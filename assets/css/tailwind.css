@@ -1,0 +1,45 @@
+@import "./fonts.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer components {
+  .cardHover {
+    @apply bg-gray-100 dark:bg-gray-900 dark:ring-gray-800 ring-1 ring-gray-200  hover:bg-gray-200 dark:hover:bg-gray-800  hover:ring-permadi-400 dark:hover:ring-permadi-500 transition
+  }
+  .headline {
+    @apply text-center max-w-3xl mx-auto block text-2xl font-extrabold  sm:text-3xl md:text-4xl;
+  }
+  .subheadline {
+    @apply mt-3 mb-6 text-center max-w-3xl mx-auto;
+  }
+}
+@layer base {
+  html {
+    @apply text-[16px] md:text-[18px] scroll-smooth;
+  }
+  body {
+    @apply font-body bg-permadi-50 dark:bg-permadi-950 transition;
+  }
+  p {
+    @apply text-permadi-700 leading-relaxed dark:text-permadi-400;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-title font-extrabold tracking-wide leading-tight  text-permadi-800 dark:text-yellow;
+  }
+}
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.3s;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+}
+.inlineCode {
+  @apply bg-permadi bg-opacity-50 px-[6px] dark:bg-permadi-700 dark:bg-opacity-50 py-[2px] border dark:border-permadi-700 border-permadi-400 dark:text-permadi-200 text-xs rounded-sm mx-0.5
+}
