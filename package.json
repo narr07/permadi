@@ -21,6 +21,7 @@
     "@iconify-json/skill-icons": "^1.1.5",
     "@nuxt/ui": "^2.11.0",
     "@storyblok/nuxt": "^5.7.9",
+    "nuxt-icon": "^0.6.6",
     "nuxt-vercel-analytics": "^0.2.2"
   }
 }

@@ -1,26 +1,6 @@
 <script setup>
 const props = defineProps({ blok: Object })
-  // Fungsi untuk mengubah tanda ":" menjadi "-"
-  const replaceColonWithDash = (originalString) => {
-    return originalString.replace(/:/g, "-");
-  };
-  // Fungsi untuk mengonversi format ikon
-  const convertIconFormat = (originalIcon) => {
-    // Pastikan format ikon sesuai kebutuhan Anda
-    // Contoh: ph:download-duotone menjadi download-duotone
-    const cleanedIcon = originalIcon.startsWith("ph:")
-      ? originalIcon.slice(3)
-      : originalIcon;
-    // Menggunakan fungsi replaceColonWithDash untuk mengubah ":" menjadi "-"
-    return replaceColonWithDash(cleanedIcon);
-  };
-  // Menggunakan computed untuk mendapatkan URL ikon
-  const iconUrl = computed(() => {
-    // Mengonversi format ikon menggunakan fungsi convertIconFormat
-    const convertedIcon = convertIconFormat(props.blok.cta_icon.icon);
-    // Membuat URL ikon dengan menggabungkan string
-    return `https://icon-sets.iconify.design/${convertedIcon}.svg`;
-  });
+const ctaIcon = props.blok.cta_icon; // Fix variable name
 </script>
 <template>
   <header class="relative overflow-hidden bgPage">
@@ -30,14 +10,16 @@ const props = defineProps({ blok: Object })
       </h1>
       <div class="mt-5 max-w-3xl text-center mx-auto">
         <p itemprop="description">
-          {{ blok.subhealine }}
+          {{ blok.subheadline }}
         </p>
       </div>
       <div class="mt-8 gap-3 flex justify-center">
-        <UButton
+        <UButton :to="blok.cta_url"
           class="animate-bounce ring-1 ring-primary-800"
-          :icon="`i-${iconUrl}`"
-          :label="blok.cta" />
+         >
+          <Icon :name="blok.cta_icon.icon" />
+          {{ blok.cta }}
+          </UButton>
       </div>
     </div>
   </header>
