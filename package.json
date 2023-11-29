@@ -17,6 +17,8 @@
     "vue-router": "^4.2.5"
   },
   "dependencies": {
+    "@iconify-json/ph": "^1.1.8",
+    "@iconify-json/skill-icons": "^1.1.5",
     "@nuxt/ui": "^2.11.0",
     "@storyblok/nuxt": "^5.7.9"
   }

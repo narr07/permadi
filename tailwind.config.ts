@@ -7,6 +7,9 @@ export default <Partial<Config>>{
       "1": "2px 2px 0px rgba(2, 50, 48, 1)",
       "2": "4px 4px 0px rgba(2, 50, 48, 1)",
       "3": "6px 6px 0px rgba(2, 50, 48, 1)",
+      "1gelap": "2px 2px 0px rgba(0, 0, 0, 1)",
+      "2gelap": "4px 4px 0px rgba(0, 0, 0, 1)",
+      "3gelap": "6px 6px 0px rgba(0, 0, 0, 1)",
     },
     extend: {
       fontSize: {

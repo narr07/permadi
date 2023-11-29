@@ -6,6 +6,9 @@ export default defineNuxtConfig({
     ["@storyblok/nuxt", { accessToken: "wAaK3C23s1FMyTl7x3Q7Qgtt" }],
     '@nuxtjs/google-fonts'
   ],
+  ui: {
+    icons: ['ph', 'skill-icons']
+  },
   googleFonts: {
     display: "swap",
     prefetch: true,
