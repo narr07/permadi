@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
+    "nuxt-vercel-analytics",
     "@nuxt/ui",
     ["@storyblok/nuxt", { accessToken: "wAaK3C23s1FMyTl7x3Q7Qgtt" }],
     '@nuxtjs/google-fonts'
