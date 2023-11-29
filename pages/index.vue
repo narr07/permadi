@@ -1,5 +1,6 @@
+<script setup>
+const story = await useAsyncStoryblok('home', { version: 'draft' })
+</script>
 <template>
-  <div>
-    <PageHero />
-  </div>
+  <StoryblokComponent v-if="story" :blok="story.content" />
 </template>

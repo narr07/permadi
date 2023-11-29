@@ -7,6 +7,7 @@ export default defineAppConfig({
       constrained: "max-w-7xl",
     },
     button: {
+      rounded: "rounded",
       default: {
         size: "sm",
         variant: "solid",
@@ -58,6 +59,50 @@ export default defineAppConfig({
         class:
           "mb-2 text-permadi-800 w-full transition  hover:bg-yellow dark:text-gray-500 dark:hover:bg-gray-800 bg-permadi-100 dark:bg-gray-900 rounded  ring-1 ring-permadi-800   drop-shadow-1 dark:drop-shadow-1gelap",
         variant: "soft",
+      },
+    },
+    badge: {
+      base: "inline-flex items-center ring-1 ring-permadi-800",
+      rounded: "rounded",
+      font: "font-medium",
+      size: {
+        xs: "text-xs px-1.5 py-0.5",
+        sm: "text-xs px-2 py-1 ",
+        md: "text-sm px-2 py-1",
+        lg: "text-sm px-2.5 py-1.5",
+      },
+      default: {
+        size: "sm",
+        variant: "solid",
+        color: "primary",
+      },
+    },
+    dropdown: {
+      wrapper: "relative inline-flex text-left rtl:text-right",
+      container: "z-20 group",
+      width: "w-48",
+      height: "",
+      background: "bg-gray-200 dark:bg-gray-800",
+      shadow: "shadow-lg",
+      rounded: "rounded",
+      ring: "ring-1 ring-gray-800 dark:ring-gray-700",
+      base: "relative focus:outline-none overflow-y-auto scroll-py-1 drop-shadow-2 dark:drop-shadow-2gelap",
+      divide: "divide-y divide-gray-200 dark:divide-gray-700",
+      padding: "p-1",
+      item: {
+        base: "group flex items-center gap-2 w-full",
+        rounded: "rounded",
+        padding: "px-2 py-1.5",
+        size: "text-sm",
+        active:
+          "bg-yellow ring-1 ring-permadi-800 dark:bg-yellow text-gray-900 dark:text-permadi-800 dark:ring-permadi-800 ",
+        inactive: "text-gray-700 dark:text-gray-200",
+        disabled: "cursor-not-allowed opacity-50",
+        icon: {
+          base: "flex-shrink-0 h-4 w-4",
+          active: "text-gray-800 dark:text-permadi-800",
+          inactive: "text-gray-700 dark:text-gray-500",
+        },
       },
     },
   },
