@@ -16,7 +16,7 @@ export default defineAppConfig({
       },
     },
     card: {
-      base: "overflow-hidden drop-shadow-2 dark:drop-shadow-2gelap hover:bg-yellow hover:drop-shadow-1 transition",
+      base: "overflow-hidden ",
       background: "bg-gray-100 dark:bg-gray-900",
       divide: "divide-y divide-gray-200 dark:divide-gray-800",
       ring: "ring-1 ring-gray-800 ",
@@ -57,7 +57,7 @@ export default defineAppConfig({
         openIcon: "i-ph-caret-down-duotone",
         closeIcon: "",
         class:
-          "mb-2 text-permadi-800 w-full transition  hover:bg-yellow dark:text-gray-500 dark:hover:bg-gray-800 bg-permadi-100 dark:bg-gray-900 rounded  ring-1 ring-permadi-800   drop-shadow-1 dark:drop-shadow-1gelap",
+          "mb-2 text-permadi-800 w-full transition  hover:bg-yellow dark:text-gray-500 dark:hover:bg-gray-800 bg-permadi-100 dark:bg-gray-900 rounded  ring-1 ring-permadi-800   drop-shadow-1 dark:drop-shadow-1gelap       dark:hover:ring-permadi-500",
         variant: "soft",
       },
     },

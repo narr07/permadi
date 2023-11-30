@@ -4,7 +4,7 @@
 @tailwind utilities;
 @layer components {
   .cardHover {
-    @apply bg-gray-100 dark:bg-gray-900 dark:ring-gray-800 ring-1 ring-gray-200  hover:bg-gray-200 dark:hover:bg-gray-800  hover:ring-permadi-400 dark:hover:ring-permadi-500 transition;
+    @apply drop-shadow-2 dark:drop-shadow-2gelap hover:bg-yellow hover:drop-shadow-1 transition bg-gray-100 dark:bg-gray-900 dark:ring-gray-800 ring-1 ring-gray-200  dark:hover:bg-gray-800   dark:hover:ring-permadi-500;
   }
   .headline {
     @apply text-center max-w-3xl mx-auto block text-2xl font-extrabold  sm:text-3xl md:text-4xl;

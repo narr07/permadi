@@ -19,6 +19,7 @@
   "dependencies": {
     "@iconify-json/ph": "^1.1.8",
     "@iconify-json/skill-icons": "^1.1.5",
+    "@nuxt/image": "^1.1.0",
     "@nuxt/ui": "^2.11.0",
     "@storyblok/nuxt": "^5.7.9",
     "nuxt-icon": "^0.6.6",

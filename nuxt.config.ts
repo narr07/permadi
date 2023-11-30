@@ -12,9 +12,18 @@ export default defineNuxtConfig({
     "nuxt-vercel-analytics",
     "@nuxtjs/google-fonts",
     "nuxt-icon",
+    '@nuxt/image',
   ],
   ui: {
     icons: ["ph", "skill-icons"],
+  },
+  image: {
+    storyblok: {
+      baseURL: 'https://a.storyblok.com'
+    }
+  },
+  colorMode: {
+    preference: "light",
   },
   googleFonts: {
     display: "swap",
