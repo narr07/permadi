@@ -23,6 +23,7 @@
     "@nuxt/ui": "^2.11.0",
     "@storyblok/nuxt": "^5.7.9",
     "nuxt-icon": "^0.6.6",
+    "nuxt-swiper": "^1.2.2",
     "nuxt-vercel-analytics": "^0.2.2"
   }
 }

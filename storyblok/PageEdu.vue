@@ -1,6 +1,5 @@
 <script setup>
   const items = ref();
-  const item = ref();
   const props = defineProps({ blok: Object });
 </script>
 <template>
@@ -8,7 +7,6 @@
     <div class="mb-6 w-full mx-auto text-center">
       <h2 class="text-g2 md:text-g3">{{ blok.headline}}</h2>
     </div>
-    <div v-html="textContent" class="prose "></div>
     <div>
       <template>
         <UAccordion :items="blok.list">
