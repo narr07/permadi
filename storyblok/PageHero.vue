@@ -2,7 +2,8 @@
 const props = defineProps({ blok: Object })
 </script>
 <template>
-  <header class="relative overflow-hidden">
+  <UContainer v-editable="blok">
+  <header class="flex items-center h-screen overflow-hidden">
     <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-10">
       <h1 class="text-g3 md:text-g4 text-center" itemprop="headline">
         {{ blok.headline }}
@@ -22,4 +23,4 @@ const props = defineProps({ blok: Object })
       </div>
     </div>
   </header>
-</template>
+</UContainer></template>

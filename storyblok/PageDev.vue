@@ -3,7 +3,7 @@
   defineProps({ blok: Object });
 </script>
 <template>
-  <UContainer v-editable="blok" class="md:pb-20 pb-16">
+  <UContainer v-editable="blok" class="mt-16 mb-20">
     <UTabs :items="blok.list" :default-index="0">
       <template #item="{ item }">
         <UCard v-editable="blok">

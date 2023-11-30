@@ -3,7 +3,7 @@ export default defineAppConfig({
     primary: "permadi",
     gray: "permadi",
     container: {
-      padding: "px-2 md:px-14",
+      padding: "px-4 sm:px-10 lg:px-16 ",
       constrained: "max-w-7xl",
     },
     button: {
