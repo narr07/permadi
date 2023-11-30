@@ -1,9 +1,8 @@
 <script setup>
 const props = defineProps({ blok: Object })
-const ctaIcon = props.blok.cta_icon; // Fix variable name
 </script>
 <template>
-  <header class="relative overflow-hidden bgPage">
+  <header class="relative overflow-hidden">
     <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-10">
       <h1 class="text-g3 md:text-g4 text-center" itemprop="headline">
         {{ blok.headline }}
