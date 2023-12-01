@@ -10,11 +10,23 @@ export default defineNuxtConfig({
     ],
     "@nuxt/ui",
     "@nuxtjs/google-fonts",
+    "@nuxtjs/fontaine",
     "nuxt-icon",
     "@nuxt/image",
     "nuxt-swiper",
-    '@vueuse/nuxt',
+    "@vueuse/nuxt",
+    "@hypernym/nuxt-anime",
+    "@nuxtjs/i18n",
+    "@nuxtseo/module",
+    "nuxt-og-image",
+    "nuxt-simple-robots",
+    "nuxt-simple-sitemap",
   ],
+  i18n: {
+    strategy: "prefix_except_default",
+    locales: ["id", "en"],
+    defaultLocale: "id", // default locale
+  },
   ui: {
     icons: ["ph", "skill-icons"],
   },
@@ -38,5 +50,25 @@ export default defineNuxtConfig({
         ital: "100..900",
       },
     },
+  },
+  fontMetrics: {
+    fonts: [
+      {
+        family: "Bricolage Grotesque",
+        fallbacks: ["Bricolage Grotesque"],
+        fallbackName: "Bricolage Grotesque",
+      },
+      {
+        family: "Hanken Grotesk",
+        fallbacks: ["Hanken Grotesk"],
+        fallbackName: "Hanken Grotesk",
+      },
+    ],
+  },
+  site: {
+    url: process.env.NUXT_SITE_URL || "https://localhost:3000/",
+    name: "Dinar Permadi Yusup",
+    description: "Personal website of Dinar Permadi Yusup",
+    defaultLocale: "id",
   },
 });

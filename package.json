@@ -10,10 +10,16 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@hypernym/nuxt-anime": "^2.1.1",
     "@nuxt/devtools": "latest",
+    "@nuxtjs/fontaine": "^0.4.1",
     "@nuxtjs/google-fonts": "^3.1.0",
+    "@nuxtseo/module": "^2.0.0-beta.45",
     "@tailwindcss/typography": "^0.5.10",
     "nuxt": "^3.8.2",
+    "nuxt-og-image": "^2.2.4",
+    "nuxt-simple-robots": "^3.1.9",
+    "nuxt-simple-sitemap": "^4.1.7",
     "vue": "^3.3.8",
     "vue-router": "^4.2.5"
   },
@@ -22,6 +28,7 @@
     "@iconify-json/skill-icons": "^1.1.5",
     "@nuxt/image": "^1.1.0",
     "@nuxt/ui": "^2.11.0",
+    "@nuxtjs/i18n": "next",
     "@storyblok/nuxt": "^5.7.9",
     "@vercel/analytics": "^1.1.1",
     "@vueuse/nuxt": "^10.6.1",
