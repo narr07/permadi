@@ -9,7 +9,6 @@ export default defineNuxtConfig({
       },
     ],
     "@nuxt/ui",
-    "nuxt-vercel-analytics",
     "@nuxtjs/google-fonts",
     "nuxt-icon",
     "@nuxt/image",
