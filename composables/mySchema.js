@@ -12,7 +12,7 @@ const pick = function (attrs, allowed) {
   return h;
 };
 const isEmailLinkType = (type) => type === "email";
-const myScema {
+export default {
   nodes: {
     horizontal_rule() {
       return {
@@ -101,7 +101,7 @@ const myScema {
       return {
         tag: "code",
         attrs: {
-          class: "inlineCode",
+          class: 'inlineCode',
         },
       };
     },
@@ -140,4 +140,14 @@ const myScema {
       };
     },
   },
+  blok:{
+    code_blok(){
+      return {
+        tag: "code",
+        attrs: {
+          class: 'code',
+        },
+      };
+    }
+  }
 };
