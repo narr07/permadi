@@ -1,15 +1,14 @@
 <template>
-  <UContainer>
+  <div data-aos="zoom-in" data-aos-duration="200">
     <UCard class="cardHover p-1 md:p-0">
-      <div
-        v-editable="article">
+      <div v-editable="article">
         <NuxtImg
           :src="article.image.filename + '/m/600x0'"
           height="200"
           width="500"
           :alt="article.image.alt"
-          class="w-full h-48  rounded object-cover pointer-events-none" />
-        <UBadge class="dark:bg-permadi-700 dark:text-permadi-200">
+          class="w-full h-48 rounded object-cover pointer-events-none" />
+        <UBadge class="dark:bg-permadi-700 mt-2 dark:text-permadi-200">
           <time>
             {{
               new Date(article.date).toLocaleDateString("id-ID", {
@@ -20,19 +19,19 @@
             }}
           </time>
         </UBadge>
-        <div class="mt-4">
-          <NuxtLink   :to="'/' + slug">
-            <h2 class="text-xl mb-3 line-clamp-2">
+        <div class="mt-2">
+          <NuxtLink :to="'/' + slug">
+            <h2 class="text-xl mb-2 line-clamp-2">
               {{ article.title }}
             </h2>
-            <div class="line-clamp-3">
+            <p class="line-clamp-3 text-sm">
               {{ article.description }}
-            </div>
+            </p>
           </NuxtLink>
         </div>
       </div>
     </UCard>
-  </UContainer>
+  </div>
 </template>
 <script setup>
   defineProps({ article: Object, slug: String });

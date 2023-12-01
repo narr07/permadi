@@ -29,49 +29,48 @@
         </div>
       </div>
       <div class="flex p-1 items-center gap-x-1.5">
-                    <ShareNetwork
-                      network="linkedin"
-                      :url="`${siteUrl}${slug.join('/')}`"
-                      :title="blok.title"
-                      :description="blok.description">
-                      <UButton icon="i-ph-linkedin-logo-duotone"> </UButton>
-                    </ShareNetwork>
-                    <ShareNetwork
-                      network="telegram"
-                      :url="`${siteUrl}${slug.join('/')}`"
-                      :title="blok.title"
-                      :description="blok.description">
-                      <UButton icon="i-ph-telegram-logo-duotone"> </UButton>
-                    </ShareNetwork>
-                    <ShareNetwork
-                      network="twitter"
-                      :url="`${siteUrl}${slug.join('/')}`"
-                      :title="blok.title"
-                      :description="blok.description"
-                      twitter-user="dinarpermadi07"
-                      hashtags="narr07">
-                      <UButton icon="i-ph-twitter-logo-duotone"> </UButton>
-                    </ShareNetwork>
-                    <ShareNetwork
-                      network="facebook"
-                      :url="`${siteUrl}${slug.join('/')}`"
-                      :title="blok.title"
-                      :description="blok.description"
-                      hashtags="narr07">
-                      <UButton icon="i-ph-facebook-logo-duotone"> </UButton>
-                    </ShareNetwork>
-                    <ShareNetwork
-                      network="whatsapp"
-                      :url="`${siteUrl}${slug.join('/')}`"
-                      :title="blok.title">
-                      <UButton square icon="i-ph-whatsapp-logo-duotone">
-                      </UButton>
-                    </ShareNetwork>
-                  </div>
+        <ShareNetwork
+          network="linkedin"
+          :url="`${siteUrl}${slug.join('/')}`"
+          :title="blok.title"
+          :description="blok.description">
+          <UButton icon="i-ph-linkedin-logo-duotone"> </UButton>
+        </ShareNetwork>
+        <ShareNetwork
+          network="telegram"
+          :url="`${siteUrl}${slug.join('/')}`"
+          :title="blok.title"
+          :description="blok.description">
+          <UButton icon="i-ph-telegram-logo-duotone"> </UButton>
+        </ShareNetwork>
+        <ShareNetwork
+          network="twitter"
+          :url="`${siteUrl}${slug.join('/')}`"
+          :title="blok.title"
+          :description="blok.description"
+          twitter-user="dinarpermadi07"
+          hashtags="narr07">
+          <UButton icon="i-ph-twitter-logo-duotone"> </UButton>
+        </ShareNetwork>
+        <ShareNetwork
+          network="facebook"
+          :url="`${siteUrl}${slug.join('/')}`"
+          :title="blok.title"
+          :description="blok.description"
+          hashtags="narr07">
+          <UButton icon="i-ph-facebook-logo-duotone"> </UButton>
+        </ShareNetwork>
+        <ShareNetwork
+          network="whatsapp"
+          :url="`${siteUrl}${slug.join('/')}`"
+          :title="blok.title">
+          <UButton square icon="i-ph-whatsapp-logo-duotone"> </UButton>
+        </ShareNetwork>
+      </div>
       <!-- End Blog Article -->
       <!-- Sticky Share Group -->
       <div class="sticky bottom-2 inset-x-0 text-center">
-        <UCard class="inline-block bg-permadi-100 cardHover">
+        <UCard class="inline-block bg-gray-100 dark:bg-gray-900 dark:ring-gray-800 ring-1 ring-gray-800  ">
           <div class="flex items-center gap-x-1.5">
             <UTooltip
               :text="$i18n.locale === 'en' ? 'TOC' : 'Daftar Isi'"
@@ -165,11 +164,11 @@
 <script setup>
   const { slug } = useRoute().params;
   const props = defineProps({ blok: Object });
-  // const resolvedRichText = computed(() => renderRichText(props.blok.content));
-  const resolvedRichText = computed(() => {
-    return renderRichText(props.blok.content, { schema: mySchema });
-  });
+  // const resolvedRichText = computed(() => {
+  //   return renderRichText(props.blok.content, { schema: mySchema });
+  // });
   const siteUrl = import.meta.env.VITE_SITE_URL || "https://permadi.dev/";
+  const resolvedRichText = computed(() => renderRichText(props.blok.content));
   const title = props.blok.title;
   const description = props.blok.description;
   useServerSeoMeta({
