@@ -8,6 +8,8 @@
         padding: 'px-2 py-3 sm:p-3',
       },
     }"
+    data-aos="zoom-in"
+    data-aos-duration="300"
     class="group flex flex-col cardHover">
     <div class="flex justify-between items-center">
       <div class="flex flow-row items-center">

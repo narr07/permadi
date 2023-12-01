@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   modules: [
     [
       "@storyblok/nuxt",
@@ -55,7 +55,7 @@ export default defineNuxtConfig({
     fonts: [
       {
         family: "Bricolage Grotesque",
-        fallbacks: ["Bricolage Grotesque"],
+        fallbacks: ["Hanken Grotesk", "Inter", "Rubik"],
         fallbackName: "Bricolage Grotesque",
       },
       {
