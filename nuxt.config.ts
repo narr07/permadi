@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     "nuxt-icon",
     "@nuxt/image",
     "nuxt-swiper",
+    '@vueuse/nuxt',
   ],
   ui: {
     icons: ["ph", "skill-icons"],

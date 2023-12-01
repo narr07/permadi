@@ -14,12 +14,9 @@
                 height="300"
                 width="500"
                 class="w-full h-[250px] lg:h-[350px] rounded ring-1 ring-permadi-800 object-cover" />
-              <h1 class="text-g2 md:text-g3 border-permadi-800 my-2 bg-red">
+              <h1 class="text-g2 md:text-g3 border-permadi-800 my-2">
                 {{ blok.title }}
               </h1>
-              <p class="inlineCode">
-                code
-              </p>
               <p>{{ blok.description }}</p>
             </UCard>
             <UCard>
