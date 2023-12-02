@@ -18,8 +18,10 @@
         @click="isOpen = true" />
       <UModal
         :ui="{
+          rounded: 'rounded',
+          ring: 'ring-1 ring-permadi-800',
           inner: 'inset-4',
-          container: ' items-center ',
+          container: 'items-center',
           padding: 'p-2 sm:p-0',
         }"
         v-model="isOpen">
@@ -54,7 +56,7 @@
                 rel="noopener noreferrer"
                 aria-label="searchResults"
                 class="w-full p-1 font-normal"
-                :to="`blog/${hit.slug}`">
+                :to="hit.slug">
                 <UCard
                   class="cardHover"
                   :ui="{
