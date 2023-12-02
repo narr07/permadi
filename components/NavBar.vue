@@ -8,7 +8,7 @@
       class="fixed w-full top-2 z-50">
       <UContainer>
         <div
-          class="dark:bg-permadi-900 bg-permadi-100 ring-1 ring-gray-200 dark:ring-gray-800 rounded-md p-2">
+          class="dark:bg-permadi-900 bg-permadi-100 ring-1 ring-gray-800 dark:ring-gray-800 rounded p-2">
           <div class="flex flex-row justify-between items-center">
             <div class="flex">
               <NuxtLink
