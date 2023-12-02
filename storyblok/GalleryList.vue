@@ -1,6 +1,8 @@
 <template>
-  <UCard data-aos="zoom-in"
-          data-aos-duration="300" class="cardHover text-center">
+  <UCard
+    data-aos="zoom-in"
+    data-aos-duration="300"
+    class="cardHover text-center">
     <NuxtImg
       class="rounded-xl sm:w-48 sm:h-48 lg:w-60 lg:h-60 mx-auto"
       :src="blok.image.filename + '/m/600x0'"
