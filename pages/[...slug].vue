@@ -69,6 +69,16 @@ defineOgImage({
   title: titleMeta,
   description: descriptionMeta,
 })
+useHead({
+  script: [
+    {
+      'src': 'https://unpkg.com/@tinybirdco/flock.js',
+      'defer': true,
+      'data-host': 'https://api.tinybird.co',
+      'data-token': 'p.eyJ1IjogIjY5OWM3Y2E3LThmN2ItNDViNi05NDlmLTY2ZWMxOWI3MTQzNCIsICJpZCI6ICI2YThlMzQ4Ny1kMWQ2LTQwZmItOTNiZi1lZDZkNTZlNDk4MTgiLCAiaG9zdCI6ICJldV9zaGFyZWQifQ.Bfq9bp_LXUBLIK4U1R_s--_pUYNCFl628l-2yYB-PEs',
+    },
+  ],
+})
 </script>
 
 <template>

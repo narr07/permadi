@@ -1,4 +1,5 @@
 <script setup>
+// eslint-disable-next-line unused-imports/no-unused-vars
 const props = defineProps({ blok: Object })
 </script>
 
@@ -9,7 +10,7 @@ const props = defineProps({ blok: Object })
         <h1
           data-aos="zoom-in"
           data-aos-duration="300"
-          class="text-g3 lg:text-g4 text-center"
+          class="text-g2 lg:text-g3 text-center"
           itemprop="headline"
         >
           {{ blok.headline }}
