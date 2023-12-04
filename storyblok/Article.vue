@@ -1,19 +1,70 @@
+<script setup>
+const props = defineProps({ blok: Object })
+const { slug } = useRoute().params
+// const resolvedRichText = computed(() => {
+//   return renderRichText(props.blok.content, { schema: mySchema });
+// });
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://permadi.dev/'
+const resolvedRichText = computed(() => renderRichText(props.blok.content))
+const title = props.blok.title
+const description = props.blok.description
+useServerSeoMeta({
+  title: () => title,
+  ogTitle: () => title,
+  description: () => description,
+  ogDescription: () => description,
+  twitterTitle: () => title,
+  twitterDescription: () => description,
+  ogType: () => 'article',
+})
+defineOgImage({
+  component: 'OgPage',
+  title,
+  description,
+})
+const counter = ref(0)
+function handleClick() {
+  counter.value++
+}
+const headings = computed(() => {
+  const headings = props.blok.content.content.filter(
+    section => section.type === 'heading' && section.attrs.level === 2,
+  )
+  return headings.map((heading) => {
+    return {
+      id: heading.content[0].marks[0].attrs?.id,
+      text: heading.content[0].text,
+    }
+  })
+})
+const categoryItem = computed(() => {
+  return headings.value.map(heading => [
+    {
+      label: heading.text,
+      to: `#${heading.id}`,
+    },
+  ])
+})
+</script>
+
 <template>
   <div class="py-16">
-    <UContainer class="px-0" v-editable="blok">
+    <UContainer v-editable="blok" class="px-0">
       <!-- Blog Article -->
       <div class="max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
         <div class="max-w-2xl">
           <div class="space-y-5 md:space-y-8">
             <UCard
-              class="drop-shadow-2 dark:drop-shadow-2gelap ring-permadi-800 bg-yellow hover:drop-shadow-1 transition dark:bg-gray-900 dark:ring-gray-800 ring-1 dark:hover:bg-gray-800 dark:hover:ring-permadi-500 space-y-3">
+              class="drop-shadow-2 dark:drop-shadow-2gelap ring-permadi-800 bg-yellow hover:drop-shadow-1 transition dark:bg-gray-900 dark:ring-gray-800 ring-1 dark:hover:bg-gray-800 dark:hover:ring-permadi-500 space-y-3"
+            >
               <NuxtImg
                 v-if="blok.image?.filename"
-                :src="blok.image.filename + '/m/1600x0'"
+                :src="`${blok.image.filename}/m/1600x0`"
                 :alt="blok.image.alt"
                 height="300"
                 width="500"
-                class="w-full h-[250px] lg:h-[350px] rounded ring-1 ring-permadi-800 object-cover" />
+                class="w-full h-[250px] lg:h-[350px] rounded ring-1 ring-permadi-800 object-cover"
+              />
               <h1 class="text-g2 md:text-g3 border-permadi-800 my-2">
                 {{ blok.title }}
               </h1>
@@ -21,8 +72,9 @@
             </UCard>
             <UCard>
               <div
+                class="prose prose-permadi prose-pre:bg-permadi-800 prose-pre:text-sm prose-blockquote:font-normal prose-headings:text-permadi-800 prose-blockquote:border-l-permadi dark:prose-blockquote:border-l-yellow max-w-3xl mx-auto dark:prose-invert"
                 v-html="resolvedRichText"
-                class="prose prose-permadi prose-pre:bg-permadi-800 prose-pre:text-sm prose-blockquote:font-normal prose-headings:text-permadi-800 prose-blockquote:border-l-permadi dark:prose-blockquote:border-l-yellow max-w-3xl mx-auto dark:prose-invert"></div>
+              />
             </UCard>
           </div>
           <!-- End Content -->
@@ -35,45 +87,52 @@
           <div class="flex items-center gap-x-1.5">
             <UTooltip
               :text="$i18n.locale === 'en' ? 'TOC' : 'Daftar Isi'"
-              :popper="{ placement: 'left' }">
+              :popper="{ placement: 'left' }"
+            >
               <UDropdown
                 :popper="{ arrow: true }"
                 :ui="{
                   width: 'w-80',
                 }"
                 class="w-full"
-                :items="categoryItem">
+                :items="categoryItem"
+              >
                 <UButton
                   block
                   color="gray"
                   variant="solid"
-                  icon="i-ph-list-bullets-duotone" />
+                  icon="i-ph-list-bullets-duotone"
+                />
               </UDropdown>
             </UTooltip>
             <UTooltip text="Share" :popper="{ placement: 'top' }">
               <UPopover
                 class="flex items-center gap-x-1.5"
-                :popper="{ arrow: true }">
+                :popper="{ arrow: true }"
+              >
                 <UButton
                   variant="solid"
                   color="gray"
                   square=""
-                  trailing-icon="i-ph-share-fat-duotone" />
+                  trailing-icon="i-ph-share-fat-duotone"
+                />
                 <template #panel>
                   <div class="flex p-1 items-center gap-x-1.5">
                     <ShareNetwork
                       network="linkedin"
                       :url="`${siteUrl}${slug.join('/')}`"
                       :title="blok.title"
-                      :description="blok.description">
-                      <UButton icon="i-ph-linkedin-logo-duotone"> </UButton>
+                      :description="blok.description"
+                    >
+                      <UButton icon="i-ph-linkedin-logo-duotone" />
                     </ShareNetwork>
                     <ShareNetwork
                       network="telegram"
                       :url="`${siteUrl}${slug.join('/')}`"
                       :title="blok.title"
-                      :description="blok.description">
-                      <UButton icon="i-ph-telegram-logo-duotone"> </UButton>
+                      :description="blok.description"
+                    >
+                      <UButton icon="i-ph-telegram-logo-duotone" />
                     </ShareNetwork>
                     <ShareNetwork
                       network="twitter"
@@ -81,23 +140,25 @@
                       :title="blok.title"
                       :description="blok.description"
                       twitter-user="dinarpermadi07"
-                      hashtags="narr07">
-                      <UButton icon="i-ph-twitter-logo-duotone"> </UButton>
+                      hashtags="narr07"
+                    >
+                      <UButton icon="i-ph-twitter-logo-duotone" />
                     </ShareNetwork>
                     <ShareNetwork
                       network="facebook"
                       :url="`${siteUrl}${slug.join('/')}`"
                       :title="blok.title"
                       :description="blok.description"
-                      hashtags="narr07">
-                      <UButton icon="i-ph-facebook-logo-duotone"> </UButton>
+                      hashtags="narr07"
+                    >
+                      <UButton icon="i-ph-facebook-logo-duotone" />
                     </ShareNetwork>
                     <ShareNetwork
                       network="whatsapp"
                       :url="`${siteUrl}${slug.join('/')}`"
-                      :title="blok.title">
-                      <UButton square icon="i-ph-whatsapp-logo-duotone">
-                      </UButton>
+                      :title="blok.title"
+                    >
+                      <UButton square icon="i-ph-whatsapp-logo-duotone" />
                     </ShareNetwork>
                   </div>
                 </template>
@@ -111,8 +172,8 @@
                 square=""
                 icon="i-ph-heart-duotone"
                 class=" "
-                v-on:click="handleClick">
-              </UButton>
+                @click="handleClick"
+              />
             </UChip>
             <!-- Button -->
           </div>
@@ -122,51 +183,3 @@
     </UContainer>
   </div>
 </template>
-<script setup>
-  const { slug } = useRoute().params;
-  const props = defineProps({ blok: Object });
-  // const resolvedRichText = computed(() => {
-  //   return renderRichText(props.blok.content, { schema: mySchema });
-  // });
-  const siteUrl = import.meta.env.VITE_SITE_URL || "https://permadi.dev/";
-  const resolvedRichText = computed(() => renderRichText(props.blok.content));
-  const title = props.blok.title;
-  const description = props.blok.description;
-  useServerSeoMeta({
-    title: () => title,
-    ogTitle: () => title,
-    description: () => description,
-    ogDescription: () => description,
-    twitterTitle: () => title,
-    twitterDescription: () => description,
-    ogType: () => "article",
-  });
-  defineOgImage({
-    component: "OgPage",
-    title: title,
-    description: description,
-  });
-  const counter = ref(0);
-  const handleClick = () => {
-    counter.value++;
-  };
-  const headings = computed(() => {
-    const headings = props.blok.content.content.filter(
-      (section) => section.type === "heading" && section.attrs.level === 2
-    );
-    return headings.map((heading) => {
-      return {
-        id: heading.content[0].marks[0].attrs?.id,
-        text: heading.content[0].text,
-      };
-    });
-  });
-  const categoryItem = computed(() => {
-    return headings.value.map((heading) => [
-      {
-        label: heading.text,
-        to: "#" + heading.id,
-      },
-    ]);
-  });
-</script>

@@ -1,23 +1,24 @@
 <script lang="ts" setup>
 defineOptions({
-  inheritAttrs: false
+  inheritAttrs: false,
 })
 defineProps({
   title: {
     type: String,
-    required: true
+    required: true,
   },
   description: {
     type: String,
-    required: true
+    required: true,
   },
   image: {
     type: String,
     required: false,
-    default: ''
-  }
+    default: '',
+  },
 })
 </script>
+
 <template>
   <div class="w-full h-full flex flex-col justify-between items-start bg-[#023230] p-20 pt-26 pb-16">
     <div
@@ -35,6 +36,7 @@ defineProps({
     </div>
   </div>
 </template>
+
 <style scoped>
 ._gradient {
 }

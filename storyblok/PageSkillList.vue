@@ -1,6 +1,7 @@
 <script setup>
-  defineProps({ blok: Object });
+defineProps({ blok: Object })
 </script>
+
 <template>
   <UCard
     :ui="{
@@ -10,11 +11,14 @@
     }"
     data-aos="zoom-in"
     data-aos-duration="300"
-    class="group flex flex-col cardHover">
+    class="group flex flex-col cardHover"
+  >
     <div class="flex justify-between items-center">
       <div class="flex flow-row items-center">
         <Icon :name="blok.icon.icon" size="44" />
-        <h3 class="ml-2 font-semibold">{{ blok.label }}</h3>
+        <h3 class="ml-2 font-semibold">
+          {{ blok.label }}
+        </h3>
       </div>
       <div class="ps-3">
         <UButton
@@ -24,7 +28,8 @@
           target="_blank"
           :to="blok.link"
           variant="ghost"
-          icon="i-ph-arrow-square-up-right-duotone" />
+          icon="i-ph-arrow-square-up-right-duotone"
+        />
       </div>
     </div>
   </UCard>

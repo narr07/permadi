@@ -1,6 +1,7 @@
 <script setup>
-  defineProps({ blok: Object });
+defineProps({ blok: Object })
 </script>
+
 <template>
   <!-- Card Section -->
   <UContainer v-editable="blok" class="py-14 lg:py-16 mx-auto">
@@ -14,7 +15,8 @@
       <StoryblokComponent
         v-for="blok in blok.list"
         :key="blok._uid"
-        :blok="blok" />
+        :blok="blok"
+      />
       <!-- End Card -->
     </div>
     <!-- End Grid -->

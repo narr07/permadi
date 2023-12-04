@@ -1,3 +1,9 @@
+<script setup>
+const props = defineProps({ blok: Object })
+const toast = useToast()
+const { copy, copied } = useClipboard()
+</script>
+
 <template>
   <UCard
     class="text-sm"
@@ -11,7 +17,8 @@
       footer: {
         padding: 'px-1 py-0 ',
       },
-    }">
+    }"
+  >
     <template #header>
       <div class="w-full text-sm -mb-6 flex p-1 items-center justify-between">
         <span>{{ blok.title }}</span>
@@ -29,8 +36,9 @@
                 timeout: 1500,
                 icon: 'i-ph-check-circle-duotone',
               });
-            " />
-          <template> </template>
+            "
+          />
+          <template />
           {{ blok.code }}
           <!-- Gunakan props.code -->
         </div>
@@ -41,8 +49,3 @@
     </template>
   </UCard>
 </template>
-<script setup>
-  const props = defineProps({ blok: Object });
-  const toast = useToast();
-  const { copy, copied } = useClipboard();
-</script>

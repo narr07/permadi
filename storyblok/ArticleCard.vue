@@ -1,14 +1,20 @@
+<script setup>
+defineProps({ article: Object, slug: String })
+const localePath = useLocalePath()
+</script>
+
 <template>
   <div class="w-full" data-aos="zoom-in" data-aos-duration="200">
     <UCard class="cardHover p-1 md:p-0">
       <div v-editable="article">
         <!-- Gambar Artikel -->
         <NuxtImg
-          :src="article.image.filename + '/m/600x0'"
+          :src="`${article.image.filename}/m/600x0`"
           height="200"
           width="500"
           :alt="article.image.alt"
-          class="w-full h-48 ring-1 ring-permadi-800 rounded object-cover pointer-events-none" />
+          class="w-full h-48 ring-1 ring-permadi-800 rounded object-cover pointer-events-none"
+        />
         <!-- Badge Tanggal -->
         <div class="flex justify-between items-center">
           <div>
@@ -25,7 +31,9 @@
             </UBadge>
           </div>
           <div>
-            <UBadge class="dark:bg-permadi-700 mt-2 dark:text-permadi-200"> TAG </UBadge>
+            <UBadge class="dark:bg-permadi-700 mt-2 dark:text-permadi-200">
+              TAG
+            </UBadge>
           </div>
         </div>
         <div class="mt-4">
@@ -44,7 +52,3 @@
     </UCard>
   </div>
 </template>
-<script setup>
-  defineProps({ article: Object, slug: String });
-  const localePath = useLocalePath();
-</script>
