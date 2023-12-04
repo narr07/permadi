@@ -98,25 +98,18 @@ export default defineNuxtConfig({
     },
   },
   routeRules: {
-    // "/**": {
-    //   prerender: true,
-    //   swr: 60 * 10,
-    // },
     '/': {
       prerender: true,
-      swr: 60 * 5,
+      isr: 60 * 60,
     },
-    '/en/**': {
+    '/en': {
       prerender: true,
-      swr: 60 * 10,
+      isr: 60 * 60,
     },
     '/blog/**': {
-      swr: 60 * 10,
-      prerender: true,
+      isr: 60,
     },
     '/gallery/**': {
-      swr: 60 * 10,
-      prerender: true,
       isr: 60,
     },
     '/api/**': {
