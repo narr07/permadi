@@ -8,7 +8,7 @@
           height="200"
           width="500"
           :alt="article.image.alt"
-          class="w-full h-48 rounded object-cover pointer-events-none" />
+          class="w-full h-48 ring-1 ring-permadi-800 rounded object-cover pointer-events-none" />
         <!-- Badge Tanggal -->
         <div class="flex justify-between items-center">
           <div>

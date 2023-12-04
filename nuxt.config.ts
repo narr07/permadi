@@ -21,7 +21,12 @@ export default defineNuxtConfig({
     "nuxt-og-image",
     "nuxt-simple-robots",
     "nuxt-simple-sitemap",
+    "nuxt-delay-hydration",
+    '@vite-pwa/nuxt',
   ],
+  delayHydration: {
+    mode: "mount",
+  },
   i18n: {
     strategy: "prefix_except_default",
     locales: ["id", "en"],
@@ -70,5 +75,67 @@ export default defineNuxtConfig({
     name: "Dinar Permadi Yusup",
     description: "Personal website of Dinar Permadi Yusup",
     defaultLocale: "id",
+  },
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+    },
+  },
+  routeRules: {
+    "/":{ swr: 60 * 10},
+    "/gallery":{ swr: 60 * 10},
+    "/blog/**": {
+      swr: 60 * 10,
+      prerender: true,
+      // isr: 60,
+      // isr: true,
+    },
+  },
+  pwa: {
+    registerType: "autoUpdate",
+    manifest: {
+      name: "Dinar Permadi Yusup",
+      short_name: "narr07",
+      theme_color: "#023230",
+      icons: [
+        {
+          src: "icon-192.png",
+          sizes: "192x192",
+          type: "image/png",
+        },
+        {
+          src: "icon-512.png",
+          sizes: "512x512",
+          type: "image/png",
+        },
+        {
+          src: "icon-192-maskable.png",
+          sizes: "192x192",
+          type: "image/png",
+          purpose: "any maskable",
+        },
+        {
+          src: "icon-512-maskable.png",
+          sizes: "512x512",
+          type: "image/png",
+          purpose: "any maskable",
+        },
+      ],
+    },
+    workbox: {
+      globPatterns: ["**/*.{js,css,html,png,svg,ico}"],
+    },
+    // client: {
+    //   installPrompt: true,
+    //   // you don't need to include this: only for testing purposes
+    //   // if enabling periodic sync for update use 1 hour or so (periodicSyncForUpdates: 3600)
+    //   periodicSyncForUpdates: 20,
+    // },
+    devOptions: {
+      enabled: true,
+      suppressWarnings: true,
+      navigateFallbackAllowlist: [/^\/$/],
+      type: "module",
+    },
   },
 });
