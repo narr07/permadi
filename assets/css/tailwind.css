@@ -29,7 +29,7 @@
   h4,
   h5,
   h6 {
-    @apply font-title font-extrabold  leading-tight tracking-wide  text-permadi-800 dark:text-yellow;
+    @apply font-title font-extrabold  leading-tight tracking-wider  text-permadi-800 dark:text-yellow;
   }
 }
 .page-enter-active,

@@ -13,7 +13,7 @@ const props = defineProps({ blok: Object })
           class="text-g3 text-center"
           itemprop="headline"
         >
-          <span class="text-permadi-600 dark:text-permadi-200">
+          <span class="text-permadi-500 dark:text-permadi-200">
             Dinar Permadi Yusup:
           </span>
           {{ blok.headline }}
