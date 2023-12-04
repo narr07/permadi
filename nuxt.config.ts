@@ -60,7 +60,7 @@ export default defineNuxtConfig({
     fonts: [
       {
         family: "Bricolage Grotesque",
-        fallbacks: ["Hanken Grotesk", "Inter", "Rubik"],
+        fallbacks: ["Bricolage Grotesque"],
         fallbackName: "Bricolage Grotesque",
       },
       {
@@ -89,9 +89,9 @@ export default defineNuxtConfig({
     //   swr: 60 * 10,
     // },
     "/": {
-      // prerender: true,
-      swr: 60 * 10,
-      // isr: 60,
+      prerender: true,
+      // swr: 60 * 10,
+      isr: 60,
     },
     // "/en/**": {
     //   prerender: true,
@@ -99,16 +99,16 @@ export default defineNuxtConfig({
     //   // isr: 60,
     // },
     "/blog/**": {
-      swr: 60 * 10,
+      // swr: 60 * 10,
       // prerender: true,
       // isr: 60,
-      // isr: true,
+      isr: true,
     },
     // "/blog/**": { isr: true },
     "/gallery/**": {
-      swr: 60 * 10,
+      // swr: 60 * 10,
       // prerender: true,
-      // isr: 60, // isr: true,
+      isr: 60, // isr: true,
     },
     // swr: 60 * 10,
     // "/api/**": { cors: true },
