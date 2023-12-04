@@ -81,38 +81,38 @@ export default defineNuxtConfig({
       crawlLinks: true,
     },
   },
-  routeRules: {
-    // revalidated every 60 seconds, in the background
-    // "/**": {
-    //   prerender: true,
-    //   // isr: 60,
-    //   swr: 60 * 10,
-    // },
-    "/": {
-      prerender: true,
-      swr: 60 * 10,
-      // isr: 60,
-    },
-    // "/en/**": {
-    //   prerender: true,
-    //   swr: 60 * 10,
-    //   // isr: 60,
-    // },
-    "/blog/**": {
-      swr: 60 * 10,
-      prerender: true,
-      // isr: 60,
-      // isr: true,
-    },
-    // "/blog/**": { isr: true },
-    "/gallery/**": {
-      swr: 60 * 10,
-      prerender: true,
-      // isr: 60, // isr: true,
-    },
-    // swr: 60 * 10,
-    "/api/**": { cors: true },
-  },
+  // routeRules: {
+  //   // revalidated every 60 seconds, in the background
+  //   // "/**": {
+  //   //   prerender: true,
+  //   //   // isr: 60,
+  //   //   swr: 60 * 10,
+  //   // },
+  //   "/": {
+  //     prerender: true,
+  //     swr: 60 * 10,
+  //     // isr: 60,
+  //   },
+  //   // "/en/**": {
+  //   //   prerender: true,
+  //   //   swr: 60 * 10,
+  //   //   // isr: 60,
+  //   // },
+  //   "/blog/**": {
+  //     swr: 60 * 10,
+  //     prerender: true,
+  //     // isr: 60,
+  //     // isr: true,
+  //   },
+  //   // "/blog/**": { isr: true },
+  //   "/gallery/**": {
+  //     swr: 60 * 10,
+  //     prerender: true,
+  //     // isr: 60, // isr: true,
+  //   },
+  //   // swr: 60 * 10,
+  //   "/api/**": { cors: true },
+  // },
   pwa: {
     registerType: "autoUpdate",
     manifest: {
