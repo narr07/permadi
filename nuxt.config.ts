@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     "nuxt-simple-robots",
     "nuxt-simple-sitemap",
     "nuxt-delay-hydration",
-    '@vite-pwa/nuxt',
+    "@vite-pwa/nuxt",
   ],
   delayHydration: {
     mode: "mount",
