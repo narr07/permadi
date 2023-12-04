@@ -60,6 +60,7 @@ const categoryItem = computed(() => {
               <NuxtImg
                 v-if="blok.image?.filename"
                 :src="`${blok.image.filename}/m/1600x0`"
+                loading="lazy"
                 :alt="blok.image.alt"
                 height="300"
                 width="500"

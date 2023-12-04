@@ -98,36 +98,30 @@ export default defineNuxtConfig({
     },
   },
   routeRules: {
-    // revalidated every 60 seconds, in the background
     // "/**": {
     //   prerender: true,
-    //   // isr: 60,
     //   swr: 60 * 10,
     // },
-    '/**': {
+    '/': {
       prerender: true,
       swr: 60 * 5,
-      // isr: 60,
     },
-    // "/en/**": {
-    //   prerender: true,
-    //   swr: 60 * 10,
-    //   // isr: 60,
-    // },
+    '/en/**': {
+      prerender: true,
+      swr: 60 * 10,
+    },
     '/blog/**': {
-      // swr: 60 * 10,
-      // prerender: true,
-      // isr: 60,
-      isr: true,
+      swr: 60 * 10,
+      prerender: true,
     },
-    // "/blog/**": { isr: true },
     '/gallery/**': {
-      // swr: 60 * 10,
-      // prerender: true,
-      isr: 60, // isr: true,
+      swr: 60 * 10,
+      prerender: true,
+      isr: 60,
     },
-    // swr: 60 * 10,
-    // "/api/**": { cors: true },
+    '/api/**': {
+      cors: true,
+    },
   },
   pwa: {
     registerType: 'autoUpdate',
@@ -163,12 +157,6 @@ export default defineNuxtConfig({
     workbox: {
       globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
     },
-    // client: {
-    //   installPrompt: true,
-    //   // you don't need to include this: only for testing purposes
-    //   // if enabling periodic sync for update use 1 hour or so (periodicSyncForUpdates: 3600)
-    //   periodicSyncForUpdates: 20,
-    // },
     devOptions: {
       enabled: true,
       suppressWarnings: true,

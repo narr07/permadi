@@ -11,6 +11,7 @@ const localePath = useLocalePath()
         <NuxtImg
           :src="`${article.image.filename}/m/600x0`"
           height="200"
+          loading="lazy"
           width="500"
           :alt="article.image.alt"
           class="w-full h-48 ring-1 ring-permadi-800 rounded object-cover pointer-events-none"
