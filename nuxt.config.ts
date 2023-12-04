@@ -33,9 +33,9 @@ export default defineNuxtConfig({
     'nuxt-simple-sitemap',
     'nuxt-delay-hydration',
     '@vite-pwa/nuxt',
-    '@nuxtjs/html-validator',
     '@nuxtjs/web-vitals',
     'nuxt-gtag',
+    '@nuxtjs/google-adsense',
   ],
   delayHydration: {
     mode: 'mount',
@@ -178,6 +178,9 @@ export default defineNuxtConfig({
   },
   gtag: {
     id: process.env.NUXT_PUBLIC_GTAG_ID || '',
+  },
+  googleAdsense: {
+    id: 'ca-pub-5549139053730632',
   },
   webVitals: {
     ga: {
