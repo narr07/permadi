@@ -50,7 +50,7 @@
               <div class="flex items-center ml-4">
                 <!-- <Search /> -->
                 <div class="flex items-center">
-                  <!-- <UPopover :popper="{ arrow: true }">
+                  <UPopover :popper="{ arrow: true }">
                     <template #default="{ open, close }">
                       <UButton
                         title="language"
@@ -92,7 +92,7 @@
                         </div>
                       </UCard>
                     </template>
-                  </UPopover> -->
+                  </UPopover>
                   <UTooltip text="Color Toggle">
                     <DarkMode/>
                   </UTooltip>

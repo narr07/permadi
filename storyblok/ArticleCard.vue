@@ -23,7 +23,7 @@
         </UBadge>
         <div class="mt-4">
           <!-- Judul Artikel -->
-          <NuxtLink :to="'/' + slug">
+          <NuxtLink :to="localePath(`/${slug}`)">
             <h2 class="text-xl mb-2 line-clamp-2">
               {{ article.title }}
             </h2>
@@ -39,4 +39,5 @@
 </template>
 <script setup>
   defineProps({ article: Object, slug: String });
+  const localePath = useLocalePath();
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="py-14">
+  <UContainer class="py-14">
     <div class="mb-6 w-full mx-auto text-center">
         <h2
           data-aos="zoom-in"
@@ -15,7 +15,7 @@
           :slug="article.full_slug"
       />
     </div>
-  </div>
+  </UContainer>
 </template>
 <script setup>
 defineProps({blok: Object})
