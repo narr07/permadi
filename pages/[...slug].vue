@@ -47,8 +47,13 @@ const story = await useAsyncStoryblok(
 // });
 // seo
 const metadata = story.value.content.metadata
-const titleMeta = metadata.title
-const descriptionMeta = metadata.description
+const defaultTitle = 'Dinar Permadi Yusup: Desainer Grafis, Guru, dan Programmer Profesional'
+const defaultDescription = 'Dinar Permadi Yusu: Desainer Grafis, Guru, dan Programmer Profesional. Temukan hal baru di website saya'
+const titleMeta = metadata && metadata.title ? metadata.title : defaultTitle
+const descriptionMeta
+    = metadata && metadata.description
+      ? metadata.description
+      : defaultDescription
 useServerSeoMeta({
   title: () => titleMeta,
   ogTitle: () => titleMeta,
