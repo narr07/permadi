@@ -42,7 +42,7 @@ const paginatedArticles = computed(() => {
 </script>
 
 <template>
-  <UContainer class="py-24">
+  <UContainer class="py-24 md:pt-32">
     <h1
       data-aos="zoom-in"
       data-aos-duration="300"

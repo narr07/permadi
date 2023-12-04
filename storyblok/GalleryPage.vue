@@ -4,7 +4,7 @@ defineProps({ blok: Object })
 
 <template>
   <!-- Team -->
-  <UContainer class="max-w-[85rem] py-20 mx-auto">
+  <UContainer class="max-w-[85rem] py-24 md:pt-32 mx-auto">
     <!-- Title -->
     <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-14">
       <h1
