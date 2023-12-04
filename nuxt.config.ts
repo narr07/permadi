@@ -1,11 +1,20 @@
+import { apiPlugin } from "@storyblok/vue";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: process.env.NUXT_PUBLIC_NODE_ENV === "production" ? true : false,
+  // Leave here other things like: css, modules, i18n, nitro
+  runtimeConfig: {
+    public: {
+      NODE_ENV: process.env.NODE_ENV,
+    },
+  },
   devtools: { enabled: false },
   modules: [
     [
       "@storyblok/nuxt",
       {
         accessToken: process.env.STORYBLOK_ACCESS_TOKEN,
+        use: [apiPlugin],
       },
     ],
     "@nuxt/ui",

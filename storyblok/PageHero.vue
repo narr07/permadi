@@ -25,7 +25,8 @@
             data-aos="zoom-in"
             data-aos-delay="200"
             data-aos-duration="300"
-            :to="blok.cta_url"
+            to="/cv.pdf"
+            target="_blank"
             class=" ring-1 ring-primary-800">
             <Icon :name="blok.cta_icon.icon" />
             {{ blok.cta }}
