@@ -10,7 +10,7 @@ const props = defineProps({ blok: Object })
         <h1
           data-aos="zoom-in"
           data-aos-duration="300"
-          class="text-g2 md:only:text-g3 text-center dark:text-permadi-200"
+          class="text-g2 md:text-g3 text-center dark:text-permadi-200"
           itemprop="headline"
         >
           <span class="text-permadi-500 dark:text-yellow">

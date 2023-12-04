@@ -47,13 +47,8 @@ const story = await useAsyncStoryblok(
 // });
 // seo
 const metadata = story.value.content.metadata
-const defaultTitle = 'Dinar'
-const defaultDescription = 'Personal Website Dinar Permadi  Yusup'
-const titleMeta = metadata && metadata.title ? metadata.title : defaultTitle
-const descriptionMeta
-    = metadata && metadata.description
-      ? metadata.description
-      : defaultDescription
+const titleMeta = metadata.title
+const descriptionMeta = metadata.description
 useServerSeoMeta({
   title: () => titleMeta,
   ogTitle: () => titleMeta,
