@@ -10,9 +10,9 @@ defineProps({ blok: Object })
       <h1
         data-aos="zoom-in"
         data-aos-duration="300"
-        class="text-g3 text-center"
+        class="text-center text-g2 md:text-g3 headline mb-4"
       >
-        Gallery Saya
+        {{ blok.headline }}
       </h1>
     </div>
     <!-- End Title -->
