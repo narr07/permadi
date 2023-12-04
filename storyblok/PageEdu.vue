@@ -1,3 +1,4 @@
+<!-- eslint-disable unused-imports/no-unused-vars -->
 <script setup>
 const props = defineProps({ blok: Object })
 const items = ref()

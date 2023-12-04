@@ -73,7 +73,7 @@ const categoryItem = computed(() => {
             </UCard>
             <UCard>
               <div
-                class="prose prose-permadi prose-pre:bg-permadi-800 prose-pre:text-sm prose-blockquote:font-normal prose-headings:text-permadi-800 prose-blockquote:border-l-permadi dark:prose-blockquote:border-l-yellow max-w-3xl mx-auto dark:prose-invert"
+                class="prose prose-permadi prose-pre:bg-permadi-800 prose-pre:text-sm prose-blockquote:font-normal prose-headings:text-permadi-800 prose-blockquote:border-l-permadi dark:prose-blockquote:border-l-yellow max-w-3xl mx-auto dark:prose-invert prose-img:rounded prose-img:ring-1 prose-img:ring-permadi-800 prose-img:mx-auto"
                 v-html="resolvedRichText"
               />
             </UCard>
