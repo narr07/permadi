@@ -30,7 +30,6 @@
     ogDescription: () => description,
     twitterTitle: () => title,
     twitterDescription: () => description,
-    ogType: () => "article",
     themeColor: "#023230",
   });
   defineOgImage({

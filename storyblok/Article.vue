@@ -70,7 +70,7 @@
       <!-- End Blog Article -->
       <!-- Sticky Share Group -->
       <div class="sticky bottom-2 inset-x-0 text-center">
-        <UCard class="inline-block bg-gray-100 dark:bg-gray-900 dark:ring-gray-800 ring-1 ring-gray-800  ">
+        <UCard class="inline-block bg-gray-100 dark:bg-gray-900 dark:ring-gray-800 ring-1 ring-gray-800 px-0 py-0  ">
           <div class="flex items-center gap-x-1.5">
             <UTooltip
               :text="$i18n.locale === 'en' ? 'TOC' : 'Daftar Isi'"

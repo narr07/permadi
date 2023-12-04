@@ -3,16 +3,16 @@
     <h1
       data-aos="zoom-in"
       data-aos-duration="300"
-      class="text-center headline mb-4">
-      All Artcle
+      class="text-center text-g2 md:text-g3 headline mb-4">
+      {{ blok.headline }}
     </h1>
-    <div class="flex w-full justify-center">
+    <div class="flex w-full justify-center pt-2">
       <UButton
       class="ring-1 ring-permadi-800 dark:ring-permadi-600"
         data-aos="zoom-in"
         data-aos-duration="300"
         aria-label="search"
-        label=" Pencarian"
+        :label="$i18n.locale === 'en' ? 'Search' : 'Pencarian'"
         rel="search"
         icon="i-ph-magnifying-glass-duotone"
         @click="isOpen = true" />
@@ -31,7 +31,7 @@
             <UInput
               v-model="query"
               name="query"
-              placeholder="Search..."
+              :placeholder="$i18n.locale === 'en' ? 'Search Content...' : 'Cari Konten...'"
               icon="i-heroicons-magnifying-glass-20-solid"
               :ui="{ icon: { trailing: { pointer: '' } } }">
               <template #trailing>
@@ -120,7 +120,6 @@
       language: locale.value,
       is_startpage: false,
       cv: Date.now(),
-      per_page: 6,
       search_term: query.value,
     });
     const hits = data.stories.filter((story) => {

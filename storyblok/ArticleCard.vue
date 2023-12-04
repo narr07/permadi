@@ -10,17 +10,24 @@
           :alt="article.image.alt"
           class="w-full h-48 rounded object-cover pointer-events-none" />
         <!-- Badge Tanggal -->
-        <UBadge class="dark:bg-permadi-700 mt-2 dark:text-permadi-200">
-          <time>
-            {{
-              new Date(article.date).toLocaleDateString("id-ID", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })
-            }}
-          </time>
-        </UBadge>
+        <div class="flex justify-between items-center">
+          <div>
+            <UBadge class="dark:bg-permadi-700 mt-2 dark:text-permadi-200">
+              <time>
+                {{
+                  new Date(article.date).toLocaleDateString("id-ID", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })
+                }}
+              </time>
+            </UBadge>
+          </div>
+          <div>
+            <UBadge class="dark:bg-permadi-700 mt-2 dark:text-permadi-200"> TAG </UBadge>
+          </div>
+        </div>
         <div class="mt-4">
           <!-- Judul Artikel -->
           <NuxtLink :to="localePath(`/${slug}`)">
