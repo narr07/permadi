@@ -1,5 +1,5 @@
 <template>
-  <div data-aos="zoom-in" data-aos-duration="200">
+  <div class="w-full" data-aos="zoom-in" data-aos-duration="200">
     <UCard class="cardHover p-1 md:p-0">
       <div v-editable="article">
         <!-- Gambar Artikel -->

@@ -82,7 +82,7 @@
       </UModal>
     </div>
     <div
-      class="mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 my-12 place-items-start">
+      class="mx-auto w-full grid  md:grid-cols-2 gap-6 md:gap-12 my-12 place-items-start">
       <ArticleCard
         v-for="article in paginatedArticles"
         :key="article.uuid"

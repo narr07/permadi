@@ -7,7 +7,7 @@
           class="text-g2 md:text-g3">
           {{ blok.headline }}
         </h2></div>
-    <div class="container mx-auto grid md:grid-cols-2 gap-4 my-12 place-items-start">
+    <div class="container mx-auto grid md:grid-cols-3 gap-4 my-12 place-items-start">
       <ArticleCard
           v-for="article in blok.articles"
           :key="article.uuid"
