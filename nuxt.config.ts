@@ -1,7 +1,7 @@
 import { apiPlugin } from "@storyblok/vue";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // ssr: process.env.NUXT_PUBLIC_NODE_ENV === 'production' ? true : false,
+  ssr: process.env.NUXT_PUBLIC_NODE_ENV === 'production' ? true : false,
   // Leave here other things like: css, modules, i18n, nitro
   devtools: { enabled: false },
   modules: [
@@ -80,48 +80,48 @@ export default defineNuxtConfig({
     description: "Personal website of Dinar Permadi Yusup",
     defaultLocale: "id",
   },
-  nitro: {
-    prerender: {
-      crawlLinks: true,
-    },
-  },
-  routeRules: {
-    // revalidated every 60 seconds, in the background
-    // "/**": {
-    //   prerender: true,
-    //   // isr: 60,
-    //   swr: 60 * 10,
-    // },
-    "/": {
-      prerender: true,
-      swr: 60 * 10,
-      // isr: 60,
-    },
-    // "/en/**": {
-    //   prerender: true,
-    //   swr: 60 * 10,
-    //   // isr: 60,
-    // },
-    "/blog/**": {
-      swr: 60 * 10,
-      prerender: true,
-      // isr: 60,
-      // isr: true,
-    },
-    // "/blog/**": { isr: true },
-    "/gallery/**": {
-      swr: 60 * 10,
-      prerender: true,
-      // isr: 60, // isr: true,
-    },
-    // swr: 60 * 10,
-    "/api/**": { cors: true },
-  },
-  // runtimeConfig: {
-  //   public: {
-  //     NODE_ENV: process.env.NODE_ENV
-  //   }
+  // nitro: {
+  //   prerender: {
+  //     crawlLinks: true,
+  //   },
   // },
+  // routeRules: {
+  //   // revalidated every 60 seconds, in the background
+  //   // "/**": {
+  //   //   prerender: true,
+  //   //   // isr: 60,
+  //   //   swr: 60 * 10,
+  //   // },
+  //   "/": {
+  //     prerender: true,
+  //     swr: 60 * 10,
+  //     // isr: 60,
+  //   },
+  //   // "/en/**": {
+  //   //   prerender: true,
+  //   //   swr: 60 * 10,
+  //   //   // isr: 60,
+  //   // },
+  //   "/blog/**": {
+  //     swr: 60 * 10,
+  //     prerender: true,
+  //     // isr: 60,
+  //     // isr: true,
+  //   },
+  //   // "/blog/**": { isr: true },
+  //   "/gallery/**": {
+  //     swr: 60 * 10,
+  //     prerender: true,
+  //     // isr: 60, // isr: true,
+  //   },
+  //   // swr: 60 * 10,
+  //   "/api/**": { cors: true },
+  // },
+  runtimeConfig: {
+    public: {
+      NODE_ENV: process.env.NODE_ENV
+    }
+  },
   pwa: {
     registerType: "autoUpdate",
     manifest: {
