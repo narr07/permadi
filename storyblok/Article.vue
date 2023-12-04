@@ -28,45 +28,6 @@
           <!-- End Content -->
         </div>
       </div>
-      <div class="flex p-1 items-center gap-x-1.5">
-        <ShareNetwork
-          network="linkedin"
-          :url="`${siteUrl}${slug.join('/')}`"
-          :title="blok.title"
-          :description="blok.description">
-          <UButton icon="i-ph-linkedin-logo-duotone"> </UButton>
-        </ShareNetwork>
-        <ShareNetwork
-          network="telegram"
-          :url="`${siteUrl}${slug.join('/')}`"
-          :title="blok.title"
-          :description="blok.description">
-          <UButton icon="i-ph-telegram-logo-duotone"> </UButton>
-        </ShareNetwork>
-        <ShareNetwork
-          network="twitter"
-          :url="`${siteUrl}${slug.join('/')}`"
-          :title="blok.title"
-          :description="blok.description"
-          twitter-user="dinarpermadi07"
-          hashtags="narr07">
-          <UButton icon="i-ph-twitter-logo-duotone"> </UButton>
-        </ShareNetwork>
-        <ShareNetwork
-          network="facebook"
-          :url="`${siteUrl}${slug.join('/')}`"
-          :title="blok.title"
-          :description="blok.description"
-          hashtags="narr07">
-          <UButton icon="i-ph-facebook-logo-duotone"> </UButton>
-        </ShareNetwork>
-        <ShareNetwork
-          network="whatsapp"
-          :url="`${siteUrl}${slug.join('/')}`"
-          :title="blok.title">
-          <UButton square icon="i-ph-whatsapp-logo-duotone"> </UButton>
-        </ShareNetwork>
-      </div>
       <!-- End Blog Article -->
       <!-- Sticky Share Group -->
       <div class="sticky bottom-2 inset-x-0 text-center">
