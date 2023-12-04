@@ -39,7 +39,7 @@ export default defineAppConfig({
       },
     },
     accordion: {
-      wrapper: "w-full flex flex-col ",
+      wrapper: "w-full flex flex-col space-y-2",
       item: {
         base: "",
         size: "text-sm",
