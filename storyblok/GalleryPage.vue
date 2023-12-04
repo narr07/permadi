@@ -12,7 +12,7 @@
     </div>
     <!-- End Title -->
     <!-- Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 ">
       <StoryblokComponent
         v-for="blok in blok.body"
         :key="blok._uid"

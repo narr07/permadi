@@ -80,8 +80,8 @@ export default <Partial<Config>>{
         },
       },
       fontFamily: {
-        title: ["Bricolage Grotesque", "sans-serif"],
-        body: ["Hanken Grotesk", "sans-serif"],
+        title: ["Rubik", "sans-serif"],
+        body: ["Schibsted Grotesk", "sans-serif"],
       },
       typography: ({ theme }: { theme: any }) => ({
         DEFAULT: {

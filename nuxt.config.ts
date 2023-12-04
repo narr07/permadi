@@ -1,20 +1,20 @@
-import { apiPlugin } from "@storyblok/vue";
+// import { apiPlugin } from "@storyblok/vue";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: process.env.NUXT_PUBLIC_NODE_ENV === "production" ? true : false,
+  // ssr: process.env.NUXT_PUBLIC_NODE_ENV === "production" ? true : false,
   // Leave here other things like: css, modules, i18n, nitro
-  runtimeConfig: {
-    public: {
-      NODE_ENV: process.env.NODE_ENV,
-    },
-  },
+  // runtimeConfig: {
+  //   public: {
+  //     NODE_ENV: process.env.NODE_ENV,
+  //   },
+  // },
   devtools: { enabled: false },
   modules: [
     [
       "@storyblok/nuxt",
       {
         accessToken: process.env.STORYBLOK_ACCESS_TOKEN,
-        use: [apiPlugin],
+        // use: [apiPlugin],
       },
     ],
     "@nuxt/ui",
@@ -52,32 +52,35 @@ export default defineNuxtConfig({
   colorMode: {
     preference: "light",
   },
+  fontMetrics: {
+    fonts: [
+      {
+        family: "Rubik",
+        fallbacks: ["Rubik"],
+        fallbackName: "Rubik",
+      },
+      {
+        family: "Schibsted Grotesk",
+        fallbacks: ["Schibsted Grotesk"],
+        fallbackName: "Schibsted Grotesk",
+      },
+    ],
+  },
   googleFonts: {
     display: "swap",
     prefetch: true,
     preconnect: true,
     preload: true,
     families: {
-      "Bricolage Grotesque": "200..800",
-      "Hanken Grotesk": {
-        wght: "100..900",
-        ital: "100..900",
+      Rubik: {
+        wght: [300, 400, 500, 600, 700, 800, 900],
+        ital: [300, 400, 500, 600, 700, 800, 900],
+      },
+      "Schibsted Grotesk": {
+        wght: [400, 500, 600, 700, 800, 900],
+        ital: [400, 500, 600, 700, 800, 900],
       },
     },
-  },
-  fontMetrics: {
-    fonts: [
-      {
-        family: "Bricolage Grotesque",
-        fallbacks: ["Bricolage Grotesque"],
-        fallbackName: "Bricolage Grotesque",
-      },
-      {
-        family: "Hanken Grotesk",
-        fallbacks: ["Hanken Grotesk"],
-        fallbackName: "Hanken Grotesk",
-      },
-    ],
   },
   site: {
     url: process.env.NUXT_SITE_URL || "https://localhost:3000/",
@@ -97,10 +100,10 @@ export default defineNuxtConfig({
     //   // isr: 60,
     //   swr: 60 * 10,
     // },
-    "/": {
+    "/**": {
       prerender: true,
-      // swr: 60 * 10,
-      isr: 60,
+      swr: 60 * 5,
+      // isr: 60,
     },
     // "/en/**": {
     //   prerender: true,
