@@ -80,21 +80,43 @@ export default defineNuxtConfig({
     description: "Personal website of Dinar Permadi Yusup",
     defaultLocale: "id",
   },
-  // nitro: {
-  //   prerender: {
-  //     crawlLinks: true,
-  //   },
-  // },
-  // routeRules: {
-  //   "/":{ swr: 60 * 10},
-  //   "/gallery":{ swr: 60 * 10},
-  //   "/blog/**": {
-  //     swr: 60 * 10,
-  //     prerender: true,
-  //     // isr: 60,
-  //     // isr: true,
-  //   },
-  // },
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+    },
+  },
+  routeRules: {
+    // revalidated every 60 seconds, in the background
+    // "/**": {
+    //   prerender: true,
+    //   // isr: 60,
+    //   swr: 60 * 10,
+    // },
+    "/": {
+      prerender: true,
+      swr: 60 * 10,
+      // isr: 60,
+    },
+    // "/en/**": {
+    //   prerender: true,
+    //   swr: 60 * 10,
+    //   // isr: 60,
+    // },
+    "/blog/**": {
+      swr: 60 * 10,
+      prerender: true,
+      // isr: 60,
+      // isr: true,
+    },
+    // "/blog/**": { isr: true },
+    "/gallery/**": {
+      swr: 60 * 10,
+      prerender: true,
+      // isr: 60, // isr: true,
+    },
+    // swr: 60 * 10,
+    "/api/**": { cors: true },
+  },
   // runtimeConfig: {
   //   public: {
   //     NODE_ENV: process.env.NODE_ENV
