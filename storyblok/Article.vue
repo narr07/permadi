@@ -44,8 +44,8 @@ const headings = computed(() => {
     section => section.type === 'heading' && section.attrs.level === 2,
   )
   return headings.map((heading) => {
-    const id = generateId(heading.content.text)
-    const text = heading.content.text || ''
+    const id = generateId(heading.content[0]?.text)
+    const text = heading.content[0]?.text || ''
     return {
       id,
       text,
@@ -83,7 +83,6 @@ function scrollTop() {
       <div class="max-w-3xl px-4 md:px-14">
         <UBreadcrumb divider="/" :links="links" />
       </div>
-      <pre>{{ categoryItem }}</pre>
       <div class="max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
         <div class="max-w-2xl">
           <div class="space-y-5 md:space-y-8">
