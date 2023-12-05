@@ -69,7 +69,7 @@ const isOpen = ref(false)
       <template #footer>
         <div class="flex justify-between items-center">
           <UTooltip :popper="{ arrow: true }" text="Tools">
-            <Icon :name="blok.tools.icon" size="32" />
+            <Icon :name="blok.tools" size="32" />
           </UTooltip>
           <div class="flex justify-end">
             <div class="flex items-center justify-end">

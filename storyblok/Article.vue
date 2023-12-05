@@ -60,17 +60,6 @@ const categoryItem = computed(() => {
     },
   ])
 })
-const links = [{
-  icon: 'i-ph-house-duotone',
-  to: '/',
-}, {
-  to: '/blog',
-  active: true,
-  icon: 'i-ph-notebook-duotone',
-  activeClass: 'text-permadi-500',
-}, {
-  label: props.blok.title,
-}]
 function scrollTop() {
   window.scrollTo(0, 0)
 }
@@ -80,9 +69,6 @@ function scrollTop() {
   <div class="py-16">
     <UContainer v-editable="blok" class="px-0">
       <!-- Blog Article -->
-      <div class="max-w-3xl px-4 md:px-14">
-        <UBreadcrumb divider="/" :links="links" />
-      </div>
       <div class="max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
         <div class="max-w-2xl">
           <div class="space-y-5 md:space-y-8">
