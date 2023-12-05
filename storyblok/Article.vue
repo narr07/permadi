@@ -1,11 +1,24 @@
 <script setup>
 const props = defineProps({ blok: Object })
 const { slug } = useRoute().params
+function generateId(text) {
+  return `${text.toLowerCase().replace(/\s+/g, '-')}`
+}
+const resolvedRichText = computed(() => {
+  const richText = renderRichText(props.blok.content)
+  const modifiedRichText = richText.replace(/<h2(.*?)>(.*?)<\/h2>/g, (match, p1, p2) => {
+    const id = generateId(p2)
+    return `<h2${p1}><span id="${id}">${p2}</span></h2>`
+  })
+  return modifiedRichText
+})
+// const resolvedRichText = computed(() => {
+//   return renderRichText(props.blok.content)
+// })
 // const resolvedRichText = computed(() => {
 //   return renderRichText(props.blok.content, { schema: mySchema });
 // });
 const siteUrl = 'https://permadi.dev/'
-const resolvedRichText = computed(() => renderRichText(props.blok.content))
 const title = props.blok.title
 const description = props.blok.description
 useServerSeoMeta({
@@ -31,9 +44,11 @@ const headings = computed(() => {
     section => section.type === 'heading' && section.attrs.level === 2,
   )
   return headings.map((heading) => {
+    const id = generateId(heading.content[0]?.text)
+    const text = heading.content[0]?.text || ''
     return {
-      id: heading.content[0]?.marks[0]?.attrs?.id ?? '#',
-      text: heading.content[0].text,
+      id,
+      text,
     }
   })
 })
@@ -68,6 +83,7 @@ function scrollTop() {
       <div class="max-w-3xl px-4 md:px-14">
         <UBreadcrumb divider="/" :links="links" />
       </div>
+      <pre>{{ categoryItem }}</pre>
       <div class="max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
         <div class="max-w-2xl">
           <div class="space-y-5 md:space-y-8">
@@ -224,7 +240,7 @@ function scrollTop() {
     <div>
       <!-- Button -->
       <UTooltip
-        :text="$i18n.locale === 'en' ? 'To Top o' : 'Ke Atas'"
+        :text="$i18n.locale === 'en' ? 'To Top' : 'Ke Atas'"
         :popper="{ placement: 'top' }"
       >
         <UButton
