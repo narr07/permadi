@@ -31,11 +31,12 @@ const localePath = useLocalePath()
               </time>
             </UBadge>
           </div>
-          <div>
+          <!-- <div>
             <UBadge class="dark:bg-permadi-700 mt-2 dark:text-permadi-200">
-              TAG
+              <span v-for="tag in article.tag" :key="tag">
+                {{ tag.tag }} </span>
             </UBadge>
-          </div>
+          </div> -->
         </div>
         <div class="mt-4">
           <!-- Judul Artikel -->
