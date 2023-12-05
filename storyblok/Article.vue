@@ -44,8 +44,8 @@ const headings = computed(() => {
     section => section.type === 'heading' && section.attrs.level === 2,
   )
   return headings.map((heading) => {
-    const id = generateId(heading.content[0]?.text)
-    const text = heading.content[0]?.text || ''
+    const id = generateId(heading.content.text)
+    const text = heading.content.text || ''
     return {
       id,
       text,
