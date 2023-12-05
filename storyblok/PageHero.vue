@@ -4,10 +4,11 @@ const props = defineProps({ blok: Object })
 </script>
 
 <template>
-  <UContainer v-editable="blok">
+  <UContainer>
     <header class="flex items-center h-screen overflow-hidden">
       <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-10">
         <h1
+          v-editable="blok"
           data-aos="zoom-in"
           data-aos-duration="300"
           class="text-g2 md:text-g3 text-center dark:text-permadi-200"
@@ -19,6 +20,7 @@ const props = defineProps({ blok: Object })
           {{ blok.headline }}
         </h1>
         <p
+          v-editable="blok"
           data-aos="zoom-in"
           data-aos-duration="300"
           data-aos-delay="100"

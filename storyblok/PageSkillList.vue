@@ -16,7 +16,7 @@ defineProps({ blok: Object })
     <div class="flex justify-between items-center">
       <div class="flex flow-row items-center">
         <Icon :name="blok.icon.icon" size="44" />
-        <h3 class="ml-2 font-semibold">
+        <h3 v-editable="blok" class="ml-2 font-semibold">
           {{ blok.label }}
         </h3>
       </div>

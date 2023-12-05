@@ -4,7 +4,7 @@ const { slug } = useRoute().params
 // const resolvedRichText = computed(() => {
 //   return renderRichText(props.blok.content, { schema: mySchema });
 // });
-const siteUrl = import.meta.env.VITE_SITE_URL || 'https://permadi.dev/'
+const siteUrl = 'https://permadi.dev/'
 const resolvedRichText = computed(() => renderRichText(props.blok.content))
 const title = props.blok.title
 const description = props.blok.description
@@ -45,12 +45,29 @@ const categoryItem = computed(() => {
     },
   ])
 })
+const links = [{
+  icon: 'i-ph-house-duotone',
+  to: '/',
+}, {
+  to: '/blog',
+  active: true,
+  icon: 'i-ph-notebook-duotone',
+  activeClass: 'text-permadi-500',
+}, {
+  label: props.blok.title,
+}]
+function scrollTop() {
+  window.scrollTo(0, 0)
+}
 </script>
 
 <template>
   <div class="py-16">
     <UContainer v-editable="blok" class="px-0">
       <!-- Blog Article -->
+      <div class="max-w-3xl px-4 md:px-14">
+        <UBreadcrumb divider="/" :links="links" />
+      </div>
       <div class="max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
         <div class="max-w-2xl">
           <div class="space-y-5 md:space-y-8">
@@ -66,6 +83,22 @@ const categoryItem = computed(() => {
                 width="500"
                 class="w-full h-[250px] lg:h-[350px] rounded ring-1 ring-permadi-800 object-cover"
               />
+              <UBadge class="dark:bg-permadi-700 mt-2 dark:text-permadi-200">
+                <time>
+                  {{
+                    new Date(blok.date).toLocaleDateString("id-ID", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })
+                  }}
+                </time>
+              </UBadge>
+              <div>
+                <UBadge class="dark:bg-permadi-700 mt-2 dark:text-permadi-200">
+                  TAG
+                </UBadge>
+              </div>
               <h1 class="text-g2 md:text-g3 border-permadi-800 my-2">
                 {{ blok.title }}
               </h1>
@@ -84,14 +117,20 @@ const categoryItem = computed(() => {
       <!-- End Blog Article -->
       <!-- Sticky Share Group -->
       <div class="sticky bottom-2 inset-x-0 text-center">
-        <UCard class="inline-block bg-gray-100 dark:bg-gray-900 dark:ring-gray-800 ring-1 ring-gray-800 px-0 py-0  ">
+        <UCard
+          :ui="{
+            body: {
+              padding: 'px-2 py-1.5 sm:px-2 sm:py-1.5 ',
+            },
+          }" class="inline-block bg-gray-100 dark:bg-gray-900 dark:ring-gray-800 ring-1 ring-gray-800 px-0 py-0  "
+        >
           <div class="flex items-center gap-x-1.5">
             <UTooltip
               :text="$i18n.locale === 'en' ? 'TOC' : 'Daftar Isi'"
               :popper="{ placement: 'left' }"
             >
               <UDropdown
-                :popper="{ arrow: true }"
+                :popper="{ arrow: true, placement: 'top-start' }"
                 :ui="{
                   width: 'w-80',
                 }"
@@ -109,7 +148,7 @@ const categoryItem = computed(() => {
             <UTooltip text="Share" :popper="{ placement: 'top' }">
               <UPopover
                 class="flex items-center gap-x-1.5"
-                :popper="{ arrow: true }"
+                :popper="{ arrow: true, placement: 'top-start' }"
               >
                 <UButton
                   variant="solid"
@@ -182,5 +221,24 @@ const categoryItem = computed(() => {
       </div>
       <!-- End Sticky Share Group -->
     </UContainer>
+    <div>
+      <!-- Button -->
+      <UTooltip
+        :text="$i18n.locale === 'en' ? 'To Top o' : 'Ke Atas'"
+        :popper="{ placement: 'top' }"
+      >
+        <UButton
+          variant="solid"
+          color="gray"
+          square=""
+          icon="i-ph-arrow-up-duotone"
+          class="fixed bottom-2 right-4 z-10"
+          @click="scrollTop"
+        />
+      </UTooltip>
+    <!-- End Button -->
+    <!-- Rest of the code -->
+    <!-- ... -->
+    </div>
   </div>
 </template>

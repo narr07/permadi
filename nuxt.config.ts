@@ -89,7 +89,7 @@ export default defineNuxtConfig({
   site: {
     url: process.env.NUXT_SITE_URL || 'https://localhost:3000/',
     name: 'Dinar Permadi Yusup',
-    description: 'Personal website of Dinar Permadi Yusup',
+    description: 'Personal Website  Dinar Permadi Yusup - Teacher Designer Programmer',
     defaultLocale: 'id',
   },
   nitro: {
@@ -99,12 +99,10 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/': {
-      prerender: true,
-      isr: 60 * 60,
+      isr: 60,
     },
     '/en': {
-      prerender: true,
-      isr: 60 * 60,
+      isr: 60,
     },
     '/blog/**': {
       isr: 60,

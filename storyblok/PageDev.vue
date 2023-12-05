@@ -1,10 +1,11 @@
+<!-- eslint-disable unused-imports/no-unused-vars -->
 <script setup>
 defineProps({ blok: Object })
 const items = ref()
 </script>
 
 <template>
-  <UContainer v-editable="blok" class="mx-auto h-full grid grid-cols-1 gap-6 md:grid-cols-2">
+  <UContainer class="mx-auto h-full grid grid-cols-1 gap-6 md:grid-cols-2">
     <UCard class="cardHover" data-aos="zoom-in" data-aos-duration="300">
       <div>
         <Swiper
@@ -49,7 +50,7 @@ const items = ref()
           class="cardHover"
         >
           <div class=" p-2 items-center gap-4 md:gap-8">
-            <div class="flex flex-col justify-center pb-4 md:pb-0 w-full">
+            <div v-editable="blok" class="flex flex-col justify-center pb-4 md:pb-0 w-full">
               <h2>
                 {{ item.label }}
               </h2>

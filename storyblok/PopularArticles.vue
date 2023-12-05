@@ -14,7 +14,7 @@ defineProps({ blok: Object })
       </h2>
     </div>
     <div class="container mx-auto grid md:grid-cols-3 gap-4 my-12 place-items-start">
-      <ArticleCard
+      <ArticlePopularCard
         v-for="article in blok.articles"
         :key="article.uuid"
         :article="article.content"

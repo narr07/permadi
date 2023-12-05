@@ -8,14 +8,6 @@ const localePath = useLocalePath()
     <UCard class="cardHover p-1 h-full md:p-0">
       <div v-editable="article">
         <!-- Gambar Artikel -->
-        <NuxtImg
-          :src="`${article.image.filename}/m/600x0`"
-          height="200"
-          loading="lazy"
-          width="500"
-          :alt="article.image.alt"
-          class="w-full h-48 ring-1 ring-permadi-800 rounded object-cover pointer-events-none"
-        />
         <!-- Badge Tanggal -->
         <div class="flex justify-between items-center h-full">
           <div>
