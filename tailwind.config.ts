@@ -1,6 +1,5 @@
 import type { Config } from 'tailwindcss'
-
-const plugin = require('tailwindcss/plugin')
+import plugin from 'tailwindcss/plugin'
 
 export default <Partial<Config>>{
   theme: {
@@ -134,7 +133,6 @@ export default <Partial<Config>>{
     require('@tailwindcss/typography'),
     plugin(({
       addComponents,
-      theme,
     }: {
       addComponents: any
       theme: any

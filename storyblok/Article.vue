@@ -32,7 +32,7 @@ const headings = computed(() => {
   )
   return headings.map((heading) => {
     return {
-      id: heading.content[0].marks[0].attrs?.id,
+      id: heading.content[0]?.marks[0]?.attrs?.id ?? '#',
       text: heading.content[0].text,
     }
   })

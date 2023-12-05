@@ -19,9 +19,9 @@ defineProps({ blok: Object })
     <!-- Grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 ">
       <StoryblokComponent
-        v-for="blok in blok.body"
-        :key="blok._uid"
-        :blok="blok"
+        v-for="item in blok.body"
+        :key="item._uid"
+        :blok="item"
       />
     </div>
     <!-- End Grid -->
