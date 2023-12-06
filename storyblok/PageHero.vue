@@ -34,8 +34,7 @@ const props = defineProps({ blok: Object })
             data-aos="zoom-in"
             data-aos-delay="200"
             data-aos-duration="300"
-            to="/cv.pdf"
-            target="_blank"
+            to="/tags"
             class=" ring-1 ring-primary-800"
           >
             <Icon :name="blok.cta_icon.icon" />

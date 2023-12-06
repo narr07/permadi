@@ -1,7 +1,7 @@
 <script setup>
 const { slug } = useRoute().params
 const { locale } = useI18n()
-const resolveRelations = ['popular-articles.articles']
+const resolveRelations = ['popular-articles.articles', 'tags.paginatedArticles']
 const url = slug && slug.length > 0 ? slug.join('/') : 'home'
 const story = await useAsyncStoryblok(
   url.replace(/\/$/, ''),

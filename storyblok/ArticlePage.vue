@@ -6,11 +6,15 @@ const searchResults = ref([])
 const articles = ref(null)
 const { locale } = useI18n()
 const storyblokApi = useStoryblokApi()
+const resolveRelations = ['article.tag']
 const { data } = await storyblokApi.get('cdn/stories', {
   version: 'draft',
   starts_with: 'blog',
   language: locale.value,
   is_startpage: false,
+  resolve_relations: resolveRelations,
+}, {
+  resolveRelations,
 })
 articles.value = data.stories
 async function search() {
@@ -21,6 +25,9 @@ async function search() {
     is_startpage: false,
     cv: Date.now(),
     search_term: query.value,
+    resolve_relations: resolveRelations,
+  }, {
+    resolveRelations,
   })
   const hits = data.stories.filter((story) => {
     // Gabungkan teks dari berbagai bidang konten yang ingin Anda cari
