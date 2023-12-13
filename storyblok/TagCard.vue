@@ -13,9 +13,11 @@ function handleClick() {
       <div v-editable="tag">
         <div class="mt-4">
           <!-- Judul Tag -->
-          <h2 class="text-xl mb-2 line-clamp-2">
-            {{ tag.label }}
-          </h2>
+          <NuxtLink :to="localePath(`/${slug}`)">
+            <h2 class="text-xl mb-2 line-clamp-2">
+              {{ tag.label }}
+            </h2>
+          </NuxtLink>
         </div>
       </div>
     </UCard>

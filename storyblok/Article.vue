@@ -1,6 +1,7 @@
 <script setup>
 const props = defineProps({ blok: Object })
 const { slug } = useRoute().params
+// const localePath = useLocalePath()
 function generateId(text) {
   return `${text.toLowerCase().replace(/\s+/g, '-')}`
 }
@@ -95,11 +96,14 @@ function scrollTop() {
                   }}
                 </time>
               </UBadge>
-              <div>
-                <UBadge class="dark:bg-permadi-700 mt-2 dark:text-permadi-200">
-                  TAG
+              <!-- <div>
+                <UBadge v-for="(tag, index) in blok.tag" :key="index" class="dark:bg-permadi-700 mt-2 dark:text-permadi-200">
+                  <ULink :to="localePath(`/tags/${tag.slug}`)">
+                    {{ tag }}
+                  </ULink>
                 </UBadge>
-              </div>
+              </div> -->
+
               <h1 class="text-g2 md:text-g3 border-permadi-800 my-2">
                 {{ blok.title }}
               </h1>
