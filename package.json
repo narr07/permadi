@@ -22,6 +22,7 @@
     "@nuxtjs/web-vitals": "^0.2.6",
     "@storyblok/nuxt": "^5.7.9",
     "@vercel/analytics": "^1.1.1",
+    "@vercel/speed-insights": "^1.0.1",
     "@vueuse/nuxt": "^10.6.1",
     "aos": "^2.3.4",
     "nuxt-icon": "^0.6.6",
