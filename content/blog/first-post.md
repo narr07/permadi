@@ -1,3 +1,8 @@
+---
+title: Test
+description: okok
+---
+
 # My first blog post
 
     Welcome to my first blog post using \[content v2 module\](https://content.nuxtjs.org/)
