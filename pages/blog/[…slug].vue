@@ -16,8 +16,8 @@ const { data } = await useAsyncData(`content-${path}`, async () => {
 })
 
 // destrucure `prev` and `next` value from data
-const surround = data.value?.surround || []
-const [prev, next] = surround
+// const surround = data.value?.surround || []
+// const [prev, next] = surround
 </script>
 
 <template>
