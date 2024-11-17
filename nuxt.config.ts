@@ -8,6 +8,10 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
   ],
 
+  content: {
+    documentDriven: true,
+  },
+
   routeRules: {
     '/': { prerender: true },
   },

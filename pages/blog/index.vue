@@ -6,11 +6,11 @@ definePageMeta({
 })
 
 // get tag query
-const {
-  query: { tags },
-} = useRoute()
+// const {
+//   query: { tags },
+// } = useRoute()
 
-const filter = ref(tags?.split(','))
+// const filter = ref(tags?.split(','))
 
 // set meta for page
 useHead({
@@ -62,11 +62,11 @@ useHead({
                       {{ article.title }}
                     </h1>
                     <p>{{ article.description }}</p>
-                    <ul class="article-tags">
+                    <!-- <ul class="article-tags">
                       <li v-for="(tag, n) in article.tags" :key="n" class="tag !py-0.5">
                         {{ tag }}
                       </li>
-                    </ul>
+                    </ul> -->
                   </header>
                 </div>
               </NuxtLink>
