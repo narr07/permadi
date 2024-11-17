@@ -32,7 +32,7 @@ useHead({
       </div>
     </header>
     <section class="page-section">
-      <Tags />
+      <!-- <Tags /> -->
 
       <!-- Render list of all articles in ./content/blog using `path` -->
       <!-- Provide only defined fieldsin the `:query` prop -->
@@ -54,9 +54,9 @@ useHead({
             <li v-for="article in list" :key="article._path" class="article-item">
               <NuxtLink :to="article._path">
                 <div class="wrapper">
-                  <div class="img-cont w-32 shrink-0">
+                  <!-- <div class="img-cont w-32 shrink-0">
                     <img :src="`/${article.img}`" :alt="article.title" class="rounded-lg max-h-[8rem]">
-                  </div>
+                  </div> -->
                   <header>
                     <h1 class="text-2xl font-semibold">
                       {{ article.title }}
