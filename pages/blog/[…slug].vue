@@ -24,20 +24,20 @@ console.log({ data, prev, next })
 <template>
   <main id="main" class="article-main">
     <header v-if="data?.article" class="article-header">
-      <div class="img-cont h-72 mb-12">
+      <!-- <div class="img-cont h-72 mb-12">
         <img :src="`/${data.article.img}`" :alt="data.article.title" class=" rounded-2xl">
-      </div>
+      </div> -->
       <h1 class="heading">
         {{ data.article.title }}
       </h1>
       <p class="supporting">
         {{ data.article.description }}
       </p>
-      <ul class="article-tags">
+      <!-- <ul class="article-tags">
         <li v-for="(tag, n) in data.article.tags" :key="n" class="tag">
           {{ tag }}
         </li>
-      </ul>
+      </ul> -->
     </header>
     <hr>
     <section class="article-section">
