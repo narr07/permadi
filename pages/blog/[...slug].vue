@@ -62,37 +62,3 @@ const { data } = await useAsyncData(`content-${path}`, async () => {
     <!-- <PrevNext :prev="prev" :next="next" /> -->
   </main>
 </template>
-
-<style scoped>
-.article-main {
-  @apply p-4 max-w-5xl m-auto;
-}
-
-.article-header {
-  @apply p-4 pb-12;
-}
-
-.article-header .heading {
-  @apply font-extrabold text-5xl;
-}
-
-.article-header .supporting {
-  @apply font-medium text-lg;
-}
-
-.article-section {
-  @apply grid grid-cols-8;
-}
-
-.aside {
-  @apply col-span-full md:col-span-2 row-start-1 w-full pt-14;
-}
-
-.aside .toc {
-  @apply sticky top-20;
-}
-
-.article {
-  @apply col-span-full md:col-span-6 md:col-start-1 md:row-start-1 prose w-full p-4 max-w-3xl m-auto;
-}
-</style>
