@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useScroll } from '@vueuse/core'
+
 // Gunakan useScroll dari VueUse
 const { y } = useScroll(window)
 
