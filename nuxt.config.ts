@@ -12,10 +12,10 @@ export default defineNuxtConfig({
     documentDriven: true,
   },
 
-  // routeRules: {
-  //   '/': { prerender: true },
-  //   '/blog': { prerender: true },
-  // },
+  routeRules: {
+    '/': { prerender: true },
+    '/blog': { prerender: true },
+  },
 
   compatibilityDate: '2024-11-17',
 })
