@@ -6,11 +6,15 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/image',
     '@nuxt/fonts',
-    '@vueuse/nuxt',
   ],
 
   content: {
     documentDriven: true,
+  },
+
+  routeRules: {
+    '/': { prerender: true },
+
   },
 
   compatibilityDate: '2024-11-17',
