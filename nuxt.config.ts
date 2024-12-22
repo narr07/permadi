@@ -19,6 +19,8 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
-
+  routeRules: {
+    '/': { prerender: true }
+  },
   compatibilityDate: '2024-11-27',
 })
