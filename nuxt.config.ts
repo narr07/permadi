@@ -1,12 +1,24 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxt/ui", "@nuxt/eslint", "@vueuse/nuxt"],
+  modules: [
+    '@nuxt/ui',
+    '@nuxt/eslint',
+    '@vueuse/nuxt',
+    '@nuxt/image',
+    '@nuxt/content',
+    '@nuxthub/core',
+  ],
+  eslint: {
+    config: {
+      standalone: false, // <---
+    },
+  },
   css: ['~/assets/css/main.css'],
 
   future: {
-    compatibilityVersion: 4
+    compatibilityVersion: 4,
   },
 
-  compatibilityDate: "2024-11-27"
+  compatibilityDate: '2024-11-27',
 })
