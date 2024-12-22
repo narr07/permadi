@@ -1,7 +1,12 @@
 <template>
   <div>
     <UApp>
-      <NuxtPage />
+      <UContainer>
+        <NuxtRouteAnnouncer />
+        <ColorModeButton />
+        <Acordiono />
+        <NuxtPage />
+      </UContainer>
     </UApp>
   </div>
 </template>

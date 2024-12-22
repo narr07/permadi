@@ -14,13 +14,23 @@ export default defineNuxtConfig({
       standalone: false, // <---
     },
   },
+  content: {
+    studio: {
+      enabled: true,
+      gitInfo: {
+        name: 'permadi',
+        owner: 'narr07',
+        url: 'https://github.com/narr07/permadi',
+      },
+    },
+  },
   css: ['~/assets/css/main.css'],
 
   future: {
     compatibilityVersion: 4,
   },
   routeRules: {
-    '/': { prerender: true }
+    '/': { prerender: true },
   },
   compatibilityDate: '2024-11-27',
 })
