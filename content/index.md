@@ -1,4 +1,10 @@
-# My First Page
+---
+title: Home
+description: Ini Halaman Homoe
+---
+
+::page-hero
+::
 
 Here is some content.
 

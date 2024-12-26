@@ -5,12 +5,16 @@ import withNuxt from './.nuxt/eslint.config.mjs'
 export default withNuxt(
   antfu({
     formatters: true,
-    vue: {
-      overrides: {
-        'style/no-tabs': 'off',
-        'style/no-mixed-spaces-and-tabs': 'off',
-      },
+    vue: true,
+    typescript: true,
+  },
+  {
+    // Remember to specify the file glob here, otherwise it might cause the vue plugin to handle non-vue files
+    files: ['**/*.vue'],
+    rules: {
+      'vue/operator-linebreak': ['error', 'before'],
+      'style/no-tabs': 'off',
+      'style/no-mixed-spaces-and-tabs': 'off',
     },
-
-  }),
+  },),
 )
