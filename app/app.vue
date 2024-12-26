@@ -3,9 +3,10 @@
     <UApp>
       <UContainer>
         <NuxtRouteAnnouncer />
-        <ColorModeButton />
-        <Acordiono />
-        <NuxtPage />
+        <NavBar />
+        <div class="pt-16">
+          <NuxtPage />
+        </div>
       </UContainer>
     </UApp>
   </div>

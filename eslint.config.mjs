@@ -5,6 +5,12 @@ import withNuxt from './.nuxt/eslint.config.mjs'
 export default withNuxt(
   antfu({
     formatters: true,
-    vue: true,
+    vue: {
+      overrides: {
+        'style/no-tabs': 'off',
+        'style/no-mixed-spaces-and-tabs': 'off',
+      },
+    },
+
   }),
 )

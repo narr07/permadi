@@ -8,11 +8,21 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/content',
     '@nuxthub/core',
+    'nuxt-svgo',
   ],
   eslint: {
     config: {
       standalone: false, // <---
     },
+  },
+  fonts: {
+    experimental: {
+      processCSSVariables: true,
+    },
+    families: [
+      { name: 'Display', weights: ['200', '300', '400', '500', '700', '900'], display: 'swap' },
+      { name: 'Narr', weights: ['100', '300', '400', '500', '700', '900'], display: 'swap' },
+    ],
   },
   content: {
     studio: {
