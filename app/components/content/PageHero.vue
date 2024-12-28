@@ -1,4 +1,4 @@
-<script setup>
+<!-- <script setup>
 defineProps({
   title: {
     type: String,
@@ -10,13 +10,13 @@ defineProps({
   },
 
 })
-</script>
+</script> -->
 
 <template>
   <div class="p-6 border text-center bg-white dark:bg-black dark:border-gray-700 rounded">
-    <h2 class="text-8xl font-black mb-2">
-      {{ title }}
+    <h2 v-if="$slots.title" class="text-8xl font-black">
+      <slot name="title" mdc-unwrap="p" />
     </h2>
-    <p>{{ description }}</p>
+    <slot />
   </div>
 </template>

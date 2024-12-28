@@ -1,12 +1,10 @@
 <template>
   <div>
     <UApp>
-      <UContainer>
-        <NuxtRouteAnnouncer />
-        <NavBar />
-        <div class="pt-16">
-          <NuxtPage />
-        </div>
+      <NuxtRouteAnnouncer />
+      <NavBar />
+      <UContainer class="pt-16">
+        <NuxtPage />
       </UContainer>
     </UApp>
   </div>

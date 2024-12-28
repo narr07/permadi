@@ -3,7 +3,11 @@ title: Home
 description: Ini Halaman Home
 ---
 
-::page-hero{description="Guru dan desainer grafis" title="Dinar Permadi Yusup"}
+::page-hero
+#title
+Dinar Permadi Yusup
+#default
+Using MDC & Vue components is addictive.
 ::
 
 Here is some content.
