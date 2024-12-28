@@ -3,11 +3,7 @@ title: Home
 description: Ini Halaman Home
 ---
 
-::page-hero
----
-title: Dinar Permadi Yusup
-description: Guru dan desainer grafis
----
+::page-hero{description="Guru dan desainer grafis" title="Dinar Permadi Yusup"}
 ::
 
 Here is some content.
@@ -49,8 +45,9 @@ print("Hello, World!")
 
 ![Alt text](https://via.placeholder.com/150)
 
-| Header 1 | Header 2 |
+|          |          |
 | -------- | -------- |
+| Header 1 | Header 2 |
 | Cell 1   | Cell 2   |
 | Cell 3   | Cell 4   |
 
@@ -60,5 +57,5 @@ Horizontal Rule:
 
 Task List:
 
-- [x] Task 1
-- [ ] Task 2
+- Task 1
+- Task 2
