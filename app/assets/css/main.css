@@ -19,6 +19,7 @@
   --color-permadi-900: #031e1c;
   --color-permadi-950: #050a09;
 
+  --color-yellow: #f9bc60;
   --color-yellow-50: #ffffff;
   --color-yellow-100: #fffefd;
   --color-yellow-200: #fdeed6;
@@ -56,8 +57,15 @@
   --color-red-950: #3a0b0b;
 }
 
+.dark ::selection {
+  @apply bg-blue-600 text-blue-50 ;
+}
+::selection {
+  @apply bg-blue-900 text-blue-400 ;
+}
+
 body {
-  @apply bg-permadi-50 dark:bg-permadi-900 font-marr;
+  @apply bg-permadi-50 dark:bg-permadi-900 font-marr ;
 }
 h1,
 h2,
@@ -65,5 +73,5 @@ h3,
 h4,
 h5,
 h6 {
-  @apply font-sans font-black;
+  @apply font-sans font-black dark:text-yellow text-permadi-800;
 }

@@ -1,9 +1,13 @@
 ---
 title: Home
-description: Ini Halaman Homoe
+description: Ini Halaman Home
 ---
 
 ::page-hero
+---
+title: Dinar Permadi Yusup
+description: Guru dan desainer grafis
+---
 ::
 
 Here is some content.

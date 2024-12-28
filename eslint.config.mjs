@@ -4,11 +4,12 @@ import withNuxt from './.nuxt/eslint.config.mjs'
 
 export default withNuxt(
   antfu({
-    formatters: true,
+    formatters: {
+      markdown: false,
+    },
     vue: true,
     typescript: true,
-  },
-  {
+  }, {
     // Remember to specify the file glob here, otherwise it might cause the vue plugin to handle non-vue files
     files: ['**/*.vue'],
     rules: {
@@ -16,5 +17,5 @@ export default withNuxt(
       'style/no-tabs': 'off',
       'style/no-mixed-spaces-and-tabs': 'off',
     },
-  },),
+  }),
 )
