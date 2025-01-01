@@ -14,7 +14,9 @@
           </div>
           <div class="flex md:space-x-2">
             <div>
-              TES
+              <ULink aria-label="Home" to="/blog">
+                BLog
+              </ULink>
             </div>
           </div>
           <ColorModeButton />
