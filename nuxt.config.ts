@@ -10,12 +10,7 @@ export default defineNuxtConfig({
     '@nuxthub/core',
     'nuxt-svgo',
   ],
-  content: {
-    database: {
-      type: 'd1',
-      binding: 'permadi',
-    },
-  },
+
   hub: {
     database: true,
   },
@@ -34,6 +29,10 @@ export default defineNuxtConfig({
     ],
   },
   content: {
+    database: {
+      type: 'd1',
+      binding: 'permadi',
+    },
     studio: {
       enabled: true,
       gitInfo: {
