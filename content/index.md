@@ -7,7 +7,7 @@ description: Ini Halaman Home
 #title
 Dinar Permadi Yusup
 #default
-Using MDC & Vue components is addictive.
+Menggabungkan kreativitas desain, keahlian pemrograman, dan dedikasi dalam pendidikan untuk menciptakan solusi inovatif dan inspiratif.
 ::
 
 Here is some content.

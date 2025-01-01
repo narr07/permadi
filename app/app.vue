@@ -3,9 +3,9 @@
     <UApp>
       <NuxtRouteAnnouncer />
       <NavBar />
-      <UContainer class="pt-16">
+      <div class="pt-[70px]">
         <NuxtPage />
-      </UContainer>
+      </div>
     </UApp>
   </div>
 </template>
