@@ -26,7 +26,7 @@ const items = [
         </div>
       </UCarousel>
     </UCard>
-    <UCard class="flex flex-col justify-center items-center text-center">
+    <UCard class="flex flex-col py-6 justify-center items-center text-center">
       <h2 v-if="$slots.title" class="pb-4 font-black text-5xl">
         <slot name="title" mdc-unwrap="p" />
       </h2>
@@ -34,14 +34,3 @@ const items = [
     </UCard>
   </UContainer>
 </template>
-
-<style scoped>
-.UContainer {
-  display: flex;
-}
-.UCard {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-</style>
