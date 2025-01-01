@@ -10,6 +10,9 @@ export default defineNuxtConfig({
     '@nuxthub/core',
     'nuxt-svgo',
   ],
+  hub: {
+    database: true,
+  },
   eslint: {
     config: {
       standalone: false, // <---
