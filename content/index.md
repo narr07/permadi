@@ -7,7 +7,10 @@ description: Ini Halaman Home
 #title
 Dinar Permadi Yusup
 #default
-Menggabungkan kreativitas desain, keahlian pemrograman, dan dedikasi dalam pendidikan untuk menciptakan solusi inovatif dan inspiratif.
+Menggabungkan kreativitas desain, keahlian pemrograman, dan dedikasi dalam pendidikan.
+::
+
+::page-skill
 ::
 
 Here is some content.
