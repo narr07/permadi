@@ -10,6 +10,12 @@ export default defineNuxtConfig({
     '@nuxthub/core',
     'nuxt-svgo',
   ],
+  content: {
+    database: {
+      type: 'd1',
+      binding: 'permadi',
+    },
+  },
   hub: {
     database: true,
   },
