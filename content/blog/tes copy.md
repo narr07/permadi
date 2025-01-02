@@ -30,6 +30,19 @@ npx nuxi@latest module add nuxt-seo-utils
 
 Documentation
 📖 Read the full documentation for more information.
+Follow the Migrate Runtime Config doc.
 
-Demos
-Basic
+The env key in nuxt.config.ts is no longer supported, you should use runtime config exclusively.
+
+// Nuxt 2
+```export default {
+  privateRuntimeConfig: {
+    apiKey: process.env.NUXT_API_KEY || 'super-secret-key'
+  },
+  publicRuntimeConfig: {
+    websiteURL: 'https://public-data.com'
+  },
+  env: {
+    NUXT_API_KEY: process.env.NUXT_API_KEY
+  }
+}```

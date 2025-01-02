@@ -15,7 +15,7 @@ const { data: page } = await useAsyncData(route.path, () => {
       </div>
     </UCard>
     <UCard>
-      <div class="prose dark:prose-dark">
+      <div class="prose dark:prose-invert prose-base  drop max-w-6xl mx-auto prose-permadi">
         <ContentRenderer v-if="page" :value="page" />
       </div>
     </UCard>

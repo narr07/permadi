@@ -3,6 +3,8 @@
 
 @plugin "@tailwindcss/typography";
 
+@config "../../tailwind.config.ts";
+
 @theme {
   --font-sans: 'Display', sans-serif;
   --font-marr: 'Marr', sans-serif;
@@ -18,45 +20,6 @@
   --color-permadi-800: #023230;
   --color-permadi-900: #031e1c;
   --color-permadi-950: #050a09;
-
-  --color-yellow: #f9bc60;
-  --color-yellow-50: #ffffff;
-  --color-yellow-100: #fffefd;
-  --color-yellow-200: #fdeed6;
-  --color-yellow-300: #fcddaf;
-  --color-yellow-400: #facd87;
-  --color-yellow-500: #f9bc60;
-  --color-yellow-600: #f7a52a;
-  --color-yellow-700: #e08a08;
-  --color-yellow-800: #aa6906;
-  --color-yellow-900: #744804;
-  --color-yellow-950: #593703;
-
-  --color-blue-50: #f2f9ff;
-  --color-blue-100: #def0fe;
-  --color-blue-200: #b6defe;
-  --color-blue-300: #8dcdfd;
-  --color-blue-400: #65bbfd;
-  --color-blue-500: #3da9fc;
-  --color-blue-600: #0691fb;
-  --color-blue-700: #0371c6;
-  --color-blue-800: #02528e;
-  --color-blue-900: #013257;
-  --color-blue-950: #01223c;
-
-  --color-red-50: #fefbfb;
-  --color-red-100: #fbeaea;
-  --color-red-200: #f5c8c8;
-  --color-red-300: #eea6a6;
-  --color-red-400: #e88384;
-  --color-red-500: #e16162;
-  --color-red-600: #d83233;
-  --color-red-700: #b02123;
-  --color-red-800: #811919;
-  --color-red-900: #521010;
-  --color-red-950: #3a0b0b;
-
-
 }
 
 
@@ -68,7 +31,7 @@
 }
 
 body {
-  @apply bg-permadi-50 dark:text-permadi-200 dark:bg-permadi-950 tracking-wide font-sans text-[18px]  ;
+  @apply bg-permadi-50 dark:text-permadi-200 text-permadi-950 dark:bg-permadi-950 tracking-wide font-marr text-[18px]  ;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='100%25' width='100%25'%3E%3Cdefs%3E%3Cpattern id='doodad-light' width='10' height='10' viewBox='0 0 40 40' patternUnits='userSpaceOnUse' patternTransform='rotate(45)'%3E%3Crect width='100%25' height='100%25' fill='rgba(247, 250, 252,0)'/%3E%3Ccircle cx='20' cy='20' r='4' fill='%23f8f9fc'/%3E%3Cpath d='M19.8 20a 0.2 0.2 0 0 0 0.4 0a 0.2 0.2 0 0 0-0.4 0M19.6 20a 0.4 0.4 0 0 0 0.8 0a 0.4 0.4 0 0 0-0.8 0M19.4 20a 0.6 0.6 0 0 0 1.2 0a 0.6 0.6 0 0 0-1.2 0M19.2 20a 0.8 0.8 0 0 0 1.6 0a 0.8 0.8 0 0 0-1.6 0M19 20a 1 1 0 0 0 2 0a 1 1 0 0 0-2 0M18.8 20a 1.2 1.2 0 0 0 2.4 0a 1.2 1.2 0 0 0-2.4 0M18.6 20a 1.4 1.4 0 0 0 2.8 0a 1.4 1.4 0 0 0-2.8 0M18.4 20a 1.6 1.6 0 0 0 3.2 0a 1.6 1.6 0 0 0-3.2 0M18.2 20a 1.8 1.8 0 0 0 3.6 0a 1.8 1.8 0 0 0-3.6 0M18 20a 2 2 0 0 0 4 0a 2 2 0 0 0-4 0M17.8 20a 2.2 2.2 0 0 0 4.4 0a 2.2 2.2 0 0 0-4.4 0M17.6 20a 2.4 2.4 0 0 0 4.8 0a 2.4 2.4 0 0 0-4.8 0M17.4 20a 2.6 2.6 0 0 0 5.2 0a 2.6 2.6 0 0 0-5.2 0M17.2 20a 2.8 2.8 0 0 0 5.6 0a 2.8 2.8 0 0 0-5.6 0M17 20a 3 3 0 0 0 6 0a 3 3 0 0 0-6 0M16.8 20a 3.2 3.2 0 0 0 6.4 0a 3.2 3.2 0 0 0-6.4 0M16.6 20a 3.4 3.4 0 0 0 6.8 0a 3.4 3.4 0 0 0-6.8 0M16.4 20a 3.6 3.6 0 0 0 7.2 0a 3.6 3.6 0 0 0-7.2 0M16.2 20a 3.8 3.8 0 0 0 7.6 0a 3.8 3.8 0 0 0-7.6 0M16 20a 4 4 0 0 0 8 0a 4 4 0 0 0-8 0' fill='rgba(0, 70, 67,0.2)'/%3E%3C/pattern%3E%3C/defs%3E%3Crect fill='url(%23doodad-light)' height='200%25' width='200%25'/%3E%3C/svg%3E ");
 }
 

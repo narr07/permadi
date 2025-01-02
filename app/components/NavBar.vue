@@ -1,17 +1,15 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 
-// Get the current route
 const route = useRoute()
-
-/**
- * Check if the current path matches exactly or includes subpaths
- * @param path - The base path to check
- * @returns true if the path is active
- */
 function isActive(path: string): boolean {
   return route.path === path || route.path.startsWith(`${path}/`)
 }
+
+const menuItems = [
+  { name: 'Home', path: '/', icon: 'home' },
+  { name: 'Blog', path: '/blog', icon: 'blog' },
+]
 </script>
 
 <template>
@@ -26,27 +24,25 @@ function isActive(path: string): boolean {
               </ULink>
             </UTooltip>
           </div>
-          <div class="flex md:space-x-2">
-            <div>
-              <ULink
-                aria-label="Home"
-                to="/blog"
-                :class="{
-                  'text-blue-500 font-bold': isActive('/blog'),
-                  'text-black': !isActive('/blog'),
-                }"
-              >
-                Blog
-              </ULink>
+          <div class="flex md:space-x-6">
+            <div class="flex items-center  space-x-4">
+              <div v-for="item in menuItems" :key="item.path">
+                <NuxtLink
+                  :aria-label="item.name"
+                  :to="item.path"
+                  class="      font-semibold items-center flex text-base   "
+                  :class="{
+                    'text-permadi-900 rounded  ring-2 ring-permadi-950 px-2 bg-permadi-200 dark:bg-yellow-500 hover:bg-permadi-300 dark:hover:bg-yellow-700 ': isActive(item.path),
+                  }"
+                >
+                  {{ item.name }}
+                </NuxtLink>
+              </div>
             </div>
+            <ColorModeButton />
           </div>
-          <ColorModeButton />
         </div>
       </div>
     </UContainer>
   </nav>
 </template>
-
-<style>
-/* Tambahkan gaya tambahan jika diperlukan */
-</style>
