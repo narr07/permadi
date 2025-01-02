@@ -15,7 +15,7 @@ const isDark = computed({
     <UButton
       :icon="isDark ? 'i-ph-moon' : 'i-ph-sun'"
       color="primary"
-      variant="ghost"
+      variant="soft"
       @click="isDark = !isDark"
     />
     <template #fallback>

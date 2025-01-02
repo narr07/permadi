@@ -26,7 +26,7 @@ export default defineNuxtConfig({
     },
     families: [
       { name: 'Display', weights: ['200', '300', '400', '500', '700', '900'], display: 'swap' },
-      { name: 'Narr', weights: ['100', '300', '400', '500', '700', '900'], display: 'swap' },
+      { name: 'Marr', weights: ['100', '300', '400', '500', '700', '900'], display: 'swap' },
     ],
   },
   content: {

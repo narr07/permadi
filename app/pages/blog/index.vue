@@ -9,9 +9,9 @@ const { data: posts } = await useAsyncData('blog', () => queryCollection('blog')
         v-for="post in posts" :key="post.id"
       >
         <NuxtLink :to="post.path">
-          <UCard class="h-full hover:bg-yellow hover:drop-shadow-2 dark:hover:drop-shadow-2gelap   duration-100 ease-in-out dark:hover:bg-permadi-700 ">
+          <UCard class="h-full hover:bg-yellow   duration-100 ease-in-out dark:hover:bg-permadi-700 ">
             <div class="flex flex-col p-2 h-full justify-between ">
-              <h2 class="text-xl   md:text-2xl text-balance font-semibold">
+              <h2 class="text-g2    text-balance font-semibold">
                 {{ post.title }}
               </h2>
               <USeparator color="primary" class="py-4" />
