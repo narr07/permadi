@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxthub/core',
     'nuxt-svgo',
-    '@nuxtjs/seo',
+
   ],
 
   hub: {

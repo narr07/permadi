@@ -15,7 +15,9 @@ const { data: page } = await useAsyncData(route.path, () => {
       </div>
     </UCard>
     <UCard>
-      <ContentRenderer v-if="page" :value="page" />
+      <div class="prose dark:prose-dark">
+        <ContentRenderer v-if="page" :value="page" />
+      </div>
     </UCard>
   </UContainer>
 </template>

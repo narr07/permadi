@@ -1,3 +1,19 @@
+<script setup lang="ts">
+import { useRoute } from 'vue-router'
+
+// Get the current route
+const route = useRoute()
+
+/**
+ * Check if the current path matches exactly or includes subpaths
+ * @param path - The base path to check
+ * @returns true if the path is active
+ */
+function isActive(path: string): boolean {
+  return route.path === path || route.path.startsWith(`${path}/`)
+}
+</script>
+
 <template>
   <nav class="fixed w-full z-50 top-1">
     <UContainer class="max-w-6xl mx-auto">
@@ -12,7 +28,14 @@
           </div>
           <div class="flex md:space-x-2">
             <div>
-              <ULink aria-label="Home" to="/blog" active-class="text-permadi-700 dark:text-yellow-500" class="fonb-bold">
+              <ULink
+                aria-label="Home"
+                to="/blog"
+                :class="{
+                  'text-blue-500 font-bold': isActive('/blog'),
+                  'text-black': !isActive('/blog'),
+                }"
+              >
                 Blog
               </ULink>
             </div>
@@ -23,3 +46,7 @@
     </UContainer>
   </nav>
 </template>
+
+<style>
+/* Tambahkan gaya tambahan jika diperlukan */
+</style>
