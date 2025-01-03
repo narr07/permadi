@@ -44,6 +44,19 @@ function onSelect(option: Option) {
 <template>
   <UModal
     v-model:open="open" title="Pencarian"
+    class="h-60"
+    close-icon="ph:x-square-duotone"
+    :ui="{
+      overlay: 'fixed inset-0 bg-[var(--ui-bg-elevated)]/40 backdrop-blur-sm',
+      content: 'fixed  w-full h-2/3 bg-[var(--ui-bg)] divide-y divide-[var(--ui-border)] flex flex-col focus:outline-none',
+      header: 'px-4 py-5 sm:px-6',
+      body: 'flex-1 overflow-y-auto   p-1 sm:p-1',
+      footer: 'flex items-center gap-1.5 p-4 sm:px-6',
+      title: 'text-[var(--ui-text-highlighted)] font-semibold',
+      description: 'mt-1 text-[var(--ui-text-muted)] text-sm',
+      close: 'absolute top-4 end-4',
+
+    }"
   >
     <UButton
       color="neutral"
@@ -51,7 +64,7 @@ function onSelect(option: Option) {
       icon="i-lucide-search"
       @click="open = true"
     />
-    <template #content>
+    <template #body>
       <UCommandPalette
         v-model:search-term="searchTerm"
         :loading="status === 'pending'"
