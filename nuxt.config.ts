@@ -39,6 +39,17 @@ export default defineNuxtConfig({
         url: 'https://github.com/narr07/permadi',
       },
     },
+    build: {
+      markdown: {
+        highlight: {
+          // Theme used in all color schemes.
+          theme: {
+            default: 'houston',
+            dark: 'aurora-x',
+          },
+        },
+      },
+    },
   },
   css: ['~/assets/css/main.css'],
   future: {
