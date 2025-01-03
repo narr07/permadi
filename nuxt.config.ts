@@ -8,10 +8,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/content',
     '@nuxthub/core',
-    'nuxt-svgo',
-
   ],
-
   hub: {
     database: true,
   },
@@ -44,7 +41,6 @@ export default defineNuxtConfig({
     },
   },
   css: ['~/assets/css/main.css'],
-
   future: {
     compatibilityVersion: 4,
   },

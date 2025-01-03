@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const icons = ref([
-  { name: 'i-ph-instagram-logo-duotone', title: 'Instagram', url: 'https://instagram.com' },
-  { name: 'i-ph-github-logo-duotone', title: 'GitHub', url: 'https://github.com' },
+  { name: 'logos:adobe-illustrator', title: 'Instagram', url: 'https://instagram.com' },
+  { name: 'devicon:adonisjs', title: 'GitHub', url: 'https://github.com' },
   { name: 'i-ph-twitter-logo-duotone', title: 'Twitter', url: 'https://twitter.com' },
   { name: 'i-ph-linkedin-logo-duotone', title: 'LinkedIn', url: 'https://linkedin.com' },
 ])

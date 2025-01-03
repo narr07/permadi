@@ -7,8 +7,8 @@ function isActive(path: string): boolean {
 }
 
 const menuItems = [
-  { name: 'Home', path: '/', icon: 'home' },
-  { name: 'Blog', path: '/blog', icon: 'blog' },
+  { name: 'Home', path: '/', icon: 'ph:house-duotone' },
+  { name: 'Blog', path: '/blog', icon: 'ph:notebook-duotone' },
 ]
 </script>
 
@@ -24,22 +24,30 @@ const menuItems = [
               </ULink>
             </UTooltip>
           </div>
-          <div class="flex md:space-x-6">
+          <div class="flex md:space-x-2">
             <div class="flex items-center  space-x-4">
               <div v-for="item in menuItems" :key="item.path">
-                <NuxtLink
-                  :aria-label="item.name"
-                  :to="item.path"
-                  class="      font-semibold items-center flex text-base   "
-                  :class="{
-                    'text-permadi-900 rounded  ring-2 ring-permadi-950 px-2 bg-permadi-200 dark:bg-yellow-500 hover:bg-permadi-300 dark:hover:bg-yellow-700 ': isActive(item.path),
-                  }"
-                >
-                  {{ item.name }}
-                </NuxtLink>
+                <UTooltip :text="item.name" placement="bottom" :popper="{ arrow: true }">
+                  <NuxtLink
+                    :aria-label="item.name"
+                    :to="item.path"
+                    class="  hover:ring-2 rounded px-2   font-semibold items-center flex text-base   "
+                    :class="{
+                      'text-permadi-900 rounded  ring-2 ring-permadi-950 px-2 bg-permadi-200 dark:bg-yellow-500 hover:bg-permadi-300 dark:hover:bg-yellow-700 ': isActive(item.path),
+                    }"
+                  >
+                    <UIcon :name="item.icon" class="size-6" />
+                    <div class="sr-only md:not-sr-only md:ml-2 ">
+                      {{ item.name }}
+                    </div>
+                  </NuxtLink>
+                </UTooltip>
               </div>
             </div>
-            <ColorModeButton />
+            <div class="flex items-center space-x-2 ml-4">
+              <DocsSearchButton />
+              <ColorModeButton />
+            </div>
           </div>
         </div>
       </div>
