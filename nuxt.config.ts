@@ -8,9 +8,13 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/content',
     '@nuxthub/core',
+    'nuxt-delay-hydration',
   ],
   hub: {
     database: true,
+  },
+  delayHydration: {
+    mode: 'mount',
   },
   eslint: {
     config: {
@@ -27,10 +31,10 @@ export default defineNuxtConfig({
     ],
   },
   content: {
-    database: {
-      type: 'd1',
-      binding: 'permadi',
-    },
+    // database: {
+    //   type: 'd1',
+    //   binding: 'permadi',
+    // },
     studio: {
       enabled: true,
       gitInfo: {

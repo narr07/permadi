@@ -62,6 +62,7 @@ defineShortcuts({
       color="neutral"
       variant="ghost"
       icon="i-lucide-search"
+      aria-label="Search"
       @click="open = true"
     />
     <template #content>

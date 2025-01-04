@@ -19,6 +19,7 @@ const skill = await queryCollection('skills')
             class="hover:scale-110 justify-center transform transition"
           >
             <UIcon :name="item.name" class="size-10" />
+            <span class="sr-only">{{ item.name }}</span>
           </UButton>
         </div>
       </div>

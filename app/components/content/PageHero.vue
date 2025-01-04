@@ -27,9 +27,9 @@ const items = [
       </UCarousel>
     </UCard>
     <UCard class="flex flex-col py-6 justify-center items-center text-center">
-      <h2 v-show="$slots.title" class="pb-4 font-black text-g3">
+      <h1 v-show="$slots.title" class="pb-4 font-black text-g3">
         <slot name="title" mdc-unwrap="p" />
-      </h2>
+      </h1>
       <slot />
     </UCard>
   </UContainer>
