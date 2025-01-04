@@ -51,8 +51,7 @@ defineShortcuts({
 <template>
   <UModal
     v-model:open="open"
-    class=""
-    title="Pencarian Blog"
+
     :ui="{
       content: 'rounded max-w-[calc(100%-1rem)] h-80 sm:h-auto sm:max-h-[calc(100vh-4rem)] mx-2 mx-auto overflow-y-auto',
     }"

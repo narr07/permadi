@@ -14,15 +14,20 @@ const skill = await queryCollection('skills')
     <UCard>
       <div class="grid grid-cols-4 md:grid-cols-6 gap-4">
         <div v-for="(item, index) in skill?.[0]?.meta?.body" :key="index" class="flex justify-center items-center">
-          <UButton
-            :to="item.url" color="neutral" variant="soft" square
-            class="hover:scale-110 justify-center transform transition"
-          >
-            <UIcon :name="item.name" class="size-10" />
-            <span class="sr-only">{{ item.name }}</span>
-          </UButton>
+          <UTooltip :title="item.title">
+            <UButton
+              :to="item.url" color="neutral" variant="soft" square
+              class="hover:scale-110 justify-center transform transition"
+            >
+              <UIcon :name="item.name" class="size-10" />
+              <span class="sr-only">{{ item.name }}</span>
+            </UButton>
+          </UTooltip>
         </div>
       </div>
+    </UCard>
+    <UCard>
+      <PageEducation />
     </UCard>
   </UContainer>
 </template>

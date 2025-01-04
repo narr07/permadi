@@ -4,6 +4,9 @@ const { data: posts } = await useAsyncData('blog', () => queryCollection('blog')
 
 <template>
   <UContainer>
+    <h1 class=" font-bold text-g4">
+      Blog
+    </h1>
     <div class="grid grid-cols-1  gap-4">
       <div
         v-for="post in posts" :key="post.id"
@@ -11,7 +14,7 @@ const { data: posts } = await useAsyncData('blog', () => queryCollection('blog')
         <NuxtLink :to="post.path">
           <UCard class="h-full hover:bg-yellow   duration-100 ease-in-out dark:hover:bg-permadi-700 ">
             <div class="flex flex-col p-2 h-full justify-between ">
-              <h2 class="text-g2    text-balance font-semibold">
+              <h2 class="text-g3 line-clamp-2    text-balance font-semibold">
                 {{ post.title }}
               </h2>
               <USeparator color="primary" class="py-4" />

@@ -70,8 +70,8 @@ export default defineNuxtConfig({
     '/': { prerender: true },
     '/blog': { prerender: true },
   },
-  vitalizer: {
-    disableStylesheets: 'entry',
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
   },
   compatibilityDate: '2024-11-27',
 })
