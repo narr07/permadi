@@ -9,13 +9,13 @@ const { data: page } = await useAsyncData(route.path, () => {
   <UContainer>
     <UCard class="mb-2">
       <div v-if="page" :value="page">
-        <h1>
+        <h1 class="text-g3">
           {{ page.title }}
         </h1>
       </div>
     </UCard>
     <UCard>
-      <div class="prose dark:prose-invert prose-base  drop max-w-6xl mx-auto prose-permadi">
+      <div class="prose dark:prose-invert prose-sm  drop max-w-6xl mx-auto prose-permadi">
         <ContentRenderer v-if="page" :value="page" />
       </div>
     </UCard>

@@ -9,9 +9,15 @@ layout: artikel
 icon: i-ph-book-open-text-duotone
 ---
 
+ini single cde
+
 `code`
 
-`const code: string = 'highlighted code inline'`{lang="ts"}
+`const code: string = 'highlighted code inline'`
+
+[Learn more about digital education](https://example.com/digital-education)
+
+ini full code
 
 ```js [file.js]{2} meta-info=val
 export default () => {

@@ -1,62 +1,53 @@
 <script setup lang="ts">
-const searchTerm = ref('')
-const open = ref(false) // Kontrol modal
-// Definisi tipe untuk opsi pencarian
-interface Option {
-  id: string
-  label: string
-  content?: string
-  suffix?: string
-  to?: string
-}
-// Mengambil data sections
-const { data: sections, status } = await useAsyncData('Pencarian', () => {
-  return queryCollectionSearchSections('blog').then(data =>
-    data.map(section => ({
-      id: section.id,
-      label: section.title,
-      content: section.content,
-      suffix: `Level ${section.level}`,
-      to: `${section.id}`, // Sesuaikan path dengan kebutuhan
-    })),
-  )
-})
-const groups = computed(() => [
+import { it } from '@nuxt/ui/runtime/locale/index.js'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+// Mengambil data dari blog
+const { data } = await useAsyncData('search-data', () => queryCollectionSearchSections('blog'))
+
+const router = useRouter()
+const open = ref(false)
+
+// Struktur grup untuk UCommandPalette
+const groups = ref([
   {
-    id: 'sections',
-    label: searchTerm.value ? `Pencarian “${searchTerm.value}”...` : 'Sections',
-    items: sections.value?.filter(section =>
-      section.label.toLowerCase().includes(searchTerm.value.toLowerCase()),
-    ) || [],
-    ignoreFilter: true,
+    id: 'blog',
+    label: 'Blog',
+    items: (data.value || []).map(item => ({
+      label: item.title, // Judul blog
+      suffix: item.id, // ID atau slug untuk navigasi
+      to: `${item.id}`, // Menentukan rute untuk navigasi
+      target: '_self', // Menentukan target, bisa diubah sesuai kebutuhan
+    })),
   },
 ])
-// Fungsi untuk navigasi dan menutup modal
-const router = useRouter()
-function onSelect(option: Option) {
-  if (option.to) {
-    router.push(option.to)
-    open.value = false // Tutup modal setelah navigasi berhasil
+
+const value = ref({})
+
+// Fungsi untuk menangani pemilihan item
+function onSelect(item: any) {
+  if (item.onSelect) {
+    item.onSelect()
   }
+  else if (item.to) {
+    if (typeof item.to === 'string' && (item.target === '_blank' || item.to.startsWith('http'))) {
+      window.open(item.to, item.target || '_blank')
+    }
+    else {
+      router.push(item.to) // Menggunakan router untuk navigasi
+    }
+  }
+  open.value = false // Menutup modal setelah pemilihan item
 }
 </script>
 
 <template>
   <UModal
-    v-model:open="open" title="Pencarian"
+    v-model:open="open"
+    title="Pencarian Blog"
     class="h-60"
     close-icon="ph:x-square-duotone"
-    :ui="{
-      overlay: 'fixed inset-0 bg-[var(--ui-bg-elevated)]/40 backdrop-blur-sm',
-      content: 'fixed  w-full h-2/3 bg-[var(--ui-bg)] divide-y divide-[var(--ui-border)] flex flex-col focus:outline-none',
-      header: 'px-4 py-5 sm:px-6',
-      body: 'flex-1 overflow-y-auto   p-1 sm:p-1',
-      footer: 'flex items-center gap-1.5 p-4 sm:px-6',
-      title: 'text-[var(--ui-text-highlighted)] font-semibold',
-      description: 'mt-1 text-[var(--ui-text-muted)] text-sm',
-      close: 'absolute top-4 end-4',
-
-    }"
   >
     <UButton
       color="neutral"
@@ -66,11 +57,15 @@ function onSelect(option: Option) {
     />
     <template #body>
       <UCommandPalette
-        v-model:search-term="searchTerm"
-        :loading="status === 'pending'"
+        v-model="value"
         :groups="groups"
-        placeholder="Pencarian..."
-        class="h-80"
+        class="flex-1 scroll-py-10 h-80"
+        :fuse="{
+          resultLimit: 10,
+          matchAllWhenSearchEmpty: true,
+          fuseOptions:
+            { includeMatches: true,
+            } }"
         @update:model-value="onSelect"
       />
     </template>

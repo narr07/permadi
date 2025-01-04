@@ -41,6 +41,10 @@ export default defineNuxtConfig({
     },
     build: {
       markdown: {
+        toc: {
+          depth: 4,
+          searchDepth: 4,
+        },
         highlight: {
           // Theme used in all color schemes.
           theme: {
