@@ -4,21 +4,21 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 // Mengambil data dari blog
-const { data } = await useAsyncData('search-data', () => queryCollectionSearchSections('blog'))
+const { data: search } = await useAsyncData('search-data', () => queryCollectionSearchSections('blog'))
 
 const router = useRouter()
 const open = ref(false)
 
-// Struktur grup untuk UCommandPalette
 const groups = ref([
   {
     id: 'blog',
     label: 'Blog',
-    items: (data.value || []).map(item => ({
+    level: 1,
+    items: (search.value || []).map(item => ({
       label: item.title, // Judul blog
-      suffix: item.id, // ID atau slug untuk navigasi
+      suffix: item.content, // ID atau slug untuk navigasi
       to: `${item.id}`, // Menentukan rute untuk navigasi
-      target: '_self', // Menentukan target, bisa diubah sesuai kebutuhan
+      icon: 'ph:notebook-duotone', // Ganti dengan ikon default
     })),
   },
 ])
@@ -40,13 +40,22 @@ function onSelect(item: any) {
   }
   open.value = false // Menutup modal setelah pemilihan item
 }
+
+defineShortcuts({
+  meta_k: () => {
+    open.value = !open.value
+  },
+})
 </script>
 
 <template>
   <UModal
     v-model:open="open"
+    class=""
     title="Pencarian Blog"
-    class="h-60"
+    :ui="{
+      content: 'rounded max-w-[calc(100%-1rem)] h-80 sm:h-auto sm:max-h-[calc(100vh-4rem)] mx-2 mx-auto overflow-y-auto',
+    }"
     close-icon="ph:x-square-duotone"
   >
     <UButton
@@ -55,17 +64,19 @@ function onSelect(item: any) {
       icon="i-lucide-search"
       @click="open = true"
     />
-    <template #body>
+    <template #content>
       <UCommandPalette
         v-model="value"
         :groups="groups"
-        class="flex-1 scroll-py-10 h-80"
+        class="flex-1  p-4  overflow-auto"
+        :ui="{
+          root: 'flex flex-col min-h-0 min-w-0 divide-y divide-[var(--ui-border)]',
+        }"
         :fuse="{
           resultLimit: 10,
           matchAllWhenSearchEmpty: true,
-          fuseOptions:
-            { includeMatches: true,
-            } }"
+          fuseOptions: { includeMatches: true },
+        }"
         @update:model-value="onSelect"
       />
     </template>
