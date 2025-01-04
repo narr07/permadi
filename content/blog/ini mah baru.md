@@ -1,13 +1,24 @@
 ---
-title: 'Kunci Sukses Guru di Era Digital: Membangun Pendidikan Berkualitas di Indonesia'
-date: 2024-05-10
-description: 'Jelajahi keterampilan esensial yang harus dimiliki guru di Indonesia untuk menghadapi tantangan pendidikan di era digital.'
-image: 'https://a.storyblok.com/f/98526/1792x1024/37b377a7da/kunci-sukses-guru-di-era-digital-membangun-pendidikan-berkualitas-di-indonesia.webp'
-tags: [Guru]
-author: 'Dinar Permadi'
+title: "Kunci Sukses Guru di Era Digital: Membangun Pendidikan Berkualitas di
+  Indonesia"
+date: 2024-05-10T00:00:00.000Z
+description: Jelajahi keterampilan esensial yang harus dimiliki guru di
+  Indonesia untuk menghadapi tantangan pendidikan di era digital.
+image: https://a.storyblok.com/f/98526/1792x1024/37b377a7da/kunci-sukses-guru-di-era-digital-membangun-pendidikan-berkualitas-di-indonesia.webp
+tags:
+  - Guru
+author: Dinar Permadi
 layout: artikel
 icon: i-ph-book-open-text-duotone
+seo:
+  title: "Kunci Sukses Guru di Era Digital: Membangun Pendidikan Berkualitas di
+    Indonesia"
+  description: "Kunci Sukses Guru di Era Digital: Membangun Pendidikan Berkualitas
+    di Indonesia"
+navigation:
+  icon: ""
 ---
+
 ## Pengantar
 
 Dalam era digital yang terus berkembang, peran guru menjadi semakin penting dalam membentuk generasi penerus yang siap menghadapi tantangan masa depan. Artikel ini akan membahas keterampilan esensial yang harus dimiliki oleh guru di Indonesia untuk membangun pendidikan berkualitas.

@@ -4,10 +4,10 @@ description: Ini Halaman Home
 ---
 
 ::page-hero
+Menggabungkan kreativitas desain, keahlian pemrograman, dan dedikasi dalam pendidikan.
+
 #title
 Dinar Permadi Yusup
-#default
-Menggabungkan kreativitas desain, keahlian pemrograman, dan dedikasi dalam pendidikan.
 ::
 
 ::page-skill
