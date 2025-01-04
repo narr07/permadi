@@ -10,7 +10,6 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxthub/core',
     'nuxt-delay-hydration',
-    'nuxt-vitalizer',
   ],
   hub: {
     database: true,
@@ -46,7 +45,9 @@ export default defineNuxtConfig({
       },
     },
     build: {
+
       markdown: {
+
         toc: {
           depth: 4,
           searchDepth: 4,
