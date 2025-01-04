@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
@@ -9,6 +10,7 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxthub/core',
     'nuxt-delay-hydration',
+    'nuxt-vitalizer',
   ],
   hub: {
     database: true,
@@ -18,7 +20,7 @@ export default defineNuxtConfig({
   },
   eslint: {
     config: {
-      standalone: false, // <---
+      standalone: false,
     },
   },
   fonts: {
@@ -66,6 +68,11 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { prerender: true },
     '/blog': { prerender: true },
+  },
+  vitalizer: {
+    disableStylesheets: 'entry',
+    disablePrefetchLinks: true,
+
   },
   compatibilityDate: '2024-11-27',
 })
