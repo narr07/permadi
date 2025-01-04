@@ -33,10 +33,10 @@ export default defineNuxtConfig({
     ],
   },
   content: {
-    // database: {
-    //   type: 'd1',
-    //   binding: 'permadi',
-    // },
+    database: {
+      type: 'd1',
+      binding: 'permadi',
+    },
     studio: {
       enabled: true,
       gitInfo: {
@@ -71,8 +71,6 @@ export default defineNuxtConfig({
   },
   vitalizer: {
     disableStylesheets: 'entry',
-    disablePrefetchLinks: true,
-
   },
   compatibilityDate: '2024-11-27',
 })
