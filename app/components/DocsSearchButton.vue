@@ -2,8 +2,14 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
+// const route = useRoute()
+const { locale } = useI18n()
+
+// const { data: page } = await useAsyncData(route.path, () => {
+//   return queryCollection(`content_${locale.value}`).first()
+// })
 // Mengambil data dari blog
-const { data: search } = await useAsyncData('search-data', () => queryCollectionSearchSections('blog'))
+const { data: search } = await useAsyncData('search-data', () => queryCollectionSearchSections(`content_${locale.value}`))
 
 const router = useRouter()
 const open = ref(false)

@@ -3,10 +3,11 @@ import { useScrollspy } from '@/composables/useScrollspy'
 import { useWindowScroll } from '@vueuse/core'
 
 const route = useRoute()
-const { data: page } = await useAsyncData(route.path, () => {
-  return queryCollection('blog').path(route.path).first()
-})
+const { locale } = useI18n()
 
+const { data: page } = await useAsyncData(route.path, () => {
+  return queryCollection(`blog_${locale.value}`).first()
+})
 // Gunakan scrollspy untuk memantau heading
 const headings = ref<Element[]>([]) // Referensi untuk elemen heading
 const { activeHeadings, updateHeadings } = useScrollspy()
@@ -14,7 +15,7 @@ const { y } = useWindowScroll()
 
 onMounted(() => {
   // Ambil semua elemen heading (misalnya <h2>) dari konten
-  headings.value = Array.from(document.querySelectorAll('.prose h2, .prose h3'))
+  headings.value = Array.from(document.querySelectorAll('.prose h2, .prose h3, .prose h4'))
   updateHeadings(headings.value) // Daftarkan heading ke observer
 })
 
@@ -27,6 +28,9 @@ function scrollToHeading(id: string) {
   }
 }
 
+if (page?.value?.seo) {
+  useSeoMeta(page.value.seo)
+}
 const open = ref(true)
 </script>
 

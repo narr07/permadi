@@ -11,7 +11,17 @@ export default defineNuxtConfig({
     '@nuxthub/core',
     'nuxt-delay-hydration',
     '@vueuse/motion/nuxt',
+    '@nuxtjs/i18n',
   ],
+  i18n: {
+    locales: [
+      { code: 'en', name: 'English', language: 'en-US', file: 'en.ts' },
+      { code: 'id', name: 'Indonesia', language: 'id-ID', file: 'id.ts' },
+    ],
+    strategy: 'prefix_except_default',
+    defaultLocale: 'id',
+    langDir: 'lang',
+  },
   hub: {
     database: true,
   },
@@ -46,7 +56,7 @@ export default defineNuxtConfig({
       },
     },
     build: {
-
+      pathMeta: { forceLeadingSlash: true },
       markdown: {
 
         toc: {

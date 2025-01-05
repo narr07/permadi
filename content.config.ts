@@ -1,20 +1,47 @@
 import { defineCollection, defineContentConfig, z } from '@nuxt/content'
 
+const commonSchema = z.object({})
+
 export default defineContentConfig({
   collections: {
-    content: defineCollection({
+    content_id: defineCollection({
       type: 'page',
-      source: '**/*.md',
+      source: {
+        include: 'id/**',
+        prefix: '',
+      },
+      schema: commonSchema,
     }),
-    blog: defineCollection({
-      source: 'blog/*.md',
+    content_en: defineCollection({
       type: 'page',
-      // Define custom schema for docs collection
+      source: {
+        include: 'en/**',
+        prefix: '',
+      },
+      schema: commonSchema,
+    }),
+    blog_id: defineCollection({
+      type: 'page',
+      source: {
+        include: 'id/blog/**',
+        prefix: '',
+      },
       schema: z.object({
         tags: z.array(z.string()),
         image: z.string(),
         date: z.date(),
-        author: z.string(),
+      }),
+    }),
+    blog_en: defineCollection({
+      type: 'page',
+      source: {
+        include: 'en/blog/**',
+        prefix: '',
+      },
+      schema: z.object({
+        tags: z.array(z.string()),
+        image: z.string(),
+        date: z.date(),
       }),
     }),
 

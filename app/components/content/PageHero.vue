@@ -3,10 +3,11 @@ import SvgDesigner from './SvgDesigner.vue'
 import SvgGuru from './SvgGuru.vue'
 import SvgProgrammer from './SvgProgrammer.vue'
 
+const { t } = useI18n()
 const items = [
-  { component: SvgDesigner, title: 'Designer' },
-  { component: SvgGuru, title: 'Teacher' },
-  { component: SvgProgrammer, title: 'Programmer' },
+  { component: SvgDesigner, title: t('focus.desain') },
+  { component: SvgGuru, title: t('focus.guru') },
+  { component: SvgProgrammer, title: t('focus.program') },
 ]
 </script>
 

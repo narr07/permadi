@@ -1,5 +1,13 @@
 <script setup lang="ts">
-const { data: posts } = await useAsyncData('blog', () => queryCollection('blog').all())
+const route = useRoute()
+const { locale } = useI18n()
+
+const { data: posts } = await useAsyncData(route.path, () => {
+  return queryCollection(`blog_${locale.value}`)
+    .order('date', 'DESC')
+    .all()
+})
+// const { data: posts } = await useAsyncData('blog', () => queryCollection(`blog_${locale.value}`).all())
 </script>
 
 <template>
@@ -11,7 +19,7 @@ const { data: posts } = await useAsyncData('blog', () => queryCollection('blog')
       <div
         v-for="post in posts" :key="post.id"
       >
-        <NuxtLink :to="post.path">
+        <NuxtLink :to="`blog${post.path}`">
           <UCard class="h-full hover:bg-yellow   duration-100 ease-in-out dark:hover:bg-permadi-700 ">
             <div class="flex flex-col p-2 h-full justify-between ">
               <h2 class="text-g3 line-clamp-2    text-balance font-semibold">

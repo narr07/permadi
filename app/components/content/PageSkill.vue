@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+const { t } = useI18n()
 const designIcon = ref([
   {
     title: 'Illustrator',
@@ -187,17 +188,17 @@ const techIcons = [
 
 const tabitems = [
   {
-    label: 'Pendidikan',
+    label: t('tabHome.education'),
     slot: 'user',
     icon: 'i-ph-user-duotone',
   },
   {
-    label: 'Desain',
+    label: t('tabHome.designer'),
     slot: 'desain',
     icon: 'i-ph-palette-duotone',
   },
   {
-    label: 'Teknologi',
+    label: t('tabHome.tech'),
     slot: 'teknologi',
     icon: 'i-ph-code-duotone',
   },
@@ -232,9 +233,7 @@ const tabitems = [
             class="my-auto flex-grow h-full p-2"
           >
             <div>
-              Melalui website ini, Saya ingin berbagi pengetahuan dalam belajar
-              desain dan pemrograman. Saya lulusan Universitas Pendidikan
-              Indonesia (UPI) dan saat ini bekerja sebagai guru di SDN Teja II
+              {{ $t('tabHome.eduText') }}
             </div>
           </UCard>
         </template>

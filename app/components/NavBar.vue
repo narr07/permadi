@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 
+const localePath = useLocalePath()
+
 const route = useRoute()
 function isActive(path: string): boolean {
-  return route.path === path || route.path.startsWith(`${path}/`)
+  const localizedPath = localePath(path)
+  return route.path === localizedPath || route.path.startsWith(`/${localizedPath}/`)
 }
 
 const menuItems = [
@@ -19,7 +22,7 @@ const menuItems = [
         <div class="flex items-center justify-between">
           <div class="flex items-center">
             <UTooltip text="Home" placement="bottom" :popper="{ arrow: true }">
-              <ULink aria-label="logo" to="/">
+              <ULink aria-label="logo" :to="localePath('/')">
                 <Logo />
               </ULink>
             </UTooltip>
@@ -30,7 +33,7 @@ const menuItems = [
                 <UTooltip :text="item.name" placement="bottom" :popper="{ arrow: true }">
                   <NuxtLink
                     :aria-label="item.name"
-                    :to="item.path"
+                    :to="localePath(item.path)"
                     class="  hover:ring-2 rounded px-2   font-semibold items-center flex text-base   "
                     :class="{
                       'text-permadi-900 rounded  ring-2 ring-permadi-950 px-2 bg-permadi-200 dark:bg-yellow-500 hover:bg-permadi-300 dark:hover:bg-yellow-700 ': isActive(item.path),
@@ -46,6 +49,7 @@ const menuItems = [
             </div>
             <div class="flex items-center space-x-2 ml-4">
               <DocsSearchButton />
+              <LangToogle />
               <ColorModeButton />
             </div>
           </div>
