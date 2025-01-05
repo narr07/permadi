@@ -24,9 +24,9 @@ const { data: posts } = await useAsyncData('blog', () => queryCollection('blog')
                 </p>
                 <div>
                   <ul>
-                    <div v-for="tag in post.tags" :key="tag">
-                      <UBadge size="lg" color="neutral" variant="outline">
-                        {{ tag }}
+                    <div v-if="post.tags.length > 0">
+                      <UBadge class="uppercase" size="lg" color="neutral" variant="outline">
+                        {{ post.tags[0] }}
                       </UBadge>
                     </div>
                   </ul>

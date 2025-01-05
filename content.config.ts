@@ -17,14 +17,6 @@ export default defineContentConfig({
         author: z.string(),
       }),
     }),
-    skills: defineCollection({
-      type: 'data',
-      source: 'skills.yml',
-      schema: z.object({
-        name: z.string(),
-        tittle: z.string(),
-        url: z.string(),
-      }),
-    }),
+
   },
 })

@@ -33,7 +33,7 @@ const open = ref(true)
 <template>
   <UContainer class="relative overflow-auto min-h-screen">
     <!-- Header -->
-    <UCard class="mb-2">
+    <UCard class="my-2">
       <div v-if="page" :value="page">
         <h1 class="text-g3">
           {{ page.title }}
@@ -60,7 +60,7 @@ const open = ref(true)
                 <NuxtLink
                   class="line-clamp-1"
                   :class="{
-                    'text-blue-500 font-bold': activeHeadings.includes(link.id), // Tambahkan gaya untuk elemen aktif
+                    'text-permadi-500 font-bold': activeHeadings.includes(link.id), // Tambahkan gaya untuk elemen aktif
                   }"
                   :to="`#${link.id}`"
                   @click.prevent="scrollToHeading(link.id)"
