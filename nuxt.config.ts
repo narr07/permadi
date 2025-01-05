@@ -14,6 +14,13 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
   ],
   i18n: {
+    skipSettingLocaleOnNavigate: false,
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root', // recommended
+      alwaysRedirect: true,
+    },
     locales: [
       { code: 'en', name: 'English', language: 'en-US', file: 'en.ts' },
       { code: 'id', name: 'Indonesia', language: 'id-ID', file: 'id.ts' },
@@ -27,6 +34,7 @@ export default defineNuxtConfig({
   },
   delayHydration: {
     mode: 'mount',
+    replayClick: true,
   },
   eslint: {
     config: {
@@ -77,11 +85,27 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
+  nitro: {
+    prerender: {
+      routes: [
+        '/',
+        '/blog',
+        '/en/',
+        '/en/blog',
+      ],
+    },
+  },
   routeRules: {
-    '/': { prerender: true },
-    '/blog': { prerender: true },
+    '/blog/**': { isr: true },
+    '/en/blog/**': { isr: true },
   },
   app: {
+    head: {
+      htmlAttrs: {
+        lang: 'id',
+        class: 'h-dvh',
+      },
+    },
     pageTransition: { name: 'page', mode: 'out-in' },
   },
   compatibilityDate: '2024-11-27',
