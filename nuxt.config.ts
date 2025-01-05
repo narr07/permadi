@@ -11,7 +11,6 @@ export default defineNuxtConfig({
     '@nuxthub/core',
     'nuxt-delay-hydration',
     '@vueuse/motion/nuxt',
-    '@nuxtjs/i18n',
   ],
   hub: {
     database: true,
