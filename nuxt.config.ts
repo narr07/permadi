@@ -13,6 +13,10 @@ export default defineNuxtConfig({
     '@vueuse/motion/nuxt',
     '@nuxtjs/i18n',
   ],
+  experimental: {
+    componentIslands: true,
+    viewTransition: true,
+  },
   i18n: {
     skipSettingLocaleOnNavigate: false,
     detectBrowserLanguage: {
@@ -22,8 +26,8 @@ export default defineNuxtConfig({
       alwaysRedirect: true,
     },
     locales: [
-      { code: 'en', name: 'English', language: 'en-US', file: 'en.ts' },
-      { code: 'id', name: 'Indonesia', language: 'id-ID', file: 'id.ts' },
+      { code: 'en', name: 'English', language: 'en-US', file: 'en.ts', value: 'en' },
+      { code: 'id', name: 'Indonesia', language: 'id-ID', file: 'id.ts', value: 'id' },
     ],
     strategy: 'prefix_except_default',
     defaultLocale: 'id',
