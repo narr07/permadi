@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { it } from '@nuxt/ui/runtime/locale/index.js'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 

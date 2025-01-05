@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxthub/core',
     'nuxt-delay-hydration',
+    '@vueuse/motion/nuxt',
   ],
   hub: {
     database: true,
