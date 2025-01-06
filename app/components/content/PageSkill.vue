@@ -217,106 +217,144 @@ const tabitems = [
 
       <UTabs
         class="h-full flex flex-col"
+
         :items="tabitems"
       >
         <!-- tombol tab -->
         <template #default="{ item }">
-          <div class="flex items-center gap-1 relative truncate">
-            <span class="text-xs text-brand-800 dark:text-brand-300 md:text-sm">
+          <div class="flex   items-center gap-1 relative truncate">
+            <span class="text-xs   md:text-sm">
               {{ item.label }}
             </span>
           </div>
         </template>
         <!-- konten tab 1 -->
         <template #user>
-          <UCard
-
-            class="my-auto flex-grow h-full p-2"
+          <div
+            v-motion
+            :initial="{
+              opacity: 0,
+              y: 30,
+            }"
+            :visible="{
+              opacity: 1,
+              y: 0,
+            }"
           >
-            <div>
-              {{ $t('tabHome.eduText') }}
-            </div>
-          </UCard>
+            <UCard
+
+              class="my-auto flex-grow h-full p-2"
+            >
+              <div>
+                {{ $t('tabHome.eduText') }}
+              </div>
+            </UCard>
+          </div>
         </template>
 
         <!-- konten tab 2 -->
         <template #desain>
-          <UCard
-            class="flex-grow h-full"
+          <div
+            v-motion
+            :initial="{
+              opacity: 0,
+              y: 30,
+            }"
+            :visible="{
+              opacity: 1,
+              y: 0,
+            }"
           >
-            <div class="items-center">
-              <div class="flex flex-wrap gap-2 md:gap-4 justify-center">
-                <div
-                  v-for="(button, index) in designIcon"
-                  :key="index"
-                >
-                  <UTooltip
-                    :text="button.title"
-                    placement="bottom"
-                    :popper="{ arrow: true }"
+            <UCard
+              class="flex-grow h-full"
+            >
+              <div class="items-center">
+                <div class="flex flex-wrap gap-2 md:gap-4 justify-center">
+                  <div
+                    v-for="(button, index) in designIcon"
+                    :key="index"
                   >
-                    <UButton
-                      class="px-1.5"
-
-                      variant="ghost"
-                      :to="button.url"
-                      target="_blank"
-                      :title="button.title"
-                      :aria-label="button.title"
-                      rel="noopener noreferrer nofollow"
+                    <UTooltip
+                      :text="button.title"
+                      placement="bottom"
+                      :popper="{ arrow: true }"
                     >
-                      <UIcon
-                        class="w-10 h-10"
-                        :name="button.iconName"
-                      />
-                      <span class="sr-only">{{ button.title }}</span>
-                    </UButton>
-                  </UTooltip>
+                      <UButton
+                        class="px-1.5"
+                        color="primary"
+                        variant="subtle"
+                        :to="button.url"
+                        target="_blank"
+                        :title="button.title"
+                        :aria-label="button.title"
+                        rel="noopener noreferrer nofollow"
+                      >
+                        <UIcon
+                          class="w-10 h-10"
+                          :name="button.iconName"
+                        />
+                        <span class="sr-only">{{ button.title }}</span>
+                      </UButton>
+                    </UTooltip>
+                  </div>
                 </div>
               </div>
-            </div>
-          </UCard>
+            </UCard>
+          </div>
         </template>
 
         <!-- konten tab 3 -->
         <template #teknologi>
-          <UCard
-            class="flex-grow h-full"
+          <div
+            v-motion
+            :initial="{
+              opacity: 0,
+              y: 30,
+            }"
+            :visible="{
+              opacity: 1,
+              y: 0,
+            }"
           >
-            <div
-              class="items-center"
+            <UCard
+              class="flex-grow h-full"
             >
-              <div class="flex flex-wrap gap-2 md:gap-4 justify-center">
-                <div
-                  v-for="(techIcon, index) in techIcons"
-                  :key="index"
-                >
-                  <UTooltip
-                    :text="techIcon.title"
-                    placement="bottom"
-                    :popper="{ arrow: true }"
+              <div
+                class="items-center"
+              >
+                <div class="flex flex-wrap gap-2 md:gap-4 justify-center">
+                  <div
+                    v-for="(techIcon, index) in techIcons"
+                    :key="index"
                   >
-                    <UButton
-                      class="px-1.5"
-
-                      variant="ghost"
-                      :to="techIcon.url"
-                      target="_blank"
-                      :aria-label="techIcon.title"
-                      :title="techIcon.title"
-                      rel="noopener noreferrer nofollow"
+                    <UTooltip
+                      :text="techIcon.title"
+                      placement="bottom"
+                      :popper="{ arrow: true }"
                     >
-                      <UIcon
-                        class="w-10 h-10"
-                        :name="techIcon.iconName"
-                      />
-                      <span class="sr-only">{{ techIcon.title }}</span>
-                    </UButton>
-                  </UTooltip>
+                      <UButton
+                        class="px-1.5"
+
+                        color="primary"
+                        variant="subtle"
+                        :to="techIcon.url"
+                        target="_blank"
+                        :aria-label="techIcon.title"
+                        :title="techIcon.title"
+                        rel="noopener noreferrer nofollow"
+                      >
+                        <UIcon
+                          class="w-10 h-10"
+                          :name="techIcon.iconName"
+                        />
+                        <span class="sr-only">{{ techIcon.title }}</span>
+                      </UButton>
+                    </UTooltip>
+                  </div>
                 </div>
               </div>
-            </div>
-          </UCard>
+            </UCard>
+          </div>
         </template>
       </UTabs>
     </UCard>

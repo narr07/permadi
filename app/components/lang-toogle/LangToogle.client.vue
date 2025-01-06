@@ -48,15 +48,28 @@ function toggleLocale() {
 <template>
   <div>
     <UTooltip :text="selected.value === 'en' ? 'Switch to Indonesian' : 'Ubah ke Inggris'" placement="bottom">
-      <UButton
-
-        color="primary"
-        variant="subtle"
-        square
-        @click="toggleLocale"
+      <div
+        v-motion
+        :initial="{
+          scale: 1,
+        }"
+        :hovered="{
+          scale: 1,
+        }"
+        :tapped="{
+          scale: 0.8,
+        }"
       >
-        <UIcon class="size-6" :name="selected.icon" />
-      </UButton>
+        <UButton
+
+          color="primary"
+          variant="subtle"
+          square
+          @click="toggleLocale"
+        >
+          <UIcon class="size-6" :name="selected.icon" />
+        </UButton>
+      </div>
     </UTooltip>
   </div>
 </template>

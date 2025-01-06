@@ -63,6 +63,7 @@ defineShortcuts({
     close-icon="ph:x-square-duotone"
   >
     <UButton
+
       color="primary"
       variant="subtle"
       icon="i-lucide-search"

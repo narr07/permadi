@@ -19,7 +19,7 @@
 .page-enter-from,
 .page-leave-to {
   opacity: 0;
-  transform: translateY(20px);
-  filter: blur(1rem);
+  transform: translateY(10px);
+
 }
 </style>

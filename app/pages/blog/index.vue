@@ -11,12 +11,33 @@ const { data: posts } = await useAsyncData(route.path, () => {
 
 <template>
   <UContainer>
-    <h1 class=" font-bold text-g4">
+    <h1
+      v-motion
+      :initial="{
+        opacity: 0,
+        y: 50,
+      }"
+      :visible="{
+        opacity: 1,
+        y: 0,
+      }"
+      class=" font-bold text-g4"
+    >
       Blog
     </h1>
     <div class="grid grid-cols-1  gap-4">
       <div
-        v-for="post in posts" :key="post.id"
+        v-for="post in posts"
+        :key="post.id"
+        v-motion
+        :initial="{
+          opacity: 0,
+          y: 50,
+        }"
+        :visible="{
+          opacity: 1,
+          y: 0,
+        }"
       >
         <NuxtLink :to="`blog${post.path}`">
           <UCard class="h-full hover:bg-yellow   duration-100 ease-in-out dark:hover:bg-permadi-700 ">
