@@ -4,6 +4,9 @@ export default {
     desain: 'Designer',
     program: 'Programmer',
   },
+  hero: {
+    description: 'Combining design creativity, programming expertise, and dedication in education.',
+  },
   tabHome: {
     education: 'Education',
     designer: 'Design',

@@ -29,10 +29,12 @@ const items = [
     </UCard>
 
     <UCard class="flex flex-col py-6 justify-center items-center text-center">
-      <h1 v-show="$slots.title" class="pb-4 font-black text-g3">
-        <slot name="title" mdc-unwrap="p" />
+      <h1 class="pb-4 font-black text-g3">
+        Dinar Permadi Yusup
       </h1>
-      <slot />
+      <p>
+        {{ t('hero.description') }}
+      </p>
     </UCard>
   </UContainer>
 </template>
