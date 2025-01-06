@@ -6,6 +6,7 @@
       <div class="py-[70px]">
         <NuxtPage />
       </div>
+
       <Footer />
     </UApp>
   </div>

@@ -98,5 +98,6 @@ const open = ref(true)
 
       <!-- Daftar Isi -->
     </div>
+    <ScrollToTop />
   </UContainer>
 </template>

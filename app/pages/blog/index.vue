@@ -65,5 +65,6 @@ const { data: posts } = await useAsyncData(route.path, () => {
         </NuxtLink>
       </div>
     </div>
+    <ScrollToTop />
   </UContainer>
 </template>
