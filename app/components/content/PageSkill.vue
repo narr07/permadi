@@ -230,6 +230,7 @@ const tabitems = [
         <!-- konten tab 1 -->
         <template #user>
           <UCard
+
             class="my-auto flex-grow h-full p-2"
           >
             <div>

@@ -15,8 +15,8 @@ const languages: globalThis.ComputedRef<ILanguage[]> = computed(() =>
       ...locale,
       icon:
         locale.value === 'en'
-          ? 'circle-flags:en'
-          : 'circle-flags:id',
+          ? 'openmoji:flag-england'
+          : 'openmoji:flag-indonesia',
       id: locale.code,
     }
   }),
@@ -49,11 +49,14 @@ function toggleLocale() {
   <div>
     <UTooltip :text="selected.value === 'en' ? 'Switch to Indonesian' : 'Ubah ke Inggris'" placement="bottom">
       <UButton
-        :icon="selected.icon"
+
         color="primary"
         variant="subtle"
+        square
         @click="toggleLocale"
-      />
+      >
+        <UIcon class="size-6" :name="selected.icon" />
+      </UButton>
     </UTooltip>
   </div>
 </template>

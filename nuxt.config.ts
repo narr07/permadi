@@ -1,5 +1,4 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
@@ -15,9 +14,8 @@ export default defineNuxtConfig({
   ],
   experimental: {
     componentIslands: true,
-    viewTransition: true,
-    inlineRouteRules: true,
-
+    // viewTransition: true,
+    // inlineRouteRules: true,
   },
   i18n: {
     skipSettingLocaleOnNavigate: false,
@@ -72,7 +70,6 @@ export default defineNuxtConfig({
     build: {
       pathMeta: { forceLeadingSlash: true },
       markdown: {
-
         toc: {
           depth: 4,
           searchDepth: 4,
