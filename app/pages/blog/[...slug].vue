@@ -1,13 +1,24 @@
 <script lang="ts" setup>
+import type { Collections } from '@nuxt/content'
 import { useScrollspy } from '@/composables/useScrollspy'
 import { useWindowScroll } from '@vueuse/core'
+import { withLeadingSlash } from 'ufo'
 
 const route = useRoute()
 const { locale } = useI18n()
 
-const { data: page } = await useAsyncData(route.path, () => {
-  return queryCollection(`blog_${locale.value}`).first()
+const slug = computed(() => withLeadingSlash(String(route.params.slug)))
+
+const { data: page } = await useAsyncData(`page-${slug.value}`, async () => {
+  const collection = (`blog_${locale.value}`) as keyof Collections
+  const content = await queryCollection(collection).path(slug.value).first()
+  return content
+}, {
+  watch: [locale],
 })
+
+prerenderRoutes([`/${locale.value}${slug.value}`])
+
 // Gunakan scrollspy untuk memantau heading
 const headings = ref<Element[]>([]) // Referensi untuk elemen heading
 const { activeHeadings, updateHeadings } = useScrollspy()

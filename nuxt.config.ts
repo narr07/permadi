@@ -16,6 +16,8 @@ export default defineNuxtConfig({
   experimental: {
     componentIslands: true,
     viewTransition: true,
+    inlineRouteRules: true,
+
   },
   i18n: {
     skipSettingLocaleOnNavigate: false,
@@ -94,14 +96,11 @@ export default defineNuxtConfig({
       routes: [
         '/',
         '/blog',
-        '/en/',
-        '/en/blog',
       ],
     },
   },
   routeRules: {
     '/blog/**': { isr: true },
-    '/en/blog/**': { isr: true },
   },
   app: {
     head: {

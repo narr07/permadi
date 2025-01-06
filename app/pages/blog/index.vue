@@ -7,7 +7,7 @@ const { data: posts } = await useAsyncData(route.path, () => {
     .order('date', 'DESC')
     .all()
 })
-// const { data: posts } = await useAsyncData('blog', () => queryCollection(`blog_${locale.value}`).all())
+defineRouteRules({ prerender: true })
 </script>
 
 <template>
