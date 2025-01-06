@@ -7,7 +7,6 @@ const { data: posts } = await useAsyncData(route.path, () => {
     .order('date', 'DESC')
     .all()
 })
-defineRouteRules({ prerender: true })
 </script>
 
 <template>

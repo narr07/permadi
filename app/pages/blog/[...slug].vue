@@ -17,8 +17,6 @@ const { data: page } = await useAsyncData(`page-${slug.value}`, async () => {
   watch: [locale],
 })
 
-prerenderRoutes([`/${locale.value}${slug.value}`])
-
 // Gunakan scrollspy untuk memantau heading
 const headings = ref<Element[]>([]) // Referensi untuk elemen heading
 const { activeHeadings, updateHeadings } = useScrollspy()
@@ -46,9 +44,9 @@ const open = ref(true)
 </script>
 
 <template>
-  <UContainer class="relative overflow-auto min-h-screen">
+  <UContainer class=" ">
     <!-- Header -->
-    <UCard class="my-2">
+    <UCard class="mb-2">
       <div v-if="page" :value="page">
         <h1 class="text-g3">
           {{ page.title }}
@@ -90,7 +88,7 @@ const open = ref(true)
     </UCard>
 
     <!-- Konten dan TOC -->
-    <div class=" ">
+    <div class="">
       <!-- Konten -->
       <UCard>
         <div class="prose dark:prose-invert prose-sm drop max-w-6xl mx-auto prose-permadi">

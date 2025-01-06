@@ -21,8 +21,6 @@ if (!home.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
-prerenderRoutes([`/${locale.value}${slug.value}`])
-
 useSeoMeta(home.value.seo)
 </script>
 

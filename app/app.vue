@@ -3,9 +3,10 @@
     <UApp>
       <NuxtRouteAnnouncer />
       <NavBar />
-      <div class="pt-[70px]">
+      <div class="py-[70px]">
         <NuxtPage />
       </div>
+      <Footer />
     </UApp>
   </div>
 </template>
