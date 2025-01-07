@@ -64,9 +64,10 @@ defineShortcuts({
   >
     <UButton
 
-      color="primary"
-      variant="subtle"
-      icon="i-lucide-search"
+      color="secondary"
+      variant="outline"
+      square
+      icon="hugeicons:search-02"
       size="lg"
       aria-label="Search"
       @click="open = true"

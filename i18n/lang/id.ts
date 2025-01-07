@@ -6,6 +6,7 @@ export default {
   },
   hero: {
     description: 'Menggabungkan kreativitas desain, keahlian pemrograman, dan dedikasi dalam pendidikan.',
+    new: 'Artikel Terbaru',
   },
   tabHome: {
     education: 'Pendidikan',

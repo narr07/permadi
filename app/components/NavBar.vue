@@ -10,8 +10,8 @@ function isActive(path: string): boolean {
 }
 
 const menuItems = [
-  { name: 'Home', path: '/', icon: 'ph:house-duotone' },
-  { name: 'Blog', path: '/blog', icon: 'ph:notebook-duotone' },
+  { name: 'Home', path: '/', icon: 'hugeicons:home-03' },
+  { name: 'Blog', path: '/blog', icon: 'hugeicons:book-04' },
 ]
 </script>
 
@@ -56,7 +56,10 @@ const menuItems = [
                       scale: 0.8,
                     }"
                   >
-                    <NuxtLink
+                    <UButton
+                      color="secondary"
+                      variant="outline"
+                      square
                       :aria-label="item.name"
                       :to="localePath(item.path)"
                       class="hover:ring-2 rounded px-2 font-semibold items-center flex text-base"
@@ -64,11 +67,11 @@ const menuItems = [
                         'text-permadi-900 rounded ring-2 ring-permadi-950 px-2 bg-permadi-200 dark:bg-yellow-500 hover:bg-permadi-300 dark:hover:bg-yellow-700': isActive(item.path),
                       }"
                     >
-                      <UIcon :name="item.icon" class="size-6" />
+                      <UIcon :name="item.icon" class="size-5" />
                       <div class="sr-only md:not-sr-only md:ml-2">
                         {{ item.name }}
                       </div>
-                    </NuxtLink>
+                    </UButton>
                   </div>
                 </UTooltip>
               </div>

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-const { t } = useI18n()
 const designIcon = ref([
   {
     title: 'Illustrator',
@@ -188,17 +187,17 @@ const techIcons = [
 
 const tabitems = [
   {
-    label: t('tabHome.education'),
+
     slot: 'user',
     icon: 'i-ph-user-duotone',
   },
   {
-    label: t('tabHome.designer'),
+
     slot: 'desain',
     icon: 'i-ph-palette-duotone',
   },
   {
-    label: t('tabHome.tech'),
+
     slot: 'teknologi',
     icon: 'i-ph-code-duotone',
   },
@@ -207,11 +206,7 @@ const tabitems = [
 
 <template>
   <UContainer class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <UCard>
-      <div class="grid grid-cols-4 md:grid-cols-6 gap-4">
-        Texs
-      </div>
-    </UCard>
+    <PageLast />
     <UCard>
       <!-- <PageEducation /> -->
 
@@ -221,13 +216,7 @@ const tabitems = [
         :items="tabitems"
       >
         <!-- tombol tab -->
-        <template #default="{ item }">
-          <div class="flex   items-center gap-1 relative truncate">
-            <span class="text-xs   md:text-sm">
-              {{ item.label }}
-            </span>
-          </div>
-        </template>
+
         <!-- konten tab 1 -->
         <template #user>
           <div

@@ -62,8 +62,9 @@ function toggleLocale() {
       >
         <UButton
 
-          color="primary"
-          variant="subtle"
+          color="secondary"
+          variant="outline"
+
           square
           @click="toggleLocale"
         >

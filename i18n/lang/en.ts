@@ -6,6 +6,7 @@ export default {
   },
   hero: {
     description: 'Combining design creativity, programming expertise, and dedication in education.',
+    new: 'Latest Articles',
   },
   tabHome: {
     education: 'Education',
