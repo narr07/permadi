@@ -44,6 +44,30 @@ export default defineContentConfig({
         date: z.date(),
       }),
     }),
+    project_id: defineCollection({
+      type: 'page',
+      source: {
+        include: 'id/project/**',
+        prefix: '',
+      },
+      schema: z.object({
+        tags: z.array(z.string()),
+        image: z.string(),
+        date: z.date(),
+      }),
+    }),
+    project_en: defineCollection({
+      type: 'page',
+      source: {
+        include: 'en/project/**',
+        prefix: '',
+      },
+      schema: z.object({
+        tags: z.array(z.string()),
+        image: z.string(),
+        date: z.date(),
+      }),
+    }),
 
   },
 })

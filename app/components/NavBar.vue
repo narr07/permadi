@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router'
 
 const localePath = useLocalePath()
 const route = useRoute()
-
+const open = ref(false)
 function isActive(path: string): boolean {
   const localizedPath = localePath(path)
   return route.path === localizedPath || (localizedPath !== '/' && localizedPath !== '/en' && route.path.startsWith(`${localizedPath}/`))
@@ -12,6 +12,7 @@ function isActive(path: string): boolean {
 const menuItems = [
   { name: 'Home', path: '/', icon: 'hugeicons:home-03' },
   { name: 'Blog', path: '/blog', icon: 'hugeicons:book-04' },
+  { name: 'Project', path: '/project', icon: 'hugeicons:folder-check' },
 ]
 </script>
 
@@ -76,10 +77,49 @@ const menuItems = [
                 </UTooltip>
               </div>
             </div>
-            <div class="flex items-center space-x-2 ml-4">
-              <DocsSearchButton />
-              <LangToogle />
-              <ColorModeButton />
+
+            <div class="md:hidden ml-4">
+              <div
+                v-motion
+                :initial="{
+                  scale: 1,
+                }"
+                :hovered="{
+                  scale: 1,
+                }"
+                :tapped="{
+                  scale: 0.8,
+                }"
+              >
+                <UPopover v-model:open="open">
+                  <UButton
+                    :icon="open ? 'hugeicons:dashboard-square-03' : 'hugeicons:dashboard-square-01'"
+                    color="secondary"
+                    variant="outline"
+                    square
+                    aria-label="Menu"
+                    size="lg"
+                  />
+
+                  <template #content>
+                    <UCard>
+                      <div class="flex items-center flex-col space-y-2">
+                        <DocsSearchButton />
+                        <LangToogle />
+                        <ColorModeButton />
+                      </div>
+                    </UCard>
+                  </template>
+                </UPopover>
+              </div>
+            </div>
+
+            <div class="hidden md:block">
+              <div class="flex items-center space-x-2 ml-4">
+                <DocsSearchButton />
+                <LangToogle />
+                <ColorModeButton />
+              </div>
             </div>
           </div>
         </div>

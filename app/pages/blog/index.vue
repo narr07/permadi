@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const route = useRoute()
 const { locale } = useI18n()
+const { t } = useI18n()
 
 const { data: posts } = await useAsyncData(route.path, () => {
   return queryCollection(`blog_${locale.value}`)
@@ -11,20 +12,22 @@ const { data: posts } = await useAsyncData(route.path, () => {
 
 <template>
   <UContainer>
-    <h1
-      v-motion
-      :initial="{
-        opacity: 0,
-        y: 50,
-      }"
-      :visible="{
-        opacity: 1,
-        y: 0,
-      }"
-      class=" font-bold text-g4"
-    >
-      Blog
-    </h1>
+    <div class="py-8">
+      <h1
+        v-motion
+        :initial="{
+          opacity: 0,
+          y: 50,
+        }"
+        :visible="{
+          opacity: 1,
+          y: 0,
+        }"
+        class=" font-bold text-g4"
+      >
+        {{ t('blog.title') }}
+      </h1>
+    </div>
     <div class="grid grid-cols-1  gap-4">
       <div
         v-for="post in posts"
