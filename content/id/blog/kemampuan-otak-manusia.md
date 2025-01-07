@@ -1,13 +1,23 @@
 ---
 title: "Rahasia Otak Manusia: Mengupas Kemampuan Supernya yang Bikin Kagum"
-date: 2024-11-10T00:00:00.000Z
-description: Penasaran sama kemampuan otak manusia yang luar biasa? Yuk, kenali lebih dalam tentang anatomi, fungsi, hingga cara meningkatkan kinerja otak kamu biar makin optimal. Jangan lewatkan info menarik ini!
+date: 2024-11-10
+description: Penasaran sama kemampuan otak manusia yang luar biasa? Yuk, kenali
+  lebih dalam tentang anatomi, fungsi, hingga cara meningkatkan kinerja otak
+  kamu biar makin optimal. Jangan lewatkan info menarik ini!
 tags:
   - Pendidikan
 author: Dinar Permadi
 seo:
   title: "Rahasia Otak Manusia: Mengupas Kemampuan Supernya yang Bikin Kagum"
-  description: "Penasaran sama kemampuan otak manusia yang luar biasa? Yuk, kenali lebih dalam tentang anatomi, fungsi, hingga cara meningkatkan kinerja otak kamu biar makin optimal. Jangan lewatkan info menarik ini!"
+  description: Penasaran sama kemampuan otak manusia yang luar biasa? Yuk, kenali
+    lebih dalam tentang anatomi, fungsi, hingga cara meningkatkan kinerja otak
+    kamu biar makin optimal. Jangan lewatkan info menarik ini!
+navigation:
+  icon: hugeicons:book-04
+  title: "Rahasia Otak Manusia: Mengupas Kemampuan Supernya yang Bikin Kagum"
+  description: Penasaran sama kemampuan otak manusia yang luar biasa? Yuk, kenali
+    lebih dalam tentang anatomi, fungsi, hingga cara meningkatkan kinerja otak
+    kamu biar makin optimal. Jangan lewatkan info menarik ini!
 ---
 
 ## Kenalan Sama Otak Kita, si Mesin Super di Kepala
@@ -45,7 +55,7 @@ Otak kita itu nggak cuma jago mikir, lho. Dia juga jago ngerasain. Ada dua kemam
 
 ## Plastisitas Otak: Kemampuan Otak Buat Jadi Lebih Baik
 
-Salah satu hal paling keren dari otak manusia adalah *plastisitasnya*. Apa tuh? Plastisitas otak itu kemampuan otak buat terus belajar dan berubah. Jadi, meskipun kita udah dewasa, otak kita masih bisa berkembang. Misalnya, kamu belajar main gitar di umur 30-an, otak kamu bakal bikin koneksi baru biar kamu bisa main gitar dengan lancar. Keren banget, kan?
+Salah satu hal paling keren dari otak manusia adalah \_plastisitasnya\_. Apa tuh? Plastisitas otak itu kemampuan otak buat terus belajar dan berubah. Jadi, meskipun kita udah dewasa, otak kita masih bisa berkembang. Misalnya, kamu belajar main gitar di umur 30-an, otak kamu bakal bikin koneksi baru biar kamu bisa main gitar dengan lancar. Keren banget, kan?
 
 ---
 
