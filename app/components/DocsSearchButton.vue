@@ -1,36 +1,70 @@
+<!-- eslint-disable ts/no-use-before-define -->
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
-// const route = useRoute()
 const { locale } = useI18n()
 
-// const { data: page } = await useAsyncData(route.path, () => {
-//   return queryCollection(`content_${locale.value}`).first()
-// })
-// Mengambil data dari blog
-const { data: search } = await useAsyncData('search-data', () => queryCollectionSearchSections(`content_${locale.value}`))
+// Buat ref untuk menyimpan hasil pencarian
+interface SearchItem {
+  id: string
+  title: string
+  titles: string[]
+  level: number
+  content: string
+}
+
+const search = ref<SearchItem[]>([])
+
+// Fungsi untuk memperbarui data pencarian
+async function updateSearchData() {
+  const { data } = await useAsyncData(`search-data-${locale.value}`, () =>
+    queryCollectionSearchSections(`content_${locale.value}`))
+  search.value = data.value || []
+}
+
+// Panggil pertama kali
+await updateSearchData()
+
+// Watch perubahan locale dan update data pencarian
+watch(locale, async () => {
+  await updateSearchData()
+  // Update groups setelah data pencarian berubah
+  groups.value = [
+    {
+      id: 'blog',
+      label: 'Blog',
+      level: 1,
+      items: search.value.map(item => ({
+        label: item.title,
+        suffix: item.content,
+        to: `${item.id}`,
+        icon: 'ph:notebook-duotone',
+      })),
+    },
+  ]
+})
 
 const router = useRouter()
 const open = ref(false)
 
+// Gunakan computed untuk groups agar reaktif
 const groups = ref([
   {
     id: 'blog',
     label: 'Blog',
     level: 1,
-    items: (search.value || []).map(item => ({
-      label: item.title, // Judul blog
-      suffix: item.content, // ID atau slug untuk navigasi
-      to: `${item.id}`, // Menentukan rute untuk navigasi
-      icon: 'ph:notebook-duotone', // Ganti dengan ikon default
+    items: search.value.map(item => ({
+      label: item.title,
+      suffix: item.content,
+      to: `${item.id}`,
+      icon: 'ph:notebook-duotone',
     })),
   },
 ])
 
 const value = ref({})
 
-// Fungsi untuk menangani pemilihan item
 function onSelect(item: any) {
   if (item.onSelect) {
     item.onSelect()
@@ -40,10 +74,10 @@ function onSelect(item: any) {
       window.open(item.to, item.target || '_blank')
     }
     else {
-      router.push(item.to) // Menggunakan router untuk navigasi
+      router.push(item.to)
     }
   }
-  open.value = false // Menutup modal setelah pemilihan item
+  open.value = false
 }
 
 defineShortcuts({

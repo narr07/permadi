@@ -33,7 +33,6 @@ onMounted(() => {
 
 watch(selected, (newLanguage) => {
   setLocale(newLanguage.value)
-  console.log(locale.value, newLanguage.value)
 })
 
 function toggleLocale() {
