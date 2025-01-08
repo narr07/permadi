@@ -28,6 +28,9 @@ const { data: posts } = await useAsyncData(route.path, () => {
         {{ t('blog.title') }}
       </h1>
     </div>
+    <div class="py-4">
+      <Tags />
+    </div>
     <div class="grid grid-cols-1  gap-4">
       <div
         v-for="post in posts"

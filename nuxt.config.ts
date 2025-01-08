@@ -72,8 +72,7 @@ export default defineNuxtConfig({
       pathMeta: { forceLeadingSlash: true },
       markdown: {
         toc: {
-          depth: 4,
-          searchDepth: 4,
+          depth: 3,
         },
         highlight: {
           // Theme used in all color schemes.
