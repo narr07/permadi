@@ -17,4 +17,7 @@ export default {
   blog: {
     title: 'Articles Collection',
   },
+  project: {
+    title: 'Projects Collection',
+  },
 }

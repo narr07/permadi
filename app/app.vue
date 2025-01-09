@@ -1,6 +1,7 @@
 <template>
   <div>
     <UApp>
+      <NuxtLoadingIndicator color="primary" />
       <NuxtRouteAnnouncer />
       <NavBar />
       <div class="py-[70px]">

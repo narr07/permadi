@@ -17,4 +17,7 @@ export default {
   blog: {
     title: 'Kumpulan Artikel ',
   },
+  project: {
+    title: 'Kumpulan Projek',
+  },
 }

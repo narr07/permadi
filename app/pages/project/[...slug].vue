@@ -74,7 +74,7 @@ const open = ref(true)
                     <NuxtLink
                       class="line-clamp-1 block transition-colors"
                       :class="{
-                        'text-yellow-800': activeHeadings.includes(link.id),
+                        'text-permadi-950': activeHeadings.includes(link.id),
                       }"
                       :to="`#${link.id}`"
                       @click.prevent="scrollToHeading(link.id)"
