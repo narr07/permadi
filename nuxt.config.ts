@@ -106,9 +106,9 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
   },
   site: {
-    url: 'https://permadi.nuxt.dev',
-    name: 'Dinar Peradi Yusup',
-    description: 'Dinar Peradi Yusup is a teacher, software engineer, writer, and designer. He is passionate about web development, design, and technology.',
+    url: 'https://permadi.dev',
+    name: 'Dinar Permadi Yusup',
+    description: 'Dinar Permadi Yusup is a teacher, software engineer, writer, and designer. He is passionate about web development, design, and technology.',
     defaultLocale: 'id', // not needed if you have @nuxtjs/i18n installed
   },
   compatibilityDate: '2024-11-27',

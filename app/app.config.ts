@@ -1,8 +1,19 @@
 export default defineAppConfig({
+  profile: {
+    name: 'Dinar Permadi Yusup',
+    job: 'Teacher, Programmer and Designer',
+    email: 'dinarpermadi07@gmail.com',
+    phone: '+6285721340777',
+    picture: 'https://avatars.githubusercontent.com/u/71938701?v=4',
+  },
   socials: {
-    twitter: '',
-    github: '',
-    mastodon: '',
+    github: 'https://github.com/narr07',
+    twitter: 'https://twitter.com/narr_permadi',
+    linkedin: 'https://linkedin.com/in/narr07',
+    instagram: 'https://instagram.com/narr07',
+    facebook: 'https://facebook.com/narr07',
+    behance: 'https://behance.net/narr07',
+    whatsapp: 'https://wa.me/6285721340777',
   },
   // https://ui3.nuxt.dev/getting-started/theme#design-system
   ui: {
