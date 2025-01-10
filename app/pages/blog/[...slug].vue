@@ -88,7 +88,7 @@ const open = ref(true)
                         <NuxtLink
                           class="line-clamp-1 block text-sm transition-colors"
                           :class="{
-                            'text-permadi-900': activeHeadings.includes(child.id),
+                            'text-yellow-700': activeHeadings.includes(child.id),
                           }"
                           :to="`#${child.id}`"
                           @click.prevent="scrollToHeading(child.id)"
@@ -135,7 +135,7 @@ const open = ref(true)
                       <NuxtLink
                         class="line-clamp-1 block transition-colors"
                         :class="{
-                          'text-permadi-950': activeHeadings.includes(link.id),
+                          'text-yellow-800': activeHeadings.includes(link.id),
                         }"
                         :to="`#${link.id}`"
                         @click.prevent="scrollToHeading(link.id)"
@@ -149,7 +149,7 @@ const open = ref(true)
                           <NuxtLink
                             class="line-clamp-1 block text-sm transition-colors"
                             :class="{
-                              'text-permadi-900': activeHeadings.includes(child.id),
+                              'text-yellow-700': activeHeadings.includes(child.id),
                             }"
                             :to="`#${child.id}`"
                             @click.prevent="scrollToHeading(child.id)"

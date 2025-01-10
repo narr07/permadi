@@ -35,12 +35,27 @@ watch(locale, async () => {
       id: 'blog',
       label: 'Blog',
       level: 1,
-      items: search.value.map(item => ({
-        label: item.title,
-        suffix: item.content,
-        to: `${item.id}`,
-        icon: 'ph:notebook-duotone',
-      })),
+      items: search.value
+        .filter(item => item.id.startsWith('/blog')) // Filter untuk grup blog
+        .map(item => ({
+          label: item.title,
+          suffix: item.content,
+          to: `${item.id}`,
+          icon: 'ph:notebook-duotone',
+        })),
+    },
+    {
+      id: 'project',
+      label: 'Project',
+      level: 1,
+      items: search.value
+        .filter(item => item.id.startsWith('/project')) // Filter untuk grup project
+        .map(item => ({
+          label: item.title,
+          suffix: item.content,
+          to: `${item.id}`,
+          icon: 'hugeicons:folder-check',
+        })),
     },
   ]
 })
@@ -54,12 +69,27 @@ const groups = ref([
     id: 'blog',
     label: 'Blog',
     level: 1,
-    items: search.value.map(item => ({
-      label: item.title,
-      suffix: item.content,
-      to: `${item.id}`,
-      icon: 'ph:notebook-duotone',
-    })),
+    items: search.value
+      .filter(item => item.id.startsWith('/blog')) // Filter untuk grup blog
+      .map(item => ({
+        label: item.title,
+        suffix: item.content,
+        to: `${item.id}`,
+        icon: 'ph:notebook-duotone',
+      })),
+  },
+  {
+    id: 'project',
+    label: 'Project',
+    level: 1,
+    items: search.value
+      .filter(item => item.id.startsWith('/project')) // Filter untuk grup project
+      .map(item => ({
+        label: item.title,
+        suffix: item.content,
+        to: `${item.id}`,
+        icon: 'hugeicons:folder-check',
+      })),
   },
 ])
 
@@ -115,7 +145,7 @@ defineShortcuts({
           root: 'flex flex-col min-h-0 min-w-0 divide-y divide-[var(--ui-border)]',
         }"
         :fuse="{
-          resultLimit: 10,
+          resultLimit: 5,
           matchAllWhenSearchEmpty: true,
           fuseOptions: { includeMatches: true },
         }"

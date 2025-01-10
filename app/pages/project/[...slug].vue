@@ -9,8 +9,8 @@ const { locale } = useI18n()
 
 const slug = computed(() => withLeadingSlash(String(route.params.slug)))
 
-const { data: page } = await useAsyncData(`page-${slug.value}`, async () => {
-  const collection = (`blog_${locale.value}`) as keyof Collections
+const { data: projectPage } = await useAsyncData(`page-${slug.value}`, async () => {
+  const collection = (`project_${locale.value}`) as keyof Collections
   const content = await queryCollection(collection).path(slug.value).first()
   return content
 }, {
@@ -38,8 +38,8 @@ function scrollToHeading(id: string) {
   }
 }
 
-if (page?.value?.seo) {
-  useSeoMeta(page.value.seo)
+if (projectPage?.value?.seo) {
+  useSeoMeta(projectPage.value.seo)
 }
 const open = ref(true)
 </script>
@@ -50,9 +50,9 @@ const open = ref(true)
     <div class="md:flex-row flex-col flex gap-2">
       <div class="md:w-3/4">
         <UCard class="mb-2">
-          <div v-if="page" :value="page">
+          <div v-if="projectPage" :value="projectPage">
             <h1 class="text-g3">
-              {{ page.title }}
+              {{ projectPage.title }}
             </h1>
           </div>
         </UCard>
@@ -69,7 +69,7 @@ const open = ref(true)
             <template #content>
               <div class="py-4">
                 <ul class="space-y-2">
-                  <li v-for="link in page?.body?.toc?.links" :key="link.id">
+                  <li v-for="link in projectPage?.body?.toc?.links" :key="link.id">
                     <!-- Parent heading -->
                     <NuxtLink
                       class="line-clamp-1 block transition-colors"
@@ -106,7 +106,7 @@ const open = ref(true)
         <!-- Konten -->
         <UCard>
           <div class="prose dark:prose-invert prose-sm drop max-w-6xl mx-auto prose-permadi">
-            <ContentRenderer v-if="page" :value="page" />
+            <ContentRenderer v-if="projectPage" :value="projectPage" />
           </div>
         </UCard>
       </div>
@@ -130,7 +130,7 @@ const open = ref(true)
               <template #content>
                 <div class="py-4">
                   <ul class="space-y-2">
-                    <li v-for="link in page?.body?.toc?.links" :key="link.id">
+                    <li v-for="link in projectPage?.body?.toc?.links" :key="link.id">
                       <!-- Parent heading -->
                       <NuxtLink
                         class="line-clamp-1 block transition-colors"

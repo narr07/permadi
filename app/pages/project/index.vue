@@ -3,8 +3,8 @@ const route = useRoute()
 const { locale } = useI18n()
 const { t } = useI18n()
 
-const { data: posts } = await useAsyncData(route.path, () => {
-  return queryCollection(`blog_${locale.value}`)
+const { data: projects } = await useAsyncData(route.path, () => {
+  return queryCollection(`project_${locale.value}`)
     .order('date', 'DESC')
     .all()
 })
@@ -31,8 +31,8 @@ const { data: posts } = await useAsyncData(route.path, () => {
 
     <div class="grid grid-cols-1  gap-4">
       <div
-        v-for="post in posts"
-        :key="post.id"
+        v-for="content in projects"
+        :key="content.id"
         v-motion
         :initial="{
           opacity: 0,
@@ -43,11 +43,11 @@ const { data: posts } = await useAsyncData(route.path, () => {
           y: 0,
         }"
       >
-        <NuxtLink :to="`blog${post.path}`">
+        <NuxtLink :to="`project${content.path}`">
           <UCard class="h-full hover:bg-yellow   duration-100 ease-in-out dark:hover:bg-permadi-700 ">
             <div class="flex flex-col p-2 h-full justify-between ">
               <h2 class="text-g2 line-clamp-2    text-balance font-semibold">
-                {{ post.title }}
+                {{ content.title }}
               </h2>
             </div>
             <template #header>
