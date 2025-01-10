@@ -1,6 +1,7 @@
 ---
 title: "Website SDN Teja II"
 date: 2023-05-10
+image: https://placehold.co/600x400
 description: Website resmi SDN Teja II yang dibangun menggunakan Nuxt3.
 tags:
   - Website

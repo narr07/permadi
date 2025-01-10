@@ -1,6 +1,7 @@
 ---
 title: "SDN Teja II Website"
 date: 2023-05-10
+image: https://placehold.co/600x400
 description: Official website of SDN Teja II built using Nuxt3.
 tags:
   - Website

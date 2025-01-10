@@ -1,6 +1,10 @@
+<script setup lang="ts">
+const { locale, locales } = useI18n()
+</script>
+
 <template>
   <div>
-    <UApp>
+    <UApp :locale="locales[locale]">
       <NuxtLoadingIndicator color="primary" />
       <NuxtRouteAnnouncer />
       <NavBar />

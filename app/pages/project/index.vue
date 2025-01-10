@@ -29,7 +29,7 @@ const { data: projects } = await useAsyncData(route.path, () => {
       </h1>
     </div>
 
-    <div class="grid grid-cols-1  gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-3  gap-4">
       <div
         v-for="content in projects"
         :key="content.id"
@@ -51,7 +51,16 @@ const { data: projects } = await useAsyncData(route.path, () => {
               </h2>
             </div>
             <template #header>
-              INI FOT
+              <NuxtImg
+                :src="content.image"
+                :alt="content.title"
+                format="webp"
+                width="800"
+                height="600"
+                loading="lazy"
+                decoding="async"
+                class="object-cover w-full rounded h-48"
+              />
             </template>
           </UCard>
         </NuxtLink>
