@@ -215,6 +215,14 @@ const tabitems = [
 
         :items="tabitems"
       >
+        <template #default="{ item }">
+          <div class="flex items-center gap-1 relative truncate">
+            <span class="sr-only">
+
+              {{ item.slot }}
+            </span>
+          </div>
+        </template>
         <!-- tombol tab -->
 
         <!-- konten tab 1 -->

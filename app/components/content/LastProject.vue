@@ -1,3 +1,4 @@
+<!-- app/components/content/LastProject.vue -->
 <script setup lang="ts">
 const route = useRoute()
 const { locale } = useI18n()
@@ -6,6 +7,8 @@ const { locale } = useI18n()
 const { data: lastProject } = await useAsyncData(route.path, () => {
   return queryCollection(`project_${locale.value}`).first()
 })
+
+console.log(lastProject) // Untuk LastProject
 </script>
 
 <template>
