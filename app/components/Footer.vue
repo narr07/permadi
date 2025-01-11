@@ -7,19 +7,22 @@ const socialIcon = [
   { name: 'Linkedin', url: socials.linkedin, icon: 'fa6-brands:linkedin' },
   { name: 'Facebook', url: socials.facebook, icon: 'fa6-brands:square-facebook' },
   { name: 'Instagram', url: socials.instagram, icon: 'fa6-brands:instagram' },
-  { name: 'Whatsapp', url: socials.whatsapp, icon: 'fa6-brands:whatsapp' },
   { name: 'Behance', url: socials.behance, icon: 'fa6-brands:square-behance' },
+  { name: 'Whatsapp', url: socials.whatsapp, icon: 'fa6-brands:whatsapp' },
 ]
 </script>
 
 <template>
   <UContainer>
-    <UCard>
-      <div class="flex flex-row space-y-4 justify-between items-center">
-        <div class="flex items-center">
-          coppy right Dinar Permadi
+    <UCard class="mt-16 bg-yellow-500 ring-2 dark:ring-permadi-600 ring-permadi-900 dark:bg-permadi-700  rounded">
+      <!-- Flex container untuk menyelaraskan teks dan ikon secara horizontal -->
+      <div class="flex flex-col md:flex-row  justify-between items-center">
+        <!-- Teks yang di kiri -->
+        <div class="flex items-center mb-4 md:mb-0 justify-center text-center">
+          © 2024, narr07 - All rights reserved.
         </div>
-        <div class="flex flex-row space-x-2">
+        <!-- Ikon sosial yang terletak di kanan -->
+        <div class="flex flex-row space-x-4">
           <div v-for="(icon, index) in socialIcon" :key="index">
             <UButton
               :href="icon.url"

@@ -243,7 +243,9 @@ const tabitems = [
               class="my-auto flex-grow h-full p-2"
             >
               <div>
-                {{ $t('tabHome.eduText') }}
+                <p class=" text-balance">
+                  {{ $t('tabHome.eduText') }}
+                </p>
               </div>
             </UCard>
           </div>

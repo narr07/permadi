@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     '@vueuse/motion/nuxt',
     '@nuxtjs/i18n',
     'nuxt-seo-utils',
+    '@nuxt/scripts',
   ],
   experimental: {
     componentIslands: true,
@@ -110,6 +111,16 @@ export default defineNuxtConfig({
     name: 'Dinar Permadi Yusup',
     description: 'Dinar Permadi Yusup is a teacher, software engineer, writer, and designer. He is passionate about web development, design, and technology.',
     defaultLocale: 'id', // not needed if you have @nuxtjs/i18n installed
+  },
+  scripts: {
+    registry: {
+      googleAnalytics: {
+        id: 'G-5LEXR84KHW',
+      },
+      googleTagManager: {
+        id: 'GTM-5XT2J2S5',
+      },
+    },
   },
   compatibilityDate: '2024-11-27',
 })

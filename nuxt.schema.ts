@@ -92,6 +92,13 @@ export default defineNuxtSchema({
           icon: 'lucide:behance',
           default: 'https://www.behance.net/myusername',
         }),
+        whatsapp: field({
+          type: 'string',
+          title: 'Behance',
+          description: 'Your Behance account.',
+          icon: 'lucide:behance',
+          default: 'https://www.behance.net/myusername',
+        }),
       },
     }),
   },

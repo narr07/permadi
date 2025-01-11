@@ -1,14 +1,17 @@
 <script setup lang="ts">
-const { locale, locales } = useI18n()
+import * as locales from '@nuxt/ui/locale'
+
+const { locale } = useI18n()
 </script>
 
 <template>
   <div>
-    <UApp :locale="locales[locale]">
-      <NuxtLoadingIndicator color="primary" />
+    <Pattern />
+    <UApp :locale="locales[locale as keyof typeof locales]">
+      <NuxtLoadingIndicator color="#F9BC60" />
       <NuxtRouteAnnouncer />
       <NavBar />
-      <div class="py-[70px]">
+      <div class="pt-[70px]">
         <NuxtPage />
       </div>
 
