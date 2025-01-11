@@ -1,10 +1,12 @@
-<!-- eslint-disable no-console -->
 <script setup lang="ts">
 const route = useRoute()
 const { slug } = route.params
 const localePath = useLocalePath()
 
+// Mengubah slug menjadi array jika itu adalah string yang dipisahkan koma
 const filter = Array.isArray(slug) ? slug : slug?.split(',')
+
+// Log untuk debugging
 console.log({ filter })
 
 const { locale } = useI18n()
@@ -15,6 +17,7 @@ const { data: tags } = await useAsyncData(route.path, () => {
     .where('tags', 'IN', filter)
     .all()
 })
+console.log({ tags })
 </script>
 
 <template>
@@ -29,8 +32,11 @@ const { data: tags } = await useAsyncData(route.path, () => {
         </p>
       </div>
     </header>
+
     <section class="page-section">
+      <!-- Komponen Tags jika ada -->
       <Tags />
+
       <ul class="article-list">
         <li v-for="article in tags" :key="article.path" class="article-item">
           <NuxtLink :to="localePath(`/blog${article.path}`)">
@@ -52,6 +58,7 @@ const { data: tags } = await useAsyncData(route.path, () => {
           </NuxtLink>
         </li>
       </ul>
+
       <p v-if="!tags?.length">
         No tags found.
       </p>

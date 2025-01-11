@@ -1,6 +1,6 @@
 ---
 title: "The Impact of Nutritious Food on the Learning Ability of Elementary School Students"
-date: 2024-11-10
+date: 2025-01-10
 description: Nutritious food has a significant impact on the learning ability of elementary school students. Learn how healthy eating habits and school food policies can support their academic performance and health.
 tags:
   - Healthy Nutrition

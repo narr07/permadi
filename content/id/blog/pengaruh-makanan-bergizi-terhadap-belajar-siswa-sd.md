@@ -1,6 +1,6 @@
 ---
 title: "Pengaruh Makanan Bergizi Terhadap Kemampuan Belajar Siswa SD"
-date: 2024-11-10
+date: 2025-01-10
 description: Makanan bergizi punya dampak besar terhadap kemampuan belajar siswa SD. Pelajari bagaimana pola makan sehat dan kebijakan makanan sehat di sekolah dapat mendukung prestasi akademik dan kesehatan mereka.
 tags:
   - Gizi Sehat
