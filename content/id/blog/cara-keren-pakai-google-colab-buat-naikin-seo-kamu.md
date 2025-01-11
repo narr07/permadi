@@ -8,10 +8,6 @@ author: Dinar Permadi
 seo:
   title: "Cara Keren Pakai Google Colab Buat Naikin SEO Kamu!"
   description: Mau tahu cara gampang dan kekinian buat ningkatin SEO situsmu? Yuk, simak cara-cara seru pakai Google Colab! Dari analisis kata kunci sampai audit konten, semua bisa kamu lakukan dengan platform ini. Baca sekarang dan bawa situsmu ke level selanjutnya!
-navigation:
-  icon: hugeicons:book-04
-  title: "Cara Keren Pakai Google Colab Buat Naikin SEO Kamu!"
-  description: Mau tahu cara gampang dan kekinian buat ningkatin SEO situsmu? Yuk, simak cara-cara seru pakai Google Colab! Dari analisis kata kunci sampai audit konten, semua bisa kamu lakukan dengan platform ini. Baca sekarang dan bawa situsmu ke level selanjutnya!
 ---
 
 ## Pendahuluan:

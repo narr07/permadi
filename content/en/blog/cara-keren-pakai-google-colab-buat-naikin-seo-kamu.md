@@ -8,10 +8,6 @@ author: Dinar Permadi
 seo:
   title: "How to use Google Colab to boost your SEO!"
   description: Want to know how to improve your site's SEO? Check out these fun ways to use Google Colab! From keyword analysis to content audits, you can do it all with this platform. Read now and take your site to the next level!
-navigation:
-  icon: hugeicons:book-04
-  title: "How to use Google Colab to boost your SEO!"
-  description: Want to know how to improve your site's SEO? Check out these fun ways to use Google Colab! From keyword analysis to content audits, you can do it all with this platform. Read now and take your site to the next level!
 ---
 
 ## Introduction:

@@ -12,12 +12,6 @@ seo:
   description: Penasaran sama kemampuan otak manusia yang luar biasa? Yuk, kenali
     lebih dalam tentang anatomi, fungsi, hingga cara meningkatkan kinerja otak
     kamu biar makin optimal. Jangan lewatkan info menarik ini!
-navigation:
-  icon: hugeicons:book-04
-  title: "Rahasia Otak Manusia: Mengupas Kemampuan Supernya yang Bikin Kagum"
-  description: Penasaran sama kemampuan otak manusia yang luar biasa? Yuk, kenali
-    lebih dalam tentang anatomi, fungsi, hingga cara meningkatkan kinerja otak
-    kamu biar makin optimal. Jangan lewatkan info menarik ini!
 ---
 
 ## Kenalan Sama Otak Kita, si Mesin Super di Kepala

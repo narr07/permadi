@@ -12,12 +12,6 @@ seo:
   description: Are you curious about the amazing capabilities of the human brain?
     Let's get to know more about the anatomy, functions, and how to improve your
     brain performance to make it more optimal. Don't miss this interesting info!
-navigation:
-  title: "Secrets of the Human Brain: Uncovering Its Astonishing Superpowers"
-  description: Are you curious about the amazing capabilities of the human brain?
-    Let's get to know more about the anatomy, functions, and how to improve your
-    brain performance to make it more optimal. Don't miss this interesting info!
-  icon: hugeicons:book-04
 ---
 
 ### Get to know our brain, the super machine in our head
