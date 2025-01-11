@@ -1,16 +1,23 @@
 ---
-title: "The Impact of Nutritious Food on the Learning Ability of Elementary School Students"
+title: The Impact of Nutritious Food on the Learning Ability of Elementary
+  School Students
 date: 2025-01-10
-description: Nutritious food has a significant impact on the learning ability of elementary school students. Learn how healthy eating habits and school food policies can support their academic performance and health.
+description: Nutritious food has a significant impact on the learning ability of
+  elementary school students. Learn how healthy eating habits and school food
+  policies can support their academic performance and health.
 tags:
   - Healthy Nutrition
   - Education
   - Child Health
 author: Dinar Permadi
 seo:
-  title: "The Impact of Nutritious Food on the Learning Ability of Elementary School Students"
-  description: Nutritious food has a significant impact on the learning ability of elementary school students. Learn how healthy eating habits and school food policies can support their academic performance and health.
-  keywords: nutritious food, learning ability, elementary students, healthy eating habits, academic performance
+  title: The Impact of Nutritious Food on the Learning Ability of Elementary
+    School Students
+  description: Nutritious food has a significant impact on the learning ability of
+    elementary school students. Learn how healthy eating habits and school food
+    policies can support their academic performance and health.
+  keywords: nutritious food, learning ability, elementary students, healthy eating
+    habits, academic performance
 ---
 
 ## The Impact of Nutritious Food on Elementary School Students' Learning Abilities
@@ -23,7 +30,7 @@ Research conducted in various countries shows that nutrition interventions in sc
 
 One of the most crucial factors in building healthy eating habits is nutrition education. Many students lack adequate knowledge about the importance of eating healthy, which often affects their daily food choices. Therefore, nutrition education programs in schools are essential to improve students' understanding of nutrition.
 
-Nutrition education programs in elementary schools, such as the use of educational media (like vegetable cards or healthy eating guides) and interactive programs like **"Nutrition Detectives,"** have been proven effective in increasing knowledge about healthy food. These programs teach students how to choose nutritious foods, how to read food labels, and the importance of eating enough fruits, vegetables, and dairy products. Through proper education, students can more easily understand and apply healthy eating habits in their daily lives.
+Nutrition education programs in elementary schools, such as the use of educational media (like vegetable cards or healthy eating guides) and interactive programs like \*\*"Nutrition Detectives,"\*\* have been proven effective in increasing knowledge about healthy food. These programs teach students how to choose nutritious foods, how to read food labels, and the importance of eating enough fruits, vegetables, and dairy products. Through proper education, students can more easily understand and apply healthy eating habits in their daily lives.
 
 This knowledge not only benefits students but also helps parents provide healthier meals at home. With better nutrition knowledge, students are expected to make better food choices, which will improve their overall well-being and support their learning success.
 
@@ -55,7 +62,7 @@ Research also shows that students with healthy eating habits are more likely to 
 
 For the benefits of nutritious food to be experienced by all students, it is crucial to have structured and consistent policies and programs in elementary schools. Governments and school authorities must work together to develop policies that support the provision of healthy meals, along with nutrition education programs that introduce students to the concept of healthy eating from an early age.
 
-These policies can include providing healthy meals in cafeterias, offering nutrition education to students and parents, and promoting healthy eating habits that students can follow outside of school. Programs like **"Nutrition Detectives,"** which use interactive media and experience-based learning, are also important in helping students understand the importance of nutrition and how they can make healthier food choices in their daily lives.
+These policies can include providing healthy meals in cafeterias, offering nutrition education to students and parents, and promoting healthy eating habits that students can follow outside of school. Programs like \*\*"Nutrition Detectives,"\*\* which use interactive media and experience-based learning, are also important in helping students understand the importance of nutrition and how they can make healthier food choices in their daily lives.
 
 ## Conclusion
 
@@ -65,22 +72,13 @@ By ensuring that healthy food is available in schools, we can create a better en
 
 ## Sumber
 
-1. Firza, M., Safitri, S., Saeed, H., & Peace, O. (2022). A Touch of Culture in Learning: Teaching Materials My Food is Healthy and Nutritious for Elementary School. Journal of Basic Education Research. https://doi.org/10.37251/jber.v3i3.894.
-
-2. Lanita, U. (2024). The Effect Of Healthy Snacks Education On Students' Knowledge. International Journal of Medicine and Health. https://doi.org/10.55606/ijmh.v3i1.2670.
-
-3. Cole, N., Bahnfleth, C., Kingshipp, B., Scinto-Madonich, S., Butera, G., & Spahn, J. (2022). School-Based Strategies to Improve Acceptance of Healthier Foods and Dietary Patterns in Elementary School Students: A Rapid Review. Current Developments in Nutrition, 6, 827 - 827. https://doi.org/10.1093/cdn/nzac065.011.
-
-4. Doustmohammadian, A., Omidvar, N., & Shakibazadeh, E. (2020). School-based interventions for promoting food and nutrition literacy (FNLIT) in elementary school children: a systematic review protocol. Systematic Reviews, 9. https://doi.org/10.1186/s13643-020-01339-0.
-
-5. Peralta, L., Dudley, D., & Cotton, W. (2016). Teaching Healthy Eating to Elementary School Students: A Scoping Review of Nutrition Education Resources.. The Journal of school health, 86 5, 334-45 . https://doi.org/10.1111/josh.12382.
-
-6. Budiyanto, M. (2019). The Implementation of Daily Feeding Policy in Malang Elementary School. Proceedings of the 6th International Conference on Community Development (ICCD 2019). https://doi.org/10.2991/iccd-19.2019.88.
-
-7. Guglielmo, D., Chantaprasopsuk, S., Kay, C., Hyde, E., Stewart, C., & Gazmararian, J. (2020). Nutrition Policies, Practices, and Environments in Low-Income Georgia Elementary Schools, United States, 2015-2017.. The Journal of school health. https://doi.org/10.1111/josh.12874.
-
-8. Au, L., Rosen, N., Fenton, K., Hecht, K., & Ritchie, L. (2016). Eating School Lunch Is Associated with Higher Diet Quality among Elementary School Students.. Journal of the Academy of Nutrition and Dietetics, 116 11, 1817-1824 . https://doi.org/10.1016/j.jand.2016.04.010.
-
-9. Katz, D., Katz, C., Treu, J., Reynolds, J., Njike, V., Walker, J., Smith, E., & Michael, J. (2011). Teaching healthful food choices to elementary school students and their parents: the Nutrition Detectives™ program.. The Journal of school health, 81 1, 21-8 . https://doi.org/10.1111/j.1746-1561.2010.00553.x.
-
-10. Fadhilah, D., Hartini, T., & Gunawan, M. (2017). Efektifitas Penyuluhan tentang Sayuran Menggunakan Media “Kartu Sayuran” terhadap Peningkatan Pengetahuan Siswa Sekolah Dasar. , 19, 100-105. https://doi.org/10.29238/JNUTRI.V19I2.18.
+1. Firza, M., Safitri, S., Saeed, H., & Peace, O. (2022). A Touch of Culture in Learning: Teaching Materials My Food is Healthy and Nutritious for Elementary School. Journal of Basic Education Research. <https://doi.org/10.37251/jber.v3i3.894>.
+2. Lanita, U. (2024). The Effect Of Healthy Snacks Education On Students' Knowledge. International Journal of Medicine and Health. <https://doi.org/10.55606/ijmh.v3i1.2670>.
+3. Cole, N., Bahnfleth, C., Kingshipp, B., Scinto-Madonich, S., Butera, G., & Spahn, J. (2022). School-Based Strategies to Improve Acceptance of Healthier Foods and Dietary Patterns in Elementary School Students: A Rapid Review. Current Developments in Nutrition, 6, 827 - 827. <https://doi.org/10.1093/cdn/nzac065.011>.
+4. Doustmohammadian, A., Omidvar, N., & Shakibazadeh, E. (2020). School-based interventions for promoting food and nutrition literacy (FNLIT) in elementary school children: a systematic review protocol. Systematic Reviews, 9. <https://doi.org/10.1186/s13643-020-01339-0>.
+5. Peralta, L., Dudley, D., & Cotton, W. (2016). Teaching Healthy Eating to Elementary School Students: A Scoping Review of Nutrition Education Resources.. The Journal of school health, 86 5, 334-45 . <https://doi.org/10.1111/josh.12382>.
+6. Budiyanto, M. (2019). The Implementation of Daily Feeding Policy in Malang Elementary School. Proceedings of the 6th International Conference on Community Development (ICCD 2019). <https://doi.org/10.2991/iccd-19.2019.88>.
+7. Guglielmo, D., Chantaprasopsuk, S., Kay, C., Hyde, E., Stewart, C., & Gazmararian, J. (2020). Nutrition Policies, Practices, and Environments in Low-Income Georgia Elementary Schools, United States, 2015-2017.. The Journal of school health. <https://doi.org/10.1111/josh.12874>.
+8. Au, L., Rosen, N., Fenton, K., Hecht, K., & Ritchie, L. (2016). Eating School Lunch Is Associated with Higher Diet Quality among Elementary School Students.. Journal of the Academy of Nutrition and Dietetics, 116 11, 1817-1824 . <https://doi.org/10.1016/j.jand.2016.04.010>.
+9. Katz, D., Katz, C., Treu, J., Reynolds, J., Njike, V., Walker, J., Smith, E., & Michael, J. (2011). Teaching healthful food choices to elementary school students and their parents: the Nutrition Detectives™ program.. The Journal of school health, 81 1, 21-8 . <https://doi.org/10.1111/j.1746-1561.2010.00553.x>.
+10. Fadhilah, D., Hartini, T., & Gunawan, M. (2017). Efektifitas Penyuluhan tentang Sayuran Menggunakan Media “Kartu Sayuran” terhadap Peningkatan Pengetahuan Siswa Sekolah Dasar. , 19, 100-105. <https://doi.org/10.29238/JNUTRI.V19I2.18>.

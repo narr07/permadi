@@ -1,16 +1,21 @@
 ---
-title: "Pengaruh Makanan Bergizi Terhadap Kemampuan Belajar Siswa SD"
+title: Pengaruh Makanan Bergizi Terhadap Kemampuan Belajar Siswa SD
 date: 2025-01-10
-description: Makanan bergizi punya dampak besar terhadap kemampuan belajar siswa SD. Pelajari bagaimana pola makan sehat dan kebijakan makanan sehat di sekolah dapat mendukung prestasi akademik dan kesehatan mereka.
+description: Makanan bergizi punya dampak besar terhadap kemampuan belajar siswa
+  SD. Pelajari bagaimana pola makan sehat dan kebijakan makanan sehat di sekolah
+  dapat mendukung prestasi akademik dan kesehatan mereka.
 tags:
   - Gizi Sehat
   - Pendidikan
   - Kesehatan Anak
 author: Dinar Permadi
 seo:
-  title: "Pengaruh Makanan Bergizi Terhadap Kemampuan Belajar Siswa SD"
-  description: Makanan bergizi punya dampak besar terhadap kemampuan belajar siswa SD. Pelajari bagaimana pola makan sehat dan kebijakan makanan sehat di sekolah dapat mendukung prestasi akademik dan kesehatan mereka.
-  keywords: makanan bergizi, kemampuan belajar, siswa SD, pola makan sehat, prestasi akademik
+  title: Pengaruh Makanan Bergizi Terhadap Kemampuan Belajar Siswa SD
+  description: Makanan bergizi punya dampak besar terhadap kemampuan belajar siswa
+    SD. Pelajari bagaimana pola makan sehat dan kebijakan makanan sehat di
+    sekolah dapat mendukung prestasi akademik dan kesehatan mereka.
+  keywords: makanan bergizi, kemampuan belajar, siswa SD, pola makan sehat,
+    prestasi akademik
 ---
 
 ## Pengaruh Makanan Bergizi Terhadap Kemampuan Belajar Siswa SD
@@ -23,7 +28,7 @@ Banyak penelitian yang nunjukin kalau intervensi gizi di sekolah itu bisa member
 
 Salah satu hal penting buat membangun pola makan sehat adalah edukasi soal gizi. Banyak anak yang nggak tahu banyak soal pentingnya makan makanan yang bergizi, jadi nggak heran kalau kadang mereka asal makan aja. Makanya, penting banget buat ada program pendidikan gizi di sekolah supaya anak-anak tahu apa itu makan sehat.
 
-Contohnya, ada program-program pendidikan gizi yang udah terbukti efektif, seperti penggunaan media edukatif (misalnya kartu sayuran atau panduan makan sehat), dan program interaktif seperti **"Nutrition Detectives"** yang ngajarin anak-anak gimana cara pilih makanan sehat, cara baca label gizi, dan kenapa penting banget makan buah, sayur, dan produk susu. Dengan pendidikan yang tepat, anak-anak bisa lebih gampang ngerti dan menerapkan pola makan sehat sehari-hari.
+Contohnya, ada program-program pendidikan gizi yang udah terbukti efektif, seperti penggunaan media edukatif (misalnya kartu sayuran atau panduan makan sehat), dan program interaktif seperti &#x2A;*"Nutrition Detectives"** yang ngajarin anak-anak gimana cara pilih makanan sehat, cara baca label gizi, dan kenapa penting banget makan buah, sayur, dan produk susu. Dengan pendidikan yang tepat, anak-anak bisa lebih gampang ngerti dan menerapkan pola makan sehat sehari-hari.
 
 Pengetahuan ini nggak cuma bantu anak-anak, tapi juga orang tua mereka biar bisa nyiapin makanan sehat di rumah. Dengan semakin banyak tahu tentang gizi, diharapkan anak-anak bisa lebih bijak memilih makanan yang lebih sehat, yang ujung-ujungnya bakal bikin mereka lebih sehat dan tentunya lebih fokus dalam belajar.
 
@@ -55,7 +60,7 @@ Banyak juga penelitian yang menunjukkan kalau anak-anak dengan pola makan sehat 
 
 Agar manfaat makanan bergizi bisa terasa oleh semua siswa, penting banget ada kebijakan dan program yang terstruktur di sekolah-sekolah dasar. Pemerintah dan pihak sekolah harus kerja bareng buat bikin kebijakan yang mendukung penyediaan makanan sehat, serta program pendidikan gizi yang ngajarin anak-anak tentang pola makan sehat sejak dini.
 
-Kebijakan ini bisa mencakup banyak hal, dari penyediaan makanan sehat di kantin, penyuluhan gizi untuk siswa dan orang tua, hingga promosi pola makan sehat yang bisa dibawa anak-anak di luar sekolah. Program seperti **"Nutrition Detectives"**, yang memakai media interaktif dan pengajaran berbasis pengalaman, juga penting banget untuk bikin anak-anak paham soal gizi dan gimana cara mereka bisa memilih makanan sehat sehari-hari.
+Kebijakan ini bisa mencakup banyak hal, dari penyediaan makanan sehat di kantin, penyuluhan gizi untuk siswa dan orang tua, hingga promosi pola makan sehat yang bisa dibawa anak-anak di luar sekolah. Program seperti &#x2A;*"Nutrition Detectives"**, yang memakai media interaktif dan pengajaran berbasis pengalaman, juga penting banget untuk bikin anak-anak paham soal gizi dan gimana cara mereka bisa memilih makanan sehat sehari-hari.
 
 ## Kesimpulan
 
@@ -64,22 +69,14 @@ Makanan bergizi dan pendidikan gizi di sekolah dasar punya peran yang sangat pen
 Dengan adanya kebijakan yang mendukung penyediaan makanan sehat, kita bisa menciptakan lingkungan sekolah yang lebih sehat dan mendukung tumbuh kembang siswa. Karena dampak dari pola makan sehat ini nggak cuma dirasakan sekarang, tapi juga berpengaruh jangka panjang terhadap kesehatan dan kualitas hidup mereka di masa depan. Jadi, yuk terus dukung kebijakan gizi sehat di sekolah-sekolah dasar!
 
 ## Sumber
-1. Firza, M., Safitri, S., Saeed, H., & Peace, O. (2022). A Touch of Culture in Learning: Teaching Materials My Food is Healthy and Nutritious for Elementary School. Journal of Basic Education Research. https://doi.org/10.37251/jber.v3i3.894.
 
-2. Lanita, U. (2024). The Effect Of Healthy Snacks Education On Students' Knowledge. International Journal of Medicine and Health. https://doi.org/10.55606/ijmh.v3i1.2670.
-
-3. Cole, N., Bahnfleth, C., Kingshipp, B., Scinto-Madonich, S., Butera, G., & Spahn, J. (2022). School-Based Strategies to Improve Acceptance of Healthier Foods and Dietary Patterns in Elementary School Students: A Rapid Review. Current Developments in Nutrition, 6, 827 - 827. https://doi.org/10.1093/cdn/nzac065.011.
-
-4. Doustmohammadian, A., Omidvar, N., & Shakibazadeh, E. (2020). School-based interventions for promoting food and nutrition literacy (FNLIT) in elementary school children: a systematic review protocol. Systematic Reviews, 9. https://doi.org/10.1186/s13643-020-01339-0.
-
-5. Peralta, L., Dudley, D., & Cotton, W. (2016). Teaching Healthy Eating to Elementary School Students: A Scoping Review of Nutrition Education Resources.. The Journal of school health, 86 5, 334-45 . https://doi.org/10.1111/josh.12382.
-
-6. Budiyanto, M. (2019). The Implementation of Daily Feeding Policy in Malang Elementary School. Proceedings of the 6th International Conference on Community Development (ICCD 2019). https://doi.org/10.2991/iccd-19.2019.88.
-
-7. Guglielmo, D., Chantaprasopsuk, S., Kay, C., Hyde, E., Stewart, C., & Gazmararian, J. (2020). Nutrition Policies, Practices, and Environments in Low-Income Georgia Elementary Schools, United States, 2015-2017.. The Journal of school health. https://doi.org/10.1111/josh.12874.
-
-8. Au, L., Rosen, N., Fenton, K., Hecht, K., & Ritchie, L. (2016). Eating School Lunch Is Associated with Higher Diet Quality among Elementary School Students.. Journal of the Academy of Nutrition and Dietetics, 116 11, 1817-1824 . https://doi.org/10.1016/j.jand.2016.04.010.
-
-9. Katz, D., Katz, C., Treu, J., Reynolds, J., Njike, V., Walker, J., Smith, E., & Michael, J. (2011). Teaching healthful food choices to elementary school students and their parents: the Nutrition Detectives™ program.. The Journal of school health, 81 1, 21-8 . https://doi.org/10.1111/j.1746-1561.2010.00553.x.
-
-10. Fadhilah, D., Hartini, T., & Gunawan, M. (2017). Efektifitas Penyuluhan tentang Sayuran Menggunakan Media “Kartu Sayuran” terhadap Peningkatan Pengetahuan Siswa Sekolah Dasar. , 19, 100-105. https://doi.org/10.29238/JNUTRI.V19I2.18.
+1. Firza, M., Safitri, S., Saeed, H., & Peace, O. (2022). A Touch of Culture in Learning: Teaching Materials My Food is Healthy and Nutritious for Elementary School. Journal of Basic Education Research. <https://doi.org/10.37251/jber.v3i3.894>.
+2. Lanita, U. (2024). The Effect Of Healthy Snacks Education On Students' Knowledge. International Journal of Medicine and Health. <https://doi.org/10.55606/ijmh.v3i1.2670>.
+3. Cole, N., Bahnfleth, C., Kingshipp, B., Scinto-Madonich, S., Butera, G., & Spahn, J. (2022). School-Based Strategies to Improve Acceptance of Healthier Foods and Dietary Patterns in Elementary School Students: A Rapid Review. Current Developments in Nutrition, 6, 827 - 827. <https://doi.org/10.1093/cdn/nzac065.011>.
+4. Doustmohammadian, A., Omidvar, N., & Shakibazadeh, E. (2020). School-based interventions for promoting food and nutrition literacy (FNLIT) in elementary school children: a systematic review protocol. Systematic Reviews, 9. <https://doi.org/10.1186/s13643-020-01339-0>.
+5. Peralta, L., Dudley, D., & Cotton, W. (2016). Teaching Healthy Eating to Elementary School Students: A Scoping Review of Nutrition Education Resources.. The Journal of school health, 86 5, 334-45 . <https://doi.org/10.1111/josh.12382>.
+6. Budiyanto, M. (2019). The Implementation of Daily Feeding Policy in Malang Elementary School. Proceedings of the 6th International Conference on Community Development (ICCD 2019). <https://doi.org/10.2991/iccd-19.2019.88>.
+7. Guglielmo, D., Chantaprasopsuk, S., Kay, C., Hyde, E., Stewart, C., & Gazmararian, J. (2020). Nutrition Policies, Practices, and Environments in Low-Income Georgia Elementary Schools, United States, 2015-2017.. The Journal of school health. <https://doi.org/10.1111/josh.12874>.
+8. Au, L., Rosen, N., Fenton, K., Hecht, K., & Ritchie, L. (2016). Eating School Lunch Is Associated with Higher Diet Quality among Elementary School Students.. Journal of the Academy of Nutrition and Dietetics, 116 11, 1817-1824 . <https://doi.org/10.1016/j.jand.2016.04.010>.
+9. Katz, D., Katz, C., Treu, J., Reynolds, J., Njike, V., Walker, J., Smith, E., & Michael, J. (2011). Teaching healthful food choices to elementary school students and their parents: the Nutrition Detectives™ program.. The Journal of school health, 81 1, 21-8 . <https://doi.org/10.1111/j.1746-1561.2010.00553.x>.
+10. Fadhilah, D., Hartini, T., & Gunawan, M. (2017). Efektifitas Penyuluhan tentang Sayuran Menggunakan Media “Kartu Sayuran” terhadap Peningkatan Pengetahuan Siswa Sekolah Dasar. , 19, 100-105. <https://doi.org/10.29238/JNUTRI.V19I2.18>.
