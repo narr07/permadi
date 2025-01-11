@@ -79,7 +79,7 @@ const open = ref(true)
                       :to="`#${link.id}`"
                       @click.prevent="scrollToHeading(link.id)"
                     >
-                      <p class="line-clamp-1 text-xs">
+                      <p class="line-clamp-1 text-sm">
                         {{ link.text }}
                       </p>
                     </NuxtLink>
@@ -95,7 +95,7 @@ const open = ref(true)
                           :to="`#${child.id}`"
                           @click.prevent="scrollToHeading(child.id)"
                         >
-                          <p class="line-clamp-1 text-xs">
+                          <p class="line-clamp-1 text-sm">
                             {{ child.text }}
                           </p>
                         </NuxtLink>
@@ -109,7 +109,7 @@ const open = ref(true)
         </UCard>
         <!-- Konten -->
         <UCard>
-          <div class="prose dark:prose-invert prose-sm drop max-w-6xl mx-auto prose-permadi">
+          <div class="prose dark:prose-invert prose-base drop max-w-6xl mx-auto prose-permadi">
             <ContentRenderer v-if="page" :value="page" />
           </div>
         </UCard>
@@ -144,7 +144,7 @@ const open = ref(true)
                         :to="`#${link.id}`"
                         @click.prevent="scrollToHeading(link.id)"
                       >
-                        <p class="line-clamp-1 text-xs">
+                        <p class="line-clamp-1 text-sm">
                           {{ link.text }}
                         </p>
                       </NuxtLink>
@@ -160,7 +160,7 @@ const open = ref(true)
                             :to="`#${child.id}`"
                             @click.prevent="scrollToHeading(child.id)"
                           >
-                            <p class="line-clamp-1 text-xs">
+                            <p class="line-clamp-1 text-sm">
                               {{ child.text }}
                             </p>
                           </NuxtLink>

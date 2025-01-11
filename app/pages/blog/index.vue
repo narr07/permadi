@@ -59,16 +59,16 @@ const { data: posts } = await useAsyncData(route.path, () => {
                 </p>
                 <div>
                   <ul class="mt-4 flex flex-wrap">
-                    <li v-for="(tag, n) in post.tags" :key="n" class="mr-2 mb-2">
-                      <NuxtLink :to="localePath(`/blog/tags/${tag}`)">
+                    <li v-if="post.tags.length" class="mr-2 mb-2">
+                      <NuxtLink :to="localePath(`/blog/tags/${post.tags[0]}`)">
                         <UButton
                           variant="subtle"
                           color="primary"
-                          :aria-label="tag"
+                          :aria-label="post.tags[0]"
                           size="xs"
                         >
                           <p class="text-sm text-permadi-700 dark:text-permadi-300">
-                            {{ tag }}
+                            {{ post.tags[0] }}
                           </p>
                         </UButton>
                       </NuxtLink>
