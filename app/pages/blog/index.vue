@@ -2,6 +2,7 @@
 const route = useRoute()
 const { locale } = useI18n()
 const { t } = useI18n()
+const localePath = useLocalePath()
 
 const { data: posts } = await useAsyncData(route.path, () => {
   return queryCollection(`blog_${locale.value}`)
@@ -57,12 +58,21 @@ const { data: posts } = await useAsyncData(route.path, () => {
                   {{ new Date(post.date).toLocaleDateString() }}
                 </p>
                 <div>
-                  <ul>
-                    <div v-if="post.tags.length > 0">
-                      <UBadge class="uppercase" size="lg" color="neutral" variant="outline">
-                        {{ post.tags[0] }}
-                      </UBadge>
-                    </div>
+                  <ul class="mt-4 flex flex-wrap">
+                    <li v-for="(tag, n) in post.tags" :key="n" class="mr-2 mb-2">
+                      <NuxtLink :to="localePath(`/blog/tags/${tag}`)">
+                        <UButton
+                          variant="subtle"
+                          color="primary"
+                          :aria-label="tag"
+                          size="xs"
+                        >
+                          <p class="text-sm text-permadi-700 dark:text-permadi-300">
+                            {{ tag }}
+                          </p>
+                        </UButton>
+                      </NuxtLink>
+                    </li>
                   </ul>
                 </div>
               </div>

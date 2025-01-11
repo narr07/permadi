@@ -6,18 +6,14 @@ const localePath = useLocalePath()
 // Mengubah slug menjadi array jika itu adalah string yang dipisahkan koma
 const filter = Array.isArray(slug) ? slug : slug?.split(',')
 
-// Log untuk debugging
-console.log({ filter })
-
 const { locale } = useI18n()
 
 // Mengambil data berdasarkan tag
-const { data: tags } = await useAsyncData(route.path, () => {
+const { data: tags } = await useAsyncData('tags', () => {
   return queryCollection(`blog_${locale.value}`)
-    .where('tags', 'IN', filter)
+    .where('tags', 'LIKE', `%${filter?.join('%')}%`) // Filter dengan LIKE
     .all()
 })
-console.log({ tags })
 </script>
 
 <template>
@@ -37,24 +33,32 @@ console.log({ tags })
       <!-- Komponen Tags jika ada -->
       <Tags />
 
-      <ul class="article-list">
-        <li v-for="article in tags" :key="article.path" class="article-item">
+      <ul class="mt-6">
+        <li v-if="!tags?.length">
+          No articles found for the selected tags.
+        </li>
+
+        <li v-for="article in tags" :key="article.path" class="flex flex-col mb-4">
           <NuxtLink :to="localePath(`/blog${article.path}`)">
-            <div class="wrapper">
+            <UCard class=" hover:bg-yellow   duration-100 ease-in-out dark:hover:bg-permadi-700 ">
               <header>
                 <h1 class="text-2xl font-semibold">
                   {{ article.title }}
                 </h1>
-                <p>{{ article.description }}</p>
-                <ul class="article-tags">
-                  <li v-for="(tag, n) in article.tags" :key="n" class="tag">
-                    <NuxtLink :to="localePath(`/blog/tags/${tag}`)" class="underline">
-                      {{ tag }}
+                <p class="line-clamp-2">
+                  {{ article.description }}
+                </p>
+                <ul class="mt-4 flex flex-wrap">
+                  <li v-for="(tag, n) in article.tags" :key="n" class="mr-2 mb-2">
+                    <NuxtLink :to="localePath(`/blog/tags/${tag}`)">
+                      <UBadge>
+                        {{ tag }}
+                      </UBadge>
                     </NuxtLink>
                   </li>
                 </ul>
               </header>
-            </div>
+            </UCard>
           </NuxtLink>
         </li>
       </ul>

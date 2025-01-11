@@ -40,9 +40,9 @@ const tags = computed<string[]>(() => {
       />
 
       <template #content>
-        <div>
+        <div class="flex flex-col gap-1">
           <div v-for="tag in tags" :key="tag">
-            <UButton class="ring-2" :to="localePath(`/blog/tags/${tag}`)">
+            <UButton class="ring-2 gap-2" size="xs" :to="localePath(`/blog/tags/${tag}`)">
               {{ tag }}
             </UButton>
           </div>

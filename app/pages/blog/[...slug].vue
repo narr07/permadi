@@ -68,32 +68,36 @@ const open = ref(true)
 
             <template #content>
               <div class="py-4">
-                <ul class="space-y-2">
+                <ul class="space-y-1">
                   <li v-for="link in page?.body?.toc?.links" :key="link.id">
                     <!-- Parent heading -->
                     <NuxtLink
-                      class="line-clamp-1 block transition-colors"
+                      class="line-clamp-1 rounded p-1"
                       :class="{
-                        'text-yellow-800': activeHeadings.includes(link.id),
+                        'bg-permadi-500/50': activeHeadings.includes(link.id),
                       }"
                       :to="`#${link.id}`"
                       @click.prevent="scrollToHeading(link.id)"
                     >
-                      {{ link.text }}
+                      <p class="line-clamp-1 text-xs">
+                        {{ link.text }}
+                      </p>
                     </NuxtLink>
 
                     <!-- Sub-headings/children -->
                     <ul v-if="link.children?.length" class="ml-4 mt-1 space-y-1">
                       <li v-for="child in link.children" :key="child.id">
                         <NuxtLink
-                          class="line-clamp-1 block text-sm transition-colors"
+                          class="line-clamp-1 rounded p-1"
                           :class="{
-                            'text-yellow-700': activeHeadings.includes(child.id),
+                            'bg-permadi-400/50': activeHeadings.includes(child.id),
                           }"
                           :to="`#${child.id}`"
                           @click.prevent="scrollToHeading(child.id)"
                         >
-                          {{ child.text }}
+                          <p class="line-clamp-1 text-xs">
+                            {{ child.text }}
+                          </p>
                         </NuxtLink>
                       </li>
                     </ul>
@@ -129,32 +133,36 @@ const open = ref(true)
 
               <template #content>
                 <div class="py-4">
-                  <ul class="space-y-2">
+                  <ul class="space-y-1">
                     <li v-for="link in page?.body?.toc?.links" :key="link.id">
                       <!-- Parent heading -->
                       <NuxtLink
-                        class="line-clamp-1 block transition-colors"
+                        class="line-clamp-1 rounded p-1"
                         :class="{
-                          'text-yellow-800': activeHeadings.includes(link.id),
+                          'bg-permadi-500/50': activeHeadings.includes(link.id),
                         }"
                         :to="`#${link.id}`"
                         @click.prevent="scrollToHeading(link.id)"
                       >
-                        {{ link.text }}
+                        <p class="line-clamp-1 text-xs">
+                          {{ link.text }}
+                        </p>
                       </NuxtLink>
 
                       <!-- Sub-headings/children -->
                       <ul v-if="link.children?.length" class="ml-4 mt-1 space-y-1">
                         <li v-for="child in link.children" :key="child.id">
                           <NuxtLink
-                            class="line-clamp-1 block text-sm transition-colors"
+                            class="line-clamp-1 rounded p-1"
                             :class="{
-                              'text-yellow-700': activeHeadings.includes(child.id),
+                              'bg-permadi-400/50': activeHeadings.includes(child.id),
                             }"
                             :to="`#${child.id}`"
                             @click.prevent="scrollToHeading(child.id)"
                           >
-                            {{ child.text }}
+                            <p class="line-clamp-1 text-xs">
+                              {{ child.text }}
+                            </p>
                           </NuxtLink>
                         </li>
                       </ul>
