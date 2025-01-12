@@ -13,11 +13,16 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     'nuxt-seo-utils',
     '@nuxt/scripts',
+    '@stefanobartoletti/nuxt-social-share',
   ],
   experimental: {
     componentIslands: true,
     // viewTransition: true,
     // inlineRouteRules: true,
+  },
+  socialShare: {
+    baseUrl: 'https://www.permadi.dev', // required!
+    // other optional module options
   },
   i18n: {
     skipSettingLocaleOnNavigate: false,

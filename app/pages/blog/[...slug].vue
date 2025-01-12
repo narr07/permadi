@@ -62,6 +62,26 @@ const open = ref(true)
             </h1>
           </div>
         </UCard>
+        <UCard class="mb-2">
+          <div>
+            <ul class="flex flex-wrap gap-2">
+              <li v-for="tag in page?.tags" :key="tag">
+                <NuxtLink :to="localePath(`/blog/tags/${tag}`)">
+                  <UButton
+                    variant="subtle"
+                    color="primary"
+                    :aria-label="tag"
+                    size="xs"
+                  >
+                    <p class="text-sm text-permadi-700 dark:text-permadi-300">
+                      {{ tag }}
+                    </p>
+                  </UButton>
+                </NuxtLink>
+              </li>
+            </ul>
+          </div>
+        </UCard>
         <UCard class="mb-2 md:hidden">
           <UCollapsible v-model:open="open" class="flex flex-col  ">
             <UButton
@@ -120,7 +140,34 @@ const open = ref(true)
           </div>
         </UCard>
       </div>
-
+      <div class="md:hidden">
+        <UCard class="mb-2">
+          <div class="flex flex-col space-y-2">
+            <UButton v-if="surroundingBlog?.[0]" variant="subtle" icon="hugeicons:circle-arrow-left-01" :to="localePath(`/blog${surroundingBlog[0].path}`)">
+              <span class="line-clamp-2">
+                {{ surroundingBlog[0].title }}
+              </span>
+            </UButton>
+            <UButton v-if="surroundingBlog?.[1]" variant="subtle" icon="hugeicons:circle-arrow-right-01" :to="localePath(`/blog${surroundingBlog[1].path}`)">
+              <span class="line-clamp-2">
+                {{ surroundingBlog[1].title }}
+              </span>
+            </UButton>
+          </div>
+        </UCard>
+        <UCard>
+          <div class="flex flex-wrap gap-2">
+            <SocialShare
+              v-for="network in ['facebook', 'x', 'whatsapp', 'linkedin', 'email', 'threads']"
+              :key="network"
+              :network="network"
+              :styled="true"
+              :label="false"
+              :title="page?.title "
+            />
+          </div>
+        </UCard>
+      </div>
       <!-- toc -->
       <div class="w-1/4 hidden md:flex flex-col  space-y-4">
         <div class=" sticky top-[86px] ">
@@ -180,8 +227,8 @@ const open = ref(true)
           </UCard>
           <UCard class="mb-2">
             <div>
-              <ul class="flex flex-wrap">
-                <li v-for="tag in page?.tags" :key="tag" class="mr-2 mb-2">
+              <ul class="flex flex-wrap gap-2">
+                <li v-for="tag in page?.tags" :key="tag">
                   <NuxtLink :to="localePath(`/blog/tags/${tag}`)">
                     <UButton
                       variant="subtle"
@@ -198,7 +245,7 @@ const open = ref(true)
               </ul>
             </div>
           </UCard>
-          <UCard>
+          <UCard class="mb-2">
             <div class="flex flex-col space-y-2">
               <UButton v-if="surroundingBlog?.[0]" variant="subtle" icon="hugeicons:circle-arrow-left-01" :to="localePath(`/blog${surroundingBlog[0].path}`)">
                 <span class="line-clamp-2">
@@ -210,6 +257,18 @@ const open = ref(true)
                   {{ surroundingBlog[1].title }}
                 </span>
               </UButton>
+            </div>
+          </UCard>
+          <UCard>
+            <div class="flex flex-wrap gap-2">
+              <SocialShare
+                v-for="network in ['facebook', 'x', 'whatsapp', 'linkedin', 'email', 'threads']"
+                :key="network"
+                :network="network"
+                :styled="true"
+                :label="false"
+                :title="page?.title "
+              />
             </div>
           </UCard>
         </div>
