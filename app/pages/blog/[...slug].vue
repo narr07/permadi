@@ -121,7 +121,7 @@ const open = ref(true)
       <div class="w-1/4 hidden md:flex flex-col  space-y-4">
         <div class=" sticky top-[86px] ">
           <UCard class="mb-2">
-            {{ new Date(page?.date).toLocaleDateString() }}
+            {{ page?.date ? new Date(page.date).toLocaleDateString() : '' }}
           </UCard>
           <UCard class="mb-2">
             <UCollapsible v-model:open="open" class="flex flex-col  ">

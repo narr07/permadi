@@ -1,7 +1,5 @@
 import { defineCollection, defineContentConfig, z } from '@nuxt/content'
 
-const commonSchema = z.object({})
-
 export default defineContentConfig({
   collections: {
     content_id: defineCollection({
@@ -10,7 +8,13 @@ export default defineContentConfig({
         include: 'id/**',
         prefix: '',
       },
-      schema: commonSchema,
+      schema: z.object({
+        title: z.string(),
+        description: z.string(),
+        tags: z.array(z.string()),
+        image: z.string(),
+        date: z.date(),
+      }),
     }),
     content_en: defineCollection({
       type: 'page',
@@ -18,7 +22,13 @@ export default defineContentConfig({
         include: 'en/**',
         prefix: '',
       },
-      schema: commonSchema,
+      schema: z.object({
+        title: z.string(),
+        description: z.string(),
+        tags: z.array(z.string()),
+        image: z.string(),
+        date: z.date(),
+      }),
     }),
     blog_id: defineCollection({
       type: 'page',
@@ -27,6 +37,8 @@ export default defineContentConfig({
         prefix: '',
       },
       schema: z.object({
+        title: z.string(),
+        description: z.string(),
         tags: z.array(z.string()),
         image: z.string(),
         date: z.date(),
@@ -39,6 +51,8 @@ export default defineContentConfig({
         prefix: '',
       },
       schema: z.object({
+        title: z.string(),
+        description: z.string(),
         tags: z.array(z.string()),
         image: z.string(),
         date: z.date(),
@@ -51,6 +65,8 @@ export default defineContentConfig({
         prefix: '',
       },
       schema: z.object({
+        title: z.string(),
+        description: z.string(),
         tags: z.array(z.string()),
         image: z.string(),
         date: z.date(),
@@ -63,6 +79,8 @@ export default defineContentConfig({
         prefix: '',
       },
       schema: z.object({
+        title: z.string(),
+        description: z.string(),
         tags: z.array(z.string()),
         image: z.string(),
         date: z.date(),
