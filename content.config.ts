@@ -56,6 +56,7 @@ export default defineContentConfig({
         tags: z.array(z.string()),
         image: z.string(),
         date: z.date(),
+        category: z.string(),
       }),
     }),
     project_id: defineCollection({
@@ -70,6 +71,7 @@ export default defineContentConfig({
         tags: z.array(z.string()),
         image: z.string(),
         date: z.date(),
+        category: z.string(),
       }),
     }),
     project_en: defineCollection({

@@ -19,6 +19,10 @@ const { data: page } = await useAsyncData(`page-${slug.value}`, async () => {
   watch: [locale],
 })
 
+const { data: surroundingBlog } = await useAsyncData('surround', () => {
+  return queryCollectionItemSurroundings(`blog_${locale.value}`, slug.value)
+})
+
 // Gunakan scrollspy untuk memantau heading
 
 const headings = ref<Element[]>([]) // Referensi untuk elemen heading
@@ -174,7 +178,7 @@ const open = ref(true)
               </template>
             </UCollapsible>
           </UCard>
-          <UCard>
+          <UCard class="mb-2">
             <div>
               <ul class="flex flex-wrap">
                 <li v-for="tag in page?.tags" :key="tag" class="mr-2 mb-2">
@@ -192,6 +196,20 @@ const open = ref(true)
                   </NuxtLink>
                 </li>
               </ul>
+            </div>
+          </UCard>
+          <UCard>
+            <div class="flex flex-col space-y-2">
+              <UButton v-if="surroundingBlog?.[0]" variant="subtle" icon="hugeicons:circle-arrow-left-01" :to="localePath(`/blog${surroundingBlog[0].path}`)">
+                <span class="line-clamp-2">
+                  {{ surroundingBlog[0].title }}
+                </span>
+              </UButton>
+              <UButton v-if="surroundingBlog?.[1]" variant="subtle" icon="hugeicons:circle-arrow-right-01" :to="localePath(`/blog${surroundingBlog[1].path}`)">
+                <span class="line-clamp-2">
+                  {{ surroundingBlog[1].title }}
+                </span>
+              </UButton>
             </div>
           </UCard>
         </div>

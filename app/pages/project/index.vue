@@ -51,8 +51,10 @@ const { data: projects } = await useAsyncData(route.path, () => {
               <h3>
                 {{ content.title }}
               </h3>
-              <div class="z-10 gap-y-1 overflow-hidden text-sm leading-6 text-permadi-900">
-                {{ content.category }}
+              <div class="absolute top-1 right-1 gap-y-1 overflow-hidden text-sm leading-6 text-permadi-900">
+                <UBadge>
+                  {{ content?.meta.category }}
+                </UBadge>
               </div>
             </div>
           </div>
