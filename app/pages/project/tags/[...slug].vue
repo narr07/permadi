@@ -3,6 +3,7 @@
 const route = useRoute()
 const { slug } = route.params
 const localePath = useLocalePath()
+const { t } = useI18n()
 
 const filter = Array.isArray(slug) ? slug : slug?.split(',')
 console.log({ filter })
@@ -14,6 +15,10 @@ const { data: tags } = await useAsyncData(route.path, () => {
   return queryCollection(`blog_${locale.value}`)
     .where('tags', 'IN', filter)
     .all()
+})
+defineOgImageComponent('Page', {
+  title: `${t('website.tag')} ${filter?.join(', ')}`,
+  description: t('website.description'),
 })
 </script>
 

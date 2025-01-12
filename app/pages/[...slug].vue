@@ -22,6 +22,10 @@ if (!home.value) {
 }
 
 useSeoMeta(home.value.seo)
+defineOgImageComponent('Page', {
+  title: home.value.title,
+  description: home.value.description,
+})
 </script>
 
 <template>

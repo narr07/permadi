@@ -1,11 +1,9 @@
 <script lang="ts" setup>
 import type { Collections } from '@nuxt/content'
-import { useScrollspy } from '@/composables/useScrollspy'
-import { useWindowScroll } from '@vueuse/core'
 import { withLeadingSlash } from 'ufo'
 
 const route = useRoute()
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 
 const slug = computed(() => withLeadingSlash(String(route.params.slug)))
 
@@ -20,6 +18,10 @@ const { data: projectPage } = await useAsyncData(`page-${slug.value}`, async () 
 if (projectPage?.value?.seo) {
   useSeoMeta(projectPage.value.seo)
 }
+defineOgImageComponent('Page', {
+  title: projectPage?.value?.title || t('website.project'),
+  description: projectPage?.value?.description || t('website.description'),
+})
 </script>
 
 <template>

@@ -2,6 +2,7 @@
 const route = useRoute()
 const { slug } = route.params
 const localePath = useLocalePath()
+const { t } = useI18n()
 
 // Mengubah slug menjadi array jika itu adalah string yang dipisahkan koma
 const filter = Array.isArray(slug) ? slug : slug?.split(',')
@@ -13,6 +14,10 @@ const { data: tags } = await useAsyncData('tags', () => {
   return queryCollection(`blog_${locale.value}`)
     .where('tags', 'LIKE', `%${filter?.join('%')}%`) // Filter dengan LIKE
     .all()
+})
+defineOgImageComponent('Page', {
+  title: `${t('website.tag')} ${filter?.join(', ')}`,
+  description: t('website.description'),
 })
 </script>
 

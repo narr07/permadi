@@ -1,6 +1,6 @@
 ---
 title: Home
-description: Ini Halaman Home
+description: Home page permadi website
 ---
 
 ::page-hero

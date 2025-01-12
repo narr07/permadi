@@ -8,6 +8,10 @@ const { data: projects } = await useAsyncData(route.path, () => {
     .order('date', 'DESC')
     .all()
 })
+defineOgImageComponent('Page', {
+  title: t('website.project'),
+  description: t('website.description'),
+})
 </script>
 
 <template>

@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     'nuxt-seo-utils',
     '@nuxt/scripts',
     '@stefanobartoletti/nuxt-social-share',
+    'nuxt-og-image',
   ],
   experimental: {
     componentIslands: true,
@@ -108,14 +109,14 @@ export default defineNuxtConfig({
     '/blog/**': { isr: true },
   },
   app: {
-
     pageTransition: { name: 'page', mode: 'out-in' },
   },
   site: {
     url: 'https://permadi.dev',
     name: 'Dinar Permadi Yusup',
-    description: 'Dinar Permadi Yusup is a teacher, software engineer, writer, and designer. He is passionate about web development, design, and technology.',
+    description: 'Dinar Permadi Yusup is a teacher, programmer, and designer. With this website, I would like to share my knowledge in learning design and programming.',
     defaultLocale: 'id', // not needed if you have @nuxtjs/i18n installed
+    logo: '/logo.png',
   },
   scripts: {
     registry: {

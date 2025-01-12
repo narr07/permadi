@@ -9,6 +9,16 @@ const { data: posts } = await useAsyncData(route.path, () => {
     .order('date', 'DESC')
     .all()
 })
+
+// for seo
+// const { data: blogPage } = await useAsyncData('blog', () => {
+//   return queryCollection(`blog_${locale.value}`)
+//     .first()
+// })
+defineOgImageComponent('Page', {
+  title: t('website.blog'),
+  description: t('website.description'),
+})
 </script>
 
 <template>

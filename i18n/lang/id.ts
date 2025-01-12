@@ -1,4 +1,11 @@
 export default {
+  website: {
+    home: 'Beranda',
+    blog: 'Artikel',
+    project: 'Projek',
+    tag: 'Semua tag dengan',
+    description: 'Dinar Permadi Yusup adalah seorang guru, programmer, dan desainer. Dengan website ini, Saya ingin berbagi pengetahuan dalam belajar desain dan pemrograman.',
+  },
   focus: {
     guru: 'Guru',
     desain: 'Desainer',

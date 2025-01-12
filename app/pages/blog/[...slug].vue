@@ -48,6 +48,11 @@ if (page?.value?.seo) {
   useSeoMeta(page.value.seo)
 }
 const open = ref(true)
+
+defineOgImageComponent('Page', {
+  title: page?.value?.title,
+  description: page?.value?.description,
+})
 </script>
 
 <template>
