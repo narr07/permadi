@@ -4,8 +4,10 @@ import { useScrollspy } from '@/composables/useScrollspy'
 import { useWindowScroll } from '@vueuse/core'
 import { withLeadingSlash } from 'ufo'
 
+const { t } = useI18n()
 const route = useRoute()
 const { locale } = useI18n()
+const localePath = useLocalePath()
 
 const slug = computed(() => withLeadingSlash(String(route.params.slug)))
 
@@ -59,7 +61,7 @@ const open = ref(true)
         <UCard class="mb-2 md:hidden">
           <UCollapsible v-model:open="open" class="flex flex-col  ">
             <UButton
-              label="DAFTAR ISI"
+              :label="t('blog.toc')"
               color="neutral"
               variant="subtle"
               :trailing-icon="open ? 'i-lucide-chevron-down' : 'i-lucide-chevron-up'"
@@ -119,12 +121,12 @@ const open = ref(true)
       <div class="w-1/4 hidden md:flex flex-col  space-y-4">
         <div class=" sticky top-[86px] ">
           <UCard class="mb-2">
-            Tanggal
+            {{ new Date(page?.date).toLocaleDateString() }}
           </UCard>
-          <UCard class="">
+          <UCard class="mb-2">
             <UCollapsible v-model:open="open" class="flex flex-col  ">
               <UButton
-                label="DAFTAR ISI"
+                :label="t('blog.toc')"
                 color="neutral"
                 variant="subtle"
                 :trailing-icon="open ? 'i-lucide-chevron-down' : 'i-lucide-chevron-up'"
@@ -171,6 +173,26 @@ const open = ref(true)
                 </div>
               </template>
             </UCollapsible>
+          </UCard>
+          <UCard>
+            <div>
+              <ul class="flex flex-wrap">
+                <li v-for="tag in page?.tags" :key="tag" class="mr-2 mb-2">
+                  <NuxtLink :to="localePath(`/blog/tags/${tag}`)">
+                    <UButton
+                      variant="subtle"
+                      color="primary"
+                      :aria-label="tag"
+                      size="xs"
+                    >
+                      <p class="text-sm text-permadi-700 dark:text-permadi-300">
+                        {{ tag }}
+                      </p>
+                    </UButton>
+                  </NuxtLink>
+                </li>
+              </ul>
+            </div>
           </UCard>
         </div>
       </div>

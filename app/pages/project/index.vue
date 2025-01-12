@@ -44,25 +44,18 @@ const { data: projects } = await useAsyncData(route.path, () => {
         }"
       >
         <NuxtLink :to="`project${content.path}`">
-          <UCard class="h-full hover:bg-yellow   duration-100 ease-in-out dark:hover:bg-permadi-700 ">
-            <div class="flex flex-col p-2 h-full justify-between ">
-              <h2 class="text-g2 line-clamp-2    text-balance font-semibold">
+          <div class="relative isolate flex flex-col dark:ring-permadi-600 ring-2 justify-end overflow-hidden rounded px-8 pb-8 pt-40 max-w-sm mx-auto mt-24">
+            <NuxtImg :src="content.image" class="absolute inset-0 object-cover w-full h-full transition-transform duration-300 transform hover:scale-105" />
+            <div class="absolute inset-0 bg-permadi-200/30 hover:bg-yellow-500/50 dark:bg-permadi-800/70 dark:hover:bg-permadi-800/30" />
+            <div class="z-50 mt-3 text-xl font-bold  ">
+              <h3>
                 {{ content.title }}
-              </h2>
+              </h3>
+              <div class="z-10 gap-y-1 overflow-hidden text-sm leading-6 text-permadi-900">
+                {{ content.category }}
+              </div>
             </div>
-            <template #header>
-              <NuxtImg
-                :src="content.image"
-                :alt="content.title"
-                format="webp"
-                width="800"
-                height="600"
-                loading="lazy"
-                decoding="async"
-                class="object-cover w-full rounded h-48"
-              />
-            </template>
-          </UCard>
+          </div>
         </NuxtLink>
       </div>
     </div>

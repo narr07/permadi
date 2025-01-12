@@ -3,14 +3,11 @@ title: SDN Teja II Website
 date: 2023-05-10
 image: https://placehold.co/600x400
 description: Official website of SDN Teja II built using Nuxt3.
+category: Website
 tags:
   - Website
 author: Dinar Permadi
 seo:
-  title: SDN Teja II Website
-  description: Official website of SDN Teja II built using Nuxt3.
-navigation:
-  icon: hugeicons:book-04
   title: SDN Teja II Website
   description: Official website of SDN Teja II built using Nuxt3.
 ---

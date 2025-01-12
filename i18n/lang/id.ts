@@ -16,6 +16,8 @@ export default {
   },
   blog: {
     title: 'Kumpulan Artikel ',
+    toc: 'Daftar Isi',
+    tags: 'Semua Tag',
   },
   project: {
     title: 'Kumpulan Projek',

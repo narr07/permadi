@@ -2,6 +2,7 @@
 const route = useRoute()
 const { locale } = useI18n()
 const localePath = useLocalePath()
+const { t } = useI18n()
 const { data: blogs } = await useAsyncData(route.path, () => {
   return queryCollection(`blog_${locale.value}`).all()
 })
@@ -32,7 +33,7 @@ const tags = computed<string[]>(() => {
   >
     <UCollapsible class="flex flex-col gap-2 w-48">
       <UButton
-        label="All Tags"
+        :label="t('blog.tags')"
         color="neutral"
         variant="subtle"
         trailing-icon="i-lucide-chevron-down"

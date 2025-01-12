@@ -16,6 +16,8 @@ export default {
   },
   blog: {
     title: 'Articles Collection',
+    toc: 'Table of Contents',
+    tags: 'All Tags',
   },
   project: {
     title: 'Projects Collection',
