@@ -13,8 +13,9 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     'nuxt-seo-utils',
     '@nuxt/scripts',
-    '@stefanobartoletti/nuxt-social-share',
     'nuxt-og-image',
+    '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
   ],
   experimental: {
     componentIslands: true,

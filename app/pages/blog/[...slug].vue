@@ -3,11 +3,13 @@ import type { Collections } from '@nuxt/content'
 import { useScrollspy } from '@/composables/useScrollspy'
 import { useDateFormat, useNow, useWindowScroll } from '@vueuse/core'
 import { withLeadingSlash } from 'ufo'
+import { useLikesStore } from '../../../stores/likes'
 
 const { t } = useI18n()
 const route = useRoute()
 const { locale } = useI18n()
 const localePath = useLocalePath()
+const likesStore = useLikesStore()
 
 const slug = computed(() => withLeadingSlash(String(route.params.slug)))
 
@@ -66,6 +68,14 @@ const networks = [
 const hashtags = computed(() => {
   return page.value?.tags ? page.value.tags.join(', ') : ''
 })
+
+async function handleLike() {
+  await likesStore.addLike(String(route.params.slug)) // Menggunakan slug sebagai articleId
+}
+
+function getLikes(articleId: string) {
+  return likesStore.getLikes(articleId)
+}
 </script>
 
 <template>
@@ -80,6 +90,15 @@ const hashtags = computed(() => {
             </h1>
           </div>
         </UCard>
+
+        <div class="fixed z-50 bottom-5 right-5">
+          <UChip :text="getLikes(page?.stem || '')" size="3xl">
+            <UButton
+              size="lg" icon="i-lucide-thumbs-up" color="neutral" variant="subtle" @click="handleLike"
+            />
+          </UChip>
+        </div>
+
         <UCard class="mb-2 md:hidden">
           <div>{{ formatted }}</div>
         </UCard>
