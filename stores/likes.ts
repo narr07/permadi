@@ -32,5 +32,13 @@ export const useLikesStore = defineStore('likes', {
     },
   },
 
-  persist: true, // Menambahkan opsi persist untuk menyimpan state
+  persist: {
+    enabled: true,
+    strategies: [
+      {
+        key: 'likes',
+        storage: localStorage,
+      },
+    ],
+  }, // Menambahkan opsi persist untuk menyimpan state
 })
