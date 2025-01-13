@@ -1,11 +1,15 @@
 // stores/likes.ts
-import { defineStore } from 'pinia'
+import { createPinia, defineStore } from 'pinia'
+import piniaPersistedstate from 'pinia-plugin-persistedstate'
 // stores/likes.ts
 
 export interface LikeResponse {
   success: boolean
   message?: string // Pesan ini opsional
 }
+
+const pinia = createPinia()
+pinia.use(piniaPersistedstate)
 
 export const useLikesStore = defineStore('likes', {
   state: () => ({
@@ -32,13 +36,10 @@ export const useLikesStore = defineStore('likes', {
     },
   },
 
-  persist: {
-    enabled: true,
-    strategies: [
-      {
-        key: 'likes',
-        storage: localStorage,
-      },
-    ],
-  }, // Menambahkan opsi persist untuk menyimpan state
+  persist: [
+    {
+      key: 'likes',
+      storage: localStorage,
+    },
+  ], // Menambahkan opsi persist untuk menyimpan state
 })
