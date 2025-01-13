@@ -13,7 +13,7 @@ export default defineContentConfig({
         description: z.string(),
         tags: z.array(z.string()),
         image: z.string(),
-        date: z.date(),
+        date: z.string().date(),
       }),
     }),
     content_en: defineCollection({
@@ -27,7 +27,7 @@ export default defineContentConfig({
         description: z.string(),
         tags: z.array(z.string()),
         image: z.string(),
-        date: z.date(),
+        date: z.string().date(),
       }),
     }),
     blog_id: defineCollection({
@@ -41,7 +41,7 @@ export default defineContentConfig({
         description: z.string(),
         tags: z.array(z.string()),
         image: z.string(),
-        date: z.date(),
+        date: z.string().date(),
       }),
     }),
     blog_en: defineCollection({
@@ -55,7 +55,7 @@ export default defineContentConfig({
         description: z.string(),
         tags: z.array(z.string()),
         image: z.string(),
-        date: z.date(),
+        date: z.string().date(),
       }),
     }),
     project_id: defineCollection({
@@ -69,7 +69,7 @@ export default defineContentConfig({
         description: z.string(),
         tags: z.array(z.string()),
         image: z.string(),
-        date: z.date(),
+        date: z.string().date(),
       }),
     }),
     project_en: defineCollection({
@@ -83,7 +83,7 @@ export default defineContentConfig({
         description: z.string(),
         tags: z.array(z.string()),
         image: z.string(),
-        date: z.date(),
+        date: z.string().date(),
       }),
     }),
 

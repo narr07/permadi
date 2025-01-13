@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { Collections } from '@nuxt/content'
 import { useScrollspy } from '@/composables/useScrollspy'
-import { useWindowScroll } from '@vueuse/core'
+import { useDateFormat, useNow, useWindowScroll } from '@vueuse/core'
 import { withLeadingSlash } from 'ufo'
 
 const { t } = useI18n()
@@ -53,12 +53,25 @@ defineOgImageComponent('Page', {
   title: page?.value?.title,
   description: page?.value?.description,
 })
+
+const formatted = useDateFormat(page.value?.date, 'dddd, D MMMM YYYY', { locales: locale.value === 'en' ? 'en-US' : 'id-ID' })
+
+const networks = [
+  { network: 'email', icon: 'i-ph-envelope-duotone' },
+  { network: 'facebook', icon: 'i-ph-facebook-logo-duotone' },
+  { network: 'linkedin', icon: 'i-ph-linkedin-logo-duotone' },
+  { network: 'twitter', icon: 'i-ph-twitter-logo-duotone' },
+  { network: 'whatsapp', icon: 'i-ph-whatsapp-logo-duotone' },
+]
+const hashtags = computed(() => {
+  return page.value?.tags ? page.value.tags.join(', ') : ''
+})
 </script>
 
 <template>
   <UContainer class=" ">
     <!-- Header -->
-    <div class="md:flex-row flex-col flex gap-2">
+    <div class="md:flex-row flex-col flex gap-4">
       <div class="md:w-3/4">
         <UCard class="mb-2">
           <div v-if="page" :value="page">
@@ -67,7 +80,10 @@ defineOgImageComponent('Page', {
             </h1>
           </div>
         </UCard>
-        <UCard class="mb-2">
+        <UCard class="mb-2 md:hidden">
+          <div>{{ formatted }}</div>
+        </UCard>
+        <UCard class="mb-2 md:hidden">
           <div>
             <ul class="flex flex-wrap gap-2">
               <li v-for="tag in page?.tags" :key="tag">
@@ -162,14 +178,24 @@ defineOgImageComponent('Page', {
         </UCard>
         <UCard>
           <div class="flex flex-wrap gap-2">
-            <SocialShare
-              v-for="network in ['facebook', 'x', 'whatsapp', 'linkedin', 'email', 'threads']"
-              :key="network"
-              :network="network"
-              :styled="true"
-              :label="false"
-              :title="page?.title "
-            />
+            <ClientOnly>
+              <ShareNetwork
+                v-for="network in networks"
+                :key="network.network"
+                :network="network.network"
+                :url="`https://permadi.dev${page?.path}/`"
+                :title="page?.title"
+                :description="page?.description"
+                :hashtags="hashtags"
+                twitter-user="dinarpermadi07"
+              >
+                <UButton
+                  variant="subtle"
+                  :icon="network.icon"
+                  :aria-label="network.network"
+                />
+              </ShareNetwork>
+            </ClientOnly>
           </div>
         </UCard>
       </div>
@@ -177,7 +203,7 @@ defineOgImageComponent('Page', {
       <div class="w-1/4 hidden md:flex flex-col  space-y-4">
         <div class=" sticky top-[86px] ">
           <UCard class="mb-2">
-            {{ page?.date ? new Date(page.date).toLocaleDateString() : '' }}
+            <div>{{ formatted }}</div>
           </UCard>
           <UCard class="mb-2">
             <UCollapsible v-model:open="open" class="flex flex-col  ">
@@ -266,14 +292,24 @@ defineOgImageComponent('Page', {
           </UCard>
           <UCard>
             <div class="flex flex-wrap gap-2">
-              <SocialShare
-                v-for="network in ['facebook', 'x', 'whatsapp', 'linkedin', 'email', 'threads']"
-                :key="network"
-                :network="network"
-                :styled="true"
-                :label="false"
-                :title="page?.title "
-              />
+              <ClientOnly>
+                <ShareNetwork
+                  v-for="network in networks"
+                  :key="network.network"
+                  :network="network.network"
+                  :url="page?.path ? `https://permadi.dev${localePath(page.path)}` : ''"
+                  :title="page?.title"
+                  :description="page?.description"
+                  :hashtags="hashtags"
+                  twitter-user="dinarpermadi07"
+                >
+                  <UButton
+                    variant="subtle"
+                    :icon="network.icon"
+                    :aria-label="network.network"
+                  />
+                </ShareNetwork>
+              </ClientOnly>
             </div>
           </UCard>
         </div>

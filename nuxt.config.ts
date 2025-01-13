@@ -21,10 +21,7 @@ export default defineNuxtConfig({
     // viewTransition: true,
     // inlineRouteRules: true,
   },
-  socialShare: {
-    baseUrl: 'https://www.permadi.dev', // required!
-    // other optional module options
-  },
+
   i18n: {
     skipSettingLocaleOnNavigate: false,
     detectBrowserLanguage: {

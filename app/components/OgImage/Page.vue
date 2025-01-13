@@ -20,7 +20,7 @@ const description = computed(() => (props.description || '').slice(0, 200))
         {{ headline }}
       </p>
       <h1
-        v-if="title" class="w-[600px] m-0 text-[48px] font-semibold mb-4 text-[rgb(249,188,96)] flex items-center"
+        v-if="title" class="w-[600px] m-0 text-[56px] font-bold mb-4 text-[rgb(249,188,96)] flex items-center"
       >
         <span>{{ title }}</span>
       </h1>
@@ -30,7 +30,7 @@ const description = computed(() => (props.description || '').slice(0, 200))
     </div>
     <div class="absolute top-20 right-10">
       <div class="flex flex-row justify-center items-center">
-        <p class="text-[#F9BC60] pr-2 text-[24px] font-semibold">
+        <p class="text-[#F9BC60] pr-2 text-[32px] font-semibold">
           permadi.dev
         </p>
         <svg width="72" height="72" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
