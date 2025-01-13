@@ -36,10 +36,7 @@ export const useLikesStore = defineStore('likes', {
     },
   },
 
-  persist: [
-    {
-      key: 'likes',
-      storage: localStorage,
-    },
-  ], // Menambahkan opsi persist untuk menyimpan state
+  persist: {
+    storage: piniaPluginPersistedstate.cookies(),
+  },
 })
