@@ -1,10 +1,9 @@
 <script setup lang="ts">
-const route = useRoute()
 const { locale } = useI18n()
 const { t } = useI18n()
 const localePath = useLocalePath()
 
-const { data: posts } = await useAsyncData(route.path, () => {
+const { data: posts } = await useAsyncData('blogPage', () => {
   return queryCollection(`blog_${locale.value}`)
     .order('date', 'DESC')
     .all()
