@@ -1,7 +1,6 @@
 // stores/likes.ts
 import { createPinia, defineStore } from 'pinia'
 import piniaPersistedstate from 'pinia-plugin-persistedstate'
-// stores/likes.ts
 
 export interface LikeResponse {
   success: boolean
@@ -13,7 +12,7 @@ pinia.use(piniaPersistedstate)
 
 export const useLikesStore = defineStore('likes', {
   state: () => ({
-    likesCount: new Map<string, number>(), // Menyimpan jumlah likes berdasarkan articleId
+    likesCount: {} as Record<string, number>, // Menggunakan objek biasa
   }),
 
   actions: {
@@ -24,7 +23,7 @@ export const useLikesStore = defineStore('likes', {
       })
 
       if (response.success) {
-        this.likesCount.set(articleId, (this.likesCount.get(articleId) || 0) + 1)
+        this.likesCount[articleId] = (this.likesCount[articleId] || 0) + 1
       }
       else {
         console.error(response.message)
@@ -32,7 +31,7 @@ export const useLikesStore = defineStore('likes', {
     },
 
     getLikes(articleId: string) {
-      return this.likesCount.get(articleId) || 0
+      return this.likesCount[articleId] || 0
     },
   },
 
