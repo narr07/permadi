@@ -3,17 +3,17 @@ const designIcon = ref([
   {
     title: 'Illustrator',
     iconName: 'i-logos-adobe-illustrator',
-    url: 'https://illustrator.example.com',
+    url: 'https://illustrator.adobe.com/',
   },
   {
     title: 'Photoshop',
     iconName: 'i-logos-adobe-photoshop',
-    url: 'https://illustrator.example.com',
+    url: 'https://photoshop.adobe.com/',
   },
   {
     title: 'Figma',
     iconName: 'i-skill-icons-figma-dark',
-    url: 'https://figma.example.com',
+    url: 'https://www.figma.com/',
   },
   {
     title: 'XD',
