@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { Collections } from '@nuxt/content'
+import { queryCollection, useRoute } from '#imports'
 import { useScrollspy } from '@/composables/useScrollspy'
 import { useDateFormat, useNow, useWindowScroll } from '@vueuse/core'
 import { withLeadingSlash } from 'ufo'
@@ -47,6 +48,13 @@ function scrollToHeading(id: string) {
 if (page?.value?.seo) {
   useSeoMeta(page.value.seo)
 }
+
+useHead({
+  ...page?.value?.head,
+  meta: page?.value?.head?.meta?.filter(meta => meta !== undefined) || [],
+  script: page?.value?.head?.script?.filter(script => script !== undefined) || [],
+})
+
 const open = ref(true)
 
 defineOgImageComponent('Page', {
@@ -206,7 +214,9 @@ const hashtags = computed(() => {
                   variant="subtle"
                   :icon="network.icon"
                   :aria-label="network.network"
-                />
+                >
+                  <span class="sr-only">Link {{ network.network }} Permadi</span>
+                </UButton>
               </ShareNetwork>
             </ClientOnly>
           </div>

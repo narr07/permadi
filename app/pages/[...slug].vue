@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Collections } from '@nuxt/content'
+import { queryCollection, useRoute } from '#imports'
 import { withLeadingSlash } from 'ufo'
 
 const route = useRoute()
@@ -21,7 +22,13 @@ if (!home.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
-useSeoMeta(home.value.seo)
+useHead({
+  ...home.value.head,
+  meta: home.value.head?.meta?.filter(meta => meta !== undefined) || [],
+  script: home.value.head?.script?.filter(script => script !== undefined) || [],
+})
+useSeoMeta(home.value.seo || {})
+
 defineOgImageComponent('Page', {
   title: home.value.title,
   description: home.value.description,
