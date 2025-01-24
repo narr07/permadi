@@ -4,6 +4,7 @@ date: 2025-01-20
 image: /project/acak.png
 description: A website for creating student groups
 category: Website
+link: https://acak.pages.dev/
 tags:
   - Website
 author: Dinar Permadi
