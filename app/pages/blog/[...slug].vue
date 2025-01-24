@@ -49,6 +49,14 @@ if (page?.value?.seo) {
   useSeoMeta(page.value.seo)
 }
 
+useSchemaOrg([
+  defineArticle({
+    // computed getter
+    title: () => page?.value?.title,
+    description: () => page?.value?.description,
+  }),
+])
+
 useHead({
   ...page?.value?.head,
   meta: page?.value?.head?.meta?.filter(meta => meta !== undefined) || [],
@@ -185,12 +193,12 @@ const hashtags = computed(() => {
       <div class="md:hidden">
         <UCard class="mb-2">
           <div class="flex flex-col space-y-2">
-            <UButton v-if="surroundingBlog?.[0]" variant="subtle" icon="hugeicons:circle-arrow-left-01" :to="localePath(`/blog${surroundingBlog[0].path}`)">
+            <UButton v-if="surroundingBlog?.[0]" variant="outline" icon="hugeicons:circle-arrow-left-01" :to="localePath(`/blog${surroundingBlog[0].path}`)">
               <span class="line-clamp-2">
                 {{ surroundingBlog[0].title }}
               </span>
             </UButton>
-            <UButton v-if="surroundingBlog?.[1]" variant="subtle" icon="hugeicons:circle-arrow-right-01" :to="localePath(`/blog${surroundingBlog[1].path}`)">
+            <UButton v-if="surroundingBlog?.[1]" variant="outline" icon="hugeicons:circle-arrow-right-01" :to="localePath(`/blog${surroundingBlog[1].path}`)">
               <span class="line-clamp-2">
                 {{ surroundingBlog[1].title }}
               </span>
@@ -204,7 +212,7 @@ const hashtags = computed(() => {
                 v-for="network in networks"
                 :key="network.network"
                 :network="network.network"
-                :url="`https://permadi.dev${page?.path}/`"
+                :url="`https://permadi.dev/blog${page?.path}/`"
                 :title="page?.title"
                 :description="page?.description"
                 :hashtags="hashtags"
