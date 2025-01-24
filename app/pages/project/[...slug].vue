@@ -37,7 +37,14 @@ defineOgImageComponent('Page', {
           </div>
         </UCard>
         <UCard class="mb-2">
-          <NuxtImg class="mx-auto " :src="projectPage?.image" />
+          <NuxtImg
+
+            sizes="100vw sm:50vw md:400px"
+            height="450"
+            width="800"
+            :placeholder="[50, 25, 75, 5]"
+            class="mx-auto h-96 aspect-video object-cover rounded" loading="lazy" :title="projectPage?.title" :alt="projectPage?.title" :src="projectPage?.image"
+          />
         </UCard>
         <!-- Konten -->
         <UCard>

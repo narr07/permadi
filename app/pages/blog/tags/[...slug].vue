@@ -26,11 +26,8 @@ defineOgImageComponent('Page', {
     <header class="page-heading">
       <div class="wrapper">
         <h1 class="text-5xl font-extrabold">
-          All tags with {{ filter?.join(', ') }}
+          {{ `${t('website.tag')} ${filter?.join(', ')}` }}
         </h1>
-        <p class="font-medium text-lg">
-          Here's a list of all my great tags
-        </p>
       </div>
     </header>
 
@@ -40,7 +37,7 @@ defineOgImageComponent('Page', {
 
       <ul class="mt-6">
         <li v-if="!tags?.length">
-          No articles found for the selected tags.
+          {{ t('website.tagNo') }}
         </li>
 
         <li v-for="article in tags" :key="article.path" class="flex flex-col mb-4">
@@ -68,9 +65,7 @@ defineOgImageComponent('Page', {
         </li>
       </ul>
 
-      <p v-if="!tags?.length">
-        No tags found.
-      </p>
+      <ScrollToTop />
     </section>
   </UContainer>
 </template>

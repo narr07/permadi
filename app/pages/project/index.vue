@@ -47,7 +47,15 @@ defineOgImageComponent('Page', {
         }"
       >
         <UCard>
-          <NuxtImg :src="content.image" class="w-full h-48 rounded object-fit" />
+          <NuxtImg
+            :title="content.title"
+            loading="lazy"
+            sizes="100vw sm:50vw md:400px"
+            height="200"
+            width="400"
+            :placeholder="[50, 25, 75, 5]"
+            :alt="content.title" :src="content.image" class="w-full h-48 aspect-video rounded object-fit"
+          />
           <NuxtLink :to="`project${content.path}`">
             <h3 class="line-clamp-2 pt-4">
               {{ content.title }}
@@ -59,27 +67,9 @@ defineOgImageComponent('Page', {
             </UBadge>
           </div>
           <div class="absolute top-1 right-1 gap-y-1 overflow-hidden text-sm leading-6 text-permadi-900">
-            <NuxtLink :to="content.meta.link as string" target="_blank">
-              <UBadge icon="ph:arrow-square-up-right-duotone" square />
-            </NuxtLink>
+            <UButton icon="ph:arrow-square-up-right-duotone" square :to="content.meta.link as string" target="_blank" />
           </div>
         </UCard>
-        <!-- <NuxtLink :to="`project${content.path}`">
-          <div class="relative isolate flex flex-col dark:ring-permadi-600 ring-2 justify-end overflow-hidden rounded px-8 pb-8 pt-40 h-96">
-            <NuxtImg :src="content.image" class="absolute  inset-0 object-cover w-full h-full transition-transform duration-300 transform hover:scale-105" />
-            <div class="absolute inset-0 bg-permadi-200/30 hover:bg-yellow-500/50 dark:bg-permadi-800/70 dark:hover:bg-permadi-800/30" />
-            <div class="z-50 mt-3 text-xl font-bold">
-              <h3 class="line-clamp-2">
-                {{ content.title }}
-              </h3>
-              <div class="absolute top-1 right-1 gap-y-1 overflow-hidden text-sm leading-6 text-permadi-900">
-                <UBadge>
-                  {{ content?.meta.category }}
-                </UBadge>
-              </div>
-            </div>
-          </div>
-        </NuxtLink> -->
       </div>
     </div>
     <ScrollToTop />

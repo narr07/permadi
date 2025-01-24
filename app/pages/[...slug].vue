@@ -27,7 +27,10 @@ useHead({
   meta: home.value.head?.meta?.filter(meta => meta !== undefined) || [],
   script: home.value.head?.script?.filter(script => script !== undefined) || [],
 })
-useSeoMeta(home.value.seo || {})
+useSeoMeta({
+  ...home.value.seo,
+  keywords: home.value?.tags ? home.value.tags.join(', ') : 'dinar, permadi, dinar permadi, dinar permadi yusup, guru, developer, programmer, desainer',
+})
 
 defineOgImageComponent('Page', {
   title: home.value.title,

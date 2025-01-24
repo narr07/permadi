@@ -61,14 +61,14 @@ defineOgImageComponent('Page', {
               <h2 class="text-g3 line-clamp-2    text-balance font-semibold">
                 {{ post.title }}
               </h2>
-              <USeparator color="primary" class="py-4" />
+              <USeparator color="primary" />
               <div class="flex items-end   justify-between h-full">
                 <p class="text-base">
                   {{ new Date(post.date).toLocaleDateString() }}
                 </p>
                 <div>
-                  <ul class="mt-4 flex flex-wrap">
-                    <li v-if="post.tags.length" class="mr-2 mb-2">
+                  <ul class=" mt-2 flex flex-wrap">
+                    <li v-if="post.tags.length" class="mr-2 ">
                       <NuxtLink :to="localePath(`/blog/tags/${post.tags[0]}`)">
                         <UButton
                           variant="subtle"

@@ -4,6 +4,7 @@ export default {
     blog: 'Artikel',
     project: 'Projek',
     tag: 'Semua tag dengan',
+    tagNo: 'Tidak ada artikel dengan tag yang di pilih',
     description: 'Dinar Permadi Yusup adalah seorang guru, programmer, dan desainer. Dengan website ini, Saya ingin berbagi pengetahuan dalam belajar desain dan pemrograman.',
   },
   focus: {

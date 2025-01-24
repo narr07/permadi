@@ -4,6 +4,7 @@ export default {
     blog: 'Articles',
     project: 'Projects',
     tag: 'All tags with',
+    tagNo: 'No articles found for the selected tags.',
     description: 'Dinar Permadi Yusup is a teacher, programmer, and designer. With this website, I would like to share my knowledge in learning design and programming.',
   },
   focus: {

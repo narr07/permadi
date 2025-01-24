@@ -2,7 +2,7 @@
 import type { Collections } from '@nuxt/content'
 import { queryCollection, useRoute } from '#imports'
 import { useScrollspy } from '@/composables/useScrollspy'
-import { useDateFormat, useNow, useWindowScroll } from '@vueuse/core'
+import { useDateFormat, useWindowScroll } from '@vueuse/core'
 import { withLeadingSlash } from 'ufo'
 
 const { t } = useI18n()
@@ -56,6 +56,10 @@ useSchemaOrg([
     description: () => page?.value?.description,
   }),
 ])
+
+useSeoMeta({
+  keywords: page.value?.tags ? page.value.tags.join(', ') : 'dinar, permadi, dinar permadi, guru, developer, programmer',
+})
 
 useHead({
   ...page?.value?.head,
