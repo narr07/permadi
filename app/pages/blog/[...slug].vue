@@ -135,7 +135,7 @@ const hashtags = computed(() => {
 
         <!-- Konten -->
         <UCard>
-          <div class="prose dark:prose-invert prose-base drop max-w-6xl mx-auto prose-permadi">
+          <div class="prose dark:prose-invert prose-sm max-w-6xl mx-auto prose-permadi">
             <ContentRenderer v-if="page" :value="page" />
           </div>
         </UCard>
@@ -196,13 +196,13 @@ const hashtags = computed(() => {
       <div class="md:hidden">
         <UCard class="mb-2">
           <div class="flex flex-col space-y-2">
-            <UButton v-if="surroundingBlog?.[0]" variant="outline" icon="hugeicons:circle-arrow-left-01" :to="localePath(`/blog${surroundingBlog[0].path}`)">
-              <span class="line-clamp-2">
+            <UButton v-if="surroundingBlog?.[0]" variant="subtle" icon="hugeicons:circle-arrow-left-01" :to="localePath(`/blog${surroundingBlog[0].path}`)">
+              <span class="line-clamp-2 text-permadi-900 dark:text-permadi-300">
                 {{ surroundingBlog[0].title }}
               </span>
             </UButton>
-            <UButton v-if="surroundingBlog?.[1]" variant="outline" icon="hugeicons:circle-arrow-right-01" :to="localePath(`/blog${surroundingBlog[1].path}`)">
-              <span class="line-clamp-2">
+            <UButton v-if="surroundingBlog?.[1]" variant="subtle" icon="hugeicons:circle-arrow-right-01" :to="localePath(`/blog${surroundingBlog[1].path}`)">
+              <span class="line-clamp-2 text-permadi-900 dark:text-permadi-300">
                 {{ surroundingBlog[1].title }}
               </span>
             </UButton>
@@ -221,6 +221,7 @@ const hashtags = computed(() => {
                 :description="page?.description"
                 :hashtags="hashtags"
                 twitter-user="dinarpermadi07"
+                tag="a"
               >
                 <UButton
                   variant="subtle"
@@ -312,14 +313,20 @@ const hashtags = computed(() => {
             </div>
           </UCard>
           <UCard class="mb-2">
-            <div class="flex flex-col space-y-2">
-              <UButton v-if="surroundingBlog?.[0]" variant="subtle" icon="hugeicons:circle-arrow-left-01" :to="localePath(`/blog${surroundingBlog[0].path}`)">
-                <span class="line-clamp-2">
+            <div class="flex flex-col  space-y-2">
+              <UButton
+                v-if="surroundingBlog?.[0]" variant="subtle"
+                color="primary" icon="hugeicons:circle-arrow-left-01" :to="localePath(`/blog${surroundingBlog[0].path}`)"
+              >
+                <span class="line-clamp-2 text-permadi-900 dark:text-permadi-300">
                   {{ surroundingBlog[0].title }}
                 </span>
               </UButton>
-              <UButton v-if="surroundingBlog?.[1]" variant="subtle" icon="hugeicons:circle-arrow-right-01" :to="localePath(`/blog${surroundingBlog[1].path}`)">
-                <span class="line-clamp-2">
+              <UButton
+                v-if="surroundingBlog?.[1]" variant="subtle"
+                color="primary" icon="hugeicons:circle-arrow-right-01" :to="localePath(`/blog${surroundingBlog[1].path}`)"
+              >
+                <span class="line-clamp-2 text-permadi-900 dark:text-permadi-300">
                   {{ surroundingBlog[1].title }}
                 </span>
               </UButton>
@@ -337,6 +344,7 @@ const hashtags = computed(() => {
                   :description="page?.description"
                   :hashtags="hashtags"
                   twitter-user="dinarpermadi07"
+                  tag="a"
                 >
                   <UButton
                     variant="subtle"

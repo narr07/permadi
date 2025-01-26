@@ -62,15 +62,7 @@ const tabitems = [
         <!-- tombol tab -->
         <!-- konten tab 1 -->
         <template #user>
-          <div
-            v-motion :initial="{
-              opacity: 0,
-              y: 30,
-            }" :visible="{
-              opacity: 1,
-              y: 0,
-            }"
-          >
+          <div>
             <UCard class="my-auto flex-grow h-full p-2">
               <div>
                 <p class=" text-balance">
@@ -82,15 +74,7 @@ const tabitems = [
         </template>
         <!-- konten tab 2 -->
         <template #desain>
-          <div
-            v-motion :initial="{
-              opacity: 0,
-              y: 30,
-            }" :visible="{
-              opacity: 1,
-              y: 0,
-            }"
-          >
+          <div>
             <UCard class="flex-grow h-full">
               <div class="items-center">
                 <div class="flex flex-wrap gap-2 md:gap-4 justify-center">
@@ -113,15 +97,7 @@ const tabitems = [
         </template>
         <!-- konten tab 3 -->
         <template #teknologi>
-          <div
-            v-motion :initial="{
-              opacity: 0,
-              y: 30,
-            }" :visible="{
-              opacity: 1,
-              y: 0,
-            }"
-          >
+          <div>
             <UCard class="flex-grow h-full">
               <div class="items-center">
                 <div class="flex flex-wrap gap-2 md:gap-4 justify-center">

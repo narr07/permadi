@@ -37,15 +37,18 @@ defineOgImageComponent('Page', {
           </div>
         </UCard>
         <UCard class="mb-2">
-          <NuxtImg
+          <div class="aspect-w-16 aspect-h-9 max-w-3xl mx-auto">
+            <NuxtImg
 
-            sizes="100vw sm:50vw md:400px"
-            height="450"
-            width="800"
-            :placeholder="[50, 25, 75, 5]"
-            class="mx-auto h-96 aspect-video object-cover rounded" loading="lazy" :title="projectPage?.title" :alt="projectPage?.title" :src="projectPage?.image"
-          />
+              sizes="100vw sm:50vw md:400px"
+              height="675"
+              width="1200"
+              :placeholder="[50, 25, 75, 5]"
+              class="mx-auto h-96 aspect-video object-fit w-full rounded" loading="lazy" :title="projectPage?.title" :alt="projectPage?.title" :src="projectPage?.image"
+            />
+          </div>
         </UCard>
+
         <!-- Konten -->
         <UCard>
           <div class="prose dark:prose-invert prose-sm drop max-w-6xl mx-auto prose-permadi">

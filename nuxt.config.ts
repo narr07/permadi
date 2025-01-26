@@ -64,8 +64,8 @@ export default defineNuxtConfig({
       type: 'd1',
       binding: 'permadi',
     },
-    studio: {
-      enabled: true,
+    preview: {
+      api: 'https://api.nuxt.studio',
       gitInfo: {
         name: 'permadi',
         owner: 'narr07',
@@ -93,7 +93,13 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
   nitro: {
+
+    experimental: {
+      openAPI: true,
+    },
+
     prerender: {
+      crawlLinks: true,
       routes: [
         '/',
       ],
