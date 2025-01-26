@@ -22,11 +22,6 @@ if (!home.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
-useHead({
-  ...home.value.head,
-  meta: home.value.head?.meta?.filter(meta => meta !== undefined) || [],
-  script: home.value.head?.script?.filter(script => script !== undefined) || [],
-})
 useSeoMeta({
   ...home.value.seo,
   keywords: home.value?.tags ? home.value.tags.join(', ') : 'dinar, permadi, dinar permadi, dinar permadi yusup, guru, developer, programmer, desainer',

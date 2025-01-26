@@ -25,7 +25,7 @@ const { data: lastPosts } = await useAsyncData('latest-blogs', () => {
       <NuxtLink :to="`/blog${post?.path}`">
         <UCard class="h-fullm mb-2  hover:bg-yellow duration-100 ease-in-out dark:hover:bg-permadi-700">
           <div class="flex flex-col h-full justify-between">
-            <h3 class="text-base line-clamp-1 font-narr text-balance  font-semibold">
+            <h3 class="text-base line-clamp-1 font-body text-balance  font-semibold">
               {{ post?.title }}
             </h3>
           </div>

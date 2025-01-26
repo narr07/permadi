@@ -51,12 +51,20 @@ export default defineNuxtConfig({
     },
   },
   fonts: {
+    assets: {
+      prefix: '/_fonts/',
+    },
     experimental: {
       processCSSVariables: true,
     },
+    defaults: {
+      preload: true,
+      subsets: ['latin'],
+      styles: ['normal', 'italic'],
+    },
     families: [
-      { name: 'Display', weights: ['200', '300', '400', '500', '700', '900'], display: 'swap' },
-      { name: 'Marr', weights: ['100', '300', '400', '500', '700', '900'], display: 'swap' },
+      { name: 'Host Grotesk', provider: 'google', display: 'swap', weights: ['300', '400', '500', '600', '700', '800', '900'] },
+      { name: 'Rubik', provider: 'google', display: 'swap', weights: ['400', '700', '900'] },
     ],
   },
   content: {
@@ -93,11 +101,6 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
   nitro: {
-
-    experimental: {
-      openAPI: true,
-    },
-
     prerender: {
       crawlLinks: true,
       routes: [
