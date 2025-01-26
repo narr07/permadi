@@ -1,68 +1,90 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
-
-interface Post {
-  id: string
-  title: string
-  date: string
-  tags: string[]
-  path: string
-}
-// Ambil locale dan fungsi terjemahan
+const route = useRoute()
 const { locale, t } = useI18n()
 const localePath = useLocalePath()
 
-const currentPage = ref(1) // Halaman saat ini
-const itemsPerPage = 10 // Jumlah artikel per halaman
+const currentPage = ref(1)
+const itemsPerPage = 10
 
-// Artikel dan total artikel
-const posts = ref<Post[]>([])
-
-const totalPosts = ref(0)
-
-// Fungsi untuk mengambil data artikel berdasarkan bahasa
-async function fetchPosts() {
-  // Tidak perlu destructure { data }
-  const data = await queryCollection(`blog_${locale.value}`)
+// Fetch posts dengan useAsyncData
+const { data: postsData } = await useAsyncData(`blog-${route.path}-${currentPage.value}`, () => {
+  return queryCollection(`blog_${locale.value}`)
     .order('date', 'DESC')
     .skip((currentPage.value - 1) * itemsPerPage)
     .limit(itemsPerPage)
     .all()
-
-  const total = await queryCollection(`blog_${locale.value}`).count()
-
-  return { posts: data, total }
-}
-
-// Fungsi untuk memuat ulang data
-async function loadPosts() {
-  const { posts: fetchedPosts, total } = await fetchPosts()
-  posts.value = fetchedPosts || []
-  totalPosts.value = total || 0
-}
-
-// Hitung jumlah halaman
-
-// Fungsi untuk mengganti halaman
-function changePage(page: number) {
-  currentPage.value = page
-  loadPosts() // Refresh data saat halaman berubah
-}
-
-// Muat data saat halaman atau bahasa berubah
-watch([currentPage, locale], () => {
-  loadPosts()
+}, {
+  watch: [currentPage, locale],
 })
 
-// Reset halaman ke 1 saat bahasa berubah
+// Fetch total posts
+const { data: totalPosts } = await useAsyncData(`blog-total-${route.path}`, () => {
+  return queryCollection(`blog_${locale.value}`).count()
+}, {
+  watch: [locale],
+})
+
+// Reset page when locale changes
 watch(locale, () => {
   currentPage.value = 1
 })
 
-// Muat data saat komponen di-mount
-loadPosts()
+// Utility functions
+function extractTextFromBody(body: any): string {
+  if (!body?.value || !Array.isArray(body.value))
+    return ''
 
+  return body.value.reduce((text: string, item: any[]) => {
+    if (Array.isArray(item)) {
+      const content = item.map((element) => {
+        if (typeof element === 'string')
+          return element
+        if (Array.isArray(element))
+          return extractTextFromBody({ value: [element] })
+        if (element?.value)
+          return element.value
+        return ''
+      }).join(' ')
+
+      return `${text} ${content}`
+    }
+    return text
+  }, '')
+}
+
+function calculateReadingTime(body: any): number {
+  const text = extractTextFromBody(body)
+  const wordsPerMinute = 200
+  const words = text.trim().split(/\s+/).length
+  return Math.ceil(words / wordsPerMinute)
+}
+
+function useReadingTime() {
+  const { locale } = useI18n()
+
+  const formatReadingTime = (minutes: number): string => {
+    return locale.value === 'id'
+      ? `${minutes} menit baca`
+      : `${minutes} min read`
+  }
+
+  return {
+    calculateReadingTime,
+    formatReadingTime,
+  }
+}
+const total = computed(() => totalPosts.value ?? 0)
+const { formatReadingTime } = useReadingTime()
+
+// Computed untuk posts dengan reading time
+const postsWithReadingTime = computed(() =>
+  postsData.value?.map(post => ({
+    ...post,
+    readingTime: calculateReadingTime(post.body),
+  })) || [],
+)
+
+// SEO
 defineOgImageComponent('Page', {
   title: t('website.blog'),
   description: t('website.description'),
@@ -85,10 +107,10 @@ defineOgImageComponent('Page', {
 
     <!-- Daftar Artikel -->
     <div class="grid grid-cols-1 gap-4">
-      <div v-for="post in posts" :key="post.id">
+      <div v-for="post in postsWithReadingTime" :key="post.id">
         <NuxtLink
-          aria-label="`${t('article.read', { title: post.title })}`"
-          :title="`${t('article.read', { title: post.title })}`"
+          :aria-label="t('article.read', { title: post.title })"
+          :title="t('article.read', { title: post.title })"
           :to="`blog${post.path}`"
         >
           <UCard class="h-full hover:bg-yellow duration-100 ease-in-out dark:hover:bg-permadi-700">
@@ -96,22 +118,30 @@ defineOgImageComponent('Page', {
               <h2 class="text-g3 line-clamp-2 text-balance font-semibold">
                 {{ post.title }}
               </h2>
-              <USeparator color="primary" />
+              <div class="pt-2">
+                <USeparator color="primary" />
+              </div>
+              <div class="pt-2">
+                <p class="text-xs   flex items-center gap-1">
+                  <UIcon name="ph:timer-duotone" class="w-4 h-4" />
+                  {{ formatReadingTime(post.readingTime) }}
+                </p>
+              </div>
+
               <div class="flex items-end justify-between h-full">
-                <p class="text-base">
+                <p class="text-xs flex items-center gap-1">
+                  <UIcon name="ph:calendar-dots-duotone" class="w-4 h-4" />
                   {{ new Date(post.date).toLocaleDateString(locale === 'id' ? 'id-ID' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' }) }}
                 </p>
-                <div class="mt-2 flex">
-                  <!-- Hanya tampilkan tag pertama -->
+                <div class=" flex">
                   <div v-if="post.tags.length > 0" class="mr-2">
                     <UButton
                       :to="localePath(`/blog/tags/${post.tags[0]}`)"
-                      variant="subtle"
-                      color="primary"
+
                       :aria-label="`Lihat artikel dengan tag ${post.tags[0]}`"
                       size="xs"
                     >
-                      <p class="text-sm text-permadi-700 dark:text-permadi-300">
+                      <p class="text-xs  ">
                         {{ post.tags[0] }}
                       </p>
                     </UButton>
@@ -123,15 +153,15 @@ defineOgImageComponent('Page', {
         </NuxtLink>
       </div>
     </div>
+
     <!-- Pagination -->
     <div class="flex justify-center mt-8">
       <UPagination
         v-model:page="currentPage"
-        :total="totalPosts"
+        :total="total"
         :items-per-page="itemsPerPage"
         :sibling-count="1"
         show-edges
-        @update:page="changePage"
       />
     </div>
     <ScrollToTop />
