@@ -1,8 +1,16 @@
 <script setup lang="ts">
 const route = useRoute()
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const localePath = useLocalePath()
-const { t } = useI18n()
+
+const open = ref(false)
+
+// Shortcut untuk toggle popover
+defineShortcuts({
+  o: () => open.value = !open.value,
+})
+
+// Fetch blog data
 const { data: blogs } = await useAsyncData(route.path, () => {
   return queryCollection(`blog_${locale.value}`).all()
 })
@@ -20,7 +28,6 @@ const tags = computed<string[]>(() => {
   })
   return Array.from(selectedTags)
 })
-const open = ref(false)
 </script>
 
 <template>
@@ -33,26 +40,31 @@ const open = ref(false)
     :visible="{
       opacity: 1,
       y: 0,
-    }" class="flex w-full justify-end items-center"
+    }"
+    class="flex w-full justify-end items-center"
   >
-    <UCollapsible v-model:open="open" class="flex flex-col gap-2 w-48">
+    <UPopover v-model:open="open">
       <UButton
         aria-label="Tag"
         :label="t('blog.tags')"
-        :trailing-icon="open ? 'i-lucide-chevron-down' : 'i-lucide-chevron-up'"
-        block
+        :trailing-icon="open ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"
       />
 
       <template #content>
-        <div class="flex flex-col gap-1">
-          <!-- Tampilkan setiap tag yang dipilih -->
+        <div class="p-2 flex flex-col gap-1 min-w-48">
           <div v-for="tag in tags" :key="tag">
-            <UButton :aria-label="tag" class="  gap-2" size="xs" :to="localePath(`/blog/tags/${tag}`)">
+            <UButton
+              :aria-label="tag"
+              class="w-full text-left"
+              size="xs"
+              variant="ghost"
+              :to="localePath(`/blog/tags/${tag}`)"
+            >
               {{ tag }}
             </UButton>
           </div>
         </div>
       </template>
-    </UCollapsible>
+    </UPopover>
   </div>
 </template>

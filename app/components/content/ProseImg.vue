@@ -44,5 +44,7 @@ const refinedSrc = computed(() => {
     :height="props.height"
     class="rounded"
     sizes="100vw sm:70vw md:500px"
+    loading="lazy"
+    :title="props.alt"
   />
 </template>

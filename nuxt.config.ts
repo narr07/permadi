@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     '@pinia/nuxt',
     'pinia-plugin-persistedstate/nuxt',
+    'nuxt-vitalizer',
   ],
   experimental: {
     componentIslands: true,
