@@ -32,9 +32,9 @@ const items = [
       <h1 class="pb-4 font-black text-g3">
         Dinar Permadi Yusup
       </h1>
-      <p>
-        {{ t('hero.description') }}
-      </p>
+      <DelayHydration>
+        <LazyHeroDescription />
+      </DelayHydration>
     </UCard>
   </UContainer>
 </template>

@@ -94,7 +94,7 @@ defineOgImageComponent('Page', {
 <template>
   <UContainer>
     <!-- Judul -->
-    <div class="py-8">
+    <div class="pt-8 pb-4">
       <h1 class="font-bold text-g4">
         {{ t('blog.title') }}
       </h1>
@@ -115,7 +115,7 @@ defineOgImageComponent('Page', {
         >
           <UCard class="h-full hover:bg-yellow duration-100 ease-in-out dark:hover:bg-permadi-700">
             <div class="flex flex-col p-2 h-full justify-between">
-              <h2 class="text-g3 line-clamp-2 text-balance font-semibold">
+              <h2 class="text-g3 line-clamp-2 text-permadi-700 text-balance font-semibold">
                 {{ post.title }}
               </h2>
               <div class="pt-2">
@@ -137,7 +137,7 @@ defineOgImageComponent('Page', {
                   <div v-if="post.tags.length > 0" class="mr-2">
                     <UButton
                       :to="localePath(`/blog/tags/${post.tags[0]}`)"
-
+                      color="neutral"
                       :aria-label="`Lihat artikel dengan tag ${post.tags[0]}`"
                       size="xs"
                     >

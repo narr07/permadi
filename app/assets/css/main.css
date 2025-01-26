@@ -106,7 +106,7 @@ html {
 }
 
 body {
-  @apply bg-permadi-100 dark:text-permadi-200 text-permadi-950 leading-tight dark:bg-permadi-900 tracking-wide font-narr text-[16px]  ;
+  @apply bg-permadi-100 dark:text-permadi-200 text-permadi-900 leading-tight dark:bg-permadi-900 tracking-wide font-narr text-[16px]  ;
 }
 
 

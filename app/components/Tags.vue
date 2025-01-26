@@ -48,6 +48,7 @@ const tags = computed<string[]>(() => {
         aria-label="Tag"
         :label="t('blog.tags')"
         :trailing-icon="open ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"
+        color="neutral"
       />
 
       <template #content>

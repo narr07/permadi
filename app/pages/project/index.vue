@@ -56,19 +56,26 @@ defineOgImageComponent('Page', {
             :placeholder="[50, 25, 75, 5]"
             :alt="content.title" :src="content.image" class="w-full h-48 aspect-video rounded object-fit"
           />
-          <NuxtLink :to="`project${content.path}`">
-            <h3 class="line-clamp-2 pt-4">
-              {{ content.title }}
-            </h3>
-          </NuxtLink>
-          <div class="absolute top-1 left-1 gap-y-1 overflow-hidden text-sm leading-6 text-permadi-900">
-            <UBadge>
-              {{ content?.meta.category }}
-            </UBadge>
-          </div>
-          <div class="absolute top-1 right-1 gap-y-1 overflow-hidden text-sm leading-6 text-permadi-900">
-            <UButton icon="ph:arrow-square-up-right-duotone" square :to="content.meta.link as string" target="_blank" />
-          </div>
+
+          <template #header>
+            <div class="flex justify-between items-center">
+              <div class="  overflow-hidden text-sm leading-6 text-permadi-900">
+                <UBadge color="neutral">
+                  {{ content?.meta.category }}
+                </UBadge>
+              </div>
+              <div class="  text-sm leading-6 text-permadi-900">
+                <UButton color="neutral" icon="ph:arrow-square-up-right-duotone" square :to="content.meta.link as string" target="_blank" />
+              </div>
+            </div>
+          </template>
+          <template #footer>
+            <NuxtLink :to="`project${content.path}`">
+              <h3 class="line-clamp-2 ">
+                {{ content.title }}
+              </h3>
+            </NuxtLink>
+          </template>
         </UCard>
       </div>
     </div>
