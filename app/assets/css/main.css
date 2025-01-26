@@ -6,7 +6,7 @@
 @config "../../tailwind.config.ts";
 
 @theme {
-  --font-title: 'Rubik', sans-serif;
+  --font-title: 'Plus Jakarta Sans', sans-serif;
   --font-body: 'Host Grotesk', sans-serif;
 
   --color-permadi-50: #edf5f3;

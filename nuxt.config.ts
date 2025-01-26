@@ -64,7 +64,7 @@ export default defineNuxtConfig({
     },
     families: [
       { name: 'Host Grotesk', provider: 'google', display: 'swap', weights: ['300', '400', '500', '600', '700', '800', '900'] },
-      { name: 'Rubik', provider: 'google', display: 'swap', weights: ['400', '700', '900'] },
+      { name: 'Plus Jakarta Sans', provider: 'google', display: 'swap', weights: ['400', '700', '800', '900'] },
     ],
   },
   content: {
