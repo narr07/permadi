@@ -60,14 +60,11 @@ function toggleLocale() {
         }"
       >
         <UButton
-
-          color="secondary"
-          variant="outline"
-
+          rel="alternate"
           square
           @click="toggleLocale"
         >
-          <UIcon class="size-6" :name="selected.icon" />
+          <UIcon class="size-6" :name="selected.icon" /> <span class="sr-only">Lang</span>
         </UButton>
       </div>
     </UTooltip>

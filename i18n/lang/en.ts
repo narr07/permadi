@@ -7,6 +7,10 @@ export default {
     tagNo: 'No articles found for the selected tags.',
     description: 'Dinar Permadi Yusup is a teacher, programmer, and designer. With this website, I would like to share my knowledge in learning design and programming.',
   },
+  article: {
+    read: 'Read article about',
+    share: 'Share',
+  },
   focus: {
     guru: 'Teacher',
     desain: 'Designer',

@@ -7,16 +7,20 @@ const { data: blogs } = await useAsyncData(route.path, () => {
   return queryCollection(`blog_${locale.value}`).all()
 })
 
-// Mengumpulkan semua tag dari blog
+// Mengambil satu tag dari setiap artikel
 const tags = computed<string[]>(() => {
-  const allTags = new Set<string>()
+  const selectedTags = new Set<string>()
   blogs.value?.forEach((blog) => {
-    if (blog.tags) {
-      blog.tags.forEach(tag => allTags.add(tag))
+    if (blog.tags && blog.tags.length > 0) {
+      // Ambil hanya tag pertama dari setiap artikel
+      if (blog.tags[0]) {
+        selectedTags.add(blog.tags[0])
+      }
     }
   })
-  return Array.from(allTags)
+  return Array.from(selectedTags)
 })
+const open = ref(false)
 </script>
 
 <template>
@@ -31,19 +35,19 @@ const tags = computed<string[]>(() => {
       y: 0,
     }" class="flex w-full justify-end items-center"
   >
-    <UCollapsible class="flex flex-col gap-2 w-48">
+    <UCollapsible v-model:open="open" class="flex flex-col gap-2 w-48">
       <UButton
+        aria-label="Tag"
         :label="t('blog.tags')"
-        color="neutral"
-        variant="subtle"
-        trailing-icon="i-lucide-chevron-down"
+        :trailing-icon="open ? 'i-lucide-chevron-down' : 'i-lucide-chevron-up'"
         block
       />
 
       <template #content>
         <div class="flex flex-col gap-1">
+          <!-- Tampilkan setiap tag yang dipilih -->
           <div v-for="tag in tags" :key="tag">
-            <UButton class="ring-2 gap-2" size="xs" :to="localePath(`/blog/tags/${tag}`)">
+            <UButton :aria-label="tag" class="  gap-2" size="xs" :to="localePath(`/blog/tags/${tag}`)">
               {{ tag }}
             </UButton>
           </div>

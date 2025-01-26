@@ -46,7 +46,7 @@ defineOgImageComponent('Page', {
           y: 0,
         }"
       >
-        <UCard>
+        <UCard class="hover:bg-yellow duration-100 ease-in-out dark:hover:bg-permadi-700">
           <NuxtImg
             :title="content.title"
             loading="lazy"

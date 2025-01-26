@@ -128,8 +128,6 @@ defineShortcuts({
   >
     <UButton
 
-      color="secondary"
-      variant="outline"
       square
       icon="hugeicons:search-02"
       size="lg"

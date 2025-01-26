@@ -12,16 +12,13 @@ export default defineNuxtConfig({
     'nuxt-delay-hydration',
     '@vueuse/motion/nuxt',
     '@nuxtjs/i18n',
-    // 'nuxt-seo-utils',
     '@nuxt/scripts',
-    // 'nuxt-og-image',
     '@pinia/nuxt',
     'pinia-plugin-persistedstate/nuxt',
   ],
   experimental: {
     componentIslands: true,
-    // viewTransition: true,
-    // inlineRouteRules: true,
+
   },
 
   i18n: {
@@ -29,7 +26,7 @@ export default defineNuxtConfig({
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
-      redirectOn: 'root', // recommended
+      redirectOn: 'root',
       alwaysRedirect: true,
     },
     locales: [
@@ -98,15 +95,23 @@ export default defineNuxtConfig({
     prerender: {
       routes: [
         '/',
-        '/blog',
       ],
     },
   },
+
   routeRules: {
+
     '/': { prerender: true },
-    '/blog': { prerender: true },
-    '/blog/**': { isr: true },
+
+    // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
+    '/blog': { isr: 3600 }, // Halaman utama blog
+    '/blog/**': { isr: 3600 }, // Setiap artikel blog
+
+    // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
+    '/project': { isr: 3600 }, // Halaman utama project
+    '/project/**': { isr: 3600 }, // Setiap detail project
   },
+
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
   },
@@ -125,6 +130,18 @@ export default defineNuxtConfig({
       googleTagManager: {
         id: 'GTM-5XT2J2S5',
       },
+    },
+  },
+  image: {
+    // The screen sizes predefined by `@nuxt/image`:
+    screens: {
+      'xs': 320,
+      'sm': 640,
+      'md': 768,
+      'lg': 1024,
+      'xl': 1280,
+      'xxl': 1536,
+      '2xl': 1536,
     },
   },
   compatibilityDate: '2024-11-27',

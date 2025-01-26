@@ -61,13 +61,7 @@ useSeoMeta({
   keywords: page.value?.tags ? page.value.tags.join(', ') : 'dinar, permadi, dinar permadi, guru, developer, programmer',
 })
 
-useHead({
-  ...page?.value?.head,
-  meta: page?.value?.head?.meta?.filter(meta => meta !== undefined) || [],
-  script: page?.value?.head?.script?.filter(script => script !== undefined) || [],
-})
-
-const open = ref(true)
+const open = ref(false)
 
 defineOgImageComponent('Page', {
   title: page?.value?.title,
@@ -118,8 +112,10 @@ const hashtags = computed(() => {
         </UCard>
         <UCard class="mb-2 md:hidden">
           <div>
-            <ul class="flex flex-wrap gap-2">
-              <li v-for="tag in page?.tags" :key="tag">
+            <div class="flex flex-wrap gap-2">
+              <!-- Batasi hanya 3 tag yang ditampilkan -->
+
+              <div v-for="tag in page?.tags.slice(0, 3)" :key="tag">
                 <NuxtLink :to="localePath(`/blog/tags/${tag}`)">
                   <UButton
                     variant="subtle"
@@ -132,67 +128,70 @@ const hashtags = computed(() => {
                     </p>
                   </UButton>
                 </NuxtLink>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
         </UCard>
-        <UCard class="mb-2 md:hidden">
-          <UCollapsible v-model:open="open" class="flex flex-col  ">
-            <UButton
-              :label="t('blog.toc')"
-              color="neutral"
-              variant="subtle"
-              :trailing-icon="open ? 'i-lucide-chevron-down' : 'i-lucide-chevron-up'"
-              block
-            />
 
-            <template #content>
-              <div class="py-4">
-                <ul class="space-y-1">
-                  <li v-for="link in page?.body?.toc?.links" :key="link.id">
-                    <!-- Parent heading -->
-                    <NuxtLink
-                      class="line-clamp-1 rounded p-1"
-                      :class="{
-                        'bg-permadi-500/50': activeHeadings.includes(link.id),
-                      }"
-                      :to="`#${link.id}`"
-                      @click.prevent="scrollToHeading(link.id)"
-                    >
-                      <p class="line-clamp-1 text-sm">
-                        {{ link.text }}
-                      </p>
-                    </NuxtLink>
-
-                    <!-- Sub-headings/children -->
-                    <ul v-if="link.children?.length" class="ml-4 mt-1 space-y-1">
-                      <li v-for="child in link.children" :key="child.id">
-                        <NuxtLink
-                          class="line-clamp-1 rounded p-1"
-                          :class="{
-                            'bg-permadi-400/50': activeHeadings.includes(child.id),
-                          }"
-                          :to="`#${child.id}`"
-                          @click.prevent="scrollToHeading(child.id)"
-                        >
-                          <p class="line-clamp-1 text-sm">
-                            {{ child.text }}
-                          </p>
-                        </NuxtLink>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-            </template>
-          </UCollapsible>
-        </UCard>
         <!-- Konten -->
         <UCard>
           <div class="prose dark:prose-invert prose-base drop max-w-6xl mx-auto prose-permadi">
             <ContentRenderer v-if="page" :value="page" />
           </div>
         </UCard>
+        <div class="sticky bottom-2  md:hidden pt-2">
+          <UCard class="mb-2 md:hidden">
+            <UCollapsible v-model:open="open" class="flex flex-col  ">
+              <UButton
+                :label="t('blog.toc')"
+                color="neutral"
+                variant="subtle"
+                :trailing-icon="open ? 'i-lucide-chevron-down' : 'i-lucide-chevron-up'"
+                block
+              />
+
+              <template #content>
+                <div class="py-4">
+                  <ul class="space-y-1">
+                    <li v-for="link in page?.body?.toc?.links" :key="link.id">
+                      <!-- Parent heading -->
+                      <NuxtLink
+                        class="line-clamp-1 rounded p-1 m-2"
+                        :class="{
+                          'bg-yellow-500 text-permadi-900 dark:text-permadi-900 ring ring-permadi-800': activeHeadings.includes(link.id),
+                        }"
+                        :to="`#${link.id}`"
+                        @click.prevent="scrollToHeading(link.id)"
+                      >
+                        <p class="line-clamp-1 text-sm">
+                          {{ link.text }}
+                        </p>
+                      </NuxtLink>
+
+                      <!-- Sub-headings/children -->
+                      <ul v-if="link.children?.length" class="ml-4 m-2 space-y-1">
+                        <li v-for="child in link.children" :key="child.id">
+                          <NuxtLink
+                            class="line-clamp-1 rounded p-1"
+                            :class="{
+                              'bg-yellow-200 text-permadi-900 dark:text-permadi-900 ring ring-permadi-800': activeHeadings.includes(child.id),
+                            }"
+                            :to="`#${child.id}`"
+                            @click.prevent="scrollToHeading(child.id)"
+                          >
+                            <p class="line-clamp-1 text-sm">
+                              {{ child.text }}
+                            </p>
+                          </NuxtLink>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </template>
+            </UCollapsible>
+          </UCard>
+        </div>
       </div>
       <div class="md:hidden">
         <UCard class="mb-2">
@@ -209,6 +208,7 @@ const hashtags = computed(() => {
             </UButton>
           </div>
         </UCard>
+
         <UCard>
           <div class="flex flex-wrap gap-2">
             <ClientOnly>
@@ -256,9 +256,9 @@ const hashtags = computed(() => {
                     <li v-for="link in page?.body?.toc?.links" :key="link.id">
                       <!-- Parent heading -->
                       <NuxtLink
-                        class="line-clamp-1 rounded p-1"
+                        class="line-clamp-1 rounded p-1 m-2"
                         :class="{
-                          'bg-permadi-500/50': activeHeadings.includes(link.id),
+                          'bg-yellow-500 text-permadi-900 dark:text-permadi-900 ring ring-permadi-800': activeHeadings.includes(link.id),
                         }"
                         :to="`#${link.id}`"
                         @click.prevent="scrollToHeading(link.id)"
@@ -269,12 +269,12 @@ const hashtags = computed(() => {
                       </NuxtLink>
 
                       <!-- Sub-headings/children -->
-                      <ul v-if="link.children?.length" class="ml-4 mt-1 space-y-1">
+                      <ul v-if="link.children?.length" class="ml-4 m-2 space-y-1">
                         <li v-for="child in link.children" :key="child.id">
                           <NuxtLink
                             class="line-clamp-1 rounded p-1"
                             :class="{
-                              'bg-permadi-400/50': activeHeadings.includes(child.id),
+                              'bg-yellow-200 text-permadi-900 dark:text-permadi-900 ring ring-permadi-800': activeHeadings.includes(child.id),
                             }"
                             :to="`#${child.id}`"
                             @click.prevent="scrollToHeading(child.id)"
@@ -293,8 +293,8 @@ const hashtags = computed(() => {
           </UCard>
           <UCard class="mb-2">
             <div>
-              <ul class="flex flex-wrap gap-2">
-                <li v-for="tag in page?.tags" :key="tag">
+              <div class="flex flex-wrap gap-2">
+                <div v-for="tag in page?.tags.slice(0, 3)" :key="tag">
                   <NuxtLink :to="localePath(`/blog/tags/${tag}`)">
                     <UButton
                       variant="subtle"
@@ -307,8 +307,8 @@ const hashtags = computed(() => {
                       </p>
                     </UButton>
                   </NuxtLink>
-                </li>
-              </ul>
+                </div>
+              </div>
             </div>
           </UCard>
           <UCard class="mb-2">

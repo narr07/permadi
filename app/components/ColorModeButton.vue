@@ -25,8 +25,6 @@ const isDark = computed({
   >
     <ClientOnly v-if="!colorMode?.forced">
       <UButton
-        color="secondary"
-        variant="outline"
 
         :aria-label="isDark ? 'Aktifkan Tema Terang' : 'Aktifkan Tema Gelap'"
         square

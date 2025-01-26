@@ -58,12 +58,12 @@ const menuItems = [
                     }"
                   >
                     <UButton
-                      color="secondary"
+                      color="neutral"
                       variant="outline"
                       square
                       :aria-label="item.name"
                       :to="localePath(item.path)"
-                      class="hover:ring-2 rounded px-2 font-semibold items-center flex text-base"
+                      class="hover:ring-2 rounded px-2 ring-permadi-950 font-semibold items-center flex text-base"
                       :class="{
                         'text-permadi-900 rounded ring-2 ring-permadi-950 px-2 bg-permadi-200 dark:bg-yellow-500 hover:bg-permadi-300 dark:hover:bg-yellow-700': isActive(item.path),
                       }"
@@ -94,11 +94,12 @@ const menuItems = [
                 <UPopover v-model:open="open">
                   <UButton
                     :icon="open ? 'hugeicons:dashboard-square-03' : 'hugeicons:dashboard-square-01'"
-                    color="secondary"
+                    color="neutral"
                     variant="outline"
                     square
                     aria-label="Menu"
                     size="lg"
+                    class="hover:ring-2 rounded px-2 ring-permadi-950 font-semibold items-center flex text-base"
                   />
 
                   <template #content>

@@ -26,7 +26,7 @@ export default defineAppConfig({
     },
     card: {
       slots: {
-        root: 'bg-permadi-100 z-40 ring-2 ring-permadi-900 dark:ring-permadi-700 dark:bg-permadi-800 divide-y divide-permadi-700 rounded-[calc(var(--ui-radius)*2)] shadow-sm',
+        root: 'bg-white z-40 ring-2 ring-permadi-900 dark:ring-permadi-700 dark:bg-permadi-950 divide-y divide-permadi-700 rounded-[calc(var(--ui-radius)*2)] shadow-sm',
         header: 'p-2 sm:px-4',
         body: 'p-2 sm:p-4 ',
         footer: 'p-2 sm:px-4',

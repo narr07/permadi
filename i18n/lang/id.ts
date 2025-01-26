@@ -1,3 +1,5 @@
+import { ar } from '@nuxt/ui/runtime/locale/index.js'
+
 export default {
   website: {
     home: 'Beranda',
@@ -6,6 +8,10 @@ export default {
     tag: 'Semua tag dengan',
     tagNo: 'Tidak ada artikel dengan tag yang di pilih',
     description: 'Dinar Permadi Yusup adalah seorang guru, programmer, dan desainer. Dengan website ini, Saya ingin berbagi pengetahuan dalam belajar desain dan pemrograman.',
+  },
+  article: {
+    read: 'Baca artikel tentang',
+    share: 'Bagikan',
   },
   focus: {
     guru: 'Guru',
