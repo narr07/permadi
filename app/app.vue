@@ -1,22 +1,10 @@
 <script setup lang="ts">
-import type { TransitionProps } from 'vue'
 import * as locales from '@nuxt/ui/locale'
 import '~/assets/css/main.css'
 
-const { locale, finalizePendingLocaleChange } = useI18n()
 const el = ref<HTMLElement | null>(null)
 const y = ref(0)
 const isMounting = ref(false)
-const isViewTransition = import.meta.server || document.startViewTransition
-const isPageTransition = computed(() =>
-  isViewTransition
-    ? false
-    : ({
-        name: 'page',
-        mode: 'out-in',
-        onBeforeEnter,
-      } as TransitionProps),
-)
 
 onMounted(() => {
   isMounting.value = true
@@ -34,10 +22,7 @@ function handleScroll() {
   y.value = window.scrollY || document.documentElement.scrollTop
 }
 
-async function onBeforeEnter() {
-  await finalizePendingLocaleChange()
-}
-
+const { locale } = useI18n()
 useSchemaOrg([
   definePerson({
     name: 'Dinar Permadi Yusup',
@@ -117,7 +102,7 @@ useHead({
       <NuxtRouteAnnouncer />
       <NavBar />
       <div class="pt-[70px]">
-        <NuxtPage :transition="isPageTransition" />
+        <NuxtPage />
       </div>
 
       <Footer />

@@ -21,7 +21,6 @@ export default defineNuxtConfig({
   ],
   experimental: {
     componentIslands: true,
-    viewTransition: true,
   },
   i18n: {
     skipSettingLocaleOnNavigate: false,
