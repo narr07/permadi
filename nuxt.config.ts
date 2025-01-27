@@ -105,11 +105,6 @@ export default defineNuxtConfig({
       crawlLinks: true,
       routes: [
         '/',
-        '/blog',
-        '/project',
-        '/en',
-        '/en/blog',
-        '/en/project',
       ],
     },
   },
@@ -205,11 +200,7 @@ export default defineNuxtConfig({
     preference: 'system',
     fallback: 'light',
   },
-  vite: {
-    build: {
-      modulePreload: false,
-    },
-  },
+
   linkChecker: {
     runOnBuild: false,
   },
