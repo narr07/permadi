@@ -22,7 +22,7 @@ function handleScroll() {
   y.value = window.scrollY || document.documentElement.scrollTop
 }
 
-const { locale } = useI18n()
+const { locale, finalizePendingLocaleChange } = useI18n()
 useSchemaOrg([
   definePerson({
     name: 'Dinar Permadi Yusup',
@@ -91,6 +91,9 @@ useHead({
 
   ],
 })
+async function onBeforeEnter() {
+  await finalizePendingLocaleChange()
+}
 </script>
 
 <template>
@@ -102,7 +105,7 @@ useHead({
       <NuxtRouteAnnouncer />
       <NavBar />
       <div class="pt-[70px]">
-        <NuxtPage />
+        <NuxtPage :transition="{ name: 'page', mode: 'out-in', onBeforeEnter }" />
       </div>
 
       <Footer />
