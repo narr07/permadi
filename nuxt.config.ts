@@ -127,16 +127,16 @@ export default defineNuxtConfig({
   },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
-    head: {
-      link: [
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com', crossorigin: 'anonymous' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap' },
-      ],
-      bodyAttrs: {
-        class: 'antialiased font-body  bg-primmary-100 dark:text-primmary-200 text-primmary-900 dark:bg-primmary-900',
-      },
-    },
+    // head: {
+    //   link: [
+    //     { rel: 'preconnect', href: 'https://fonts.googleapis.com', crossorigin: 'anonymous' },
+    //     { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
+    //     { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap' },
+    //   ],
+    //   bodyAttrs: {
+    //     class: 'antialiased font-body  bg-primmary-100 dark:text-primmary-200 text-primmary-900 dark:bg-primmary-900',
+    //   },
+    // },
   },
   site: {
     url: 'https://permadi.dev',
@@ -191,11 +191,11 @@ export default defineNuxtConfig({
       asset: '0%',
     },
   },
-  // vitalizer: {
-  //   disablePrefetchLinks: true,
-  //   disablePreloadLinks: true,
-  //   disableStylesheets: 'entry',
-  // },
+  vitalizer: {
+    disablePrefetchLinks: true,
+    disablePreloadLinks: true,
+    disableStylesheets: 'entry',
+  },
   // icon: {
   //   serverBundle: {
   //     collections: ['fa6-brands', 'devicon', 'file-icons', 'hugeicons', 'logos', 'lucide', 'openmoji', 'ph', 'skill-icons'],
@@ -205,11 +205,11 @@ export default defineNuxtConfig({
     preference: 'system',
     fallback: 'light',
   },
-  vite: {
-    build: {
-      modulePreload: false,
-    },
-  },
+  // vite: {
+  //   build: {
+  //     modulePreload: false,
+  //   },
+  // },
   linkChecker: {
     runOnBuild: false,
   },
