@@ -39,9 +39,9 @@ const items = [
               </div>
             </template>
           </Suspense>
-          <h3 class="mt-2 text-center">
+          <h2 class="mt-2 text-center">
             {{ item.title }}
-          </h3>
+          </h2>
         </div>
       </UCarousel>
     </UCard>

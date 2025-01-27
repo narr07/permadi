@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import * as locales from '@nuxt/ui/locale'
-// import '~/assets/css/main.css'
+import '~/assets/css/main.css'
 
 // const el = ref<HTMLElement | null>(null)
 // const y = ref(0)
