@@ -205,14 +205,9 @@ export default defineNuxtConfig({
     preference: 'system',
     fallback: 'light',
   },
-  ssr: true,
-  builder: 'vite',
-
   vite: {
     build: {
-      chunkSizeWarningLimit: 1000,
-      cssMinify: true,
-      minify: true,
+      modulePreload: false,
     },
   },
   linkChecker: {
