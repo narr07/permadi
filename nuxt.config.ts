@@ -191,11 +191,11 @@ export default defineNuxtConfig({
       asset: '0%',
     },
   },
-  vitalizer: {
-    disablePrefetchLinks: true,
-    disablePreloadLinks: true,
-    disableStylesheets: 'entry',
-  },
+  // vitalizer: {
+  //   disablePrefetchLinks: true,
+  //   disablePreloadLinks: true,
+  //   disableStylesheets: 'entry',
+  // },
   // icon: {
   //   serverBundle: {
   //     collections: ['fa6-brands', 'devicon', 'file-icons', 'hugeicons', 'logos', 'lucide', 'openmoji', 'ph', 'skill-icons'],
