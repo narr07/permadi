@@ -14,9 +14,9 @@ defineProps<{
         <Logo height="200px" width="200px" />
       </div>
       <div>
-        <h1>
+        <div class="text-4xl font-bold font-title animate-pulse  text-permadi-800">
           Loading ...
-        </h1>
+        </div>
       </div>
     </div>
   </div>

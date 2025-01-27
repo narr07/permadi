@@ -103,12 +103,13 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
-      crawlLinks: true,
       routes: [
         '/',
         '/blog',
         '/project',
-        '/sitemap.xml',
+        '/en',
+        '/en/blog',
+        '/en/project',
       ],
     },
   },
@@ -124,8 +125,16 @@ export default defineNuxtConfig({
     hidePoweredBy: true,
   },
   routeRules: {
+    // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
+    '/blog': { isr: 3600 }, // Halaman utama blog
     '/blog/**': { isr: 3600 }, // Setiap artikel blog
+    '/en/blog': { isr: 3600 }, // Halaman utama blog
+    '/en/blog/**': { isr: 3600 }, // Setiap artikel blog
+    // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
+    '/project': { isr: 3600 }, // Halaman utama project
     '/project/**': { isr: 3600 }, // Setiap detail project
+    '/en/project': { isr: 3600 }, // Halaman utama project
+    '/en/project/**': { isr: 3600 }, // Setiap detail project
   },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
