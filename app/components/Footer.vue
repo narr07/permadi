@@ -14,7 +14,7 @@ const socialIcon = [
 
 <template>
   <UContainer>
-    <UCard class="mt-16 bg-yellow-500 ring-2 dark:ring-permadi-600 ring-permadi-900 dark:bg-permadi-700  rounded">
+    <UCard class="mt-2 bg-yellow-500 ring-2 dark:ring-permadi-600 ring-permadi-900 dark:bg-permadi-700  rounded">
       <!-- Flex container untuk menyelaraskan teks dan ikon secara horizontal -->
       <div class="flex flex-col md:flex-row  justify-between items-center">
         <!-- Teks yang di kiri -->

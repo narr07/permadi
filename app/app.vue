@@ -61,6 +61,15 @@ useSchemaOrg([
     ],
   }),
 ])
+useHead({
+  meta: [
+    { name: 'theme-color', content: '#004643', media: '(prefers-color-scheme: dark)' },
+    { name: 'theme-color', content: '#abd1c6', media: '(prefers-color-scheme: light)' },
+    { name: 'msapplication-TileColor', content: '#004643' },
+    { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+
+  ],
+})
 </script>
 
 <template>

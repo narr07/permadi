@@ -48,7 +48,6 @@ const tabitems = [
 
 <template>
   <UContainer class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <PageLast />
     <UCard>
       <!-- <PageEducation /> -->
       <UTabs class="h-full flex flex-col" :items="tabitems">
@@ -119,5 +118,6 @@ const tabitems = [
         </template>
       </UTabs>
     </UCard>
+    <PageLast />
   </UContainer>
 </template>

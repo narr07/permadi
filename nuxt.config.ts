@@ -16,12 +16,11 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     'pinia-plugin-persistedstate/nuxt',
     'nuxt-vitalizer',
+    'nuxt-booster',
   ],
   experimental: {
     componentIslands: true,
-
   },
-
   i18n: {
     skipSettingLocaleOnNavigate: false,
     detectBrowserLanguage: {
@@ -37,6 +36,7 @@ export default defineNuxtConfig({
     strategy: 'prefix_except_default',
     defaultLocale: 'id',
     langDir: 'lang',
+    lazy: true,
   },
   hub: {
     database: true,
@@ -64,7 +64,7 @@ export default defineNuxtConfig({
     },
     families: [
       { name: 'Host Grotesk', provider: 'google', display: 'swap', weights: ['300', '400', '500', '600', '700', '800', '900'] },
-      { name: 'Plus Jakarta Sans', provider: 'google', display: 'swap', weights: ['400', '700', '800', '900'] },
+      { name: 'Sofia Sans', provider: 'google', display: 'swap', weights: ['400', '700', '800', '900'] },
     ],
   },
   content: {
@@ -105,25 +105,38 @@ export default defineNuxtConfig({
       crawlLinks: true,
       routes: [
         '/',
+        '/blog',
+        '/project',
+        '/en',
+        '/en/blog',
+        '/en/project',
       ],
     },
   },
-
   routeRules: {
-
-    '/': { prerender: true },
-
     // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
     '/blog': { isr: 3600 }, // Halaman utama blog
     '/blog/**': { isr: 3600 }, // Setiap artikel blog
-
+    '/en/blog': { isr: 3600 }, // Halaman utama blog
+    '/en/blog/**': { isr: 3600 }, // Setiap artikel blog
     // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
     '/project': { isr: 3600 }, // Halaman utama project
     '/project/**': { isr: 3600 }, // Setiap detail project
+    '/en/project': { isr: 3600 }, // Halaman utama project
+    '/en/project/**': { isr: 3600 }, // Setiap detail project
   },
-
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
+    head: {
+      link: [
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com', crossorigin: 'anonymous' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap' },
+      ],
+      bodyAttrs: {
+        class: 'antialiased font-body  bg-primmary-100 dark:text-primmary-200 text-primmary-900 dark:bg-primmary-900',
+      },
+    },
   },
   site: {
     url: 'https://permadi.dev',
@@ -143,6 +156,9 @@ export default defineNuxtConfig({
     },
   },
   image: {
+    provider: 'ipx',
+    formats: ['webp'],
+    quality: 85,
     // The screen sizes predefined by `@nuxt/image`:
     screens: {
       'xs': 320,
@@ -150,8 +166,57 @@ export default defineNuxtConfig({
       'md': 768,
       'lg': 1024,
       'xl': 1280,
-      'xxl': 1536,
       '2xl': 1536,
+    },
+  },
+  booster: {
+    detection: {
+      performance: true,
+      browserSupport: true,
+      battery: true,
+    },
+    performanceMetrics: {
+      timing: {
+        fcp: 800,
+        dcl: 1200,
+      },
+    },
+    optimizeSSR: {
+      cleanPreloads: true,
+      cleanPrefetches: true,
+      inlineStyles: true,
+    },
+    lazyOffset: {
+      component: '0%',
+      asset: '0%',
+    },
+  },
+  vitalizer: {
+    disablePrefetchLinks: true,
+    disablePreloadLinks: true,
+    disableStylesheets: 'entry',
+  },
+  icon: {
+    serverBundle: {
+      collections: ['fa6-brands', 'devicon', 'file-icons', 'hugeicons', 'logos', 'lucide', 'openmoji', 'ph', 'skill-icons'],
+    },
+  },
+  colorMode: {
+    preference: 'system',
+    fallback: 'light',
+  },
+  hooks: {
+    // Related to https://github.com/nuxt/nuxt/pull/22558
+    // Adding all global components to the main entry
+    // To avoid lagging during page navigation on client-side
+    // Downside: bigger JS bundle
+    // With sync: 465KB, gzip: 204KB
+    // Without: 418KB, gzip: 184KB
+    'components:extend': function (components) {
+      for (const comp of components) {
+        if (comp.global)
+          comp.global = 'sync'
+      }
     },
   },
   compatibilityDate: '2024-11-27',
