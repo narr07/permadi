@@ -105,6 +105,11 @@ export default defineNuxtConfig({
       crawlLinks: true,
       routes: [
         '/',
+        '/blog',
+        '/project',
+        '/en',
+        '/en/blog',
+        '/en/project',
       ],
     },
   },
@@ -191,16 +196,20 @@ export default defineNuxtConfig({
     disablePreloadLinks: true,
     disableStylesheets: 'entry',
   },
-  icon: {
-    serverBundle: {
-      collections: ['fa6-brands', 'devicon', 'file-icons', 'hugeicons', 'logos', 'lucide', 'openmoji', 'ph', 'skill-icons'],
-    },
-  },
+  // icon: {
+  //   serverBundle: {
+  //     collections: ['fa6-brands', 'devicon', 'file-icons', 'hugeicons', 'logos', 'lucide', 'openmoji', 'ph', 'skill-icons'],
+  //   },
+  // },
   colorMode: {
     preference: 'system',
     fallback: 'light',
   },
-
+  vite: {
+    build: {
+      modulePreload: false,
+    },
+  },
   linkChecker: {
     runOnBuild: false,
   },
