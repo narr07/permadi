@@ -27,8 +27,9 @@ const selected = ref<ILanguage>(
   || languages.value[0],
 )
 
-// Langsung set locale saat inisialisasi
-setLocale(selected.value.value)
+onMounted(() => {
+  setLocale(selected.value.value)
+})
 
 watch(selected, (newLanguage) => {
   setLocale(newLanguage.value)

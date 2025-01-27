@@ -17,9 +17,11 @@ export default defineNuxtConfig({
     'pinia-plugin-persistedstate/nuxt',
     'nuxt-vitalizer',
     'nuxt-booster',
+    'nuxt-security',
   ],
   experimental: {
     componentIslands: true,
+    viewTransition: true,
   },
   i18n: {
     skipSettingLocaleOnNavigate: false,
@@ -113,6 +115,17 @@ export default defineNuxtConfig({
       ],
     },
   },
+  security: {
+    headers: {
+      contentSecurityPolicy: false,
+      // contentSecurityPolicy: {
+      //   'img-src': ["'self'", 'data:', 'https://ik.imagekit.io', 'https://repository-images.githubusercontent.com','https://opengraph.githubassets.com'],
+      // },
+      referrerPolicy: 'strict-origin-when-cross-origin',
+      xFrameOptions: 'DENY',
+    },
+    hidePoweredBy: true,
+  },
   routeRules: {
     // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
     '/blog': { isr: 3600 }, // Halaman utama blog
@@ -127,16 +140,16 @@ export default defineNuxtConfig({
   },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
-    // head: {
-    //   link: [
-    //     { rel: 'preconnect', href: 'https://fonts.googleapis.com', crossorigin: 'anonymous' },
-    //     { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
-    //     { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap' },
-    //   ],
-    //   bodyAttrs: {
-    //     class: 'antialiased font-body  bg-primmary-100 dark:text-primmary-200 text-primmary-900 dark:bg-primmary-900',
-    //   },
-    // },
+    head: {
+      // link: [
+      //   { rel: 'preconnect', href: 'https://fonts.googleapis.com', crossorigin: 'anonymous' },
+      //   { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
+      //   { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap' },
+      // ],
+      bodyAttrs: {
+        class: 'antialiased font-body  bg-primary-100 dark:text-primary-200 text-primary-900 dark:bg-primary-900',
+      },
+    },
   },
   site: {
     url: 'https://permadi.dev',
