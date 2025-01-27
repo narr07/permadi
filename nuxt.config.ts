@@ -213,12 +213,10 @@ export default defineNuxtConfig({
       chunkSizeWarningLimit: 1000,
       cssMinify: true,
       minify: true,
-      rollupOptions: {
-        output: {
-          inlineDynamicImports: true,
-        },
-      },
     },
+  },
+  linkChecker: {
+    runOnBuild: false,
   },
   compatibilityDate: '2024-11-27',
 })
