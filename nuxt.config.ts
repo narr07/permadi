@@ -37,7 +37,6 @@ export default defineNuxtConfig({
     strategy: 'prefix_except_default',
     defaultLocale: 'id',
     langDir: 'lang',
-    lazy: true,
   },
   hub: {
     database: true,
@@ -126,15 +125,15 @@ export default defineNuxtConfig({
   },
   routeRules: {
     // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
-    '/blog': { isr: 3600 }, // Halaman utama blog
-    '/blog/**': { isr: 3600 }, // Setiap artikel blog
-    '/en/blog': { isr: 3600 }, // Halaman utama blog
-    '/en/blog/**': { isr: 3600 }, // Setiap artikel blog
+    '/blog': { isr: true }, // Halaman utama blog
+    '/blog/**': { isr: true }, // Setiap artikel blog
+    '/en/blog': { isr: true }, // Halaman utama blog
+    '/en/blog/**': { isr: true }, // Setiap artikel blog
     // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
-    '/project': { isr: 3600 }, // Halaman utama project
-    '/project/**': { isr: 3600 }, // Setiap detail project
-    '/en/project': { isr: 3600 }, // Halaman utama project
-    '/en/project/**': { isr: 3600 }, // Setiap detail project
+    '/project': { isr: true }, // Halaman utama project
+    '/project/**': { isr: true }, // Setiap detail project
+    '/en/project': { isr: true }, // Halaman utama project
+    '/en/project/**': { isr: true }, // Setiap detail project
   },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
@@ -180,28 +179,28 @@ export default defineNuxtConfig({
       '2xl': 1536,
     },
   },
-  // booster: {
-  //   detection: {
-  //     performance: true,
-  //     browserSupport: true,
-  //     battery: true,
-  //   },
-  //   performanceMetrics: {
-  //     timing: {
-  //       fcp: 800,
-  //       dcl: 1200,
-  //     },
-  //   },
-  //   optimizeSSR: {
-  //     cleanPreloads: true,
-  //     cleanPrefetches: true,
-  //     inlineStyles: true,
-  //   },
-  //   lazyOffset: {
-  //     component: '0%',
-  //     asset: '0%',
-  //   },
-  // },
+  booster: {
+    detection: {
+      performance: true,
+      browserSupport: true,
+      battery: true,
+    },
+    performanceMetrics: {
+      timing: {
+        fcp: 800,
+        dcl: 1200,
+      },
+    },
+    optimizeSSR: {
+      cleanPreloads: true,
+      cleanPrefetches: true,
+      inlineStyles: true,
+    },
+    lazyOffset: {
+      component: '0%',
+      asset: '0%',
+    },
+  },
   // vitalizer: {
   //   disablePrefetchLinks: true,
   //   disablePreloadLinks: true,
