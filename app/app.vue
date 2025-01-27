@@ -1,26 +1,26 @@
 <script setup lang="ts">
 import * as locales from '@nuxt/ui/locale'
-import '~/assets/css/main.css'
+// import '~/assets/css/main.css'
 
-// const el = ref<HTMLElement | null>(null)
-// const y = ref(0)
-// const isMounting = ref(false)
+const el = ref<HTMLElement | null>(null)
+const y = ref(0)
+const isMounting = ref(false)
 
-// onMounted(() => {
-//   isMounting.value = true
+onMounted(() => {
+  isMounting.value = true
 
-//   el.value = document.body
-//   window.addEventListener('scroll', handleScroll)
-//   handleScroll() // Для инициализации значения сразу при монтировании
-// })
+  el.value = document.body
+  window.addEventListener('scroll', handleScroll)
+  handleScroll() // Для инициализации значения сразу при монтировании
+})
 
-// onUnmounted(() => {
-//   window.removeEventListener('scroll', handleScroll)
-// })
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 
-// function handleScroll() {
-//   y.value = window.scrollY || document.documentElement.scrollTop
-// }
+function handleScroll() {
+  y.value = window.scrollY || document.documentElement.scrollTop
+}
 
 const { locale } = useI18n()
 useSchemaOrg([
@@ -95,7 +95,7 @@ useHead({
 
 <template>
   <div>
-    <!-- <Loader :is-mounting="isMounting" critical /> -->
+    <Loader :is-mounting="isMounting" critical />
     <Pattern />
     <UApp :locale="locales[locale as keyof typeof locales]">
       <NuxtLoadingIndicator color="#F9BC60" />
