@@ -102,15 +102,24 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
+      crawlLinks: true,
       routes: [
         '/',
-        '/blog',
-        '/project',
-        '/en',
-        '/en/blog',
-        '/en/project',
       ],
     },
+  },
+
+  routeRules: {
+
+    '/': { prerender: true },
+
+    // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
+    '/blog': { isr: 3600 }, // Halaman utama blog
+    '/blog/**': { isr: 3600 }, // Setiap artikel blog
+
+    // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
+    '/project': { isr: 3600 }, // Halaman utama project
+    '/project/**': { isr: 3600 }, // Setiap detail project
   },
   security: {
     headers: {
@@ -123,30 +132,8 @@ export default defineNuxtConfig({
     },
     hidePoweredBy: true,
   },
-  routeRules: {
-    // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
-    '/blog': { isr: true }, // Halaman utama blog
-    '/blog/**': { isr: true }, // Setiap artikel blog
-    '/en/blog': { isr: true }, // Halaman utama blog
-    '/en/blog/**': { isr: true }, // Setiap artikel blog
-    // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
-    '/project': { isr: true }, // Halaman utama project
-    '/project/**': { isr: true }, // Setiap detail project
-    '/en/project': { isr: true }, // Halaman utama project
-    '/en/project/**': { isr: true }, // Setiap detail project
-  },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
-    // head: {
-    //   // link: [
-    //   //   { rel: 'preconnect', href: 'https://fonts.googleapis.com', crossorigin: 'anonymous' },
-    //   //   { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
-    //   //   { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap' },
-    //   // ],
-    //   bodyAttrs: {
-    //     class: 'antialiased font-body  bg-primary-100 dark:text-primary-200 text-primary-900 dark:bg-primary-900',
-    //   },
-    // },
   },
   site: {
     url: 'https://permadi.dev',

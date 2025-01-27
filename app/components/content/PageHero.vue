@@ -18,9 +18,8 @@ const items = [
       <h1 class="pb-4 font-black text-g3">
         Dinar Permadi Yusup
       </h1>
-      <DelayHydration>
-        <LazyHeroDescription />
-      </DelayHydration>
+
+      <HeroDescription />
     </UCard>
     <UCard class="flex flex-col">
       <UCarousel
