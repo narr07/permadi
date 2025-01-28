@@ -1,13 +1,13 @@
 <script setup lang="ts">
 const { t } = useI18n()
-const hydrate = useBoosterHydrate()
+// const hydrate = useBoosterHydrate()
 
 // const PageHero = hydrate(
 //   () => import('~/components/content/PageHero.vue'),
 // )
-const PageSkill = hydrate(
-  () => import('~/components/content/PageSkill.vue'),
-)
+// const PageSkill = hydrate(
+//   () => import('~/components/content/PageSkill.vue'),
+// )
 
 const seoMeta = computed(() => ({
   title: 'Home',
