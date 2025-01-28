@@ -4,6 +4,7 @@ import { withLeadingSlash } from 'ufo'
 
 const route = useRoute()
 const { locale, t } = useI18n()
+const localePath = useLocalePath()
 
 const slug = computed(() => withLeadingSlash(String(route.params.slug)))
 
@@ -12,7 +13,7 @@ const { data: projectPage } = await useAsyncData(`page-${locale.value}-${slug.va
   const content = await queryCollection(collection).path(slug.value).first()
   return content
 }, {
-  watch: [locale],
+  watch: [localePath],
 })
 
 if (projectPage?.value?.seo) {

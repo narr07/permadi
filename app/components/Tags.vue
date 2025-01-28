@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const route = useRoute()
 const { locale, t } = useI18n()
 const localePath = useLocalePath()
 
@@ -10,8 +11,10 @@ defineShortcuts({
 })
 
 // Fetch blog data
-const { data: blogs } = await useAsyncData(`TagBlog-${locale.value}`, () => {
+const { data: blogs } = await useAsyncData(route.path, () => {
   return queryCollection(`blog_${locale.value}`).all()
+}, {
+  watch: [localePath],
 })
 
 // Mengambil satu tag dari setiap artikel

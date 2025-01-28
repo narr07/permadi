@@ -2,11 +2,14 @@
 const route = useRoute()
 const { locale } = useI18n()
 const { t } = useI18n()
+const localePath = useLocalePath()
 
 const { data: projects } = await useAsyncData(route.path, () => {
   return queryCollection(`project_${locale.value}`)
     .order('date', 'DESC')
     .all()
+}, {
+  watch: [localePath],
 })
 
 const seoMeta = computed(() => ({

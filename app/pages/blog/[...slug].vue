@@ -22,7 +22,7 @@ const { data: pageBlog, error: pageError } = await useAsyncData(`page-${locale.v
     throw new Error('Content not found')
   return content
 }, {
-  watch: [locale, slug], // Pastikan slug juga dipantau
+  watch: [localePath, slug], // Pastikan slug juga dipantau
 })
 
 // Tangani error jika terjadi
@@ -42,7 +42,7 @@ const { data: surroundingBlog, error: surroundingError } = await useAsyncData(
     }).order('date', 'DESC')
   },
   {
-    watch: [locale, slug], // Pastikan slug juga dipantau
+    watch: [localePath, slug], // Pastikan slug juga dipantau
   },
 )
 

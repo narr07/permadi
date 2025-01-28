@@ -28,11 +28,11 @@ const { data: totalPosts } = await useAsyncData(`blog-total-${route.path}`, () =
     .where('tags', 'LIKE', `%${filter?.join('%')}%`)
     .count()
 }, {
-  watch: [locale],
+  watch: [localePath],
 })
 
 // Reset page when locale changes
-watch(locale, () => {
+watch(localePath, () => {
   currentPage.value = 1
 })
 
