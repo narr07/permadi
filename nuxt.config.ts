@@ -100,14 +100,19 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
-  // nitro: {
-  //   prerender: {
-  //     crawlLinks: true,
-  //     routes: [
-  //       '/',
-  //     ],
-  //   },
-  // },
+  nitro: {
+    prerender: {
+      // crawlLinks: true,
+      routes: [
+        '/',
+        '/blog',
+        '/project',
+        '/en',
+        '/en/blog',
+        '/en/project',
+      ],
+    },
+  },
 
   // routeRules: {
 
