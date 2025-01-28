@@ -37,7 +37,6 @@ export default defineNuxtConfig({
     strategy: 'prefix_except_default',
     defaultLocale: 'id',
     langDir: 'lang',
-    lazy: true,
   },
   hub: {
     database: true,
@@ -101,28 +100,27 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
-  // nitro: {
-  //   prerender: {
-  //     // Pre-render the homepage
-  //     routes: ['/'],
-  //     // Then crawl all the links on the page
-  //     // crawlLinks: true,
-  //   },
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      routes: [
+        '/',
+      ],
+    },
+  },
 
-  // },
+  routeRules: {
 
-  // routeRules: {
+    '/': { prerender: true },
 
-  //   '/': { prerender: true },
+    // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
+    '/blog': { isr: 3600 }, // Halaman utama blog
+    '/blog/**': { isr: 3600 }, // Setiap artikel blog
 
-  //   // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
-  //   '/blog': { isr: 3600, prerender: true }, // Halaman utama blog
-  //   '/blog/**': { isr: 3600, prerender: true }, // Setiap artikel blog
-
-  //   // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
-  //   '/project': { isr: 3600, prerender: true }, // Halaman utama project
-  //   '/project/**': { isr: 3600 }, // Setiap detail project
-  // },
+    // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
+    '/project': { isr: 3600 }, // Halaman utama project
+    '/project/**': { isr: 3600 }, // Setiap detail project
+  },
   security: {
     headers: {
       contentSecurityPolicy: false,
@@ -131,8 +129,6 @@ export default defineNuxtConfig({
       // },
       referrerPolicy: 'strict-origin-when-cross-origin',
       xFrameOptions: 'DENY',
-      crossOriginOpenerPolicy: 'same-origin', // Tambahkan COOP
-      crossOriginEmbedderPolicy: 'require-corp', // Tambahkan COEP
     },
     hidePoweredBy: true,
   },

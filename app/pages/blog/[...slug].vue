@@ -6,7 +6,8 @@ import { useDateFormat, useWindowScroll } from '@vueuse/core'
 import { withLeadingSlash } from 'ufo'
 import { computed, onMounted, ref } from 'vue'
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
+const { locale } = useI18n()
 const localePath = useLocalePath()
 
 // Ambil rute sekali saat inisialisasi
@@ -14,24 +15,24 @@ const route = useRoute()
 const slug = computed(() => withLeadingSlash(String(route.params.slug)))
 
 // Ambil data artikel saat ini
-const { data: pageBlog } = await useAsyncData(route.path, async () => {
+const { data: pageBlog, error: pageError } = await useAsyncData(`page-${locale.value}-${slug.value}`, async () => {
   const collection = (`blog_${locale.value}`) as keyof Collections
   const content = await queryCollection(collection).path(slug.value).first()
   if (!content)
     throw new Error('Content not found')
   return content
 }, {
-  watch: [locale], // Pastikan slug juga dipantau
+  watch: [locale, slug], // Pastikan slug juga dipantau
 })
 
 // Tangani error jika terjadi
-if (!pageBlog.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
+if (pageError.value) {
+  console.error(pageError.value)
 }
 
 // Ambil artikel sebelumnya dan berikutnya
 const { data: surroundingBlog, error: surroundingError } = await useAsyncData(
-  `surround-${locale.value}-${route.path}`,
+  `surround-${locale.value}-${slug.value}`,
   async () => {
     if (!pageBlog.value)
       return null
@@ -41,7 +42,7 @@ const { data: surroundingBlog, error: surroundingError } = await useAsyncData(
     }).order('date', 'DESC')
   },
   {
-    watch: [locale], // Pastikan slug juga dipantau
+    watch: [locale, slug], // Pastikan slug juga dipantau
   },
 )
 
@@ -103,9 +104,6 @@ const open = ref(false)
 
 <template>
   <UContainer class=" ">
-    <!-- <pre>
-      {{ `${route.path}` }}
-    </pre> -->
     <!-- Header -->
     <div class="md:flex-row flex-col flex gap-4">
       <div class="md:w-3/4">

@@ -7,7 +7,7 @@ const currentPage = ref(1)
 const itemsPerPage = 10
 
 // Fetch posts dengan useAsyncData
-const { data: postsData } = await useAsyncData('bloglist', () => {
+const { data: postsData } = await useAsyncData(`blog-${route.path}-${currentPage.value}`, () => {
   return queryCollection(`blog_${locale.value}`)
     .order('date', 'DESC')
     .skip((currentPage.value - 1) * itemsPerPage)
