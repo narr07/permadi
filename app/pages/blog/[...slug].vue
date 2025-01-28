@@ -13,7 +13,7 @@ const localePath = useLocalePath()
 
 const slug = computed(() => withLeadingSlash(String(route.params.slug)))
 
-const { data: page, error: pageError } = await useAsyncData(`page-${slug.value}`, async () => {
+const { data: BlogPage, error: pageError } = await useAsyncData(`page-${slug.value}`, async () => {
   const collection = (`blog_${locale.value}`) as keyof Collections
   const content = await queryCollection(collection).path(slug.value).first()
   if (!content)
@@ -61,8 +61,8 @@ onMounted(() => {
   }
 })
 
-if (page?.value?.seo) {
-  useSeoMeta(page.value.seo)
+if (BlogPage?.value?.seo) {
+  useSeoMeta(BlogPage.value.seo)
 }
 
 useSchemaOrg([
