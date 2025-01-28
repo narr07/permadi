@@ -16,7 +16,6 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     'pinia-plugin-persistedstate/nuxt',
     'nuxt-vitalizer',
-    // 'nuxt-security',
     'nuxt-booster',
     'nuxt-security',
   ],
@@ -104,25 +103,36 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
+      // Pre-render the homepage
+      routes: ['/'],
+      // Then crawl all the links on the page
       crawlLinks: true,
-      routes: [
-        '/',
-      ],
     },
+    cloudflare: {
+      pages: {
+        routes: {
+          exclude: [
+            // we know that all docs and blog pages are pre-rendered
+            '/project/*',
+          ],
+        },
+      },
+    },
+
   },
 
-  routeRules: {
+  // routeRules: {
 
-    '/': { prerender: true },
+  //   '/': { prerender: true },
 
-    // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
-    '/blog': { isr: 3600 }, // Halaman utama blog
-    '/blog/**': { isr: 3600 }, // Setiap artikel blog
+  //   // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
+  //   '/blog': { isr: 3600 }, // Halaman utama blog
+  //   '/blog/**': { isr: 3600 }, // Setiap artikel blog
 
-    // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
-    '/project': { isr: 3600 }, // Halaman utama project
-    '/project/**': { isr: 3600 }, // Setiap detail project
-  },
+  //   // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
+  //   '/project': { isr: 3600 }, // Halaman utama project
+  //   '/project/**': { isr: 3600 }, // Setiap detail project
+  // },
   security: {
     headers: {
       contentSecurityPolicy: false,

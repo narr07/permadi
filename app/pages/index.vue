@@ -2,9 +2,9 @@
 const { t } = useI18n()
 const hydrate = useBoosterHydrate()
 
-const PageHero = hydrate(
-  () => import('~/components/content/PageHero.vue'),
-)
+// const PageHero = hydrate(
+//   () => import('~/components/content/PageHero.vue'),
+// )
 const PageSkill = hydrate(
   () => import('~/components/content/PageSkill.vue'),
 )

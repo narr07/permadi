@@ -14,7 +14,7 @@ const route = useRoute()
 const slug = computed(() => withLeadingSlash(String(route.params.slug)))
 
 // Ambil data artikel saat ini
-const { data: pageBlog } = await useAsyncData(`blog-${locale.value}-${slug.value}`, async () => {
+const { data: pageBlog } = await useAsyncData(route.path, async () => {
   const collection = (`blog_${locale.value}`) as keyof Collections
   const content = await queryCollection(collection).path(slug.value).first()
   if (!content)
