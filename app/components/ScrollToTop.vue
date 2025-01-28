@@ -8,12 +8,11 @@ function scrollToTop() {
 
 <template>
   <UButton
-    icon="i-heroicons-chevron-up"
+    icon="ph:caret-double-up-duotone"
     square
-    variant="solid"
+
     rel="noopener noreferrer"
-    size="sm"
-    class="fixed z-50 bottom-16 left-2 backdrop-blur-md bg-permadi-200/80 text-black hover:!bg-permadi-300 dark:bg-permadi-800/80 dark:text-white dark:hover:!bg-permadi-900 transition duration-200"
+    class="fixed z-50   bottom-2  md:hidden  left-2 backdrop-blur-md bg-permadi-200/80 text-black hover:!bg-permadi-300 dark:bg-permadi-800/80 dark:text-white dark:hover:!bg-permadi-900 transition duration-200"
     @click="scrollToTop()"
   >
     <span class="sr-only">To Top</span>

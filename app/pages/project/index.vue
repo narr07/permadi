@@ -91,6 +91,5 @@ defineOgImageComponent('Page', {
         </UCard>
       </div>
     </div>
-    <ScrollToTop />
   </UContainer>
 </template>

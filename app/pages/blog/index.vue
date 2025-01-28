@@ -176,6 +176,5 @@ defineOgImageComponent('Page', {
         show-edges
       />
     </div>
-    <ScrollToTop />
   </UContainer>
 </template>
