@@ -14,7 +14,7 @@ defineShortcuts({
 const { data: blogs } = await useAsyncData(route.path, () => {
   return queryCollection(`blog_${locale.value}`).all()
 }, {
-  watch: [localePath],
+  watch: [localePath, locale],
 })
 
 // Mengambil satu tag dari setiap artikel

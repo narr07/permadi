@@ -9,7 +9,7 @@ const { data: projects } = await useAsyncData(route.path, () => {
     .order('date', 'DESC')
     .all()
 }, {
-  watch: [localePath],
+  watch: [localePath, locale],
 })
 
 const seoMeta = computed(() => ({

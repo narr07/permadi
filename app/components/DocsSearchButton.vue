@@ -32,8 +32,7 @@ async function updateSearchData() {
 updateSearchData()
 
 // Watch perubahan locale dan update data pencarian
-watch(localePath, updateSearchData)
-watchEffect(() => {
+watch([locale, localePath], () => {
   updateSearchData()
 })
 

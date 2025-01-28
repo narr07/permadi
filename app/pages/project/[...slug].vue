@@ -13,7 +13,7 @@ const { data: projectPage } = await useAsyncData(`page-${locale.value}-${slug.va
   const content = await queryCollection(collection).path(slug.value).first()
   return content
 }, {
-  watch: [localePath],
+  watch: [localePath, locale],
 })
 
 if (projectPage?.value?.seo) {
