@@ -81,7 +81,7 @@ export default defineNuxtConfig({
       },
     },
     build: {
-      pathMeta: { forceLeadingSlash: true },
+      // pathMeta: { forceLeadingSlash: true },
       markdown: {
         toc: {
           depth: 3,
@@ -109,20 +109,20 @@ export default defineNuxtConfig({
   //   },
   // },
 
-  routeRules: {
+  // routeRules: {
 
-    '/': { prerender: true },
+  //   '/': { prerender: true },
 
-    // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
-    '/blog': { isr: true, prerender: true }, // Halaman utama blog
-    '/blog/**': { isr: true, prerender: true }, // Setiap artikel blog
-    '/en/blog': { isr: true, prerender: true }, // Halaman utama blog
-    '/en/blog/**': { isr: true, prerender: true }, // Setiap artikel blog
+  //   // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
+  //   '/blog': { isr: true, prerender: true }, // Halaman utama blog
+  //   '/blog/**': { isr: true, prerender: true }, // Setiap artikel blog
+  //   '/en/blog': { isr: true, prerender: true }, // Halaman utama blog
+  //   '/en/blog/**': { isr: true, prerender: true }, // Setiap artikel blog
 
-    // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
-    '/project': { isr: true, prerender: true }, // Halaman utama project
+  //   // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
+  //   '/project': { isr: true, prerender: true }, // Halaman utama project
 
-  },
+  // },
   security: {
     headers: {
       contentSecurityPolicy: false,
