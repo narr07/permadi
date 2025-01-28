@@ -96,23 +96,24 @@ export default defineNuxtConfig({
       },
     },
   },
+  ssr: true,
   css: ['~/assets/css/main.css'],
   future: {
     compatibilityVersion: 4,
   },
-  nitro: {
-    prerender: {
-      // crawlLinks: true,
-      routes: [
-        '/',
-        '/blog',
-        '/project',
-        '/en',
-        '/en/blog',
-        '/en/project',
-      ],
-    },
-  },
+  // nitro: {
+  //   prerender: {
+  //     // crawlLinks: true,
+  //     routes: [
+  //       '/',
+  //       '/blog',
+  //       '/project',
+  //       '/en',
+  //       '/en/blog',
+  //       '/en/project',
+  //     ],
+  //   },
+  // },
 
   // routeRules: {
 
