@@ -4,16 +4,34 @@ import { useRouter } from 'vue-router'
 
 const { locale } = useI18n()
 
-// Memuat data pencarian dengan useLazyAsyncData
-const { data: search, refresh } = await useLazyAsyncData(
-  'searchSections', // Kunci unik untuk data ini
-  () => queryCollectionSearchSections(`content_${locale.value}`), // Fungsi untuk mengambil data
-)
+// Buat ref untuk menyimpan hasil pencarian
+interface SearchItem {
+  id: string
+  title: string
+  titles: string[]
+  level: number
+  content: string
+}
 
-// Watch perubahan locale dan panggil refresh untuk memuat ulang data
-watch(locale, () => {
-  refresh() // Memuat ulang data saat locale berubah
-})
+const search = ref<SearchItem[]>([])
+
+// Fungsi untuk memperbarui data pencarian
+async function updateSearchData() {
+  try {
+    const data = await queryCollectionSearchSections(`content_${locale.value}`)
+    search.value = data || [] // Fallback ke array kosong jika data undefined atau null
+  }
+  catch (error) {
+    console.error('Gagal memuat data pencarian:', error)
+    search.value = [] // Fallback ke array kosong jika terjadi error
+  }
+}
+
+// Panggil pertama kali
+updateSearchData()
+
+// Watch perubahan locale dan update data pencarian
+watch(locale, updateSearchData)
 
 // Gunakan computed untuk membuat grup secara reaktif
 const groups = computed(() => [
@@ -22,26 +40,26 @@ const groups = computed(() => [
     label: 'Blog',
     level: 1,
     items: search.value
-      ?.filter(item => item.id.startsWith('/blog')) // Filter untuk grup blog
+      .filter(item => item.id.startsWith('/blog')) // Filter untuk grup blog
       .map(item => ({
         label: item.title,
         suffix: item.content,
         to: `${item.id}`,
         icon: 'ph:notebook-duotone',
-      })) || [],
+      })),
   },
   {
     id: 'project',
     label: 'Project',
     level: 1,
     items: search.value
-      ?.filter(item => item.id.startsWith('/project')) // Filter untuk grup project
+      .filter(item => item.id.startsWith('/project')) // Filter untuk grup project
       .map(item => ({
         label: item.title,
         suffix: item.content,
         to: `${item.id}`,
         icon: 'hugeicons:folder-check',
-      })) || [],
+      })),
   },
 ])
 

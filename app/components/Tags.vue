@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const route = useRoute()
 const { locale, t } = useI18n()
 const localePath = useLocalePath()
 
@@ -11,7 +10,7 @@ defineShortcuts({
 })
 
 // Fetch blog data
-const { data: blogs } = await useAsyncData(route.path, () => {
+const { data: blogs } = await useAsyncData(`TagBlog-${locale.value}`, () => {
   return queryCollection(`blog_${locale.value}`).all()
 })
 
