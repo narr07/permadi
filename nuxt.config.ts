@@ -38,9 +38,9 @@ export default defineNuxtConfig({
     defaultLocale: 'id',
     langDir: 'lang',
   },
-  // hub: {
-  //   database: true,
-  // },
+  hub: {
+    database: true,
+  },
   delayHydration: {
     mode: 'mount',
     // replayClick: true,
@@ -68,10 +68,10 @@ export default defineNuxtConfig({
     ],
   },
   content: {
-    // database: {
-    //   type: 'd1',
-    //   binding: 'permadi',
-    // },
+    database: {
+      type: 'd1',
+      binding: 'permadi',
+    },
     preview: {
       api: 'https://api.nuxt.studio',
       gitInfo: {
