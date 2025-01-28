@@ -7,7 +7,7 @@ const currentPage = ref(1)
 const itemsPerPage = 10
 
 // Fetch posts dengan useAsyncData
-const { data: postsData } = await useAsyncData(route.path, () => {
+const { data: postsData } = await useLazyAsyncData('ListBlog', () => {
   return queryCollection(`blog_${locale.value}`)
     .order('date', 'DESC')
     .skip((currentPage.value - 1) * itemsPerPage)
@@ -18,7 +18,7 @@ const { data: postsData } = await useAsyncData(route.path, () => {
 })
 
 // Fetch total posts
-const { data: totalPosts } = await useAsyncData(`blog-total-${route.path}`, () => {
+const { data: totalPosts } = await useLazyAsyncData(`blog-total-${route.path}`, () => {
   return queryCollection(`blog_${locale.value}`).count()
 }, {
   watch: [locale],

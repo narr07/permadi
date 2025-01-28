@@ -101,38 +101,28 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
-  nitro: {
-    prerender: {
-      // Pre-render the homepage
-      routes: ['/'],
-      // Then crawl all the links on the page
-      crawlLinks: true,
-    },
-    cloudflare: {
-      pages: {
-        routes: {
-          exclude: [
-            // we know that all docs and blog pages are pre-rendered
-            '/project/*',
-          ],
-        },
-      },
-    },
+  // nitro: {
+  //   prerender: {
+  //     // Pre-render the homepage
+  //     routes: ['/'],
+  //     // Then crawl all the links on the page
+  //     // crawlLinks: true,
+  //   },
 
-  },
-
-  // routeRules: {
-
-  //   '/': { prerender: true },
-
-  //   // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
-  //   '/blog': { isr: 3600 }, // Halaman utama blog
-  //   '/blog/**': { isr: 3600 }, // Setiap artikel blog
-
-  //   // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
-  //   '/project': { isr: 3600 }, // Halaman utama project
-  //   '/project/**': { isr: 3600 }, // Setiap detail project
   // },
+  ssr: true,
+  routeRules: {
+
+    '/': { prerender: true },
+
+    // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
+    '/blog': { isr: 3600, prerender: true }, // Halaman utama blog
+    '/blog/**': { isr: 3600, prerender: true }, // Setiap artikel blog
+
+    // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
+    '/project': { isr: 3600, prerender: true }, // Halaman utama project
+    '/project/**': { isr: 3600 }, // Setiap detail project
+  },
   security: {
     headers: {
       contentSecurityPolicy: false,

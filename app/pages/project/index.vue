@@ -77,15 +77,17 @@ defineOgImageComponent('Page', {
                 </UBadge>
               </div>
               <div class="  text-sm leading-6 text-permadi-900">
-                <UButton color="neutral" icon="ph:arrow-square-up-right-duotone" square :to="content.meta.link as string" target="_blank" />
+                <UButton color="neutral" icon="ph:arrow-square-up-right-duotone" :aria-label="content.title" square :to="content.meta.link as string" target="_blank">
+                  <span class="sr-only">{{ content.meta.link }}</span>
+                </UButton>
               </div>
             </div>
           </template>
           <template #footer>
             <NuxtLink :to="`project${content.path}`">
-              <h3 class="line-clamp-2 ">
+              <h2 class="line-clamp-2 ">
                 {{ content.title }}
-              </h3>
+              </h2>
             </NuxtLink>
           </template>
         </UCard>

@@ -1,5 +1,3 @@
-import { ar } from '@nuxt/ui/runtime/locale/index.js'
-
 export default {
   website: {
     home: 'Beranda',
@@ -29,11 +27,11 @@ export default {
     eduText: 'Melalui website ini, Saya ingin berbagi pengetahuan dalam belajar desain dan pemrograman. Saya lulusan Universitas Pendidikan Indonesia (UPI) dan saat ini bekerja sebagai guru di SDN Teja II',
   },
   blog: {
-    title: 'Kumpulan Artikel ',
+    title: 'Kumpulan Artikel Menarik ',
     toc: 'Daftar Isi',
     tags: 'Semua Tag',
   },
   project: {
-    title: 'Kumpulan Projek',
+    title: 'Kumpulan Projek Yang Dikerjakan',
   },
 }

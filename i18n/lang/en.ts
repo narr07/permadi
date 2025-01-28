@@ -27,11 +27,11 @@ export default {
     eduText: 'Through this website, I want to share my knowledge in learning design and programming. I am a graduate of the Indonesian Education University (UPI) and currently work as a teacher at SDN Teja II',
   },
   blog: {
-    title: 'Articles Collection',
+    title: 'Collection of Interesting Articles',
     toc: 'Table of Contents',
     tags: 'All Tags',
   },
   project: {
-    title: 'Projects Collection',
+    title: 'Collection of Projects Worked On',
   },
 }

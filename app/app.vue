@@ -22,7 +22,7 @@ import * as locales from '@nuxt/ui/locale'
 //   y.value = window.scrollY || document.documentElement.scrollTop
 // }
 
-const { locale, finalizePendingLocaleChange } = useI18n()
+const { locale } = useI18n()
 useSchemaOrg([
   definePerson({
     name: 'Dinar Permadi Yusup',
@@ -92,9 +92,9 @@ useHead({
   ],
 })
 
-async function onBeforeEnter() {
-  await finalizePendingLocaleChange()
-}
+// async function onBeforeEnter() {
+//   await finalizePendingLocaleChange()
+// }
 </script>
 
 <template>
@@ -106,8 +106,8 @@ async function onBeforeEnter() {
       <NuxtRouteAnnouncer />
       <NavBar />
       <div class="pt-[70px]">
-        <NuxtPage :transition="{ name: 'page', mode: 'out-in', onBeforeEnter }" />
-        <!-- <NuxtPage /> -->
+        <!-- <NuxtPage :transition="{ name: 'page', mode: 'out-in', onBeforeEnter }" /> -->
+        <NuxtPage />
       </div>
 
       <Footer />
