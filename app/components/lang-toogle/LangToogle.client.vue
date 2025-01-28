@@ -12,7 +12,8 @@ interface ILanguage {
 const languages: globalThis.ComputedRef<ILanguage[]> = computed(() =>
   locales.value.map((locale) => {
     return {
-      ...locale,
+      value: locale.value,
+      code: locale.code,
       icon:
         locale.value === 'en'
           ? 'openmoji:flag-england'

@@ -2,21 +2,22 @@
 import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
-const { locale } = useI18n()
-
-// Buat ref untuk menyimpan hasil pencarian
 interface SearchItem {
   id: string
   title: string
-  titles: string[]
-  level: number
   content: string
+  onSelect?: () => void
+  to?: string
+  target?: string
 }
 
+const { locale } = useI18n()
+
+// Ref untuk menyimpan data pencarian
 const search = ref<SearchItem[]>([])
 
-// Fungsi untuk memperbarui data pencarian
-async function updateSearchData() {
+// Fungsi untuk memuat data pencarian
+async function loadSearchData() {
   try {
     const data = await queryCollectionSearchSections(`content_${locale.value}`)
     search.value = data || [] // Fallback ke array kosong jika data undefined atau null
@@ -27,11 +28,13 @@ async function updateSearchData() {
   }
 }
 
-// Panggil pertama kali
-updateSearchData()
+// Panggil pertama kali untuk memuat data awal
+loadSearchData()
 
-// Watch perubahan locale dan update data pencarian
-watch(locale, updateSearchData)
+// Watch perubahan locale dan panggil ulang loadSearchData
+watch(locale, () => {
+  loadSearchData()
+})
 
 // Gunakan computed untuk membuat grup secara reaktif
 const groups = computed(() => [

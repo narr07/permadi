@@ -6,3 +6,4 @@ name = "javascript"
 [analyzers.meta]
 plugins = [ "vue" ]
 environment = [ "nodejs" ]
+node_version = "20"

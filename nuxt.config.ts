@@ -38,6 +38,7 @@ export default defineNuxtConfig({
     strategy: 'prefix_except_default',
     defaultLocale: 'id',
     langDir: 'lang',
+    lazy: true,
   },
   hub: {
     database: true,
@@ -124,7 +125,6 @@ export default defineNuxtConfig({
   },
   security: {
     headers: {
-      contentSecurityPolicy: false,
       contentSecurityPolicy: false,
       // contentSecurityPolicy: {
       //   'img-src': ["'self'", 'data:', 'https://ik.imagekit.io', 'https://repository-images.githubusercontent.com','https://opengraph.githubassets.com'],
