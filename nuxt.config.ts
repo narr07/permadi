@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     'pinia-plugin-persistedstate/nuxt',
     'nuxt-vitalizer',
     'nuxt-booster',
-    'nuxt-security',
+    // 'nuxt-security',
   ],
   experimental: {
     componentIslands: true,
@@ -121,17 +121,17 @@ export default defineNuxtConfig({
     '/project': { isr: 3600 }, // Halaman utama project
     '/project/**': { isr: 3600 }, // Setiap detail project
   },
-  security: {
-    headers: {
-      contentSecurityPolicy: false,
-      // contentSecurityPolicy: {
-      //   'img-src': ["'self'", 'data:', 'https://ik.imagekit.io', 'https://repository-images.githubusercontent.com','https://opengraph.githubassets.com'],
-      // },
-      referrerPolicy: 'strict-origin-when-cross-origin',
-      xFrameOptions: 'DENY',
-    },
-    hidePoweredBy: true,
-  },
+  // security: {
+  //   headers: {
+  //     contentSecurityPolicy: false,
+  //     // contentSecurityPolicy: {
+  //     //   'img-src': ["'self'", 'data:', 'https://ik.imagekit.io', 'https://repository-images.githubusercontent.com','https://opengraph.githubassets.com'],
+  //     // },
+  //     referrerPolicy: 'strict-origin-when-cross-origin',
+  //     xFrameOptions: 'DENY',
+  //   },
+  //   hidePoweredBy: true,
+  // },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
   },

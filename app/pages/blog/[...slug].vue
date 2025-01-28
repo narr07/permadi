@@ -209,7 +209,7 @@ const hashtags = computed(() => {
           </div>
         </UCard>
 
-        <UCard>
+        <!-- <UCard>
           <div class="flex flex-wrap gap-2">
             <ClientOnly>
               <ShareNetwork
@@ -233,7 +233,7 @@ const hashtags = computed(() => {
               </ShareNetwork>
             </ClientOnly>
           </div>
-        </UCard>
+        </UCard> -->
       </div>
       <!-- toc -->
       <div class="w-1/4 hidden md:flex flex-col  space-y-4">
