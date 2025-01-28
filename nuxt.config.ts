@@ -38,12 +38,12 @@ export default defineNuxtConfig({
     defaultLocale: 'id',
     langDir: 'lang',
   },
-  hub: {
-    database: true,
-  },
+  // hub: {
+  //   database: true,
+  // },
   delayHydration: {
     mode: 'mount',
-    replayClick: true,
+    // replayClick: true,
   },
   eslint: {
     config: {
@@ -68,10 +68,10 @@ export default defineNuxtConfig({
     ],
   },
   content: {
-    database: {
-      type: 'd1',
-      binding: 'permadi',
-    },
+    // database: {
+    //   type: 'd1',
+    //   binding: 'permadi',
+    // },
     preview: {
       api: 'https://api.nuxt.studio',
       gitInfo: {
@@ -113,13 +113,13 @@ export default defineNuxtConfig({
 
     '/': { prerender: true },
 
-    // // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
-    // '/blog': { isr: 3600 }, // Halaman utama blog
-    // '/blog/**': { isr: 3600 }, // Setiap artikel blog
+    // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
+    '/blog': { isr: 3600, prerender: true }, // Halaman utama blog
+    '/blog/**': { isr: 3600, prerender: true }, // Setiap artikel blog
 
-    // // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
-    // '/project': { isr: 3600 }, // Halaman utama project
-    // '/project/**': { isr: 3600 }, // Setiap detail project
+    // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
+    '/project': { isr: 3600, prerender: true }, // Halaman utama project
+    '/project/**': { isr: 3600 }, // Setiap detail project
   },
   security: {
     headers: {
