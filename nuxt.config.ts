@@ -110,19 +110,19 @@ export default defineNuxtConfig({
   //   },
 
   // },
-  ssr: true,
-  routeRules: {
 
-    '/': { prerender: true },
+  // routeRules: {
 
-    // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
-    '/blog': { isr: 3600, prerender: true }, // Halaman utama blog
-    '/blog/**': { isr: 3600, prerender: true }, // Setiap artikel blog
+  //   '/': { prerender: true },
 
-    // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
-    '/project': { isr: 3600, prerender: true }, // Halaman utama project
-    '/project/**': { isr: 3600 }, // Setiap detail project
-  },
+  //   // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
+  //   '/blog': { isr: 3600, prerender: true }, // Halaman utama blog
+  //   '/blog/**': { isr: 3600, prerender: true }, // Setiap artikel blog
+
+  //   // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
+  //   '/project': { isr: 3600, prerender: true }, // Halaman utama project
+  //   '/project/**': { isr: 3600 }, // Setiap detail project
+  // },
   security: {
     headers: {
       contentSecurityPolicy: false,
