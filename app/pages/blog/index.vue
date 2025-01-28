@@ -14,18 +14,18 @@ const { data: postsData } = await useAsyncData(`blog-${route.path}-${currentPage
     .limit(itemsPerPage)
     .all()
 }, {
-  watch: [currentPage, localePath, locale],
+  watch: [currentPage, locale],
 })
 
 // Fetch total posts
 const { data: totalPosts } = await useAsyncData(`blog-total-${route.path}`, () => {
   return queryCollection(`blog_${locale.value}`).count()
 }, {
-  watch: [localePath, locale, currentPage],
+  watch: [locale, currentPage],
 })
 
 // Reset page when locale changes
-watch([localePath, locale], () => {
+watch([locale], () => {
   currentPage.value = 1
 })
 

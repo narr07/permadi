@@ -22,7 +22,7 @@ const { data: pageBlog, error: pageError } = await useAsyncData(`page-${locale.v
     throw new Error('Content not found')
   return content
 }, {
-  watch: [localePath, locale], // Pastikan slug juga dipantau
+  watch: [locale], // Pastikan slug juga dipantau
 })
 
 // Tangani error jika terjadi
@@ -31,25 +31,17 @@ if (pageError.value) {
 }
 
 // Ambil artikel sebelumnya dan berikutnya
-const { data: surroundingBlog, error: surroundingError } = await useAsyncData(
-  `surround-${locale.value}-${slug.value}`,
-  async () => {
-    if (!pageBlog.value)
-      return null
-    return queryCollectionItemSurroundings(`blog_${locale.value}`, slug.value, {
-      before: 1,
-      after: 1,
-    }).order('date', 'DESC')
-  },
-  {
-    watch: [localePath, locale], // Pastikan slug juga dipantau
-  },
-)
+const { data: surroundingBlog } = await useAsyncData(`surround-${locale.value}-${slug.value}`, async () => {
+  if (!pageBlog.value)
+    return null
+  return queryCollectionItemSurroundings(`blog_${locale.value}`, slug.value, {
+    before: 1,
+    after: 1,
+  }).order('date', 'DESC')
+}, {
 
-// Tangani error jika terjadi
-if (surroundingError.value) {
-  console.error(surroundingError.value)
-}
+  watch: [locale], // Pastikan slug juga dipantau
+})
 
 // Gunakan scrollspy untuk memantau heading
 const headings = ref<Element[]>([]) // Referensi untuk elemen heading
