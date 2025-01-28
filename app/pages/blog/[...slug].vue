@@ -4,6 +4,7 @@ import { queryCollection, useRoute } from '#imports'
 import { useScrollspy } from '@/composables/useScrollspy'
 import { useDateFormat, useWindowScroll } from '@vueuse/core'
 import { withLeadingSlash } from 'ufo'
+import { computed } from 'vue'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -12,15 +13,22 @@ const localePath = useLocalePath()
 
 const slug = computed(() => withLeadingSlash(String(route.params.slug)))
 
-const { data: page } = await useAsyncData(`page-${slug.value}`, async () => {
+const { data: page, error: pageError } = await useAsyncData(`page-${slug.value}`, async () => {
   const collection = (`blog_${locale.value}`) as keyof Collections
   const content = await queryCollection(collection).path(slug.value).first()
+  if (!content)
+    throw new Error('Content not found')
   return content
 }, {
   watch: [locale],
 })
 
-const { data: surroundingBlog } = await useAsyncData('surround', () => {
+// Jika terjadi error, Anda bisa menangani fallback
+if (pageError.value) {
+  console.error(pageError.value)
+}
+
+const { data: surroundingBlog, error: _surroundingError } = await useAsyncData('surround', () => {
   return queryCollectionItemSurroundings(`blog_${locale.value}`, slug.value)
 })
 
@@ -38,12 +46,20 @@ onMounted(() => {
 
 function scrollToHeading(id: string) {
   const heading = document.getElementById(id)
-  if (heading) {
-    const offset = 100
-    const top = heading.getBoundingClientRect().top + y.value - offset
-    window.scrollTo({ top, behavior: 'smooth' })
-  }
+  if (!heading)
+    return
+  const offset = 100
+  const top = heading.getBoundingClientRect().top + y.value - offset
+  window.scrollTo({ top, behavior: 'smooth' })
 }
+
+onMounted(() => {
+  const elements = document.querySelectorAll('.prose h2, .prose h3, .prose h4')
+  if (elements.length > 0) {
+    headings.value = Array.from(elements)
+    updateHeadings(headings.value)
+  }
+})
 
 if (page?.value?.seo) {
   useSeoMeta(page.value.seo)
@@ -63,10 +79,12 @@ useSeoMeta({
 
 const open = ref(false)
 
-defineOgImageComponent('Page', {
-  title: page?.value?.title,
-  description: page?.value?.description,
-})
+if (page?.value) {
+  defineOgImageComponent('Page', {
+    title: page.value.title,
+    description: page.value.description,
+  })
+}
 
 const formatted = useDateFormat(page.value?.date, 'dddd, D MMMM YYYY', { locales: locale.value === 'en' ? 'en-US' : 'id-ID' })
 
@@ -313,23 +331,37 @@ const hashtags = computed(() => {
             </div>
           </UCard>
           <UCard class="mb-2">
-            <div class="flex flex-col  space-y-2">
+            <div class="flex flex-col space-y-2">
+              <!-- Tombol Blog Sebelumnya -->
               <UButton
-                v-if="surroundingBlog?.[0]" variant="subtle"
-                color="primary" icon="hugeicons:circle-arrow-left-01" :to="localePath(`/blog${surroundingBlog[0].path}`)"
+                v-if="surroundingBlog?.[0]"
+                variant="subtle"
+                color="primary"
+                icon="hugeicons:circle-arrow-left-01"
+                :to="surroundingBlog[0]?.path ? localePath(`/blog${surroundingBlog[0].path}`) : '#'"
               >
                 <span class="line-clamp-2 text-permadi-900 dark:text-permadi-300">
-                  {{ surroundingBlog[0].title }}
+                  {{ surroundingBlog[0]?.title || t('blog.no_previous') }}
                 </span>
               </UButton>
+
+              <!-- Tombol Blog Berikutnya -->
               <UButton
-                v-if="surroundingBlog?.[1]" variant="subtle"
-                color="primary" icon="hugeicons:circle-arrow-right-01" :to="localePath(`/blog${surroundingBlog[1].path}`)"
+                v-if="surroundingBlog?.[1]"
+                variant="subtle"
+                color="primary"
+                icon="hugeicons:circle-arrow-right-01"
+                :to="surroundingBlog[1]?.path ? localePath(`/blog${surroundingBlog[1].path}`) : '#'"
               >
                 <span class="line-clamp-2 text-permadi-900 dark:text-permadi-300">
-                  {{ surroundingBlog[1].title }}
+                  {{ surroundingBlog[1]?.title || t('blog.no_next') }}
                 </span>
               </UButton>
+
+              <!-- Fallback jika tidak ada blog sebelumnya atau berikutnya -->
+              <p v-if="!surroundingBlog?.[0] && !surroundingBlog?.[1]" class="text-center text-gray-500">
+                {{ t('blog.no_surrounding_posts') }}
+              </p>
             </div>
           </UCard>
           <UCard>

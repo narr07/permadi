@@ -8,6 +8,18 @@ const { data: projects } = await useAsyncData(route.path, () => {
     .order('date', 'DESC')
     .all()
 })
+
+const seoMeta = computed(() => ({
+  title: 'Project',
+  description: t('website.description'),
+}))
+
+useSeoMeta(seoMeta.value)
+
+defineOgImageComponent('Page', {
+  title: 'Project',
+  description: t('website.description'),
+})
 defineOgImageComponent('Page', {
   title: t('website.project'),
   description: t('website.description'),

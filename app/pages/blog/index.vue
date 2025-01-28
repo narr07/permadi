@@ -84,6 +84,17 @@ const postsWithReadingTime = computed(() =>
   })) || [],
 )
 
+const seoMeta = computed(() => ({
+  title: 'Blog',
+  description: t('website.description'),
+}))
+
+useSeoMeta(seoMeta.value)
+
+defineOgImageComponent('Page', {
+  title: 'Blog',
+  description: t('website.description'),
+})
 // SEO
 defineOgImageComponent('Page', {
   title: t('website.blog'),
@@ -108,52 +119,50 @@ defineOgImageComponent('Page', {
     <!-- Daftar Artikel -->
     <div class="grid grid-cols-1 gap-4">
       <div v-for="post in postsWithReadingTime" :key="post.id">
-        <DelayHydration>
-          <LazyNuxtLink
+        <NuxtLink
 
-            :aria-label="t('article.read', { title: post.title })"
-            :title="t('article.read', { title: post.title })"
-            :to="`blog${post.path}`"
-          >
-            <UCard class="h-full hover:bg-yellow duration-100 ease-in-out dark:hover:bg-permadi-700">
-              <div class="flex flex-col p-2 h-full justify-between">
-                <h2 class="text-g3 line-clamp-2 text-permadi-700 text-balance font-semibold">
-                  {{ post.title }}
-                </h2>
-                <div class="pt-2">
-                  <USeparator color="primary" />
-                </div>
-                <div class="pt-2">
-                  <p class="text-xs   flex items-center gap-1">
-                    <UIcon name="ph:timer-duotone" class="w-4 h-4" />
-                    {{ formatReadingTime(post.readingTime) }}
-                  </p>
-                </div>
+          :aria-label="t('article.read', { title: post.title })"
+          :title="t('article.read', { title: post.title })"
+          :to="`blog${post.path}`"
+        >
+          <UCard class="h-full hover:bg-yellow duration-100 ease-in-out dark:hover:bg-permadi-700">
+            <div class="flex flex-col p-2 h-full justify-between">
+              <h2 class="text-g3 line-clamp-2 text-permadi-700 text-balance font-semibold">
+                {{ post.title }}
+              </h2>
+              <div class="pt-2">
+                <USeparator color="primary" />
+              </div>
+              <div class="pt-2">
+                <p class="text-xs   flex items-center gap-1">
+                  <UIcon name="ph:timer-duotone" class="w-4 h-4" />
+                  {{ formatReadingTime(post.readingTime) }}
+                </p>
+              </div>
 
-                <div class="flex items-end justify-between h-full">
-                  <p class="text-xs flex items-center gap-1">
-                    <UIcon name="ph:calendar-dots-duotone" class="w-4 h-4" />
-                    {{ new Date(post.date).toLocaleDateString(locale === 'id' ? 'id-ID' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' }) }}
-                  </p>
-                  <div class=" flex">
-                    <div v-if="post.tags.length > 0" class="mr-2">
-                      <UButton
-                        :to="localePath(`/blog/tags/${post.tags[0]}`)"
-                        color="neutral"
-                        :aria-label="`Lihat artikel dengan tag ${post.tags[0]}`"
-                        size="xs"
-                      >
-                        <p class="text-xs  ">
-                          {{ post.tags[0] }}
-                        </p>
-                      </UButton>
-                    </div>
+              <div class="flex items-end justify-between h-full">
+                <p class="text-xs flex items-center gap-1">
+                  <UIcon name="ph:calendar-dots-duotone" class="w-4 h-4" />
+                  {{ new Date(post.date).toLocaleDateString(locale === 'id' ? 'id-ID' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' }) }}
+                </p>
+                <div class=" flex">
+                  <div v-if="post.tags.length > 0" class="mr-2">
+                    <UButton
+                      :to="localePath(`/blog/tags/${post.tags[0]}`)"
+                      color="neutral"
+                      :aria-label="`Lihat artikel dengan tag ${post.tags[0]}`"
+                      size="xs"
+                    >
+                      <p class="text-xs  ">
+                        {{ post.tags[0] }}
+                      </p>
+                    </UButton>
                   </div>
                 </div>
               </div>
-            </UCard>
-          </LazyNuxtLink>
-        </DelayHydration>
+            </div>
+          </UCard>
+        </NuxtLink>
       </div>
     </div>
 

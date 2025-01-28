@@ -9,6 +9,18 @@ function isActive(path: string): boolean {
   return route.path === localizedPath || (localizedPath !== '/' && localizedPath !== '/en' && route.path.startsWith(`${localizedPath}/`))
 }
 
+const hydrate = useBoosterHydrate()
+
+const DocsSearchButton = hydrate(
+  () => import('~/components/DocsSearchButton.vue'),
+)
+const ColorModeButton = hydrate(
+  () => import('~/components/ColorModeButton.vue'),
+)
+const LangToogle = hydrate(
+  () => import('~/components/lang-toogle/LangToogle.client.vue'),
+)
+
 const menuItems = [
   { name: 'Home', path: '/', icon: 'hugeicons:home-03' },
   { name: 'Blog', path: '/blog', icon: 'hugeicons:book-04' },
