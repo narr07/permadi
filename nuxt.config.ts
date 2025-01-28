@@ -100,26 +100,26 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
-  nitro: {
-    prerender: {
-      crawlLinks: true,
-      routes: [
-        '/',
-      ],
-    },
-  },
+  // nitro: {
+  //   prerender: {
+  //     crawlLinks: true,
+  //     routes: [
+  //       '/',
+  //     ],
+  //   },
+  // },
 
   routeRules: {
 
     '/': { prerender: true },
 
-    // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
-    '/blog': { isr: 3600 }, // Halaman utama blog
-    '/blog/**': { isr: 3600 }, // Setiap artikel blog
+    // // Halaman blog menggunakan ISR dengan waktu 1 jam (3600 detik)
+    // '/blog': { isr: 3600 }, // Halaman utama blog
+    // '/blog/**': { isr: 3600 }, // Setiap artikel blog
 
-    // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
-    '/project': { isr: 3600 }, // Halaman utama project
-    '/project/**': { isr: 3600 }, // Setiap detail project
+    // // Halaman project menggunakan ISR dengan waktu 30 menit (1800 detik)
+    // '/project': { isr: 3600 }, // Halaman utama project
+    // '/project/**': { isr: 3600 }, // Setiap detail project
   },
   security: {
     headers: {
