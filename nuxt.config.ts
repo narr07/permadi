@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     // 'nuxt-vitalizer',
     // 'nuxt-booster',
     'nuxt-security',
+    'nuxt-visitors',
   ],
   experimental: {
     componentIslands: true,
@@ -101,19 +102,22 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
-  // nitro: {
-  //   prerender: {
-  //     // crawlLinks: true,
-  //     routes: [
-  //       '/',
-  //       '/blog',
-  //       '/project',
-  //       '/en',
-  //       '/en/blog',
-  //       '/en/project',
-  //     ],
-  //   },
-  // },
+  nitro: {
+    experimental: {
+      websocket: true,
+    },
+    // prerender: {
+    //   // crawlLinks: true,
+    //   routes: [
+    //     '/',
+    //     '/blog',
+    //     '/project',
+    //     '/en',
+    //     '/en/blog',
+    //     '/en/project',
+    //   ],
+    // },
+  },
 
   // routeRules: {
 

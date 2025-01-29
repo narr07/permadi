@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import * as locales from '@nuxt/ui/locale'
+
+const { visitors } = useVisitors()
 // import '~/assets/css/main.css'
 
 // const el = ref<HTMLElement | null>(null)
@@ -108,6 +110,11 @@ async function onBeforeEnter() {
       <div class="pt-[70px]">
         <NuxtPage :transition="{ name: 'page', mode: 'out-in', onBeforeEnter }" />
         <!-- <NuxtPage /> -->
+      </div>
+      <div class="fixed bottom-4 left-4">
+        <UChip :text="visitors">
+          <UButton icon="i-lucide-user" color="neutral" variant="subtle" />
+        </UChip>
       </div>
 
       <Footer />
