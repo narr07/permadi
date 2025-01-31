@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     'pinia-plugin-persistedstate/nuxt',
     // 'nuxt-vitalizer',
-    'nuxt-booster',
+    // 'nuxt-booster',
     'nuxt-security',
     'nuxt-visitors',
   ],
@@ -174,28 +174,28 @@ export default defineNuxtConfig({
       '2xl': 1536,
     },
   },
-  booster: {
-    detection: {
-      performance: true,
-      browserSupport: true,
-      battery: true,
-    },
-    performanceMetrics: {
-      timing: {
-        fcp: 800,
-        dcl: 1200,
-      },
-    },
-    optimizeSSR: {
-      cleanPreloads: true,
-      cleanPrefetches: true,
-      inlineStyles: true,
-    },
-    lazyOffset: {
-      component: '0%',
-      asset: '0%',
-    },
-  },
+  // booster: {
+  //   detection: {
+  //     performance: true,
+  //     browserSupport: true,
+  //     battery: true,
+  //   },
+  //   performanceMetrics: {
+  //     timing: {
+  //       fcp: 800,
+  //       dcl: 1200,
+  //     },
+  //   },
+  //   optimizeSSR: {
+  //     cleanPreloads: true,
+  //     cleanPrefetches: true,
+  //     inlineStyles: true,
+  //   },
+  //   lazyOffset: {
+  //     component: '0%',
+  //     asset: '0%',
+  //   },
+  // },
   // vitalizer: {
   //   disablePrefetchLinks: true,
   //   disablePreloadLinks: true,
