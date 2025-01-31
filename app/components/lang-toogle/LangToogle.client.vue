@@ -1,4 +1,4 @@
-<!-- eslint-disable no-console -->
+<!-- eslint-disable no-console
 <script setup lang="ts">
 const { locale, locales, setLocale } = useI18n()
 
@@ -69,5 +69,23 @@ function toggleLocale() {
         </UButton>
       </div>
     </UTooltip>
+  </div>
+</template> -->
+<script setup lang="ts">
+const { setLocale, locale } = useI18n()
+</script>
+
+<template>
+  <div>
+    <UButton
+      :icon="locale === 'id' ? 'openmoji:flag-england' : 'openmoji:flag-indonesia'"
+      square
+      size="lg"
+      @click="setLocale(locale === 'id' ? 'en' : 'id')"
+    >
+      <span class="sr-only">
+        {{ locale === 'id' ? 'Switch to English' : 'Ubah ke Indonesia' }}
+      </span>
+    </UButton>
   </div>
 </template>

@@ -196,6 +196,7 @@ export default defineNuxtConfig({
   //     asset: '0%',
   //   },
   // },
+
   // vitalizer: {
   //   disablePrefetchLinks: true,
   //   disablePreloadLinks: true,
