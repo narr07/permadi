@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     'pinia-plugin-persistedstate/nuxt',
     // 'nuxt-vitalizer',
-    // 'nuxt-booster',
+    'nuxt-booster',
     'nuxt-security',
     'nuxt-visitors',
   ],
@@ -106,17 +106,17 @@ export default defineNuxtConfig({
     experimental: {
       websocket: true,
     },
-    // prerender: {
-    //   // crawlLinks: true,
-    //   routes: [
-    //     '/',
-    //     '/blog',
-    //     '/project',
-    //     '/en',
-    //     '/en/blog',
-    //     '/en/project',
-    //   ],
-    // },
+    prerender: {
+      // crawlLinks: true,
+      routes: [
+        '/',
+        '/blog',
+        '/project',
+        '/en',
+        '/en/blog',
+        '/en/project',
+      ],
+    },
   },
 
   // routeRules: {
@@ -178,33 +178,33 @@ export default defineNuxtConfig({
       '2xl': 1536,
     },
   },
-  // booster: {
-  //   detection: {
-  //     performance: true,
-  //     browserSupport: true,
-  //     battery: true,
-  //   },
-  //   performanceMetrics: {
-  //     timing: {
-  //       fcp: 800,
-  //       dcl: 1200,
-  //     },
-  //   },
-  //   optimizeSSR: {
-  //     cleanPreloads: true,
-  //     cleanPrefetches: true,
-  //     inlineStyles: true,
-  //   },
-  //   lazyOffset: {
-  //     component: '0%',
-  //     asset: '0%',
-  //   },
-  // },
-  // vitalizer: {
-  //   disablePrefetchLinks: true,
-  //   disablePreloadLinks: true,
-  //   disableStylesheets: 'entry',
-  // },
+  booster: {
+    detection: {
+      performance: true,
+      browserSupport: true,
+      battery: true,
+    },
+    performanceMetrics: {
+      timing: {
+        fcp: 800,
+        dcl: 1200,
+      },
+    },
+    optimizeSSR: {
+      cleanPreloads: true,
+      cleanPrefetches: true,
+      inlineStyles: true,
+    },
+    lazyOffset: {
+      component: '0%',
+      asset: '0%',
+    },
+  },
+  vitalizer: {
+    disablePrefetchLinks: true,
+    disablePreloadLinks: true,
+    disableStylesheets: 'entry',
+  },
   // icon: {
   //   serverBundle: {
   //     collections: ['fa6-brands', 'devicon', 'file-icons', 'hugeicons', 'logos', 'lucide', 'openmoji', 'ph', 'skill-icons'],
