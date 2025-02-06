@@ -5,7 +5,7 @@ const { setLocale, locales, locale } = useI18n()
 <template>
   <div>
     <NuxtRouteAnnouncer />
-    <NuxtLoadingIndicator />
+    <NuxtLoadingIndicator color="#f9bc60" />
     <UButtonGroup>
       <UButton
         v-for="_locale of locales"
