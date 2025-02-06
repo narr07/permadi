@@ -7,25 +7,25 @@ const route = useRoute()
 const { locale, localeProperties } = useI18n()
 const slug = computed(() => withLeadingSlash(`${String(route.params.slug)}`))
 
-const { data: page } = await useAsyncData('blog' + slug.value, async () => {
-  const collection = ('blog_' + locale.value) as keyof Collections
-  return await queryCollection(collection).path(slug.value).first() as Collections['blog_id'] | Collections['blog_en']
+const { data: pageProject } = await useAsyncData('blog' + slug.value, async () => {
+  const collection = ('project_' + locale.value) as keyof Collections
+  return await queryCollection(collection).path(slug.value).first() as Collections['project_id'] | Collections['project_en']
 }, {
   watch: [locale],
 })
 </script>
 
 <template>
-  <div v-if="page">
+  <div v-if="pageProject">
     <article class="writing mx-auto px-4 sm:max-w-2xl md:max-w-3xl lg:max-w-4xl">
       <h1>
-        {{ page?.title }}
+        {{ pageProject?.title }}
       </h1>
 
       <ContentRenderer
-        v-if="page"
+        v-if="pageProject"
         :dir="localeProperties?.dir ?? 'ltr'"
-        :value="page"
+        :value="pageProject"
       />
     </article>
   </div>

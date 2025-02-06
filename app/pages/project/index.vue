@@ -7,12 +7,12 @@ const { locale } = useI18n()
 const localePath = useLocalePath()
 
 const slug = computed(() => withLeadingSlash(String(route.params.slug)))
-const { data: posts } = await useAsyncData(`articles-${slug.value}`, async () => {
-  const collection = (`blog_${locale.value}`) as keyof Collections
+const { data: allProject } = await useAsyncData(`articles-${slug.value}`, async () => {
+  const collection = (`project_${locale.value}`) as keyof Collections
   return await queryCollection(collection)
     .select('title', 'description', 'path', 'id', 'date')
     .order('date', 'DESC')
-    .all() as Collections['blog_id'][] | Collections['blog_en'][]
+    .all() as Collections['project_id'][] | Collections['project_en'][]
 }, {
   watch: [locale],
 })
@@ -20,16 +20,16 @@ const { data: posts } = await useAsyncData(`articles-${slug.value}`, async () =>
 
 <template>
   <div>
-    <h1>Blog</h1>
+    <h1>project</h1>
     <p
-      v-for="post in posts"
-      :key="post.id"
+      v-for="project in allProject"
+      :key="project.id"
     >
-      <NuxtLink :to="localePath(`/blog${post.path}`)">
-        <strong>{{ post.title }}</strong>
+      <NuxtLink :to="localePath(`/project${project.path}`)">
+        <strong>{{ project.title }}</strong>
       </NuxtLink>
 
-      &nbsp;{{ post.description }}
+      &nbsp;{{ project.description }}
     </p>
   </div>
 </template>

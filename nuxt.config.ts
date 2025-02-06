@@ -6,8 +6,10 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxt/scripts',
     '@nuxt/ui',
+    '@nuxtjs/seo',
     '@nuxt/content',
     '@nuxthub/core',
+    'nuxt-security',
   ],
   content: {
     database: {
@@ -23,22 +25,47 @@ export default defineNuxtConfig({
       },
     },
   },
+  site: {
+    url: 'https://permadi.dev',
+    name: 'Dinar Permadi Yusup',
+    description: 'Dinar Permadi Yusup is a teacher, programmer, and designer. With this website, I would like to share my knowledge in learning design and programming.',
+    defaultLocale: 'id', // not needed if you have @nuxtjs/i18n installed
+    logo: '/logo.png',
+  },
   hub: {
     database: true,
   },
+  security: {
+    headers: {
+      contentSecurityPolicy: false,
+      // contentSecurityPolicy: {
+      //   'img-src': ["'self'", 'data:', 'https://ik.imagekit.io', 'https://repository-images.githubusercontent.com','https://opengraph.githubassets.com'],
+      // },
+      referrerPolicy: 'strict-origin-when-cross-origin',
+      xFrameOptions: 'DENY',
+    },
+    hidePoweredBy: true,
+  },
   i18n: {
+    baseUrl: 'https://permadi.dev',
     locales: [
-      { code: 'id', name: 'Indonesia', language: 'id_ID', dir: 'ltr' },
-      { code: 'en', name: 'English', language: 'en-US', dir: 'ltr' },
+      { code: 'id', name: 'Indonesia', language: 'id_ID', dir: 'ltr', file: 'id.ts' },
+      { code: 'en', name: 'English', language: 'en-US', dir: 'ltr', file: 'en.ts' },
     ],
     strategy: 'prefix_except_default',
     defaultLocale: 'id',
+    langDir: 'lang',
   },
   css: ['~/assets/css/main.css'],
   devtools: { enabled: true },
-  runtimeConfig: {
-    public: {
-      helloText: 'Hello from the Edge 👋',
+  scripts: {
+    registry: {
+      googleAnalytics: {
+        id: 'G-5LEXR84KHW',
+      },
+      googleTagManager: {
+        id: 'GTM-5XT2J2S5',
+      },
     },
   },
   future: { compatibilityVersion: 4 },

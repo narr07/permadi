@@ -3,6 +3,7 @@ const localePath = useLocalePath()
 const nav = [
   { url: '/', title: 'home' },
   { url: '/blog', title: 'blog' },
+  { url: '/project', title: 'project' },
 ]
 </script>
 
