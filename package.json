@@ -27,6 +27,7 @@
     "@nuxt/scripts": "^0.9.5",
     "@nuxt/ui": "3.0.0-alpha.12",
     "@nuxthub/core": "^0.8.16",
+    "@nuxtjs/html-validator": "^1.8.2",
     "@nuxtjs/i18n": "^9.1.5",
     "@nuxtjs/seo": "^2.1.1",
     "@vueuse/nuxt": "^12.5.0",

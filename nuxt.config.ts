@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxthub/core',
     'nuxt-security',
+    '@nuxtjs/html-validator',
   ],
   content: {
     database: {
