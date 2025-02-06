@@ -1,10 +1,10 @@
- {
+{
   "files.associations": {
-  "*.css": "tailwindcss"
-},
-"editor.quickSuggestions": {
-  "strings": "on"
-},
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
 
   // Disable the default formatter, use eslint instead
   // "prettier.enable": false,

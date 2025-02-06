@@ -12,16 +12,16 @@ export default defineNuxtConfig({
   content: {
     database: {
       type: 'd1',
-      binding: 'permadi'
+      bindingName: 'permadi',
     },
     preview: {
       api: 'https://api.nuxt.studio',
       gitInfo: {
         name: 'permadi',
         owner: 'narr07',
-        url: 'github.com/narr07/permadi',
-      }
-    }
+        url: 'https://github.com/narr07/permadi/',
+      },
+    },
   },
   hub: {
     database: true,
@@ -42,7 +42,7 @@ export default defineNuxtConfig({
     },
   },
   future: { compatibilityVersion: 4 },
-  compatibilityDate: '2024-07-30', 
+  compatibilityDate: '2024-07-30',
   eslint: {
     config: {
       standalone: false,

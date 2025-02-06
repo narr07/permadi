@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "@nuxt/ui";
+@import 'tailwindcss';
+@import '@nuxt/ui';
 
 @theme {
   --font-sans: 'Host Grotesk', sans-serif;
@@ -30,41 +30,41 @@
   --color-gray-900: #3e4f6a;
   --color-gray-950: #293242;
 
-  --color-yellow-50: #FFFFFF;
-  --color-yellow-100: #FFFEFD;
-  --color-yellow-200: #FDEED6;
-  --color-yellow-300: #FCDDAF;
-  --color-yellow-400: #FACD87;
-  --color-yellow-500: #F9BC60;
-  --color-yellow-600: #F7A52A;
-  --color-yellow-700: #E08A08;
-  --color-yellow-800: #AA6906;
+  --color-yellow-50: #ffffff;
+  --color-yellow-100: #fffefd;
+  --color-yellow-200: #fdeed6;
+  --color-yellow-300: #fcddaf;
+  --color-yellow-400: #facd87;
+  --color-yellow-500: #f9bc60;
+  --color-yellow-600: #f7a52a;
+  --color-yellow-700: #e08a08;
+  --color-yellow-800: #aa6906;
   --color-yellow-900: #744804;
   --color-yellow-950: #593703;
 
-  --color-blue-50: #F2F9FF;
-  --color-blue-100: #DEF0FE;
-  --color-blue-200: #B6DEFE;
-  --color-blue-300: #8DCDFD;
-  --color-blue-400: #65BBFD;
-  --color-blue-500: #3DA9FC;
-  --color-blue-600: #0691FB;
-  --color-blue-700: #0371C6;
-  --color-blue-800: #02528E;
+  --color-blue-50: #f2f9ff;
+  --color-blue-100: #def0fe;
+  --color-blue-200: #b6defe;
+  --color-blue-300: #8dcdfd;
+  --color-blue-400: #65bbfd;
+  --color-blue-500: #3da9fc;
+  --color-blue-600: #0691fb;
+  --color-blue-700: #0371c6;
+  --color-blue-800: #02528e;
   --color-blue-900: #013257;
-  --color-blue-950: #01223C;
+  --color-blue-950: #01223c;
 
-  --color-red-50: #FEFBFB;
-  --color-red-100: #FBEAEA;
-  --color-red-200: #F5C8C8;
-  --color-red-300: #EEA6A6;
-  --color-red-400: #E88384;
-  --color-red-500: #E16162;
-  --color-red-600: #D83233;
-  --color-red-700: #B02123;
+  --color-red-50: #fefbfb;
+  --color-red-100: #fbeaea;
+  --color-red-200: #f5c8c8;
+  --color-red-300: #eea6a6;
+  --color-red-400: #e88384;
+  --color-red-500: #e16162;
+  --color-red-600: #d83233;
+  --color-red-700: #b02123;
   --color-red-800: #811919;
   --color-red-900: #521010;
-  --color-red-950: #3A0B0B;
+  --color-red-950: #3a0b0b;
 
   --color-green-50: #eefbf4;
   --color-green-100: #d7f4e3;
@@ -91,12 +91,11 @@
   --color-purple-950: #361f56;
 }
 
-
 .dark ::selection {
-  @apply bg-red-500 text-blue-900 ;
+  @apply bg-red-500 text-blue-900;
 }
 ::selection {
-  @apply bg-blue-900 text-blue-400 ;
+  @apply bg-blue-900 text-blue-400;
 }
 
 html {
@@ -104,10 +103,8 @@ html {
 }
 
 body {
-  @apply bg-permadi-100 dark:text-permadi-200 text-permadi-900 leading-tight dark:bg-permadi-900 tracking-wide font-sans text-[16px]  ;
+  @apply bg-permadi-100 dark:text-permadi-200 text-permadi-900 leading-tight dark:bg-permadi-900 tracking-wide font-sans text-[16px];
 }
-
-
 
 h1,
 h2,
@@ -133,7 +130,6 @@ h6 {
 ::-webkit-scrollbar-corner {
   background-color: var(--color-permadi-100);
 }
-
 
 .dark ::-webkit-scrollbar-thumb {
   background-color: var(--color-permadi-700);
