@@ -4,7 +4,6 @@ import { withLeadingSlash } from 'ufo'
 
 const route = useRoute()
 const { locale, t } = useI18n()
-const localePath = useLocalePath()
 const currentPage = ref(1)
 const blogData = ref<{ posts: any[], total: number }>({ posts: [], total: 0 })
 const itemsPerPage = 10
@@ -153,20 +152,15 @@ defineOgImageComponent('Page', {
                 <div class="flex items-end justify-between h-full">
                   <p class="text-xs flex items-center gap-1">
                     <UIcon name="ph:calendar-dots-duotone" class="w-4 h-4" />
-                    {{ new Date(post.date).toLocaleDateString(
-                      locale === 'id' ? 'id-ID' : 'en-US',
-                      { day: 'numeric', month: 'long', year: 'numeric' },
-                    ) }}
+                    {{ formatDate(post.date, locale) }}
                   </p>
                   <div v-if="post.tags.length > 0" class="mr-2">
-                    <UButton
-                      :to="localePath(`/blog/tags/${post.tags[0]}`)"
+                    <UBadge
                       color="neutral"
                       :aria-label="`Lihat artikel dengan tag ${post.tags[0]}`"
-                      size="xs"
                     >
                       {{ post.tags[0] }}
-                    </UButton>
+                    </UBadge>
                   </div>
                 </div>
               </div>

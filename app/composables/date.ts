@@ -1,7 +1,6 @@
-export function formatDate(date: string) {
-  return new Date(date).toLocaleDateString('id', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
+export function formatDate(date: string, locale: string) {
+  return new Date(date).toLocaleDateString(
+    locale === 'id' ? 'id-ID' : 'en-US',
+    { day: 'numeric', month: 'long', year: 'numeric' },
+  )
 }

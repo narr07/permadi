@@ -78,6 +78,7 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/': { prerender: true },
+    '/blog': { prerender: true },
   },
   future: { compatibilityVersion: 4 },
   compatibilityDate: '2024-07-30',
