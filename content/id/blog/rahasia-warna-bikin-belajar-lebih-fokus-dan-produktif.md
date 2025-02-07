@@ -78,15 +78,15 @@ Warna juga bisa bantu kamu lebih produktif loh! Caranya, pakai warna yang bikin 
 ## Bonus: Cara Setting Ruang Belajar Biar Lebih Maksimal! 🎨
 
 1. **Pakai aturan 60-30-10**:
-    - 60% warna netral (contoh: putih atau abu-abu)
-    - 30% warna pendukung (contoh: biru atau hijau)
-    - 10% warna aksen (contoh: kuning atau orange)
+   - 60% warna netral (contoh: putih atau abu-abu)
+   - 30% warna pendukung (contoh: biru atau hijau)
+   - 10% warna aksen (contoh: kuning atau orange)
 2. **Dekorasi simpel**:
-    - Tambahin poster atau quotes warna-warni buat motivasi.
-    - Gunain lampu belajar dengan tone warna yang nyaman.
+   - Tambahin poster atau quotes warna-warni buat motivasi.
+   - Gunain lampu belajar dengan tone warna yang nyaman.
 3. **Digital learning**:
-    - Aktifin night mode di gadget kamu biar mata gak gampang capek.
-    - Gunakan wallpaper laptop atau HP dengan warna calming kayak biru atau hijau.
+   - Aktifin night mode di gadget kamu biar mata gak gampang capek.
+   - Gunakan wallpaper laptop atau HP dengan warna calming kayak biru atau hijau.
 
 ---
 

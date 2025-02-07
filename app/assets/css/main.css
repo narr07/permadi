@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @import '@nuxt/ui';
 
+@plugin "@tailwindcss/typography";
+
 @theme {
   --font-sans: 'Host Grotesk', sans-serif;
   --font-title: 'Sofia Sans', sans-serif;

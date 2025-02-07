@@ -23,7 +23,7 @@ This framework helps you create mobile apps that are beautiful, responsive, and 
 
 In addition, Flutter uses the Dart programming language, which is simple and easy to learn. So, for those of you who are just getting into the world of coding, Flutter can be the right choice.
 
-##  How Flutter Works:   Simple but Powerful
+## How Flutter Works: Simple but Powerful
 
 Flutter is different from other frameworks. It uses the Dart language, which makes the coding process faster and more efficient. One of its main features is **Hot Reload**, which allows you to see code changes in real-time. So, there's no need to go back and forth with time-consuming compiles.
 

@@ -14,4 +14,5 @@ seo:
 ---
 
 ## Student Group Generator Website
+
 The Student Group Generator Website is a tool that helps teachers and educators create random student groups. By using this website, you can easily divide students into several groups without any hassle. Simply enter the list of student names, specify the desired number of groups, and let this tool do the rest. This website is designed to facilitate the learning and collaboration process in the classroom.

@@ -39,19 +39,19 @@ Kalau kamu masih ragu buat belajar Flutter, nih aku kasih alasan kenapa framewor
 
 1. **Cross-Platform Development**
 
-    Satu kode untuk semua platform. Kamu nggak perlu bikin dua aplikasi terpisah untuk Android dan iOS. Hemat waktu dan tenaga!
+   Satu kode untuk semua platform. Kamu nggak perlu bikin dua aplikasi terpisah untuk Android dan iOS. Hemat waktu dan tenaga!
 
 2. **UI yang Kece Abis**
 
-    Flutter punya banyak widget yang bisa kamu pakai buat bikin desain antarmuka yang keren dan responsif. Dijamin aplikasi kamu bakal terlihat profesional.
+   Flutter punya banyak widget yang bisa kamu pakai buat bikin desain antarmuka yang keren dan responsif. Dijamin aplikasi kamu bakal terlihat profesional.
 
 3. **Performa Ngebut**
 
-    Flutter nggak cuma soal tampilan, tapi juga performa. Aplikasi yang dibangun dengan Flutter punya waktu respon yang cepat dan smooth.
+   Flutter nggak cuma soal tampilan, tapi juga performa. Aplikasi yang dibangun dengan Flutter punya waktu respon yang cepat dan smooth.
 
 4. **Komunitas Developer yang Solid**
 
-    Karena dikembangkan oleh Google, Flutter punya komunitas yang besar. Jadi, kalau kamu nemu masalah, pasti ada solusinya di forum atau dokumentasi.
+   Karena dikembangkan oleh Google, Flutter punya komunitas yang besar. Jadi, kalau kamu nemu masalah, pasti ada solusinya di forum atau dokumentasi.
 
 ---
 
@@ -61,29 +61,29 @@ Kalau kamu masih ragu buat belajar Flutter, nih aku kasih alasan kenapa framewor
 
 - **Responsif di Berbagai Platform**
 
-    Dengan Flutter, kamu bisa bikin aplikasi yang tampilannya sama bagusnya di Android, iOS, atau bahkan web.
+  Dengan Flutter, kamu bisa bikin aplikasi yang tampilannya sama bagusnya di Android, iOS, atau bahkan web.
 
 - **Bahasa Dart yang Mudah Dipelajari**
 
-    Dart itu mirip banget sama bahasa pemrograman lain seperti Java atau JavaScript. Jadi, gampang banget buat dipelajari, terutama buat pemula.
+  Dart itu mirip banget sama bahasa pemrograman lain seperti Java atau JavaScript. Jadi, gampang banget buat dipelajari, terutama buat pemula.
 
 - **Produktivitas Tinggi**
 
-    Karena fitur **Hot Reload**, kamu bisa langsung lihat perubahan kode tanpa harus nunggu lama. Ini bikin proses pengembangan jadi super cepat.
+  Karena fitur **Hot Reload**, kamu bisa langsung lihat perubahan kode tanpa harus nunggu lama. Ini bikin proses pengembangan jadi super cepat.
 
 - **Widget yang Fleksibel**
 
-    Flutter punya banyak widget bawaan yang bisa kamu kustomisasi sesuai kebutuhan. Nggak perlu mulai dari nol!
+  Flutter punya banyak widget bawaan yang bisa kamu kustomisasi sesuai kebutuhan. Nggak perlu mulai dari nol!
 
 ### Kekurangan Flutter
 
 - **Kurva Belajar yang Lumayan**
 
-    Buat pemula, mungkin agak butuh waktu buat memahami konsep Dart dan ekosistem Flutter. Tapi kalau udah paham, dijamin worth it!
+  Buat pemula, mungkin agak butuh waktu buat memahami konsep Dart dan ekosistem Flutter. Tapi kalau udah paham, dijamin worth it!
 
 - **Library yang Kadang Kurang Lengkap**
 
-    Karena Flutter masih relatif baru, ada beberapa library yang belum tersedia. Tapi jangan khawatir, komunitas Flutter terus berkembang, kok.
+  Karena Flutter masih relatif baru, ada beberapa library yang belum tersedia. Tapi jangan khawatir, komunitas Flutter terus berkembang, kok.
 
 ---
 

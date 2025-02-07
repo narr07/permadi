@@ -22,37 +22,37 @@ Guys, tau gak sih? Indonesia sekarang punya sistem pendidikan baru yang super ke
 ## Apa Sih yang Baru dari Kurikulum Merdeka? 🤔
 
 1. **Lebih Fleksibel dan Bebas**
-    - Guru bisa mix and match cara ngajar sesuai kebutuhan murid
-    - Siswa bisa lebih aktif dan kreatif dalam belajar
-    - Learning path yang bisa disesuaikan sama kemampuan masing-masing
+   - Guru bisa mix and match cara ngajar sesuai kebutuhan murid
+   - Siswa bisa lebih aktif dan kreatif dalam belajar
+   - Learning path yang bisa disesuaikan sama kemampuan masing-masing
 2. **Focus on What Matters**
-    - Materi yang dipelajari lebih esensial dan meaningful
-    - Ada penekanan khusus buat pengembangan karakter
-    - Skill dasar kayak literasi dan numerasi jadi prioritas
+   - Materi yang dipelajari lebih esensial dan meaningful
+   - Ada penekanan khusus buat pengembangan karakter
+   - Skill dasar kayak literasi dan numerasi jadi prioritas
 3. **Belajar Jadi Lebih Personal**
-    - Tiap siswa bisa belajar sesuai kecepatannya sendiri
-    - Ada ruang buat eksplorasi minat dan bakat
-    - Pembelajaran yang lebih interaktif dan engaging
+   - Tiap siswa bisa belajar sesuai kecepatannya sendiri
+   - Ada ruang buat eksplorasi minat dan bakat
+   - Pembelajaran yang lebih interaktif dan engaging
 
 ## Bedanya Sama K13? 👀
 
-| Kurikulum Merdeka | Kurikulum 2013 |
-| --- | --- |
-| Lebih fleksibel dan adaptif | Lebih terstruktur dan kaku |
-| Fokus ke pengembangan karakter | Fokus ke kompetensi akademik |
-| Siswa lebih aktif dan mandiri | Pembelajaran lebih teacher-centered |
-| Assessment lebih beragam | Assessment lebih standardized |
+| Kurikulum Merdeka              | Kurikulum 2013                      |
+| ------------------------------ | ----------------------------------- |
+| Lebih fleksibel dan adaptif    | Lebih terstruktur dan kaku          |
+| Fokus ke pengembangan karakter | Fokus ke kompetensi akademik        |
+| Siswa lebih aktif dan mandiri  | Pembelajaran lebih teacher-centered |
+| Assessment lebih beragam       | Assessment lebih standardized       |
 
 ## Tips Sukses dengan Kurikulum Merdeka 💪
 
 1. **Buat Siswa:**
-    - Be proactive! Jangan tunggu disuruh baru bergerak
-    - Explore minat dan passion kamu
-    - Jangan takut buat coba hal baru
+   - Be proactive! Jangan tunggu disuruh baru bergerak
+   - Explore minat dan passion kamu
+   - Jangan takut buat coba hal baru
 2. **Buat Guru:**
-    - Keep updated dengan metode pembelajaran terbaru
-    - Bikin kelas jadi lebih interactive dan fun
-    - Customize pembelajaran sesuai kebutuhan siswa
+   - Keep updated dengan metode pembelajaran terbaru
+   - Bikin kelas jadi lebih interactive dan fun
+   - Customize pembelajaran sesuai kebutuhan siswa
 
 ## Kesimpulan
 
