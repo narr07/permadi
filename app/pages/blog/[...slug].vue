@@ -2,7 +2,7 @@
 import type { Collections } from '@nuxt/content'
 import { queryCollection, useRoute } from '#imports'
 import { useScrollspy } from '@/composables/useScrollspy'
-import { useDateFormat, useWindowScroll } from '@vueuse/core'
+import { useWindowScroll } from '@vueuse/core'
 import { withLeadingSlash } from 'ufo'
 import { computed, onMounted, ref } from 'vue'
 
@@ -86,8 +86,8 @@ defineOgImageComponent('Page', {
   description: pageBlog.value?.description,
 })
 // Format tanggal
-const formatted = useDateFormat(pageBlog.value?.date, 'dddd, D MMMM YYYY', {
-  locales: locale.value === 'en' ? 'en-US' : 'id-ID',
+const formatted = computed(() => {
+  return formatDate(pageBlog.value?.date?.toString() || '', locale.value)
 })
 
 // Tombol collapsible untuk TOC
