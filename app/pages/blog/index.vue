@@ -6,27 +6,47 @@ const route = useRoute()
 const { locale, t } = useI18n()
 const localePath = useLocalePath()
 const currentPage = ref(1)
+const blogData = ref<{ posts: any[], total: number }>({ posts: [], total: 0 })
 const itemsPerPage = 10
 
 const slug = computed(() => withLeadingSlash(String(route.params.slug)))
 
 // Optimasi: Gabungkan pengambilan data artikel dan total artikel
-const { data: blogData } = await useAsyncData(`articles-and-total-${slug.value}`, async () => {
-  const collection = (`blog_${locale.value}`) as keyof Collections
+// const router = useRouter()
 
-  const [posts, total] = await Promise.all([
-    queryCollection(collection)
-      .order('date', 'DESC')
-      .skip((currentPage.value - 1) * itemsPerPage)
-      .limit(itemsPerPage)
-      .all() as unknown as Collections['blog_id'][] | Collections['blog_en'][],
+async function updateBlogData() {
+  const { data } = await useAsyncData(`articles-and-total-${slug.value}`, async () => {
+    const collection = (`blog_${locale.value}`) as keyof Collections
 
-    queryCollection(collection).count() as unknown as number, // Total count
-  ])
+    const [posts, total] = await Promise.all([
+      queryCollection(collection)
+        .order('date', 'DESC')
+        .skip((currentPage.value - 1) * itemsPerPage)
+        .limit(itemsPerPage)
+        .all() as unknown as Collections['blog_id'][] | Collections['blog_en'][],
 
-  return { posts, total }
-}, {
-  watch: [locale, currentPage],
+      queryCollection(collection).count() as unknown as number, // Total count
+    ])
+
+    return { posts, total }
+  }, {
+    watch: [locale, currentPage],
+  })
+
+  if (data.value) {
+    blogData.value = data.value
+  }
+  else {
+    blogData.value = { posts: [], total: 0 }
+  }
+}
+
+// Panggil pertama kali saat komponen di-mount
+await updateBlogData()
+
+// Watch perubahan locale dan currentPage, perbarui data blog
+watch([locale, currentPage], async () => {
+  await updateBlogData()
 })
 
 // Reset halaman saat locale berubah
