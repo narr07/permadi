@@ -8,9 +8,9 @@ const { setLocale, locales, locale } = useI18n()
       v-for="_locale of locales"
       :key="_locale.code"
       square
-      color="neutral"
+      size="lg"
       :variant="_locale.code === locale ? 'solid' : 'outline'"
-      class="px-4"
+      class="px-4 "
       aria-label="Change language"
       @click="setLocale(_locale.code)"
     >

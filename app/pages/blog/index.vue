@@ -1,62 +1,30 @@
 <script setup lang="ts">
-import type { Collections } from '@nuxt/content'
-import { withLeadingSlash } from 'ufo'
-
 const route = useRoute()
 const { locale, t } = useI18n()
 const localePath = useLocalePath()
+
 const currentPage = ref(1)
-const blogData = ref<{ posts: any[], total: number }>({ posts: [], total: 0 })
 const itemsPerPage = 10
 
-const slug = computed(() => withLeadingSlash(String(route.params.slug)))
-const isLoading = ref(true) // Status loading
-
-// Optimasi: Gabungkan pengambilan data artikel dan total artikel
-// const router = useRouter()
-
-async function updateBlogData() {
-  isLoading.value = true // Set loading true
-  try {
-    const { data } = await useAsyncData(`articles-and-total-${slug.value}`, async () => {
-      const collection = (`blog_${locale.value}`) as keyof Collections
-      const [posts, total] = await Promise.all([
-        queryCollection(collection)
-          .order('date', 'DESC')
-          .skip((currentPage.value - 1) * itemsPerPage)
-          .limit(itemsPerPage)
-          .all() as unknown as Collections['blog_id'][] | Collections['blog_en'][],
-        queryCollection(collection).count() as unknown as number, // Total count
-      ])
-      return { posts, total }
-    }, {
-      watch: [locale, currentPage],
-    })
-
-    if (data.value) {
-      blogData.value = data.value
-    }
-    else {
-      blogData.value = { posts: [], total: 0 }
-    }
-  }
-  catch (error) {
-    console.error('Error fetching blog data:', error)
-  }
-  finally {
-    isLoading.value = false // Set loading false
-  }
-}
-
-// Panggil pertama kali saat komponen di-mount
-await updateBlogData()
-
-// Watch perubahan locale dan currentPage, perbarui data blog
-watch([locale, currentPage], async () => {
-  await updateBlogData()
+// Fetch posts dengan useAsyncData
+const { data: postsData } = await useAsyncData(`blog-${route.path}-${currentPage.value}`, () => {
+  return queryCollection(`blog_${locale.value}`)
+    .order('date', 'DESC')
+    .skip((currentPage.value - 1) * itemsPerPage)
+    .limit(itemsPerPage)
+    .all()
+}, {
+  watch: [currentPage, locale],
 })
 
-// Reset halaman saat locale berubah
+// Fetch total posts
+const { data: totalPosts } = await useAsyncData(`blog-total-${route.path}`, () => {
+  return queryCollection(`blog_${locale.value}`).count()
+}, {
+  watch: [locale, currentPage],
+})
+
+// Reset page when locale changes
 watch([locale], () => {
   currentPage.value = 1
 })
@@ -105,16 +73,15 @@ function useReadingTime() {
     formatReadingTime,
   }
 }
-
-const total = computed(() => blogData.value?.total ?? 0)
+const total = computed(() => totalPosts.value ?? 0)
 const { formatReadingTime } = useReadingTime()
 
 // Computed untuk posts dengan reading time
 const postsWithReadingTime = computed(() =>
-  (blogData.value?.posts || []).map(post => ({
+  postsData.value?.map(post => ({
     ...post,
     readingTime: calculateReadingTime(post.body),
-  })),
+  })) || [],
 )
 
 const seoMeta = computed(() => ({
@@ -136,84 +103,78 @@ defineOgImageComponent('Page', {
 </script>
 
 <template>
-  <div>
-    <UContainer>
-      <!-- Judul -->
-      <div class="pt-8 pb-4">
-        <h1 class="font-bold text-g4">
-          {{ t('blog.title') }}
-        </h1>
-      </div>
+  <UContainer>
+    <!-- Judul -->
+    <div class="pt-8 pb-4">
+      <h1 class="font-bold text-g4">
+        {{ t('blog.title') }}
+      </h1>
+    </div>
 
-      <div v-if="isLoading">
-        Loading...
-      </div> <!-- Tampilkan loading jika sedang mengambil data -->
+    <!-- Tags -->
+    <div class="py-4">
+      <Tags />
+    </div>
 
-      <!-- Tags -->
-      <div class="py-4">
-        <Tags />
-      </div>
+    <!-- Daftar Artikel -->
+    <div class="grid grid-cols-1 gap-4">
+      <div v-for="post in postsWithReadingTime" :key="post.id">
+        <NuxtLink
 
-      <!-- Daftar Artikel -->
-      <div class="grid grid-cols-1 gap-4">
-        <div v-for="post in postsWithReadingTime" :key="post.id">
-          <NuxtLink
+          :aria-label="t('article.read', { title: post.title })"
+          :title="t('article.read', { title: post.title })"
+          :to="`blog${post.path}`"
+        >
+          <UCard class="h-full hover:bg-yellow duration-100 ease-in-out dark:hover:bg-permadi-700">
+            <div class="flex flex-col p-2 h-full justify-between">
+              <h2 class="text-g3 line-clamp-2 text-permadi-700 text-balance font-semibold">
+                {{ post.title }}
+              </h2>
+              <div class="pt-2">
+                <USeparator color="primary" />
+              </div>
+              <div class="pt-2">
+                <p class="text-xs   flex items-center gap-1">
+                  <UIcon name="ph:timer-duotone" class="w-4 h-4" />
+                  {{ formatReadingTime(post.readingTime) }}
+                </p>
+              </div>
 
-            :aria-label="t('article.read', { title: post.title })"
-            :title="t('article.read', { title: post.title })"
-            :to="`blog${post.path}`"
-          >
-            <UCard class="h-full hover:bg-yellow duration-100 ease-in-out dark:hover:bg-permadi-700">
-              <div class="flex flex-col p-2 h-full justify-between">
-                <h2 class="text-2xl line-clamp-2 text-permadi-700 text-balance font-semibold">
-                  {{ post.title }}
-                </h2>
-                <div class="pt-2">
-                  <USeparator color="primary" />
-                </div>
-                <div class="pt-2">
-                  <p class="text-xs   flex items-center gap-1">
-                    <UIcon name="ph:timer-duotone" class="w-4 h-4" />
-                    {{ formatReadingTime(post.readingTime) }}
-                  </p>
-                </div>
-
-                <div class="flex items-end justify-between h-full">
-                  <p class="text-xs flex items-center gap-1">
-                    <UIcon name="ph:calendar-dots-duotone" class="w-4 h-4" />
-                    {{ new Date(post.date).toLocaleDateString(locale === 'id' ? 'id-ID' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' }) }}
-                  </p>
-                  <div class=" flex">
-                    <div v-if="post.tags.length > 0" class="mr-2">
-                      <UButton
-                        :to="localePath(`/blog/tags/${post.tags[0]}`)"
-                        color="neutral"
-                        :aria-label="`Lihat artikel dengan tag ${post.tags[0]}`"
-                        size="xs"
-                      >
-                        <p class="text-xs  ">
-                          {{ post.tags[0] }}
-                        </p>
-                      </UButton>
-                    </div>
+              <div class="flex items-end justify-between h-full">
+                <p class="text-xs flex items-center gap-1">
+                  <UIcon name="ph:calendar-dots-duotone" class="w-4 h-4" />
+                  {{ new Date(post.date).toLocaleDateString(locale === 'id' ? 'id-ID' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' }) }}
+                </p>
+                <div class=" flex">
+                  <div v-if="post.tags.length > 0" class="mr-2">
+                    <UButton
+                      :to="localePath(`/blog/tags/${post.tags[0]}`)"
+                      color="neutral"
+                      :aria-label="`Lihat artikel dengan tag ${post.tags[0]}`"
+                      size="xs"
+                    >
+                      <p class="text-xs  ">
+                        {{ post.tags[0] }}
+                      </p>
+                    </UButton>
                   </div>
                 </div>
               </div>
-            </UCard>
-          </NuxtLink>
-        </div>
+            </div>
+          </UCard>
+        </NuxtLink>
       </div>
+    </div>
 
-      <!-- Pagination -->
-      <div class="flex justify-center mt-8">
-        <UPagination
-          v-model:page="currentPage"
-          :total="total"
-          :items-per-page="itemsPerPage"
-          :sibling-count="1"
-          show-edges
-        />
-      </div>
-    </UContainer>
-  </div>
+    <!-- Pagination -->
+    <div class="flex justify-center mt-8">
+      <UPagination
+        v-model:page="currentPage"
+        :total="total"
+        :items-per-page="itemsPerPage"
+        :sibling-count="1"
+        show-edges
+      />
+    </div>
+  </UContainer>
 </template>
