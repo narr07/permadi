@@ -10,34 +10,41 @@ const blogData = ref<{ posts: any[], total: number }>({ posts: [], total: 0 })
 const itemsPerPage = 10
 
 const slug = computed(() => withLeadingSlash(String(route.params.slug)))
+const isLoading = ref(true) // Status loading
 
 // Optimasi: Gabungkan pengambilan data artikel dan total artikel
 // const router = useRouter()
 
 async function updateBlogData() {
-  const { data } = await useAsyncData(`articles-and-total-${slug.value}`, async () => {
-    const collection = (`blog_${locale.value}`) as keyof Collections
+  isLoading.value = true // Set loading true
+  try {
+    const { data } = await useAsyncData(`articles-and-total-${slug.value}`, async () => {
+      const collection = (`blog_${locale.value}`) as keyof Collections
+      const [posts, total] = await Promise.all([
+        queryCollection(collection)
+          .order('date', 'DESC')
+          .skip((currentPage.value - 1) * itemsPerPage)
+          .limit(itemsPerPage)
+          .all() as unknown as Collections['blog_id'][] | Collections['blog_en'][],
+        queryCollection(collection).count() as unknown as number, // Total count
+      ])
+      return { posts, total }
+    }, {
+      watch: [locale, currentPage],
+    })
 
-    const [posts, total] = await Promise.all([
-      queryCollection(collection)
-        .order('date', 'DESC')
-        .skip((currentPage.value - 1) * itemsPerPage)
-        .limit(itemsPerPage)
-        .all() as unknown as Collections['blog_id'][] | Collections['blog_en'][],
-
-      queryCollection(collection).count() as unknown as number, // Total count
-    ])
-
-    return { posts, total }
-  }, {
-    watch: [locale, currentPage],
-  })
-
-  if (data.value) {
-    blogData.value = data.value
+    if (data.value) {
+      blogData.value = data.value
+    }
+    else {
+      blogData.value = { posts: [], total: 0 }
+    }
   }
-  else {
-    blogData.value = { posts: [], total: 0 }
+  catch (error) {
+    console.error('Error fetching blog data:', error)
+  }
+  finally {
+    isLoading.value = false // Set loading false
   }
 }
 
@@ -137,6 +144,10 @@ defineOgImageComponent('Page', {
           {{ t('blog.title') }}
         </h1>
       </div>
+
+      <div v-if="isLoading">
+        Loading...
+      </div> <!-- Tampilkan loading jika sedang mengambil data -->
 
       <!-- Tags -->
       <div class="py-4">
