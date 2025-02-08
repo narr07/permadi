@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Collections } from '@nuxt/content'
+import { withLeadingSlash } from 'ufo'
 import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -15,6 +16,7 @@ const router = useRouter()
 // Ambil nilai `page` dari query parameter, default ke 1 jika tidak ada
 const currentPage = ref(Number(route.query.page) || 1)
 
+const slug = computed(() => withLeadingSlash(String(route.params.slug)))
 // Update query parameter saat `currentPage` berubah
 watch(currentPage, (newPage) => {
   router.replace({
@@ -26,7 +28,7 @@ watch(currentPage, (newPage) => {
 })
 
 // Ambil semua data blog
-const { data: allBlog } = await useAsyncData(`allBlog-${locale}`, async () => {
+const { data: allBlog } = await useAsyncData(`allBlog-${locale}-${slug.value}`, async () => {
   const collection = (`blog_${locale.value}`) as keyof Collections
   return await queryCollection(collection)
     .select('title', 'description', 'path', 'id', 'date', 'body', 'tags')
