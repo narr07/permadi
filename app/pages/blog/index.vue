@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Collections } from '@nuxt/content'
-import { withLeadingSlash } from 'ufo'
 import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -16,7 +15,6 @@ const router = useRouter()
 // Ambil nilai `page` dari query parameter, default ke 1 jika tidak ada
 const currentPage = ref(Number(route.query.page) || 1)
 
-const slug = computed(() => withLeadingSlash(String(route.params.slug)))
 // Update query parameter saat `currentPage` berubah
 watch(currentPage, (newPage) => {
   router.replace({
@@ -28,7 +26,7 @@ watch(currentPage, (newPage) => {
 })
 
 // Ambil semua data blog
-const { data: allBlog } = await useAsyncData(`allBlog-${locale}-${slug.value}`, async () => {
+const { data: allBlog } = await useAsyncData(`allBlog-${route.path}`, async () => {
   const collection = (`blog_${locale.value}`) as keyof Collections
   return await queryCollection(collection)
     .select('title', 'description', 'path', 'id', 'date', 'body', 'tags')
@@ -56,6 +54,23 @@ const postsWithReadingTime = computed(() =>
     date: new Date(post.date), // Konversi date menjadi objek Date
   })),
 )
+
+const seoMeta = computed(() => ({
+  title: 'Blog',
+  description: t('website.description'),
+}))
+
+useSeoMeta(seoMeta.value)
+
+defineOgImageComponent('Page', {
+  title: 'Blog',
+  description: t('website.description'),
+})
+// SEO
+defineOgImageComponent('Page', {
+  title: t('website.blog'),
+  description: t('website.description'),
+})
 </script>
 
 <template>
@@ -63,7 +78,7 @@ const postsWithReadingTime = computed(() =>
     <UContainer>
       <!-- Judul -->
       <div class="pt-8 pb-4">
-        <h1 class="font-bold text-g4">
+        <h1 class="font-bold text-g3 md:text-g4">
           {{ t('blog.title') }}
         </h1>
       </div>
@@ -84,7 +99,7 @@ const postsWithReadingTime = computed(() =>
             <UCard class="h-full hover:bg-yellow-500 duration-100 ease-in-out dark:hover:bg-permadi-700">
               <div class="flex flex-col p-2 h-full justify-between">
                 <!-- Judul Artikel -->
-                <h2 class="text-2xl line-clamp-2 text-permadi-700 text-balance font-semibold">
+                <h2 class="text-g2 md:text-g3 line-clamp-2 text-permadi-700 text-balance font-semibold">
                   {{ post.title }}
                 </h2>
 
