@@ -51,6 +51,9 @@ importers:
       '@nuxtjs/seo':
         specifier: ^2.1.1
         version: 2.1.1(@unhead/vue@1.11.18(vue@3.5.13(typescript@5.7.3)))(h3@1.14.0)(magicast@0.3.5)(rollup@4.34.4)(typescript@5.7.3)(unhead@1.11.18)(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(terser@5.38.0)(tsx@4.19.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.7.3))
+      '@stefanobartoletti/nuxt-social-share':
+        specifier: ^1.2.1
+        version: 1.2.1(magicast@0.3.5)(rollup@4.34.4)
       '@tailwindcss/typography':
         specifier: ^0.5.16
         version: 0.5.16(tailwindcss@4.0.0)
@@ -1705,6 +1708,9 @@ packages:
   '@sqlite.org/sqlite-wasm@3.48.0-build4':
     resolution: {integrity: sha512-hI6twvUkzOmyGZhQMza1gpfqErZxXRw6JEsiVjUbo7tFanVD+8Oil0Ih3l2nGzHdxPI41zFmfUQG7GHqhciKZQ==}
     hasBin: true
+
+  '@stefanobartoletti/nuxt-social-share@1.2.1':
+    resolution: {integrity: sha512-1Ey8vXg+4OXzxZFhSS3IN+DjYQzHMnGs0Jz46g+kOyUZeTI6Lt3cH7rgBnR9gUGFXGerHbGqyEw4IbZ6fnUcww==}
 
   '@stripe/stripe-js@4.10.0':
     resolution: {integrity: sha512-KrMOL+sH69htCIXCaZ4JluJ35bchuCCznyPyrbN8JXSGQfwBI1SuIEMZNwvy8L8ykj29t6sa5BAAiL7fNoLZ8A==}
@@ -8815,6 +8821,15 @@ snapshots:
   '@socket.io/component-emitter@3.1.2': {}
 
   '@sqlite.org/sqlite-wasm@3.48.0-build4': {}
+
+  '@stefanobartoletti/nuxt-social-share@1.2.1(magicast@0.3.5)(rollup@4.34.4)':
+    dependencies:
+      '@nuxt/kit': 3.15.4(magicast@0.3.5)(rollup@4.34.4)
+      defu: 6.1.4
+    transitivePeerDependencies:
+      - magicast
+      - rollup
+      - supports-color
 
   '@stripe/stripe-js@4.10.0': {}
 

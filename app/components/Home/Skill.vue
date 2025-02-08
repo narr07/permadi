@@ -118,6 +118,6 @@ const tabitems = [
         </template>
       </UTabs>
     </UCard>
-    <PageLast />
+    <HomeLast />
   </UContainer>
 </template>

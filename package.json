@@ -30,6 +30,7 @@
     "@nuxtjs/html-validator": "^1.8.2",
     "@nuxtjs/i18n": "^9.1.5",
     "@nuxtjs/seo": "^2.1.1",
+    "@stefanobartoletti/nuxt-social-share": "^1.2.1",
     "@tailwindcss/typography": "^0.5.16",
     "@vueuse/nuxt": "^12.5.0",
     "eslint": "^9.18.0",

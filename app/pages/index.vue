@@ -16,8 +16,7 @@ useSeoMeta(seoMeta.value)
 <template>
   <div>
     <HomeHero />
-    <UContainer>
-      <HomeLast />
-    </UContainer>
+
+    <HomeSkill />
   </div>
 </template>

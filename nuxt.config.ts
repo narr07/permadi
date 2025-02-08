@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@nuxthub/core',
     'nuxt-security',
     '@nuxtjs/html-validator',
+    '@stefanobartoletti/nuxt-social-share',
   ],
   content: {
     database: {
@@ -25,6 +26,10 @@ export default defineNuxtConfig({
         url: 'https://github.com/narr07/permadi/',
       },
     },
+  },
+  socialShare: {
+    baseUrl: 'https://permadi.dev', // required!
+    // other optional module options
   },
   site: {
     url: 'https://permadi.dev',

@@ -111,6 +111,17 @@ const open = ref(false)
           <div>{{ formatted }}</div>
         </UCard>
         <UCard class="mb-2 md:hidden">
+          <div class="flex gap-2 justify-center flex-wrap">
+            <SocialShare
+              v-for="network in ['facebook', 'x', 'linkedin', 'email', 'whatsapp']"
+              :key="network"
+              :network="network"
+              :styled="true"
+              :label="false"
+            />
+          </div>
+        </UCard>
+        <UCard class="mb-2 md:hidden">
           <div>
             <div class="flex flex-wrap gap-2">
               <!-- Batasi hanya 3 tag yang ditampilkan -->
@@ -197,6 +208,17 @@ const open = ref(false)
       <!-- Bagian Sidebar -->
       <div class="w-1/4 hidden md:flex flex-col  space-y-4">
         <div class=" sticky top-[86px] ">
+          <UCard class="mb-2">
+            <div class="flex gap-2 justify-center flex-wrap">
+              <SocialShare
+                v-for="network in ['facebook', 'x', 'linkedin', 'email', 'whatsapp']"
+                :key="network"
+                :network="network"
+                :styled="true"
+                :label="false"
+              />
+            </div>
+          </UCard>
           <UCard class="mb-2">
             <div>{{ formatted }}</div>
           </UCard>
