@@ -1,114 +1,35 @@
 <script setup lang="ts">
 import type { Collections } from '@nuxt/content'
-import { withLeadingSlash } from 'ufo'
 
-const route = useRoute()
+const { calculateReadingTime, formatReadingTime } = useReadingTime()
 const { locale, t } = useI18n()
-const currentPage = ref(1)
-const blogData = ref<{ posts: any[], total: number }>({ posts: [], total: 0 })
 const itemsPerPage = 10
+const currentPage = ref(1)
 
-// eslint-disable-next-line unused-imports/no-unused-vars
-const slug = computed(() => withLeadingSlash(String(route.params.slug)))
-const isLoading = ref(true) // Status loading
-
-// Fungsi untuk mengambil data blog
-async function fetchBlogData() {
-  isLoading.value = true // Set loading true
-  try {
-    const collection = (`blog_${locale.value}`) as keyof Collections
-    const [posts, total] = await Promise.all([
-      queryCollection(collection)
-        .order('date', 'DESC')
-        .skip((currentPage.value - 1) * itemsPerPage)
-        .limit(itemsPerPage)
-        .all(),
-      queryCollection(collection).count(),
-    ])
-    blogData.value = { posts, total }
-  }
-  catch (error) {
-    console.error('Error fetching blog data:', error)
-    blogData.value = { posts: [], total: 0 }
-  }
-  finally {
-    isLoading.value = false // Set loading false
-  }
-}
-
-// Gunakan watchEffect untuk memantau perubahan dan memanggil fetch data
-watchEffect(() => {
-  fetchBlogData()
+const { data: blogData } = await useAsyncData(`blog-${locale.value}`, async () => {
+  const collection = (`blog_${locale.value}`) as keyof Collections
+  const [posts, total] = await Promise.all([
+    queryCollection(collection)
+      .order('date', 'DESC')
+      .skip((currentPage.value - 1) * itemsPerPage)
+      .limit(itemsPerPage)
+      .all(),
+    queryCollection(collection).count(),
+  ])
+  return { posts, total }
+}, {
+  watch: [locale, currentPage],
 })
 
-// Reset halaman ke pertama saat locale berubah
-watch(locale, () => {
-  currentPage.value = 1
-})
-
-// Utility functions
-function extractTextFromBody(body: any): string {
-  if (!body?.value || !Array.isArray(body.value))
-    return ''
-
-  return body.value.reduce((text: string, item: any[]) => {
-    if (Array.isArray(item)) {
-      const content = item.map((element) => {
-        if (typeof element === 'string')
-          return element
-        if (Array.isArray(element))
-          return extractTextFromBody({ value: [element] })
-        if (element?.value)
-          return element.value
-        return ''
-      }).join(' ')
-
-      return `${text} ${content}`
-    }
-    return text
-  }, '')
-}
-
-function calculateReadingTime(body: any): number {
-  const text = extractTextFromBody(body)
-  const wordsPerMinute = 200
-  const words = text.trim().split(/\s+/).length
-  return Math.ceil(words / wordsPerMinute)
-}
-
-function useReadingTime() {
-  const formatReadingTime = (minutes: number): string =>
-    locale.value === 'id' ? `${minutes} menit baca` : `${minutes} min read`
-
-  return {
-    calculateReadingTime,
-    formatReadingTime,
-  }
-}
-
-const total = computed(() => blogData.value?.total ?? 0)
-const { formatReadingTime } = useReadingTime()
-
-// Computed untuk posts dengan reading time
 const postsWithReadingTime = computed(() =>
   (blogData.value?.posts || []).map(post => ({
     ...post,
     readingTime: calculateReadingTime(post.body),
+    date: new Date(post.date), // Konversi date menjadi objek Date
   })),
 )
 
-// SEO Metadata
-const seoMeta = computed(() => ({
-  title: 'Blog',
-  description: t('website.description'),
-}))
-
-useSeoMeta(seoMeta.value)
-
-defineOgImageComponent('Page', {
-  title: 'Blog',
-  description: t('website.description'),
-})
+const total = computed(() => blogData.value?.total ?? 0)
 </script>
 
 <template>
@@ -127,7 +48,7 @@ defineOgImageComponent('Page', {
       </div>
 
       <!-- Daftar Artikel -->
-      <div v-if="!isLoading" class="grid grid-cols-1 gap-4">
+      <div class="grid grid-cols-1 gap-4">
         <div v-for="post in postsWithReadingTime" :key="post.id">
           <NuxtLink
             :aria-label="t('article.read', { title: post.title })"
@@ -170,7 +91,7 @@ defineOgImageComponent('Page', {
       </div>
 
       <!-- Pagination -->
-      <div v-if="!isLoading" class="flex justify-center mt-8">
+      <div class="flex justify-center mt-8">
         <UPagination
           v-model:page="currentPage"
           :total="total"
