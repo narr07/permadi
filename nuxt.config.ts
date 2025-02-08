@@ -74,7 +74,6 @@ export default defineNuxtConfig({
     provider: 'ipx',
     formats: ['webp'],
     quality: 85,
-    // The screen sizes predefined by `@nuxt/image`:
     screens: {
       'xs': 320,
       'sm': 640,

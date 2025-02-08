@@ -1,7 +1,7 @@
 ---
 title: Website Grup Generator
 date: 2025-01-20
-image: /project/acak.png
+image: /project/p-acak.png
 description: Website pembuat grup siswa
 category: Website
 link: https://acak.pages.dev/

@@ -1,7 +1,7 @@
 ---
 title: SDN Teja II Website
 date: 2023-05-10
-image: https://placehold.co/600x400
+image: https://images.pexels.com/photos/30164510/pexels-photo-30164510/free-photo-of-rumah-batu-menawan-di-pulau-hoedic.jpeg
 description: Official website of SDN Teja II built using Nuxt3.
 category: Website
 link: https://sdnteja2.sch.id
