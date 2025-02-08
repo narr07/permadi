@@ -82,5 +82,6 @@ useHead({
         <NuxtPage />
       </div>
     </UApp>
+    <Footer />
   </div>
 </template>
