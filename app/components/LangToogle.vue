@@ -1,22 +1,18 @@
 <script setup lang="ts">
-const { setLocale, locales, locale } = useI18n()
+const { setLocale, locale } = useI18n()
 </script>
 
 <template>
-  <UButtonGroup>
+  <div>
     <UButton
-      v-for="_locale of locales"
-      :key="_locale.code"
+      :icon="locale === 'id' ? 'openmoji:flag-england' : 'openmoji:flag-indonesia'"
       square
-      size="lg"
-      :variant="_locale.code === locale ? 'solid' : 'outline'"
-      class="px-4 "
-      aria-label="Change language"
-      @click="setLocale(_locale.code)"
+      class="button"
+      @click="setLocale(locale === 'id' ? 'en' : 'id')"
     >
-      <span class="uppercase">
-        {{ _locale.code }}
+      <span class="sr-only">
+        {{ locale === 'id' ? 'Switch to English' : 'Ubah ke Indonesia' }}
       </span>
     </UButton>
-  </UButtonGroup>
+  </div>
 </template>

@@ -7,7 +7,7 @@ const { locale } = useI18n()
 const localePath = useLocalePath()
 
 const slug = computed(() => withLeadingSlash(String(route.params.slug)))
-const { data: allProject } = await useAsyncData(`articles-${slug.value}`, async () => {
+const { data: allProject } = await useAsyncData(`allproject-${slug.value}`, async () => {
   const collection = (`project_${locale.value}`) as keyof Collections
   return await queryCollection(collection)
     .select('title', 'description', 'path', 'id', 'date')

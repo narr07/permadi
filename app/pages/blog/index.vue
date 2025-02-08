@@ -1,35 +1,59 @@
 <script setup lang="ts">
 import type { Collections } from '@nuxt/content'
+import { computed, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 const { calculateReadingTime, formatReadingTime } = useReadingTime()
 const { locale, t } = useI18n()
-const itemsPerPage = 10
-const currentPage = ref(1)
+const localePath = useLocalePath()
 
-const { data: blogData } = await useAsyncData(`blog-${locale.value}`, async () => {
-  const collection = (`blog_${locale.value}`) as keyof Collections
-  const [posts, total] = await Promise.all([
-    queryCollection(collection)
-      .order('date', 'DESC')
-      .skip((currentPage.value - 1) * itemsPerPage)
-      .limit(itemsPerPage)
-      .all(),
-    queryCollection(collection).count(),
-  ])
-  return { posts, total }
-}, {
-  watch: [locale, currentPage],
+// Pagination state
+const itemsPerPage = 10
+const route = useRoute()
+const router = useRouter()
+
+// Ambil nilai `page` dari query parameter, default ke 1 jika tidak ada
+const currentPage = ref(Number(route.query.page) || 1)
+
+// Update query parameter saat `currentPage` berubah
+watch(currentPage, (newPage) => {
+  router.replace({
+    query: {
+      ...route.query,
+      page: newPage.toString(),
+    },
+  })
 })
 
+// Ambil semua data blog
+const { data: allBlog } = await useAsyncData(`allBlog-${locale}`, async () => {
+  const collection = (`blog_${locale.value}`) as keyof Collections
+  return await queryCollection(collection)
+    .select('title', 'description', 'path', 'id', 'date', 'body', 'tags')
+    .order('date', 'DESC')
+    .all() as Collections['blog_id'][] | Collections['blog_en'][]
+}, {
+  watch: [locale],
+})
+
+// Total item untuk pagination
+const totalItems = computed(() => allBlog.value?.length ?? 0)
+
+// Data blog yang dipotong berdasarkan halaman
+const paginatedBlogs = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return allBlog.value?.slice(start, end) ?? []
+})
+
+// Tambahkan readingTime dan format tanggal
 const postsWithReadingTime = computed(() =>
-  (blogData.value?.posts || []).map(post => ({
+  paginatedBlogs.value.map(post => ({
     ...post,
     readingTime: calculateReadingTime(post.body),
     date: new Date(post.date), // Konversi date menjadi objek Date
   })),
 )
-
-const total = computed(() => blogData.value?.total ?? 0)
 </script>
 
 <template>
@@ -53,16 +77,21 @@ const total = computed(() => blogData.value?.total ?? 0)
           <NuxtLink
             :aria-label="t('article.read', { title: post.title })"
             :title="t('article.read', { title: post.title })"
-            :to="`blog${post.path}`"
+            :to="localePath(`/blog${post.path}`)"
           >
-            <UCard class="h-full hover:bg-yellow duration-100 ease-in-out dark:hover:bg-permadi-700">
+            <UCard class="h-full hover:bg-yellow-500 duration-100 ease-in-out dark:hover:bg-permadi-700">
               <div class="flex flex-col p-2 h-full justify-between">
+                <!-- Judul Artikel -->
                 <h2 class="text-2xl line-clamp-2 text-permadi-700 text-balance font-semibold">
                   {{ post.title }}
                 </h2>
+
+                <!-- Separator -->
                 <div class="pt-2">
                   <USeparator color="primary" />
                 </div>
+
+                <!-- Reading Time -->
                 <div class="pt-2">
                   <p class="text-xs flex items-center gap-1">
                     <UIcon name="ph:timer-duotone" class="w-4 h-4" />
@@ -70,18 +99,23 @@ const total = computed(() => blogData.value?.total ?? 0)
                   </p>
                 </div>
 
+                <!-- Tanggal dan Tag -->
                 <div class="flex items-end justify-between h-full">
                   <p class="text-xs flex items-center gap-1">
                     <UIcon name="ph:calendar-dots-duotone" class="w-4 h-4" />
                     {{ formatDate(post.date, locale) }}
                   </p>
                   <div v-if="post.tags.length > 0" class="mr-2">
-                    <UBadge
+                    <UButton
+                      :to="localePath(`/blog/tags/${post.tags[0]}`)"
                       color="neutral"
                       :aria-label="`Lihat artikel dengan tag ${post.tags[0]}`"
+                      size="xs"
                     >
-                      {{ post.tags[0] }}
-                    </UBadge>
+                      <p class="text-xs  ">
+                        {{ post.tags[0] }}
+                      </p>
+                    </UButton>
                   </div>
                 </div>
               </div>
@@ -94,10 +128,11 @@ const total = computed(() => blogData.value?.total ?? 0)
       <div class="flex justify-center mt-8">
         <UPagination
           v-model:page="currentPage"
-          :total="total"
           :items-per-page="itemsPerPage"
+          active-color="neutral"
+
           :sibling-count="1"
-          show-edges
+          :total="totalItems"
         />
       </div>
     </UContainer>

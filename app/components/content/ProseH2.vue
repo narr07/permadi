@@ -11,7 +11,7 @@ const generate = computed(() => props.id && ((typeof headings?.anchorLinks === '
   <h2 :id="props.id">
     <NuxtLink
       v-if="props.id && generate"
-      class="dark:text-yellow     no-underline  font-black   text-g2   "
+      class="dark:text-yellow-500     no-underline  font-black   text-g2   "
       :to="`#${props.id}`"
     >
       <slot />

@@ -14,12 +14,12 @@ const isDark = computed({
   <div>
     <ClientOnly v-if="!colorMode?.forced">
       <UButton
-
+        class="button"
         :aria-label="isDark ? 'Aktifkan Tema Terang' : 'Aktifkan Tema Gelap'"
         square
         @click="isDark = !isDark"
       >
-        <UIcon class="size-6" :name="isDark ? 'hugeicons:moon' : 'hugeicons:sun-02'" />
+        <UIcon class="size-5" :name="isDark ? 'hugeicons:moon' : 'hugeicons:sun-02'" />
       </UButton>
       <template #fallback>
         <div class="size-8" />

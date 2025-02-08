@@ -92,8 +92,8 @@ defineShortcuts({
     <UButton
       square
       icon="hugeicons:search-02"
-      size="lg"
       aria-label="Search"
+      class="button"
       @click="open = true"
     />
 

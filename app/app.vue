@@ -78,7 +78,7 @@ useHead({
 
     <NavBar />
     <UApp>
-      <div class="pt-16">
+      <div class="pt-20">
         <NuxtPage />
       </div>
     </UApp>
