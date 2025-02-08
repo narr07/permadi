@@ -54,6 +54,7 @@ export default defineNuxtConfig({
   },
   i18n: {
     baseUrl: 'https://permadi.dev',
+    lazy: true,
     strategy: 'prefix_except_default',
     defaultLocale: 'id',
     langDir: 'lang',
@@ -68,6 +69,20 @@ export default defineNuxtConfig({
       alwaysRedirect: true,
     },
 
+  },
+  image: {
+    provider: 'ipx',
+    formats: ['webp'],
+    quality: 85,
+    // The screen sizes predefined by `@nuxt/image`:
+    screens: {
+      'xs': 320,
+      'sm': 640,
+      'md': 768,
+      'lg': 1024,
+      'xl': 1280,
+      '2xl': 1536,
+    },
   },
   css: ['~/assets/css/main.css'],
   devtools: { enabled: true },
@@ -85,6 +100,9 @@ export default defineNuxtConfig({
     '/': { prerender: true },
     '/blog': { prerender: true },
     '/en/blog': { prerender: true },
+  },
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
   },
   future: { compatibilityVersion: 4 },
   compatibilityDate: '2024-07-30',

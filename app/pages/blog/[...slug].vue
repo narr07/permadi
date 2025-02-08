@@ -81,10 +81,18 @@ useSeoMeta({
     ? pageBlog.value.tags.join(', ')
     : 'dinar, permadi, dinar permadi, guru, developer, programmer',
 })
-defineOgImageComponent('Page', {
-  title: pageBlog.value?.title,
-  description: pageBlog.value?.description,
-})
+if (pageBlog.value) {
+  defineOgImageComponent('Page', {
+    title: pageBlog.value.title,
+    description: pageBlog.value.description,
+  })
+}
+else {
+  defineOgImageComponent('Page', {
+    title: 'Blog | Dinar Permadi Yusup ',
+    description: 'Dinar Permadi Yusup is a teacher, programmer, and designer. With this website, I would like to share my knowledge in learning design and programming.',
+  })
+}
 // Format tanggal
 const formatted = computed(() => {
   return formatDate(pageBlog.value?.date?.toString() || '', locale.value)

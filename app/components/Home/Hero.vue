@@ -19,8 +19,11 @@ const items = [
         Dinar Permadi Yusup
       </h1>
 
-      <HomeHeroDescription />
+      <p>
+        {{ t('hero.description') }}
+      </p>
     </UCard>
+
     <UCard class="flex flex-col">
       <UCarousel
         v-slot="{ item }"

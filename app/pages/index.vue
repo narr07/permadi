@@ -11,6 +11,9 @@ defineOgImageComponent('Page', {
   description: seoMeta.value.description,
 })
 useSeoMeta(seoMeta.value)
+
+const HomeHero = defineAsyncComponent(() => import('../components/Home/Hero.vue'))
+const HomeSkill = defineAsyncComponent(() => import('../components/Home/Skill.vue'))
 </script>
 
 <template>
