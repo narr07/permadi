@@ -15,7 +15,7 @@ const route = useRoute()
 const slug = computed(() => withLeadingSlash(String(route.params.slug)))
 
 // Ambil data artikel saat ini
-const { data: pageBlog, error: pageError } = await useAsyncData(`page-${locale.value}-${slug.value}`, async () => {
+const { data: pageBlog } = await useAsyncData(`page-${locale.value}-${slug.value}`, async () => {
   const collection = (`blog_${locale.value}`) as keyof Collections
   const content = await queryCollection(collection).path(slug.value).first()
   if (!content)
@@ -25,11 +25,15 @@ const { data: pageBlog, error: pageError } = await useAsyncData(`page-${locale.v
   watch: [locale], // Pastikan slug juga dipantau
 })
 
-// Tangani error jika terjadi
-if (pageError.value) {
-  console.error(pageError.value)
+if (pageBlog.value?.ogImage) {
+  defineOgImage(pageBlog.value.ogImage)
 }
-
+else {
+  defineOgImageComponent('Page', {
+    title: () => pageBlog.value?.title,
+    description: () =>  pageBlog.value?.description,
+  })
+}
 // Ambil artikel sebelumnya dan berikutnya
 const { data: surroundingBlog } = await useAsyncData(`surround-${locale.value}-${slug.value}`, async () => {
   if (!pageBlog.value)
@@ -71,10 +75,10 @@ useSeoMeta({
     ? pageBlog.value.tags.join(', ')
     : 'dinar, permadi, dinar permadi, guru, developer, programmer',
 })
-defineOgImageComponent('Page', {
-  title: () => pageBlog.value?.title,
-  description: () => pageBlog.value?.description,
-})
+// defineOgImageComponent('Page', {
+//   title: () => pageBlog.value?.title,
+//   description: () => pageBlog.value?.description,
+// })
 
 const { countTotalWords } = useReadingTime()
 

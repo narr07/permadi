@@ -32,6 +32,7 @@ export default defineNuxtConfig({
     baseUrl: 'https://permadi.dev', // required!
     // other optional module options
   },
+
   site: {
     url: 'https://permadi.dev',
     name: 'Dinar Permadi Yusup',
@@ -113,6 +114,7 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
   },
   ogImage: {
+    zeroRuntime: true,
     fonts: [
       'Sofia+Sans:700',
       'Sofia+Sans:400',
