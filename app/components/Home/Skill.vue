@@ -78,7 +78,7 @@ const tabitems = [
               <div class="items-center">
                 <div class="flex flex-wrap gap-2 md:gap-4 justify-center">
                   <div v-for="(button, index) in designIcon" :key="index">
-                    <UTooltip :text="button.title" placement="bottom" :popper="{ arrow: true }">
+                    <UTooltip :delay-duration="0" :text="button.title" placement="bottom" :popper="{ arrow: true }">
                       <UButton
                         class="px-1.5" color="primary" variant="subtle" :to="`${button.url}?ref=dinarpermadiyusup`" target="_blank"
                         :title="button.title" :aria-label="button.title" rel="noopener noreferrer nofollow"
@@ -101,7 +101,7 @@ const tabitems = [
               <div class="items-center">
                 <div class="flex flex-wrap gap-2 md:gap-4 justify-center">
                   <div v-for="(techIcon, index) in techIcons" :key="index">
-                    <UTooltip :text="techIcon.title" placement="bottom" :popper="{ arrow: true }">
+                    <UTooltip :delay-duration="0" :text="techIcon.title" placement="bottom" :popper="{ arrow: true }">
                       <UButton
                         class="px-1.5" color="primary" variant="subtle" :to="`${techIcon.url}?ref=dinarpermadiyusup`" target="_blank"
                         :aria-label="techIcon.title" :title="techIcon.title" rel="noopener noreferrer nofollow"

@@ -27,7 +27,10 @@ function calculateReadingTime(body: any): number {
   const words = text.trim().split(/\s+/).length
   return Math.ceil(words / wordsPerMinute)
 }
-
+function countTotalWords(body: any): number {
+  const text = extractTextFromBody(body)
+  return text.trim().split(/\s+/).length
+}
 function useReadingTime() {
   const { locale } = useI18n()
   const formatReadingTime = (minutes: number): string =>
@@ -36,6 +39,7 @@ function useReadingTime() {
   return {
     calculateReadingTime,
     formatReadingTime,
+    countTotalWords,
   }
 }
 

@@ -17,7 +17,7 @@ const { data: allProject } = await useAsyncData(`allproject-${route.path}`, asyn
 
 const seoMeta = computed(() => ({
   title: 'Project',
-  description: t('website.description'),
+  description: () => t('website.description'),
   keywords: 'dinar, permadi, dinar permadi, guru, developer, programmer',
 }))
 
@@ -25,7 +25,7 @@ useSeoMeta(seoMeta.value)
 
 defineOgImageComponent('Page', {
   title: 'Project',
-  description: t('website.description'),
+  description: () => t('website.description'),
 })
 
 const isLoaded = ref(false)
@@ -34,40 +34,47 @@ const isLoaded = ref(false)
 <template>
   <div>
     <UContainer>
-      <h1>Project</h1>
+      <div class="pt-8 pb-6">
+        <h1 class="font-bold text-g3 md:text-g4">
+          {{ t('project.title') }}
+        </h1>
+      </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
           v-for="project in allProject"
           :key="project.id"
         >
           <NuxtLink :to="localePath(`/project${project.path}`)" class="group flex flex-col focus:outline-none">
-            <div class="relative pt-[56.25%] rounded overflow-hidden ring-2 ring-permadi-900 dark:ring-permadi-600">
-              <!-- Gambar dengan Skeleton Loader jika gambar belum ada -->
-              <NuxtImg
-                v-show="isLoaded"
-                v-if="project.image "
-                class="size-full absolute top-0 start-0 object-cover group-hover:scale-105 group-focus:scale-105 transition-transform duration-500 ease-in-out rounded"
-                :src="project.image"
-                :alt="project.title"
-                width="600"
-                height="400"
-                format="webp"
-                preload
-                loading="lazy"
-                :placeholder="[50, 25, 75, 5]"
+            <UCard class="relative hover:bg-yellow-500 duration-100 ease-in-out dark:hover:bg-permadi-700">
+              <div class="relative  aspect-video rounded overflow-hidden ring-2 ring-permadi-900 dark:ring-permadi-600">
+                <!-- Gambar dengan Skeleton Loader jika gambar belum ada -->
+                <NuxtImg
+                  v-show="isLoaded"
+                  v-if="project.image "
+                  class="size-full absolute top-0 start-0 object-cover group-hover:scale-105 group-focus:scale-105 transition-transform duration-500 ease-in-out rounded"
+                  :src="project.image"
+                  :alt="project.title"
+                  :title="project.title"
+                  width="1000"
+                  height="600"
+                  format="webp"
+                  preload
+                  loading="lazy"
+                  :placeholder="[50, 25, 75, 5]"
 
-                @load="isLoaded = true"
-              />
-              <USkeleton v-show="!isLoaded" class="size-full absolute top-0 start-0 object-cover rounded" />
+                  @load="isLoaded = true"
+                />
+                <USkeleton v-show="!isLoaded" class="size-full absolute top-0 start-0 object-cover rounded" />
+              </div>
               <span class="absolute top-0 end-0 rounded-se rounded-es text-xs font-medium bg-permadi-700 text-white py-1.5 px-3 dark:bg-permadi-700">
                 {{ project.meta.category }}
               </span>
-            </div>
-            <div class="mt-2">
-              <h2 class="text-xl font-semibold text-yellow-500 group-hover:text-gray-600 dark:text-neutral-300 dark:group-hover:text-white">
-                {{ project.title }}
-              </h2>
-            </div>
+              <div class="mt-2">
+                <h2 class="text-xl font-semibold text-yellow-500 group-hover:text-gray-600 dark:text-neutral-300 dark:group-hover:text-white">
+                  {{ project.title }}
+                </h2>
+              </div>
+            </UCard>
           </NuxtLink>
           <USeparator />
         </div>

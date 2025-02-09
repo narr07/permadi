@@ -33,17 +33,42 @@ defineOgImageComponent('Page', {
 </script>
 
 <template>
-  <div v-if="pageProject">
-    <article class="writing mx-auto px-4 sm:max-w-2xl md:max-w-3xl lg:max-w-4xl">
-      <h1>
-        {{ pageProject?.title }}
-      </h1>
-
-      <ContentRenderer
-        v-if="pageProject"
-        :dir="localeProperties?.dir ?? 'ltr'"
-        :value="pageProject"
-      />
+  <UContainer v-if="pageProject">
+    <article>
+      <UCard class="mb-2">
+        <div class="relative aspect-video max-w-2xl mx-auto object-cover bg-cover rounded overflow-hidden ring-2 ring-permadi-900 dark:ring-permadi-600">
+          <NuxtImg
+            v-if="pageProject?.image"
+            loading="eager"
+            :src="pageProject.image"
+            :alt="pageProject.title"
+            :title="pageProject.title"
+            width="1000"
+            height="600"
+            format="webp"
+            class="rounded bg-cover bg-center h-full w-full"
+          />
+        </div>
+      </UCard>
+      <UCard>
+        <div class="mb-2 mx-auto  max-w-2xl">
+          <div v-if="pageProject" :value="pageProject">
+            <h1 class="text-g3">
+              {{ pageProject.title }}
+            </h1>
+          </div>
+          <p>
+            {{ pageProject?.description }}
+          </p>
+        </div>
+        <div class="prose mx-auto  prose-permadi dark:prose-invert">
+          <ContentRenderer
+            v-if="pageProject"
+            :dir="localeProperties?.dir ?? 'ltr'"
+            :value="pageProject"
+          />
+        </div>
+      </UCard>
     </article>
-  </div>
+  </UContainer>
 </template>

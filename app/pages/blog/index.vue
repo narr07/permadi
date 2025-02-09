@@ -57,7 +57,7 @@ const postsWithReadingTime = computed(() =>
 
 const seoMeta = computed(() => ({
   title: 'Blog',
-  description: t('website.description'),
+  description: () => t('website.description'),
   keywords: 'dinar, permadi, dinar permadi, guru, developer, programmer',
 }))
 
@@ -89,8 +89,8 @@ defineOgImageComponent('Page', {
         <div v-for="post in postsWithReadingTime" :key="post.id">
           <div>
             <NuxtLink
-              :aria-label="t('article.read', { title: post.title })"
-              :title="t('article.read', { title: post.title })"
+              :aria-label="`${t('article.read')} ${post.title}`"
+              :title="`${t('article.read')} ${post.title}`"
               :to="localePath(`/blog${post.path}`)"
             >
               <UCard class="h-full hover:bg-yellow-500 duration-100 ease-in-out dark:hover:bg-permadi-700">

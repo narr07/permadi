@@ -72,17 +72,17 @@ useHead({
 
 <template>
   <div>
-    <Pattern />
-    <NuxtRouteAnnouncer />
-    <NuxtLoadingIndicator color="#f9bc60" />
-
-    <NavBar />
     <UApp>
+      <Pattern />
+      <NuxtRouteAnnouncer />
+      <NuxtLoadingIndicator color="#f9bc60" />
+
+      <NavBar />
       <div class="pt-20">
         <NuxtPage />
       </div>
+      <Footer />
     </UApp>
-    <Footer />
   </div>
 </template>
 

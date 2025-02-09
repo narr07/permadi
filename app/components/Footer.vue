@@ -10,6 +10,7 @@ const socialIcon = [
   { name: 'Behance', url: socials.behance, icon: 'fa6-brands:square-behance' },
   { name: 'Whatsapp', url: socials.whatsapp, icon: 'fa6-brands:whatsapp' },
 ]
+const userVisitor = defineAsyncComponent(() => import('../components/userVisitor.vue'))
 </script>
 
 <template>
@@ -19,7 +20,12 @@ const socialIcon = [
       <div class="flex flex-col md:flex-row  justify-between items-center">
         <!-- Teks yang di kiri -->
         <div class="flex items-center mb-4 md:mb-0 justify-center text-center">
-          © 2024, narr07 - All rights reserved.
+          <userVisitor />
+          <div class="ml-2">
+            <p>
+              © 2024, narr07 - All rights reserved.
+            </p>
+          </div>
         </div>
         <!-- Ikon sosial yang terletak di kanan -->
         <div class="flex flex-row space-x-4">

@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     'nuxt-security',
     '@nuxtjs/html-validator',
     '@stefanobartoletti/nuxt-social-share',
+    'nuxt-visitors',
   ],
   content: {
     database: {
@@ -71,7 +72,6 @@ export default defineNuxtConfig({
 
   },
   image: {
-    provider: 'ipx',
     formats: ['webp'],
     quality: 85,
     screens: {
@@ -111,6 +111,11 @@ export default defineNuxtConfig({
       'Host+Grotesk:700',
       'Host+Grotesk:400',
     ],
+  },
+  nitro: {
+    experimental: {
+      websocket: true,
+    },
   },
   future: { compatibilityVersion: 4 },
   compatibilityDate: '2024-07-30',

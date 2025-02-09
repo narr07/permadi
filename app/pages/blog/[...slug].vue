@@ -7,7 +7,7 @@ import { withLeadingSlash } from 'ufo'
 import { computed, onMounted, ref } from 'vue'
 
 const { t } = useI18n()
-const { locale } = useI18n()
+const { locales, locale } = useI18n()
 const localePath = useLocalePath()
 
 // Ambil rute sekali saat inisialisasi
@@ -24,6 +24,9 @@ const { data: pageBlog, error: pageError } = await useAsyncData(`page-${locale.v
 }, {
   watch: [locale], // Pastikan slug juga dipantau
 })
+if (pageBlog.value?.ogImage) {
+  defineOgImage(pageBlog.value.ogImage)
+}
 
 // Tangani error jika terjadi
 if (pageError.value) {
@@ -64,41 +67,70 @@ function scrollToHeading(id: string) {
   }
 }
 
+useSeoMeta({
+  title: pageBlog.value?.title,
+  description: pageBlog.value?.description,
+  keywords: pageBlog.value?.tags
+    ? pageBlog.value.tags.join(', ')
+    : 'dinar, permadi, dinar permadi, guru, developer, programmer',
+})
+defineOgImageComponent('Page', {
+  title: pageBlog.value?.title,
+  description: pageBlog.value?.description,
+})
+
+const { countTotalWords } = useReadingTime()
+
+const wordCount = computed(() => countTotalWords(pageBlog.value?.body || {}))
+
+const currentLanguage = computed(() => {
+  const lang = locales.value.find(_locale => _locale.code === locale.value)
+  return lang ? lang.name : 'Unknown' // Jika tidak ditemukan, return 'Unknown'
+})
+
 useSchemaOrg([
   defineArticle({
-    title: () => pageBlog?.value?.title,
-    description: () => pageBlog?.value?.description,
+    headline: pageBlog.value?.title,
+    description: pageBlog.value?.description,
+    title: pageBlog.value?.title,
+    datePublished: pageBlog.value?.date,
+    author: {
+      name: 'Dinar Permadi Yusup',
+      url: 'https://permadi.dev',
+    },
+    wordCount: wordCount.value,
+    inLanguage: currentLanguage.value,
   }),
 ])
 
-useSeoMeta({
-  ogTitle: () => pageBlog.value?.title,
-  ogDescription: () => pageBlog.value?.description,
-  ogType: 'article',
-  author: 'Dinar Permadi Yusup',
-  articleAuthor: ['Dinar Permadi Yusup'],
-  keywords: () => pageBlog.value?.tags
-    ? pageBlog.value.tags.join(', ')
-    : 'dinar, permadi, dinar permadi, guru, developer, programmer',
-  articleTag: pageBlog.value?.tags,
-  articlePublishedTime: () => formatDate(pageBlog.value?.date?.toString() || '', 'd-MM-yyyy'),
-})
-
-defineOgImageComponent('Page', {
-  title: () => pageBlog.value?.title,
-  description: () => pageBlog.value?.description,
-})
 const formatted = computed(() => {
   return formatDate(pageBlog.value?.date?.toString() || '', locale.value)
 })
 
 const open = ref(false)
+
+const items = ref([
+  {
+    label: 'Home',
+    icon: 'i-lucide-home',
+    to: localePath('/'),
+  },
+  {
+    label: 'Blog',
+    icon: 'i-lucide-newspaper',
+    to: localePath('/blog'),
+  },
+
+])
 </script>
 
 <template>
   <UContainer>
     <!-- Header -->
-    <div class="md:flex-row flex-col flex gap-4">
+    <UCard class="mb-2">
+      <UBreadcrumb :items="items" />
+    </UCard>
+    <article class="md:flex-row flex-col flex gap-4">
       <div class="md:w-3/4">
         <UCard class="mb-2">
           <div v-if="pageBlog" :value="pageBlog">
@@ -329,7 +361,7 @@ const open = ref(false)
           </UCard>
         </div>
       </div>
-    </div>
+    </article>
     <div class="md:hidden">
       <UCard class="mb-2">
         <div class="flex flex-col space-y-2">
