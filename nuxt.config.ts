@@ -38,6 +38,7 @@ export default defineNuxtConfig({
     description: 'Dinar Permadi Yusup is a teacher, programmer, and designer. With this website, I would like to share my knowledge in learning design and programming.',
     defaultLocale: 'id', // not needed if you have @nuxtjs/i18n installed
     logo: '/logo.png',
+    indexable: true,
   },
   hub: {
     database: true,
@@ -72,6 +73,7 @@ export default defineNuxtConfig({
 
   },
   image: {
+    provider: 'ipx',
     formats: ['webp'],
     quality: 85,
     screens: {
@@ -96,10 +98,16 @@ export default defineNuxtConfig({
     },
   },
   routeRules: {
-    '/': { prerender: true },
-    '/blog': { prerender: true },
-    '/en/blog': { prerender: true },
-    // '/blog/**': { isr: true },
+    '/': { isr: true },
+    '/blog': { isr: true },
+    '/blog/**': { isr: true },
+    '/project': { isr: true },
+    '/project/**': { isr: true },
+    '/en': { isr: true },
+    '/en/blog': { isr: true },
+    '/en/blog/**': { isr: true },
+    '/en/project': { isr: true },
+    '/en/project/**': { isr: true },
   },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },

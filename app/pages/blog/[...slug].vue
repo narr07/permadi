@@ -24,9 +24,6 @@ const { data: pageBlog, error: pageError } = await useAsyncData(`page-${locale.v
 }, {
   watch: [locale], // Pastikan slug juga dipantau
 })
-if (pageBlog.value?.ogImage) {
-  defineOgImage(pageBlog.value.ogImage)
-}
 
 // Tangani error jika terjadi
 if (pageError.value) {
@@ -68,15 +65,15 @@ function scrollToHeading(id: string) {
 }
 
 useSeoMeta({
-  title: pageBlog.value?.title,
-  description: pageBlog.value?.description,
+  title: () => pageBlog.value?.title || '',
+  description: () => pageBlog.value?.description,
   keywords: pageBlog.value?.tags
     ? pageBlog.value.tags.join(', ')
     : 'dinar, permadi, dinar permadi, guru, developer, programmer',
 })
 defineOgImageComponent('Page', {
-  title: pageBlog.value?.title,
-  description: pageBlog.value?.description,
+  title: () => pageBlog.value?.title,
+  description: () => pageBlog.value?.description,
 })
 
 const { countTotalWords } = useReadingTime()

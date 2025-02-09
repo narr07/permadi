@@ -1,7 +1,7 @@
 ---
 title: Student Group Generator Website
 date: 2025-01-20
-image: https://res.cloudinary.com/daton7ry4/image/upload/v1739096173/project/acak_rrp2f7.png
+image: /project/acak.png
 description: A website for creating student groups
 category: Website
 link: https://acak.pages.dev/

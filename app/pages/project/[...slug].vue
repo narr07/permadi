@@ -13,6 +13,13 @@ const { data: pageProject } = await useAsyncData('blog' + slug.value, async () =
 }, {
   watch: [locale],
 })
+
+const pageTitle = computed(() => pageProject?.value?.title || '')
+const pageDescription = computed(() => pageProject?.value?.description)
+const pageTags = computed(() => pageProject?.value?.tags
+  ? pageProject.value.tags.join(', ')
+  : 'dinar, permadi, dinar permadi, guru, developer, programmer')
+
 useSchemaOrg([
   defineArticle({
     title: () => pageProject?.value?.title,
@@ -21,19 +28,24 @@ useSchemaOrg([
 ])
 
 useSeoMeta({
-  keywords: () => pageProject.value?.tags
-    ? pageProject.value.tags.join(', ')
-    : 'dinar, permadi, dinar permadi, guru, developer, programmer',
+  title: pageTitle,
+  description: pageDescription,
+  keywords: pageTags,
 })
 
 defineOgImageComponent('Page', {
-  title: () => pageProject.value?.title,
-  description: () => pageProject.value?.description,
+  title: pageTitle,
+  description: pageDescription,
 })
 </script>
 
 <template>
   <UContainer v-if="pageProject">
+    <pre>
+      {{ pageTitle }}
+      {{ pageDescription }}
+      {{ pageTags }}
+    </pre>
     <article>
       <UCard class="mb-2">
         <div class="relative aspect-video max-w-2xl mx-auto object-cover bg-cover rounded overflow-hidden ring-2 ring-permadi-900 dark:ring-permadi-600">
