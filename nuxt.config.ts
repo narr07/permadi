@@ -98,18 +98,18 @@ export default defineNuxtConfig({
       },
     },
   },
-  routeRules: {
-    '/': { prerender: true },
-    '/blog': { prerender: true },
-    '/blog/**': { prerender: true },
-    '/project': { isr: true },
-    '/project/**': { isr: true },
-    '/en': { prerender: true },
-    '/en/blog': { isr: true },
-    '/en/blog/**': { isr: true },
-    '/en/project': { isr: true },
-    '/en/project/**': { isr: true },
-  },
+  // routeRules: {
+  //   '/': { prerender: true },
+  //   '/blog': { prerender: true },
+  //   '/blog/**': { prerender: true },
+  //   '/project': { isr: true },
+  //   '/project/**': { isr: true },
+  //   '/en': { prerender: true },
+  //   '/en/blog': { isr: true },
+  //   '/en/blog/**': { isr: true },
+  //   '/en/project': { isr: true },
+  //   '/en/project/**': { isr: true },
+  // },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
   },
@@ -120,6 +120,13 @@ export default defineNuxtConfig({
     ],
   },
   nitro: {
+
+    prerender: {
+      // Pre-render the homepage
+      routes: ['/'],
+      // Then crawl all the links on the page
+      crawlLinks: true,
+    },
     experimental: {
       websocket: true,
     },
