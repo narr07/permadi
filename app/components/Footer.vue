@@ -28,10 +28,12 @@ const socialIcon = [
               :href="icon.url"
               :aria-label="icon.name"
               target="_blank"
-              :icon="icon.icon"
+              class="hover:scale-105 duration-100 ease-out"
+
               square
-              color="primary"
+              color="neutral"
             >
+              <UIcon :name="icon.icon" class="size-5 text-permadi-200 dark:text-permadi-900" />
               <span class="sr-only">{{ icon.name }}</span>
             </UButton>
           </div>

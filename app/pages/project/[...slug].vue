@@ -13,6 +13,23 @@ const { data: pageProject } = await useAsyncData('blog' + slug.value, async () =
 }, {
   watch: [locale],
 })
+useSchemaOrg([
+  defineArticle({
+    title: () => pageProject?.value?.title,
+    description: () => pageProject?.value?.description,
+  }),
+])
+
+useSeoMeta({
+  keywords: () => pageProject.value?.tags
+    ? pageProject.value.tags.join(', ')
+    : 'dinar, permadi, dinar permadi, guru, developer, programmer',
+})
+
+defineOgImageComponent('Page', {
+  title: () => pageProject.value?.title,
+  description: () => pageProject.value?.description,
+})
 </script>
 
 <template>

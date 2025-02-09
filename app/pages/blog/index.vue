@@ -58,15 +58,11 @@ const postsWithReadingTime = computed(() =>
 const seoMeta = computed(() => ({
   title: 'Blog',
   description: t('website.description'),
+  keywords: 'dinar, permadi, dinar permadi, guru, developer, programmer',
 }))
 
 useSeoMeta(seoMeta.value)
 
-defineOgImageComponent('Page', {
-  title: 'Blog',
-  description: t('website.description'),
-})
-// SEO
 defineOgImageComponent('Page', {
   title: t('website.blog'),
   description: t('website.description'),

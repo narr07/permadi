@@ -64,11 +64,6 @@ function scrollToHeading(id: string) {
   }
 }
 
-// Tambahkan metadata SEO
-if (pageBlog?.value?.seo) {
-  useSeoMeta(pageBlog.value.seo)
-}
-
 useSchemaOrg([
   defineArticle({
     title: () => pageBlog?.value?.title,
@@ -76,23 +71,16 @@ useSchemaOrg([
   }),
 ])
 
-
-const seoMeta = computed(() => ({
-  keywords: pageBlog.value?.tags
+useSeoMeta({
+  keywords: () => pageBlog.value?.tags
     ? pageBlog.value.tags.join(', ')
     : 'dinar, permadi, dinar permadi, guru, developer, programmer',
-}))
+})
 
-useSeoMeta(seoMeta.value)
-
-const ogImageMeta = computed(() => ({
-  title: pageBlog.value?.title,
-  description: pageBlog.value?.description,
-}))
-
-defineOgImageComponent('Page', ogImageMeta.value)
-
-
+defineOgImageComponent('Page', {
+  title: () => pageBlog.value?.title,
+  description: () => pageBlog.value?.description,
+})
 const formatted = computed(() => {
   return formatDate(pageBlog.value?.date?.toString() || '', locale.value)
 })
@@ -101,7 +89,7 @@ const open = ref(false)
 </script>
 
 <template>
-  <UContainer class=" ">
+  <UContainer>
     <!-- Header -->
     <div class="md:flex-row flex-col flex gap-4">
       <div class="md:w-3/4">

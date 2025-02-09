@@ -2,7 +2,7 @@
 import type { Collections } from '@nuxt/content'
 
 const route = useRoute()
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const localePath = useLocalePath()
 
 const { data: allProject } = await useAsyncData(`allproject-${route.path}`, async () => {
@@ -14,12 +14,27 @@ const { data: allProject } = await useAsyncData(`allproject-${route.path}`, asyn
 }, {
   watch: [locale],
 })
+
+const seoMeta = computed(() => ({
+  title: 'Project',
+  description: t('website.description'),
+  keywords: 'dinar, permadi, dinar permadi, guru, developer, programmer',
+}))
+
+useSeoMeta(seoMeta.value)
+
+defineOgImageComponent('Page', {
+  title: 'Project',
+  description: t('website.description'),
+})
+
+const isLoaded = ref(false)
 </script>
 
 <template>
   <div>
     <UContainer>
-      <h1>project</h1>
+      <h1>Project</h1>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
           v-for="project in allProject"
@@ -27,8 +42,11 @@ const { data: allProject } = await useAsyncData(`allproject-${route.path}`, asyn
         >
           <NuxtLink :to="localePath(`/project${project.path}`)" class="group flex flex-col focus:outline-none">
             <div class="relative pt-[56.25%] rounded overflow-hidden ring-2 ring-permadi-900 dark:ring-permadi-600">
+              <!-- Gambar dengan Skeleton Loader jika gambar belum ada -->
               <NuxtImg
-                class="size-full absolute top-0 start-0 object-cover group-hover:scale-105 group-focus:scale-105 transition-transform duration-500 ease-in-out rounded "
+                v-show="isLoaded"
+                v-if="project.image "
+                class="size-full absolute top-0 start-0 object-cover group-hover:scale-105 group-focus:scale-105 transition-transform duration-500 ease-in-out rounded"
                 :src="project.image"
                 :alt="project.title"
                 width="600"
@@ -36,9 +54,12 @@ const { data: allProject } = await useAsyncData(`allproject-${route.path}`, asyn
                 format="webp"
                 preload
                 loading="lazy"
-                placeholder="blur"
+                :placeholder="[50, 25, 75, 5]"
+
+                @load="isLoaded = true"
               />
-              <span class="absolute top-0 end-0 rounded-se  rounded-es  text-xs font-medium bg-permadi-700 text-white py-1.5 px-3 dark:bg-permadi-700">
+              <USkeleton v-show="!isLoaded" class="size-full absolute top-0 start-0 object-cover rounded" />
+              <span class="absolute top-0 end-0 rounded-se rounded-es text-xs font-medium bg-permadi-700 text-white py-1.5 px-3 dark:bg-permadi-700">
                 {{ project.meta.category }}
               </span>
             </div>

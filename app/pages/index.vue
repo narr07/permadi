@@ -1,10 +1,9 @@
 <script setup lang="ts">
 // const { t } = useI18n()
 const seoMeta = computed(() => ({
-  // title: t("seo.home.title"),
-  // description: t("seo.home.description"),
   title: 'Home',
   description: 'Home page',
+  keywords: 'dinar, permadi, dinar permadi, guru, developer, programmer',
 }))
 defineOgImageComponent('Page', {
   title: seoMeta.value.title,

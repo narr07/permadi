@@ -50,7 +50,7 @@ const tabitems = [
   <UContainer class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <UCard>
       <!-- <PageEducation /> -->
-      <UTabs class="h-full flex flex-col" :items="tabitems">
+      <UTabs class="h-full flex flex-col" :items="tabitems" color="neutral">
         <template #default="{ item }">
           <div class="flex items-center gap-1 relative truncate">
             <span class="sr-only">

@@ -99,10 +99,18 @@ export default defineNuxtConfig({
     '/': { prerender: true },
     '/blog': { prerender: true },
     '/en/blog': { prerender: true },
-'/blog/**': { isr: true },
+    // '/blog/**': { isr: true },
   },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
+  },
+  ogImage: {
+    fonts: [
+      'Sofia+Sans:700',
+      'Sofia+Sans:400',
+      'Host+Grotesk:700',
+      'Host+Grotesk:400',
+    ],
   },
   future: { compatibilityVersion: 4 },
   compatibilityDate: '2024-07-30',
