@@ -99,12 +99,12 @@ export default defineNuxtConfig({
     },
   },
   routeRules: {
-    '/': { isr: true },
+    '/': { prerender: true },
     '/blog': { isr: true },
     '/blog/**': { isr: true },
     '/project': { isr: true },
     '/project/**': { isr: true },
-    '/en': { isr: true },
+    '/en': { prerender: true },
     '/en/blog': { isr: true },
     '/en/blog/**': { isr: true },
     '/en/project': { isr: true },
@@ -114,12 +114,9 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
   },
   ogImage: {
-    zeroRuntime: true,
     fonts: [
       'Sofia+Sans:700',
       'Sofia+Sans:400',
-      'Host+Grotesk:700',
-      'Host+Grotesk:400',
     ],
   },
   nitro: {
