@@ -72,9 +72,16 @@ useSchemaOrg([
 ])
 
 useSeoMeta({
+  ogTitle: () => pageBlog.value?.title,
+  ogDescription: () => pageBlog.value?.description,
+  ogType: 'article',
+  author: 'Dinar Permadi Yusup',
+  articleAuthor: ['Dinar Permadi Yusup'],
   keywords: () => pageBlog.value?.tags
     ? pageBlog.value.tags.join(', ')
     : 'dinar, permadi, dinar permadi, guru, developer, programmer',
+  articleTag: pageBlog.value?.tags,
+  articlePublishedTime: () => formatDate(pageBlog.value?.date?.toString() || '', 'd-MM-yyyy'),
 })
 
 defineOgImageComponent('Page', {
