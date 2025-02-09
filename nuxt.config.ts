@@ -99,6 +99,7 @@ export default defineNuxtConfig({
     '/': { prerender: true },
     '/blog': { prerender: true },
     '/en/blog': { prerender: true },
+'/blog/**': { isr: true },
   },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },

@@ -76,29 +76,27 @@ useSchemaOrg([
   }),
 ])
 
-useSeoMeta({
+
+const seoMeta = computed(() => ({
   keywords: pageBlog.value?.tags
     ? pageBlog.value.tags.join(', ')
     : 'dinar, permadi, dinar permadi, guru, developer, programmer',
-})
-if (pageBlog.value) {
-  defineOgImageComponent('Page', {
-    title: pageBlog.value.title,
-    description: pageBlog.value.description,
-  })
-}
-else {
-  defineOgImageComponent('Page', {
-    title: 'Blog | Dinar Permadi Yusup ',
-    description: 'Dinar Permadi Yusup is a teacher, programmer, and designer. With this website, I would like to share my knowledge in learning design and programming.',
-  })
-}
-// Format tanggal
+}))
+
+useSeoMeta(seoMeta.value)
+
+const ogImageMeta = computed(() => ({
+  title: pageBlog.value?.title,
+  description: pageBlog.value?.description,
+}))
+
+defineOgImageComponent('Page', ogImageMeta.value)
+
+
 const formatted = computed(() => {
   return formatDate(pageBlog.value?.date?.toString() || '', locale.value)
 })
 
-// Tombol collapsible untuk TOC
 const open = ref(false)
 </script>
 
@@ -113,6 +111,9 @@ const open = ref(false)
               {{ pageBlog.title }}
             </h1>
           </div>
+          <p>
+            {{ pageBlog?.description }}
+          </p>
         </UCard>
 
         <UCard class="mb-2 md:hidden">
