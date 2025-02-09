@@ -43,13 +43,13 @@ const { data: surroundingBlog } = await useAsyncData(`surround-${locale.value}-$
 })
 
 defineOgImageComponent('Page', {
-  title: () => pageBlog.value?.title,
-  description: () => pageBlog.value?.description,
+  title: pageBlog.value?.title,
+  description: pageBlog.value?.description,
 })
 
 useSeoMeta({
-  title: () => pageBlog.value?.title || '',
-  description: () => pageBlog.value?.description,
+  title: pageBlog.value?.title || '',
+  description: pageBlog.value?.description,
   keywords: pageBlog.value?.tags
     ? pageBlog.value.tags.join(', ')
     : 'dinar, permadi, dinar permadi, guru, developer, programmer',
