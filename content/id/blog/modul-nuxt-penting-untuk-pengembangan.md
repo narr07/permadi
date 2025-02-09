@@ -6,9 +6,11 @@ tags:
   - Nuxt
   - Modul Nuxt
 author: Dinar Permadi
-seo:
-  title: Modul Nuxt Favorit untuk Pengembangan dan Performa yang Optimal
-  description: Temukan modul-modul Nuxt untuk meningkatkan fungsionalitas, performa, dan efisiensi pengembangan aplikasi web dengan mudah dan cepat.
+ogImage:
+  component: Page
+  props:
+    title: "Modul Nuxt Favorit untuk Pengembangan dan Performa yang Optimal"
+    description: "Temukan modul-modul Nuxt untuk meningkatkan fungsionalitas, performa, dan efisiensi pengembangan aplikasi web dengan mudah dan cepat."
 ---
 
 Modul Nuxt itu penting buat nambahin fitur di aplikasi Nuxt kamu, biar lebih simpel buat ngerjain tugas-tugas umum dan juga ningkatin performa. Berikut ini, kami kasih gambaran singkat tentang modul-modul yang disebutkan, kegunaannya, dan link ke dokumentasi resminya.

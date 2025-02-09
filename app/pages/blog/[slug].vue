@@ -7,7 +7,7 @@ import { withLeadingSlash } from 'ufo'
 import { computed, onMounted, ref } from 'vue'
 
 const { t } = useI18n()
-const { locales, locale } = useI18n()
+const { locale } = useI18n()
 const localePath = useLocalePath()
 
 // Ambil rute sekali saat inisialisasi
@@ -28,12 +28,7 @@ const { data: pageBlog } = await useAsyncData(`page-${locale.value}-${slug.value
 if (pageBlog.value?.ogImage) {
   defineOgImage(pageBlog.value.ogImage)
 }
-else {
-  defineOgImageComponent('Page', {
-    title: () => pageBlog.value?.title,
-    description: () =>  pageBlog.value?.description,
-  })
-}
+
 // Ambil artikel sebelumnya dan berikutnya
 const { data: surroundingBlog } = await useAsyncData(`surround-${locale.value}-${slug.value}`, async () => {
   if (!pageBlog.value)
@@ -45,6 +40,19 @@ const { data: surroundingBlog } = await useAsyncData(`surround-${locale.value}-$
 }, {
 
   watch: [locale], // Pastikan slug juga dipantau
+})
+
+defineOgImageComponent('Page', {
+  title: () => pageBlog.value?.title,
+  description: () => pageBlog.value?.description,
+})
+
+useSeoMeta({
+  title: () => pageBlog.value?.title || '',
+  description: () => pageBlog.value?.description,
+  keywords: pageBlog.value?.tags
+    ? pageBlog.value.tags.join(', ')
+    : 'dinar, permadi, dinar permadi, guru, developer, programmer',
 })
 
 // Gunakan scrollspy untuk memantau heading
@@ -68,26 +76,14 @@ function scrollToHeading(id: string) {
   }
 }
 
-useSeoMeta({
-  title: () => pageBlog.value?.title || '',
-  description: () => pageBlog.value?.description,
-  keywords: pageBlog.value?.tags
-    ? pageBlog.value.tags.join(', ')
-    : 'dinar, permadi, dinar permadi, guru, developer, programmer',
-})
-// defineOgImageComponent('Page', {
-//   title: () => pageBlog.value?.title,
-//   description: () => pageBlog.value?.description,
-// })
-
 const { countTotalWords } = useReadingTime()
 
 const wordCount = computed(() => countTotalWords(pageBlog.value?.body || {}))
 
-const currentLanguage = computed(() => {
-  const lang = locales.value.find(_locale => _locale.code === locale.value)
-  return lang ? lang.name : 'Unknown' // Jika tidak ditemukan, return 'Unknown'
-})
+// const currentLanguage = computed(() => {
+//   const lang = locales.value.find(_locale => _locale.code === locale.value)
+//   return lang ? lang.name : 'Unknown' // Jika tidak ditemukan, return 'Unknown'
+// })
 
 useSchemaOrg([
   defineArticle({
@@ -100,7 +96,7 @@ useSchemaOrg([
       url: 'https://permadi.dev',
     },
     wordCount: wordCount.value,
-    inLanguage: currentLanguage.value,
+    inLanguage: locale.value,
   }),
 ])
 

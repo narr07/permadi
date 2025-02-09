@@ -6,9 +6,11 @@ tags:
   - Nuxt
   - Modul Nuxt
 author: Dinar Permadi
-seo:
-  title: Essential Nuxt Modules for Optimized Development and Performance
-  description: Explore essential Nuxt modules to boost functionality, performance, and development efficiency for faster, scalable web app creation.
+ogImage:
+  component: Page
+  props:
+    title: "Essential Nuxt Modules for Optimized Development and Performance"
+    description: "Explore essential Nuxt modules to boost functionality, performance, and development efficiency for faster, scalable web app creation."
 ---
 
 Nuxt modules are game-changers for your app, making it easier to handle common tasks and boosting performance. Below, we’ve broken down some key modules, what they do, and where you can find their official docs.
