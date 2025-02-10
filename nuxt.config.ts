@@ -11,8 +11,9 @@ export default defineNuxtConfig({
     '@nuxthub/core',
     'nuxt-security',
     '@stefanobartoletti/nuxt-social-share',
-    'nuxt-visitors',
     // 'nuxt-pageviews',
+    'nuxt-visitors',
+    'nuxt-booster',
   ],
   content: {
     database: {
@@ -98,8 +99,7 @@ export default defineNuxtConfig({
       },
     },
   },
- 
-  
+
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
   },
@@ -107,19 +107,19 @@ export default defineNuxtConfig({
     fonts: [
       {
         name: 'Sblack',
-        weight: 800, 
+        weight: 800,
         path: '/Sblack.ttf',
       },
       {
         name: 'Snomal',
-        weight: 400, 
+        weight: 400,
         path: '/Snormal.ttf',
-      }
+      },
     ],
   },
   nitro: {
     prerender: {
-      routes: ['/'], 
+      routes: ['/'],
       crawlLinks: true,
     },
     experimental: {
@@ -131,6 +131,34 @@ export default defineNuxtConfig({
   eslint: {
     config: {
       standalone: false,
+    },
+  },
+  booster: {
+    detection: {
+      performance: true,
+      browserSupport: true,
+      battery: true,
+    },
+
+    performanceMetrics: {
+      timing: {
+        fcp: 800,
+        dcl: 1200,
+      },
+    },
+
+    optimizeSSR: {
+      cleanPreloads: true,
+      cleanPrefetches: true,
+      inlineStyles: true,
+    },
+
+    /**
+     * IntersectionObserver rootMargin for Compoennts and Assets
+     */
+    lazyOffset: {
+      component: '0%',
+      asset: '0%',
     },
   },
 })

@@ -1,6 +1,6 @@
 export default {
   website: {
-    home: 'Beranda',
+    home: 'Home',
     blog: 'Artikel',
     project: 'Projek',
     tag: 'Semua tag dengan',

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-// const { t } = useI18n()
+const { t } = useI18n()
 const seoMeta = computed(() => ({
   title: 'Home',
   description: 'Home page',
   keywords: 'dinar, permadi, dinar permadi, guru, developer, programmer',
 }))
 defineOgImageComponent('Page', {
-  title: seoMeta.value.title,
-  description: seoMeta.value.description,
+  title: t('website.home'),
+  description: t('website.description'),
 })
 useSeoMeta(seoMeta.value)
 
