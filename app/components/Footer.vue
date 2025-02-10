@@ -11,24 +11,18 @@ const socialIcon = [
   { name: 'Whatsapp', url: socials.whatsapp, icon: 'fa6-brands:whatsapp' },
 ]
 const userVisitor = defineAsyncComponent(() => import('../components/userVisitor.vue'))
+const pageView = defineAsyncComponent(() => import('../components/pageView.vue'))
 </script>
 
 <template>
   <UContainer>
     <UCard class="mt-2 bg-yellow-500 ring-2 dark:ring-permadi-600 ring-permadi-900 dark:bg-permadi-700  rounded">
-      <!-- Flex container untuk menyelaraskan teks dan ikon secara horizontal -->
-      <div class="flex flex-col md:flex-row  justify-between items-center">
-        <!-- Teks yang di kiri -->
-        <div class="flex items-center mb-4 md:mb-0 justify-center text-center">
+      <div class="flex items-center justify-between flex-col md:flex-row">
+        <div class="flex flex-col mb-2 md:mb-0  md:flex-row  items-center gap-2">
           <userVisitor />
-          <div class="ml-2">
-            <p>
-              © 2024, narr07 - All rights reserved.
-            </p>
-          </div>
+          <pageView />
         </div>
-        <!-- Ikon sosial yang terletak di kanan -->
-        <div class="flex flex-row space-x-4">
+        <div class="flex flex-row gap-2">
           <div v-for="(icon, index) in socialIcon" :key="index">
             <UButton
               :href="icon.url"
@@ -43,6 +37,14 @@ const userVisitor = defineAsyncComponent(() => import('../components/userVisitor
               <span class="sr-only">{{ icon.name }}</span>
             </UButton>
           </div>
+        </div>
+      </div>
+
+      <div class="flex items-center mt-4 md:mb-0 justify-center text-center">
+        <div class="ml-2">
+          <p>
+            © 2024, narr07 - All rights reserved.
+          </p>
         </div>
       </div>
     </UCard>

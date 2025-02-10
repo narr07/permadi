@@ -6,9 +6,7 @@ const { visitors } = useVisitors()
   <div>
     <UTooltip text="Visitors" :delay-duration="1">
       <UButton icon="i-lucide-user" color="neutral">
-        <span>
-          {{ visitors }}
-        </span>
+        User Online: {{ visitors }}
       </UButton>
     </UTooltip>
   </div>

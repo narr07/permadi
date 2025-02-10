@@ -66,23 +66,7 @@ function calculateReadingTime(body: any): number {
   return Math.ceil(words / wordsPerMinute)
 }
 
-function useReadingTime() {
-  const { locale } = useI18n()
-
-  const formatReadingTime = (minutes: number): string => {
-    return locale.value === 'id'
-      ? `${minutes} menit baca`
-      : `${minutes} min read`
-  }
-
-  return {
-    calculateReadingTime,
-    formatReadingTime,
-  }
-}
-
 const total = computed(() => totalPosts.value ?? 0)
-const { formatReadingTime } = useReadingTime()
 
 // Computed untuk posts dengan reading time
 const postsWithReadingTime = computed(() =>
@@ -127,16 +111,12 @@ defineOgImageComponent('Page', {
                 <p class="line-clamp-2">
                   {{ article.description }}
                 </p>
-                <p class="text-sm text-gray-500">
-                  {{ formatReadingTime(article.readingTime) }}
-                </p>
+
                 <ul class="mt-4 flex flex-wrap">
                   <li v-for="(tag, n) in article.tags" :key="n" class="mr-2 mb-2">
-                    <NuxtLink :to="localePath(`/blog/tags/${tag}`)">
-                      <UBadge>
-                        {{ tag }}
-                      </UBadge>
-                    </NuxtLink>
+                    <UButton size="xs" color="neutral" rel="noopener" :to="localePath(`/blog/tags/${tag}`)">
+                      {{ tag }}
+                    </UButton>
                   </li>
                 </ul>
               </header>
@@ -150,6 +130,7 @@ defineOgImageComponent('Page', {
       <div class="flex justify-center mt-8">
         <UPagination
           v-model:page="currentPage"
+          active-color="neutral"
           :total="total"
           :items-per-page="itemsPerPage"
           :sibling-count="1"
