@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     'nuxt-security',
     '@stefanobartoletti/nuxt-social-share',
     'nuxt-visitors',
-    'nuxt-pageviews',
+    // 'nuxt-pageviews',
   ],
   content: {
     database: {
@@ -98,19 +98,8 @@ export default defineNuxtConfig({
       },
     },
   },
-  alias: {
-    string_decoder: 'string_decoder/',
-  },
-  pageViews: {
-    credentialsFile: './permadi-449018-0a45a61835b1.json',
-    propertyId: '352504120',
-    endpoint: '/api/views',
-    preload: true, // preload analytics data on startup (default: true)
-    exact: false, // if exact is false, the module will merge urls that are the same when the trailing slash is removed
-    startDate: '2021-01-01', // Get data starting at this date
-    cacheTimeout: 15 * 60, // Cache half-life (in seconds)
-    debug: false, // Debug mode, will show timings and refreshes
-  },
+ 
+  
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
   },

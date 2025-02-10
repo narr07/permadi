@@ -24,13 +24,6 @@ jobs:
           node-version: 22
           cache: 'pnpm'
 
-      # Buat file JSON dari secret
-      - name: Create Google Service Account Key File
-        env:
-          GOOGLE_SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }} 
-        run: |
-          echo "$GOOGLE_SERVICE_ACCOUNT_KEY" > permadi-449018-0a45a61835b1.json
-
       - name: Install dependencies
         run: pnpm install
 
