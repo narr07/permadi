@@ -10,7 +10,6 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxthub/core',
     'nuxt-security',
-    '@nuxtjs/html-validator',
     '@stefanobartoletti/nuxt-social-share',
     'nuxt-visitors',
     'nuxt-pageviews',
@@ -98,6 +97,9 @@ export default defineNuxtConfig({
         id: 'GTM-5XT2J2S5',
       },
     },
+  },
+  alias: {
+    string_decoder: 'string_decoder/',
   },
   pageViews: {
     credentialsFile: './permadi-449018-0a45a61835b1.json',
