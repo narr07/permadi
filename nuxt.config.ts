@@ -105,8 +105,16 @@ export default defineNuxtConfig({
   },
   ogImage: {
     fonts: [
-      'Sofia+Sans:700',
-      'Sofia+Sans:400',
+      {
+        name: 'Sblack',
+        weight: 800, 
+        path: '/Sblack.ttf',
+      },
+      {
+        name: 'Snomal',
+        weight: 400, 
+        path: '/Snormal.ttf',
+      }
     ],
   },
   nitro: {
