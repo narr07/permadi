@@ -121,11 +121,8 @@ export default defineNuxtConfig({
     ],
   },
   nitro: {
-
     prerender: {
-      // Pre-render the homepage
-      routes: ['/'],
-      // Then crawl all the links on the page
+      routes: ['/'], 
       crawlLinks: true,
     },
     experimental: {
