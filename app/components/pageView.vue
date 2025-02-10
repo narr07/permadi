@@ -1,4 +1,4 @@
-<script setup>
+<!-- <script setup>
 const views = await usePageViews()
 </script>
 
@@ -9,5 +9,11 @@ const views = await usePageViews()
         Page views: {{ views }}
       </UButton>
     </UTooltip>
+  </div>
+</template> -->
+
+<template>
+  <div>
+    tes
   </div>
 </template>

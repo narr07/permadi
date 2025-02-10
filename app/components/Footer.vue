@@ -11,7 +11,7 @@ const socialIcon = [
   { name: 'Whatsapp', url: socials.whatsapp, icon: 'fa6-brands:whatsapp' },
 ]
 const userVisitor = defineAsyncComponent(() => import('../components/userVisitor.vue'))
-const pageView = defineAsyncComponent(() => import('../components/pageView.vue'))
+// const pageView = defineAsyncComponent(() => import('../components/pageView.vue'))
 </script>
 
 <template>
@@ -20,7 +20,7 @@ const pageView = defineAsyncComponent(() => import('../components/pageView.vue')
       <div class="flex items-center justify-between flex-col md:flex-row">
         <div class="flex flex-col mb-2 md:mb-0  md:flex-row  items-center gap-2">
           <userVisitor />
-          <pageView />
+          <!-- <pageView /> -->
         </div>
         <div class="flex flex-row gap-2">
           <div v-for="(icon, index) in socialIcon" :key="index">
