@@ -11,7 +11,6 @@ export default defineNuxtConfig({
     '@nuxthub/core',
     'nuxt-security',
     '@stefanobartoletti/nuxt-social-share',
-    // 'nuxt-pageviews',
     'nuxt-visitors',
     'nuxt-booster',
   ],

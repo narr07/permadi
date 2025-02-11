@@ -16,7 +16,7 @@ seo:
     bawa situsmu ke level selanjutnya!
 ---
 
-## Pendahuluan:
+## Pendahuluan
 
 Di zaman digital yang terus berubah, SEO itu jadi hal yang wajib banget buat kamu yang pengen situsnya lebih dikenal. SEO itu kayak strategi jitu buat naikin jumlah pengunjung ke situs kamu lewat pencarian organik. Nah, salah satu alat yang mungkin belum banyak orang tahu, tapi super berguna buat SEO adalah Google Colab.
 

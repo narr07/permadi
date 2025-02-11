@@ -9,6 +9,7 @@ import { computed, onMounted, ref } from 'vue'
 const { t } = useI18n()
 const { locale } = useI18n()
 const localePath = useLocalePath()
+const { calculateReadingTime, formatReadingTime } = useReadingTime()
 
 // Ambil rute sekali saat inisialisasi
 const route = useRoute()
@@ -53,6 +54,18 @@ useSeoMeta({
   keywords: pageBlog.value?.tags
     ? pageBlog.value.tags.join(', ')
     : 'dinar, permadi, dinar permadi, guru, developer, programmer',
+  author: 'Dinar Permadi Yusup',
+  articleAuthor: ['Dinar Permadi Yusup'],
+  articleSection: () => pageBlog.value?.title,
+  articleTag: () => pageBlog.value?.tags,
+  ogType: 'article',
+  twitterTitle: () => pageBlog.value?.title,
+  twitterDescription: () => pageBlog.value?.description,
+  twitterData1: 'Dinar Permadi Yusup',
+  twitterLabel1: 'Author',
+  twitterData2: () => formatReadingTime(calculateReadingTime(pageBlog.value?.body)),
+  twitterLabel2: 'Read Time',
+
 })
 
 // Gunakan scrollspy untuk memantau heading

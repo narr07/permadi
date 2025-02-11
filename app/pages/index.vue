@@ -2,14 +2,22 @@
 const { t } = useI18n()
 const seoMeta = computed(() => ({
   title: 'Home',
-  description: 'Home page',
+  description: t('website.description'),
   keywords: 'dinar, permadi, dinar permadi, guru, developer, programmer',
+
 }))
 defineOgImageComponent('Page', {
   title: t('website.home'),
   description: t('website.description'),
 })
-useSeoMeta(seoMeta.value)
+useSeoMeta({
+  title: seoMeta.value.title,
+  description: seoMeta.value.description,
+  keywords: seoMeta.value.keywords,
+  twitterTitle: seoMeta.value.title,
+  twitterDescription: seoMeta.value.description,
+
+})
 
 const HomeHero = defineAsyncComponent(() => import('../components/Home/Hero.vue'))
 const HomeSkill = defineAsyncComponent(() => import('../components/Home/Skill.vue'))

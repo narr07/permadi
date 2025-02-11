@@ -23,7 +23,7 @@ useSchemaOrg([
     ],
     address: {
       '@type': 'PostalAddress',
-      'streetAddress': 'Desa Indrakila',
+      'streetAddress': 'Desa Teja',
       'addressLocality': 'Majalengka',
       'addressRegion': 'Jawa Barat',
       'postalCode': '45472',
@@ -68,6 +68,7 @@ useHead({
   ],
 })
 useSeoMeta({
+  author: 'Dinar Permadi Yusup',
   fbAppId: '1161711028356295',
 })
 </script>

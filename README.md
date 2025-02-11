@@ -1,58 +1,139 @@
-# Hello Edge
+# Nuxt App
 
-A minimal [Nuxt](https://nuxt.com) starter deployed on the Edge using [NuxtHub](https://hub.nuxt.com).
-
-https://hello.nuxt.dev
-
-<a href="https://hello.nuxt.dev">
-<img src="https://github.com/nuxt-hub/hello-edge/assets/904724/99d1bd54-ef7e-4ac9-83ad-0a290f85edcf" alt="Hello World template for NuxtHub" />
-</a>
+This is a Nuxt.js project configured with various useful modules and features. The app is built using Nuxt 3 and includes functionalities such as internationalization, image optimization, SEO optimization, social media sharing, security headers, and more.
 
 ## Features
 
-- Server-Side rendering on Cloudflare Workers
-- ESLint setup
-- Ready to add a database, blob and KV storage
-- One click deploy on 275+ locations for free
+- **Modules**: Uses a set of Nuxt modules for improving app functionality:
+  - `@nuxt/eslint`: Linting configuration.
+  - `@nuxtjs/i18n`: Internationalization support with multiple languages.
+  - `@nuxt/image`: Image optimization.
+  - `@vueuse/nuxt`: Useful Vue composition API utilities.
+  - `nuxt-security`: Enhances security headers.
+  - `nuxt-booster`: Optimizes app performance.
+  - `@nuxt/content`: Content management.
+  - `@nuxtjs/seo`: SEO optimization.
+  - `@stefanobartoletti/nuxt-social-share`: Social media share buttons.
+  - `nuxt-visitors`: Tracks visitor information.
+  - `@nuxthub/core`: Integrates with Nuxthub for previewing and deployment.
 
-## Setup
+## Installation
 
-Make sure to install the dependencies with [pnpm](https://pnpm.io/installation#using-corepack):
+### Prerequisites
 
-```bash
-pnpm install
-```
+- Node.js
+- pnpm (package manager)
 
-You can update the main text displayed by creating a `.env`:
+### Setup
 
-```bash
-NUXT_PUBLIC_HELLO_TEXT="Hello my world!"
-```
+1. Clone this repository:
 
-## Development Server
+   ```bash
+   git clone https://github.com/narr07/permadi
+   cd permadi
+   ```
 
-Start the development server on `http://localhost:3000`:
+2. Install dependencies:
+
+   ```bash
+   pnpm install
+   ```
+
+3. Configure environment variables (if needed).
+
+### Development
+
+Run the development server:
 
 ```bash
 pnpm dev
 ```
 
-## Production
+### Build
 
-Build the application for production:
+To build the project for production:
 
 ```bash
 pnpm build
 ```
 
-## Deploy
+### Generate Static Files
 
-Deploy the application on the Edge with [NuxtHub](https://hub.nuxt.com) on your Cloudflare account:
+For static site generation:
 
 ```bash
-npx nuxthub deploy
+pnpm generate
 ```
 
-Then checkout your server logs, analaytics and more in the [NuxtHub Admin](https://admin.hub.nuxt.com).
+### Preview
 
-You can also deploy using [Cloudflare Pages CI](https://hub.nuxt.com/docs/getting-started/deploy#cloudflare-pages-ci).
+Preview the site:
+
+```bash
+pnpm preview
+```
+
+### Deploy
+
+To deploy using Nuxthub:
+
+```bash
+pnpm deploy
+```
+
+## Configuration
+
+The project includes several custom configurations in `nuxt.config.js`, including:
+
+- **Content Database**: The project uses `d1` for the content database, bound to `permadi`.
+- **Social Share**: Base URL is set to `https://permadi.dev`.
+- **SEO**: Site metadata like description, URL, and locale are pre-configured.
+- **Security**: Security headers like `ContentSecurityPolicy`, `X-Frame-Options`, and `ReferrerPolicy` are enabled for better app protection.
+
+## Localization
+
+This app is set up with two languages:
+
+- `id`: Indonesian
+- `en`: English
+
+It uses `@nuxtjs/i18n` to detect and manage languages, with support for lazy loading of translation files.
+
+## Performance Optimization
+
+The project uses `nuxt-booster` for detecting performance issues and optimizing SSR. Key configurations include:
+
+- **Lazy Loading**: Components and assets are lazily loaded.
+- **Image Optimization**: Images are optimized with the `ipx` provider and support for `webp` format.
+
+## Scripts
+
+- **Build**: `pnpm build`
+- **Development**: `pnpm dev`
+- **Generate**: `pnpm generate`
+- **Preview**: `pnpm preview`
+- **Deploy**: `pnpm deploy`
+- **Lint**: `pnpm lint`
+- **Fix Linting**: `pnpm lint:fix`
+
+## Deployment
+
+To deploy the app, you can use `Nuxthub` for easy deployment:
+
+```bash
+pnpm deploy
+```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgements
+
+- [Nuxt.js](https://nuxtjs.org/)
+- [Vue.js](https://vuejs.org/)
+- [pnpm](https://pnpm.io/)
+
+---
+
+Feel free to make contributions or raise issues to help improve the project.

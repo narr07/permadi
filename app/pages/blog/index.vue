@@ -61,7 +61,13 @@ const seoMeta = computed(() => ({
   keywords: 'dinar, permadi, dinar permadi, guru, developer, programmer',
 }))
 
-useSeoMeta(seoMeta.value)
+useSeoMeta({
+  title: seoMeta.value.title,
+  description: seoMeta.value.description,
+  keywords: seoMeta.value.keywords,
+  twitterTitle: seoMeta.value.title,
+  twitterDescription: seoMeta.value.description,
+})
 
 defineOgImageComponent('Page', {
   title: t('website.blog'),

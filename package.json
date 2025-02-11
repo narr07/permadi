@@ -35,7 +35,6 @@
     "eslint": "^9.18.0",
     "eslint-plugin-format": "^1.0.1",
     "nuxt-booster": "^3.1.10",
-    "nuxt-pageviews": "^1.0.17",
     "nuxt-security": "^2.1.5",
     "nuxt-visitors": "^1.1.2",
     "typescript": "^5.7.3",
