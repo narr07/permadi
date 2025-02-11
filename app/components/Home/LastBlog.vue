@@ -4,7 +4,7 @@ const { locale } = useI18n()
 const { t } = useI18n()
 
 // Mengambil 3 artikel terbaru dari koleksi blog
-const { data: lastPosts } = await useAsyncData('latest-blogs', () => {
+const { data: lastPosts } = await useAsyncData(`latest-blogs-${locale.value}`, () => {
   return queryCollection(`blog_${locale.value}`)
     .order('date', 'DESC') // Urutkan berdasarkan tanggal terbaru
     .limit(3) // Batasi hasil menjadi 3 artikel

@@ -5,7 +5,7 @@ const route = useRoute()
 const { locale, t } = useI18n()
 const localePath = useLocalePath()
 
-const { data: allProject } = await useAsyncData(`allproject-${route.path}`, async () => {
+const { data: allProject } = await useAsyncData(`allproject-${locale.value}-${route.path}`, async () => {
   const collection = (`project_${locale.value}`) as keyof Collections
   return await queryCollection(collection)
     .select('title', 'description', 'path', 'id', 'image', 'date', 'meta')

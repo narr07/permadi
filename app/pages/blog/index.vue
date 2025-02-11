@@ -26,7 +26,7 @@ watch(currentPage, (newPage) => {
 })
 
 // Ambil semua data blog
-const { data: allBlog } = await useAsyncData(`allBlog-${route.path}`, async () => {
+const { data: allBlog } = await useAsyncData(`allBlog-$${locale.value}-{route.path}`, async () => {
   const collection = (`blog_${locale.value}`) as keyof Collections
   return await queryCollection(collection)
     .select('title', 'description', 'path', 'id', 'date', 'body', 'tags')
