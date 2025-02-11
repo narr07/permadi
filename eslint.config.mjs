@@ -13,4 +13,12 @@ export default withNuxt(
     stylistic: true,
     typescript: true,
   }),
+  {
+    // Remember to specify the file glob here, otherwise it might cause the vue plugin to handle non-vue files
+    files: ['**/*.vue'],
+    rules: {
+      'style/no-tabs': 'off',
+      'style/no-mixed-spaces-and-tabs': 'off',
+    },
+  },
 )

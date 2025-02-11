@@ -65,32 +65,10 @@ useHead({
     { name: 'theme-color', content: '#abd1c6', media: '(prefers-color-scheme: light)' },
     { name: 'msapplication-TileColor', content: '#004643' },
     { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
-
   ],
-  // link: [
-  //   {
-  //     rel: 'icon',
-  //     type: 'image/x-icon',
-  //     href: '/favicon.ico',
-  //   },
-  //   {
-  //     rel: 'apple-touch-icon',
-  //     sizes: '180x180',
-  //     href: '/apple-touch-icon.png',
-  //   },
-  //   {
-  //     rel: 'icon',
-  //     type: 'image/png',
-  //     sizes: '192x192',
-  //     href: '/icon-192x192.png',
-  //   },
-  //   {
-  //     rel: 'icon',
-  //     type: 'image/png',
-  //     sizes: '512x512',
-  //     href: '/icon-512x512.png',
-  //   },
-  // ],
+})
+useSeoMeta({
+  fbAppId: '1161711028356295',
 })
 </script>
 
