@@ -2,6 +2,7 @@
 <script setup lang="ts">
 const { locale } = useI18n()
 const { t } = useI18n()
+const localePath = useLocalePath()
 
 // Mengambil 3 artikel terbaru dari koleksi blog
 const { data: lastPosts } = await useAsyncData(`latest-blogs-${locale.value}`, () => {
@@ -23,7 +24,8 @@ const { data: lastPosts } = await useAsyncData(`latest-blogs-${locale.value}`, (
     </h2>
     <div v-for="post in lastPosts" :key="post.path">
       <NuxtLink
-        :to="`/blog${post?.path}`"
+        :to="localePath(`/blog${post?.path}`)"
+
         :aria-label="`${t('article.read')} ${post.title}`"
         :title="`${t('article.read')} ${post.title}`"
       >

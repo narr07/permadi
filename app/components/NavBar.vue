@@ -18,7 +18,14 @@ const menuItems = [
 
 <template>
   <nav class="fixed w-full z-50 top-1">
-    <UContainer class="max-w-6xl mx-auto">
+    <UContainer
+      :ui="{
+        slot: {
+          base: 'max-w-6xl mx-auto px-2 sm:px-6 lg:px-8 my-4',
+        },
+      }"
+      class="max-w-6xl mx-auto"
+    >
       <div class="bg-yellow-500 ring-2 dark:ring-permadi-600 ring-permadi-900 dark:bg-permadi-700 p-2 rounded">
         <div class="flex items-center justify-between">
           <div class="flex items-center">
@@ -29,7 +36,7 @@ const menuItems = [
             </div>
           </div>
           <div class="flex md:space-x-2">
-            <div class="md:flex hidden items-center space-x-4">
+            <div class="flex items-center space-x-1">
               <div v-for="item in menuItems" :key="item.path">
                 <div>
                   <UButton
@@ -52,18 +59,13 @@ const menuItems = [
               </div>
             </div>
 
-            <div class="flex items-center space-x-2 ml-4">
-              <LangToogle />
-              <DocsSearchButton />
-              <ColorModeButton />
-            </div>
             <div class="md:hidden ml-4">
-              <div>
-                <UPopover v-model:open="open" arrow>
+              <div class="flex items-center space-x-2">
+                <ColorModeButton />
+                <UPopover v-model:open="open">
                   <UButton
                     :icon="open ? 'hugeicons:dashboard-square-03' : 'hugeicons:dashboard-square-01'"
                     color="neutral"
-
                     variant="outline"
                     square
                     aria-label="Menu"
@@ -74,31 +76,20 @@ const menuItems = [
                   <template #content>
                     <UCard>
                       <div class="flex items-start flex-col space-y-2">
-                        <div v-for="item in menuItems" :key="item.path" class="w-full">
-                          <div class="justify-start flex flex-col w-full">
-                            <UButton
-                              color="neutral"
-                              variant="outline"
-                              square
-                              :aria-label="item.name"
-                              :to="localePath(item.path)"
-                              class="hover:ring-2 rounded px-2 ring-permadi-950 font-semibold items-center flex text-base w-full"
-                              :class="{
-                                'text-permadi-900 rounded ring-2 ring-permadi-950 px-2 bg-permadi-200 dark:bg-yellow-500 hover:bg-permadi-300 dark:hover:bg-yellow-700': isActive(item.path),
-                              }"
-                              @click="open = false"
-                            >
-                              <UIcon :name="item.icon" class="size-5" />
-                              <div class="flex-1 text-left">
-                                {{ item.name }}
-                              </div>
-                            </UButton>
-                          </div>
-                        </div>
+                        <DocsSearchButton />
+                        <LangToogle />
                       </div>
                     </UCard>
                   </template>
                 </UPopover>
+              </div>
+            </div>
+
+            <div class="hidden md:block">
+              <div class="flex items-center space-x-2 ml-4">
+                <DocsSearchButton />
+                <LangToogle />
+                <ColorModeButton />
               </div>
             </div>
           </div>

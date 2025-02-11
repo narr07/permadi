@@ -28,11 +28,18 @@ const items = [
       <UCarousel
         v-slot="{ item }"
         loop
+
         :autoplay="{ delay: 2000 }"
         :items="items"
-        class="w-full max-w-xs mx-auto"
+        dots
+        :ui="{
+
+          dots: 'md:-bottom-2  -bottom-1',
+          dot: 'w-6 h-1',
+        }"
+        class="w-full  max-w-sm mx-auto"
       >
-        <div class="w-full flex flex-col justify-center items-center">
+        <div class="w-full flex py-2 flex-col justify-center items-center">
           <Suspense>
             <component :is="item.component" />
             <template #fallback>

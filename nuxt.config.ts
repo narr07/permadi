@@ -56,7 +56,6 @@ export default defineNuxtConfig({
   },
   i18n: {
     baseUrl: 'https://permadi.dev',
-    lazy: true,
     strategy: 'prefix_except_default',
     defaultLocale: 'id',
     langDir: 'lang',
@@ -64,13 +63,14 @@ export default defineNuxtConfig({
       { code: 'id', name: 'Indonesia', language: 'id_ID', dir: 'ltr', file: 'id.ts' },
       { code: 'en', name: 'English', language: 'en-US', dir: 'ltr', file: 'en.ts' },
     ],
+    lazy: true,
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
       redirectOn: 'root', // recommended
       alwaysRedirect: true,
     },
-
+    skipSettingLocaleOnNavigate: true,
   },
   image: {
     provider: 'ipx',

@@ -71,6 +71,12 @@ useSeoMeta({
   author: 'Dinar Permadi Yusup',
   fbAppId: '1161711028356295',
 })
+const { finalizePendingLocaleChange } = useI18n()
+
+// eslint-disable-next-line antfu/top-level-function
+const onBeforeEnter = async () => {
+  await finalizePendingLocaleChange()
+}
 </script>
 
 <template>
@@ -82,7 +88,13 @@ useSeoMeta({
 
       <NavBar />
       <div class="pt-20">
-        <NuxtPage />
+        <NuxtPage
+          :transition="{
+            name: 'page',
+            mode: 'out-in',
+            onBeforeEnter,
+          }"
+        />
       </div>
       <Footer />
     </UApp>
