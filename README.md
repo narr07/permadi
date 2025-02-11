@@ -1,21 +1,19 @@
-# Nuxt App
+# permadi.dev
 
 This is a Nuxt.js project configured with various useful modules and features. The app is built using Nuxt 3 and includes functionalities such as internationalization, image optimization, SEO optimization, social media sharing, security headers, and more.
 
 ## Features
 
 - **Modules**: Uses a set of Nuxt modules for improving app functionality:
-  - `@nuxt/eslint`: Linting configuration.
-  - `@nuxtjs/i18n`: Internationalization support with multiple languages.
-  - `@nuxt/image`: Image optimization.
-  - `@vueuse/nuxt`: Useful Vue composition API utilities.
-  - `nuxt-security`: Enhances security headers.
-  - `nuxt-booster`: Optimizes app performance.
-  - `@nuxt/content`: Content management.
-  - `@nuxtjs/seo`: SEO optimization.
-  - `@stefanobartoletti/nuxt-social-share`: Social media share buttons.
-  - `nuxt-visitors`: Tracks visitor information.
-  - `@nuxthub/core`: Integrates with Nuxthub for previewing and deployment.
+- [`@nuxt/eslint`](https://eslint.nuxt.com/): Linting configuration.
+- [`@nuxtjs/i18n`](https://i18n.nuxtjs.org/): Internationalization support with multiple languages.
+- [`@nuxt/image`](https://image.nuxt.com/): Image optimization.
+- [`@vueuse/nuxt`](https://vueuse.org/): Useful Vue composition API utilities.
+- [`nuxt-security`](https://nuxt-security.vercel.app/): Enhances security headers.
+- [`@nuxt/content`](https://content.nuxt.com/): Content management.
+- [`@nuxtjs/seo`](https://nuxtseo.com/): SEO optimization.
+- [`@stefanobartoletti/nuxt-social-share`](https://nuxt-social-share.stefanobartoletti.it/): Social media share buttons.
+- [`@nuxthub/core`](https://hub.nuxt.com/): Integrates with Nuxthub for previewing and deployment.
 
 ## Installation
 

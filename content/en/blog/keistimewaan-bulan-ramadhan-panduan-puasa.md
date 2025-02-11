@@ -1,81 +1,82 @@
 ---
-title: 'Keistimewaan Bulan Ramadhan: Panduan Lengkap Puasa dan Ibadah'
+title: 'The Specialty of the Month of Ramadan: A Complete Guide to Fasting and Worship'
 date: 2025-02-11
-description: Panduan Ramadhan,Ibadah Ramadhan,Keistimewaan Bulan Ramadhan
+description: Ramadan Guide, Ramadan Worship, Specialty of the Month of Ramadan
 tags:
   - Ramadan
+  - Ramadhan
   - Puasa
 ---
 
-## Yuk, Kenali Lebih Dekat Bulan Ramadhan
+## Let's get to know the month of Ramadan better
 
-- Teman-teman, tahukah kalian? Ramadhan adalah bulan istimewa yang hadir di bulan kesembilan kalender Hijriyah. Di bulan yang penuh berkah ini, Al-Qur'an diturunkan sebagai cahaya petunjuk bagi kita semua. Dengan penuh semangat dan keikhlasan, umat Muslim di seluruh dunia menjalankan ibadah puasa untuk mendekatkan diri kepada Allah SWT dan meningkatkan ketakwaan.
-- Kalender Hijriyah yang kita gunakan mengikuti pergerakan bulan di langit. Menariknya, Ramadhan selalu hadir di bulan kesembilan, dengan waktu yang ditentukan melalui pengamatan hilal atau perhitungan astronomi yang cermat. Karena perbedaan dengan kalender Masehi, setiap tahun kita bisa merasakan keindahan Ramadhan 10-11 hari lebih awal dari tahun sebelumnya.
+- Friends, did you know? Ramadan is a special month that comes in the ninth month of the Hijri calendar. In this blessed month, the Qur'an is revealed as a guiding light for all of us. With great enthusiasm and sincerity, Muslims around the world observe fasting to get closer to Allah SWT and increase piety.
+- The Hijriyah calendar that we use follows the movement of the moon in the sky. Interestingly, Ramadan always comes in the ninth month, with the timing determined through hilal observation or careful astronomical calculations. Because of the difference with the Gregorian calendar, every year we can experience the beauty of Ramadan 10-11 days earlier than the previous year.
 
-## Keistimewaan Bulan Ramadhan
+## Features of the month of Ramadan
 
-### 1. Bulan yang Penuh Berkah
+### 1. A Month Full of Blessings
 
-Alhamdulillah! Di bulan Ramadhan yang indah ini, Allah SWT membuka lebar-lebar pintu surga-Nya dan menutup rapat pintu neraka. Setan-setan pun dibelenggu agar tidak mengganggu ibadah kita. Betapa bahagianya, setiap amalan baik yang kita lakukan, sekecil apapun, akan mendapat balasan yang berlipat ganda dari Allah SWT. Keberkahan ini tidak hanya dalam ibadah lho, tapi juga membawa kedamaian dan ketenangan dalam kehidupan sehari-hari kita.
+Alhamdulillah, in this beautiful month of Ramadan, Allah SWT opens wide the doors of His heaven and tightly closes the doors of hell. The demons are also shackled so as not to interfere with our worship. How happy, every good deed we do, no matter how small, will get a double reward from Allah SWT. This blessing is not only in worship, but also brings peace and tranquility in our daily lives.
 
-### 2. Bulan Turunnya Al-Qur'an
+### 2. The Month of the Descent of the Qur'an
 
-Subhanallah! Ramadhan menjadi sangat istimewa karena pada bulan ini Al-Qur'an pertama kali diturunkan kepada Nabi Muhammad SAW melalui Malaikat Jibril di Gua Hira. Momen bersejarah ini terjadi pada malam Lailatul Qadar yang penuh kemuliaan. Karena itu, yuk kita perbanyak membaca dan mengkaji Al-Qur'an di bulan suci ini sebagai bentuk cinta kita pada kitab suci yang menjadi petunjuk hidup kita.
+Ramadan is very special because in this month the Qur'an was first revealed to the Prophet Muhammad SAW through the Angel Gabriel in the Cave of Hira. This historic moment occurred on the glorious night of Lailatul Qadar. Therefore, let's multiply reading and studying the Qur'an in this holy month as a form of our love for the holy book that guides our lives.
 
-### 3. Bulan Pengampunan yang Indah
+### 3. The Beautiful Month of Forgiveness
 
-Masya Allah! Betapa indahnya bulan Ramadhan yang membawa kesempatan bertaubat dan memohon ampun kepada Allah SWT. Di bulan yang penuh rahmat ini, Allah SWT membuka pintu ampunan seluas-luasnya bagi kita yang dengan tulus memohon maaf atas kesalahan-kesalahan kita. Setiap langkah menuju kebaikan di bulan ini sangat istimewa, dan Allah SWT menjanjikan ampunan yang berlimpah bagi kita yang sungguh-sungguh ingin memperbaiki diri.
+How beautiful is the month of Ramadan that brings opportunities to repent and ask for forgiveness from Allah SWT. In this merciful month, Allah SWT opens the door of forgiveness as wide as possible for those of us who sincerely apologize for our mistakes. Every step towards goodness in this month is very special, and Allah SWT promises abundant forgiveness for those of us who really want to improve ourselves.
 
-## Hal-Hal yang Perlu Kita Jaga di Bulan Ramadhan
+## Things We Need to Keep in the Month of Ramadan
 
-Yuk, sama-sama kita jaga kemuliaan puasa kita dengan menghindari hal-hal berikut:
+Let's keep the glory of our fasting together by avoiding the following things:
 
-- Makan dan minum di siang hari saat berpuasa (kecuali ada uzur syar'i ya)
-- Mengucapkan kata-kata yang tidak baik seperti berbohong, menggunjing, atau menyakiti hati orang lain
-- Hal-hal yang bisa mengurangi pahala puasa kita, seperti:
-  - Menonton atau mendengarkan yang tidak baik
-  - Bertengkar dengan orang lain
-  - Melakukan hal-hal yang dilarang dalam Islam
+- Eating and drinking during the day while fasting (unless there is a shar'i excuse)
+- Saying bad words such as lying, gossiping, or hurting other people's hearts
+- Things that can reduce the reward of our fast, such as:
+  - Watching or listening to bad things
+  - Fighting with other people
+  - Doing things that are prohibited in Islam
 
-## Keutamaan yang Allah Berikan di Bulan Ramadhan
+## The Virtues that Allah Gives in the Month of Ramadan
 
-### 1. Pahala yang Berlimpah
+### 1. Abundant Rewards
 
-Kabar gembira! Setiap ibadah yang kita lakukan di bulan Ramadhan akan mendapat pahala yang berlipat-lipat dari Allah SWT. Hadits riwayat Bukhari menyampaikan kabar bahagia bahwa amalan sunah bisa mendapat pahala 10 hingga 700 kali lipat, dan amalan wajib bisa mendapat pahala sampai 70 kali lipat dibanding hari biasa. Subhanallah, betapa Allah sangat menyayangi kita!
+Good news! Every act of worship that we do in the month of Ramadan will receive multiple rewards from Allah SWT. The hadith narrated by Bukhari conveyed the happy news that voluntary deeds can be rewarded 10 to 700 times, and mandatory deeds can be rewarded up to 70 times compared to ordinary days. Subhanallah, how Allah loves us so much!
 
-### 2. Malam yang Lebih Baik dari Seribu Bulan
+### 2. A Night Better than a Thousand Months
 
-Malam Lailatul Qadar adalah hadiah istimewa dari Allah SWT yang biasanya hadir di malam-malam ganjil sepuluh hari terakhir Ramadhan. Di malam yang penuh berkah ini, para malaikat turun ke bumi membawa rahmat dan keberkahan. Ibadah di malam ini sangat istimewa, dan Allah SWT siap memberikan ampunan yang berlimpah bagi kita yang menghidupkan malam tersebut dengan ibadah.
+The night of Lailatul Qadar is a special gift from Allah SWT that usually comes on the odd nights of the last ten days of Ramadan. On this blessed night, angels descend to earth bringing mercy and blessings. Worship on this night is very special, and Allah SWT is ready to provide abundant forgiveness for those of us who live the night with worship.
 
-### 3. Kesempatan Beribadah yang Melimpah
+### 3. Abundant Opportunities for Worship
 
-Alhamdulillah! Bulan Ramadhan memberi kita banyak kesempatan untuk lebih dekat dengan Allah SWT melalui shalat tarawih berjamaah, tadarus Al-Qur'an, sedekah, dan i'tikaf di masjid. Suasana spiritual yang indah, ditambah dengan puasa di siang hari, membuat hati kita lebih mudah untuk fokus beribadah dan mendekatkan diri kepada Allah SWT.
+Alhamdulillah, the month of Ramadan gives us many opportunities to get closer to Allah SWT through tarawih prayers in congregation, Qur'anic tadarus, charity, and i'tikaf in the mosque. The beautiful spiritual atmosphere, coupled with fasting during the day, makes it easier for our hearts to focus on worship and get closer to Allah SWT.
 
-## Apa yang Membatalkan Puasa Kita?
+## What Cancels Our Fasting?
 
-Mari kita perhatikan hal-hal yang bisa membatalkan puasa:
+Let's look at the things that can break the fast:
 
-- Makan dan minum dengan sengaja di siang hari, baik itu makanan atau minuman apapun yang kita masukkan ke mulut dengan sadar
-- Berhubungan suami istri di siang hari saat puasa. Ini tidak hanya membatalkan puasa tapi juga mengharuskan kita membayar kafarat (puasa 60 hari berturut-turut atau memberi makan 60 orang yang membutuhkan)
-- Muntah dengan sengaja
-- Bagi muslimah, datangnya haid atau nifas (tapi tenang, bisa diganti di hari lain ya)
-- Keluar dari Islam (na'udzubillah min dzalik)
+- Eating and drinking intentionally during the day, be it any food or drink that we consciously put into our mouths
+- Having intercourse during the day while fasting. This not only breaks the fast but also requires us to pay expiation (fasting 60 consecutive days or feeding 60 needy people)
+- Vomiting intentionally
+- For Muslim women, the onset of menstruation or postpartum bleeding (but don't worry, it can be replaced on another day).
+- Leaving Islam (na'udzubillah min dhalik)
 
-## Kapan Puasa Kita Tidak Sah?
+## When is our fast invalid?
 
-Beberapa hal yang membuat puasa kita perlu diganti di hari lain:
+Some things that make our fast need to be replaced on another day:
 
-- Makan atau minum dengan sengaja di siang hari, termasuk menelan air liur yang sudah keluar dari mulut atau sisa makanan di gigi
-- Melakukan hal-hal yang dilarang saat puasa seperti berbohong, menggunjing, atau bertengkar yang bisa mengurangi keberkahan puasa kita
+- Eating or drinking intentionally during the day, including swallowing saliva that has come out of the mouth or food residue in the teeth
+- Doing things that are forbidden during fasting such as lying, backbiting, or arguing that can reduce the blessing of our fasting
 
-## Siapa yang Mendapat Keringanan untuk Tidak Puasa?
+## Who gets relief from fasting?
 
-Allah SWT Maha Pengasih, beberapa kelompok diberi keringanan untuk tidak berpuasa:
+Allah SWT is merciful, some groups are given relief from fasting:
 
-- Anak-anak yang belum baligh. Tapi bagusnya, mereka bisa mulai berlatih puasa sesuai kemampuan
-- Orang tua yang sudah lemah dan tidak mampu berpuasa. Mereka bisa menggantinya dengan memberi makan orang yang membutuhkan (fidyah)
-- Orang yang memiliki penyakit kronis yang bisa berbahaya jika berpuasa (sesuai saran dokter). Mereka juga bisa membayar fidyah sebagai gantinya
+- Children who have not yet reached puberty. But the good thing is, they can start practicing fasting according to their ability
+- Old people who are weak and unable to fast. They can compensate by feeding the needy (fidyah).
+- People who have chronic illnesses that can be dangerous if they fast (according to doctor's advice). They can also pay fidyah instead.
 
-## Kesimpulan
+## Conclusion
 
-Alhamdulillah! Bulan Ramadhan benar-benar merupakan karunia luar biasa dari Allah SWT yang memberi kita kesempatan untuk membersihkan diri, meningkatkan ketakwaan, dan mendekatkan diri kepada-Nya. Dengan menjalankan ibadah puasa dan amalan-amalan lainnya dengan ikhlas, kita bisa meraih keberkahan dan pahala yang berlimpah di bulan yang mulia ini. Mari kita manfaatkan sebaik-baiknya kesempatan emas ini untuk menjadi pribadi yang lebih baik dan lebih dekat dengan Allah SWT.
+Alhamdulillah, the month of Ramadan is truly an amazing gift from Allah SWT that gives us the opportunity to cleanse ourselves, increase our piety, and get closer to Him. By practicing fasting and other deeds with sincerity, we can achieve abundant blessings and rewards in this glorious month. Let's make the most of this golden opportunity to become a better person and get closer to Allah SWT.
