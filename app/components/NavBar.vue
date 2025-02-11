@@ -19,12 +19,8 @@ const menuItems = [
 <template>
   <nav class="fixed w-full z-50 top-1">
     <UContainer
-      :ui="{
-        slot: {
-          base: 'max-w-6xl mx-auto px-2 sm:px-6 lg:px-8 my-4',
-        },
-      }"
-      class="max-w-6xl mx-auto"
+
+      class="max-w-6xl sm:px-4 lg:px-6 px-2 mx-auto"
     >
       <div class="bg-yellow-500 ring-2 dark:ring-permadi-600 ring-permadi-900 dark:bg-permadi-700 p-2 rounded">
         <div class="flex items-center justify-between">

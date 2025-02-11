@@ -15,7 +15,7 @@ const userVisitor = defineAsyncComponent(() => import('../components/userVisitor
 </script>
 
 <template>
-  <UContainer>
+  <UContainer class=" sm:px-4 lg:px-6 px-2">
     <UCard class="mt-2 bg-yellow-500 ring-2 dark:ring-permadi-600 ring-permadi-900 dark:bg-permadi-700  rounded">
       <div class="flex items-center justify-between flex-col md:flex-row">
         <div class="flex flex-col mb-2 md:mb-0  md:flex-row  items-center gap-2">
