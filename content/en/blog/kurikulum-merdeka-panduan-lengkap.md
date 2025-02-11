@@ -58,7 +58,7 @@ Guys, did you know that Indonesia now has a super cool new education system call
 
 The Merdeka Curriculum is actually really cool! This is not just a change of system, but really brings fresh water to the world of Indonesian education. With a more flexible and personalized system, learning becomes less boring and more meaningful.
 
-## Source:
+## Source
 
 1. [Polemics and Wisdom of the Merdeka Curriculum](https://kumparan.com/maulano-barontuko/polemik-dan-hikmah-kurikulum-merdeka-pada-mata-pelajaran-sejarah-1zU4FQLABF2)
 2. [Weaving the Merdeka Learning Spirit](https://willyrenandya.com/weaving-the-merdeka-belajar-spirit-into-elt-classrooms/)

@@ -1,9 +1,10 @@
 ---
 title: 'Keistimewaan Bulan Ramadhan: Panduan Lengkap Puasa dan Ibadah'
 date: 2025-02-11
-description: Panduan Ramadhan,Ibadah Ramadhan,Keistimewaan Bulan Ramadhan
+description: Panduan Ramadhan, Ibadah Ramadhan, Keistimewaan Bulan Ramadhan
 tags:
   - Ramadan
+  - Ramadhan
   - Puasa
 ---
 

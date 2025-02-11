@@ -21,4 +21,5 @@ export default withNuxt(
       'style/no-mixed-spaces-and-tabs': 'off',
     },
   },
+
 )
