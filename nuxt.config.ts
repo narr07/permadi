@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     'nuxt-security',
     '@stefanobartoletti/nuxt-social-share',
     'nuxt-visitors',
+    'nuxt-booster',
   ],
   content: {
     database: {
@@ -25,6 +26,34 @@ export default defineNuxtConfig({
         owner: 'narr07',
         url: 'https://github.com/narr07/permadi/',
       },
+    },
+  },
+  booster: {
+    detection: {
+      performance: true,
+      browserSupport: true,
+      battery: true,
+    },
+
+    performanceMetrics: {
+      timing: {
+        fcp: 800,
+        dcl: 1200,
+      },
+    },
+
+    optimizeSSR: {
+      cleanPreloads: true,
+      cleanPrefetches: true,
+      inlineStyles: true,
+    },
+
+    /**
+     * IntersectionObserver rootMargin for Compoennts and Assets
+     */
+    lazyOffset: {
+      component: '0%',
+      asset: '0%',
     },
   },
   socialShare: {
