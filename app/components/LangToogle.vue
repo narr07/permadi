@@ -17,9 +17,7 @@ const icon = computed(() => items.find(item => item.id === value.value)?.icon)
 </script>
 
 <template>
-  <USelect
-    v-model="value" :ui="{
-      trailingIcon: 'group-data-[state=open]:rotate-180 transition-transform duration-200',
-    }" :icon="icon" class="ring rounded ring-permadi-900 dark:ring-permadi-800" value-key="id" size="md" :items="items"
-  />
+  <SwitchLocalePathLink :locale="value">
+    <UButton class="button" :icon="icon" size="md" @click="value = value === 'en' ? 'id' : 'en'" />
+  </SwitchLocalePathLink>
 </template>

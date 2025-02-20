@@ -18,15 +18,11 @@ useSeoMeta({
   twitterDescription: seoMeta.value.description,
 
 })
-
-const HomeHero = defineAsyncComponent(() => import('../components/Home/Hero.server.vue'))
-const HomeSkill = defineAsyncComponent(() => import('../components/Home/Skill.vue'))
 </script>
 
 <template>
   <div>
     <HomeHero />
-
     <HomeSkill />
   </div>
 </template>
