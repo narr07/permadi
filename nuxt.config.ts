@@ -160,5 +160,9 @@ export default defineNuxtConfig({
       standalone: false,
     },
   },
+  experimental: {
+    componentIslands: true,
+    viewTransition: true,
+  },
 
 })
