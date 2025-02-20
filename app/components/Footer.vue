@@ -2,8 +2,8 @@
 const { socials } = useAppConfig()
 
 const socialIcon = [
-  { name: 'Twitter', url: socials.github, icon: 'fa6-brands:square-x-twitter' },
-  { name: 'Github', url: socials.twitter, icon: 'fa6-brands:square-github' },
+  { name: 'Twitter', url: socials.twitter, icon: 'fa6-brands:square-x-twitter' },
+  { name: 'Github', url: socials.github, icon: 'fa6-brands:square-github' },
   { name: 'Linkedin', url: socials.linkedin, icon: 'fa6-brands:linkedin' },
   { name: 'Facebook', url: socials.facebook, icon: 'fa6-brands:square-facebook' },
   { name: 'Instagram', url: socials.instagram, icon: 'fa6-brands:instagram' },

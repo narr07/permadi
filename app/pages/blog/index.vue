@@ -91,7 +91,7 @@ defineOgImageComponent('Page', {
       </div>
 
       <!-- Daftar Artikel -->
-      <div class="grid grid-cols-1 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div v-for="post in postsWithReadingTime" :key="post.id">
           <div>
             <NuxtLink
@@ -102,7 +102,7 @@ defineOgImageComponent('Page', {
               <UCard class="h-full hover:bg-yellow-500 duration-100 ease-in-out dark:hover:bg-permadi-700">
                 <div class="flex flex-col p-2 h-full justify-between">
                   <!-- Judul Artikel -->
-                  <h2 class="text-g2 md:text-g3 line-clamp-2 text-permadi-700 text-balance font-semibold">
+                  <h2 class="text-g2   line-clamp-2 text-permadi-700 text-balance font-semibold">
                     {{ post.title }}
                   </h2>
 

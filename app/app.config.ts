@@ -8,7 +8,7 @@ export default defineAppConfig({
   },
   socials: {
     github: 'https://github.com/narr07',
-    twitter: 'https://twitter.com/narr_permadi',
+    twitter: 'https://x.com/dinarpermadi07',
     linkedin: 'https://linkedin.com/in/narr07',
     instagram: 'https://instagram.com/narr07',
     facebook: 'https://facebook.com/narr07',

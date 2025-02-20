@@ -51,38 +51,43 @@ const isLoaded = ref(false)
           v-for="project in allProject"
           :key="project.id"
         >
-          <NuxtLink :to="localePath(`/project${project.path}`)" class="group flex flex-col focus:outline-none">
-            <UCard class="relative hover:bg-yellow-500 duration-100 ease-in-out dark:hover:bg-permadi-700">
-              <div class="relative  aspect-video rounded overflow-hidden ring-2 ring-permadi-900 dark:ring-permadi-600">
-                <!-- Gambar dengan Skeleton Loader jika gambar belum ada -->
-                <NuxtImg
-                  v-show="isLoaded"
-                  v-if="project.image "
-                  class="size-full absolute top-0 start-0 object-cover group-hover:scale-105 group-focus:scale-105 transition-transform duration-500 ease-in-out rounded"
-                  :src="project.image"
-                  :alt="project.title"
-                  :title="project.title"
-                  width="1000"
-                  height="600"
-                  format="webp"
-                  preload
-                  loading="lazy"
-                  :placeholder="[50, 25, 75, 5]"
+          <div class="relative">
+            <div class="absolute top-0 z-50 end-0  ">
+              <UButton icon="hugeicons:arrow-up-right-02" target="_blank" :to="project.meta.link as string" color="neutral" square />
+            </div>
+            <NuxtLink :to="localePath(`/project${project.path}`)" class="group flex flex-col focus:outline-none">
+              <UCard class="relative hover:bg-yellow-500 duration-100 ease-in-out dark:hover:bg-permadi-700">
+                <div class="relative  aspect-video rounded overflow-hidden ring-2 ring-permadi-900 dark:ring-permadi-600">
+                  <!-- Gambar dengan Skeleton Loader jika gambar belum ada -->
+                  <NuxtImg
+                    v-show="isLoaded"
+                    v-if="project.image "
+                    class="size-full absolute top-0 start-0 object-cover group-hover:scale-105 group-focus:scale-105 transition-transform duration-500 ease-in-out rounded"
+                    :src="project.image"
+                    :alt="project.title"
+                    :title="project.title"
+                    width="500"
+                    height="300"
+                    format="webp"
+                    preload
+                    loading="lazy"
+                    :placeholder="[50, 25, 75, 5]"
+                    @load="isLoaded = true"
+                  />
+                  <USkeleton v-show="!isLoaded" class="size-full absolute top-0 start-0 object-cover rounded" />
+                </div>
+                <span class="absolute top-0 start-0 rounded-se rounded-es text-xs font-medium bg-permadi-700 text-white py-1.5 px-3 dark:bg-permadi-700">
+                  {{ project.meta.category }}
+                </span>
 
-                  @load="isLoaded = true"
-                />
-                <USkeleton v-show="!isLoaded" class="size-full absolute top-0 start-0 object-cover rounded" />
-              </div>
-              <span class="absolute top-0 end-0 rounded-se rounded-es text-xs font-medium bg-permadi-700 text-white py-1.5 px-3 dark:bg-permadi-700">
-                {{ project.meta.category }}
-              </span>
-              <div class="mt-2">
-                <h2 class="text-xl font-semibold text-yellow-500 group-hover:text-gray-600 dark:text-neutral-300 dark:group-hover:text-white">
-                  {{ project.title }}
-                </h2>
-              </div>
-            </UCard>
-          </NuxtLink>
+                <div class="mt-2">
+                  <h2 class="text-xl font-semibold text-yellow-500 group-hover:text-gray-600 dark:text-neutral-300 dark:group-hover:text-white">
+                    {{ project.title }}
+                  </h2>
+                </div>
+              </UCard>
+            </NuxtLink>
+          </div>
           <USeparator />
         </div>
       </div>

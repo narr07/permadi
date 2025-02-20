@@ -42,12 +42,12 @@ defineOgImageComponent('Page', {
         <div class="relative aspect-video max-w-2xl mx-auto object-cover bg-cover rounded overflow-hidden ring-2 ring-permadi-900 dark:ring-permadi-600">
           <NuxtImg
             v-if="pageProject?.image"
-            loading="eager"
+            loading="lazy"
             :src="pageProject.image"
             :alt="pageProject.title"
             :title="pageProject.title"
-            width="1000"
-            height="600"
+            width="500"
+            height="300"
             format="webp"
             class="rounded bg-cover bg-center h-full w-full"
           />
