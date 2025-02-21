@@ -1,6 +1,6 @@
 ---
 title: Website Platform Guru
-date: 2025-02 -20
+date: 2025-02-20
 image: https://guru.permadi.dev/__og-image__/static/og.png
 description: A comprehensive educational platform to facilitate the teaching and learning process with various teaching materials accessible anytime and anywhere.
 category: Website

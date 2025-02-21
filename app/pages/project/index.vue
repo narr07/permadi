@@ -51,7 +51,7 @@ defineOgImageComponent('Page', {
         >
           <div class="relative">
             <div class="absolute top-0 z-50 end-0  ">
-              <UButton icon="hugeicons:arrow-up-right-02" target="_blank" :to="project.meta.link" color="neutral" square="" />
+              <UButton icon="hugeicons:arrow-up-right-02" target="_blank" :to="project.meta.link as string" color="neutral" square />
             </div>
             <NuxtLink :to="localePath(`/project${project.path}`)" class="group flex flex-col focus:outline-none">
               <UCard class="relative hover:bg-yellow-500 duration-100 ease-in-out dark:hover:bg-permadi-700">
