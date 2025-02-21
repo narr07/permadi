@@ -10,13 +10,9 @@ const designIcon = ref([
   { title: 'Animate', iconName: 'i-logos-adobe-animate', url: 'https://www.adobe.com/products/animate.html' },
   { title: 'Affinity Designer', iconName: 'i-vscode-icons-file-type-affinitydesigner', url: 'https://affinity.serif.com/en-us/designer/' },
   { title: 'Corel Draw', iconName: 'i-file-icons-coreldraw-alt', url: 'https://www.coreldraw.com/' },
-  { title: 'SketchUp', iconName: 'i-skill-icons-sketchup-dark', url: 'https://www.sketchup.com/' },
   { title: 'Blender', iconName: 'i-skill-icons-blender-dark', url: 'https://www.blender.org/' },
   { title: 'Gimp', iconName: 'i-devicon-gimp', url: 'https://www.gimp.org/' },
-  { title: 'InkScape', iconName: 'i-devicon-inkscape', url: 'https://inkscape.org/' },
   { title: 'Sketch', iconName: 'i-devicon-sketch', url: 'https://www.sketch.com/' },
-  { title: 'Canva', iconName: 'i-devicon-canva', url: 'https://www.canva.com/' },
-  { title: 'InCoppy', iconName: 'i-logos-adobe-incopy', url: 'https://www.adobe.com/products/incopy.html' },
   { title: 'InDesign', iconName: 'i-logos-adobe-indesign', url: 'https://www.adobe.com/products/indesign.html' },
 ])
 
@@ -34,10 +30,7 @@ const techIcons = [
   { title: 'PHP', iconName: 'i-skill-icons-php-dark', url: 'https://www.php.net/' },
   { title: 'Laravel', iconName: 'i-skill-icons-laravel-dark', url: 'https://laravel.com/' },
   { title: 'React', iconName: 'i-skill-icons-react-dark', url: 'https://reactjs.org/' },
-  { title: 'Git', iconName: 'i-skill-icons-git', url: 'https://git-scm.com/' },
-  { title: 'Supabase', iconName: 'i-skill-icons-supabase-dark', url: 'https://supabase.com/' },
   { title: 'TypeScript', iconName: 'i-skill-icons-typescript', url: 'https://www.typescriptlang.org/' },
-  { title: 'Vercel', iconName: 'i-skill-icons-vercel-dark', url: 'https://vercel.com/' },
 ]
 const tabitems = [
   { slot: 'user', icon: 'i-ph-user-duotone' },

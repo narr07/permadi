@@ -34,8 +34,6 @@ defineOgImageComponent('Page', {
   title: 'Project',
   description: () => t('website.description'),
 })
-
-const isLoaded = ref(false)
 </script>
 
 <template>
@@ -53,15 +51,14 @@ const isLoaded = ref(false)
         >
           <div class="relative">
             <div class="absolute top-0 z-50 end-0  ">
-              <UButton icon="hugeicons:arrow-up-right-02" target="_blank" :to="project.meta.link as string" color="neutral" square />
+              <UButton icon="hugeicons:arrow-up-right-02" target="_blank" :to="project.meta.link" color="neutral" square="" />
             </div>
             <NuxtLink :to="localePath(`/project${project.path}`)" class="group flex flex-col focus:outline-none">
               <UCard class="relative hover:bg-yellow-500 duration-100 ease-in-out dark:hover:bg-permadi-700">
                 <div class="relative  aspect-video rounded overflow-hidden ring-2 ring-permadi-900 dark:ring-permadi-600">
                   <!-- Gambar dengan Skeleton Loader jika gambar belum ada -->
                   <NuxtImg
-                    v-show="isLoaded"
-                    v-if="project.image "
+
                     class="size-full absolute top-0 start-0 object-cover group-hover:scale-105 group-focus:scale-105 transition-transform duration-500 ease-in-out rounded"
                     :src="project.image"
                     :alt="project.title"
@@ -72,9 +69,7 @@ const isLoaded = ref(false)
                     preload
                     loading="lazy"
                     :placeholder="[50, 25, 75, 5]"
-                    @load="isLoaded = true"
                   />
-                  <USkeleton v-show="!isLoaded" class="size-full absolute top-0 start-0 object-cover rounded" />
                 </div>
                 <span class="absolute top-0 start-0 rounded-se rounded-es text-xs font-medium bg-permadi-700 text-white py-1.5 px-3 dark:bg-permadi-700">
                   {{ project.meta.category }}
