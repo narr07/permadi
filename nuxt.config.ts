@@ -164,5 +164,10 @@ export default defineNuxtConfig({
     componentIslands: true,
     viewTransition: true,
   },
+  routeRules: {
+    '/blog': { isr: 3600 },
+    // Blog post page generated on demand once until next deployment, cached on CDN
+    '/blog/**': { isr: true },
+  },
 
 })
