@@ -1,18 +1,15 @@
 ---
-title: Creating a Website with Nuxt page
+title: Tutorial on Creating a Website with the Nuxt Framework
 date: 2025-02-21T00:00:00.000Z
-description: Learn how to create a school website using Nuxt3 with features such
-  as articles, news, teachers, and activities. Follow the step-by-step tutorial!
+description: Learn how to create a school website using Nuxt3 with features such as articles, news, teachers, and activities. Follow the step-by-step tutorial!
 tags:
-  - Nuxt
-  - Website
-  - Tutorial
+   - Nuxt
+   - Website
+   - Tutorial
 author: Dinar Permadi
 seo:
-  title: Creating a Website with Nuxt page
-  description: Learn how to create a school website using Nuxt3 with features such
-    as articles, news, teachers, and activities. Follow the step-by-step
-    tutorial!
+   title: Tutorial on Creating a Website with the Nuxt Framework
+   description: Learn how to create a school website using Nuxt3 with features such as articles, news, teachers, and activities. Follow the step-by-step tutorial!
 ---
 
 Hello everyone! In this article, we will create a school website with **Nuxt3**. This website will feature several main features such as **Home**, **Articles**, **News**, **Teachers**, and **Activities**. Keep watching the tutorial!
@@ -23,25 +20,22 @@ Hello everyone! In this article, we will create a school website with **Nuxt3**.
    - Hero section
    - A glimpse of the principal
    - Vision, mission, and objectives
-
-- Achievements
-- Latest articles and news
+   - Achievements
+   - Latest articles and news
 
 2. **Articles**:
-
-- List of articles with search and tag features
+   - List of articles with search and tag features
 
 3. **News**:
-
-- List of news with tags
+   - List of news with tags
 
 4. **Teachers**:
-
-- List of teachers at the school
+   - List of teachers at the school
 
 5. **Activities**:
+   - Photos of school activities
 
-- Photos of school activities In addition, like a school website in general, we will also add a **Navbar**, **Footer**, and various other common elements.
+In addition, like a school website in general, we will also add a **Navbar**, **Footer**, and various other common elements.
 
 ## Technology to be used
 
@@ -49,7 +43,11 @@ Hello everyone! In this article, we will create a school website with **Nuxt3**.
 - **Nuxt Content v3** (CMS for managing content)
 - **Nuxt UI v3** (for interface display)
 - **Nuxt Hub / Vercel** (for hosting)
-- And others, flexible according to your needs Requirements for Running Nuxt on a Laptop Before starting, make sure you have the following ready on your laptop:
+- And others, flexible according to your needs
+
+## Requirements for Running Nuxt on a Laptop
+
+Before starting, make sure you have the following ready on your laptop:
 
 1. **Node.js**
    - Version **18.x** or later (we recommend the active LTS version). Can be downloaded here. [Nuxt Installation](https://nuxt.com/docs/getting-started/installation)
@@ -63,6 +61,7 @@ Hello everyone! In this article, we will create a school website with **Nuxt3**.
 I assume that you understand the basics of website programming and are familiar with the basic concepts of HTML, CSS, and JavaScript. Here, I will only provide a general tutorial. Each discussion will be divided into several **Chapters** for easier understanding.
 
 ## List of Tutorial Chapters
+
 - **Chapter 1**: Nuxt 3 Preparation and Installation
 - **Chapter 2**: Creating a Website Structure (Navbar, Footer, etc.)
 - **Chapter 3**: Adding a Home Page and Articles
@@ -70,4 +69,3 @@ I assume that you understand the basics of website programming and are familiar 
 - **Chapter 5**: Adding News and Activity Features
 - **Chapter 6**: Displaying Teacher Data
 - **Chapter 7**: Deploying Website to Vercel
-

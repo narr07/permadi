@@ -1,5 +1,5 @@
 ---
-title: Membuat Website Dengan Nuxt page
+title: Tutorial Membuat Website Dengan Framework Nuxt
 date: 2025-02-21T00:00:00.000Z
 description: Pelajari cara membuat website sekolah menggunakan Nuxt3 dengan
   fitur seperti artikel, berita, guru, dan kegiatan. Ikuti tutorial langkah demi
@@ -63,6 +63,7 @@ Untuk informasi lebih lengkap, kamu bisa cek dokumentasi resmi Nuxt di sini.
 Saya anggap kamu sudah paham dasar-dasar pemrograman website dan sudah familiar dengan konsep-konsep dasar HTML, CSS, dan JavaScript. Di sini, saya hanya akan memberikan tutorial secara garis besar. Setiap pembahasan akan dibagi dalam beberapa **Chapter** untuk memudahkan pemahaman.
 
 ## Daftar Bab Tutorial
+
 - **Chapter 1**: Persiapan dan Instalasi Nuxt 3
 - **Chapter 2**: Membuat Struktur Website (Navbar, Footer, dsb.)
 - **Chapter 3**: Menambahkan Halaman Home dan Artikel
