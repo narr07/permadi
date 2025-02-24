@@ -373,7 +373,7 @@ const items = ref([
       </div>
     </article>
     <div class="md:hidden">
-      <UCard class="mb-2">
+      <UCard class="my-2">
         <div class="flex flex-col space-y-2">
           <UButton v-if="surroundingBlog?.[0]" variant="outline" icon="hugeicons:circle-arrow-left-01" :to="localePath(`/blog${surroundingBlog[0].path}`)">
             <span class="line-clamp-2">
