@@ -7,7 +7,7 @@ const { t } = useI18n()
 const localePath = useLocalePath()
 
 // Mengambil 3 artikel terbaru dari koleksi blog
-const { data: lastPosts } = await useAsyncData(`latest-blogs-${locale.value}`, async () => {
+const { data: lastPosts } = await useLazyAsyncData(`latest-blogs-${locale.value}`, async () => {
   const collection = (`blog_${locale.value}`) as keyof Collections
   return await queryCollection(collection)
     .select('title', 'path', 'date')

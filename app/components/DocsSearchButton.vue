@@ -15,7 +15,7 @@ const router = useRouter()
 
 // Fungsi untuk memperbarui data pencarian
 async function updateSearchData() {
-  const { data } = await useAsyncData(`search-data-${locale.value}`, () =>
+  const { data } = await useLazyAsyncData(`search-data-${locale.value}`, () =>
     queryCollectionSearchSections(`blog_${locale.value}`))
   if (data.value) {
     search.value = data.value

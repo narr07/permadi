@@ -5,7 +5,7 @@ const route = useRoute()
 const { locale, t } = useI18n()
 const localePath = useLocalePath()
 
-const { data: allProject } = await useAsyncData(`allproject-${locale.value}-${route.path}`, async () => {
+const { data: allProject } = await useLazyAsyncData(`allproject-${locale.value}-${route.path}`, async () => {
   const collection = (`project_${locale.value}`) as keyof Collections
   return await queryCollection(collection)
     .select('title', 'description', 'path', 'id', 'image', 'date', 'meta')
@@ -58,11 +58,11 @@ defineOgImageComponent('Page', {
                 <div class="relative  aspect-video rounded overflow-hidden ring-2 ring-permadi-900 dark:ring-permadi-600">
                   <!-- Gambar dengan Skeleton Loader jika gambar belum ada -->
                   <NuxtImg
-
                     class="size-full absolute top-0 start-0 object-cover group-hover:scale-105 group-focus:scale-105 transition-transform duration-500 ease-in-out rounded"
                     :src="project.image"
                     :alt="project.title"
                     :title="project.title"
+                    quality="70"
                     width="500"
                     height="300"
                     format="webp"

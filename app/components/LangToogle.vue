@@ -4,7 +4,7 @@ const { setLocale, locales, locale } = useI18n()
 const items = locales.value.map(_locale => ({
   label: _locale.code,
   id: _locale.code,
-  icon: _locale.code === 'en' ? 'openmoji:flag-england' : 'openmoji:flag-indonesia',
+  icon: _locale.code === 'id' ? 'openmoji:flag-england' : 'openmoji:flag-indonesia',
 }))
 
 const value = ref(locale.value)
