@@ -1,3 +1,4 @@
+// app/components/DocsSearchButton.vue
 <script setup lang="ts">
 // Ambil locale dari i18n
 const { locale } = useI18n()
