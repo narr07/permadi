@@ -132,6 +132,24 @@ const items = ref([
   },
 
 ])
+
+const { copy, copied } = useClipboard()
+const toast = useToast()
+
+// const isButtonVisible = ref(false)
+// const timeout = ref<number | null>(null)
+
+// const { y: scrollY } = useScroll(window)
+
+// watch(scrollY, () => {
+//   if (timeout.value) {
+//     clearTimeout(timeout.value)
+//   }
+//   isButtonVisible.value = true
+//   timeout.value = setTimeout(() => {
+//     isButtonVisible.value = false
+//   }, 5000) as unknown as number
+// })
 </script>
 
 <template>
@@ -165,6 +183,8 @@ const items = ref([
               :styled="true"
               :label="false"
             />
+
+            <UButton color="neutral" :icon="copied ? 'i-ph-check-square-duotone' : 'i-ph-copy-duotone'" square size="lg" @click="copy(`http://permadi.dev${locale === 'id' ? '' : `/${locale}`}${slug}`); toast.add({ title: t('blog.coppy'), icon: 'i-ph-check-fat-duotone', duration: 1500 })" />
           </div>
         </UCard>
         <UCard class="mb-2 md:hidden">
@@ -191,16 +211,18 @@ const items = ref([
 
         <!-- Konten -->
         <UCard>
-          <div class="prose dark:prose-invert prose-sm max-w-6xl mx-auto prose-permadi">
+          <div class="prose dark:prose-invert overflow-y-hidden prose-sm max-w-6xl mx-auto prose-permadi">
             <ContentRenderer v-if="pageBlog" :value="pageBlog" />
           </div>
         </UCard>
-        <div class="fixed z-50 bottom-2 right-2 md:hidden  ">
+        <!-- <div v-show="isButtonVisible" class="fixed z-50 bottom-3 right-2 md:hidden"> -->
+        <div class="fixed z-50 bottom-3 right-2 md:hidden">
           <UCollapsible v-model:open="open" class="flex flex-col items-end">
             <!-- Tambahkan `items-end` untuk memposisikan konten di kanan -->
             <UButton
               rel="noopener"
               square
+              class="button"
               color="neutral"
               variant="subtle"
               :trailing-icon="open ? 'ph:x-square-duotone' : 'ph:list-bullets-duotone'"

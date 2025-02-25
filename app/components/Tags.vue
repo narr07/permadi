@@ -5,18 +5,13 @@ const localePath = useLocalePath()
 const router = useRouter()
 
 // Fetch blog data dengan penanganan kesalahan
-const { data: blogs, error } = await useAsyncData(route.path, () => {
+const { data: blogs } = await useAsyncData(route.path, () => {
   return queryCollection(`blog_${locale.value}`)
     .order('date', 'DESC')
     .all()
 }, {
   watch: [locale],
 })
-
-// Tangani kesalahan jika ada
-if (error.value) {
-  console.error('Error fetching blog data:', error.value)
-}
 
 // Mengambil semua tag dari setiap artikel
 const tags = computed<string[]>(() => {
@@ -48,10 +43,16 @@ function handleTagSelect(tag: string) {
   <div class="flex w-full justify-end items-center">
     <USelectMenu
       v-model="selectedTag"
+      :ui="{
+        trailingIcon: 'group-data-[state=open]:rotate-180 transition-transform duration-200',
+        placeholder: 'truncate text-permadi-800 dark:text-permadi-300',
+      }"
+
+      highlight
       :items="tags"
       selected-icon="ph:hand-swipe-left-duotone"
       :placeholder="t('blog.tags')"
-      class="w-48"
+      class="w-32 "
       @update:model-value="handleTagSelect"
     />
   </div>

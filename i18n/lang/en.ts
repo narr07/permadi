@@ -30,6 +30,7 @@ export default {
     title: 'Collection of Interesting Articles',
     toc: 'Table of Contents',
     tags: 'Select Tag',
+    coppy: 'Link copied to clipboard',
   },
   project: {
     title: 'Collection of Projects Worked On',

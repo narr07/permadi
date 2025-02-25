@@ -30,6 +30,7 @@ export default {
     title: 'Kumpulan Artikel Menarik ',
     toc: 'Daftar Isi',
     tags: 'Pilih Tag',
+    coppy: 'Link berhasil disalin ',
   },
   project: {
     title: 'Kumpulan Projek Yang Dikerjakan',
