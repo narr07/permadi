@@ -29,7 +29,7 @@ export default {
   blog: {
     title: 'Kumpulan Artikel Menarik ',
     toc: 'Daftar Isi',
-    tags: 'Semua Tag',
+    tags: 'Pilih Tag',
   },
   project: {
     title: 'Kumpulan Projek Yang Dikerjakan',

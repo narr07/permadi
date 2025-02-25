@@ -29,7 +29,7 @@ export default {
   blog: {
     title: 'Collection of Interesting Articles',
     toc: 'Table of Contents',
-    tags: 'All Tags',
+    tags: 'Select Tag',
   },
   project: {
     title: 'Collection of Projects Worked On',

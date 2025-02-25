@@ -27,6 +27,18 @@ export default defineNuxtConfig({
         url: 'https://github.com/narr07/permadi/',
       },
     },
+    build: {
+      markdown: {
+        highlight: {
+          theme: {
+            default: 'houston',
+            dark: 'ayu-dark',
+          },
+          langs: ['json', 'js', 'ts', 'html', 'css', 'vue', 'diff', 'shell', 'markdown', 'yaml', 'bash', 'ini', 'c', 'cpp'],
+          preload: ['json', 'js', 'ts', 'html', 'css', 'vue', 'diff', 'shell', 'markdown', 'yaml', 'bash', 'ini', 'c', 'cpp'],
+        },
+      },
+    },
   },
   booster: {
     detection: {

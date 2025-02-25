@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import * as locales from '@nuxt/ui/locale'
+
 useSchemaOrg([
   definePerson({
     name: 'Dinar Permadi Yusup',
@@ -77,11 +79,13 @@ const { finalizePendingLocaleChange } = useI18n()
 const onBeforeEnter = async () => {
   await finalizePendingLocaleChange()
 }
+
+const { locale } = useI18n()
 </script>
 
 <template>
   <div>
-    <UApp>
+    <UApp :locale="locales[locale]">
       <Pattern />
       <NuxtRouteAnnouncer />
       <NuxtLoadingIndicator color="#f9bc60" />
@@ -100,3 +104,15 @@ const onBeforeEnter = async () => {
     </UApp>
   </div>
 </template>
+
+<style>
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.2s;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+</style>
