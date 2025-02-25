@@ -54,13 +54,11 @@ const tabitems = [
         <!-- tombol tab -->
         <!-- konten tab 1 -->
         <template #user>
-          <div>
+          <div class="h-full">
             <UCard class="my-auto flex-grow h-full p-2">
-              <div>
-                <p class=" text-balance">
-                  {{ $t('tabHome.eduText') }}
-                </p>
-              </div>
+              <p class=" text-balance">
+                {{ $t('tabHome.eduText') }}
+              </p>
             </UCard>
           </div>
         </template>

@@ -51,13 +51,16 @@ defineOgImageComponent('Page', {
         >
           <div class="relative">
             <div class="absolute -top-1.5 z-50 -end-1.5  ">
-              <UButton square icon="ph:arrow-square-up-right-duotone" target="_blank" :to="project.meta.link as string" color="neutral" />
+              <UButton square icon="ph:arrow-square-up-right-duotone" target="_blank" :to="project.meta.link as string" color="neutral">
+                <span class="sr-only">{{ project.title }}</span>
+              </UButton>
             </div>
             <NuxtLink :to="localePath(`/project${project.path}`)" class="group flex flex-col focus:outline-none">
               <UCard class="relative hover:bg-yellow-500 duration-100 ease-in-out dark:hover:bg-permadi-700">
                 <div class="relative  aspect-video rounded overflow-hidden ring-2 ring-permadi-900 dark:ring-permadi-600">
                   <!-- Gambar dengan Skeleton Loader jika gambar belum ada -->
                   <NuxtImg
+                    critical
                     class="size-full absolute top-0 start-0 object-cover group-hover:scale-105 group-focus:scale-105 transition-transform duration-500 ease-in-out rounded"
                     :src="project.image"
                     :alt="project.title"

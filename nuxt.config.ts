@@ -156,6 +156,9 @@ export default defineNuxtConfig({
       },
     ],
   },
+  icon: {
+    serverBundle: 'local',
+  },
   nitro: {
     prerender: {
       routes: ['/'],

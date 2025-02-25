@@ -184,7 +184,7 @@ const toast = useToast()
               :label="false"
             />
 
-            <UButton color="neutral" :icon="copied ? 'i-ph-check-square-duotone' : 'i-ph-copy-duotone'" square size="lg" @click="copy(`http://permadi.dev${locale === 'id' ? '' : `/${locale}`}${slug}`); toast.add({ title: t('blog.coppy'), icon: 'i-ph-check-fat-duotone', duration: 1500 })" />
+            <UButton color="neutral" :icon="copied ? 'i-ph-check-square-duotone' : 'i-ph-copy-duotone'" square size="lg" @click="copy(`http://permadi.dev${locale === 'id' ? '' : `/${locale}`}/blog${slug}`); toast.add({ title: t('blog.coppy'), icon: 'i-ph-check-fat-duotone', duration: 1500 })" />
           </div>
         </UCard>
         <UCard class="mb-2 md:hidden">

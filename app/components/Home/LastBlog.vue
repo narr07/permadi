@@ -25,30 +25,34 @@ const { data: lastPosts } = await useLazyAsyncData(`latest-blogs-${locale.value}
 </script>
 
 <template>
-  <div v-if="lastPosts && lastPosts.length > 0">
-    <h2 class="py-4">
-      {{ t('hero.new') }}
-    </h2>
-    <div v-for="post in lastPosts" :key="post.path">
-      <NuxtLink
-        :to="localePath(`/blog${post?.path}`)"
+  <UCard class="h-full">
+    <template #header>
+      <h2 class="py-4">
+        {{ t('hero.new') }}
+      </h2>
+    </template>
+    <div v-if="lastPosts && lastPosts.length > 0">
+      <div v-for="post in lastPosts" :key="post.path">
+        <NuxtLink
+          :to="localePath(`/blog${post?.path}`)"
 
-        :aria-label="`${t('article.read')} ${post.title}`"
-        :title="`${t('article.read')} ${post.title}`"
-      >
-        <UCard
-          :ui="{
-            body: 'p-4 sm:p-2', // atau 'px-2 py-2' untuk padding horizontal dan vertical
-          }"
-          class="h-full mb-2 hover:bg-yellow duration-100 ease-in-out dark:hover:bg-permadi-700"
+          :aria-label="`${t('article.read')} ${post.title}`"
+          :title="`${t('article.read')} ${post.title}`"
         >
-          <div class="flex flex-col h-full justify-between">
-            <h3 class="text-base line-clamp-1 font-body text-balance font-semibold">
-              {{ post?.title }}
-            </h3>
-          </div>
-        </UCard>
-      </NuxtLink>
+          <UCard
+            :ui="{
+              body: 'p-2 sm:p-2', // atau 'px-2 py-2' untuk padding horizontal dan vertical
+            }"
+            class="h-full mb-2 hover:bg-yellow duration-100 ease-in-out dark:hover:bg-permadi-700"
+          >
+            <div class="flex flex-col h-full justify-between">
+              <h3 class="text-base line-clamp-2 md:line-clamp-1 font-body text-balance font-semibold">
+                {{ post?.title }}
+              </h3>
+            </div>
+          </UCard>
+        </NuxtLink>
+      </div>
     </div>
-  </div>
+  </UCard>
 </template>
