@@ -95,7 +95,7 @@
 }
 
 .button {
-  @apply ring-1 ring-permadi-900 dark:bg-permadi-900 dark:text-permadi-50 dark:hover:bg-permadi-800 hover:ring-2 bg-white text-permadi-900 stroke-2 rounded hover:bg-permadi-100 dark:ring-permadi-900;
+  @apply ring-1 ring-permadi-900 dark:bg-permadi-900 dark:text-permadi-50 dark:hover:bg-permadi-800 hover:ring-2 bg-white text-permadi-900 stroke-2 rounded hover:bg-permadi-100 dark:ring-permadi-700;
 }
 
 :root {

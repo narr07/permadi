@@ -1,5 +1,3 @@
-// app/components/Tags.vue
-
 <script setup lang="ts">
 const route = useRoute()
 const { locale, t } = useI18n()
@@ -14,7 +12,9 @@ defineShortcuts({
 
 // Fetch blog data dengan penanganan kesalahan
 const { data: blogs, error } = await useAsyncData(route.path, () => {
-  return queryCollection(`blog_${locale.value}`).all()
+  return queryCollection(`blog_${locale.value}`)
+    .order('date', 'DESC')
+    .all()
 }, {
   watch: [locale],
 })
@@ -24,18 +24,24 @@ if (error.value) {
   console.error('Error fetching blog data:', error.value)
 }
 
-// Mengambil satu tag dari setiap artikel
+// Mengambil dua tag dari setiap artikel
 const tags = computed<string[]>(() => {
   const selectedTags = new Set<string>()
-  blogs.value?.forEach((blog) => {
-    if (blog.tags?.length) {
-      const firstTag = blog.tags[0]
-      // Hanya tambahkan jika firstTag bukan undefined
-      if (firstTag) {
-        selectedTags.add(firstTag)
+  if (blogs.value?.length) {
+    blogs.value.forEach((blog) => {
+      if (blog.tags?.length) {
+        const firstTag = blog.tags[0]
+        const secondTag = blog.tags[1]
+        // Hanya tambahkan jika firstTag dan secondTag bukan undefined
+        if (firstTag) {
+          selectedTags.add(firstTag)
+        }
+        if (secondTag) {
+          selectedTags.add(secondTag)
+        }
       }
-    }
-  })
+    })
+  }
   return Array.from(selectedTags)
 })
 </script>
@@ -51,14 +57,14 @@ const tags = computed<string[]>(() => {
       />
 
       <template #content>
-        <div class="p-2 flex flex-col gap-1 min-w-48">
+        <div class="p-2 flex flex-wrap gap-1  ring-2 rounded w-60">
           <div v-if="tags.length === 0" class="text-gray-500 text-xs">
             {{ t('blog.noTags') }} <!-- Pesan ketika tidak ada tag -->
           </div>
           <div v-for="tag in tags" :key="tag">
             <UButton
               :aria-label="tag"
-              class="w-full text-left"
+              class="text-left button dark:ring-permadi-700"
               size="xs"
               variant="ghost"
               :to="localePath(`/blog/tags/${tag}`)"
