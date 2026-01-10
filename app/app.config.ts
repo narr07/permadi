@@ -1,8 +1,10 @@
 export default defineAppConfig({
   ui: {
     colors: {
-      primary: 'teal',
+      primary: 'permadi',
+      neutral: 'permadi',
     },
+
     icons: {
       arrowDown: 'i-narr-arrow-down',
       arrowLeft: 'i-narr-arrow-left',
@@ -45,7 +47,7 @@ export default defineAppConfig({
       system: 'i-narr-system',
       tip: 'i-narr-tip',
       upload: 'i-narr-upload',
-      warning: 'i-narr-warning'
-    }
+      warning: 'i-narr-warning',
+    },
   },
 })
