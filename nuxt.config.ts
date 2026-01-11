@@ -15,18 +15,18 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
   ],
   site: {
-    url: 'https://permadi.dev',
+    url: 'https://permadi.pages.dev/',
     name: 'Permadi',
     description: 'Permadi is a teacher and a web developer.',
     defaultLocale: 'id',
     locales: {
       id: {
-        url: 'https://permadi.dev',
+        url: 'https://permadi.pages.dev/',
         name: 'Permadi',
         description: 'Permadi adalah seorang guru dan pengembang web.',
       },
       en: {
-        url: 'https://permadi.dev/en',
+        url: 'https://permadi.pages.dev/en',
         name: 'Permadi',
         description: 'Permadi is a teacher and a web developer.',
       },
@@ -45,7 +45,7 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
-    baseUrl: 'https://permadi.dev',
+    baseUrl: 'https://permadi.pages.dev/',
     locales: [
       { code: 'id', name: 'Indonesia', language: 'id-ID' },
       { code: 'en', name: 'English', language: 'en-US' },

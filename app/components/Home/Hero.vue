@@ -29,9 +29,6 @@ const carouselItems = [
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
       <!-- Left Column: Tabs -->
       <div class="space-y-6">
-        <h1 class="text-4xl font-black lg:text-5xl">
-          Dinar Permadi Yusup
-        </h1>
         <UTabs :items="tabItems" class="w-full">
           <template #content="{ item }">
             <UCard class="mt-4">

@@ -4,7 +4,33 @@ export default defineAppConfig({
       primary: 'permadi',
       neutral: 'permadi',
     },
-
+    card: {
+      slots: {
+        root: 'rounded-md ring ring-permadi-900 dark:ring-permadi-700 overflow-hidden',
+        header: 'p-2 sm:px-2',
+        body: 'p-2 sm:p-2',
+        footer: 'p-2 sm:px-2',
+      },
+      variants: {
+        variant: {
+          solid: {
+            root: 'bg-inverted text-inverted',
+          },
+          outline: {
+            root: 'bg-default ring ring-default divide-y divide-default',
+          },
+          soft: {
+            root: 'bg-elevated/50 divide-y divide-default',
+          },
+          subtle: {
+            root: 'bg-elevated/50 ring ring-default divide-y divide-default',
+          },
+        },
+      },
+      defaultVariants: {
+        variant: 'outline',
+      },
+    },
     icons: {
       arrowDown: 'i-narr-arrow-down',
       arrowLeft: 'i-narr-arrow-left',
