@@ -65,14 +65,14 @@ watch(doc, (newDoc) => {
 }, { immediate: true })
 
 useSeoMeta({
-  ogTitle: () => doc.value?.title,
-  ogDescription: () => doc.value?.description,
+  ogTitle: doc.value?.title,
+  ogDescription: doc.value?.description,
   twitterCard: 'summary_large_image',
 })
 
 defineOgImageComponent('NuxtSeo', {
-  title: () => doc.value?.title,
-  description: () => doc.value?.description,
+  title: doc.value?.title,
+  description: doc.value?.description,
   theme: '#99F6E4',
 })
 </script>

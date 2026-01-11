@@ -21,15 +21,16 @@ const { data: page } = await useAsyncData(`page-${slug.value}`, async () => {
 if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
-useSeoMeta({
-  ogTitle: () => page.value?.title,
-  ogDescription: () => page.value?.description,
-  twitterCard: 'summary_large_image',
-})
 
+useSeoMeta({
+  title: page.value.title,
+  description: page.value.description,
+  twitterTitle: page.value.title,
+  twitterDescription: page.value.description,
+})
 defineOgImageComponent('NuxtSeo', {
-  title: () => page.value?.title,
-  description: () => page.value?.description,
+  title: page.value.title,
+  description: page.value.description,
   theme: '#99F6E4',
 })
 </script>

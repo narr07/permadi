@@ -90,4 +90,16 @@ export default defineNuxtConfig({
   studio: {
     route: '/narr',
   },
+  nitro: {
+    prerender: {
+      routes: ['/', '/en'],
+      crawlLinks: true,
+    },
+  },
+  routeRules: {
+    '/': { prerender: true },
+    '/en': { prerender: true },
+    'blog/*': { swr: 60 },
+    '/blog/**': { swr: 60 },
+  },
 })
