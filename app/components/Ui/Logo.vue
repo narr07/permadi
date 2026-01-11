@@ -8,7 +8,7 @@ const sizeValue = computed(() => {
 </script>
 
 <template>
-  <div class="inline-flex items-center" :style="{ lineHeight: 0 }">
+  <div :style="{ lineHeight: 0 }">
     <svg :style="{ width: sizeValue, height: sizeValue }" class="block" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Logo">
       <g clip-path="url(#clip0_1011_38)">
         <path d="M400 800C620.914 800 800 620.914 800 400C800 179.086 620.914 0 400 0C179.086 0 0 179.086 0 400C0 620.914 179.086 800 400 800Z" fill="#99F6E4" />

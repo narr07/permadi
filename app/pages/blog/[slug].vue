@@ -63,6 +63,18 @@ watch(doc, (newDoc) => {
     setI18nParams(newDoc.translations)
   }
 }, { immediate: true })
+
+useSeoMeta({
+  ogTitle: () => doc.value?.title,
+  ogDescription: () => doc.value?.description,
+  twitterCard: 'summary_large_image',
+})
+
+defineOgImageComponent('NuxtSeo', {
+  title: () => doc.value?.title,
+  description: () => doc.value?.description,
+  theme: '#99F6E4',
+})
 </script>
 
 <template>

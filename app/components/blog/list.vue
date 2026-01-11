@@ -1,12 +1,6 @@
 <script setup lang="ts">
 const { locale } = useI18n()
 const localePath = useLocalePath()
-const setI18nParams = useSetI18nParams()
-
-// Reset params untuk halaman list (tidak pakai slug)
-onMounted(() => {
-  setI18nParams({})
-})
 
 const { data: blogs } = await useAsyncData(`blog-list-${locale.value}`, async () => {
   const collection = `blog_${locale.value}` as any
@@ -17,7 +11,6 @@ const { data: blogs } = await useAsyncData(`blog-list-${locale.value}`, async ()
 }, {
   watch: [locale],
 })
-
 function getBlogLink(blog: any) {
   const slug = blog.path.split('/').pop()
   return localePath({ name: 'blog-slug', params: { slug } })
@@ -33,17 +26,14 @@ function getBlogLink(blog: any) {
       <div class="hidden">
         {{ blog.path }}
       </div>
-
       <template #header>
         <h2 class="text-xl font-bold leading-tight">
           {{ blog.title }}
         </h2>
       </template>
-
       <p class="text-gray-500 dark:text-gray-400 line-clamp-2">
         {{ blog.description }}
       </p>
-
       <template #footer>
         <div class="flex items-center justify-between gap-3">
           <UBadge variant="subtle" color="neutral">

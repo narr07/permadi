@@ -1,0 +1,10 @@
+{
+  "home": "Home",
+  "article": "Article",
+  "project": "Project",
+  "gallery": "Gallery",
+  "home_route": "/",
+  "article_route": "/article",
+  "project_route": "/project",
+  "gallery_route": "/gallery"
+}

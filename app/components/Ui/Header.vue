@@ -7,21 +7,16 @@ const { data: navigation } = await useAsyncData(
   () => queryCollectionNavigation(`content_${locale.value}` as any),
   { watch: [locale] },
 )
-
 const route = useRoute()
 const localePath = useLocalePath()
-
 const isMenuOpen = ref(false)
-
 // Menutup popover saat berpindah halaman
 watch(() => route.path, () => {
   isMenuOpen.value = false
 })
-
 const items = computed<NavigationMenuItem[]>(() => {
   if (!navigation.value)
     return []
-
   return navigation.value.map((item: any) => {
     const path = localePath(item.path)
     return {
@@ -34,11 +29,12 @@ const items = computed<NavigationMenuItem[]>(() => {
 </script>
 
 <template>
-  <UHeader :toggle="false" class="top-2 border-2 max-w-6xl mx-auto">
+  <UHeader :toggle="false" class="top-2   rounded-md border-2 border-permadi-900 dark:border-permadi-700 max-w-6xl mx-auto">
     <template #title>
-      <Logo />
+      <NuxtLink :to="localePath('/')">
+        <UiLogo />
+      </NuxtLink>
     </template>
-
     <div class="hidden lg:flex">
       <UNavigationMenu
         class="-mx-2.5  "
@@ -49,7 +45,6 @@ const items = computed<NavigationMenuItem[]>(() => {
         }"
       />
     </div>
-
     <template #right>
       <UColorModeButton />
       <UButton
@@ -58,7 +53,6 @@ const items = computed<NavigationMenuItem[]>(() => {
         :icon="locale === 'id' ? 'i-narr-flag-id' : 'i-narr-flag-en'"
         @click="setLocale(locale === 'id' ? 'en' : 'id')"
       />
-
       <!-- Popover Menu untuk Mobile -->
       <UPopover v-model:open="isMenuOpen" :ui="{ content: 'w-48 p-2' }" class="lg:hidden">
         <UButton
@@ -67,7 +61,6 @@ const items = computed<NavigationMenuItem[]>(() => {
           variant="ghost"
           aria-label="Menu"
         />
-
         <template #content>
           <UNavigationMenu
             :items="items"
@@ -84,19 +77,16 @@ const items = computed<NavigationMenuItem[]>(() => {
 </template>
 
 <style>
-@reference "../../app/assets/css/main.css";
+@reference "../../../app/assets/css/main.css";
 .navactive-link {
   @apply rounded transition-all duration-200;
 }
-
 .navactive-link[data-active] {
   @apply bg-permadi-200 py-1 dark:bg-yellow-500 border text-permadi-900;
 }
-
 .navactive-link:not([data-active]):hover {
   @apply bg-permadi-100 py-1 border dark:border-yellow-500/10 border-permadi-200/10 dark:bg-yellow-500/50;
 }
-
 .navactive-link:not([data-active]) {
   @apply border-transparent;
 }

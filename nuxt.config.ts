@@ -12,7 +12,26 @@ export default defineNuxtConfig({
     'nuxt-studio',
     '@nuxt/content',
     '@nuxtjs/i18n',
+    '@nuxtjs/seo',
   ],
+  site: {
+    url: 'https://permadi.dev',
+    name: 'Permadi',
+    description: 'Permadi is a teacher and a web developer.',
+    defaultLocale: 'id',
+    locales: {
+      id: {
+        url: 'https://permadi.dev',
+        name: 'Permadi',
+        description: 'Permadi adalah seorang guru dan pengembang web.',
+      },
+      en: {
+        url: 'https://permadi.dev/en',
+        name: 'Permadi',
+        description: 'Permadi is a teacher and a web developer.',
+      },
+    },
+  },
   content: {
     build: {
       markdown: {
@@ -26,10 +45,12 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
+    baseUrl: 'https://permadi.dev',
     locales: [
       { code: 'id', name: 'Indonesia', language: 'id-ID' },
       { code: 'en', name: 'English', language: 'en-US' },
     ],
+    vueI18n: '~/i18n.config.ts',
     strategy: 'prefix_except_default',
     defaultLocale: 'id',
     detectBrowserLanguage: {
@@ -54,6 +75,12 @@ export default defineNuxtConfig({
     },
   },
   css: ['~/assets/css/main.css'],
+  fonts: {
+    families: [
+      { name: 'PermadiHeading', weights: ['400', '700', '900'], display: 'swap' },
+      { name: 'PermadiBody', weights: ['300', '350', '400', '700', '900'], display: 'swap' },
+    ],
+  },
   icon: {
     customCollections: [{
       prefix: 'narr',

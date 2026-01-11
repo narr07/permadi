@@ -1,0 +1,11 @@
+{
+  "hero": {
+    "title": "Selamat datang di aplikasi React",
+    "description": "Aplikasi ini dibuat dengan React dan Next.js",
+    "headline": "Perkenalan"
+  },
+  "developer": {
+    "title": "Saya Developer",
+    "skills": "Keahlian Saya"
+  }
+}
