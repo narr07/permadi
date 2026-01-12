@@ -6,13 +6,19 @@ const { data: blogs } = await useAsyncData(`blog-list-${locale.value}`, async ()
   const collection = `blog_${locale.value}` as any
   return await queryCollection(collection)
     .order('date', 'DESC')
-    .select('title', 'path', 'description', 'idBlog')
+    .select('title', 'path', 'description', 'readingTime')
     .all()
 }, {
   watch: [locale],
 })
 function getBlogLink(blog: any) {
-  const slug = blog.path.split('/').pop()
+  const filename = blog.path.split('/').pop() || ''
+  const stem = filename.replace(/\.[^.]+$/, '') // Remove extension
+  const slug = stem
+    .replace(/^\d+\./, '') // Remove number prefix
+    .trim()
+    .replace(/\s+/g, '-')
+    .toLowerCase()
   return localePath({ name: 'blog-slug', params: { slug } })
 }
 </script>
@@ -37,7 +43,7 @@ function getBlogLink(blog: any) {
       <template #footer>
         <div class="flex items-center justify-between gap-3">
           <UBadge variant="subtle" color="neutral">
-            ID: {{ blog.idBlog }}
+            Baca {{ blog.readingTime }} menit
           </UBadge>
           <UButton
             color="neutral"

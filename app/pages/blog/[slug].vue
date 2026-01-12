@@ -5,19 +5,25 @@ const { locale, locales } = useI18n()
 const route = useRoute()
 const setI18nParams = useSetI18nParams()
 
+// Helper function to generate slug from path
+function generateSlug(path: string): string {
+  const filename = path.split('/').pop() || ''
+  const stem = filename.replace(/\.[^.]+$/, '') // Remove extension
+  return stem
+    .replace(/^\d+\./, '') // Remove number prefix
+    .trim()
+    .replace(/\s+/g, '-')
+    .toLowerCase()
+}
+
 const { data: doc } = await useAsyncData(`blog-${locale.value}-${route.params.slug}`, async () => {
   const collectionName = `blog_${locale.value}` as keyof Collections
 
-  // Find matching document by normalizing paths from the collection
+  // Find matching document by comparing slug from path
   const allDocs = await queryCollection(collectionName).select('path', 'idBlog').all()
   const matchingDoc = allDocs.find((d) => {
-    const filename = d.path.split('/').pop() || ''
-    const cleanSlug = filename
-      .replace(/^\d+\./, '')
-      .trim()
-      .replace(/\s+/g, '-')
-      .toLowerCase()
-    return cleanSlug === route.params.slug
+    const slug = generateSlug(d.path)
+    return slug === route.params.slug
   })
 
   if (!matchingDoc)
@@ -35,17 +41,12 @@ const { data: doc } = await useAsyncData(`blog-${locale.value}-${route.params.sl
     const locCollection = `blog_${locCode}` as keyof Collections
 
     const translatedDoc = await queryCollection(locCollection)
-      .where('idBlog', '=', (currentDoc as any).idBlog)
+      .where('idBlog', '=', (matchingDoc as any).idBlog)
       .first()
 
     if (translatedDoc) {
-      const filename = translatedDoc.path.split('/').pop() || ''
-      const cleanSlug = filename
-        .replace(/^\d+\./, '')
-        .trim()
-        .replace(/\s+/g, '-')
-        .toLowerCase()
-      translations[locCode] = { slug: cleanSlug }
+      const slug = generateSlug(translatedDoc.path)
+      translations[locCode] = { slug }
     }
   }
 

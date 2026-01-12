@@ -13,7 +13,6 @@ const slug = computed(() => withLeadingSlash(String(route.params.slug)))
 const { data: page } = await useAsyncData(`page-${slug.value}`, async () => {
   const collection = (`content_${locale.value}`) as keyof Collections
   const content = await queryCollection(collection).path(slug.value).first()
-  // Possibly fallback to default locale if content is missing in non-default locale
   return content
 }, {
   watch: [locale],

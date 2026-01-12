@@ -14,6 +14,11 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxtjs/seo',
   ],
+  image: {
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload',
+    },
+  },
   site: {
     url: 'https://permadi.pages.dev/',
     name: 'Permadi',
@@ -101,5 +106,23 @@ export default defineNuxtConfig({
     '/en': { prerender: true },
     'blog/*': { swr: 60 },
     '/blog/**': { swr: 60 },
+  },
+  hooks: {
+    'content:file:beforeParse': function (ctx) {
+      const { file } = ctx
+
+      if (file.id.endsWith('.md')) {
+        file.body = file.body.replace(/react/gi, 'Vue')
+      }
+    },
+    'content:file:afterParse': function (ctx) {
+      const { file, content } = ctx
+
+      const wordsPerMinute = 180
+      const text = typeof file.body === 'string' ? file.body : ''
+      const wordCount = text.split(/\s+/).length
+
+      content.readingTime = Math.ceil(wordCount / wordsPerMinute)
+    },
   },
 })

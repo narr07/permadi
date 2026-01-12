@@ -1,0 +1,12 @@
+title: Pengembangan Platform E-Commerce
+image: /images/projects/ecommerce-platform.jpg
+category: Aplikasi Web
+tools:
+  - Next.js
+  - React
+  - Tailwind CSS
+  - Node.js
+  - PostgreSQL
+  - Stripe
+date: 2025-12-15
+link: https://github.com/example/ecommerce-platform

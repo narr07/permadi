@@ -1,0 +1,10 @@
+title: Mobile Fitness Tracking App
+image: /images/projects/fitness-app.jpg
+category: Mobile Application
+tools:
+  - React Native
+  - Firebase
+  - TensorFlow Lite
+  - TypeScript
+date: 2025-11-20
+link: https://github.com/example/fitness-app
