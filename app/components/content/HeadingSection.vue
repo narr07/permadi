@@ -1,3 +1,4 @@
+<!-- eslint-disable unused-imports/no-unused-vars -->
 <script setup lang="ts">
 const props = defineProps({
   label: {

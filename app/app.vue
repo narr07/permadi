@@ -1,18 +1,28 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
 
+const { locale, setLocale } = useI18n()
+
 const { data: nav } = await useAsyncData('navigation', () => {
-  return queryCollectionNavigation('content')
+  return queryCollectionNavigation(`content_${locale.value}` as any)
+}, {
+  watch: [locale],
 })
 
 const route = useRoute()
+const localePath = useLocalePath()
 
 const items = computed<NavigationMenuItem[]>(() => {
-  return (nav.value || []).map(item => ({
-    label: item.title,
-    to: item.path,
-    active: item.path === '/' ? route.path === '/' : route.path.startsWith(item.path),
-  }))
+  if (!nav.value)
+    return []
+  return nav.value.map((item: any) => {
+    const path = localePath(item.path)
+    return {
+      label: item.title,
+      to: path,
+      active: (path === '/' || path === '/en') ? route.path === path : route.path.startsWith(path),
+    }
+  })
 })
 </script>
 
@@ -31,6 +41,12 @@ const items = computed<NavigationMenuItem[]>(() => {
 
         <template #right>
           <UColorModeButton />
+          <UButton
+            color="neutral"
+            variant="ghost"
+            :label="locale === 'id' ? 'EN' : 'ID'"
+            @click="setLocale(locale === 'id' ? 'en' : 'id')"
+          />
         </template>
 
         <template #body>
