@@ -9,13 +9,23 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@vueuse/nuxt',
     'nuxt-studio',
+    '@nuxtjs/i18n',
   ],
+
   css: ['~/assets/css/main.css'],
   devtools: { enabled: true },
   compatibilityDate: '2026-01-01',
-  eslint:{
-    config:{
-      standalone:false
-    }
-  }
+  nitro: {
+    prerender: {
+    // Pre-render the homepage
+      routes: ['/'],
+      // Then crawl all the links on the page
+      crawlLinks: true,
+    },
+  },
+  eslint: {
+    config: {
+      standalone: false,
+    },
+  },
 })

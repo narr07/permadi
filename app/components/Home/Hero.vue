@@ -3,18 +3,18 @@ const items = [
   {
     component: resolveComponent('SvgDev'),
     title: 'Full-stack Developer',
-    description: 'Membangun aplikasi web yang skalabel dan performa tinggi.'
+    description: 'Membangun aplikasi web yang skalabel dan performa tinggi.',
   },
   {
     component: resolveComponent('SvgDesigner'),
     title: 'Graphic Designer',
-    description: 'Menciptakan desain visual yang estetis dan komunikatif.'
+    description: 'Menciptakan desain visual yang estetis dan komunikatif.',
   },
   {
     component: resolveComponent('SvgGuru'),
     title: 'Educator',
-    description: 'Berdedikasi dalam pendidikan teknologi yang bermakna.'
-  }
+    description: 'Berdedikasi dalam pendidikan teknologi yang bermakna.',
+  },
 ]
 </script>
 
@@ -23,7 +23,7 @@ const items = [
     <!-- Left Card: Hero Content -->
     <UCard
       class="flex-3"
-      :ui="{ body: 'flex flex-col gap-6 h-full justify-center' }"
+      :ui="{ body: 'flex flex-col gap-6 h-full justify-center ' }"
     >
       <div class="flex">
         <UBadge variant="subtle" size="lg" class="rounded-lg px-3 py-1 uppercase tracking-wider font-bold">
@@ -58,14 +58,13 @@ const items = [
         :items="items"
         :ui="{
           item: 'basis-full',
-          dots: 'absolute inset-x-0 bottom-6 flex flex-wrap items-center justify-center gap-3'
+          dots: 'absolute inset-x-0 bottom-6 flex flex-wrap items-center justify-center gap-3',
         }"
         dots
         class="w-full h-full"
       >
         <div class="flex flex-col items-center justify-center p-8 pb-16 h-full text-center min-h-[400px] relative">
           <!-- Radial Glow Background -->
-
 
           <component :is="item.component" class="w-full max-h-64 drop-shadow-2xl z-10" />
 

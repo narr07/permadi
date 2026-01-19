@@ -11,7 +11,7 @@ const items = computed<NavigationMenuItem[]>(() => {
   return (nav.value || []).map(item => ({
     label: item.title,
     to: item.path,
-    active: item.path === '/' ? route.path === '/' : route.path.startsWith(item.path)
+    active: item.path === '/' ? route.path === '/' : route.path.startsWith(item.path),
   }))
 })
 </script>
