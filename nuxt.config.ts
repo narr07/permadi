@@ -16,7 +16,7 @@ export default defineNuxtConfig({
       { code: 'id', name: 'Indonesia', language: 'id-ID', dir: 'ltr' },
       { code: 'en', name: 'English', language: 'en-US', dir: 'ltr' },
     ],
-    strategy: 'prefix',
+    strategy: 'prefix_except_default',
     defaultLocale: 'id',
   },
   studio: {
