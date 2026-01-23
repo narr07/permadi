@@ -6,6 +6,10 @@
 .cache
 dist
 
+# agent skills
+.agent
+.agents
+.gemini
 # Node dependencies
 node_modules
 

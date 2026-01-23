@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { browserFallbackLocale, defaultLocale, languageCodes, languageNames, locales } from './i18n-constants'
+import { browserFallbackLocale, defaultLocale } from './i18n-constants'
 
 export default defineNuxtConfig({
   modules: [
@@ -18,15 +18,26 @@ export default defineNuxtConfig({
     vueI18n: './i18n.config.ts',
     strategy: 'prefix_except_default',
     defaultLocale,
+    langDir: 'locales',
     detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      alwaysRedirect: false,
       fallbackLocale: browserFallbackLocale,
+      redirectOn: 'root',
     },
-    locales: locales.map(locale => ({
-      code: locale,
-      name: languageNames[locale],
-      language: languageCodes[locale],
-      dir: 'ltr' as const,
-    })),
+    locales: [
+      {
+        code: 'id',
+        name: 'Indonesia',
+        file: 'id.json',
+      },
+      {
+        code: 'en',
+        name: 'English',
+        file: 'en.json',
+      },
+    ],
   },
 
   studio: {
@@ -45,7 +56,7 @@ export default defineNuxtConfig({
 
   nitro: {
     prerender: {
-      routes: ['/'],
+      routes: ['/', '/en'],
       crawlLinks: true,
     },
   },

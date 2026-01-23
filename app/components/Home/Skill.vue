@@ -12,16 +12,16 @@
     />
   </div>
   <div class="flex gap-2 py-10">
-    <div class="h-8 w-8 bg-brand-50"/>
-    <div class="h-8 w-8 bg-brand-100"/>
-    <div class="h-8 w-8 bg-brand-200"/>
-    <div class="h-8 w-8 bg-brand-300"/>
-    <div class="h-8 w-8 bg-brand-400"/>
-    <div class="h-8 w-8 bg-brand-500"/>
-    <div class="h-8 w-8 bg-brand-600"/>
-    <div class="h-8 w-8 bg-brand-700"/>
-    <div class="h-8 w-8 bg-brand-800"/>
-    <div class="h-8 w-8 bg-brand-900"/>
-    <div class="h-8 w-8 bg-brand-950"/>
+    <div class="h-8 w-8 bg-brand-50" />
+    <div class="h-8 w-8 bg-brand-100" />
+    <div class="h-8 w-8 bg-brand-200" />
+    <div class="h-8 w-8 bg-brand-300" />
+    <div class="h-8 w-8 bg-brand-400" />
+    <div class="h-8 w-8 bg-brand-500" />
+    <div class="h-8 w-8 bg-brand-600" />
+    <div class="h-8 w-8 bg-brand-700" />
+    <div class="h-8 w-8 bg-brand-800" />
+    <div class="h-8 w-8 bg-brand-900" />
+    <div class="h-8 w-8 bg-brand-950" />
   </div>
 </template>

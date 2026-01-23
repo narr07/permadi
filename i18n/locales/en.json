@@ -1,0 +1,11 @@
+{
+  "nav": {
+    "home": "Home",
+    "blog": "Blog",
+    "projects": "Projects",
+    "gallery": "Gallery"
+  },
+  "header": {
+    "title": "Architect.sys"
+  }
+}

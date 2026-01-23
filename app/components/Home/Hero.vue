@@ -1,4 +1,7 @@
 <script setup lang="ts">
+const { locale } = useI18n()
+const localePath = useLocalePath()
+
 const items = [
   {
     component: resolveComponent('SvgDev'),
@@ -42,8 +45,8 @@ const items = [
       </p>
 
       <div class="mt-4 flex gap-4">
-        <UButton label="Lihat Proyek" size="xl" trailing-icon="i-lucide-arrow-right" />
-        <UButton label="Hubungi Saya" variant="subtle" size="xl" />
+        <UButton :to="localePath('/project')" :label="locale === 'id' ? 'Lihat Proyek' : 'View Projects'" size="xl" trailing-icon="i-lucide-arrow-right" />
+        <UButton :label="locale === 'id' ? 'Hubungi Saya' : 'Contact Me'" variant="subtle" size="xl" />
       </div>
     </UCard>
 

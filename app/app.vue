@@ -1,30 +1,32 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
 
-const { locale, setLocale } = useI18n()
-
-const { data: nav } = await useAsyncData('navigation', () => {
-  // Use locale-based collection (id_pages or en_pages)
-  return queryCollectionNavigation(`${locale.value}_pages` as any)
-}, {
-  watch: [locale],
-})
-
-const route = useRoute()
+const { locale, setLocale, t } = useI18n()
 const localePath = useLocalePath()
+const route = useRoute()
 
-const items = computed<NavigationMenuItem[]>(() => {
-  if (!nav.value)
-    return []
-  return nav.value.map((item: any) => {
-    const path = localePath(item.path)
-    return {
-      label: item.title,
-      to: path,
-      active: (path === '/' || path === '/en') ? route.path === path : route.path.startsWith(path),
-    }
-  })
-})
+const items = computed<NavigationMenuItem[]>(() => [
+  {
+    label: t('nav.home'),
+    to: localePath('/'),
+    active: route.path === localePath('/')
+  },
+  {
+    label: t('nav.blog'),
+    to: localePath('/blog'),
+    active: route.path.startsWith(localePath('/blog'))
+  },
+  {
+    label: t('nav.projects'),
+    to: localePath('/project'),
+    active: route.path.startsWith(localePath('/project'))
+  },
+  {
+    label: t('nav.gallery'),
+    to: localePath('/gallery'),
+    active: route.path.startsWith(localePath('/gallery'))
+  }
+])
 </script>
 
 <template>
@@ -34,7 +36,7 @@ const items = computed<NavigationMenuItem[]>(() => {
         <template #title>
           <div class="flex items-center gap-2 text-brand-500 font-bold uppercase ">
             <UIcon name="i-lucide-compass" class="size-5" />
-            <span>Architect.sys</span>
+            <span>{{ t('header.title') }}</span>
           </div>
         </template>
 

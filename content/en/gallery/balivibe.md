@@ -1,0 +1,7 @@
+---
+title: Sunset in Canggu
+imageUrl: https://images.unsplash.com/photo-1518548419970-58e3b4079ab2
+category: Travel
+aspectRatio: 16/9
+navigation: false
+---
