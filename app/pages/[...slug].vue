@@ -7,13 +7,13 @@ const { locale } = useI18n()
 const slug = computed(() => withLeadingSlash(String(route.params.slug)))
 
 const { data: page } = await useAsyncData(`page-${slug.value}`, async () => {
-  // Build collection name based on current locale
-  const collection = (`content_${locale.value}`) as keyof Collections
+  // Build collection name based on current locale (id_pages or en_pages)
+  const collection = `${locale.value}_pages` as keyof Collections
   const content = await queryCollection(collection).path(slug.value).first()
 
-  // Optional: fallback to default locale if content is missing
+  // Fallback to default locale (id) if content is missing
   if (!content && locale.value !== 'id') {
-    return await queryCollection('content_id').path(slug.value).first()
+    return await queryCollection(`id_pages` as keyof Collections).path(slug.value).first()
   }
 
   return content

@@ -4,7 +4,8 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 const { locale, setLocale } = useI18n()
 
 const { data: nav } = await useAsyncData('navigation', () => {
-  return queryCollectionNavigation(`content_${locale.value}` as any)
+  // Use locale-based collection (id_pages or en_pages)
+  return queryCollectionNavigation(`${locale.value}_pages` as any)
 }, {
   watch: [locale],
 })

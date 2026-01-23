@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { browserFallbackLocale, defaultLocale, languageCodes, languageNames, locales } from './i18n-constants'
+
 export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
@@ -11,14 +13,22 @@ export default defineNuxtConfig({
     'nuxt-studio',
     '@nuxtjs/i18n',
   ],
+
   i18n: {
-    locales: [
-      { code: 'id', name: 'Indonesia', language: 'id-ID', dir: 'ltr' },
-      { code: 'en', name: 'English', language: 'en-US', dir: 'ltr' },
-    ],
+    vueI18n: './i18n.config.ts',
     strategy: 'prefix_except_default',
-    defaultLocale: 'id',
+    defaultLocale,
+    detectBrowserLanguage: {
+      fallbackLocale: browserFallbackLocale,
+    },
+    locales: locales.map(locale => ({
+      code: locale,
+      name: languageNames[locale],
+      language: languageCodes[locale],
+      dir: 'ltr' as const,
+    })),
   },
+
   studio: {
     route: '/narr',
     repository: {
@@ -28,17 +38,22 @@ export default defineNuxtConfig({
       branch: 'master',
     },
   },
+
   css: ['~/assets/css/main.css'],
   devtools: { enabled: true },
   compatibilityDate: '2026-01-01',
+
   nitro: {
     prerender: {
-    // Pre-render the homepage
       routes: ['/'],
-      // Then crawl all the links on the page
       crawlLinks: true,
     },
   },
+
+  experimental: {
+    scanPageMeta: true, // Required for defineI18nRoute
+  },
+
   eslint: {
     config: {
       standalone: false,
