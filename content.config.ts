@@ -11,7 +11,7 @@ const blogSchema = pageSchema.extend({
   date: z.string().optional(),
   image: z.string().optional(),
   tags: z.array(z.string()).optional(),
-  category: z.string().optional(),
+  category: z.enum(['pendidikan', 'programmer', 'desainer']).optional(),
 })
 
 const projectSchema = pageSchema.extend({
@@ -24,7 +24,7 @@ const projectSchema = pageSchema.extend({
 const gallerySchema = z.object({
   title: z.string(),
   imageUrl: z.string(),
-  category: z.string().optional(),
+  category: z.enum(['pendidikan', 'programmer', 'desainer']).optional(),
   aspectRatio: z.string().default('1/1'),
 })
 

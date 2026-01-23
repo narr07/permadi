@@ -6,3 +6,6 @@ description: Galeri foto dan karya visual saya.
 # Galeri
 
 Selamat datang di galeri visual saya.
+
+:gallery-list
+

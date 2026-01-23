@@ -6,3 +6,6 @@ description: My photo gallery and visual works.
 # Gallery
 
 Welcome to my visual gallery.
+
+:gallery-list
+

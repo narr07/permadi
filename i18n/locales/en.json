@@ -7,5 +7,10 @@
   },
   "header": {
     "title": "Architect.sys"
+  },
+  "categories": {
+    "pendidikan": "Education",
+    "programmer": "Programmer",
+    "desainer": "Designer"
   }
 }

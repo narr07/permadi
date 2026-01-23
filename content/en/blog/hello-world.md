@@ -6,7 +6,7 @@ image: https://images.unsplash.com/photo-1498050108023-c5249f4df085
 tags:
   - Nuxt
   - Tech
-category: Personal
+category: pendidikan
 navigation: false
 ---
 
