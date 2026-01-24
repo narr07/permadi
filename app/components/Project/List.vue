@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Motion } from 'motion-v'
+
 const { locale, t } = useI18n()
 
 const { data: projects } = await useAsyncData(`project-list-${locale.value}`, async () => {
@@ -89,11 +91,16 @@ function closeModal() {
 
     <!-- Projects Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <UCard
-        v-for="project in paginatedProjects"
+      <Motion
+        v-for="(project, index) in paginatedProjects"
         :key="project.stem"
-        class="cursor-pointer hover:shadow-lg transition-shadow"
-        @click="openProjectModal(project)"
+        :initial="{ opacity: 0, transform: 'translateY(20px)' }"
+        :in-view="{ opacity: 1, transform: 'translateY(0)' }"
+        :transition="{ delay: 0.1 * index, duration: 0.4 }"
+      >
+        <UCard
+          class="cursor-pointer hover:shadow-lg transition-shadow h-full"
+          @click="openProjectModal(project)"
       >
         <template #header>
           <div class="relative w-full h-48 -m-4 mb-4 overflow-hidden">
@@ -137,6 +144,7 @@ function closeModal() {
           </div>
         </template>
       </UCard>
+      </Motion>
     </div>
 
     <!-- Empty State -->

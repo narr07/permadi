@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'nuxt-studio',
     '@nuxtjs/i18n',
+    'motion-v/nuxt',
   ],
 
   i18n: {

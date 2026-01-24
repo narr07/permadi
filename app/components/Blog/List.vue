@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Motion } from 'motion-v'
+
 const { locale, t } = useI18n()
 const localePath = useLocalePath()
 
@@ -40,51 +42,57 @@ function getBlogUrl(post: any): string {
 <template>
   <div class="blog-list-container my-12">
     <div v-if="posts && posts.length > 0" class="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      <NuxtLink
-        v-for="post in posts"
+      <Motion
+        v-for="(post, index) in posts"
         :key="post.path"
-        :to="getBlogUrl(post)"
-        class="group flex flex-col h-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-primary-500/50"
+        :initial="{ opacity: 0, transform: 'translateY(20px)' }"
+        :in-view="{ opacity: 1, transform: 'translateY(0)' }"
+        :transition="{ delay: 0.1 * index, duration: 0.4 }"
       >
-        <div class="relative aspect-video overflow-hidden">
-          <NuxtImg
-            v-if="post.image"
-            :src="post.image"
-            :alt="post.title"
-            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            width="400"
-            height="225"
-          />
-          <div v-else class="w-full h-full bg-linear-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 flex items-center justify-center">
-            <UIcon name="i-heroicons-document-text" class="w-12 h-12 text-gray-400" />
+        <NuxtLink
+          :to="getBlogUrl(post)"
+          class="group flex flex-col h-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-primary-500/50"
+        >
+          <div class="relative aspect-video overflow-hidden">
+            <NuxtImg
+              v-if="post.image"
+              :src="post.image"
+              :alt="post.title"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              width="400"
+              height="225"
+            />
+            <div v-else class="w-full h-full bg-linear-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 flex items-center justify-center">
+              <UIcon name="i-heroicons-document-text" class="w-12 h-12 text-gray-400" />
+            </div>
+
+            <div v-if="post.category" class="absolute top-4 left-4">
+              <UBadge color="primary" variant="solid" size="sm" class="font-medium">
+                {{ $t(`categories.${post.category}`) }}
+              </UBadge>
+            </div>
           </div>
 
-          <div v-if="post.category" class="absolute top-4 left-4">
-            <UBadge color="primary" variant="solid" size="sm" class="font-medium">
-              {{ $t(`categories.${post.category}`) }}
-            </UBadge>
+          <div class="p-6 flex flex-col grow">
+            <div class="flex items-center gap-2 text-xs text-gray-500 mb-3">
+              <time v-if="post.date" :datetime="post.date">{{ post.date }}</time>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 leading-tight group-hover:text-primary-500 transition-colors">
+              {{ post.title }}
+            </h3>
+
+            <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 mb-6 grow">
+              {{ post.description }}
+            </p>
+
+            <div class="flex items-center text-sm font-semibold text-primary-600 dark:text-primary-400 group-hover:gap-2 transition-all">
+              <span>{{ t('read_more') || 'Baca Selengkapnya' }}</span>
+              <UIcon name="i-heroicons-arrow-right" class="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </div>
           </div>
-        </div>
-
-        <div class="p-6 flex flex-col grow">
-          <div class="flex items-center gap-2 text-xs text-gray-500 mb-3">
-            <time v-if="post.date" :datetime="post.date">{{ post.date }}</time>
-          </div>
-
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 leading-tight group-hover:text-primary-500 transition-colors">
-            {{ post.title }}
-          </h3>
-
-          <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 mb-6 grow">
-            {{ post.description }}
-          </p>
-
-          <div class="flex items-center text-sm font-semibold text-primary-600 dark:text-primary-400 group-hover:gap-2 transition-all">
-            <span>{{ t('read_more') || 'Baca Selengkapnya' }}</span>
-            <UIcon name="i-heroicons-arrow-right" class="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </div>
-        </div>
-      </NuxtLink>
+        </NuxtLink>
+      </Motion>
     </div>
 
     <div v-else class="text-center py-20 bg-gray-50 dark:bg-gray-800/50 rounded-3xl border-2 border-dashed border-gray-200 dark:border-gray-800">

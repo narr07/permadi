@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Motion } from 'motion-v'
+
 const { locale, t } = useI18n()
 
 const { data: galleries } = await useAsyncData(`gallery-list-${locale.value}`, async () => {
@@ -88,11 +90,16 @@ function closeModal() {
 
     <!-- Gallery Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-      <div
-        v-for="gallery in paginatedGalleries"
+      <Motion
+        v-for="(gallery, index) in paginatedGalleries"
         :key="gallery.stem"
-        class="group relative cursor-pointer overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800 hover:border-primary-500 transition-all hover:shadow-lg"
-        @click="openGalleryModal(gallery)"
+        :initial="{ opacity: 0, transform: 'scale(0.95)' }"
+        :in-view="{ opacity: 1, transform: 'scale(1)' }"
+        :transition="{ delay: 0.05 * index, duration: 0.4 }"
+      >
+        <div
+          class="group relative cursor-pointer overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800 hover:border-primary-500 transition-all hover:shadow-lg h-full"
+          @click="openGalleryModal(gallery)"
       >
         <!-- Image -->
         <div class="relative overflow-hidden bg-gray-100 dark:bg-gray-800" :style="{ aspectRatio: gallery.aspectRatio || '1/1' }">
@@ -115,6 +122,7 @@ function closeModal() {
           </div>
         </div>
       </div>
+      </Motion>
     </div>
 
     <!-- Empty State -->
