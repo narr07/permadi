@@ -10,19 +10,25 @@ const route = useRoute()
 const searchTerm = ref('')
 
 // Get blog navigation based on current locale
-const { data: navigation } = await useAsyncData(
-  `navigation-${locale.value}`,
+const { data: navigation, refresh: refreshNavigation } = await useAsyncData(
+  'blog-navigation',
   () => queryCollectionNavigation(`${locale.value}_blog`),
-  { watch: [locale] },
 )
 
 // Get blog files for search based on current locale (lazy loaded on client)
-// Note: useLazyAsyncData WITHOUT await as per official docs
-const { data: files } = useLazyAsyncData(
-  `search-blog-${locale.value}`,
+const { data: files, refresh: refreshFiles } = useLazyAsyncData(
+  'blog-search-files',
   () => queryCollectionSearchSections(`${locale.value}_blog`),
-  { server: false, watch: [locale] },
+  { server: false },
 )
+
+// Refresh data when locale changes
+watch(locale, async () => {
+  await Promise.all([
+    refreshNavigation(),
+    refreshFiles(),
+  ])
+})
 
 const items = computed<NavigationMenuItem[]>(() => [
   {
