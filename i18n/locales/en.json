@@ -12,5 +12,21 @@
     "pendidikan": "Education",
     "programmer": "Programmer",
     "desainer": "Designer"
-  }
+  },
+  "back": "Back",
+  "published": "Published",
+  "back_to_articles": "Back to Articles",
+  "read_more": "Read More",
+  "no_articles": "No articles published yet.",
+  "filter_by_tech": "Filter by technology...",
+  "clear": "Clear",
+  "projects_found": "project(s) found",
+  "no_projects_found": "No projects found.",
+  "tech_used": "Technologies",
+  "featured": "Featured",
+  "view_project": "View Project",
+  "close": "Close",
+  "filter_by_category": "Filter by category...",
+  "images_found": "image(s) found",
+  "no_images_found": "No images found."
 }

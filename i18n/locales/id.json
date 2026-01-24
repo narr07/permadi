@@ -12,5 +12,21 @@
     "pendidikan": "Pendidikan",
     "programmer": "Programmer",
     "desainer": "Desainer"
-  }
+  },
+  "back": "Kembali",
+  "published": "Dipublikasikan",
+  "back_to_articles": "Kembali ke Artikel",
+  "read_more": "Baca Selengkapnya",
+  "no_articles": "Belum ada artikel yang dipublikasikan.",
+  "filter_by_tech": "Filter berdasarkan teknologi...",
+  "clear": "Hapus",
+  "projects_found": "projek ditemukan",
+  "no_projects_found": "Tidak ada projek yang ditemukan.",
+  "tech_used": "Teknologi",
+  "featured": "Unggulan",
+  "view_project": "Lihat Projek",
+  "close": "Tutup",
+  "filter_by_category": "Filter berdasarkan kategori...",
+  "images_found": "gambar ditemukan",
+  "no_images_found": "Tidak ada gambar yang ditemukan."
 }

@@ -15,6 +15,7 @@ export default defineNuxtConfig({
   ],
 
   i18n: {
+    baseUrl: 'https://permadi.pages.dev',
     vueI18n: './i18n.config.ts',
     strategy: 'prefix_except_default',
     defaultLocale,
@@ -74,6 +75,7 @@ export default defineNuxtConfig({
     prerender: {
       routes: ['/', '/en'],
       crawlLinks: true,
+      failOnError: false,
     },
   },
 
