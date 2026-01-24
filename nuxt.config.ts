@@ -92,11 +92,17 @@ export default defineNuxtConfig({
 
   hooks: {
     'content:file:afterParse': (ctx: any) => {
+      // Get file ID (e.g., "id_pages/id/blog/2.Title.md")
+      const fileId = ctx.file?.id || ''
+
       // Only apply to blog posts
-      if (ctx.content?.path?.includes('/blog/')) {
-        // Extract idBlog from filename prefix (e.g., "1. Title.md" -> 1)
-        const filename = ctx.content.stem || ''
-        const match = filename.match(/^(\d+)\.\s*/)
+      if (fileId.includes('/blog/') || fileId.includes('blog/')) {
+        // Extract filename from file ID
+        const parts = fileId.split('/')
+        const filename = parts[parts.length - 1] || ''
+
+        // Extract idBlog from filename prefix (e.g., "1.Title.md" -> 1)
+        const match = filename.match(/^(\d+)\./)
         if (match) {
           ctx.content.idBlog = Number.parseInt(match[1], 10)
         }

@@ -12,7 +12,7 @@ function extractSlug(path: string): string {
 
   // Clean the slug: remove special characters, convert to lowercase, replace spaces with hyphens
   return filename
-    .replace(/^\d+\.\s*/, '') // Remove number prefix like "1. "
+    .replace(/^\d+\.?\s*/, '') // Remove number prefix like "1." or "1. "
     .toLowerCase()
     .replace(/['`]/g, '') // Remove apostrophes
     .replace(/[!?.,;:"()[\]{}]/g, '') // Remove punctuation
