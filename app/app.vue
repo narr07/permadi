@@ -9,23 +9,23 @@ const items = computed<NavigationMenuItem[]>(() => [
   {
     label: t('nav.home'),
     to: localePath('/'),
-    active: route.path === localePath('/')
+    active: route.path === localePath('/'),
   },
   {
     label: t('nav.blog'),
     to: localePath('/blog'),
-    active: route.path.startsWith(localePath('/blog'))
+    active: route.path.startsWith(localePath('/blog')),
   },
   {
     label: t('nav.projects'),
     to: localePath('/project'),
-    active: route.path.startsWith(localePath('/project'))
+    active: route.path.startsWith(localePath('/project')),
   },
   {
     label: t('nav.gallery'),
     to: localePath('/gallery'),
-    active: route.path.startsWith(localePath('/gallery'))
-  }
+    active: route.path.startsWith(localePath('/gallery')),
+  },
 ])
 </script>
 

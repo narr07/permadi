@@ -1,99 +1,144 @@
 <script setup lang="ts">
+const { locale, locales, t } = useI18n()
 const route = useRoute()
-const { locale } = useI18n()
+const localePath = useLocalePath()
+const setI18nParams = useSetI18nParams()
 
-// Construct the expected content path from the route
-// If route is /blog/hello-world, we look for /id/blog/hello-world or /en/blog/hello-world
-const slug = route.params.slug as string
-const contentPath = `/${locale.value}/blog/${slug}`
+// Helper function to generate slug from path
+function generateSlug(contentPath: string): string {
+  // Extract the last part of the path (filename without locale prefix)
+  const parts = contentPath.split('/')
+  return parts[parts.length - 1] || ''
+}
 
-const { data: page } = await useAsyncData(`blog-${contentPath}`, () => {
-  return queryCollection(`${locale.value}_pages`)
-    .where('path', '=', contentPath)
-    .first()
+const { data: doc } = await useAsyncData(`blog-${locale.value}-${route.params.slug}`, async () => {
+  const collectionName = `${locale.value}_pages` as any
+
+  // Get all blog posts for current locale
+  const allDocs = await queryCollection(collectionName)
+    .where('path', 'LIKE', `/${locale.value}/blog/%`)
+    .all()
+
+  // Find matching document by comparing slug from path
+  const matchingDoc = allDocs.find((d: any) => {
+    const slug = generateSlug(d.path)
+    return slug === route.params.slug
+  })
+
+  if (!matchingDoc)
+    return null
+
+  // Find translations based on idBlog
+  const translations: Record<string, any> = {}
+  for (const loc of locales.value) {
+    const locCode = typeof loc === 'string' ? loc : loc.code
+    const locCollection = `${locCode}_pages` as any
+
+    // Find the translated doc with the same idBlog
+    const allTranslatedDocs = await queryCollection(locCollection)
+      .where('path', 'LIKE', `/${locCode}/blog/%`)
+      .all()
+
+    const translatedDoc = allTranslatedDocs.find((d: any) => d.idBlog === matchingDoc.idBlog)
+
+    if (translatedDoc) {
+      const slug = generateSlug(translatedDoc.path)
+      translations[locCode] = { slug }
+    }
+  }
+
+  return {
+    ...matchingDoc,
+    translations,
+  }
+}, {
+  watch: [locale],
 })
 
 // Handle 404
-if (!page.value) {
+if (!doc.value) {
   throw createError({ statusCode: 404, statusMessage: 'Post tidak ditemukan', fatal: true })
 }
 
-// SEO
+// Update i18n params for language switcher
+watch(doc, (newDoc) => {
+  if (newDoc?.translations) {
+    setI18nParams(newDoc.translations)
+  }
+}, { immediate: true })
+
 useSeoMeta({
-  title: page.value?.title,
-  ogTitle: page.value?.title,
-  description: page.value?.description,
-  ogDescription: page.value?.description,
-  ogImage: page.value?.image,
+  title: doc.value?.title,
+  ogTitle: doc.value?.title,
+  description: doc.value?.description,
+  ogDescription: doc.value?.description,
+  ogImage: doc.value?.image,
+  twitterCard: 'summary_large_image',
 })
 </script>
 
 <template>
-  <UContainer class="py-12 md:py-20">
-    <div v-if="page" class="max-w-3xl mx-auto">
-      <!-- Back button -->
-      <NuxtLink
-        :to="locale === 'id' ? '/blog' : '/en/blog'"
-        class="inline-flex items-center text-sm text-gray-500 hover:text-primary-500 transition-colors mb-8 group"
+  <UContainer v-if="doc" class="py-12 md:py-20 space-y-4">
+    <UPage>
+      <UButton
+        :to="localePath('/blog')"
+        variant="ghost"
+        color="neutral"
+        icon="i-heroicons-arrow-left-20-solid"
       >
-        <UIcon name="i-heroicons-arrow-left" class="mr-2 w-4 h-4 transition-transform group-hover:-translate-x-1" />
-        Kembali ke Blog
-      </NuxtLink>
+        {{ t('back') || 'Kembali' }}
+      </UButton>
 
-      <!-- Header -->
-      <header class="mb-10 text-center md:text-left">
-        <div v-if="page.category" class="mb-4">
-          <UBadge color="primary" variant="subtle" size="lg" class="rounded-full">
-            {{ $t(`categories.${page.category}`) }}
-          </UBadge>
-        </div>
-
-        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-6 leading-tight">
-          {{ page.title }}
-        </h1>
-
-        <div class="flex flex-wrap items-center justify-center md:justify-start gap-6 text-gray-500 text-sm">
-          <div v-if="page.date" class="flex items-center gap-2">
-            <UIcon name="i-heroicons-calendar" class="w-4 h-4" />
-            <time :datetime="page.date">{{ page.date }}</time>
+      <UPageHeader>
+        <template #title>
+          {{ doc.title }}
+        </template>
+        <template #description>
+          {{ doc.description }}
+        </template>
+        <template #headline>
+          <div class="flex items-center gap-2">
+            <UBadge v-for="tag in doc.tags" :key="tag" variant="subtle">
+              {{ tag }}
+            </UBadge>
           </div>
-        </div>
-      </header>
+        </template>
+      </UPageHeader>
 
-      <!-- Image -->
-      <div v-if="page.image" class="mb-12 rounded-3xl overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-800">
-        <NuxtImg
-          :src="page.image"
-          :alt="page.title"
-          class="w-full h-auto aspect-21/9 object-cover"
-          width="800"
-          height="343"
-        />
-      </div>
+      <UPageBody>
+        <UCard>
+          <div v-if="doc.image" class="relative w-full h-80 -m-4 mb-6 rounded-t-lg overflow-hidden">
+            <NuxtImg
+              :src="doc.image"
+              :alt="doc.title"
+              class="w-full h-full object-cover"
+            />
+          </div>
 
-      <!-- Content -->
-      <article class="prose prose-gray dark:prose-invert max-w-none prose-lg md:prose-xl prose-headings:font-bold prose-a:text-primary-500 hover:prose-a:text-primary-600 transition-colors prose-img:rounded-2xl shadow-sm">
-        <ContentRenderer :value="page" />
-      </article>
+          <div class="prose dark:prose-invert max-w-none">
+            <ContentRenderer :value="doc" />
+          </div>
 
-      <!-- Footer/Tags -->
-      <footer v-if="page.tags && page.tags.length > 0" class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
-        <h4 class="text-sm font-semibold text-gray-900 dark:text-white mb-4">
-          Tagar Terkait:
-        </h4>
-        <div class="flex flex-wrap gap-2">
-          <UBadge
-            v-for="tag in page.tags"
-            :key="tag"
-            color="neutral"
-            variant="solid"
-            size="sm"
-            class="rounded-full px-3 py-1 border border-gray-200 dark:border-gray-700 hover:border-primary-500 hover:text-primary-500 transition-all cursor-pointer"
-          >
-            #{{ tag }}
-          </UBadge>
-        </div>
-      </footer>
-    </div>
+          <template #footer>
+            <div class="flex justify-between items-center text-sm text-gray-600 dark:text-gray-400 pt-4 border-t">
+              <span v-if="doc.date">
+                {{ t('published') || 'Published' }}: {{ new Date(doc.date).toLocaleDateString(locale) }}
+              </span>
+              <UButton
+                :to="localePath('/blog')"
+                variant="ghost"
+                size="sm"
+              >
+                {{ t('back_to_articles') || 'Kembali ke Artikel' }}
+              </UButton>
+            </div>
+          </template>
+        </UCard>
+      </UPageBody>
+
+      <template v-if="doc?.body?.toc?.links?.length" #right>
+        <UContentToc highlight highlight-color="warning" color="warning" :links="doc.body.toc.links" />
+      </template>
+    </UPage>
   </UContainer>
 </template>

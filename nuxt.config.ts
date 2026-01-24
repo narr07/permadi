@@ -38,6 +38,22 @@ export default defineNuxtConfig({
         file: 'en.json',
       },
     ],
+    customRoutes: 'config',
+    pages: {
+      'blog': {
+        en: '/blog',
+      },
+      'blog-slug': {
+        en: '/blog/[slug]',
+      },
+      'gallery': {
+        en: '/gallery',
+        id: '/galeri',
+      },
+      'gallery-slug': {
+        en: '/gallery/[slug]',
+      },
+    },
   },
 
   studio: {

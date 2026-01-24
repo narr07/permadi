@@ -1,14 +1,29 @@
 <script setup lang="ts">
-const { locale } = useI18n()
+const { locale, t } = useI18n()
+const localePath = useLocalePath()
+
+// Helper function to extract slug from content path
+function extractSlug(path: string): string {
+  // Path format: /id/blog/my-article or /en/blog/my-article
+  const parts = path.split('/')
+  return parts[parts.length - 1] || ''
+}
 
 // Query the collection based on current locale
-// We filter by path to only get items in the /blog/ directory (excluding the blog.md itself if possible)
 const { data: posts } = await useAsyncData(`blog-list-${locale.value}`, () => {
   return queryCollection(`${locale.value}_pages`)
     .where('path', 'LIKE', `/${locale.value}/blog/%`)
     .order('date', 'DESC')
     .all()
+}, {
+  watch: [locale],
 })
+
+// Generate proper URL using localePath
+function getBlogUrl(post: any): string {
+  const slug = extractSlug(post.path)
+  return localePath(`/blog/${slug}`)
+}
 </script>
 
 <template>
@@ -17,7 +32,7 @@ const { data: posts } = await useAsyncData(`blog-list-${locale.value}`, () => {
       <NuxtLink
         v-for="post in posts"
         :key="post.path"
-        :to="post.path"
+        :to="getBlogUrl(post)"
         class="group flex flex-col h-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-primary-500/50"
       >
         <div class="relative aspect-video overflow-hidden">
@@ -42,7 +57,7 @@ const { data: posts } = await useAsyncData(`blog-list-${locale.value}`, () => {
 
         <div class="p-6 flex flex-col grow">
           <div class="flex items-center gap-2 text-xs text-gray-500 mb-3">
-            <time :datetime="post.date">{{ post.date }}</time>
+            <time v-if="post.date" :datetime="post.date">{{ post.date }}</time>
           </div>
 
           <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 leading-tight group-hover:text-primary-500 transition-colors">
@@ -54,7 +69,7 @@ const { data: posts } = await useAsyncData(`blog-list-${locale.value}`, () => {
           </p>
 
           <div class="flex items-center text-sm font-semibold text-primary-600 dark:text-primary-400 group-hover:gap-2 transition-all">
-            <span>Baca Selengkapnya</span>
+            <span>{{ t('read_more') || 'Baca Selengkapnya' }}</span>
             <UIcon name="i-heroicons-arrow-right" class="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
           </div>
         </div>
@@ -64,26 +79,8 @@ const { data: posts } = await useAsyncData(`blog-list-${locale.value}`, () => {
     <div v-else class="text-center py-20 bg-gray-50 dark:bg-gray-800/50 rounded-3xl border-2 border-dashed border-gray-200 dark:border-gray-800">
       <UIcon name="i-heroicons-inbox" class="w-16 h-16 text-gray-300 dark:text-gray-700 mx-auto mb-4" />
       <p class="text-gray-500 dark:text-gray-400 text-lg">
-        Belum ada artikel yang dipublikasikan.
+        {{ t('no_articles') || 'Belum ada artikel yang dipublikasikan.' }}
       </p>
     </div>
   </div>
 </template>
-
-<style scoped>
-.blog-list-container {
-  opacity: 0;
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-</style>
