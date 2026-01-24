@@ -24,8 +24,8 @@ function extractSlug(path: string): string {
 
 // Query the collection based on current locale
 const { data: posts } = await useAsyncData(`blog-list-${locale.value}`, () => {
-  return queryCollection(`${locale.value}_pages`)
-    .where('path', 'LIKE', `/${locale.value}/blog/%`)
+  return queryCollection(`${locale.value}_blog`)
+    // .where('path', 'LIKE', `/${locale.value}/blog/%`)
     .order('date', 'DESC')
     .all()
 }, {
@@ -40,14 +40,14 @@ function getBlogUrl(post: any): string {
 </script>
 
 <template>
-  <div class="blog-list-container my-12">
+  <div class=" my-12">
     <div v-if="posts && posts.length > 0" class="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       <Motion
         v-for="(post, index) in posts"
         :key="post.path"
         :initial="{ opacity: 0, transform: 'translateY(20px)' }"
         :in-view="{ opacity: 1, transform: 'translateY(0)' }"
-        :transition="{ delay: 0.1 * index, duration: 0.4 }"
+        :transition="{ delay: 0.05 * index, duration: 0.2 }"
       >
         <NuxtLink
           :to="getBlogUrl(post)"

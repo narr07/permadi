@@ -23,11 +23,13 @@ function generateSlug(contentPath: string): string {
 }
 
 const { data: article } = await useAsyncData(`blog-${locale.value}-${route.params.slug}`, async () => {
-  const collectionName = `${locale.value}_pages` as any
+  const collectionName = `${locale.value}_blog` as any
+  // With prefix config: id = /blog/*, en = /en/blog/*
+  const pathPrefix = locale.value === 'id' ? '/blog/%' : `/${locale.value}/blog/%`
 
   // Get all blog posts for current locale
   const allPosts = await queryCollection(collectionName)
-    .where('path', 'LIKE', `/${locale.value}/blog/%`)
+    .where('path', 'LIKE', pathPrefix)
     .all()
 
   // Find matching document by comparing slug from path
@@ -43,11 +45,13 @@ const { data: article } = await useAsyncData(`blog-${locale.value}-${route.param
   const translations: Record<string, any> = {}
   for (const loc of locales.value) {
     const locCode = typeof loc === 'string' ? loc : loc.code
-    const locCollection = `${locCode}_pages` as any
+    const locCollection = `${locCode}_blog` as any
+    // With prefix config: id = /blog/*, en = /en/blog/*
+    const locPathPrefix = locCode === 'id' ? '/blog/%' : `/${locCode}/blog/%`
 
     // Find the translated post with the same idBlog
     const allTranslatedPosts = await queryCollection(locCollection)
-      .where('path', 'LIKE', `/${locCode}/blog/%`)
+      .where('path', 'LIKE', locPathPrefix)
       .all()
 
     const translatedPost = allTranslatedPosts.find((post: any) => post.idBlog === matchingPost.idBlog)

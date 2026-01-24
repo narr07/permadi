@@ -1,9 +1,28 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
+import * as locales from '@nuxt/ui/locale'
 
 const { locale, setLocale, t } = useI18n()
 const localePath = useLocalePath()
 const route = useRoute()
+
+// Search term for ContentSearch
+const searchTerm = ref('')
+
+// Get blog navigation based on current locale
+const { data: navigation } = await useAsyncData(
+  `navigation-${locale.value}`,
+  () => queryCollectionNavigation(`${locale.value}_blog`),
+  { watch: [locale] },
+)
+
+// Get blog files for search based on current locale (lazy loaded on client)
+// Note: useLazyAsyncData WITHOUT await as per official docs
+const { data: files } = useLazyAsyncData(
+  `search-blog-${locale.value}`,
+  () => queryCollectionSearchSections(`${locale.value}_blog`),
+  { server: false, watch: [locale] },
+)
 
 const items = computed<NavigationMenuItem[]>(() => [
   {
@@ -30,19 +49,19 @@ const items = computed<NavigationMenuItem[]>(() => [
 </script>
 
 <template>
-  <UApp>
+  <UApp :locale="locales[locale]">
     <UContainer class="fixed top-2 inset-x-0 z-50">
-      <UHeader class="border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/60 backdrop-blur-sm px-4">
+      <UHeader class="border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/60 backdrop-blur-sm px-4 py-2">
         <template #title>
           <div class="flex items-center gap-2 text-brand-500 font-bold uppercase ">
-            <UIcon name="i-lucide-compass" class="size-5" />
-            <span>{{ t('header.title') }}</span>
+            <Logo />
           </div>
         </template>
 
-        <UNavigationMenu :items="items" class="justify-center uppercase   text-xs font-medium" />
+        <UNavigationMenu :items="items" class="justify-center uppercase text-xs font-medium" />
 
         <template #right>
+          <UContentSearchButton collapsed />
           <UColorModeButton />
           <UButton
             color="neutral"
@@ -57,6 +76,19 @@ const items = computed<NavigationMenuItem[]>(() => [
         </template>
       </UHeader>
     </UContainer>
+
+    <!-- Content Search Modal (Blog only) -->
+    <ClientOnly>
+      <LazyUContentSearch
+        v-model:search-term="searchTerm"
+        :files="files"
+        :navigation="navigation"
+        :placeholder="t('search.placeholder', 'Search blog...')"
+        shortcut="meta_k"
+        :color-mode="false"
+        :fuse="{ resultLimit: 20 }"
+      />
+    </ClientOnly>
 
     <UMain>
       <UContainer class="py-6 pt-24">

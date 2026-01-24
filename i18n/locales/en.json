@@ -29,5 +29,8 @@
   "filter_by_category": "Filter by category...",
   "images_found": "image(s) found",
   "no_images_found": "No images found.",
-  "min_read": "min read"
+  "min_read": "min read",
+  "search": {
+    "placeholder": "Search blog..."
+  }
 }

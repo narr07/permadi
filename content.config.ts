@@ -40,6 +40,18 @@ locales.forEach((locale) => {
     schema: blogSchema,
   })
 
+  // Blog collection with proper i18n path prefix
+  // prefix_except_default strategy: id = /blog, en = /en/blog
+  collections[`${locale}_blog`] = defineCollection({
+    type: 'page',
+    source: {
+      include: `${locale}/blog/**/*.md`,
+      // Default locale (id) gets /blog, other locales get /{locale}/blog
+      prefix: locale === 'id' ? '/blog' : `/${locale}/blog`,
+    },
+    schema: blogSchema,
+  })
+
   // Specific collections for structured data queries (not for routing)
   collections[`${locale}_project`] = defineCollection({
     type: 'data',
