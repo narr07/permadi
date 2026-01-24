@@ -2,11 +2,22 @@
 const { locale, t } = useI18n()
 const localePath = useLocalePath()
 
-// Helper function to extract slug from content path
+// Helper function to generate clean slug from content path
 function extractSlug(path: string): string {
   // Path format: /id/blog/my-article or /en/blog/my-article
   const parts = path.split('/')
-  return parts[parts.length - 1] || ''
+  const filename = parts[parts.length - 1] || ''
+
+  // Clean the slug: remove special characters, convert to lowercase, replace spaces with hyphens
+  return filename
+    .replace(/^\d+\.\s*/, '') // Remove number prefix like "1. "
+    .toLowerCase()
+    .replace(/['`]/g, '') // Remove apostrophes
+    .replace(/[!?.,;:"()[\]{}]/g, '') // Remove punctuation
+    .replace(/&/g, 'and') // Replace & with 'and'
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/-+/g, '-') // Replace multiple hyphens with single
+    .replace(/^-|-$/g, '') // Remove leading/trailing hyphens
 }
 
 // Query the collection based on current locale
