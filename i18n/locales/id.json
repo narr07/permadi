@@ -28,5 +28,6 @@
   "close": "Tutup",
   "filter_by_category": "Filter berdasarkan kategori...",
   "images_found": "gambar ditemukan",
-  "no_images_found": "Tidak ada gambar yang ditemukan."
+  "no_images_found": "Tidak ada gambar yang ditemukan.",
+  "min_read": "menit baca"
 }

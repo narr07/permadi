@@ -28,5 +28,6 @@
   "close": "Close",
   "filter_by_category": "Filter by category...",
   "images_found": "image(s) found",
-  "no_images_found": "No images found."
+  "no_images_found": "No images found.",
+  "min_read": "min read"
 }

@@ -108,7 +108,11 @@ useSeoMeta({
           {{ article.description }}
         </template>
         <template #headline>
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-3 flex-wrap">
+            <div v-if="article.readingTime" class="flex items-center gap-1 text-sm text-gray-500">
+              <UIcon name="i-heroicons-clock" class="w-4 h-4" />
+              <span>{{ article.readingTime }} {{ t('min_read') || 'menit baca' }}</span>
+            </div>
             <UBadge v-for="tag in article.tags" :key="tag" variant="subtle">
               {{ tag }}
             </UBadge>

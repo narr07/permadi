@@ -48,12 +48,12 @@ export default defineNuxtConfig({
         en: '/blog/[slug]',
       },
       'gallery': {
-        en: '/gallery',
         id: '/galeri',
       },
-      'gallery-slug': {
-        en: '/gallery/[slug]',
+      'project': {
+        id: '/projek',
       },
+
     },
   },
 
@@ -86,6 +86,26 @@ export default defineNuxtConfig({
   eslint: {
     config: {
       standalone: false,
+    },
+  },
+
+  hooks: {
+    'content:file:afterParse': (ctx: any) => {
+      // Only apply to blog posts
+      if (ctx.content?.path?.includes('/blog/')) {
+        // Extract idBlog from filename prefix (e.g., "1. Title.md" -> 1)
+        const filename = ctx.content.stem || ''
+        const match = filename.match(/^(\d+)\.\s*/)
+        if (match) {
+          ctx.content.idBlog = Number.parseInt(match[1], 10)
+        }
+
+        // Calculate reading time based on word count
+        const wordsPerMinute = 180
+        const text = typeof ctx.file?.body === 'string' ? ctx.file.body : ''
+        const wordCount = text.split(/\s+/).filter(Boolean).length
+        ctx.content.readingTime = Math.max(1, Math.ceil(wordCount / wordsPerMinute))
+      }
     },
   },
 })

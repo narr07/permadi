@@ -8,7 +8,8 @@ const pageSchema = z.object({
 })
 
 const blogSchema = pageSchema.extend({
-  idBlog: z.number(),
+  idBlog: z.number().optional(), // Auto-extracted from filename prefix (e.g., "1. Title.md" -> 1)
+  readingTime: z.number().optional(), // Auto-calculated based on word count
   date: z.string().optional(),
   image: z.string().optional(),
   tags: z.array(z.string()).optional(),
