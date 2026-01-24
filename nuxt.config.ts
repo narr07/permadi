@@ -13,7 +13,13 @@ export default defineNuxtConfig({
     'nuxt-studio',
     '@nuxtjs/i18n',
     'motion-v/nuxt',
+    '@nuxthub/core',
   ],
+
+  // NuxtHub configuration for D1 database
+  hub: {
+    db: 'sqlite',
+  },
 
   i18n: {
     baseUrl: 'https://permadi.pages.dev',

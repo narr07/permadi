@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "permadi",
+  "compatibility_date": "2026-01-01",
+  "pages_build_output_dir": ".output/public",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "permadi-db",
+      "database_id": "4f1034fd-0882-4869-b853-37933b6a5ce6",
+      "migrations_dir": "server/db/migrations/sqlite"
+    }
+  ],
+  "observability": {
+    "logs": {
+      "enabled": true
+    }
+  }
+}
