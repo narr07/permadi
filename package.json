@@ -25,7 +25,7 @@
     "drizzle-kit": "^0.31.8",
     "drizzle-orm": "^0.45.1",
     "motion-v": "^1.9.0",
-    "nuxt": "^4.3.0",
+    "nuxt": "^4.3.1",
     "nuxt-studio": "^1.1.1",
     "typescript": "^5.9.3",
     "vue": "^3.5.27"
