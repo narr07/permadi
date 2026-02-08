@@ -32,6 +32,43 @@ const { data: posts } = await useAsyncData(`blog-list-${locale.value}`, () => {
   watch: [locale],
 })
 
+// Fetch reaction counts for all posts
+const reactionCounts = ref<Record<number, { love: number, like: number, sad: number }>>({})
+
+async function fetchReactions() {
+  if (!posts.value || posts.value.length === 0)
+    return
+
+  const postIds = posts.value
+    .map((post: any) => post.idBlog)
+    .filter((id: any) => id != null)
+
+  if (postIds.length === 0)
+    return
+
+  try {
+    const data = await $fetch<Record<number, { love: number, like: number, sad: number }>>('/api/reactions/batch', {
+      query: { postIds: postIds.join(',') },
+    })
+    reactionCounts.value = data
+  }
+  catch (e) {
+    console.error('Failed to fetch reactions:', e)
+  }
+}
+
+// Fetch reactions on mount and when posts change
+onMounted(() => fetchReactions())
+watch(posts, () => fetchReactions())
+
+// Get total reactions for a post
+function getTotalReactions(postId: number | undefined): number {
+  if (!postId || !reactionCounts.value[postId])
+    return 0
+  const counts = reactionCounts.value[postId]
+  return counts.love + counts.like + counts.sad
+}
+
 // Generate proper URL using localePath
 function getBlogUrl(post: any): string {
   const slug = extractSlug(post.path)
@@ -74,8 +111,35 @@ function getBlogUrl(post: any): string {
           </div>
 
           <div class="p-6 flex flex-col grow">
-            <div class="flex items-center gap-2 text-xs text-gray-500 mb-3">
+            <div class="flex items-center justify-between text-xs text-gray-500 mb-3">
               <time v-if="post.date" :datetime="post.date">{{ post.date }}</time>
+              <!-- Reaction badges -->
+              <div v-if="post.idBlog && getTotalReactions(post.idBlog) > 0" class="flex items-center gap-1">
+                <UBadge
+                  v-if="reactionCounts[post.idBlog]?.love"
+                  color="error"
+                  variant="subtle"
+                  size="xs"
+                  icon="i-heroicons-heart"
+                  :label="String(reactionCounts[post.idBlog]?.love ?? 0)"
+                />
+                <UBadge
+                  v-if="reactionCounts[post.idBlog]?.like"
+                  color="info"
+                  variant="subtle"
+                  size="xs"
+                  icon="i-heroicons-hand-thumb-up"
+                  :label="String(reactionCounts[post.idBlog]?.like ?? 0)"
+                />
+                <UBadge
+                  v-if="reactionCounts[post.idBlog]?.sad"
+                  color="warning"
+                  variant="subtle"
+                  size="xs"
+                  icon="i-heroicons-face-frown"
+                  :label="String(reactionCounts[post.idBlog]?.sad ?? 0)"
+                />
+              </div>
             </div>
 
             <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 leading-tight group-hover:text-primary-500 transition-colors">
