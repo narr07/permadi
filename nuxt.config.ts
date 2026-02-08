@@ -30,7 +30,7 @@ export default defineNuxtConfig({
   i18n: {
     baseUrl: 'https://permadi.pages.dev',
     vueI18n: './i18n.config.ts',
-    strategy: 'prefix_except_default',
+    strategy: 'prefix_and_default',
     defaultLocale,
     langDir: 'locales',
     detectBrowserLanguage: {
