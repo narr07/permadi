@@ -33,10 +33,13 @@ const gallerySchema = z.object({
 const collections: any = {}
 
 locales.forEach((locale) => {
-  // Main collection for all routable pages
+  // Main collection for all routable pages (excluding blog/project/gallery which have their own collections)
   collections[`${locale}_pages`] = defineCollection({
     type: 'page',
-    source: `${locale}/**/*.md`,
+    source: {
+      include: `${locale}/**/*.md`,
+      exclude: [`${locale}/blog/**`, `${locale}/project/**`, `${locale}/gallery/**`],
+    },
     schema: blogSchema,
   })
 

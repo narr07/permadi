@@ -112,7 +112,18 @@ function getBlogUrl(post: any): string {
 
           <div class="p-6 flex flex-col grow">
             <div class="flex items-center justify-between text-xs text-gray-500 mb-3">
-              <time v-if="post.date" :datetime="post.date">{{ post.date }}</time>
+              <div class="flex items-center gap-2">
+                <time v-if="post.date" :datetime="post.date">{{ post.date }}</time>
+                <!-- Reading time badge -->
+                <UBadge
+                  v-if="post.readingTime"
+                  color="neutral"
+                  variant="subtle"
+                  size="xs"
+                  icon="i-heroicons-clock"
+                  :label="`${post.readingTime} min`"
+                />
+              </div>
               <!-- Reaction badges -->
               <div v-if="post.idBlog && getTotalReactions(post.idBlog) > 0" class="flex items-center gap-1">
                 <UBadge
