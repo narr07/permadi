@@ -1,7 +1,20 @@
 <script setup lang="ts">
+defineProps({
+  headline: {
+    type: String,
+    default: 'Haloo',
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+})
 const { locale } = useI18n()
 const localePath = useLocalePath()
-
 const items = [
   {
     component: resolveComponent('SvgDev'),
@@ -29,19 +42,15 @@ const items = [
       :ui="{ body: 'flex flex-col gap-6 h-full justify-center ' }"
     >
       <div class="flex">
-        <UBadge variant="subtle" size="lg" class="rounded-lg px-3 py-1 uppercase tracking-wider font-bold">
-          Headline
-        </UBadge>
+        <UBadge v-if="headline" variant="subtle" :label="headline" size="lg" class="rounded-lg px-3 py-1 uppercase tracking-wider font-bold" />
       </div>
 
       <h1 class="text-g4 font-black font-title leading-[1.1] text-brand-900 dark:text-white uppercase transition-colors">
-        Di Balik Kode & <br>
-        <span class="text-brand-500">Kanvas</span>, Ada Pendidikan <br>
-        Yang Bermakna.
+        <slot name="title" mdc-unwrap="p" />
       </h1>
 
       <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed">
-        Saya adalah guru, programmer, dan desainer grafis yang menciptakan alat bantu belajar yang estetis dan fungsional.
+        <slot name="description" mdc-unwrap="p" />
       </p>
 
       <div class="mt-4 flex gap-4">

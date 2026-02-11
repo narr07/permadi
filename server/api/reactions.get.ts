@@ -1,3 +1,4 @@
+// server/api/reactions.get.ts
 // GET /api/reactions?postId=1
 // Returns reaction counts for a specific blog post by idBlog
 import { eq, sql } from 'drizzle-orm'

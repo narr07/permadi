@@ -64,7 +64,7 @@ locales.forEach((locale) => {
 
   collections[`${locale}_gallery`] = defineCollection({
     type: 'data',
-    source: `${locale}/gallery/*.md`,
+    source: `${locale}/gallery/*.yaml`,
     schema: gallerySchema,
   })
 })

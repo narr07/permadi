@@ -1,3 +1,4 @@
+// app/composables/useReactions.ts
 export type ReactionType = 'love' | 'like' | 'sad'
 
 export interface ReactionCounts {
@@ -19,7 +20,8 @@ export function useReactions(postId: number | null | undefined) {
 
   // Fetch reaction counts
   async function fetchReactions() {
-    if (!postId) return
+    if (!postId)
+      return
 
     isLoading.value = true
     error.value = null
@@ -40,7 +42,8 @@ export function useReactions(postId: number | null | undefined) {
 
   // Add a reaction
   async function addReaction(type: ReactionType) {
-    if (!postId || isSubmitting.value) return
+    if (!postId || isSubmitting.value)
+      return
 
     isSubmitting.value = true
     error.value = null

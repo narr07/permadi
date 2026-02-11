@@ -1,3 +1,4 @@
+// server/api/reactions/batch.get.ts
 // GET /api/reactions/batch?postIds=1,2,3
 // Returns reaction counts for multiple blog posts
 import { inArray, sql } from 'drizzle-orm'

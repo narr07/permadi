@@ -1,3 +1,4 @@
+// app/components/ReactionButtons.vue
 <script setup lang="ts">
 const props = defineProps<{
   postId: number | null | undefined
