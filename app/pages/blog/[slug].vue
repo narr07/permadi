@@ -24,8 +24,8 @@ function generateSlug(contentPath: string): string {
 
 const { data: article } = await useAsyncData(`blog-${locale.value}-${route.params.slug}`, async () => {
   const collectionName = `${locale.value}_blog` as any
-  // With prefix strategy: all locales get /{locale}/blog/*
-  const pathPrefix = `/${locale.value}/blog/%`
+  // With prefix config: id = /blog/*, en = /en/blog/*
+  const pathPrefix = locale.value === 'id' ? '/blog/%' : `/${locale.value}/blog/%`
 
   // Get all blog posts for current locale
   const allPosts = await queryCollection(collectionName)
@@ -50,8 +50,8 @@ const { data: article } = await useAsyncData(`blog-${locale.value}-${route.param
   for (const loc of locales.value) {
     const locCode = typeof loc === 'string' ? loc : loc.code
     const locCollection = `${locCode}_blog` as any
-    // With prefix strategy: all locales get /{locale}/blog/*
-    const locPathPrefix = `/${locCode}/blog/%`
+    // With prefix config: id = /blog/*, en = /en/blog/*
+    const locPathPrefix = locCode === 'id' ? '/blog/%' : `/${locCode}/blog/%`
 
     // Find the translated post with the same idBlog
     const allTranslatedPosts = await queryCollection(locCollection)
