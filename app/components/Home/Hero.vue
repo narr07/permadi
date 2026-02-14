@@ -76,7 +76,6 @@ const items = [
           </div>
         </div>
       </UCarousel>
-      <LazyStarsBg />
     </UCard>
   </div>
 </template>

@@ -58,13 +58,13 @@ locales.forEach((locale) => {
   // Specific collections for structured data queries (not for routing)
   collections[`${locale}_project`] = defineCollection({
     type: 'data',
-    source: `${locale}/project/*.md`,
+    source: `${locale}/project/*.yml`,
     schema: projectSchema,
   })
 
   collections[`${locale}_gallery`] = defineCollection({
     type: 'data',
-    source: `${locale}/gallery/*.yaml`,
+    source: `${locale}/gallery/*.yml`,
     schema: gallerySchema,
   })
 })
