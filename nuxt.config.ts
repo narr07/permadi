@@ -14,7 +14,17 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     'motion-v/nuxt',
     '@nuxthub/core',
+    '@nuxtjs/seo',
   ],
+  site: {
+    url: 'https://permadi.pages.dev',
+    name: 'Permadi',
+    description: 'Permadi is a website for Permadi',
+    defaultLocale: 'id',
+  },
+  linkChecker: {
+    runOnBuild: false,
+  },
 
   // NuxtHub configuration for D1 database
   hub: {
@@ -30,7 +40,7 @@ export default defineNuxtConfig({
   i18n: {
     baseUrl: 'https://permadi.pages.dev',
     vueI18n: './i18n.config.ts',
-    strategy: 'prefix',
+    strategy: 'prefix_except_default',
     defaultLocale,
     langDir: 'locales',
     detectBrowserLanguage: {

@@ -116,7 +116,7 @@ function closeModal() {
                 {{ gallery.title }}
               </h3>
               <p v-if="gallery.category" class="text-xs text-gray-200 mt-1">
-                {{ $t(`categories.${gallery.category}`) }}
+                {{ t(`categories.${gallery.category}`) }}
               </p>
             </div>
           </div>
@@ -163,7 +163,7 @@ function closeModal() {
             <!-- Category -->
             <div v-if="selectedGallery.category">
               <UBadge variant="subtle" color="primary">
-                {{ $t(`categories.${selectedGallery.category}`) }}
+                {{ t(`categories.${selectedGallery.category}`) }}
               </UBadge>
             </div>
 

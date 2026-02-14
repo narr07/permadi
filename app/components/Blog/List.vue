@@ -106,7 +106,7 @@ function getBlogUrl(post: any): string {
 
             <div v-if="post.category" class="absolute top-4 left-4">
               <UBadge color="primary" variant="solid" size="sm" class="font-medium">
-                {{ $t(`categories.${post.category}`) }}
+                {{ t(`categories.${post.category}`) }}
               </UBadge>
             </div>
           </div>
