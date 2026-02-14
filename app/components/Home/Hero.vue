@@ -1,20 +1,11 @@
 <script setup lang="ts">
-defineProps({
-  headline: {
-    type: String,
-    default: 'Haloo',
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
+withDefaults(defineProps<{
+  title?: string
+  description?: string
+}>(), {
+  title: '',
+  description: '',
 })
-const { locale } = useI18n()
-const localePath = useLocalePath()
 const items = [
   {
     component: resolveComponent('SvgDev'),
@@ -41,22 +32,17 @@ const items = [
       class="flex-3"
       :ui="{ body: 'flex flex-col gap-6 h-full justify-center ' }"
     >
-      <div class="flex">
-        <UBadge v-if="headline" variant="subtle" :label="headline" size="lg" class="rounded-lg px-3 py-1 uppercase tracking-wider font-bold" />
-      </div>
-
       <h1 class="text-g4 font-black font-title leading-[1.1] text-brand-900 dark:text-white uppercase transition-colors">
-        <slot name="title" mdc-unwrap="p" />
+        <slot name="title" mdc-unwrap="p">
+          {{ title }}
+        </slot>
       </h1>
 
       <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed">
-        <slot name="description" mdc-unwrap="p" />
+        <slot name="description" mdc-unwrap="p">
+          {{ description }}
+        </slot>
       </p>
-
-      <div class="mt-4 flex gap-4">
-        <UButton :to="localePath('/project')" :label="locale === 'id' ? 'Lihat Proyek' : 'View Projects'" size="xl" trailing-icon="i-lucide-arrow-right" />
-        <UButton :label="locale === 'id' ? 'Hubungi Saya' : 'Contact Me'" variant="subtle" size="xl" />
-      </div>
     </UCard>
 
     <!-- Right Card: Carousel Section -->
@@ -90,6 +76,7 @@ const items = [
           </div>
         </div>
       </UCarousel>
+      <LazyStarsBg />
     </UCard>
   </div>
 </template>
