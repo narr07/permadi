@@ -17,13 +17,34 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
   ],
   site: {
-    url: 'https://permadi.pages.dev',
+    url: 'https://permadi.pages.dev/',
     name: 'Permadi',
-    description: 'Permadi is a website for Permadi',
+    description: 'Permadi adalah seorang guru, programmer dan desainer.',
     defaultLocale: 'id',
+    locales: {
+      id: {
+        url: 'https://permadi.pages.dev/',
+        name: 'Permadi',
+        description: 'Permadi adalah seorang guru, programmer dan desainer.',
+      },
+      en: {
+        url: 'https://permadi.pages.dev/en',
+        name: 'Permadi',
+        description: 'Permadi is a teacher, programmer and designer.',
+      },
+    },
+  },
+  image: {
+    domains: ['res.cloudinary.com'],
   },
   linkChecker: {
     runOnBuild: false,
+  },
+  icon: {
+    customCollections: [{
+      prefix: 'narr',
+      dir: './app/assets/icons',
+    }],
   },
 
   // NuxtHub configuration for D1 database

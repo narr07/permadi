@@ -32,6 +32,9 @@
     { "rule": "*quotes", "severity": "off", "fixable": true },
     { "rule": "*semi", "severity": "off", "fixable": true }
   ],
+  "iconify.customCollectionJsonPaths": [
+    "app/assets/icons.json"
+  ],
 
   // Enable eslint for all supported languages
   "eslint.validate": [
