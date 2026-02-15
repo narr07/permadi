@@ -19,7 +19,7 @@ export default defineNuxtConfig({
   site: {
     url: 'https://permadi.pages.dev/',
     name: 'Permadi',
-    description: 'Permadi adalah seorang guru, programmer dan desainer.',
+    // description: 'Permadi adalah seorang guru, programmer dan desainer.',
     defaultLocale: 'id',
     locales: {
       id: {
@@ -49,7 +49,13 @@ export default defineNuxtConfig({
 
   // NuxtHub configuration for D1 database
   hub: {
-    db: 'sqlite',
+    db: {
+      dialect: 'sqlite',
+      driver: 'd1',
+      connection: {
+        databaseId: '4f1034fd-0882-4869-b853-37933b6a5ce6',
+      },
+    },
   },
 
   i18n: {
