@@ -10,12 +10,23 @@ const { data: galleries } = await useAsyncData(`gallery-list-${locale.value}`, a
   watch: [locale],
 })
 
+// Gallery likes
+const { fetchLikes, toggleLike, getCount, isLiked, isToggling } = useGalleryLikes()
+
+// Fetch likes when galleries load
+watch(galleries, (items) => {
+  if (items?.length) {
+    fetchLikes(items.map(g => g.stem))
+  }
+}, { immediate: true })
+
 // Extract all unique categories for filter
 const allCategories = computed(() => {
   const categorySet = new Set<string>()
   galleries.value?.forEach((gallery) => {
-    if (gallery.category)
-      categorySet.add(gallery.category)
+    if (gallery.category) {
+      gallery.category.forEach((cat: string) => categorySet.add(cat))
+    }
   })
   return Array.from(categorySet).sort()
 })
@@ -32,7 +43,7 @@ const filteredGalleries = computed(() => {
   if (!selectedCategory.value)
     return galleries.value
   return galleries.value.filter(gallery =>
-    gallery.category === selectedCategory.value,
+    gallery.category?.includes(selectedCategory.value!),
   )
 })
 
@@ -88,8 +99,8 @@ function closeModal() {
       </span>
     </div>
 
-    <!-- Gallery Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <!-- Gallery Masonry -->
+    <UPageColumns>
       <Motion
         v-for="(gallery, index) in paginatedGalleries"
         :key="gallery.stem"
@@ -98,33 +109,56 @@ function closeModal() {
         :transition="{ delay: 0.05 * index, duration: 0.4 }"
       >
         <div
-          class="group relative cursor-pointer overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800 hover:border-primary-500 transition-all hover:shadow-lg h-full"
-          @click="openGalleryModal(gallery)"
-      >
-        <!-- Image -->
-        <div class="relative overflow-hidden bg-gray-100 dark:bg-gray-800" :style="{ aspectRatio: gallery.aspectRatio || '1/1' }">
-          <NuxtImg
-            :src="gallery.imageUrl"
-            :alt="gallery.title"
-            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-            loading="lazy"
-          />
-          <!-- Overlay on Hover -->
-          <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-end">
-            <div class="p-3 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <h3 class="font-semibold line-clamp-1">
-                {{ gallery.title }}
-              </h3>
-              <p v-if="gallery.category" class="text-xs text-gray-200 mt-1">
-                {{ t(`categories.${gallery.category}`) }}
-              </p>
+          class="group overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800 hover:border-primary-500 transition-all hover:shadow-lg"
+        >
+          <!-- Image (clickable to open modal) -->
+          <div
+            class="relative cursor-pointer overflow-hidden bg-gray-100 dark:bg-gray-800"
+            @click="openGalleryModal(gallery)"
+          >
+            <NuxtImg
+              :src="gallery.image"
+              :alt="gallery.title"
+              class="w-full h-auto object-cover group-hover:scale-110 transition-transform duration-300"
+              loading="lazy"
+            />
+            <!-- Overlay on Hover -->
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-end">
+              <div class="p-3 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <h3 class="font-semibold line-clamp-1">
+                  {{ gallery.title }}
+                </h3>
+                <p v-if="gallery.category" class="text-xs text-gray-200 mt-1">
+                  {{ gallery.category.join(', ') }}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      </Motion>
-    </div>
 
+          <!-- Footer: Like Button -->
+          <div class="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-900">
+            <button
+              :disabled="isToggling(gallery.stem)"
+              class="flex items-center gap-1.5 text-sm transition-all duration-200 rounded-full px-2 py-1 hover:bg-red-50 dark:hover:bg-red-950/30"
+              :class="isLiked(gallery.stem) ? 'text-red-500' : 'text-gray-400 dark:text-gray-500 hover:text-red-400'"
+              @click.stop="toggleLike(gallery.stem)"
+            >
+              <UIcon
+                :name="isLiked(gallery.stem) ? 'i-lucide-heart' : 'i-lucide-heart'"
+                class="size-4 transition-transform duration-200"
+                :class="[
+                  isLiked(gallery.stem) ? 'fill-red-500 scale-110' : '',
+                  isToggling(gallery.stem) ? 'animate-pulse' : '',
+                ]"
+              />
+              <span class="text-xs font-medium tabular-nums">
+                {{ getCount(gallery.stem) }}
+              </span>
+            </button>
+          </div>
+        </div>
+      </Motion>
+    </UPageColumns>
     <!-- Empty State -->
     <div v-if="paginatedGalleries.length === 0" class="text-center py-12 text-gray-500">
       {{ t('no_images_found') || 'No images found matching the selected filter.' }}
@@ -145,14 +179,13 @@ function closeModal() {
       v-if="selectedGallery"
       v-model:open="isModalOpen"
       :title="selectedGallery.title"
-      fullscreen
     >
       <template #body>
         <div class="space-y-6">
           <!-- Full Image -->
           <div class="relative w-full flex items-center justify-center bg-black rounded-lg overflow-hidden" style="max-height: 70vh;">
             <NuxtImg
-              :src="selectedGallery.imageUrl"
+              :src="selectedGallery.image"
               :alt="selectedGallery.title"
               class="max-w-full max-h-full object-contain"
             />
@@ -161,9 +194,9 @@ function closeModal() {
           <!-- Details -->
           <div class="space-y-4">
             <!-- Category -->
-            <div v-if="selectedGallery.category">
-              <UBadge variant="subtle" color="primary">
-                {{ t(`categories.${selectedGallery.category}`) }}
+            <div v-if="selectedGallery.category?.length" class="flex flex-wrap gap-2">
+              <UBadge v-for="cat in selectedGallery.category" :key="cat" variant="subtle" color="primary">
+                {{ cat }}
               </UBadge>
             </div>
 

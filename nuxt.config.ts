@@ -49,13 +49,7 @@ export default defineNuxtConfig({
 
   // NuxtHub configuration for D1 database
   hub: {
-    db: {
-      dialect: 'sqlite',
-      driver: 'd1',
-      connection: {
-        databaseId: '4f1034fd-0882-4869-b853-37933b6a5ce6',
-      },
-    },
+    db: 'sqlite',
   },
 
   i18n: {

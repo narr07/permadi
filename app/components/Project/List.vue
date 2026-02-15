@@ -101,49 +101,49 @@ function closeModal() {
         <UCard
           class="cursor-pointer hover:shadow-lg transition-shadow h-full"
           @click="openProjectModal(project)"
-      >
-        <template #header>
-          <div class="relative w-full h-48 -m-4 mb-4 overflow-hidden">
-            <NuxtImg
-              :src="project.image"
-              :alt="project.title"
-              class="w-full h-full object-cover"
-            />
-          </div>
-          <h2 class="text-xl font-bold leading-tight mt-2">
-            {{ project.title }}
-          </h2>
-        </template>
-
-        <p v-if="project.description" class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
-          {{ project.description }}
-        </p>
-
-        <template #footer>
-          <div class="flex items-center justify-between gap-3">
-            <div class="flex flex-wrap gap-1">
-              <UBadge
-                v-for="item in project.tech?.slice(0, 2)"
-                :key="item"
-                variant="subtle"
-                color="primary"
-                size="xs"
-              >
-                {{ item }}
-              </UBadge>
-              <UBadge v-if="project.tech?.length > 2" variant="subtle" color="neutral" size="xs">
-                +{{ project.tech.length - 2 }}
-              </UBadge>
+        >
+          <template #header>
+            <div class="relative w-full h-48 -m-4 mb-4 overflow-hidden">
+              <NuxtImg
+                :src="project.image"
+                :alt="project.title"
+                class="w-full h-full object-cover"
+              />
             </div>
-            <UButton
-              color="neutral"
-              variant="ghost"
-              icon="i-heroicons-arrow-right-20-solid"
-              trailing
-            />
-          </div>
-        </template>
-      </UCard>
+            <h2 class="text-xl font-bold leading-tight mt-2">
+              {{ project.title }}
+            </h2>
+          </template>
+
+          <p v-if="project.description" class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+            {{ project.description }}
+          </p>
+
+          <template #footer>
+            <div class="flex items-center justify-between gap-3">
+              <div class="flex flex-wrap gap-1">
+                <UBadge
+                  v-for="item in project.tech?.slice(0, 2)"
+                  :key="item"
+                  variant="subtle"
+                  color="primary"
+                  size="xs"
+                >
+                  {{ item }}
+                </UBadge>
+                <UBadge v-if="project.tech?.length > 2" variant="subtle" color="neutral" size="xs">
+                  +{{ project.tech.length - 2 }}
+                </UBadge>
+              </div>
+              <UButton
+                color="neutral"
+                variant="ghost"
+                icon="i-heroicons-arrow-right-20-solid"
+                trailing
+              />
+            </div>
+          </template>
+        </UCard>
       </Motion>
     </div>
 

@@ -8,6 +8,13 @@
       "when": 1769268672228,
       "tag": "0000_right_iron_lad",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1771172779621,
+      "tag": "0001_eager_bloodstorm",
+      "breakpoints": true
     }
   ]
 }

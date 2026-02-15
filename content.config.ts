@@ -10,7 +10,7 @@ const pageSchema = z.object({
 const blogSchema = pageSchema.extend({
   idBlog: z.number().optional(), // Auto-extracted from filename prefix (e.g., "1. Title.md" -> 1)
   readingTime: z.number().optional(), // Auto-calculated based on word count
-  date: z.string().optional(),
+  date: z.date(),
   image: z.string().optional(),
   tags: z.array(z.string()).optional(),
   category: z.enum(['pendidikan', 'programmer', 'desainer']).optional(),
@@ -25,9 +25,11 @@ const projectSchema = pageSchema.extend({
 
 const gallerySchema = z.object({
   title: z.string(),
-  imageUrl: z.string(),
-  category: z.enum(['pendidikan', 'programmer', 'desainer']).optional(),
+  image: z.string(),
+  category: z.array(z.string()),
   aspectRatio: z.string().default('1/1'),
+  tools: z.enum(['illustator', 'photoshop', 'affinity', 'lightroom']),
+  date: z.date(),
 })
 
 const collections: any = {}
