@@ -44,8 +44,6 @@ const { data: article } = await useAsyncData(`blog-${locale.value}-${route.param
   // Find translations based on idBlog
   const translations: Record<string, any> = {}
 
-  // Debug: log current post idBlog
-  console.warn('[Blog] Current post idBlog:', matchingPost.idBlog, 'path:', matchingPost.path)
 
   for (const loc of locales.value) {
     const locCode = typeof loc === 'string' ? loc : loc.code
@@ -58,15 +56,12 @@ const { data: article } = await useAsyncData(`blog-${locale.value}-${route.param
       .where('path', 'LIKE', locPathPrefix)
       .all()
 
-    // Debug: log all posts with their idBlog
-    console.warn(`[Blog] ${locCode} posts:`, allTranslatedPosts.map((p: any) => ({ path: p.path, idBlog: p.idBlog })))
 
     const translatedPost = allTranslatedPosts.find((post: any) => post.idBlog === matchingPost.idBlog)
 
     if (translatedPost) {
       const slug = generateSlug(translatedPost.path)
       translations[locCode] = { slug }
-      console.warn(`[Blog] Found translation for ${locCode}:`, slug)
     }
   }
 
@@ -110,6 +105,19 @@ useSeoMeta({
   ogImage: article.value?.image,
   twitterCard: 'summary_large_image',
 })
+
+useSchemaOrg([
+  defineArticle({
+    headline: article.value?.title,
+    description: article.value?.description,
+    image: article.value?.image,
+    datePublished: article.value?.date,
+    author: {
+      name: 'Permadi',
+      url: 'https://permadi.pages.dev',
+    },
+  }),
+])
 </script>
 
 <template>

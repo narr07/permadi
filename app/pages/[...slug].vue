@@ -54,6 +54,21 @@ const { data: page } = await useAsyncData(dataKey.value, async () => {
   watch: [locale, slug], // Refresh if either changes
 })
 
+// SEO meta for content pages
+useSeoMeta({
+  title: () => page.value?.title,
+  ogTitle: () => page.value?.title,
+  description: () => (page.value as any)?.description,
+  ogDescription: () => (page.value as any)?.description,
+})
+
+defineOgImageComponent('NuxtSeo', {
+  title: () => page.value?.title,
+  description: () => (page.value as any)?.description,
+  colorMode: 'dark',
+  theme: '#14b898',
+})
+
 // Reset i18n params on mount for non-blog pages
 onMounted(() => {
   // For catch-all pages, we don't have dynamic slug translations

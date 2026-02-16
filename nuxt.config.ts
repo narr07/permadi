@@ -18,22 +18,10 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
   ],
   site: {
-    url: 'https://permadi.pages.dev/',
+    url: 'https://permadi.dev',
     name: 'Permadi',
-    // description: 'Permadi adalah seorang guru, programmer dan desainer.',
+    description: 'Permadi is a teacher, programmer and designer.',
     defaultLocale: 'id',
-    locales: {
-      id: {
-        url: 'https://permadi.pages.dev/',
-        name: 'Permadi',
-        description: 'Permadi adalah seorang guru, programmer dan desainer.',
-      },
-      en: {
-        url: 'https://permadi.pages.dev/en',
-        name: 'Permadi',
-        description: 'Permadi is a teacher, programmer and designer.',
-      },
-    },
   },
   image: {
     cloudinary: {
