@@ -1,5 +1,5 @@
 // app/composables/useGalleryLikes.ts
-// Composable for fetching and adding gallery likes (no unlike, same as blog reactions)
+// Composable for fetching and adding gallery likes using image as identifier
 
 export function useGalleryLikes() {
   const toast = useToast()
@@ -8,18 +8,18 @@ export function useGalleryLikes() {
   const isSubmitting = ref<Record<string, boolean>>({})
 
   // Fetch like counts for multiple gallery items at once
-  async function fetchLikes(stems: string[]) {
-    if (stems.length === 0)
+  async function fetchLikes(images: string[]) {
+    if (images.length === 0)
       return
 
     isLoading.value = true
 
     try {
       const data = await $fetch<Record<string, { count: number }>>('/api/gallery-likes/batch', {
-        query: { stems: stems.join(',') },
+        query: { images: images.join(',') },
       })
-      for (const [stem, info] of Object.entries(data)) {
-        likeCounts.value[stem] = info.count
+      for (const [image, info] of Object.entries(data)) {
+        likeCounts.value[image] = info.count
       }
     }
     catch {
@@ -30,27 +30,27 @@ export function useGalleryLikes() {
     }
   }
 
-  // Add a like to a gallery item (no unlike)
-  async function addLike(stem: string) {
-    if (isSubmitting.value[stem])
+  // Add a like to a gallery item
+  async function addLike(image: string) {
+    if (isSubmitting.value[image])
       return
 
-    isSubmitting.value[stem] = true
+    isSubmitting.value[image] = true
 
     // Optimistic update
-    const previousCount = likeCounts.value[stem] ?? 0
-    likeCounts.value[stem] = previousCount + 1
+    const previousCount = likeCounts.value[image] ?? 0
+    likeCounts.value[image] = previousCount + 1
 
     try {
-      const response = await $fetch<{ stem: string, count: number }>('/api/gallery-likes', {
+      const response = await $fetch<{ image: string, count: number }>('/api/gallery-likes', {
         method: 'POST',
-        body: { stem },
+        body: { image },
       })
-      likeCounts.value[stem] = response.count
+      likeCounts.value[image] = response.count
     }
     catch (e: any) {
       // Rollback on error
-      likeCounts.value[stem] = previousCount
+      likeCounts.value[image] = previousCount
       const statusCode = e?.response?.status || e?.statusCode
       if (statusCode === 429) {
         toast.add({
@@ -70,16 +70,16 @@ export function useGalleryLikes() {
       }
     }
     finally {
-      isSubmitting.value[stem] = false
+      isSubmitting.value[image] = false
     }
   }
 
-  function getCount(stem: string): number {
-    return likeCounts.value[stem] ?? 0
+  function getCount(image: string): number {
+    return likeCounts.value[image] ?? 0
   }
 
-  function isLikeSubmitting(stem: string): boolean {
-    return isSubmitting.value[stem] ?? false
+  function isLikeSubmitting(image: string): boolean {
+    return isSubmitting.value[image] ?? false
   }
 
   return {

@@ -26,7 +26,7 @@ const { fetchLikes, addLike, getCount, isLikeSubmitting } = useGalleryLikes()
 // Fetch likes when galleries load
 watch(galleries, (items) => {
   if (items?.length) {
-    fetchLikes(items.map(g => g.stem))
+    fetchLikes(items.map(g => g.image))
   }
 }, { immediate: true })
 
@@ -200,18 +200,18 @@ const img = useImage()
 
             <!-- Like Button (Right) -->
             <button
-              :disabled="isLikeSubmitting(gallery.stem)"
+              :disabled="isLikeSubmitting(gallery.image)"
               class="group/like flex items-center gap-1.5 text-sm transition-all duration-200 rounded-full px-2 py-1 text-gray-400 dark:text-gray-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 active:scale-95"
-              :class="isLikeSubmitting(gallery.stem) ? 'opacity-50' : ''"
-              @click.stop="addLike(gallery.stem)"
+              :class="isLikeSubmitting(gallery.image) ? 'opacity-50' : ''"
+              @click.stop="addLike(gallery.image)"
             >
               <UIcon
                 name="i-lucide-heart"
                 class="size-4 transition-transform duration-200 group-hover/like:scale-110"
-                :class="isLikeSubmitting(gallery.stem) ? 'animate-pulse' : ''"
+                :class="isLikeSubmitting(gallery.image) ? 'animate-pulse' : ''"
               />
               <span class="text-xs font-medium tabular-nums">
-                {{ getCount(gallery.stem) }}
+                {{ getCount(gallery.image) }}
               </span>
             </button>
           </div>

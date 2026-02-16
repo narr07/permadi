@@ -1,45 +1,45 @@
 // server/api/gallery-likes/batch.get.ts
-// GET /api/gallery-likes/batch?stems=id/gallery/ani,id/gallery/ijem
-// Returns like counts for multiple gallery items
+// GET /api/gallery-likes/batch?images=img1.jpg,img2.jpg
+// Returns like counts for multiple gallery items using image as identifier
 import { inArray, sql } from 'drizzle-orm'
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
-  const stemsParam = query.stems as string
+  const imagesParam = query.images as string
 
-  if (!stemsParam) {
+  if (!imagesParam) {
     return {}
   }
 
-  const stems = stemsParam
+  const images = imagesParam
     .split(',')
     .map(s => s.trim())
     .filter(Boolean)
 
-  if (stems.length === 0) {
+  if (images.length === 0) {
     return {}
   }
 
-  // Get like counts grouped by stem
+  // Get like counts grouped by image (stored in galleryStem column)
   const results = await db
     .select({
-      galleryStem: schema.galleryLikes.galleryStem,
+      image: schema.galleryLikes.galleryStem,
       count: sql<number>`count(*)`,
     })
     .from(schema.galleryLikes)
-    .where(inArray(schema.galleryLikes.galleryStem, stems))
+    .where(inArray(schema.galleryLikes.galleryStem, images))
     .groupBy(schema.galleryLikes.galleryStem)
 
-  // Build response: { stem: { count } }
+  // Build response: { image: { count } }
   const counts: Record<string, { count: number }> = {}
 
-  for (const stem of stems) {
-    counts[stem] = { count: 0 }
+  for (const image of images) {
+    counts[image] = { count: 0 }
   }
 
   for (const row of results) {
-    if (counts[row.galleryStem]) {
-      counts[row.galleryStem].count = row.count
+    if (counts[row.image]) {
+      counts[row.image].count = row.count
     }
   }
 

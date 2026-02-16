@@ -1,16 +1,16 @@
 // server/api/gallery-likes.post.ts
 // POST /api/gallery-likes
-// Add a like to a gallery item (no unlike, same as blog reactions)
+// Add a like to a gallery item using image as identifier (same across locales)
 import { and, eq, gt, sql } from 'drizzle-orm'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-  const stem = body?.stem as string
+  const image = body?.image as string
 
-  if (!stem || typeof stem !== 'string') {
+  if (!image || typeof image !== 'string') {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Valid stem is required in request body',
+      statusMessage: 'Valid image is required in request body',
     })
   }
 
@@ -37,9 +37,9 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // Insert the like
+  // Insert the like (reuse galleryStem column to store image identifier)
   await db.insert(schema.galleryLikes).values({
-    galleryStem: stem,
+    galleryStem: image,
     ipAddress: ip,
   })
 
@@ -47,10 +47,10 @@ export default defineEventHandler(async (event) => {
   const countResult = await db
     .select({ count: sql<number>`count(*)` })
     .from(schema.galleryLikes)
-    .where(eq(schema.galleryLikes.galleryStem, stem))
+    .where(eq(schema.galleryLikes.galleryStem, image))
 
   return {
-    stem,
+    image,
     count: countResult[0]?.count ?? 0,
   }
 })
