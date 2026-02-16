@@ -35,6 +35,11 @@ export default defineNuxtConfig({
     },
   },
   image: {
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/daton7ry4/image/upload/',
+      format: 'webp',
+    },
+    format: ['webp'],
     domains: ['res.cloudinary.com'],
   },
   linkChecker: {
@@ -117,6 +122,16 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/api/**': { prerender: false },
+    // Cache Cloudinary images served via Nuxt Image proxy (IPX)
+    '/_ipx/**': {
+      swr: 86400, // Stale-while-revalidate: serve from cache, revalidate every 24h
+      cache: {
+        maxAge: 60 * 60 * 24 * 7, // Browser cache: 7 days
+      },
+      headers: {
+        'Cache-Control': 'public, max-age=604800, s-maxage=86400, stale-while-revalidate=86400',
+      },
+    },
   },
 
   nitro: {

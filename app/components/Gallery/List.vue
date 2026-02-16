@@ -167,7 +167,9 @@ const img = useImage()
               :src="gallery.image"
               :alt="gallery.title"
               format="webp"
-              :placeholder="img(gallery.image, { h: 15, w: 25, f: 'webp', blur: 5, q: 10 })"
+              quality="80"
+              sizes="sm:100vw md:50vw lg:33vw"
+              :placeholder="img(gallery.image, { height: 50, width: 25, format: 'webp', blur: 5, quality: 30 })"
               class="w-full h-auto object-cover group-hover:scale-110 transition-transform duration-300"
               loading="lazy"
             />
@@ -246,8 +248,11 @@ const img = useImage()
             <NuxtImg
               :src="selectedGallery.image"
               :alt="selectedGallery.title"
+              format="webp"
+              quality="85"
+              sizes="sm:100vw md:80vw lg:70vw"
               class="max-w-full max-h-full object-contain"
-              :placeholder="img(selectedGallery.image, { h: 35, w: 25, f: 'webp', blur: 5, q: 10 })"
+              :placeholder="img(selectedGallery.image, { height: 50, width: 25, format: 'webp', blur: 5, quality: 30 })"
             />
           </div>
 
