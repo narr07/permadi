@@ -3,6 +3,16 @@ import { Motion } from 'motion-v'
 
 const { locale, t } = useI18n()
 
+// Tool icon mapping
+const toolIconMap: Record<string, { icon: string, label: string, color: string }> = {
+  illustator: { icon: 'i-simple-icons-adobeillustrator', label: 'Illustrator', color: 'text-[#FF9A00]' },
+  photoshop: { icon: 'i-simple-icons-adobephotoshop', label: 'Photoshop', color: 'text-[#31A8FF]' },
+  affinity: { icon: 'i-simple-icons-affinitydesigner', label: 'Affinity', color: 'text-[#1B72BE]' },
+  lightroom: { icon: 'i-simple-icons-adobelightroom', label: 'Lightroom', color: 'text-[#31A8FF]' },
+  canva: { icon: 'i-simple-icons-canva', label: 'Canva', color: 'text-[#00C4CC]' },
+  figma: { icon: 'i-simple-icons-figma', label: 'Figma', color: 'text-[#F24E1E]' },
+}
+
 const { data: galleries } = await useAsyncData(`gallery-list-${locale.value}`, async () => {
   const collection = `${locale.value}_gallery` as any
   return await queryCollection(collection).all()
@@ -31,8 +41,23 @@ const allCategories = computed(() => {
   return Array.from(categorySet).sort()
 })
 
+// Extract all unique tools for filter
+const allTools = computed(() => {
+  const toolSet = new Set<string>()
+  galleries.value?.forEach((gallery) => {
+    if (gallery.tools) {
+      toolSet.add(gallery.tools)
+    }
+  })
+  return Array.from(toolSet).sort().map(tool => ({
+    value: tool,
+    label: toolIconMap[tool]?.label || tool,
+  }))
+})
+
 // Filter and pagination state
 const selectedCategory = ref<string | undefined>(undefined)
+const selectedTool = ref<string | undefined>(undefined)
 const currentPage = ref(1)
 const itemsPerPage = 12
 
@@ -40,11 +65,18 @@ const itemsPerPage = 12
 const filteredGalleries = computed(() => {
   if (!galleries.value)
     return []
-  if (!selectedCategory.value)
-    return galleries.value
-  return galleries.value.filter(gallery =>
-    gallery.category?.includes(selectedCategory.value!),
-  )
+  let result = galleries.value
+  if (selectedCategory.value) {
+    result = result.filter(gallery =>
+      gallery.category?.includes(selectedCategory.value!),
+    )
+  }
+  if (selectedTool.value) {
+    result = result.filter(gallery =>
+      gallery.tools === selectedTool.value,
+    )
+  }
+  return result
 })
 
 // Paginated galleries
@@ -55,9 +87,14 @@ const paginatedGalleries = computed(() => {
 })
 
 // Reset page when filter changes
-watch(selectedCategory, () => {
+watch([selectedCategory, selectedTool], () => {
   currentPage.value = 1
 })
+
+function clearFilters() {
+  selectedCategory.value = undefined
+  selectedTool.value = undefined
+}
 
 const selectedGallery = ref<any>(null)
 const isModalOpen = ref(false)
@@ -81,20 +118,29 @@ function closeModal() {
         v-model="selectedCategory"
         :items="allCategories"
         :placeholder="t('filter_by_category') || 'Filter by category...'"
-        class="w-56"
+        class="w-48"
         icon="i-heroicons-funnel"
       />
+      <USelectMenu
+        v-model="selectedTool"
+        :items="allTools"
+        value-key="value"
+        label-key="label"
+        :placeholder="t('filter_by_tool') || 'Filter by tool...'"
+        class="w-48"
+        icon="i-heroicons-wrench-screwdriver"
+      />
       <UButton
-        v-if="selectedCategory"
+        v-if="selectedCategory || selectedTool"
         size="sm"
         variant="ghost"
         color="neutral"
         icon="i-heroicons-x-mark-20-solid"
-        @click="selectedCategory = undefined"
+        @click="clearFilters"
       >
         {{ t('clear') || 'Clear' }}
       </UButton>
-      <span v-if="selectedCategory" class="text-sm text-gray-500">
+      <span v-if="selectedCategory || selectedTool" class="text-sm text-gray-500">
         {{ filteredGalleries.length }} {{ t('images_found') || 'image(s) found' }}
       </span>
     </div>
@@ -135,8 +181,22 @@ function closeModal() {
             </div>
           </div>
 
-          <!-- Footer: Like Button -->
-          <div class="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-900">
+          <!-- Footer: Tool Icon + Like Button -->
+          <div class="flex items-center justify-between px-3 py-2 bg-white dark:bg-gray-900">
+            <!-- Tool Icon (Left) -->
+            <div v-if="gallery.tools && toolIconMap[gallery.tools]" class="flex items-center gap-1.5">
+              <UIcon
+                :name="toolIconMap[gallery.tools].icon"
+                class="size-4"
+                :class="toolIconMap[gallery.tools].color"
+              />
+              <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+                {{ toolIconMap[gallery.tools].label }}
+              </span>
+            </div>
+            <div v-else />
+
+            <!-- Like Button (Right) -->
             <button
               :disabled="isToggling(gallery.stem)"
               class="flex items-center gap-1.5 text-sm transition-all duration-200 rounded-full px-2 py-1 hover:bg-red-50 dark:hover:bg-red-950/30"
