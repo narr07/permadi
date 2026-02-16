@@ -27,7 +27,6 @@ const gallerySchema = z.object({
   title: z.string(),
   image: z.string(),
   category: z.array(z.string()),
-  aspectRatio: z.string().default('1/1'),
   tools: z.enum(['illustator', 'photoshop', 'affinity', 'lightroom', 'canva', 'figma']),
   date: z.date(),
 })

@@ -158,5 +158,5 @@ h6 {
 }
 
 body {
-  @apply text-gray-600 dark:text-gray-200 font-sans text-[18px];
+  @apply text-gray-600 dark:text-gray-200 font-sans text-[16px];
 }
