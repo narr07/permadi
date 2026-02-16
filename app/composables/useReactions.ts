@@ -8,6 +8,7 @@ export interface ReactionCounts {
 }
 
 export function useReactions(postId: number | null | undefined) {
+  const toast = useToast()
   const counts = ref<ReactionCounts>({
     love: 0,
     like: 0,
@@ -62,7 +63,24 @@ export function useReactions(postId: number | null | undefined) {
     catch (e: any) {
       // Rollback on error
       counts.value = previousCounts
-      error.value = e?.data?.statusMessage || e?.message || 'Failed to add reaction'
+      const statusCode = e?.response?.status || e?.statusCode
+      if (statusCode === 429) {
+        toast.add({
+          title: 'Batas tercapai',
+          description: 'Kamu sudah mencapai batas maksimal reaksi. Coba lagi nanti ya!',
+          icon: 'i-heroicons-exclamation-triangle',
+          color: 'warning',
+        })
+      }
+      else {
+        toast.add({
+          title: 'Gagal',
+          description: 'Tidak bisa menambahkan reaksi. Coba lagi.',
+          icon: 'i-heroicons-x-circle',
+          color: 'error',
+        })
+      }
+      error.value = null
     }
     finally {
       isSubmitting.value = false

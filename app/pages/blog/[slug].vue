@@ -134,7 +134,7 @@ useSeoMeta({
 
       <UPageBody>
         <UCard>
-          <div v-if="article.image" class="relative w-full h-80 -m-4 mb-6 rounded-t-lg overflow-hidden">
+          <div v-if="article.image" class="relative w-full h-80 -m-8 mb-6 rounded-t-lg overflow-hidden">
             <NuxtImg
               :src="article.image"
               :alt="article.title"

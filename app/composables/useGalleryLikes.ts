@@ -7,6 +7,7 @@ interface GalleryLikeData {
 }
 
 export function useGalleryLikes() {
+  const toast = useToast()
   const likes = ref<Record<string, GalleryLikeData>>({})
   const isLoading = ref(false)
   const togglingStems = ref<Set<string>>(new Set())
@@ -53,9 +54,26 @@ export function useGalleryLikes() {
       })
       likes.value[stem] = { count: response.count, liked: response.liked }
     }
-    catch {
+    catch (e: any) {
       // Rollback on error
       likes.value[stem] = previous
+      const statusCode = e?.response?.status || e?.statusCode
+      if (statusCode === 429) {
+        toast.add({
+          title: 'Batas tercapai',
+          description: 'Kamu sudah mencapai batas maksimal like. Coba lagi nanti ya!',
+          icon: 'i-heroicons-exclamation-triangle',
+          color: 'warning',
+        })
+      }
+      else {
+        toast.add({
+          title: 'Gagal',
+          description: 'Tidak bisa memberikan like. Coba lagi.',
+          icon: 'i-heroicons-x-circle',
+          color: 'error',
+        })
+      }
     }
     finally {
       togglingStems.value.delete(stem)

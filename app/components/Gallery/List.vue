@@ -4,13 +4,13 @@ import { Motion } from 'motion-v'
 const { locale, t } = useI18n()
 
 // Tool icon mapping
-const toolIconMap: Record<string, { icon: string, label: string, color: string }> = {
-  illustator: { icon: 'i-simple-icons-adobeillustrator', label: 'Illustrator', color: 'text-[#FF9A00]' },
-  photoshop: { icon: 'i-simple-icons-adobephotoshop', label: 'Photoshop', color: 'text-[#31A8FF]' },
-  affinity: { icon: 'i-simple-icons-affinitydesigner', label: 'Affinity', color: 'text-[#1B72BE]' },
-  lightroom: { icon: 'i-simple-icons-adobelightroom', label: 'Lightroom', color: 'text-[#31A8FF]' },
-  canva: { icon: 'i-simple-icons-canva', label: 'Canva', color: 'text-[#00C4CC]' },
-  figma: { icon: 'i-simple-icons-figma', label: 'Figma', color: 'text-[#F24E1E]' },
+const toolIconMap: Record<string, { icon: string, label: string }> = {
+  illustator: { icon: 'i-narr-d-illustrator', label: 'Illustrator' },
+  photoshop: { icon: 'i-narr-d-photoshop', label: 'Photoshop' },
+  affinity: { icon: 'i-narr-d-affinity', label: 'Affinity' },
+  lightroom: { icon: 'i-narr-d-lightroom', label: 'Lightroom' },
+  canva: { icon: 'i-narr-d-canva', label: 'Canva' },
+  figma: { icon: 'i-narr-d-figma', label: 'Figma' },
 }
 
 const { data: galleries } = await useAsyncData(`gallery-list-${locale.value}`, async () => {
@@ -108,6 +108,7 @@ function closeModal() {
   isModalOpen.value = false
   selectedGallery.value = null
 }
+const img = useImage()
 </script>
 
 <template>
@@ -117,7 +118,7 @@ function closeModal() {
       <USelectMenu
         v-model="selectedCategory"
         :items="allCategories"
-        :placeholder="t('filter_by_category') || 'Filter by category...'"
+        placeholder="Tag"
         class="w-48"
         icon="i-heroicons-funnel"
       />
@@ -126,7 +127,7 @@ function closeModal() {
         :items="allTools"
         value-key="value"
         label-key="label"
-        :placeholder="t('filter_by_tool') || 'Filter by tool...'"
+        placeholder="Tools"
         class="w-48"
         icon="i-heroicons-wrench-screwdriver"
       />
@@ -165,6 +166,8 @@ function closeModal() {
             <NuxtImg
               :src="gallery.image"
               :alt="gallery.title"
+              format="webp"
+              :placeholder="img(gallery.image, { h: 15, w: 25, f: 'webp', blur: 5, q: 10 })"
               class="w-full h-auto object-cover group-hover:scale-110 transition-transform duration-300"
               loading="lazy"
             />
@@ -185,14 +188,13 @@ function closeModal() {
           <div class="flex items-center justify-between px-3 py-2 bg-white dark:bg-gray-900">
             <!-- Tool Icon (Left) -->
             <div v-if="gallery.tools && toolIconMap[gallery.tools]" class="flex items-center gap-1.5">
-              <UIcon
-                :name="toolIconMap[gallery.tools].icon"
-                class="size-4"
-                :class="toolIconMap[gallery.tools].color"
-              />
-              <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                {{ toolIconMap[gallery.tools].label }}
-              </span>
+              <UTooltip :text="toolIconMap[gallery.tools].label">
+                <UIcon
+                  :name="toolIconMap[gallery.tools].icon"
+                  class="size-4"
+                  :class="toolIconMap[gallery.tools].color"
+                />
+              </UTooltip>
             </div>
             <div v-else />
 
@@ -248,6 +250,7 @@ function closeModal() {
               :src="selectedGallery.image"
               :alt="selectedGallery.title"
               class="max-w-full max-h-full object-contain"
+              :placeholder="img(selectedGallery.image, { h: 35, w: 25, f: 'webp', blur: 5, q: 10 })"
             />
           </div>
 
