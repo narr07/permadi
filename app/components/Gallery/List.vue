@@ -169,7 +169,7 @@ const img = useImage()
               format="webp"
               quality="80"
               sizes="sm:100vw md:50vw lg:33vw"
-              :placeholder="img(gallery.image, { height: 50, width: 25, format: 'webp', blur: 5, quality: 30 })"
+              :placeholder="img(gallery.image, { height: 35, width: 25, format: 'webp', blur: 5, quality: 30 })"
               class="w-full h-auto object-cover group-hover:scale-110 transition-transform duration-300"
               loading="lazy"
             />

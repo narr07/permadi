@@ -36,8 +36,8 @@ export default defineNuxtConfig({
   },
   image: {
     cloudinary: {
-      // baseURL: 'https://res.cloudinary.com/daton7ry4/image/upload/',
-      baseURL: 'https://res.cloudinary.com/daton7ry4/image/fetch',
+      baseURL: 'https://res.cloudinary.com/daton7ry4/image/upload/q_auto/f_auto/',
+      // baseURL: 'https://res.cloudinary.com/daton7ry4/image/fetch',
       format: 'webp',
     },
     format: ['webp'],
