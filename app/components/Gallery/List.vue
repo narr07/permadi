@@ -26,7 +26,7 @@ const { fetchLikes, addLike, getCount, isLikeSubmitting } = useGalleryLikes()
 // Fetch likes when galleries load
 watch(galleries, (items) => {
   if (items?.length) {
-    fetchLikes(items.map(g => g.image))
+    fetchLikes(items.map(g => getImageKey(g.image)))
   }
 }, { immediate: true })
 
@@ -109,6 +109,14 @@ function closeModal() {
   selectedGallery.value = null
 }
 const img = useImage()
+
+// Reconstruct full Cloudinary URL for likes API key (backward compatibility)
+const CLOUDINARY_BASE = 'https://res.cloudinary.com/daton7ry4/image/upload'
+function getImageKey(imagePath: string): string {
+  if (imagePath.startsWith('http'))
+    return imagePath
+  return `${CLOUDINARY_BASE}${imagePath}`
+}
 </script>
 
 <template>
@@ -161,14 +169,17 @@ const img = useImage()
           <!-- Image (clickable to open modal) -->
           <div
             class="relative cursor-pointer overflow-hidden bg-gray-100 dark:bg-gray-800"
+
             @click="openGalleryModal(gallery)"
           >
             <NuxtImg
+              provider="cloudinary"
               :src="gallery.image"
               :alt="gallery.title"
               format="webp"
               quality="80"
-              sizes="sm:100vw md:50vw lg:33vw"
+              width="400"
+              densities="1x 2x"
               :placeholder="img(gallery.image, { height: 35, width: 25, format: 'webp', blur: 5, quality: 30 })"
               class="w-full h-auto object-cover group-hover:scale-110 transition-transform duration-300"
               loading="lazy"
@@ -202,18 +213,18 @@ const img = useImage()
 
             <!-- Like Button (Right) -->
             <button
-              :disabled="isLikeSubmitting(gallery.image)"
+              :disabled="isLikeSubmitting(getImageKey(gallery.image))"
               class="group/like flex items-center gap-1.5 text-sm transition-all duration-200 rounded-full px-2 py-1 text-gray-400 dark:text-gray-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 active:scale-95"
-              :class="isLikeSubmitting(gallery.image) ? 'opacity-50' : ''"
-              @click.stop="addLike(gallery.image)"
+              :class="isLikeSubmitting(getImageKey(gallery.image)) ? 'opacity-50' : ''"
+              @click.stop="addLike(getImageKey(gallery.image))"
             >
               <UIcon
                 name="i-lucide-heart"
                 class="size-4 transition-transform duration-200 group-hover/like:scale-110"
-                :class="isLikeSubmitting(gallery.image) ? 'animate-pulse' : ''"
+                :class="isLikeSubmitting(getImageKey(gallery.image)) ? 'animate-pulse' : ''"
               />
               <span class="text-xs font-medium tabular-nums">
-                {{ getCount(gallery.image) }}
+                {{ getCount(getImageKey(gallery.image)) }}
               </span>
             </button>
           </div>
@@ -246,11 +257,13 @@ const img = useImage()
           <!-- Full Image -->
           <div class="relative w-full flex items-center justify-center bg-black rounded-lg overflow-hidden" style="max-height: 70vh;">
             <NuxtImg
+              provider="cloudinary"
               :src="selectedGallery.image"
               :alt="selectedGallery.title"
               format="webp"
-              quality="85"
-              sizes="sm:100vw md:80vw lg:70vw"
+              quality="90"
+              width="900"
+              densities="1x 2x"
               class="max-w-full max-h-full object-contain"
               :placeholder="img(selectedGallery.image, { height: 50, width: 25, format: 'webp', blur: 5, quality: 30 })"
             />
