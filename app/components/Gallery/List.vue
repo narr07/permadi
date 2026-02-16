@@ -21,7 +21,7 @@ const { data: galleries } = await useAsyncData(`gallery-list-${locale.value}`, a
 })
 
 // Gallery likes
-const { fetchLikes, toggleLike, getCount, isLiked, isToggling } = useGalleryLikes()
+const { fetchLikes, addLike, getCount, isLikeSubmitting } = useGalleryLikes()
 
 // Fetch likes when galleries load
 watch(galleries, (items) => {
@@ -200,18 +200,15 @@ const img = useImage()
 
             <!-- Like Button (Right) -->
             <button
-              :disabled="isToggling(gallery.stem)"
-              class="flex items-center gap-1.5 text-sm transition-all duration-200 rounded-full px-2 py-1 hover:bg-red-50 dark:hover:bg-red-950/30"
-              :class="isLiked(gallery.stem) ? 'text-red-500' : 'text-gray-400 dark:text-gray-500 hover:text-red-400'"
-              @click.stop="toggleLike(gallery.stem)"
+              :disabled="isLikeSubmitting(gallery.stem)"
+              class="group/like flex items-center gap-1.5 text-sm transition-all duration-200 rounded-full px-2 py-1 text-gray-400 dark:text-gray-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 active:scale-95"
+              :class="isLikeSubmitting(gallery.stem) ? 'opacity-50' : ''"
+              @click.stop="addLike(gallery.stem)"
             >
               <UIcon
-                :name="isLiked(gallery.stem) ? 'i-lucide-heart' : 'i-lucide-heart'"
-                class="size-4 transition-transform duration-200"
-                :class="[
-                  isLiked(gallery.stem) ? 'fill-red-500 scale-110' : '',
-                  isToggling(gallery.stem) ? 'animate-pulse' : '',
-                ]"
+                name="i-lucide-heart"
+                class="size-4 transition-transform duration-200 group-hover/like:scale-110"
+                :class="isLikeSubmitting(gallery.stem) ? 'animate-pulse' : ''"
               />
               <span class="text-xs font-medium tabular-nums">
                 {{ getCount(gallery.stem) }}

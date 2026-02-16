@@ -1,18 +1,13 @@
 // app/composables/useGalleryLikes.ts
-// Composable for fetching and toggling gallery likes in batch
-
-interface GalleryLikeData {
-  count: number
-  liked: boolean
-}
+// Composable for fetching and adding gallery likes (no unlike, same as blog reactions)
 
 export function useGalleryLikes() {
   const toast = useToast()
-  const likes = ref<Record<string, GalleryLikeData>>({})
+  const likeCounts = ref<Record<string, number>>({})
   const isLoading = ref(false)
-  const togglingStems = ref<Set<string>>(new Set())
+  const isSubmitting = ref<Record<string, boolean>>({})
 
-  // Fetch likes for multiple gallery items at once
+  // Fetch like counts for multiple gallery items at once
   async function fetchLikes(stems: string[]) {
     if (stems.length === 0)
       return
@@ -20,10 +15,12 @@ export function useGalleryLikes() {
     isLoading.value = true
 
     try {
-      const data = await $fetch<Record<string, GalleryLikeData>>('/api/gallery-likes/batch', {
+      const data = await $fetch<Record<string, { count: number }>>('/api/gallery-likes/batch', {
         query: { stems: stems.join(',') },
       })
-      likes.value = { ...likes.value, ...data }
+      for (const [stem, info] of Object.entries(data)) {
+        likeCounts.value[stem] = info.count
+      }
     }
     catch {
       // Silently fail — likes are non-critical
@@ -33,30 +30,27 @@ export function useGalleryLikes() {
     }
   }
 
-  // Toggle like on a gallery item
-  async function toggleLike(stem: string) {
-    if (togglingStems.value.has(stem))
+  // Add a like to a gallery item (no unlike)
+  async function addLike(stem: string) {
+    if (isSubmitting.value[stem])
       return
 
-    togglingStems.value.add(stem)
+    isSubmitting.value[stem] = true
 
     // Optimistic update
-    const previous = likes.value[stem] ?? { count: 0, liked: false }
-    likes.value[stem] = {
-      count: previous.liked ? Math.max(0, previous.count - 1) : previous.count + 1,
-      liked: !previous.liked,
-    }
+    const previousCount = likeCounts.value[stem] ?? 0
+    likeCounts.value[stem] = previousCount + 1
 
     try {
-      const response = await $fetch<{ stem: string, count: number, liked: boolean }>('/api/gallery-likes', {
+      const response = await $fetch<{ stem: string, count: number }>('/api/gallery-likes', {
         method: 'POST',
         body: { stem },
       })
-      likes.value[stem] = { count: response.count, liked: response.liked }
+      likeCounts.value[stem] = response.count
     }
     catch (e: any) {
       // Rollback on error
-      likes.value[stem] = previous
+      likeCounts.value[stem] = previousCount
       const statusCode = e?.response?.status || e?.statusCode
       if (statusCode === 429) {
         toast.add({
@@ -76,29 +70,24 @@ export function useGalleryLikes() {
       }
     }
     finally {
-      togglingStems.value.delete(stem)
+      isSubmitting.value[stem] = false
     }
   }
 
   function getCount(stem: string): number {
-    return likes.value[stem]?.count ?? 0
+    return likeCounts.value[stem] ?? 0
   }
 
-  function isLiked(stem: string): boolean {
-    return likes.value[stem]?.liked ?? false
-  }
-
-  function isToggling(stem: string): boolean {
-    return togglingStems.value.has(stem)
+  function isLikeSubmitting(stem: string): boolean {
+    return isSubmitting.value[stem] ?? false
   }
 
   return {
-    likes,
+    likeCounts,
     isLoading,
     fetchLikes,
-    toggleLike,
+    addLike,
     getCount,
-    isLiked,
-    isToggling,
+    isLikeSubmitting,
   }
 }

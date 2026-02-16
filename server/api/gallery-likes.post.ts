@@ -1,6 +1,6 @@
 // server/api/gallery-likes.post.ts
 // POST /api/gallery-likes
-// Toggle like on a gallery item (like/unlike based on IP)
+// Add a like to a gallery item (no unlike, same as blog reactions)
 import { and, eq, gt, sql } from 'drizzle-orm'
 
 export default defineEventHandler(async (event) => {
@@ -36,39 +36,12 @@ export default defineEventHandler(async (event) => {
       statusMessage: 'Rate limit exceeded. Maximum 10 likes per 24 hours.',
     })
   }
-  const existing = await db
-    .select({ id: schema.galleryLikes.id })
-    .from(schema.galleryLikes)
-    .where(
-      and(
-        eq(schema.galleryLikes.galleryStem, stem),
-        eq(schema.galleryLikes.ipAddress, ip),
-      ),
-    )
-    .limit(1)
 
-  let liked: boolean
-
-  if (existing.length > 0) {
-    // Already liked → unlike (remove the record)
-    await db
-      .delete(schema.galleryLikes)
-      .where(
-        and(
-          eq(schema.galleryLikes.galleryStem, stem),
-          eq(schema.galleryLikes.ipAddress, ip),
-        ),
-      )
-    liked = false
-  }
-  else {
-    // Not liked → like (insert new record)
-    await db.insert(schema.galleryLikes).values({
-      galleryStem: stem,
-      ipAddress: ip,
-    })
-    liked = true
-  }
+  // Insert the like
+  await db.insert(schema.galleryLikes).values({
+    galleryStem: stem,
+    ipAddress: ip,
+  })
 
   // Return updated count
   const countResult = await db
@@ -79,6 +52,5 @@ export default defineEventHandler(async (event) => {
   return {
     stem,
     count: countResult[0]?.count ?? 0,
-    liked,
   }
 })
