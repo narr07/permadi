@@ -9,6 +9,9 @@ const route = useRoute()
 // Search term for ContentSearch
 const searchTerm = ref('')
 
+// Mobile dropdown menu state
+const mobileMenuOpen = ref(false)
+
 // Get blog navigation based on current locale
 const { data: navigation, refresh: refreshNavigation } = await useAsyncData(
   'blog-navigation',
@@ -57,30 +60,77 @@ const items = computed<NavigationMenuItem[]>(() => [
 <template>
   <UApp :locale="locales[locale]">
     <UContainer class="fixed top-2 inset-x-0 z-50">
-      <UHeader class="border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/60 backdrop-blur-sm px-4 py-2">
-        <template #title>
-          <div class="flex items-center gap-2 text-brand-500 font-bold uppercase ">
-            <Logo />
-          </div>
-        </template>
+      <nav class="flex items-center justify-between border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/60 backdrop-blur-sm px-4 py-2">
+        <!-- Left: Logo -->
+        <NuxtLink :to="localePath('/')" class="flex items-center gap-2 text-brand-500 font-bold uppercase">
+          <Logo />
+        </NuxtLink>
 
-        <UNavigationMenu :items="items" class="justify-center uppercase text-xs font-medium" />
+        <!-- Center: Desktop Navigation (hidden on mobile) -->
+        <UNavigationMenu :items="items" class="hidden sm:flex justify-center uppercase text-xs font-medium" />
 
-        <template #right>
+        <!-- Right: Action buttons -->
+        <div class="flex items-center gap-1">
           <UContentSearchButton collapsed />
           <UColorModeButton />
+
+          <!-- Desktop: Language switcher -->
           <UButton
             color="neutral"
             variant="ghost"
             :label="locale === 'id' ? 'EN' : 'ID'"
+            class="hidden sm:inline-flex"
             @click="setLocale(locale === 'id' ? 'en' : 'id')"
           />
-        </template>
 
-        <template #body>
-          <UNavigationMenu :items="items" orientation="vertical" class="-mx-2.5 uppercase" />
-        </template>
-      </UHeader>
+          <!-- Mobile: Popover Menu -->
+          <UPopover
+            v-model:open="mobileMenuOpen"
+            class="sm:hidden"
+          >
+            <UButton
+              color="neutral"
+              variant="ghost"
+              :icon="mobileMenuOpen ? 'i-narr-close' : 'i-narr-menu'"
+            />
+
+            <template #content>
+              <div class="p-2 w-48 space-y-1">
+                <!-- Nav Links -->
+                <NuxtLink
+                  v-for="item in items"
+                  :key="item.label"
+                  :to="item.to"
+                  class="flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium uppercase transition-colors"
+                  :class="item.active
+                    ? 'bg-primary-50 dark:bg-primary-950/50 text-primary-500'
+                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
+                  @click="mobileMenuOpen = false"
+                >
+                  <UIcon
+                    v-if="item.active"
+                    name="i-narr-chevron-right"
+                    class="size-3.5"
+                  />
+                  {{ item.label }}
+                </NuxtLink>
+
+                <!-- Divider -->
+                <USeparator />
+
+                <!-- Language Switcher -->
+                <button
+                  class="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  @click="setLocale(locale === 'id' ? 'en' : 'id'); mobileMenuOpen = false"
+                >
+                  <UIcon name="i-lucide-languages" class="size-4" />
+                  {{ locale === 'id' ? 'English' : 'Indonesia' }}
+                </button>
+              </div>
+            </template>
+          </UPopover>
+        </div>
+      </nav>
     </UContainer>
 
     <!-- Content Search Modal (Blog only) -->

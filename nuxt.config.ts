@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     'motion-v/nuxt',
     '@nuxthub/core',
     '@nuxtjs/seo',
+    '@nuxt/scripts',
   ],
   site: {
     url: 'https://permadi.pages.dev/',

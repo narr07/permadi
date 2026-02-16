@@ -52,6 +52,7 @@ const allTools = computed(() => {
   return Array.from(toolSet).sort().map(tool => ({
     value: tool,
     label: toolIconMap[tool]?.label || tool,
+    icon: toolIconMap[tool]?.icon || 'i-heroicons-wrench-screwdriver',
   }))
 })
 
@@ -99,8 +100,18 @@ function clearFilters() {
 const selectedGallery = ref<any>(null)
 const isModalOpen = ref(false)
 
+// Track image loaded state for list items
+const imageLoadedMap = reactive<Record<string, boolean>>({})
+function onImageLoaded(key: string) {
+  imageLoadedMap[key] = true
+}
+
+// Track modal image loaded state
+const modalImageLoaded = ref(false)
+
 function openGalleryModal(gallery: any) {
   selectedGallery.value = gallery
+  modalImageLoaded.value = false
   isModalOpen.value = true
 }
 
@@ -137,7 +148,6 @@ function getImageKey(imagePath: string): string {
         label-key="label"
         placeholder="Tools"
         class="w-48"
-        icon="i-heroicons-wrench-screwdriver"
       />
       <UButton
         v-if="selectedCategory || selectedTool"
@@ -169,9 +179,13 @@ function getImageKey(imagePath: string): string {
           <!-- Image (clickable to open modal) -->
           <div
             class="relative cursor-pointer overflow-hidden bg-gray-100 dark:bg-gray-800"
-
             @click="openGalleryModal(gallery)"
           >
+            <!-- Skeleton placeholder while image is loading -->
+            <USkeleton
+              v-if="!imageLoadedMap[gallery.stem]"
+              class="w-full aspect-3/4 absolute inset-0 z-10"
+            />
             <NuxtImg
               provider="cloudinary"
               :src="gallery.image"
@@ -182,7 +196,9 @@ function getImageKey(imagePath: string): string {
               densities="1x 2x"
               :placeholder="img(gallery.image, { height: 35, width: 25, format: 'webp', blur: 5, quality: 30 })"
               class="w-full h-auto object-cover group-hover:scale-110 transition-transform duration-300"
+              :class="imageLoadedMap[gallery.stem] ? 'opacity-100' : 'opacity-0'"
               loading="lazy"
+              @load="onImageLoaded(gallery.stem)"
             />
             <!-- Overlay on Hover -->
             <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-end">
@@ -205,7 +221,6 @@ function getImageKey(imagePath: string): string {
                 <UIcon
                   :name="toolIconMap[gallery.tools].icon"
                   class="size-4"
-                  :class="toolIconMap[gallery.tools].color"
                 />
               </UTooltip>
             </div>
@@ -256,6 +271,10 @@ function getImageKey(imagePath: string): string {
         <div class="space-y-6">
           <!-- Full Image -->
           <div class="relative w-full flex items-center justify-center bg-black rounded-lg overflow-hidden" style="max-height: 70vh;">
+            <!-- Skeleton placeholder for modal image -->
+            <div v-if="!modalImageLoaded" class="w-full flex flex-col items-center justify-center gap-3 py-12">
+              <USkeleton class="w-full aspect-thumbnail rounded-lg" />
+            </div>
             <NuxtImg
               provider="cloudinary"
               :src="selectedGallery.image"
@@ -264,8 +283,10 @@ function getImageKey(imagePath: string): string {
               quality="90"
               width="900"
               densities="1x 2x"
-              class="max-w-full max-h-full object-contain"
+              class="max-w-full max-h-full object-contain transition-opacity duration-300"
+              :class="modalImageLoaded ? 'opacity-100' : 'opacity-0 absolute'"
               :placeholder="img(selectedGallery.image, { height: 50, width: 25, format: 'webp', blur: 5, quality: 30 })"
+              @load="modalImageLoaded = true"
             />
           </div>
 

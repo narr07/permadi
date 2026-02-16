@@ -78,6 +78,18 @@ const { data: article } = await useAsyncData(`blog-${locale.value}-${route.param
   watch: [locale],
 })
 
+// Fetch surround (prev/next) posts
+const { data: surround } = await useAsyncData(`blog-surround-${locale.value}-${route.params.slug}`, async () => {
+  if (!article.value)
+    return null
+  const collectionName = `${locale.value}_blog` as any
+  return queryCollectionItemSurroundings(collectionName, article.value.path, {
+    fields: ['title', 'description'],
+  })
+}, {
+  watch: [locale, article],
+})
+
 // Update i18n params for language switcher (do this before potential 404)
 watch(article, (newArticle) => {
   if (newArticle?.translations) {
@@ -101,7 +113,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <UContainer v-if="article" class="py-12 md:py-20 space-y-4">
+  <div v-if="article" class="py-12 md:py-20 space-y-4">
     <UPage>
       <UButton
         :to="localePath('/blog')"
@@ -132,9 +144,9 @@ useSeoMeta({
         </template>
       </UPageHeader>
 
-      <UPageBody>
-        <UCard>
-          <div v-if="article.image" class="relative w-full h-80 -m-8 mb-6 rounded-t-lg overflow-hidden">
+      <UPageBody :ui="{ wrapper: 'px-0 sm:px-0' }">
+        <UCard :ui="{ body: 'p-2 sm:p-4' }">
+          <div v-if="article.image" class="relative w-full h-80 -m-2 sm:-m-4 mb-6 rounded-t-lg overflow-hidden">
             <NuxtImg
               :src="article.image"
               :alt="article.title"
@@ -166,11 +178,15 @@ useSeoMeta({
             </div>
           </template>
         </UCard>
+
+        <USeparator v-if="surround?.filter(Boolean).length" class="my-8" />
+
+        <UContentSurround :surround="(surround as any)" />
       </UPageBody>
 
       <template v-if="article?.body?.toc?.links?.length" #right>
         <UContentToc highlight highlight-color="warning" color="warning" :links="article.body.toc.links" />
       </template>
     </UPage>
-  </UContainer>
+  </div>
 </template>
