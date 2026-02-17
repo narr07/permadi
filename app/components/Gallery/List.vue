@@ -174,7 +174,7 @@ function getImageKey(imagePath: string): string {
         :transition="{ delay: 0.05 * index, duration: 0.4 }"
       >
         <div
-          class="group overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800 hover:border-primary-500 transition-all hover:shadow-lg"
+          class="group overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800 hover:border-primary-500 transition-all hover:shadow"
         >
           <!-- Image (clickable to open modal) -->
           <div
@@ -220,28 +220,28 @@ function getImageKey(imagePath: string): string {
               <UTooltip :text="toolIconMap[gallery.tools].label">
                 <UIcon
                   :name="toolIconMap[gallery.tools].icon"
-                  class="size-4"
                 />
               </UTooltip>
             </div>
             <div v-else />
-
             <!-- Like Button (Right) -->
-            <button
-              :disabled="isLikeSubmitting(getImageKey(gallery.image))"
-              class="group/like flex items-center gap-1.5 text-sm transition-all duration-200 rounded-full px-2 py-1 text-gray-400 dark:text-gray-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 active:scale-95"
-              :class="isLikeSubmitting(getImageKey(gallery.image)) ? 'opacity-50' : ''"
-              @click.stop="addLike(getImageKey(gallery.image))"
+            <UChip
+              :text="getCount(getImageKey(gallery.image))"
+              size="2xl"
+              position="top-right"
+              color="error"
+              :show="getCount(getImageKey(gallery.image)) > 0"
             >
-              <UIcon
-                name="i-lucide-heart"
-                class="size-4 transition-transform duration-200 group-hover/like:scale-110"
-                :class="isLikeSubmitting(getImageKey(gallery.image)) ? 'animate-pulse' : ''"
+              <UButton
+                :icon="isLikeSubmitting(getImageKey(gallery.image)) ? 'i-lucide-loader-2' : 'i-lucide-heart'"
+                color="neutral"
+                size="sm"
+                variant="subtle"
+                :class="{ 'animate-pulse': isLikeSubmitting(getImageKey(gallery.image)) }"
+                :disabled="isLikeSubmitting(getImageKey(gallery.image))"
+                @click.stop="addLike(getImageKey(gallery.image))"
               />
-              <span class="text-xs font-medium tabular-nums">
-                {{ getCount(getImageKey(gallery.image)) }}
-              </span>
-            </button>
+            </UChip>
           </div>
         </div>
       </Motion>
@@ -268,55 +268,50 @@ function getImageKey(imagePath: string): string {
       :title="selectedGallery.title"
     >
       <template #body>
-        <div class="space-y-6">
-          <!-- Full Image -->
-          <div class="relative w-full flex items-center justify-center bg-black rounded-lg overflow-hidden" style="max-height: 70vh;">
-            <!-- Skeleton placeholder for modal image -->
-            <div v-if="!modalImageLoaded" class="w-full flex flex-col items-center justify-center gap-3 py-12">
-              <USkeleton class="w-full aspect-thumbnail rounded-lg" />
-            </div>
-            <NuxtImg
-              provider="cloudinary"
-              :src="selectedGallery.image"
-              :alt="selectedGallery.title"
-              format="webp"
-              quality="90"
-              width="900"
-              densities="1x 2x"
-              class="max-w-full max-h-full object-contain transition-opacity duration-300"
-              :class="modalImageLoaded ? 'opacity-100' : 'opacity-0 absolute'"
-              :placeholder="img(selectedGallery.image, { height: 50, width: 25, format: 'webp', blur: 5, quality: 30 })"
-              @load="modalImageLoaded = true"
-            />
+        <div class="relative w-full flex items-center justify-center rounded-xl overflow-hidden shadow" style="max-height: 75vh;">
+          <!-- Skeleton placeholder for modal image -->
+          <div v-if="!modalImageLoaded" class="w-full flex flex-col items-center justify-center gap-3 py-12">
+            <USkeleton class="w-full aspect-thumbnail rounded-lg" />
           </div>
-
-          <!-- Details -->
-          <div class="space-y-4">
-            <!-- Category -->
-            <div v-if="selectedGallery.category?.length" class="flex flex-wrap gap-2">
-              <UBadge v-for="cat in selectedGallery.category" :key="cat" variant="subtle" color="primary">
-                {{ cat }}
-              </UBadge>
-            </div>
-
-            <!-- Title -->
-            <div>
-              <h3 class="text-xl font-bold text-gray-900 dark:text-white">
-                {{ selectedGallery.title }}
-              </h3>
-            </div>
-          </div>
+          <NuxtImg
+            provider="cloudinary"
+            :src="selectedGallery.image"
+            :alt="selectedGallery.title"
+            format="webp"
+            quality="90"
+            width="900"
+            densities="1x 2x"
+            class="max-w-full max-h-full object-contain transition-opacity duration-300"
+            :class="modalImageLoaded ? 'opacity-100' : 'opacity-0 absolute'"
+            :placeholder="img(selectedGallery.image, { height: 50, width: 25, format: 'webp', blur: 5, quality: 30 })"
+            @load="modalImageLoaded = true"
+          />
         </div>
       </template>
 
       <template #footer>
-        <UButton
-          color="neutral"
-          variant="ghost"
-          @click="closeModal"
-        >
-          {{ t('close') || 'Close' }}
-        </UButton>
+        <div class="flex flex-wrap items-center justify-between w-full gap-4">
+          <!-- Categories -->
+          <div v-if="selectedGallery.category?.length" class="flex flex-wrap gap-1.5">
+            <UBadge
+              v-for="cat in selectedGallery.category"
+              :key="cat"
+              variant="subtle"
+              color="primary"
+            >
+              {{ cat }}
+            </UBadge>
+          </div>
+
+          <!-- Tool -->
+          <div v-if="selectedGallery.tools && toolIconMap[selectedGallery.tools]" class="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+            <UTooltip :text="toolIconMap[selectedGallery.tools].label">
+              <UIcon
+                :name="toolIconMap[selectedGallery.tools].icon"
+              />
+            </UTooltip>
+          </div>
+        </div>
       </template>
     </UModal>
   </div>

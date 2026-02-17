@@ -44,7 +44,7 @@ function onSelect(_e: Event, item: TimelineItem) {
 </script>
 
 <template>
-  <UContainer>
+  <div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center justify-center">
       <!-- Kolom Kiri: Timeline -->
       <UCard
@@ -85,5 +85,5 @@ function onSelect(_e: Event, item: TimelineItem) {
         </div>
       </UCard>
     </div>
-  </UContainer>
+  </div>
 </template>

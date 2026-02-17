@@ -24,7 +24,7 @@ const allTech = computed(() => {
 // Filter and pagination state
 const selectedTech = ref<string | undefined>(undefined)
 const currentPage = ref(1)
-const itemsPerPage = 6
+const itemsPerPage = 12
 
 // Filtered projects
 const filteredProjects = computed(() => {
@@ -90,7 +90,7 @@ function closeModal() {
     </div>
 
     <!-- Projects Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <UBlogPosts>
       <Motion
         v-for="(project, index) in paginatedProjects"
         :key="project.stem"
@@ -98,54 +98,32 @@ function closeModal() {
         :in-view="{ opacity: 1, transform: 'translateY(0)' }"
         :transition="{ delay: 0.1 * index, duration: 0.4 }"
       >
-        <UCard
-          class="cursor-pointer hover:shadow-lg transition-shadow h-full"
+        <UBlogPost
+          :title="project.title"
+          :image="{ src: project.image, alt: project.title }"
+          variant="outline"
+          class="cursor-pointer"
           @click="openProjectModal(project)"
         >
-          <template #header>
-            <div class="relative w-full h-48 -m-4 mb-4 overflow-hidden">
-              <NuxtImg
-                :src="project.image"
-                :alt="project.title"
-                class="w-full h-full object-cover"
-              />
-            </div>
-            <h2 class="text-xl font-bold leading-tight mt-2">
-              {{ project.title }}
-            </h2>
-          </template>
-
-          <p v-if="project.description" class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
-            {{ project.description }}
-          </p>
-
-          <template #footer>
-            <div class="flex items-center justify-between gap-3">
-              <div class="flex flex-wrap gap-1">
-                <UBadge
-                  v-for="item in project.tech?.slice(0, 2)"
-                  :key="item"
-                  variant="subtle"
-                  color="primary"
-                  size="xs"
-                >
-                  {{ item }}
-                </UBadge>
-                <UBadge v-if="project.tech?.length > 2" variant="subtle" color="neutral" size="xs">
-                  +{{ project.tech.length - 2 }}
-                </UBadge>
-              </div>
-              <UButton
-                color="neutral"
-                variant="ghost"
-                icon="i-heroicons-arrow-right-20-solid"
-                trailing
-              />
+          <template #badge>
+            <div class="flex flex-wrap gap-1">
+              <UBadge
+                v-for="item in project.tech?.slice(0, 2)"
+                :key="item"
+                variant="subtle"
+                color="primary"
+                size="xs"
+              >
+                {{ item }}
+              </UBadge>
+              <UBadge v-if="project.tech?.length > 2" variant="subtle" color="neutral" size="xs">
+                +{{ project.tech.length - 2 }}
+              </UBadge>
             </div>
           </template>
-        </UCard>
+        </UBlogPost>
       </Motion>
-    </div>
+    </UBlogPosts>
 
     <!-- Empty State -->
     <div v-if="paginatedProjects.length === 0" class="text-center py-12 text-gray-500">
