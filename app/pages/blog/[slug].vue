@@ -44,7 +44,6 @@ const { data: article } = await useAsyncData(`blog-${locale.value}-${route.param
   // Find translations based on idBlog
   const translations: Record<string, any> = {}
 
-
   for (const loc of locales.value) {
     const locCode = typeof loc === 'string' ? loc : loc.code
     const locCollection = `${locCode}_blog` as any
@@ -55,7 +54,6 @@ const { data: article } = await useAsyncData(`blog-${locale.value}-${route.param
     const allTranslatedPosts = await queryCollection(locCollection)
       .where('path', 'LIKE', locPathPrefix)
       .all()
-
 
     const translatedPost = allTranslatedPosts.find((post: any) => post.idBlog === matchingPost.idBlog)
 
@@ -193,7 +191,7 @@ useSchemaOrg([
       </UPageBody>
 
       <template v-if="article?.body?.toc?.links?.length" #right>
-        <UContentToc highlight highlight-color="warning" color="warning" :links="article.body.toc.links" />
+        <UContentToc highlight highlight-color="primary" dark:highlight-color="warning" color="warning" :links="article.body.toc.links" />
       </template>
     </UPage>
   </div>
