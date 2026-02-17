@@ -115,10 +115,11 @@ function openGalleryModal(gallery: any) {
   isModalOpen.value = true
 }
 
-function closeModal() {
-  isModalOpen.value = false
-  selectedGallery.value = null
-}
+watch(isModalOpen, (val) => {
+  if (!val) {
+    selectedGallery.value = null
+  }
+})
 const img = useImage()
 
 // Reconstruct full Cloudinary URL for likes API key (backward compatibility)
@@ -225,23 +226,16 @@ function getImageKey(imagePath: string): string {
             </div>
             <div v-else />
             <!-- Like Button (Right) -->
-            <UChip
-              :text="getCount(getImageKey(gallery.image))"
-              size="2xl"
-              position="top-right"
-              color="error"
-              :show="getCount(getImageKey(gallery.image)) > 0"
-            >
-              <UButton
-                :icon="isLikeSubmitting(getImageKey(gallery.image)) ? 'i-lucide-loader-2' : 'i-lucide-heart'"
-                color="neutral"
-                size="sm"
-                variant="subtle"
-                :class="{ 'animate-pulse': isLikeSubmitting(getImageKey(gallery.image)) }"
-                :disabled="isLikeSubmitting(getImageKey(gallery.image))"
-                @click.stop="addLike(getImageKey(gallery.image))"
-              />
-            </UChip>
+            <UButton
+              :icon="isLikeSubmitting(getImageKey(gallery.image)) ? 'i-lucide-loader-2' : 'i-lucide-heart'"
+              :label="String(getCount(getImageKey(gallery.image)) || 0)"
+              color="neutral"
+              size="sm"
+              variant="subtle"
+              :class="{ 'animate-pulse': isLikeSubmitting(getImageKey(gallery.image)) }"
+              :disabled="isLikeSubmitting(getImageKey(gallery.image))"
+              @click.stop="addLike(getImageKey(gallery.image))"
+            />
           </div>
         </div>
       </Motion>

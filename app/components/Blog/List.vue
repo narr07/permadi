@@ -136,7 +136,7 @@ function formatDate(dateStr: string) {
 
                 <!-- Reactions -->
                 <div v-if="post.idBlog && getTotalReactions(post.idBlog) > 0" class="flex items-center gap-1">
-                  <UBadge
+                  <UButton
                     v-if="reactionCounts[post.idBlog]?.love"
                     color="error"
                     variant="subtle"
@@ -144,7 +144,7 @@ function formatDate(dateStr: string) {
                     icon="i-heroicons-heart"
                     :label="String(reactionCounts[post.idBlog]?.love ?? 0)"
                   />
-                  <UBadge
+                  <UButton
                     v-if="reactionCounts[post.idBlog]?.like"
                     color="info"
                     variant="subtle"
@@ -152,7 +152,7 @@ function formatDate(dateStr: string) {
                     icon="i-heroicons-hand-thumb-up"
                     :label="String(reactionCounts[post.idBlog]?.like ?? 0)"
                   />
-                  <UBadge
+                  <UButton
                     v-if="reactionCounts[post.idBlog]?.sad"
                     color="warning"
                     variant="subtle"
