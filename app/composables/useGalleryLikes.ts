@@ -30,6 +30,8 @@ export function useGalleryLikes() {
     }
   }
 
+  const { t } = useI18n()
+
   // Add a like to a gallery item
   async function addLike(image: string) {
     if (isSubmitting.value[image])
@@ -54,17 +56,17 @@ export function useGalleryLikes() {
       const statusCode = e?.response?.status || e?.statusCode
       if (statusCode === 429) {
         toast.add({
-          title: 'Batas tercapai',
-          description: 'Kamu sudah mencapai batas maksimal like. Coba lagi nanti ya!',
-          icon: 'i-heroicons-exclamation-triangle',
+          title: t('toast.limit_reached'),
+          description: t('toast.like_limit_msg'),
+          icon: 'i-narr-warning',
           color: 'warning',
         })
       }
       else {
         toast.add({
-          title: 'Gagal',
-          description: 'Tidak bisa memberikan like. Coba lagi.',
-          icon: 'i-heroicons-x-circle',
+          title: t('toast.error_title'),
+          description: t('toast.like_error_msg'),
+          icon: 'i-narr-error',
           color: 'error',
         })
       }

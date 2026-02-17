@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
 
   for (const row of results) {
     if (counts[row.image]) {
-      counts[row.image].count = row.count
+      counts[row.image]!.count = row.count
     }
   }
 

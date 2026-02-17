@@ -35,18 +35,24 @@ const { data: posts } = await useAsyncData(`blog-list-${locale.value}`, () => {
 
 // Fetch reaction counts for all posts
 const reactionCounts = ref<Record<number, { love: number, like: number, sad: number }>>({})
+const reactionsLoading = ref(true)
 
 async function fetchReactions() {
-  if (!posts.value || posts.value.length === 0)
+  if (!posts.value || posts.value.length === 0) {
+    reactionsLoading.value = false
     return
+  }
 
   const postIds = posts.value
     .map((post: any) => post.idBlog)
     .filter((id: any) => id != null)
 
-  if (postIds.length === 0)
+  if (postIds.length === 0) {
+    reactionsLoading.value = false
     return
+  }
 
+  reactionsLoading.value = true
   try {
     const data = await $fetch<Record<number, { love: number, like: number, sad: number }>>('/api/reactions/batch', {
       query: { postIds: postIds.join(',') },
@@ -55,6 +61,9 @@ async function fetchReactions() {
   }
   catch (e) {
     console.error('Failed to fetch reactions:', e)
+  }
+  finally {
+    reactionsLoading.value = false
   }
 }
 
@@ -107,60 +116,82 @@ function formatDate(dateStr: string) {
           :to="getBlogUrl(post)"
           variant="outline"
           class="h-full"
-          :ui="{ title: 'line-clamp-2', description: 'line-clamp-2' }"
+          :ui="{ title: 'line-clamp-2', description: 'line-clamp-2', footer: 'px-4 sm:px-6 pb-4 sm:pb-6' }"
         >
-          <template #badge>
-            <UBadge v-if="post.category" color="primary" variant="solid" size="sm">
-              {{ t(`categories.${post.category}`) }}
-            </UBadge>
+          <template #header>
+            <div class="relative">
+              <NuxtImg
+                :src="post.image"
+                :alt="post.title"
+                class="object-cover object-top w-full h-full transform transition-transform duration-200 group-hover/blog-post:scale-110"
+              />
+              <!-- Category badge overlay on image -->
+              <UBadge
+                v-if="post.category"
+                color="primary"
+                variant="solid"
+                size="sm"
+                class="absolute top-3 right-3 z-10"
+              >
+                {{ t(`categories.${post.category}`) }}
+              </UBadge>
+            </div>
           </template>
 
+          <!-- Empty badge slot to prevent meta from rendering badge -->
+          <template #badge />
+
           <template #date>
-            <div class="space-y-3">
-              <time v-if="post.date" :datetime="post.date" class="block text-sm text-gray-500 dark:text-gray-400">
-                {{ formatDate(post.date) }}
-              </time>
+            {{ formatDate(post.date) }}
+          </template>
 
-              <div class="flex items-center justify-between w-full">
-                <!-- Reading time -->
-                <div class="flex items-center gap-2">
-                  <UBadge
-                    v-if="post.readingTime"
-                    color="neutral"
-                    variant="subtle"
-                    size="xs"
-                    icon="i-heroicons-clock"
-                    :label="`${post.readingTime} min`"
-                  />
-                </div>
+          <template #footer>
+            <div class="flex items-center justify-between w-full">
+              <!-- Reading time -->
+              <div class="flex items-center gap-2">
+                <UBadge
+                  v-if="post.readingTime"
+                  color="neutral"
+                  variant="subtle"
+                  size="xs"
+                  icon="i-narr-time"
+                  :label="`${post.readingTime} min`"
+                />
+              </div>
 
-                <!-- Reactions -->
-                <div v-if="post.idBlog && getTotalReactions(post.idBlog) > 0" class="flex items-center gap-1">
-                  <UButton
-                    v-if="reactionCounts[post.idBlog]?.love"
-                    color="error"
-                    variant="subtle"
-                    size="xs"
-                    icon="i-heroicons-heart"
-                    :label="String(reactionCounts[post.idBlog]?.love ?? 0)"
-                  />
-                  <UButton
-                    v-if="reactionCounts[post.idBlog]?.like"
-                    color="info"
-                    variant="subtle"
-                    size="xs"
-                    icon="i-heroicons-hand-thumb-up"
-                    :label="String(reactionCounts[post.idBlog]?.like ?? 0)"
-                  />
-                  <UButton
-                    v-if="reactionCounts[post.idBlog]?.sad"
-                    color="warning"
-                    variant="subtle"
-                    size="xs"
-                    icon="i-heroicons-face-frown"
-                    :label="String(reactionCounts[post.idBlog]?.sad ?? 0)"
-                  />
-                </div>
+              <!-- Reactions skeleton -->
+              <div v-if="reactionsLoading && post.idBlog" class="flex items-center gap-1">
+                <USkeleton class="h-6 w-14 rounded-md" />
+                <USkeleton class="h-6 w-14 rounded-md" />
+                <USkeleton class="h-6 w-14 rounded-md" />
+              </div>
+
+              <!-- Reactions -->
+              <div v-else-if="post.idBlog && getTotalReactions(post.idBlog) > 0" class="flex items-center gap-1">
+                <UButton
+                  v-if="reactionCounts[post.idBlog]?.love"
+                  color="error"
+                  variant="subtle"
+                  size="xs"
+                  icon="i-narr-love"
+                  :label="String(reactionCounts[post.idBlog]?.love ?? 0)"
+                />
+                <UButton
+                  v-if="reactionCounts[post.idBlog]?.like"
+                  color="info"
+                  variant="subtle"
+                  size="xs"
+                  icon="i-narr-lovefinger"
+                  :label="String(reactionCounts[post.idBlog]?.like ?? 0)"
+                />
+                <UButton
+                  v-if="reactionCounts[post.idBlog]?.sad"
+                  color="warning"
+                  variant="subtle"
+                  size="xs"
+                  icon="i-narr-like"
+                  :label="String(reactionCounts[post.idBlog]?.sad ?? 0)"
+                />
               </div>
             </div>
           </template>
@@ -169,7 +200,7 @@ function formatDate(dateStr: string) {
     </UBlogPosts>
 
     <div v-else class="text-center py-20 bg-gray-50 dark:bg-gray-800/50 rounded-3xl border-2 border-dashed border-gray-200 dark:border-gray-800">
-      <UIcon name="i-heroicons-inbox" class="w-16 h-16 text-gray-300 dark:text-gray-700 mx-auto mb-4" />
+      <UIcon name="i-narr-loading" class="w-16 h-16 text-gray-300 dark:text-gray-700 mx-auto mb-4" />
       <p class="text-gray-500 dark:text-gray-400 text-lg">
         {{ t('no_articles') || 'Belum ada artikel yang dipublikasikan.' }}
       </p>

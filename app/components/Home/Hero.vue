@@ -6,21 +6,22 @@ withDefaults(defineProps<{
   title: '',
   description: '',
 })
+const { t } = useI18n()
 const items = [
   {
     component: resolveComponent('SvgDev'),
-    title: 'Full-stack Developer',
-    description: 'Membangun aplikasi web yang skalabel dan performa tinggi.',
+    title: t('developer.title'),
+    description: t('developer.description'),
   },
   {
     component: resolveComponent('SvgDesigner'),
-    title: 'Graphic Designer',
-    description: 'Menciptakan desain visual yang estetis dan komunikatif.',
+    title: t('designer.title'),
+    description: t('designer.description'),
   },
   {
     component: resolveComponent('SvgGuru'),
-    title: 'Educator',
-    description: 'Berdedikasi dalam pendidikan teknologi yang bermakna.',
+    title: t('teacher.title'),
+    description: t('teacher.description'),
   },
 ]
 </script>

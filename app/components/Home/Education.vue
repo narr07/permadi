@@ -1,40 +1,50 @@
 <script setup lang="ts">
 import type { TimelineItem } from '@nuxt/ui'
 
-const pendidikan = ref<TimelineItem[]>([
+const { t } = useI18n()
+
+const pendidikan = [
   {
     date: '2015 - 2021',
-    title: 'Universitas Pendidikan Indonesia',
-    description: 'S1 PGSD',
-    icon: 'i-lucide-school',
+    title: t('edu.upi'),
+    description: t('edu.jurusan'),
+    avatar: {
+      src: '/logo.png',
+    },
     value: 'upi',
   },
   {
     date: '2012 - 2015',
     title: 'SMA Negeri 1 Rajagaluh',
-    description: 'Sekolah Menengah Atas - Jurusan IPA',
-    icon: 'i-lucide-graduation-cap',
+    description: t('edu.sma'),
+    avatar: {
+      src: '/logo.png',
+    },
     value: 'sman1rjl',
   },
   {
     date: '2009 - 2012',
     title: 'SMP Negeri 1 Rajagaluh',
-    description: 'Sekolah Menengah Pertama',
-    icon: 'i-lucide-book',
+    description: t('edu.smp'),
+    avatar: {
+      src: '/logo.png',
+    },
     value: 'smpn1rjl',
   },
   {
     date: '2003 - 2009',
     title: 'SD Negeri Teja 1',
-    description: 'Sekolah Dasar',
-    icon: 'i-lucide-book-open',
+    description: t('edu.sd'),
+    avatar: {
+      src: '/logo.png',
+    },
     value: 'sdn1teja',
   },
-])
+] satisfies TimelineItem[]
 
 const active = ref<string | number>('upi')
 
-const activeSchool = computed(() => pendidikan.value.find(item => item.value === active.value))
+const activeSchool = computed(() => pendidikan.find(item => item.value === active.value))
 
 function onSelect(_e: Event, item: TimelineItem) {
   if (item.value) {
@@ -67,7 +77,7 @@ function onSelect(_e: Event, item: TimelineItem) {
         <div v-if="activeSchool" class="space-y-6">
           <div class="flex justify-center">
             <div class="w-32 h-32 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20">
-              <UIcon :name="activeSchool.icon" class="w-16 h-16 text-primary" />
+              <NuxtImg :src="activeSchool.avatar!.src" class="w-16 h-16 text-primary" />
             </div>
           </div>
 

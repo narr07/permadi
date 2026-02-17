@@ -21,7 +21,7 @@ const { data: galleries } = await useAsyncData(`gallery-list-${locale.value}`, a
 })
 
 // Gallery likes
-const { fetchLikes, addLike, getCount, isLikeSubmitting } = useGalleryLikes()
+const { fetchLikes, addLike, getCount, isLikeSubmitting, isLoading: likesLoading } = useGalleryLikes()
 
 // Fetch likes when galleries load
 watch(galleries, (items) => {
@@ -52,7 +52,7 @@ const allTools = computed(() => {
   return Array.from(toolSet).sort().map(tool => ({
     value: tool,
     label: toolIconMap[tool]?.label || tool,
-    icon: toolIconMap[tool]?.icon || 'i-heroicons-wrench-screwdriver',
+    icon: toolIconMap[tool]?.icon || 'i-narr-tools',
   }))
 })
 
@@ -140,7 +140,7 @@ function getImageKey(imagePath: string): string {
         :items="allCategories"
         placeholder="Tag"
         class="w-48"
-        icon="i-heroicons-funnel"
+        icon="i-narr-filter"
       />
       <USelectMenu
         v-model="selectedTool"
@@ -155,7 +155,7 @@ function getImageKey(imagePath: string): string {
         size="sm"
         variant="ghost"
         color="neutral"
-        icon="i-heroicons-x-mark-20-solid"
+        icon="i-narr-close"
         @click="clearFilters"
       >
         {{ t('clear') || 'Clear' }}
@@ -218,16 +218,18 @@ function getImageKey(imagePath: string): string {
           <div class="flex items-center justify-between px-3 py-2 bg-white dark:bg-gray-900">
             <!-- Tool Icon (Left) -->
             <div v-if="gallery.tools && toolIconMap[gallery.tools]" class="flex items-center gap-1.5">
-              <UTooltip :text="toolIconMap[gallery.tools].label">
+              <UTooltip :text="toolIconMap[gallery.tools!]?.label">
                 <UIcon
-                  :name="toolIconMap[gallery.tools].icon"
+                  :name="toolIconMap[gallery.tools!]?.icon"
                 />
               </UTooltip>
             </div>
             <div v-else />
             <!-- Like Button (Right) -->
+            <USkeleton v-if="likesLoading" class="h-8 w-14 rounded-md" />
             <UButton
-              :icon="isLikeSubmitting(getImageKey(gallery.image)) ? 'i-lucide-loader-2' : 'i-lucide-heart'"
+              v-else
+              :icon="isLikeSubmitting(getImageKey(gallery.image)) ? 'i-narr-loading' : 'i-narr-love'"
               :label="String(getCount(getImageKey(gallery.image)) || 0)"
               color="neutral"
               size="sm"
@@ -299,9 +301,9 @@ function getImageKey(imagePath: string): string {
 
           <!-- Tool -->
           <div v-if="selectedGallery.tools && toolIconMap[selectedGallery.tools]" class="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-            <UTooltip :text="toolIconMap[selectedGallery.tools].label">
+            <UTooltip :text="toolIconMap[selectedGallery.tools]?.label">
               <UIcon
-                :name="toolIconMap[selectedGallery.tools].icon"
+                :name="toolIconMap[selectedGallery.tools]?.icon"
               />
             </UTooltip>
           </div>

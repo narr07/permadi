@@ -19,6 +19,8 @@ export function useReactions(postId: number | null | undefined) {
   const isSubmitting = ref(false)
   const error = ref<string | null>(null)
 
+  const { t } = useI18n()
+
   // Fetch reaction counts
   async function fetchReactions() {
     if (!postId)
@@ -34,7 +36,7 @@ export function useReactions(postId: number | null | undefined) {
       counts.value = data
     }
     catch (e: any) {
-      error.value = e?.message || 'Failed to load reactions'
+      error.value = e?.message || t('toast.load_reactions_error')
     }
     finally {
       isLoading.value = false
@@ -66,17 +68,17 @@ export function useReactions(postId: number | null | undefined) {
       const statusCode = e?.response?.status || e?.statusCode
       if (statusCode === 429) {
         toast.add({
-          title: 'Batas tercapai',
-          description: 'Kamu sudah mencapai batas maksimal reaksi. Coba lagi nanti ya!',
-          icon: 'i-heroicons-exclamation-triangle',
+          title: t('toast.limit_reached'),
+          description: t('toast.reaction_limit_msg'),
+          icon: 'i-narr-warning',
           color: 'warning',
         })
       }
       else {
         toast.add({
-          title: 'Gagal',
-          description: 'Tidak bisa menambahkan reaksi. Coba lagi.',
-          icon: 'i-heroicons-x-circle',
+          title: t('toast.error_title'),
+          description: t('toast.reaction_error_msg'),
+          icon: 'i-narr-error',
           color: 'error',
         })
       }

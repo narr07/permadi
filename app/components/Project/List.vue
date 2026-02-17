@@ -72,14 +72,14 @@ function closeModal() {
         :items="allTech"
         :placeholder="t('filter_by_tech') || 'Filter by tech...'"
         class="w-48"
-        icon="i-heroicons-funnel"
+        icon="i-narr-filter"
       />
       <UButton
         v-if="selectedTech"
         size="sm"
         variant="ghost"
         color="neutral"
-        icon="i-heroicons-x-mark-20-solid"
+        icon="i-narr-close"
         @click="selectedTech = undefined"
       >
         {{ t('clear') || 'Clear' }}
@@ -197,7 +197,7 @@ function closeModal() {
           :to="selectedProject.link"
           target="_blank"
           color="primary"
-          icon="i-heroicons-arrow-top-right-on-square-20-solid"
+          icon="i-narr-external"
           trailing
         >
           {{ t('view_project') || 'View Project' }}

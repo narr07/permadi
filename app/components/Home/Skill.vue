@@ -1,55 +1,64 @@
 <script setup lang="ts">
-interface SkillItem {
-  icon: string
-  title: string
-  link: string
-}
-
 const props = withDefaults(defineProps<{
   frontend?: SkillItem[]
   backend?: SkillItem[]
   tools?: SkillItem[]
 }>(), {
   frontend: () => [
-    { icon: 'i-simple-icons-vuedotjs', title: 'Vue.js', link: 'https://vuejs.org' },
-    { icon: 'i-simple-icons-nuxtdotjs', title: 'Nuxt.js', link: 'https://nuxt.com' },
-    { icon: 'i-simple-icons-tailwindcss', title: 'Tailwind CSS', link: 'https://tailwindcss.com' },
-    { icon: 'i-simple-icons-typescript', title: 'TypeScript', link: 'https://www.typescriptlang.org' },
-    { icon: 'i-simple-icons-javascript', title: 'JavaScript', link: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
+    { icon: 'i-narr-f-nuxt', title: 'Nuxt.js', link: 'https://nuxt.com' },
+    { icon: 'i-narr-f-vue', title: 'Vue.js', link: 'https://vuejs.org' },
+    { icon: 'i-narr-f-tailwind', title: 'Tailwind CSS', link: 'https://tailwindcss.com' },
+    { icon: 'i-narr-f-next', title: 'Next.js', link: 'https://nextjs.org' },
+    { icon: 'i-narr-f-svg', title: 'SVG', link: 'https://developer.mozilla.org/en-US/docs/Web/SVG' },
+    { icon: 'i-narr-f-astro', title: 'Astro', link: 'https://astro.build' },
+    { icon: 'i-narr-f-flutter', title: 'Flutter', link: 'https://flutter.dev' },
   ],
   backend: () => [
-    { icon: 'i-simple-icons-nodedotjs', title: 'Node.js', link: 'https://nodejs.org' },
-    { icon: 'i-simple-icons-hono', title: 'Hono', link: 'https://hono.dev' },
-    { icon: 'i-simple-icons-sqlite', title: 'SQLite', link: 'https://www.sqlite.org' },
-    { icon: 'i-simple-icons-postgresql', title: 'PostgreSQL', link: 'https://www.postgresql.org' },
-    { icon: 'i-simple-icons-drizzle', title: 'Drizzle ORM', link: 'https://orm.drizzle.team' },
+    { icon: 'i-narr-b-bun', title: 'Bun', link: 'https://bun.sh' },
+    { icon: 'i-narr-b-dart', title: 'Dart', link: 'https://dart.dev' },
+    { icon: 'i-narr-b-django', title: 'Django', link: 'https://www.djangoproject.com' },
+    { icon: 'i-narr-b-laravel', title: 'Laravel', link: 'https://laravel.com' },
+    { icon: 'i-narr-b-node', title: 'Node.js', link: 'https://nodejs.org' },
+    { icon: 'i-narr-b-python', title: 'Python', link: 'https://python.org' },
+    { icon: 'i-narr-b-supabase', title: 'Supabase', link: 'https://supabase.com' },
+
   ],
   tools: () => [
-    { icon: 'i-simple-icons-visualstudiocode', title: 'VS Code', link: 'https://code.visualstudio.com' },
-    { icon: 'i-simple-icons-figma', title: 'Figma', link: 'https://www.figma.com' },
-    { icon: 'i-simple-icons-git', title: 'Git', link: 'https://git-scm.com' },
-    { icon: 'i-simple-icons-github', title: 'GitHub', link: 'https://github.com' },
-    { icon: 'i-simple-icons-pnpm', title: 'PNPM', link: 'https://pnpm.io' },
+    { icon: 'i-narr-d-illustrator', title: 'Adobe Illustrator', link: 'https://www.adobe.com/products/illustrator.html' },
+    { icon: 'i-narr-d-photoshop', title: 'Adobe Photoshop', link: 'https://www.adobe.com/products/photoshop.html' },
+    { icon: 'i-narr-d-figma', title: 'Figma', link: 'https://www.figma.com' },
+    { icon: 'i-narr-d-premiere', title: 'Adobe Premiere', link: 'https://www.adobe.com/products/premiere.html' },
+    { icon: 'i-narr-d-aftereffect', title: 'Adobe After Effects', link: 'https://www.adobe.com/products/aftereffects.html' },
+    { icon: 'i-narr-d-xd', title: 'Adobe XD', link: 'https://www.adobe.com/products/xd.html' },
+    { icon: 'i-narr-d-affinity', title: 'Affinity Designer', link: 'https://affinity.serif.com/designer' },
   ],
 })
+
+const { t } = useI18n()
+
+interface SkillItem {
+  icon: string
+  title: string
+  link: string
+}
 
 const categories = [
   {
     title: 'Frontend',
-    icon: 'i-heroicons-computer-desktop',
-    description: 'Modern web technologies I use to build beautiful interfaces.',
+    icon: 'i-narr-pc',
+    description: t('skill.frontend'),
     skills: props.frontend,
   },
   {
     title: 'Backend',
-    icon: 'i-heroicons-server-stack',
-    description: 'Robust server-side solutions and database management.',
+    icon: 'i-narr-database',
+    description: t('skill.backend'),
     skills: props.backend,
   },
   {
     title: 'Tools',
-    icon: 'i-heroicons-wrench-screwdriver',
-    description: 'Essential tools and software for efficient development.',
+    icon: 'i-narr-tools',
+    description: t('skill.tools'),
     skills: props.tools,
   },
 ]
@@ -67,15 +76,17 @@ const categories = [
       spotlight
       spotlight-color="primary"
     >
-      <div class="flex flex-wrap gap-3 mt-6">
+      <div class="flex flex-wrap justify-evenly gap-2 mt-4">
         <div
           v-for="skill in category.skills"
           :key="skill.title"
         >
           <UTooltip :text="skill.title">
-            <UButton
-              :icon="skill.icon" size="xl" variant="ghost" :to="skill.link"
-            />
+            <NuxtLink
+              :to="skill.link"
+            >
+              <UIcon :name="skill.icon" class="size-10" />
+            </NuxtLink>
           </UTooltip>
         </div>
       </div>

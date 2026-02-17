@@ -7,9 +7,9 @@ const props = defineProps<{
 const { counts, isLoading, isSubmitting, error, addReaction } = useReactions(props.postId)
 
 const reactions = [
-  { type: 'love' as const, icon: 'i-heroicons-heart', label: 'Love', color: 'text-red-500' },
-  { type: 'like' as const, icon: 'i-heroicons-hand-thumb-up', label: 'Like', color: 'text-blue-500' },
-  { type: 'sad' as const, icon: 'i-heroicons-face-frown', label: 'Sad', color: 'text-yellow-500' },
+  { type: 'love' as const, icon: 'i-narr-love', label: 'Love', color: 'text-red-500' },
+  { type: 'like' as const, icon: 'i-narr-lovefinger', label: 'Love Full', color: 'text-blue-500' },
+  { type: 'sad' as const, icon: 'i-narr-like', label: 'Like', color: 'text-yellow-500' },
 ]
 </script>
 
@@ -24,7 +24,7 @@ const reactions = [
 
       <!-- Reaction buttons -->
       <div class="flex items-center gap-4">
-        <button
+        <UButton
           v-for="reaction in reactions"
           :key="reaction.type"
           :disabled="isSubmitting"
@@ -45,7 +45,7 @@ const reactions = [
             <span v-if="isLoading" class="animate-pulse">...</span>
             <span v-else>{{ counts[reaction.type] }}</span>
           </span>
-        </button>
+        </UButton>
       </div>
 
       <p class="text-xs text-gray-500">

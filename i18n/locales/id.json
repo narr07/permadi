@@ -1,6 +1,6 @@
 {
   "nav": {
-    "home": "Beranda",
+    "home": "Home",
     "blog": "Blog",
     "projects": "Projek",
     "gallery": "Galeri"
@@ -26,11 +26,44 @@
   "featured": "Unggulan",
   "view_project": "Lihat Projek",
   "close": "Tutup",
-  "filter_by_category": "Filter berdasarkan kategori...",
+  "filter_by_category": "Tag",
   "images_found": "gambar ditemukan",
   "no_images_found": "Tidak ada gambar yang ditemukan.",
   "min_read": "menit baca",
   "search": {
     "placeholder": "Cari blog..."
+  },
+  "skill": {
+    "frontend": "Teknologi untuk membangun UI",
+    "backend": "Teknologi untuk membangun Backend",
+    "tools": "Aplikasi yang saya gunakan untuk desain"
+  },
+  "edu": {
+    "upi": "Universitas Pendidikan Indonesia",
+    "jurusan": "S1 PGSD",
+    "sma": "Sekolah Menengah Atas (IPA)",
+    "smp": "Sekolah Menengah Pertama",
+    "sd": "Sekolah Dasar"
+  },
+  "developer": {
+    "title": "Full-stack Developer",
+    "description": "Menguasai teknologi frontend dan backend untuk membangun aplikasi."
+  },
+  "designer": {
+    "title": "Desainer Grafis",
+    "description": "Menguasai aplikasi desain untuk membuat visual yang estetis dan komunikatif."
+  },
+  "teacher": {
+    "title": "Guru",
+    "description": "Menguasai ilmu pendidikan dalam mengajar siswa."
+  },
+  "toast": {
+    "limit_reached": "Batas tercapai",
+    "like_limit_msg": "Kamu sudah mencapai batas maksimal like. Coba lagi nanti ya!",
+    "reaction_limit_msg": "Kamu sudah mencapai batas maksimal reaksi. Coba lagi nanti ya!",
+    "error_title": "Gagal",
+    "like_error_msg": "Tidak bisa memberikan like. Coba lagi.",
+    "reaction_error_msg": "Tidak bisa menambahkan reaksi. Coba lagi.",
+    "load_reactions_error": "Gagal memuat reaksi"
   }
 }

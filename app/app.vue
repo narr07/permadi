@@ -78,7 +78,7 @@ const items = computed<NavigationMenuItem[]>(() => [
           <UButton
             color="neutral"
             variant="ghost"
-            :label="locale === 'id' ? 'EN' : 'ID'"
+            :icon="locale === 'id' ? 'i-narr-en' : 'i-narr-id'"
             class="hidden sm:inline-flex"
             @click="setLocale(locale === 'id' ? 'en' : 'id')"
           />
@@ -119,13 +119,10 @@ const items = computed<NavigationMenuItem[]>(() => [
                 <USeparator />
 
                 <!-- Language Switcher -->
-                <button
-                  class="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                <UButton
+                  :icon="locale === 'id' ? 'i-narr-en' : 'i-narr-id'"
                   @click="setLocale(locale === 'id' ? 'en' : 'id'); mobileMenuOpen = false"
-                >
-                  <UIcon name="i-lucide-languages" class="size-4" />
-                  {{ locale === 'id' ? 'English' : 'Indonesia' }}
-                </button>
+                />
               </div>
             </template>
           </UPopover>
@@ -163,28 +160,44 @@ const items = computed<NavigationMenuItem[]>(() => [
 
       <template #right>
         <UButton
-          icon="i-simple-icons-discord"
+          icon="i-narr-soc-mail"
           color="neutral"
           variant="ghost"
           to="https://go.nuxt.com/discord"
           target="_blank"
-          aria-label="Discord"
+          aria-label="Email"
         />
         <UButton
-          icon="i-simple-icons-x"
+          icon="i-narr-soc-ig"
           color="neutral"
           variant="ghost"
           to="https://go.nuxt.com/x"
           target="_blank"
-          aria-label="X"
+          aria-label="Instagram"
         />
         <UButton
-          icon="i-simple-icons-github"
+          icon="i-narr-soc-github"
           color="neutral"
           variant="ghost"
           to="https://github.com/nuxt/nuxt"
           target="_blank"
           aria-label="GitHub"
+        />
+        <UButton
+          icon="i-narr-soc-behance"
+          color="neutral"
+          variant="ghost"
+          to="https://go.nuxt.com/x"
+          target="_blank"
+          aria-label="Behance"
+        />
+        <UButton
+          icon="i-narr-soc-x"
+          color="neutral"
+          variant="ghost"
+          to="https://go.nuxt.com/x"
+          target="_blank"
+          aria-label="X"
         />
       </template>
     </UFooter>

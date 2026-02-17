@@ -125,7 +125,7 @@ useSchemaOrg([
         :to="localePath('/blog')"
         variant="ghost"
         color="neutral"
-        icon="i-heroicons-arrow-left-20-solid"
+        icon="i-narr-leftarrow"
       >
         {{ t('back') || 'Kembali' }}
       </UButton>
@@ -140,7 +140,7 @@ useSchemaOrg([
         <template #headline>
           <div class="flex items-center gap-3 flex-wrap">
             <div v-if="article.readingTime" class="flex items-center gap-1 text-sm text-gray-500">
-              <UIcon name="i-heroicons-clock" class="w-4 h-4" />
+              <UIcon name="i-narr-time" class="w-4 h-4" />
               <span>{{ article.readingTime }} {{ t('min_read') || 'menit baca' }}</span>
             </div>
             <UBadge v-for="tag in article.tags" :key="tag" variant="subtle">

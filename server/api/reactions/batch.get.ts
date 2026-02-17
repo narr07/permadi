@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
 
   for (const row of results) {
     if (counts[row.postId]) {
-      counts[row.postId][row.reactionType] = row.count
+      counts[row.postId]![row.reactionType] = row.count
     }
   }
 

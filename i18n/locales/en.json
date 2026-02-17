@@ -26,11 +26,44 @@
   "featured": "Featured",
   "view_project": "View Project",
   "close": "Close",
-  "filter_by_category": "Filter by category...",
+  "filter_by_category": "Tags",
   "images_found": "image(s) found",
   "no_images_found": "No images found.",
   "min_read": "min read",
   "search": {
     "placeholder": "Search blog..."
+  },
+  "skill": {
+    "frontend": "Technologies for building UI",
+    "backend": "Technologies for building Backend",
+    "tools": "Applications I use for design"
+  },
+  "edu": {
+    "upi": "Indonesia University of Education",
+    "jurusan": "Bachelor of Elementary Education",
+    "sma": "Senior High School (Science)",
+    "smp": "Junior High School",
+    "sd": "Elementary School"
+  },
+  "developer": {
+    "title": "Full-stack Developer",
+    "description": "Mastering frontend and backend technologies to build applications."
+  },
+  "designer": {
+    "title": "Graphic Designer",
+    "description": "Mastering design applications to create aesthetic and communicative visuals."
+  },
+  "teacher": {
+    "title": "Teacher",
+    "description": "Mastering educational pedagogy in teaching students."
+  },
+  "toast": {
+    "limit_reached": "Limit reached",
+    "like_limit_msg": "You have reached the maximum likes. Please try again later!",
+    "reaction_limit_msg": "You have reached the maximum reactions. Please try again later!",
+    "error_title": "Failed",
+    "like_error_msg": "Unable to like. Please try again.",
+    "reaction_error_msg": "Unable to add reaction. Please try again.",
+    "load_reactions_error": "Failed to load reactions"
   }
 }
