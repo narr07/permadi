@@ -28,11 +28,10 @@ const reactions = [
           v-for="reaction in reactions"
           :key="reaction.type"
           :disabled="isSubmitting"
-          class="group flex flex-col items-center gap-1 transition-transform hover:scale-110 active:scale-95 disabled:opacity-50"
+          variant="subtle"
           @click="addReaction(reaction.type)"
         >
           <div
-            class="relative flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-800 transition-all group-hover:shadow-lg"
             :class="[isSubmitting ? 'animate-pulse' : '']"
           >
             <UIcon

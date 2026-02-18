@@ -3,6 +3,7 @@ const { locale, locales, t } = useI18n()
 const route = useRoute()
 const localePath = useLocalePath()
 const setI18nParams = useSetI18nParams()
+const colorMode = useColorMode()
 
 // Helper function to generate clean slug from path
 function generateSlug(contentPath: string): string {
@@ -116,6 +117,8 @@ useSchemaOrg([
     },
   }),
 ])
+
+const tocColor = computed(() => colorMode.value === 'dark' ? 'warning' : 'primary')
 </script>
 
 <template>
@@ -123,8 +126,6 @@ useSchemaOrg([
     <UPage>
       <UButton
         :to="localePath('/blog')"
-        variant="ghost"
-        color="neutral"
         icon="i-narr-leftarrow"
       >
         {{ t('back') || 'Kembali' }}
@@ -152,15 +153,7 @@ useSchemaOrg([
 
       <UPageBody :ui="{ wrapper: 'px-0 sm:px-0' }">
         <UCard :ui="{ body: 'p-2 sm:p-4' }">
-          <div v-if="article.image" class="relative w-full h-80 -m-2 sm:-m-4 mb-6 rounded-t-lg overflow-hidden">
-            <NuxtImg
-              :src="article.image"
-              :alt="article.title"
-              class="w-full h-full object-cover"
-            />
-          </div>
-
-          <div class="prose dark:prose-invert max-w-none">
+          <div class="prose dark:prose-invert  max-w-none">
             <ContentRenderer :value="article" />
           </div>
 
@@ -191,7 +184,11 @@ useSchemaOrg([
       </UPageBody>
 
       <template v-if="article?.body?.toc?.links?.length" #right>
-        <UContentToc highlight highlight-color="primary" dark:highlight-color="warning" color="warning" :links="article.body.toc.links" />
+        <UContentToc
+          :color="tocColor"
+          highlight
+          :highlight-color="tocColor" :links="article.body.toc.links"
+        />
       </template>
     </UPage>
   </div>

@@ -54,7 +54,6 @@ const projectSchema = pageSchema.extend({
   image: z.string(),
   tech: z.array(z.string()),
   link: z.string().optional(),
-  featured: z.boolean().default(false),
 })
 
 const gallerySchema = z.object({

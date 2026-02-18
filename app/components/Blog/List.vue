@@ -123,6 +123,7 @@ function formatDate(dateStr: string) {
               <NuxtImg
                 :src="post.image"
                 :alt="post.title"
+                format="webp"
                 class="object-cover object-top w-full h-full transform transition-transform duration-200 group-hover/blog-post:scale-110"
               />
               <!-- Category badge overlay on image -->
@@ -153,7 +154,6 @@ function formatDate(dateStr: string) {
                   v-if="post.readingTime"
                   color="neutral"
                   variant="subtle"
-                  size="xs"
                   icon="i-narr-time"
                   :label="`${post.readingTime} min`"
                 />

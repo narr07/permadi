@@ -70,7 +70,7 @@ function closeModal() {
       <USelectMenu
         v-model="selectedTech"
         :items="allTech"
-        :placeholder="t('filter_by_tech') || 'Filter by tech...'"
+        placeholder="Tags"
         class="w-48"
         icon="i-narr-filter"
       />

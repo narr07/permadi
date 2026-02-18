@@ -55,6 +55,14 @@ const items = computed<NavigationMenuItem[]>(() => [
     active: route.path.startsWith(localePath('/gallery')),
   },
 ])
+
+const socials = [
+  { icon: 'i-narr-soc-mail', to: 'https://go.nuxt.com/discord', label: 'Email' },
+  { icon: 'i-narr-soc-ig', to: 'https://go.nuxt.com/x', label: 'Instagram' },
+  { icon: 'i-narr-soc-github', to: 'https://github.com/nuxt/nuxt', label: 'GitHub' },
+  { icon: 'i-narr-soc-behance', to: 'https://go.nuxt.com/x', label: 'Behance' },
+  { icon: 'i-narr-soc-x', to: 'https://go.nuxt.com/x', label: 'X' },
+]
 </script>
 
 <template>
@@ -120,6 +128,7 @@ const items = computed<NavigationMenuItem[]>(() => [
 
                 <!-- Language Switcher -->
                 <UButton
+                  variant="ghost"
                   :icon="locale === 'id' ? 'i-narr-en' : 'i-narr-id'"
                   @click="setLocale(locale === 'id' ? 'en' : 'id'); mobileMenuOpen = false"
                 />
@@ -152,53 +161,27 @@ const items = computed<NavigationMenuItem[]>(() => [
     <UFooter>
       <template #left>
         <p class="text-muted text-sm">
-          Copyright © {{ new Date().getFullYear() }}
+          Copyright © narr07 - {{ new Date().getFullYear() }}
         </p>
       </template>
 
       <UNavigationMenu :items="items" variant="link" />
 
       <template #right>
-        <UButton
-          icon="i-narr-soc-mail"
-          color="neutral"
-          variant="ghost"
-          to="https://go.nuxt.com/discord"
-          target="_blank"
-          aria-label="Email"
-        />
-        <UButton
-          icon="i-narr-soc-ig"
-          color="neutral"
-          variant="ghost"
-          to="https://go.nuxt.com/x"
-          target="_blank"
-          aria-label="Instagram"
-        />
-        <UButton
-          icon="i-narr-soc-github"
-          color="neutral"
-          variant="ghost"
-          to="https://github.com/nuxt/nuxt"
-          target="_blank"
-          aria-label="GitHub"
-        />
-        <UButton
-          icon="i-narr-soc-behance"
-          color="neutral"
-          variant="ghost"
-          to="https://go.nuxt.com/x"
-          target="_blank"
-          aria-label="Behance"
-        />
-        <UButton
-          icon="i-narr-soc-x"
-          color="neutral"
-          variant="ghost"
-          to="https://go.nuxt.com/x"
-          target="_blank"
-          aria-label="X"
-        />
+        <UTooltip
+          v-for="social in socials"
+          :key="social.label" :text="social.label"
+        >
+          <UButton
+
+            :icon="social.icon"
+            color="neutral"
+            variant="ghost"
+            :to="social.to"
+            target="_blank"
+            :aria-label="social.label"
+          />
+        </UTooltip>
       </template>
     </UFooter>
   </UApp>
