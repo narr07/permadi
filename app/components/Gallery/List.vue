@@ -3,6 +3,12 @@ import { Motion } from 'motion-v'
 
 const { locale, t } = useI18n()
 
+function ensureArray(val: any): string[] {
+  if (!val)
+    return []
+  return Array.isArray(val) ? val : [val]
+}
+
 // Tool icon mapping
 const toolIconMap: Record<string, { icon: string, label: string }> = {
   illustator: { icon: 'i-narr-d-illustrator', label: 'Illustrator' },
@@ -15,7 +21,9 @@ const toolIconMap: Record<string, { icon: string, label: string }> = {
 
 const { data: galleries } = await useAsyncData(`gallery-list-${locale.value}`, async () => {
   const collection = `${locale.value}_gallery` as any
-  return await queryCollection(collection).all()
+  return await queryCollection(collection)
+    .order('date', 'DESC')
+    .all()
 }, {
   watch: [locale],
 })
@@ -35,7 +43,8 @@ const allCategories = computed(() => {
   const categorySet = new Set<string>()
   galleries.value?.forEach((gallery) => {
     if (gallery.category) {
-      gallery.category.forEach((cat: string) => categorySet.add(cat))
+      const cats = Array.isArray(gallery.category) ? gallery.category : [gallery.category]
+      cats.forEach((cat: string) => categorySet.add(cat))
     }
   })
   return Array.from(categorySet).sort()
@@ -68,9 +77,10 @@ const filteredGalleries = computed(() => {
     return []
   let result = galleries.value
   if (selectedCategory.value) {
-    result = result.filter(gallery =>
-      gallery.category?.includes(selectedCategory.value!),
-    )
+    result = result.filter((gallery) => {
+      const cats = Array.isArray(gallery.category) ? gallery.category : [gallery.category]
+      return cats.includes(selectedCategory.value!)
+    })
   }
   if (selectedTool.value) {
     result = result.filter(gallery =>
@@ -149,6 +159,7 @@ function getImageKey(imagePath: string): string {
         label-key="label"
         placeholder="Tools"
         class="w-48"
+        icon="i-narr-tools"
       />
       <UButton
         v-if="selectedCategory || selectedTool"
@@ -166,7 +177,7 @@ function getImageKey(imagePath: string): string {
     </div>
 
     <!-- Gallery Masonry -->
-    <UPageColumns>
+    <UPageColumns :key="`${currentPage}-${selectedCategory}-${selectedTool}`">
       <Motion
         v-for="(gallery, index) in paginatedGalleries"
         :key="gallery.stem"
@@ -208,7 +219,7 @@ function getImageKey(imagePath: string): string {
                   {{ gallery.title }}
                 </h3>
                 <p v-if="gallery.category" class="text-xs text-gray-200 mt-1">
-                  {{ gallery.category.join(', ') }}
+                  {{ ensureArray(gallery.category).join(', ') }}
                 </p>
               </div>
             </div>
@@ -220,6 +231,7 @@ function getImageKey(imagePath: string): string {
             <div v-if="gallery.tools && toolIconMap[gallery.tools]" class="flex items-center gap-1.5">
               <UTooltip :text="toolIconMap[gallery.tools!]?.label">
                 <UIcon
+                  class="size-6"
                   :name="toolIconMap[gallery.tools!]?.icon"
                 />
               </UTooltip>
@@ -288,9 +300,9 @@ function getImageKey(imagePath: string): string {
       <template #footer>
         <div class="flex flex-wrap items-center justify-between w-full gap-4">
           <!-- Categories -->
-          <div v-if="selectedGallery.category?.length" class="flex flex-wrap gap-1.5">
+          <div v-if="selectedGallery.category" class="flex flex-wrap gap-1.5">
             <UBadge
-              v-for="cat in selectedGallery.category"
+              v-for="cat in ensureArray(selectedGallery.category)"
               :key="cat"
               variant="subtle"
               color="primary"

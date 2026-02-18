@@ -118,7 +118,28 @@ useSchemaOrg([
   }),
 ])
 
-const tocColor = computed(() => colorMode.value === 'dark' ? 'warning' : 'primary')
+// const { copy, copied } = useClipboard()
+
+// // Copy seluruh konten artikel
+// function copyArticle() {
+//   if (!article.value)
+//     return
+
+//   // Ambil teks asli (Markdown) dari rawbody yang sudah kita tambahkan di schema
+//   let content = `${article.value.title}\n\n`
+
+//   if (article.value.description) {
+//     content += `${article.value.description}\n\n`
+//   }
+
+//   // Gunakan rawbody (teks Markdown mentah)
+//   if (article.value.rawbody) {
+//     content += article.value.rawbody
+//   }
+
+//   copy(content)
+// }
+const tocColor = computed(() => colorMode.value === 'dark' ? 'warning' : 'info')
 </script>
 
 <template>
@@ -127,10 +148,20 @@ const tocColor = computed(() => colorMode.value === 'dark' ? 'warning' : 'primar
       <UButton
         :to="localePath('/blog')"
         icon="i-narr-leftarrow"
+        variant="subtle"
       >
         {{ t('back') || 'Kembali' }}
       </UButton>
-
+      <!-- <UTooltip :text="copied ? 'Copied!' : 'Copy content'">
+        <UButton
+          :color="copied ? 'success' : 'neutral'"
+          variant="ghost"
+          size="sm"
+          :icon="copied ? 'i-narr-copy-check' : 'i-narr-copy'"
+          label="Copy content"
+          @click="copyArticle"
+        />
+      </UTooltip> -->
       <UPageHeader>
         <template #title>
           {{ article.title }}

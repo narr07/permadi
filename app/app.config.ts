@@ -38,6 +38,20 @@ export default defineAppConfig({
           'transition-colors [&>code]:transition-colors',
         ],
       },
+      h3: {
+        slots: {
+          base: [
+            'relative text-xl text-primary-700 dark:text-primary-300 font-bold mt-8 mb-3 scroll-mt-[calc(32px+45px+var(--ui-header-height))] lg:scroll-mt-[calc(32px+var(--ui-header-height))] [&>a]:focus-visible:outline-primary [&>a>code]:border-dashed hover:[&>a>code]:border-primary hover:[&>a>code]:text-primary [&>a>code]:text-lg/6 [&>a>code]:font-bold',
+            '[&>a>code]:transition-colors',
+          ],
+          leading: [
+            'absolute -ms-8 top-0.5 opacity-0 group-hover:opacity-100 group-focus:opacity-100 p-1 bg-elevated hover:text-primary rounded-md hidden lg:flex text-muted',
+            'transition',
+          ],
+          leadingIcon: 'size-4 shrink-0',
+          link: 'group lg:ps-2 lg:-ms-2',
+        },
+      },
     },
     icons: {
       arrowDown: 'i-narr-arrow-down',

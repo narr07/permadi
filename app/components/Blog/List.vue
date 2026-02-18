@@ -129,7 +129,7 @@ function formatDate(dateStr: string) {
               <!-- Category badge overlay on image -->
               <UBadge
                 v-if="post.category"
-                color="primary"
+                color="neutral"
                 variant="solid"
                 size="sm"
                 class="absolute top-3 right-3 z-10"

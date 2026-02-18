@@ -27,6 +27,7 @@ const pageSchema = z.object({
 const blogSchema = pageSchema.extend({
   idBlog: z.number().optional().editor({ hidden: true }), // Auto-extracted from filename prefix (e.g., "1. Title.md" -> 1)
   readingTime: z.number().optional().editor({ hidden: true }), // Auto-calculated based on word count
+  // rawbody: z.string().editor({ hidden: true }),
   date: z.date(),
   image: z.string().optional(),
   tags: z.array(z.string()).optional(),

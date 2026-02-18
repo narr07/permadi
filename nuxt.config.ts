@@ -23,6 +23,11 @@ export default defineNuxtConfig({
     description: 'Permadi is a teacher, programmer and designer.',
     defaultLocale: 'id',
   },
+  content: {
+    renderer: {
+      anchorLinks: false,
+    },
+  },
   image: {
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/daton7ry4/image/upload/',
@@ -53,7 +58,7 @@ export default defineNuxtConfig({
   },
 
   i18n: {
-    baseUrl: 'https://permadi.pages.dev',
+    baseUrl: 'https://permadi.dev',
     vueI18n: './i18n.config.ts',
     strategy: 'prefix_except_default',
     defaultLocale,
