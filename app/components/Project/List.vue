@@ -2,12 +2,18 @@
 import { Motion } from 'motion-v'
 
 const { locale, t } = useI18n()
+const img = useImage()
 
 const { data: projects } = await useAsyncData(`project-list-${locale.value}`, async () => {
   const collection = `${locale.value}_project` as any
-  return await queryCollection(collection)
-    .order('featured', 'DESC')
-    .all()
+  try {
+    return await queryCollection(collection)
+      .all()
+  }
+  catch (e) {
+    console.error('Error querying projects:', e)
+    return []
+  }
 }, {
   watch: [locale],
 })
@@ -61,12 +67,36 @@ function closeModal() {
   isModalOpen.value = false
   selectedProject.value = null
 }
+
+// Track image loaded state for list items
+const imageLoadedMap = reactive<Record<string, boolean>>({})
+function onImageLoaded(key: string) {
+  imageLoadedMap[key] = true
+}
+
+// Preload the first image for LCP optimization
+watchEffect(() => {
+  const firstProject = filteredProjects.value?.[0]
+  if (firstProject?.image) {
+    const preloadUrl = img(firstProject.image, { width: 600, format: 'webp', quality: 100 } as any)
+    useHead({
+      link: [
+        { rel: 'preload', as: 'image', href: preloadUrl, imagesrcset: img.getSizes(firstProject.image, { width: 600, format: 'webp' } as any).srcset },
+      ],
+    })
+  }
+})
 </script>
 
 <template>
-  <div class="space-y-6 my-12">
+  <UPage class="space-y-6">
+    <UPageHeader
+      :title="t('project.title')"
+      :description="t('project.description')"
+      headline="Project"
+    />
     <!-- Filter Section -->
-    <div class="flex flex-wrap items-center gap-3">
+    <div class="flex flex-wrap py-4 justify-end items-center gap-3">
       <USelectMenu
         v-model="selectedTech"
         :items="allTech"
@@ -100,11 +130,29 @@ function closeModal() {
       >
         <UBlogPost
           :title="project.title"
-          :image="{ src: project.image, alt: project.title }"
           variant="outline"
-          class="cursor-pointer"
+          class="cursor-pointer group/project-card"
           @click="openProjectModal(project)"
         >
+          <template #header>
+            <div class="relative overflow-hidden aspect-video bg-gray-100 dark:bg-gray-800">
+              <NuxtImg
+                :src="project.image"
+                :alt="project.title"
+                format="webp"
+                quality="80"
+                width="600"
+                :loading="index === 0 ? 'eager' : 'lazy'"
+                :fetchpriority="index === 0 ? 'high' : 'auto'"
+                :placeholder="project.image && index > 0 ? img(project.image, { height: 20, width: 35, format: 'webp', blur: 5, quality: 30 } as any) : undefined"
+                class="object-cover object-top w-full h-full transform transition-all duration-500 group-hover/project-card:scale-110"
+                :class="imageLoadedMap[project.stem] || index === 0 ? 'blur-0' : 'blur-xl scale-105'"
+                @load="onImageLoaded(project.stem)"
+                @error="onImageLoaded(project.stem)"
+              />
+            </div>
+          </template>
+
           <template #badge>
             <div class="flex flex-wrap gap-1">
               <UBadge
@@ -181,13 +229,6 @@ function closeModal() {
               </UBadge>
             </div>
           </div>
-
-          <!-- Featured Badge -->
-          <div v-if="selectedProject.featured">
-            <UBadge variant="solid" color="warning">
-              {{ t('featured') || 'Featured' }}
-            </UBadge>
-          </div>
         </div>
       </template>
 
@@ -211,5 +252,5 @@ function closeModal() {
         </UButton>
       </template>
     </UModal>
-  </div>
+  </UPage>
 </template>

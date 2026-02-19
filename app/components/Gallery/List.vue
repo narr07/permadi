@@ -2,6 +2,16 @@
 import { Motion } from 'motion-v'
 
 const { locale, t } = useI18n()
+const img = useImage()
+
+const { data: galleries } = await useAsyncData(`gallery-list-${locale.value}`, async () => {
+  const collection = `${locale.value}_gallery` as any
+  return await queryCollection(collection)
+    .order('date', 'DESC')
+    .all()
+}, {
+  watch: [locale],
+})
 
 function ensureArray(val: any): string[] {
   if (!val)
@@ -18,15 +28,6 @@ const toolIconMap: Record<string, { icon: string, label: string }> = {
   canva: { icon: 'i-narr-d-canva', label: 'Canva' },
   figma: { icon: 'i-narr-d-figma', label: 'Figma' },
 }
-
-const { data: galleries } = await useAsyncData(`gallery-list-${locale.value}`, async () => {
-  const collection = `${locale.value}_gallery` as any
-  return await queryCollection(collection)
-    .order('date', 'DESC')
-    .all()
-}, {
-  watch: [locale],
-})
 
 // Gallery likes
 const { fetchLikes, addLike, getCount, isLikeSubmitting, isLoading: likesLoading } = useGalleryLikes()
@@ -116,6 +117,19 @@ function onImageLoaded(key: string) {
   imageLoadedMap[key] = true
 }
 
+// Preload the first image for LCP optimization
+watchEffect(() => {
+  const firstGallery = filteredGalleries.value?.[0]
+  if (firstGallery?.image) {
+    const preloadUrl = img(firstGallery.image, { width: 400, format: 'webp', quality: 100 } as any)
+    useHead({
+      link: [
+        { rel: 'preload', as: 'image', href: preloadUrl, imagesrcset: img.getSizes(firstGallery.image, { width: 400, format: 'webp' } as any).srcset },
+      ],
+    })
+  }
+})
+
 // Track modal image loaded state
 const modalImageLoaded = ref(false)
 
@@ -130,7 +144,6 @@ watch(isModalOpen, (val) => {
     selectedGallery.value = null
   }
 })
-const img = useImage()
 
 // Reconstruct full Cloudinary URL for likes API key (backward compatibility)
 const CLOUDINARY_BASE = 'https://res.cloudinary.com/daton7ry4/image/upload'
@@ -142,9 +155,14 @@ function getImageKey(imagePath: string): string {
 </script>
 
 <template>
-  <div class="space-y-6 my-12">
+  <UPage class="space-y-6">
+    <UPageHeader
+      :title="t('gallery.title')"
+      :description="t('gallery.description')"
+      headline="Gallery"
+    />
     <!-- Filter Section -->
-    <div class="flex flex-wrap items-center gap-3">
+    <div class="flex py-4 justify-end flex-wrap items-center gap-3">
       <USelectMenu
         v-model="selectedCategory"
         :items="allCategories"
@@ -193,11 +211,7 @@ function getImageKey(imagePath: string): string {
             class="relative cursor-pointer overflow-hidden bg-gray-100 dark:bg-gray-800"
             @click="openGalleryModal(gallery)"
           >
-            <!-- Skeleton placeholder while image is loading -->
-            <USkeleton
-              v-if="!imageLoadedMap[gallery.stem]"
-              class="w-full aspect-3/4 absolute inset-0 z-10"
-            />
+            <!-- Image with blur-up loading effect -->
             <NuxtImg
               provider="cloudinary"
               :src="gallery.image"
@@ -206,12 +220,20 @@ function getImageKey(imagePath: string): string {
               quality="80"
               width="400"
               densities="1x 2x"
-              :placeholder="img(gallery.image, { height: 35, width: 25, format: 'webp', blur: 5, quality: 30 })"
-              class="w-full h-auto object-cover group-hover:scale-110 transition-transform duration-300"
-              :class="imageLoadedMap[gallery.stem] ? 'opacity-100' : 'opacity-0'"
-              loading="lazy"
+              :loading="index < 4 ? 'eager' : 'lazy'"
+              :fetchpriority="index === 0 ? 'high' : 'auto'"
+              :placeholder="index < 4 ? undefined : img(gallery.image, { height: 35, width: 25, format: 'webp', blur: 5, quality: 30 } as any)"
+              class="w-full h-auto transform transition-all duration-500 group-hover:scale-110"
+              :class="imageLoadedMap[gallery.stem] || index < 4 ? 'blur-0' : 'blur-xl scale-105'"
               @load="onImageLoaded(gallery.stem)"
             />
+            <!-- Loading indicator overlay (centered without breaking height) -->
+            <div
+              v-if="!imageLoadedMap[gallery.stem] && index >= 4"
+              class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none"
+            >
+              <UIcon name="i-narr-loading" class="animate-spin size-6 text-white/50" />
+            </div>
             <!-- Overlay on Hover -->
             <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-end">
               <div class="p-3 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -291,7 +313,7 @@ function getImageKey(imagePath: string): string {
             densities="1x 2x"
             class="max-w-full max-h-full object-contain transition-opacity duration-300"
             :class="modalImageLoaded ? 'opacity-100' : 'opacity-0 absolute'"
-            :placeholder="img(selectedGallery.image, { height: 50, width: 25, format: 'webp', blur: 5, quality: 30 })"
+            :placeholder="img(selectedGallery.image, { height: 50, width: 25, format: 'webp', blur: 5, quality: 30 } as any)"
             @load="modalImageLoaded = true"
           />
         </div>
@@ -322,5 +344,5 @@ function getImageKey(imagePath: string): string {
         </div>
       </template>
     </UModal>
-  </div>
+  </UPage>
 </template>

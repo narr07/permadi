@@ -55,6 +55,7 @@ const projectSchema = pageSchema.extend({
   image: z.string(),
   tech: z.array(z.string()),
   link: z.string().optional(),
+  date: z.string().optional(), // Keep date as it's useful for sorting
 })
 
 const gallerySchema = z.object({
@@ -93,7 +94,9 @@ locales.forEach((locale) => {
   // Specific collections for structured data queries (not for routing)
   collections[`${locale}_project`] = defineCollection({
     type: 'data',
-    source: `${locale}/project/*.yml`,
+    source: {
+      include: `${locale}/project/*.yml`,
+    },
     schema: projectSchema,
   })
 

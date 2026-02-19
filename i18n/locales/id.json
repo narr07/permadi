@@ -5,6 +5,18 @@
     "projects": "Projek",
     "gallery": "Galeri"
   },
+  "blog": {
+    "title": "Blog Edukasi & Kreatif oleh Permadi",
+    "description": "Temukan artikel seputar pendidikan, desain, dan teknologi modern. Tips praktis, inspirasi kreatif, serta panduan untuk guru dan desainer."
+  },
+  "project": {
+    "title": "Portofolio Project: Solusi Digital & Kreatif",
+    "description": "Kumpulan proyek yang saya kerjakan, mulai dari pengembangan web, aplikasi, hingga solusi digital lainnya."
+  },
+  "gallery": {
+    "title": "Gallery Karya Desain Grafis Permadi",
+    "description": "Jelajahi kumpulan karya desain grafis saya—logo, poster, ilustrasi, dan eksperimen visual yang memadukan kreativitas dengan detail modern."
+  },
   "header": {
     "title": "Architect.sys"
   },

@@ -5,6 +5,18 @@
     "projects": "Projects",
     "gallery": "Gallery"
   },
+  "blog": {
+    "title": "Educational & Creative Blog by Permadi",
+    "description": "Discover articles on education, design, and modern technology. Practical tips, creative inspiration, and guides for teachers and designers."
+  },
+  "project": {
+    "title": "Portfolio Project: Digital & Creative Solutions",
+    "description": "A collection of projects I've worked on, ranging from web development, applications, to other digital solutions."
+  },
+  "gallery": {
+    "title": "Gallery of Permadi's Graphic Design Works",
+    "description": "Explore my collection of graphic design works—logos, posters, illustrations, and visual experiments that blend creativity with modern details."
+  },
   "header": {
     "title": "Architect.sys"
   },
