@@ -144,7 +144,6 @@ defineOgImageComponent('NuxtSeo', {
   description: () => (article.value as any)?.description,
   colorMode: 'dark',
   theme: '#14b898',
-  isPro: true,
 })
 
 const tocColor = computed(() => colorMode.value === 'dark' ? 'warning' : 'info')
@@ -155,7 +154,7 @@ const tocColor = computed(() => colorMode.value === 'dark' ? 'warning' : 'info')
     <UPage>
       <UButton
         :to="localePath('/blog')"
-        icon="i-narr-leftarrow"
+        icon="i-narr-chevron-left"
         variant="subtle"
       >
         {{ t('back') || 'Kembali' }}

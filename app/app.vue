@@ -178,14 +178,15 @@ const socials = [
           :key="social.label" :text="social.label"
         >
           <UButton
-
             :icon="social.icon"
             color="neutral"
             variant="ghost"
             :to="social.to"
             target="_blank"
             :aria-label="social.label"
-          />
+          >
+            <span class="sr-only">{{ social.label }}</span>
+          </UButton>
         </UTooltip>
       </template>
     </UFooter>

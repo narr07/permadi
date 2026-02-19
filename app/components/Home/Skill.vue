@@ -84,8 +84,10 @@ const categories = [
           <UTooltip :text="skill.title">
             <NuxtLink
               :to="skill.link"
+              target="_blank"
             >
               <UIcon :name="skill.icon" class="size-10" />
+              <span class="sr-only">{{ skill.title }}</span>
             </NuxtLink>
           </UTooltip>
         </div>
