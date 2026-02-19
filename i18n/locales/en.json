@@ -3,7 +3,9 @@
     "home": "Home",
     "blog": "Blog",
     "projects": "Projects",
-    "gallery": "Gallery"
+    "gallery": "Gallery",
+    "switch_language": "Switch language",
+    "menu": "Menu"
   },
   "blog": {
     "title": "Educational & Creative Blog by Permadi",

@@ -88,6 +88,7 @@ const socials = [
             variant="ghost"
             :icon="locale === 'id' ? 'i-narr-en' : 'i-narr-id'"
             class="hidden sm:inline-flex"
+            :aria-label="t('nav.switch_language')"
             @click="setLocale(locale === 'id' ? 'en' : 'id')"
           />
 
@@ -100,6 +101,7 @@ const socials = [
               color="neutral"
               variant="ghost"
               :icon="mobileMenuOpen ? 'i-narr-close' : 'i-narr-menu'"
+              :aria-label="t('nav.menu')"
             />
 
             <template #content>
@@ -130,6 +132,7 @@ const socials = [
                 <UButton
                   variant="ghost"
                   :icon="locale === 'id' ? 'i-narr-en' : 'i-narr-id'"
+                  :aria-label="t('nav.switch_language')"
                   @click="setLocale(locale === 'id' ? 'en' : 'id'); mobileMenuOpen = false"
                 />
               </div>

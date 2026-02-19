@@ -260,18 +260,20 @@ function getImageKey(imagePath: string): string {
             </div>
             <div v-else />
             <!-- Like Button (Right) -->
-            <USkeleton v-if="likesLoading" class="h-8 w-14 rounded-md" />
-            <UButton
-              v-else
-              :icon="isLikeSubmitting(getImageKey(gallery.image)) ? 'i-narr-loading' : 'i-narr-love'"
-              :label="String(getCount(getImageKey(gallery.image)) || 0)"
-              color="neutral"
-              size="sm"
-              variant="subtle"
-              :class="{ 'animate-pulse': isLikeSubmitting(getImageKey(gallery.image)) }"
-              :disabled="isLikeSubmitting(getImageKey(gallery.image))"
-              @click.stop="addLike(getImageKey(gallery.image))"
-            />
+            <ClientOnly>
+              <USkeleton v-if="likesLoading" class="h-8 w-14 rounded-md" />
+              <UButton
+                v-else
+                :icon="isLikeSubmitting(getImageKey(gallery.image)) ? 'i-narr-loading' : 'i-narr-love'"
+                :label="String(getCount(getImageKey(gallery.image)) || 0)"
+                color="neutral"
+                size="sm"
+                variant="subtle"
+                :class="{ 'animate-pulse': isLikeSubmitting(getImageKey(gallery.image)) }"
+                :disabled="isLikeSubmitting(getImageKey(gallery.image))"
+                @click.stop="addLike(getImageKey(gallery.image))"
+              />
+            </ClientOnly>
           </div>
         </div>
       </Motion>

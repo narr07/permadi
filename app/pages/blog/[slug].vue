@@ -190,14 +190,18 @@ const tocColor = computed(() => colorMode.value === 'dark' ? 'warning' : 'info')
 
           <!-- Reaction Buttons -->
           <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-            <ReactionButtons :post-id="article.idBlog" />
+            <ClientOnly>
+              <ReactionButtons :post-id="article.idBlog" />
+            </ClientOnly>
           </div>
 
           <template #footer>
             <div class="flex justify-between items-center text-sm text-gray-600 dark:text-gray-400 pt-4 border-t">
-              <span v-if="article.date">
-                {{ t('published') || 'Dipublikasikan' }}: {{ new Date(article.date).toLocaleDateString(locale) }}
-              </span>
+              <ClientOnly>
+                <span v-if="article.date">
+                  {{ t('published') || 'Dipublikasikan' }}: {{ new Date(article.date).toLocaleDateString(locale) }}
+                </span>
+              </ClientOnly>
               <UButton
                 :to="localePath('/blog')"
                 variant="ghost"

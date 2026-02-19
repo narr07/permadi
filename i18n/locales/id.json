@@ -3,7 +3,9 @@
     "home": "Home",
     "blog": "Blog",
     "projects": "Projek",
-    "gallery": "Galeri"
+    "gallery": "Galeri",
+    "switch_language": "Ganti bahasa",
+    "menu": "Menu"
   },
   "blog": {
     "title": "Blog Edukasi & Kreatif oleh Permadi",

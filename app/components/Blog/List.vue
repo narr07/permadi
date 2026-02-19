@@ -224,7 +224,9 @@ watchEffect(() => {
           <template #badge />
 
           <template #date>
-            {{ formatDate(post.date) }}
+            <ClientOnly>
+              {{ formatDate(post.date) }}
+            </ClientOnly>
           </template>
 
           <template #footer>
@@ -239,38 +241,40 @@ watchEffect(() => {
                 />
               </div>
 
-              <div v-if="reactionsLoading && post.idBlog" class="flex items-center gap-1">
-                <USkeleton class="h-6 w-14 rounded-md" />
-                <USkeleton class="h-6 w-14 rounded-md" />
-                <USkeleton class="h-6 w-14 rounded-md" />
-              </div>
+              <ClientOnly>
+                <div v-if="reactionsLoading && post.idBlog" class="flex items-center gap-1">
+                  <USkeleton class="h-6 w-14 rounded-md" />
+                  <USkeleton class="h-6 w-14 rounded-md" />
+                  <USkeleton class="h-6 w-14 rounded-md" />
+                </div>
 
-              <div v-else-if="post.idBlog && getTotalReactions(post.idBlog) > 0" class="flex items-center gap-1">
-                <UButton
-                  v-if="reactionCounts[post.idBlog]?.love"
-                  color="error"
-                  variant="subtle"
-                  size="xs"
-                  icon="i-narr-love"
-                  :label="String(reactionCounts[post.idBlog]?.love ?? 0)"
-                />
-                <UButton
-                  v-if="reactionCounts[post.idBlog]?.like"
-                  color="info"
-                  variant="subtle"
-                  size="xs"
-                  icon="i-narr-lovefinger"
-                  :label="String(reactionCounts[post.idBlog]?.like ?? 0)"
-                />
-                <UButton
-                  v-if="reactionCounts[post.idBlog]?.sad"
-                  color="warning"
-                  variant="subtle"
-                  size="xs"
-                  icon="i-narr-like"
-                  :label="String(reactionCounts[post.idBlog]?.sad ?? 0)"
-                />
-              </div>
+                <div v-else-if="post.idBlog && getTotalReactions(post.idBlog) > 0" class="flex items-center gap-1">
+                  <UButton
+                    v-if="reactionCounts[post.idBlog]?.love"
+                    color="error"
+                    variant="subtle"
+                    size="xs"
+                    icon="i-narr-love"
+                    :label="String(reactionCounts[post.idBlog]?.love ?? 0)"
+                  />
+                  <UButton
+                    v-if="reactionCounts[post.idBlog]?.like"
+                    color="info"
+                    variant="subtle"
+                    size="xs"
+                    icon="i-narr-lovefinger"
+                    :label="String(reactionCounts[post.idBlog]?.like ?? 0)"
+                  />
+                  <UButton
+                    v-if="reactionCounts[post.idBlog]?.sad"
+                    color="warning"
+                    variant="subtle"
+                    size="xs"
+                    icon="i-narr-like"
+                    :label="String(reactionCounts[post.idBlog]?.sad ?? 0)"
+                  />
+                </div>
+              </ClientOnly>
             </div>
           </template>
         </UBlogPost>
