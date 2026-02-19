@@ -139,6 +139,14 @@ useSchemaOrg([
 
 //   copy(content)
 // }
+defineOgImageComponent('NuxtSeo', {
+  title: () => article.value?.title,
+  description: () => (article.value as any)?.description,
+  colorMode: 'dark',
+  theme: '#14b898',
+  isPro: true,
+})
+
 const tocColor = computed(() => colorMode.value === 'dark' ? 'warning' : 'info')
 </script>
 

@@ -161,6 +161,8 @@ const socials = [
       </UContainer>
     </UMain>
 
+    <BackToTop />
+
     <UFooter>
       <template #left>
         <p class="text-muted text-sm">
