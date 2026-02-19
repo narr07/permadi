@@ -45,7 +45,16 @@ export default defineNuxtConfig({
       dir: './app/assets/icons',
     }],
   },
-
+  scripts: {
+    registry: {
+      googleTagManager: {
+        id: 'G-5LEXR84KHW',
+      },
+      googleAnalytics: {
+        id: 'G-5LEXR84KHW',
+      },
+    },
+  },
   // NuxtHub configuration for D1 database
   hub: {
     db: {
