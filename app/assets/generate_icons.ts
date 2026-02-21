@@ -7,7 +7,7 @@ const iconsJsonPath = 'app/assets/icons.json'
 async function main() {
   try {
     const iconsJsonContent = await readFile(iconsJsonPath, 'utf-8')
-    let iconsData = JSON.parse(iconsJsonContent)
+    const iconsData = JSON.parse(iconsJsonContent)
     const existingIcons = new Set(Object.keys(iconsData.icons))
 
     const files = await readdir(iconsDir)
@@ -51,12 +51,12 @@ async function main() {
 
       if (svgStart !== -1 && svgEnd !== -1) {
         // Get everything from start of <svg to start of </svg>
-        let rawBody = content.substring(svgStart, svgEnd)
+        const rawBody = content.substring(svgStart, svgEnd)
 
         // Find the end of the opening <svg ...> tag
         const openingTagEnd = rawBody.indexOf('>')
         if (openingTagEnd !== -1) {
-          let body = rawBody.substring(openingTagEnd + 1).trim()
+          const body = rawBody.substring(openingTagEnd + 1).trim()
           // remove any XML declaration if present at the very start of file, handled by svgStart
 
           iconsData.icons[iconName] = {

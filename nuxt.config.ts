@@ -111,9 +111,6 @@ export default defineNuxtConfig({
   },
   scripts: {
     registry: {
-      googleTagManager: {
-        id: 'G-5LEXR84KHW',
-      },
       googleAnalytics: {
         id: 'G-5LEXR84KHW',
       },
@@ -163,11 +160,11 @@ export default defineNuxtConfig({
       'blog-slug': {
         en: '/blog/[slug]',
       },
-      'gallery': {
-        id: '/galeri',
+      'galeri': {
+        en: '/gallery',
       },
-      'project': {
-        id: '/projek',
+      'projek': {
+        en: '/project',
       },
 
     },
@@ -188,16 +185,16 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-01-01',
 
   delayHydration: {
-    mode: 'mount',
+    mode: 'init',
   },
   routeRules: {
     '/': { prerender: true },
     '/en': { prerender: true },
     '/blog': { prerender: true },
     '/en/blog': { prerender: true },
-    '/gallery': { prerender: true },
+    '/galeri': { prerender: true },
     '/en/gallery': { prerender: true },
-    '/project': { prerender: true },
+    '/projek': { prerender: true },
     '/en/project': { prerender: true },
     '/blog/**': { prerender: true },
     '/en/blog/**': { prerender: true },
@@ -226,17 +223,21 @@ export default defineNuxtConfig({
         dcl: 1200,
       },
     },
+    targetFormats: ['webp', 'avif', 'jpg|jpeg|png|gif'],
     optimizeSSR: {
       cleanPreloads: true,
       cleanPrefetches: true,
       inlineStyles: true,
     },
     /**
-     * IntersectionObserver rootMargin for Compoennts and Assets
+     * IntersectionObserver rootMargin for Components and Assets
      */
     lazyOffset: {
       component: '0%',
       asset: '0%',
+    },
+    experimental: {
+      fallbackInit: true,
     },
   },
   nitro: {

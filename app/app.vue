@@ -32,21 +32,25 @@ const items = computed<NavigationMenuItem[]>(() => [
     label: t('nav.home'),
     to: localePath('/'),
     active: route.path === localePath('/'),
+    icon: 'i-narr-home',
   },
   {
     label: t('nav.blog'),
     to: localePath('/blog'),
     active: route.path.startsWith(localePath('/blog')),
+    icon: 'i-narr-article',
   },
   {
     label: t('nav.projects'),
-    to: localePath('/project'),
-    active: route.path.startsWith(localePath('/project')),
+    to: localePath({ name: 'projek' }),
+    active: route.path.startsWith(localePath({ name: 'projek' }) as string),
+    icon: 'i-narr-project',
   },
   {
     label: t('nav.gallery'),
-    to: localePath('/gallery'),
-    active: route.path.startsWith(localePath('/gallery')),
+    to: localePath({ name: 'galeri' }),
+    active: route.path.startsWith(localePath({ name: 'galeri' }) as string),
+    icon: 'i-narr-gallery',
   },
 ])
 const socials = [
@@ -78,7 +82,7 @@ useSchemaOrg([
       <nav class="flex items-center justify-between border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/60 backdrop-blur-sm px-4 py-2">
         <!-- Left: Logo -->
         <NuxtLink :to="localePath('/')" class="flex items-center gap-2 text-brand-500 font-bold uppercase">
-          <Logo />
+          <Logo size="40" />
         </NuxtLink>
         <!-- Center: Desktop Navigation (hidden on mobile) -->
         <UNavigationMenu :items="items" class="hidden sm:flex justify-center uppercase text-xs font-medium" />

@@ -75,7 +75,7 @@ locales.forEach((locale) => {
     type: 'page',
     source: {
       include: `${locale}/**/*.md`,
-      exclude: [`${locale}/blog/**`, `${locale}/project/**`, `${locale}/gallery/**`],
+      exclude: [`${locale}/blog/**`, `${locale}/projek/**`, `${locale}/galeri/**`],
     },
     schema: blogSchema,
   })
@@ -96,14 +96,14 @@ locales.forEach((locale) => {
   collections[`${locale}_project`] = defineCollection({
     type: 'data',
     source: {
-      include: `${locale}/project/*.yml`,
+      include: `${locale}/projek/*.yml`,
     },
     schema: projectSchema,
   })
 
   collections[`${locale}_gallery`] = defineCollection({
     type: 'data',
-    source: `${locale}/gallery/*.yml`,
+    source: `${locale}/galeri/*.yml`,
     schema: gallerySchema,
   })
 })
