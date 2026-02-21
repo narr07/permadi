@@ -211,35 +211,7 @@ export default defineNuxtConfig({
       },
     },
   },
-  booster: {
-    detection: {
-      performance: true,
-      browserSupport: true,
-      battery: true,
-    },
-    performanceMetrics: {
-      timing: {
-        fcp: 800,
-        dcl: 1200,
-      },
-    },
-    targetFormats: ['webp', 'avif', 'jpg|jpeg|png|gif'],
-    optimizeSSR: {
-      cleanPreloads: true,
-      cleanPrefetches: true,
-      inlineStyles: true,
-    },
-    /**
-     * IntersectionObserver rootMargin for Components and Assets
-     */
-    lazyOffset: {
-      component: '0%',
-      asset: '0%',
-    },
-    experimental: {
-      fallbackInit: true,
-    },
-  },
+
   nitro: {
     prerender: {
       routes: ['/', '/en'],

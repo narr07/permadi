@@ -119,7 +119,7 @@ useSchemaOrg([
       <motion.nav
         :animate="{ y: idle ? 150 : 0 }"
         :transition="{ type: 'spring', stiffness: 200, damping: 20 }"
-        class="flex items-center justify-around border dark:border-brand-700 border-brand-900 rounded bg-(--ui-bg)/80 backdrop-blur-md px-2 py-2 shadow-lg"
+        class="flex items-center justify-around border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/80 backdrop-blur-md px-2 py-2 shadow-lg"
       >
         <NuxtLink
           v-for="item in items"
