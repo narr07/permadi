@@ -197,7 +197,7 @@ function getImageKey(imagePath: string): string {
         :key="gallery.stem"
         :initial="{ opacity: 0, transform: 'scale(0.95)' }"
         :in-view="{ opacity: 1, transform: 'scale(1)' }"
-        :transition="{ delay: 0.05 * index, duration: 0.4 }"
+        :transition="{ delay: 0.02 * index, duration: 0.4 }"
       >
         <div
           class="group overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800 hover:border-primary-500 transition-all hover:shadow"
