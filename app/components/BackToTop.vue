@@ -36,7 +36,7 @@ function scrollToTop() {
   >
     <div
       v-if="showButton"
-      class="fixed bottom-6 right-6 z-50"
+      class="fixed bottom-24 right-6 z-50"
     >
       <div class="relative flex items-center justify-center p-1 group">
         <!-- Progress Circle -->

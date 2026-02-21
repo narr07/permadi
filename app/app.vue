@@ -2,13 +2,21 @@
 import type { NavigationMenuItem } from '@nuxt/ui'
 import * as locales from '@nuxt/ui/locale'
 
+import { breakpointsTailwind, useBreakpoints, useIdle } from '@vueuse/core'
+import { motion } from 'motion-v'
+
 const { locale, setLocale, t } = useI18n()
 const localePath = useLocalePath()
 const route = useRoute()
+
+const breakpoints = useBreakpoints(breakpointsTailwind)
+const isMobile = breakpoints.smaller('md')
+
 // Search term for ContentSearch
 const searchTerm = ref('')
-// Mobile dropdown menu state
-const mobileMenuOpen = ref(false)
+
+// Auto-hide mobile navigation on idle (2 seconds timeout)
+const { idle } = useIdle(2000)
 // Get blog navigation based on current locale
 const { data: navigation, refresh: refreshNavigation } = await useAsyncData(
   'blog-navigation',
@@ -79,7 +87,11 @@ useSchemaOrg([
 <template>
   <UApp :locale="locales[locale]">
     <UContainer class="fixed top-2 inset-x-0 z-50">
-      <nav class="flex items-center justify-between border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/60 backdrop-blur-sm px-4 py-2">
+      <motion.nav
+        :animate="{ y: (idle && isMobile) ? -100 : 0 }"
+        :transition="{ type: 'spring', stiffness: 200, damping: 20 }"
+        class="flex items-center justify-between border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/60 backdrop-blur-sm px-4 py-2"
+      >
         <!-- Left: Logo -->
         <NuxtLink :to="localePath('/')" class="flex items-center gap-2 text-brand-500 font-bold uppercase">
           <Logo size="40" />
@@ -90,60 +102,38 @@ useSchemaOrg([
         <div class="flex items-center gap-1">
           <UContentSearchButton collapsed />
           <UColorModeButton />
-          <!-- Desktop: Language switcher -->
+          <!-- Language switcher -->
           <UButton
             color="neutral"
             variant="ghost"
             :icon="locale === 'id' ? 'i-narr-en' : 'i-narr-id'"
-            class="hidden sm:inline-flex"
             :aria-label="t('nav.switch_language')"
             @click="setLocale(locale === 'id' ? 'en' : 'id')"
           />
-          <!-- Mobile: Popover Menu -->
-          <UPopover
-            v-model:open="mobileMenuOpen"
-            class="sm:hidden"
-          >
-            <UButton
-              color="neutral"
-              variant="ghost"
-              :icon="mobileMenuOpen ? 'i-narr-close' : 'i-narr-menu'"
-              :aria-label="t('nav.menu')"
-            />
-            <template #content>
-              <div class="p-2 w-48 space-y-1">
-                <!-- Nav Links -->
-                <NuxtLink
-                  v-for="item in items"
-                  :key="item.label"
-                  :to="item.to"
-                  class="flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium uppercase transition-colors"
-                  :class="item.active
-                    ? 'bg-primary-50 dark:bg-primary-950/50 text-primary-500'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
-                  @click="mobileMenuOpen = false"
-                >
-                  <UIcon
-                    v-if="item.active"
-                    name="i-narr-chevron-right"
-                    class="size-3.5"
-                  />
-                  {{ item.label }}
-                </NuxtLink>
-                <!-- Divider -->
-                <USeparator />
-                <!-- Language Switcher -->
-                <UButton
-                  variant="ghost"
-                  :icon="locale === 'id' ? 'i-narr-en' : 'i-narr-id'"
-                  :aria-label="t('nav.switch_language')"
-                  @click="setLocale(locale === 'id' ? 'en' : 'id'); mobileMenuOpen = false"
-                />
-              </div>
-            </template>
-          </UPopover>
         </div>
-      </nav>
+      </motion.nav>
+    </UContainer>
+
+    <!-- Mobile Bottom Navigation -->
+    <UContainer class="sm:hidden fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] inset-x-0 z-50">
+      <motion.nav
+        :animate="{ y: idle ? 150 : 0 }"
+        :transition="{ type: 'spring', stiffness: 200, damping: 20 }"
+        class="flex items-center justify-around border dark:border-brand-700 border-brand-900 rounded bg-(--ui-bg)/80 backdrop-blur-md px-2 py-2 shadow-lg"
+      >
+        <NuxtLink
+          v-for="item in items"
+          :key="item.label"
+          :to="item.to"
+          class="flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-200"
+          :class="item.active
+            ? 'text-primary-500 bg-primary-50 dark:bg-primary-950/50 scale-110'
+            : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100'"
+        >
+          <UIcon :name="item.icon" class="size-6" />
+          <span class="sr-only">{{ item.label }}</span>
+        </NuxtLink>
+      </motion.nav>
     </UContainer>
     <!-- Content Search Modal (Blog only) -->
     <ClientOnly>

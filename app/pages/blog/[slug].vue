@@ -151,6 +151,15 @@ defineOgImageComponent('Permadi', {
 })
 
 const tocColor = computed(() => colorMode.value === 'dark' ? 'warning' : 'info')
+const isMobileTocOpen = ref(false)
+
+function handleTocClick(e: MouseEvent) {
+  const target = e.target as HTMLElement
+  // Check if what was clicked was an anchor tag
+  if (target.closest('a')) {
+    isMobileTocOpen.value = false
+  }
+}
 </script>
 
 <template>
@@ -230,12 +239,47 @@ const tocColor = computed(() => colorMode.value === 'dark' ? 'warning' : 'info')
       </UPageBody>
 
       <template v-if="article?.body?.toc?.links?.length" #right>
-        <UContentToc
-          :color="tocColor"
-          highlight
-          :highlight-color="tocColor" :links="article.body.toc.links"
-        />
+        <div class="hidden lg:block sticky top-24">
+          <UContentToc
+            :color="tocColor"
+            highlight
+            :highlight-color="tocColor"
+            :links="article.body.toc.links"
+            class="max-h-[calc(100vh-140px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700"
+          />
+        </div>
       </template>
+
+      <!-- Mobile TOC: Popover button -->
+      <div v-if="article?.body?.toc?.links?.length" class="lg:hidden fixed bottom-24 left-4 z-40">
+        <UPopover
+          v-model:open="isMobileTocOpen"
+          :popper="{ placement: 'top-end' }"
+          overlay
+        >
+          <UButton
+            icon="i-narr-list"
+            color="primary"
+            size="lg"
+            class="rounded-full shadow-xl"
+            aria-label="Table of Contents"
+          />
+          <template #content>
+            <div class="p-4 w-64" @click="handleTocClick">
+              <UContentToc
+                title="Daftar Isi"
+                :default-open="true"
+                :color="tocColor"
+                highlight
+                :highlight-color="tocColor"
+                :links="article.body.toc.links"
+                class="max-h-[60vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700"
+                :ui="{ trigger: 'cursor-default pointer-events-none pb-3 border-b border-gray-200 dark:border-gray-800', trailing: 'hidden' }"
+              />
+            </div>
+          </template>
+        </UPopover>
+      </div>
     </UPage>
   </div>
 </template>
