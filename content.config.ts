@@ -55,6 +55,7 @@ const projectSchema = pageSchema.extend({
   image: z.string(),
   tech: z.array(z.string()),
   link: z.string().optional(),
+  repo: z.string().optional(),
   date: z.string().optional(), // Keep date as it's useful for sorting
 })
 

@@ -1,8 +1,0 @@
-title: Smart Arch System
-description: Project management platform for modern architects.
-image: /logo.png
-tech:
-  - Vue 3
-  - Nuxt
-  - Tailwind
-link: https://example.com

@@ -130,12 +130,8 @@ watchEffect(() => {
   }
 })
 
-// Track modal image loaded state
-const modalImageLoaded = ref(false)
-
 function openGalleryModal(gallery: any) {
   selectedGallery.value = gallery
-  modalImageLoaded.value = false
   isModalOpen.value = true
 }
 
@@ -297,53 +293,18 @@ function getImageKey(imagePath: string): string {
     <UModal
       v-if="selectedGallery"
       v-model:open="isModalOpen"
-      :title="selectedGallery.title"
     >
-      <template #body>
-        <div class="relative w-full flex items-center justify-center rounded-xl overflow-hidden shadow" style="max-height: 75vh;">
-          <!-- Skeleton placeholder for modal image -->
-          <div v-if="!modalImageLoaded" class="w-full flex flex-col items-center justify-center gap-3 py-12">
-            <USkeleton class="w-full aspect-thumbnail rounded-lg" />
-          </div>
-          <NuxtImg
-            provider="cloudinary"
-            :src="selectedGallery.image"
-            :alt="selectedGallery.title"
-            format="webp"
-            quality="90"
-            width="900"
-            densities="1x 2x"
-            class="max-w-full max-h-full object-contain transition-opacity duration-300"
-            :class="modalImageLoaded ? 'opacity-100' : 'opacity-0 absolute'"
-            :placeholder="img(selectedGallery.image, { provider: 'cloudinary', height: 50, width: 25, format: 'webp', blur: 5, quality: 30 } as any)"
-            @load="modalImageLoaded = true"
-          />
-        </div>
-      </template>
-
-      <template #footer>
-        <div class="flex flex-wrap items-center justify-between w-full gap-4">
-          <!-- Categories -->
-          <div v-if="selectedGallery.category" class="flex flex-wrap gap-1.5">
-            <UBadge
-              v-for="cat in ensureArray(selectedGallery.category)"
-              :key="cat"
-              variant="subtle"
-              color="primary"
-            >
-              {{ cat }}
-            </UBadge>
-          </div>
-
-          <!-- Tool -->
-          <div v-if="selectedGallery.tools && toolIconMap[selectedGallery.tools]" class="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-            <UTooltip :text="toolIconMap[selectedGallery.tools]?.label">
-              <UIcon
-                :name="toolIconMap[selectedGallery.tools]?.icon"
-              />
-            </UTooltip>
-          </div>
-        </div>
+      <template #content>
+        <NuxtImg
+          provider="cloudinary"
+          :src="selectedGallery.image"
+          :alt="selectedGallery.title"
+          format="webp"
+          quality="90"
+          width="900"
+          densities="1x 2x"
+          class="w-full h-auto max-h-[90vh] object-contain rounded-xl"
+        />
       </template>
     </UModal>
   </UPage>

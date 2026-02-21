@@ -9,7 +9,7 @@ const pendidikan = [
     title: t('edu.upi'),
     description: t('edu.jurusan'),
     avatar: {
-      src: '/logo.png',
+      src: '/logo/upi.png',
       alt: t('edu.upi'),
     },
     value: 'upi',
@@ -19,7 +19,7 @@ const pendidikan = [
     title: 'SMA Negeri 1 Rajagaluh',
     description: t('edu.sma'),
     avatar: {
-      src: '/logo.png',
+      src: '/logo/sma1rjl.png',
       alt: 'SMA Negeri 1 Rajagaluh',
     },
     value: 'sman1rjl',
@@ -29,7 +29,7 @@ const pendidikan = [
     title: 'SMP Negeri 1 Rajagaluh',
     description: t('edu.smp'),
     avatar: {
-      src: '/logo.png',
+      src: '/logo/smp1rjl.png',
       alt: 'SMP Negeri 1 Rajagaluh',
     },
     value: 'smpn1rjl',
@@ -39,7 +39,7 @@ const pendidikan = [
     title: 'SD Negeri Teja 1',
     description: t('edu.sd'),
     avatar: {
-      src: '/logo.png',
+      src: '/logo/teja1.png',
       alt: 'SD Negeri Teja 1',
     },
     value: 'sdn1teja',
@@ -80,8 +80,8 @@ function onSelect(_e: Event, item: TimelineItem) {
       >
         <div v-if="activeSchool" class="space-y-6">
           <div class="flex justify-center">
-            <div class="w-32 h-32 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20">
-              <NuxtImg :alt="activeSchool.title" :src="activeSchool.avatar!.src" class="w-16 h-16 text-primary" />
+            <div class="w-36 h-36 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20">
+              <NuxtImg :alt="activeSchool.title" :src="activeSchool.avatar!.src" class="w-30 h-30 text-primary" />
             </div>
           </div>
 

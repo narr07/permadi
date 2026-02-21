@@ -160,7 +160,6 @@ h3 {
   @apply font-title; /* hanya font, biarkan warna diatur AppConfig */
 }
 
-
 body {
-  @apply text-gray-600 dark:text-gray-200 font-sans text-[18px];
+  @apply text-gray-600 dark:text-gray-200 font-sans ;
 }

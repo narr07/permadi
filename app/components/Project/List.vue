@@ -63,11 +63,6 @@ function openProjectModal(project: any) {
   isModalOpen.value = true
 }
 
-function closeModal() {
-  isModalOpen.value = false
-  selectedProject.value = null
-}
-
 // Track image loaded state for list items
 const imageLoadedMap = reactive<Record<string, boolean>>({})
 function onImageLoaded(key: string) {
@@ -234,6 +229,18 @@ watchEffect(() => {
 
       <template #footer>
         <UButton
+          v-if="selectedProject.repo"
+          :to="selectedProject.repo"
+          target="_blank"
+          color="neutral"
+          variant="outline"
+          icon="i-narr-soc-github"
+        >
+          {{ t('view_repo') || 'Repository' }}
+        </UButton>
+        <div v-else />
+
+        <UButton
           v-if="selectedProject.link"
           :to="selectedProject.link"
           target="_blank"
@@ -242,13 +249,6 @@ watchEffect(() => {
           trailing
         >
           {{ t('view_project') || 'View Project' }}
-        </UButton>
-        <UButton
-          color="neutral"
-          variant="ghost"
-          @click="closeModal"
-        >
-          {{ t('close') || 'Close' }}
         </UButton>
       </template>
     </UModal>
