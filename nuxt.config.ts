@@ -16,12 +16,74 @@ export default defineNuxtConfig({
     '@nuxthub/core',
     '@nuxtjs/seo',
     '@nuxt/scripts',
+    'nuxt-llms',
   ],
   site: {
     url: 'https://permadi.dev',
     name: 'Permadi',
     description: 'Permadi is a teacher, programmer and designer.',
     defaultLocale: 'id',
+  },
+  ogImage: {
+    fonts: [
+      {
+        name: 'PermadiHeading',
+        weight: 700,
+        path: '/fonts/PermadiHeading/Permadi-Heading-Bold.otf',
+      },
+      {
+        name: 'PermadiBody',
+        weight: 400,
+        path: '/fonts/PermadiBody/Permadi-Body-Regular.otf',
+      },
+    ],
+  },
+  llms: {
+    domain: 'https://permadi.dev',
+    title: 'Permadi',
+    description: 'Permadi is a teacher, programmer and designer.',
+    sections: [
+      {
+        title: 'Pages (ID)',
+        description: 'Halaman profil dan info dasar',
+        contentCollection: 'id_pages',
+      },
+      {
+        title: 'Pages (EN)',
+        description: 'Profile and basic info pages',
+        contentCollection: 'en_pages',
+      },
+      {
+        title: 'Blog (ID)',
+        description: 'Artikel blog',
+        contentCollection: 'id_blog',
+      },
+      {
+        title: 'Blog (EN)',
+        description: 'Blog articles',
+        contentCollection: 'en_blog',
+      },
+      {
+        title: 'Projects (ID)',
+        description: 'Daftar projek',
+        contentCollection: 'id_project',
+      },
+      {
+        title: 'Projects (EN)',
+        description: 'List of projects',
+        contentCollection: 'en_project',
+      },
+      {
+        title: 'Gallery (ID)',
+        description: 'Galeri karya',
+        contentCollection: 'id_gallery',
+      },
+      {
+        title: 'Gallery (EN)',
+        description: 'Artwork gallery',
+        contentCollection: 'en_gallery',
+      },
+    ],
   },
   content: {
     renderer: {

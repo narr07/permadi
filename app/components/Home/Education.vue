@@ -62,7 +62,6 @@ function onSelect(_e: Event, item: TimelineItem) {
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center justify-center">
       <!-- Kolom Kiri: Timeline -->
       <UCard
-        class="border dark:border-primary-700/30 border-primary-900/10"
         :ui="{ body: 'p-6' }"
       >
         <UTimeline
@@ -75,7 +74,7 @@ function onSelect(_e: Event, item: TimelineItem) {
 
       <!-- Kolom Kanan: Gambar & Detail (hidden di mobile) -->
       <UCard
-        class="hidden lg:flex flex-col items-center justify-center text-center h-full min-h-[300px] border dark:border-primary-700/30 border-primary-900/10 spotlight"
+        class="hidden lg:flex flex-col items-center justify-center text-center h-full min-h-[300px] "
         spotlight
       >
         <div v-if="activeSchool" class="space-y-6">

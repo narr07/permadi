@@ -1,74 +1,95 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 /**
- * @credits Nuxt SEO <https://nuxtseo.com/>
+ * @credits NuxtLabs <https://nuxtlabs.com/>
+ * @see https://github.com/nuxt/nuxt.com/blob/main/components/OgImage/Docs.vue
  */
-
 import { computed } from 'vue'
 
-const props = withDefaults(defineProps<{
-  colorMode?: 'dark' | 'light'
-  title?: string
-  description?: string
-  isPro?: boolean
-}>(), {
-  colorMode: 'light',
+const props = withDefaults(defineProps<{ title?: string, description?: string, headline?: string }>(), {
   title: 'title',
+  description: 'description',
+  headline: 'headline',
 })
 
-const themeColor = computed(() => props.isPro ? '124, 58, 237' : '34, 197, 94')
+const title = computed(() => (props.title || '').slice(0, 60))
+const description = computed(() => (props.description || '').slice(0, 165))
 </script>
 
 <template>
-  <div
-    class="w-full h-full justify-center items-center relative p-10 lg:p-[60px] bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50"
-  >
-    <!-- Gradient background -->
-    <div
-      class="absolute top-0 left-0 right-0 bottom-0" :style="{
-        backgroundImage: `radial-gradient(ellipse 100% 100% at 100% 100%, rgba(${themeColor}, 0.15) 0%, transparent 60%)`,
-      }"
-    />
-    <div
-      class="absolute top-0 left-0 right-0 bottom-0" :style="{
-        backgroundImage: `radial-gradient(ellipse 100% 100% at 0.1% 0.1%, rgba(${themeColor}, 0.1) 0%, transparent 50%)`,
-      }"
-    />
+  <div class="w-full h-full flex flex-col justify-center bg-[#042f27]">
+    <svg
+      class="absolute right-0 top-0"
+      width="629"
+      height="593"
+      viewBox="0 0 629 593"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g filter="url(#filter0_f_199_94966)">
+        <path d="M628.5 -578L639.334 -94.4223L806.598 -548.281L659.827 -87.387L965.396 -462.344L676.925 -74.0787L1087.69 -329.501L688.776 -55.9396L1160.22 -164.149L694.095 -34.9354L1175.13 15.7948L692.306 -13.3422L1130.8 190.83L683.602 6.50012L1032.04 341.989L668.927 22.4412L889.557 452.891L649.872 32.7537L718.78 511.519L628.5 36.32L538.22 511.519L607.128 32.7537L367.443 452.891L588.073 22.4412L224.955 341.989L573.398 6.50012L126.198 190.83L564.694 -13.3422L81.8734 15.7948L562.905 -34.9354L96.7839 -164.149L568.224 -55.9396L169.314 -329.501L580.075 -74.0787L291.604 -462.344L597.173 -87.387L450.402 -548.281L617.666 -94.4223L628.5 -578Z" fill="#5eeacf" />
+      </g>
+      <defs>
+        <filter
+          id="filter0_f_199_94966"
+          x="0.873535"
+          y="-659"
+          width="1255.25"
+          height="1251.52"
+          filterUnits="userSpaceOnUse"
+          color-interpolation-filters="sRGB"
+        >
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+          <feGaussianBlur stdDeviation="40.5" result="effect1_foregroundBlur_199_94966" />
+        </filter>
+      </defs>
+    </svg>
 
-    <div class="w-full flex-col justify-center relative items-center text-center gap-5 lg:gap-8">
-      <!-- Logo -->
-      <div class="flex items-center gap-1">
-        <svg viewBox="0 0 64 64" class="w-10 h-10 lg:w-16 lg:h-16">
-          <defs>
-            <linearGradient :id="isPro ? 'nsLine2' : 'nsLine1'" x1="0%" y1="100%" x2="100%" y2="0%">
-              <stop offset="0%" :stop-color="isPro ? '#7c3aed' : '#22c55e'" />
-              <stop offset="100%" :stop-color="isPro ? '#c4b5fd' : '#86efac'" />
-            </linearGradient>
-            <linearGradient :id="isPro ? 'nsFill2' : 'nsFill1'" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" :stop-color="isPro ? '#7c3aed' : '#22c55e'" stop-opacity="0.6" />
-              <stop offset="100%" :stop-color="isPro ? '#7c3aed' : '#22c55e'" stop-opacity="0" />
-            </linearGradient>
-          </defs>
-          <path d="M8 52 Q20 48 24 36 T40 20 T56 12 L56 56 L8 56 Z" :fill="`url(#${isPro ? 'nsFill2' : 'nsFill1'})`" />
-          <path d="M8 52 Q20 48 24 36 T40 20 T56 12" fill="none" :stroke="`url(#${isPro ? 'nsLine2' : 'nsLine1'})`" stroke-width="4" stroke-linecap="round" />
-          <circle cx="56" cy="12" r="6" :fill="`url(#${isPro ? 'nsLine2' : 'nsLine1'})`" />
-        </svg>
-        <span class="text-[32px] lg:text-[42px] font-bold tracking-tight">
-          Nuxt<span :class="isPro ? 'text-violet-500' : 'text-green-500'" class="ml-1">SEO{{ isPro ? ' Pro' : '' }}</span>
-        </span>
-      </div>
-
-      <!-- Title -->
-      <h1
-        class="w-full justify-center text-center text-[48px] lg:text-[80px] font-bold m-0 leading-tight max-w-[700px] lg:max-w-[1000px]"
-        style="display: block; line-clamp: 3; text-overflow: ellipsis; text-wrap: balance;"
-      >
+    <div class="max-w-[750px] pl-6 lg:pl-[80px]">
+      <p v-if="headline" class="uppercase text-[24px] text-[#f9bc60] mb-4 font-bold ">
+        {{ headline }}
+      </p>
+      <h1 v-if="title" class="m-0 text-[70px] leading-tight font-bold mb-2 text-white" style="font-family: 'PermadiHeading'">
         {{ title }}
       </h1>
-
-      <!-- Description -->
-      <p v-if="description" class="text-[24px] lg:text-[32px] opacity-70 max-w-[650px] lg:max-w-[900px] leading-relaxed" style="display: block; line-clamp: 2; text-overflow: ellipsis;">
+      <p v-if="description" class="text-[24px] text-neutral-200 leading-tight" style="font-family: 'PermadiBody'; display: block; line-clamp: 3; text-overflow: ellipsis;">
         {{ description }}
       </p>
     </div>
+
+    <svg width="340" height="340" class="absolute top-[100px] right-[80px] flex" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M86.6287 103.106C88.21 94.7479 94.7479 88.21 103.106 86.6287L104.427 86.3789C146.343 78.4486 189.386 78.5578 231.262 86.7004L232.272 86.8968C239.615 88.3245 245.4 93.9902 246.981 101.301L247.277 102.671C256.565 145.63 256.438 190.092 246.903 232.997C245.361 239.939 239.939 245.361 232.997 246.903C190.092 256.438 145.63 256.565 102.671 247.277L101.301 246.981C93.9902 245.4 88.3245 239.615 86.8968 232.272L86.7004 231.262C78.5578 189.386 78.4486 146.343 86.3789 104.426L86.6287 103.106Z" fill="url(#paint0_linear_1065_6)" />
+      <path d="M103.028 86.2151C94.4994 87.8286 87.8286 94.4994 86.2151 103.028L85.9653 104.348C78.0252 146.318 78.1344 189.414 86.2872 231.342L86.4836 232.353C87.9434 239.86 93.7366 245.776 101.212 247.392L102.582 247.688C145.601 256.989 190.124 256.862 233.089 247.314C240.19 245.736 245.736 240.19 247.314 233.089C256.862 190.124 256.989 145.601 247.688 102.582L247.392 101.212C245.776 93.7366 239.86 87.9434 232.353 86.4836L231.342 86.2872C189.414 78.1344 146.318 78.0252 104.348 85.9653L103.028 86.2151Z" stroke="url(#paint1_linear_1065_6)" stroke-opacity="0.2" stroke-width="0.841584" />
+      <path d="M86.5692 66.0417C76.1887 68.0727 68.0727 76.1887 66.0417 86.5692L65.7806 87.904C55.4494 140.708 55.563 195.024 66.115 247.784L66.3094 248.756C68.187 258.144 75.4485 265.527 84.8038 267.561L86.1766 267.86C140.001 279.561 195.755 279.425 249.525 267.477C258.483 265.486 265.485 258.489 267.475 249.53C279.429 195.737 279.558 139.989 267.852 86.1412L267.553 84.767C265.524 75.434 258.158 68.1899 248.793 66.3168L247.784 66.115C195.024 55.563 140.708 55.4494 87.9039 65.7806L86.5692 66.0417Z" stroke="url(#paint2_linear_1065_6)" stroke-opacity="0.6" stroke-width="1.7" />
+      <path d="M66.175 44.2984C55.2118 46.6477 46.6476 55.2118 44.2984 66.175L43.1524 71.5229C29.5423 135.037 29.5423 200.713 43.1524 264.227L44.4251 270.166C46.7027 280.795 54.9171 289.15 65.5056 291.608C132.857 307.243 203.127 307.189 270.477 291.554C280.924 289.129 289.129 280.924 291.554 270.477C307.189 203.127 307.243 132.857 291.608 65.5056C289.15 54.9171 280.795 46.7027 270.166 44.4251L264.227 43.1524C200.713 29.5423 135.037 29.5423 71.5229 43.1524L66.175 44.2984Z" stroke="url(#paint3_linear_1065_6)" stroke-opacity="0.4" stroke-width="1.7" />
+      <path d="M47.0949 24.9846C36.0029 27.3375 27.3375 36.0029 24.9846 47.0949L19.3193 73.8027C5.86736 137.219 5.96965 202.762 19.6195 266.137L25.0028 291.131C27.3518 302.037 35.8106 310.592 46.6894 313.064L67.2583 317.739C134.879 333.107 205.098 332.991 272.667 317.398L291.54 313.043C302.229 310.576 310.576 302.229 313.043 291.54L317.398 272.667C332.991 205.098 333.107 134.879 317.739 67.2583L313.064 46.6894C310.592 35.8106 302.037 27.3518 291.131 25.0028L266.137 19.6195C202.762 5.96964 137.219 5.86736 73.8027 19.3193L47.0949 24.9846Z" stroke="url(#paint4_linear_1065_6)" stroke-opacity="0.2" stroke-width="2.125" />
+      <path d="M170 229C204.242 229 232 201.242 232 167C232 132.758 204.242 105 170 105C135.758 105 108 132.758 108 167C108 201.242 135.758 229 170 229Z" fill="#99F6E4" />
+      <path d="M190.232 174.029C194.107 174.029 197.261 170.876 197.261 167C197.261 163.123 194.108 159.972 190.232 159.972C186.355 159.972 183.203 163.125 183.203 167C183.203 170.875 186.355 174.029 190.232 174.029Z" fill="#134E4A" />
+      <path d="M142.768 167C142.768 170.875 145.921 174.029 149.797 174.029C153.674 174.029 156.827 170.876 156.827 167C156.827 163.123 153.674 159.972 149.797 159.972C145.921 159.972 142.768 163.125 142.768 167Z" fill="#134E4A" />
+      <path d="M213.84 123.16C202.132 111.451 186.56 105 170 105C153.44 105 137.869 111.448 126.16 123.16C114.448 134.869 108 150.44 108 167C108 183.56 114.448 199.13 126.16 210.84C137.869 222.549 153.44 229 170 229C186.56 229 202.132 222.552 213.84 210.84C225.552 199.132 232 183.56 232 167C232 150.44 225.552 134.87 213.84 123.16ZM210.539 199.734C203.22 208.808 192.991 215.202 181.684 217.79V167.18C181.684 158.94 188.307 152.236 196.446 152.236H196.544C200.498 152.261 204.202 153.831 206.975 156.652C209.748 159.472 211.252 163.207 211.21 167.166C211.122 175.213 204.503 181.762 196.452 181.765C194.848 181.765 193.272 181.513 191.768 181.01C191.257 180.84 190.728 180.752 190.198 180.752C187.475 180.752 185.258 182.973 185.258 185.704C185.258 187.84 186.627 189.729 188.66 190.405C191.162 191.237 193.783 191.66 196.448 191.66C202.965 191.66 209.111 189.142 213.753 184.568C218.388 179.998 221 173.902 221.102 167.4C221.207 160.764 218.732 154.51 214.132 149.784C209.536 145.06 203.356 142.419 196.73 142.344C196.637 142.344 196.541 142.341 196.446 142.341C189.845 142.341 183.643 144.917 178.982 149.592C174.342 154.247 171.786 160.43 171.786 167.002V219.077C171.187 219.097 170.587 219.106 169.997 219.106C141.266 219.106 117.892 195.731 117.892 167.002C117.892 155.138 122.001 143.513 129.458 134.267C136.777 125.193 147.006 118.8 158.313 116.211V166.822C158.313 175.062 151.69 181.765 143.551 181.765H143.452C139.498 181.741 135.793 180.17 133.02 177.349C130.247 174.53 128.744 170.794 128.786 166.836C128.874 158.788 135.492 152.239 143.543 152.236C145.147 152.236 146.724 152.489 148.227 152.991C148.739 153.162 149.267 153.25 149.797 153.25C152.521 153.25 154.737 151.029 154.737 148.298C154.737 146.162 153.368 144.272 151.335 143.597C148.833 142.764 146.212 142.341 143.548 142.341C137.03 142.341 130.884 144.86 126.242 149.434C121.607 154.003 118.996 160.099 118.893 166.602C118.788 173.237 121.263 179.491 125.864 184.217C130.46 188.942 136.639 191.583 143.266 191.657C143.359 191.657 143.455 191.66 143.549 191.66C150.151 191.66 156.352 189.084 161.013 184.41C165.654 179.755 168.21 173.572 168.21 167V114.925C168.808 114.904 169.408 114.895 169.998 114.895C198.731 114.895 222.103 138.271 222.103 167C222.103 178.864 217.994 190.489 210.537 199.734H210.539Z" fill="#134E4A" />
+      <defs>
+        <linearGradient id="paint0_linear_1065_6" x1="245" y1="62" x2="101.5" y2="243.5" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#042F27" />
+          <stop offset="0.491992" stop-color="#328E7D" stop-opacity="0" />
+          <stop offset="1" stop-color="#5EEACF" stop-opacity="0" />
+        </linearGradient>
+        <linearGradient id="paint1_linear_1065_6" x1="247.183" y1="96.4978" x2="194.172" y2="229.234" gradientUnits="userSpaceOnUse">
+          <stop />
+          <stop offset="1" stop-opacity="0" />
+        </linearGradient>
+        <linearGradient id="paint2_linear_1065_6" x1="267.01" y1="78.6536" x2="200.746" y2="244.574" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#14B898" />
+          <stop offset="1" stop-color="#14B898" stop-opacity="0" />
+        </linearGradient>
+        <linearGradient id="paint3_linear_1065_6" x1="292.405" y1="57.816" x2="209.877" y2="264.463" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#14B898" />
+          <stop offset="1" stop-color="#14B898" stop-opacity="0" />
+        </linearGradient>
+        <linearGradient id="paint4_linear_1065_6" x1="314.196" y1="40.2232" x2="217.813" y2="281.562" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#14B898" />
+          <stop offset="1" stop-color="#14B898" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+    </svg>
   </div>
 </template>

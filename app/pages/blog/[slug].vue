@@ -113,7 +113,7 @@ useSchemaOrg([
     datePublished: article.value?.date,
     author: {
       name: 'Permadi',
-      url: 'https://permadi.pages.dev',
+      url: 'https://permadi.dev',
     },
   }),
 ])
@@ -139,9 +139,10 @@ useSchemaOrg([
 
 //   copy(content)
 // }
-defineOgImageComponent('NuxtSeo', {
+defineOgImageComponent('Permadi', {
   title: article.value?.title,
   description: article.value?.description,
+  headline: 'Blog',
 })
 
 const tocColor = computed(() => colorMode.value === 'dark' ? 'warning' : 'info')

@@ -62,11 +62,10 @@ useSeoMeta({
   ogDescription: () => (page.value as any)?.description,
 })
 
-defineOgImageComponent('NuxtSeo', {
+defineOgImageComponent('Permadi', {
   title: () => page.value?.title,
   description: () => (page.value as any)?.description,
-  colorMode: 'dark',
-  theme: '#14b898',
+  headline: 'Permadi',
 })
 
 // Reset i18n params on mount for non-blog pages
