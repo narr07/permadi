@@ -17,6 +17,8 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
     '@nuxt/scripts',
     'nuxt-llms',
+    'nuxt-delay-hydration',
+    'nuxt-booster',
   ],
   site: {
     url: 'https://permadi.dev',
@@ -185,7 +187,21 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   compatibilityDate: '2026-01-01',
 
+  delayHydration: {
+    mode: 'mount',
+  },
   routeRules: {
+    '/': { prerender: true },
+    '/en': { prerender: true },
+    '/blog': { prerender: true },
+    '/en/blog': { prerender: true },
+    '/gallery': { prerender: true },
+    '/en/gallery': { prerender: true },
+    '/project': { prerender: true },
+    '/en/project': { prerender: true },
+    '/blog/**': { prerender: true },
+    '/en/blog/**': { prerender: true },
+
     '/api/**': { prerender: false },
     // Cache Cloudinary images served via Nuxt Image proxy (IPX)
     '/_ipx/**': {
@@ -198,7 +214,31 @@ export default defineNuxtConfig({
       },
     },
   },
-
+  booster: {
+    detection: {
+      performance: true,
+      browserSupport: true,
+      battery: true,
+    },
+    performanceMetrics: {
+      timing: {
+        fcp: 800,
+        dcl: 1200,
+      },
+    },
+    optimizeSSR: {
+      cleanPreloads: true,
+      cleanPrefetches: true,
+      inlineStyles: true,
+    },
+    /**
+     * IntersectionObserver rootMargin for Compoennts and Assets
+     */
+    lazyOffset: {
+      component: '0%',
+      asset: '0%',
+    },
+  },
   nitro: {
     prerender: {
       routes: ['/', '/en'],
