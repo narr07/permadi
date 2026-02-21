@@ -103,6 +103,8 @@ useSeoMeta({
   ogDescription: article.value?.description,
   ogImage: article.value?.image,
   twitterCard: 'summary_large_image',
+  ogType: 'article',
+  articleAuthor: ['Permadi'],
 })
 
 useSchemaOrg([
@@ -114,6 +116,9 @@ useSchemaOrg([
     author: {
       name: 'Permadi',
       url: 'https://permadi.dev',
+    },
+    publisher: {
+      name: 'Permadi',
     },
   }),
 ])

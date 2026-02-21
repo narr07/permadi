@@ -45,14 +45,14 @@ const description = computed(() => (props.description || '').slice(0, 165))
       </defs>
     </svg>
 
-    <div class="max-w-[750px] pl-6 lg:pl-[80px]">
+    <div class="max-w-[800px] pl-12 lg:pl-[120px]">
       <p v-if="headline" class="uppercase text-[24px] text-[#f9bc60] mb-4 font-bold ">
         {{ headline }}
       </p>
-      <h1 v-if="title" class="m-0 text-[60px] leading-tight font-bold mb-2 text-[#99f6e4]" style="font-family: 'PermadiHeading'">
+      <h1 v-if="title" class="m-0 text-[60px] leading-none font-bold mb-2 text-[#99f6e4]" style="font-family: 'PermadiHeading'">
         {{ title }}
       </h1>
-      <p v-if="description" class="text-[24px] text-neutral-200 leading-tight" style="font-family: 'PermadiBody'; display: block; line-clamp: 3; text-overflow: ellipsis;">
+      <p v-if="description" class="text-[30px] text-neutral-200 leading-tight" style="font-family: 'PermadiBody'; display: block; line-clamp: 3; text-overflow: ellipsis;">
         {{ description }}
       </p>
     </div>

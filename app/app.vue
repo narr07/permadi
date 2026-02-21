@@ -5,26 +5,21 @@ import * as locales from '@nuxt/ui/locale'
 const { locale, setLocale, t } = useI18n()
 const localePath = useLocalePath()
 const route = useRoute()
-
 // Search term for ContentSearch
 const searchTerm = ref('')
-
 // Mobile dropdown menu state
 const mobileMenuOpen = ref(false)
-
 // Get blog navigation based on current locale
 const { data: navigation, refresh: refreshNavigation } = await useAsyncData(
   'blog-navigation',
   () => queryCollectionNavigation(`${locale.value}_blog`),
 )
-
 // Get blog files for search based on current locale (lazy loaded on client)
 const { data: files, refresh: refreshFiles } = useLazyAsyncData(
   'blog-search-files',
   () => queryCollectionSearchSections(`${locale.value}_blog`),
   { server: false },
 )
-
 // Refresh data when locale changes
 watch(locale, async () => {
   await Promise.all([
@@ -32,7 +27,6 @@ watch(locale, async () => {
     refreshFiles(),
   ])
 })
-
 const items = computed<NavigationMenuItem[]>(() => [
   {
     label: t('nav.home'),
@@ -55,7 +49,6 @@ const items = computed<NavigationMenuItem[]>(() => [
     active: route.path.startsWith(localePath('/gallery')),
   },
 ])
-
 const socials = [
   { icon: 'i-narr-soc-mail', to: 'https://go.nuxt.com/discord', label: 'Email' },
   { icon: 'i-narr-soc-ig', to: 'https://go.nuxt.com/x', label: 'Instagram' },
@@ -63,6 +56,20 @@ const socials = [
   { icon: 'i-narr-soc-behance', to: 'https://go.nuxt.com/x', label: 'Behance' },
   { icon: 'i-narr-soc-x', to: 'https://go.nuxt.com/x', label: 'X' },
 ]
+useSchemaOrg([
+  definePerson({
+    name: 'Dinar Permadi Yusup',
+    jobTitle: 'Teacher',
+    description: 'Dinar Permadi Yusup is a teacher at SDN Teja 2, full-stack developer, and a passionate graphic designer and UI/UX designer. He is also the founder of Permadi.dev and Permadi.id.',
+    image: 'https://permadi.dev/permadi.jpg',
+  }),
+  defineWebSite({
+    name: 'Permadi',
+    description: 'Dinar Permadi Yusup is a teacher at SDN Teja 2, full-stack developer, and a passionate graphic designer and UI/UX designer. He is also the founder of Permadi.dev and Permadi.id.',
+    image: 'https://permadi.dev/permadi.jpg',
+    url: 'https://permadi.dev',
+  }),
+])
 </script>
 
 <template>
@@ -73,15 +80,12 @@ const socials = [
         <NuxtLink :to="localePath('/')" class="flex items-center gap-2 text-brand-500 font-bold uppercase">
           <Logo />
         </NuxtLink>
-
         <!-- Center: Desktop Navigation (hidden on mobile) -->
         <UNavigationMenu :items="items" class="hidden sm:flex justify-center uppercase text-xs font-medium" />
-
         <!-- Right: Action buttons -->
         <div class="flex items-center gap-1">
           <UContentSearchButton collapsed />
           <UColorModeButton />
-
           <!-- Desktop: Language switcher -->
           <UButton
             color="neutral"
@@ -91,7 +95,6 @@ const socials = [
             :aria-label="t('nav.switch_language')"
             @click="setLocale(locale === 'id' ? 'en' : 'id')"
           />
-
           <!-- Mobile: Popover Menu -->
           <UPopover
             v-model:open="mobileMenuOpen"
@@ -103,7 +106,6 @@ const socials = [
               :icon="mobileMenuOpen ? 'i-narr-close' : 'i-narr-menu'"
               :aria-label="t('nav.menu')"
             />
-
             <template #content>
               <div class="p-2 w-48 space-y-1">
                 <!-- Nav Links -->
@@ -124,10 +126,8 @@ const socials = [
                   />
                   {{ item.label }}
                 </NuxtLink>
-
                 <!-- Divider -->
                 <USeparator />
-
                 <!-- Language Switcher -->
                 <UButton
                   variant="ghost"
@@ -141,7 +141,6 @@ const socials = [
         </div>
       </nav>
     </UContainer>
-
     <!-- Content Search Modal (Blog only) -->
     <ClientOnly>
       <LazyUContentSearch
@@ -154,24 +153,19 @@ const socials = [
         :fuse="{ resultLimit: 20 }"
       />
     </ClientOnly>
-
     <UMain>
       <UContainer class="py-6 pt-24">
         <NuxtPage />
       </UContainer>
     </UMain>
-
     <BackToTop />
-
     <UFooter>
       <template #left>
         <p class="text-muted text-sm">
           Copyright © narr07 - {{ new Date().getFullYear() }}
         </p>
       </template>
-
       <UNavigationMenu :items="items" variant="link" />
-
       <template #right>
         <UTooltip
           v-for="social in socials"
