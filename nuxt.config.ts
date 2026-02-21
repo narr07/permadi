@@ -29,7 +29,7 @@ export default defineNuxtConfig({
       {
         name: 'PermadiHeading',
         weight: 700,
-        path: '/fonts/PermadiHeading/Permadi-Heading-Bold.otf',
+        path: '/fonts/PermadiHeading/Permadi-Body-Bold.otf',
       },
       {
         name: 'PermadiBody',

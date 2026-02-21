@@ -54,6 +54,7 @@ const items = [
       <UCarousel
         v-slot="{ item }"
         loop
+        :autoplay="{ delay: 2000 }"
         :items="items"
         :ui="{
           item: 'basis-full',
