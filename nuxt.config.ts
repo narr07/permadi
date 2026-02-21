@@ -17,8 +17,6 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
     '@nuxt/scripts',
     'nuxt-llms',
-    'nuxt-delay-hydration',
-    'nuxt-booster',
   ],
   site: {
     url: 'https://permadi.dev',
@@ -184,9 +182,6 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   compatibilityDate: '2026-01-01',
 
-  delayHydration: {
-    mode: 'init',
-  },
   routeRules: {
     '/': { prerender: true },
     '/en': { prerender: true },
