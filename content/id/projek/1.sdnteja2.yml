@@ -1,6 +1,10 @@
 title: SDN Teja 2 Website
 description: Website for SDN Teja 2.
 image: /projects/sdnteja2.jpg
+images:
+  - /projects/sdnteja2.jpg
+  - /projects/sdnteja2.jpg
+  - /projects/sdnteja2.jpg
 link: https://sdnteja2.sch.id
 repo: https://github.com/narr07/sdnteja2
 tech:

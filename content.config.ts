@@ -53,6 +53,7 @@ const blogSchema = pageSchema.extend({
 
 const projectSchema = pageSchema.extend({
   image: z.string(),
+  images: z.array(z.string()).optional(),
   tech: z.array(z.string()),
   link: z.string().optional(),
   repo: z.string().optional(),

@@ -163,7 +163,7 @@ function handleTocClick(e: MouseEvent) {
 </script>
 
 <template>
-  <div v-if="article" class="py-12 md:py-20 space-y-4">
+  <div v-if="article" class="py-12  space-y-4">
     <UPage>
       <UButton
         :to="localePath('/blog')"
@@ -195,7 +195,7 @@ function handleTocClick(e: MouseEvent) {
               <UIcon name="i-narr-time" class="w-4 h-4" />
               <span>{{ article.readingTime }} {{ t('min_read') || 'menit baca' }}</span>
             </div>
-            <UBadge v-for="tag in article.tags" :key="tag" variant="subtle">
+            <UBadge v-for="tag in article.tags" :key="tag" class="uppercase" variant="subtle">
               {{ tag }}
             </UBadge>
           </div>
@@ -259,8 +259,8 @@ function handleTocClick(e: MouseEvent) {
         >
           <UButton
             icon="i-narr-list"
-            color="primary"
-            size="lg"
+            color="neutral"
+            variant="subtle"
             class="rounded-full shadow-xl"
             aria-label="Table of Contents"
           />

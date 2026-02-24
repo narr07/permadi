@@ -28,4 +28,3 @@ logs
 !.env.example
 
 pnpm-lock.yaml
-.wrangler

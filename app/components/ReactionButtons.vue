@@ -46,10 +46,6 @@ const reactions = [
           </span>
         </UButton>
       </div>
-
-      <p class="text-xs text-gray-500">
-        Klik untuk memberikan reaksi!
-      </p>
     </template>
 
     <!-- Fallback if no postId -->

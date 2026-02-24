@@ -58,6 +58,8 @@ watch(selectedTech, () => {
 const selectedProject = ref<any>(null)
 const isModalOpen = ref(false)
 
+const projectImages = computed<string[]>(() => selectedProject.value?.images || [])
+
 function openProjectModal(project: any) {
   selectedProject.value = project
   isModalOpen.value = true
@@ -192,12 +194,34 @@ watchEffect(() => {
     >
       <template #body>
         <div class="space-y-6">
-          <!-- Project Image -->
-          <div class="relative w-full h-64 rounded-lg overflow-hidden">
+          <!-- Project Image(s) -->
+          <div class="relative w-full rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+            <UCarousel
+              v-if="projectImages.length > 1"
+              v-slot="{ item }"
+              :items="projectImages"
+              arrows
+              dots
+              :prev="{ variant: 'solid', color: 'neutral' }"
+              :next="{ variant: 'solid', color: 'neutral' }"
+              class="w-full relative py-6"
+              :ui="{
+                item: 'basis-full flex justify-center items-center',
+                dots: 'absolute inset-x-0 bottom-4 flex justify-center gap-2 z-10',
+              }"
+            >
+              <NuxtImg
+                :src="item"
+                :alt="selectedProject.title"
+                class="w-full h-[45vh] object-contain mx-auto"
+                draggable="false"
+              />
+            </UCarousel>
             <NuxtImg
-              :src="selectedProject.image"
+              v-else
+              :src="selectedProject.images && selectedProject.images.length === 1 ? selectedProject.images[0] : selectedProject.image"
               :alt="selectedProject.title"
-              class="w-full h-full object-cover"
+              class="w-full h-[50vh] object-contain mx-auto"
             />
           </div>
 
@@ -235,9 +259,7 @@ watchEffect(() => {
           color="neutral"
           variant="outline"
           icon="i-narr-soc-github"
-        >
-          {{ t('view_repo') || 'Repository' }}
-        </UButton>
+        />
         <div v-else />
 
         <UButton
