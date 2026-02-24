@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
     '@nuxt/scripts',
     'nuxt-llms',
+    '@stefanobartoletti/nuxt-social-share',
   ],
   site: {
     url: 'https://permadi.dev',
@@ -205,6 +206,10 @@ export default defineNuxtConfig({
         'Cache-Control': 'public, max-age=604800, s-maxage=86400, stale-while-revalidate=86400',
       },
     },
+  },
+
+  socialShare: {
+    baseUrl: 'https://permadi.dev',
   },
 
   nitro: {

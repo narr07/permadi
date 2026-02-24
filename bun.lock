@@ -15,6 +15,7 @@
         "@nuxthub/core": "^0.10.5",
         "@nuxtjs/i18n": "^10.2.1",
         "@nuxtjs/seo": "3.4.0",
+        "@stefanobartoletti/nuxt-social-share": "2.3.1",
         "@vueuse/nuxt": "^14.2.1",
         "better-sqlite3": "^12.6.2",
         "drizzle-kit": "^0.31.9",
@@ -770,6 +771,8 @@
     "@sqlite.org/sqlite-wasm": ["@sqlite.org/sqlite-wasm@3.50.4-build1", "", { "bin": { "sqlite-wasm": "bin/index.js" } }, "sha512-Qig2Wso7gPkU1PtXwFzndh+CTRzrIFxVGqv6eCetjU7YqxlHItj+GvQYwYTppCRgAPawtRN/4AJcEgB9xDHGug=="],
 
     "@standard-schema/spec": ["@standard-schema/spec@1.1.0", "", {}, "sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w=="],
+
+    "@stefanobartoletti/nuxt-social-share": ["@stefanobartoletti/nuxt-social-share@2.3.1", "", { "dependencies": { "@nuxt/kit": "^4.2.2", "defu": "^6.1.4" } }, "sha512-VAtquBFShxUh4z0a6oTE1EpiZUQf7j3vbIdxWiakK1TsQ4EcNP+DW37tISvDO1wHm/4QPlnp5g6dpNny69aR/g=="],
 
     "@stylistic/eslint-plugin": ["@stylistic/eslint-plugin@5.8.0", "", { "dependencies": { "@eslint-community/eslint-utils": "^4.9.1", "@typescript-eslint/types": "^8.54.0", "eslint-visitor-keys": "^4.2.1", "espree": "^10.4.0", "estraverse": "^5.3.0", "picomatch": "^4.0.3" }, "peerDependencies": { "eslint": ">=9.0.0" } }, "sha512-WNPVF/FfBAjyi3OA7gok8swRiImNLKI4dmV3iK/GC/0xSJR7eCzBFsw9hLZVgb1+MYNLy7aDsjohxN1hA/FIfQ=="],
 

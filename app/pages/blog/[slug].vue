@@ -163,7 +163,7 @@ function handleTocClick(e: MouseEvent) {
 </script>
 
 <template>
-  <div v-if="article" class="py-12  space-y-4">
+  <div v-if="article" class="py-8 space-y-4">
     <UPage>
       <UButton
         :to="localePath('/blog')"
@@ -190,14 +190,16 @@ function handleTocClick(e: MouseEvent) {
           {{ article.description }}
         </template>
         <template #headline>
-          <div class="flex items-center gap-3 flex-wrap">
+          <div class="flex flex-col gap-2">
             <div v-if="article.readingTime" class="flex items-center gap-1 text-sm text-gray-500">
               <UIcon name="i-narr-time" class="w-4 h-4" />
               <span>{{ article.readingTime }} {{ t('min_read') || 'menit baca' }}</span>
             </div>
-            <UBadge v-for="tag in article.tags" :key="tag" class="uppercase" variant="subtle">
-              {{ tag }}
-            </UBadge>
+            <div class="flex flex-wrap py-2 gap-2">
+              <UBadge v-for="tag in article.tags" :key="tag" class="uppercase text-xs" variant="subtle">
+                {{ tag }}
+              </UBadge>
+            </div>
           </div>
         </template>
       </UPageHeader>
@@ -208,6 +210,20 @@ function handleTocClick(e: MouseEvent) {
             <ContentRenderer :value="article" />
           </div>
 
+          <!-- Reaction Buttons -->
+          <div class="py-4">
+            <ClientOnly>
+              <SocialShare
+                v-for="network in ['facebook', 'x', 'linkedin', 'email', 'threads', 'whatsapp']"
+                :key="network"
+                :network="network"
+                :styled="true"
+                :url="article.path"
+                :title="article.title"
+                :hashtags="article.tags?.join(',')"
+              />
+            </ClientOnly>
+          </div>
           <!-- Reaction Buttons -->
           <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
             <ClientOnly>
