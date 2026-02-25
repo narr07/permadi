@@ -15,9 +15,6 @@ async function main() {
 
     for (const file of svgFiles) {
       const iconName = parse(file).name
-      if (existingIcons.has(iconName)) {
-        continue
-      }
 
       const filePath = join(iconsDir, file)
       const content = await readFile(filePath, 'utf-8')

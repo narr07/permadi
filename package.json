@@ -8,6 +8,7 @@
     "generate": "NODE_OPTIONS='--max-old-space-size=4096' nuxt generate",
     "preview": "nuxt preview",
     "optimize:images": "node --experimental-strip-types scripts/convert-webp.ts",
+    "generate:icons": "bun app/assets/generate_icons.ts",
     "lint": "eslint",
     "lint:fix": "eslint --fix"
   },

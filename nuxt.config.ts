@@ -251,6 +251,7 @@ export default defineNuxtConfig({
     scanPageMeta: true, // Required for defineI18nRoute
     payloadExtraction: true, // Extracts state to smaller json payloads
     renderJsonPayloads: true, // Ensures JSON payload is rendered
+    // viewTransition: true,
   },
 
   vite: {

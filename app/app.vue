@@ -149,7 +149,7 @@ useSchemaOrg([
     </ClientOnly>
     <UMain>
       <UContainer class="py-6 pt-24">
-        <NuxtPage />
+        <NuxtPage :transition="{ name: 'page', mode: 'out-in' }" />
       </UContainer>
     </UMain>
     <BackToTop />
@@ -180,3 +180,15 @@ useSchemaOrg([
     </UFooter>
   </UApp>
 </template>
+
+<style>
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.2s;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
+}
+</style>
