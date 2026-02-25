@@ -9,7 +9,7 @@ const pendidikan = [
     title: t('edu.upi'),
     description: t('edu.jurusan'),
     avatar: {
-      src: '/logo/upi.png',
+      src: '/logo/upi.webp',
       alt: t('edu.upi'),
       size: 'lg',
       class: 'bg-gray-100 dark:bg-gray-800 p-1',
@@ -24,7 +24,7 @@ const pendidikan = [
     title: 'SMA Negeri 1 Rajagaluh',
     description: t('edu.sma'),
     avatar: {
-      src: '/logo/sma1rjl.png',
+      src: '/logo/sma1rjl.webp',
       alt: 'SMA Negeri 1 Rajagaluh',
       size: 'lg',
       class: 'bg-gray-100 dark:bg-gray-800 p-1',
@@ -39,7 +39,7 @@ const pendidikan = [
     title: 'SMP Negeri 1 Rajagaluh',
     description: t('edu.smp'),
     avatar: {
-      src: '/logo/smp1rjl.png',
+      src: '/logo/smp1rjl.webp',
       alt: 'SMP Negeri 1 Rajagaluh',
       size: 'lg',
       class: 'bg-gray-100 dark:bg-gray-800 p-1',
@@ -54,7 +54,7 @@ const pendidikan = [
     title: 'SD Negeri Teja 1',
     description: t('edu.sd'),
     avatar: {
-      src: '/logo/teja1.png',
+      src: '/logo/teja1.webp',
       alt: 'SD Negeri Teja 1',
       size: 'lg',
       class: 'bg-gray-100 dark:bg-gray-800 p-1',
