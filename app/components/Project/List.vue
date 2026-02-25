@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Motion } from 'motion-v'
-
 const { locale, t } = useI18n()
 const img = useImage()
 
@@ -118,56 +116,50 @@ watchEffect(() => {
 
     <!-- Projects Grid -->
     <UBlogPosts>
-      <Motion
+      <UBlogPost
         v-for="(project, index) in paginatedProjects"
         :key="project.stem"
-        :initial="{ opacity: 0, transform: 'translateY(20px)' }"
-        :in-view="{ opacity: 1, transform: 'translateY(0)' }"
-        :transition="{ delay: 0.1 * index, duration: 0.4 }"
+        :title="project.title"
+        variant="outline"
+        class="cursor-pointer group/project-card"
+        @click="openProjectModal(project)"
       >
-        <UBlogPost
-          :title="project.title"
-          variant="outline"
-          class="cursor-pointer group/project-card"
-          @click="openProjectModal(project)"
-        >
-          <template #header>
-            <div class="relative overflow-hidden aspect-video bg-gray-100 dark:bg-gray-800">
-              <NuxtImg
-                :src="project.image"
-                :alt="project.title"
-                format="webp"
-                quality="80"
-                width="600"
-                :loading="index === 0 ? 'eager' : 'lazy'"
-                :fetchpriority="index === 0 ? 'high' : 'auto'"
-                :placeholder="project.image && index > 0 ? img(project.image, { height: 20, width: 35, format: 'webp', blur: 5, quality: 30 } as any) : undefined"
-                class="object-cover object-top w-full h-full transform transition-all duration-500 group-hover/project-card:scale-110"
-                :class="imageLoadedMap[project.stem] || index === 0 ? 'blur-0' : 'blur-xl scale-105'"
-                @load="onImageLoaded(project.stem)"
-                @error="onImageLoaded(project.stem)"
-              />
-            </div>
-          </template>
+        <template #header>
+          <div class="relative overflow-hidden aspect-video bg-gray-100 dark:bg-gray-800">
+            <NuxtImg
+              :src="project.image"
+              :alt="project.title"
+              format="webp"
+              quality="80"
+              width="600"
+              :loading="index === 0 ? 'eager' : 'lazy'"
+              :fetchpriority="index === 0 ? 'high' : 'auto'"
+              :placeholder="project.image && index > 0 ? img(project.image, { height: 20, width: 35, format: 'webp', blur: 5, quality: 30 } as any) : undefined"
+              class="object-cover object-top w-full h-full transform transition-all duration-500 group-hover/project-card:scale-110"
+              :class="imageLoadedMap[project.stem] || index === 0 ? 'blur-0' : 'blur-xl scale-105'"
+              @load="onImageLoaded(project.stem)"
+              @error="onImageLoaded(project.stem)"
+            />
+          </div>
+        </template>
 
-          <template #badge>
-            <div class="flex flex-wrap gap-1">
-              <UBadge
-                v-for="item in project.tech?.slice(0, 2)"
-                :key="item"
-                variant="subtle"
-                color="primary"
-                size="xs"
-              >
-                {{ item }}
-              </UBadge>
-              <UBadge v-if="project.tech?.length > 2" variant="subtle" color="neutral" size="xs">
-                +{{ project.tech.length - 2 }}
-              </UBadge>
-            </div>
-          </template>
-        </UBlogPost>
-      </Motion>
+        <template #badge>
+          <div class="flex flex-wrap gap-1">
+            <UBadge
+              v-for="item in project.tech?.slice(0, 2)"
+              :key="item"
+              variant="subtle"
+              color="primary"
+              size="xs"
+            >
+              {{ item }}
+            </UBadge>
+            <UBadge v-if="project.tech?.length > 2" variant="subtle" color="neutral" size="xs">
+              +{{ project.tech.length - 2 }}
+            </UBadge>
+          </div>
+        </template>
+      </UBlogPost>
     </UBlogPosts>
 
     <!-- Empty State -->

@@ -1,7 +1,5 @@
 // app/components/Blog/List.vue
 <script setup lang="ts">
-import { Motion } from 'motion-v'
-
 const { locale, t } = useI18n()
 const localePath = useLocalePath()
 
@@ -176,109 +174,103 @@ watchEffect(() => {
 
     <!-- Blog Posts Grid -->
     <UBlogPosts v-if="filteredPosts && filteredPosts.length > 0">
-      <Motion
+      <UBlogPost
         v-for="(post, index) in filteredPosts"
         :key="post.path"
-        :initial="{ opacity: 0, transform: 'translateY(20px)' }"
-        :in-view="{ opacity: 1, transform: 'translateY(0)' }"
-        :transition="{ delay: 0.05 * index, duration: 0.2 }"
+        :title="post.title"
+        :description="post.description"
+        :image="{ src: post.image, alt: post.title }"
+        :to="getBlogUrl(post)"
+        variant="outline"
+        class="h-full"
+        :ui="{ title: 'line-clamp-2', description: 'line-clamp-2', footer: 'px-4 sm:px-6 pb-4 sm:pb-6' }"
       >
-        <UBlogPost
-          :title="post.title"
-          :description="post.description"
-          :image="{ src: post.image, alt: post.title }"
-          :to="getBlogUrl(post)"
-          variant="outline"
-          class="h-full"
-          :ui="{ title: 'line-clamp-2', description: 'line-clamp-2', footer: 'px-4 sm:px-6 pb-4 sm:pb-6' }"
-        >
-          <template #header>
-            <div class="relative overflow-hidden aspect-video bg-gray-100 dark:bg-gray-800">
-              <NuxtImg
-                :src="post.image"
-                :alt="post.title"
-                format="webp"
-                quality="80"
-                width="600"
-                :loading="index === 0 ? 'eager' : 'lazy'"
-                :fetchpriority="index === 0 ? 'high' : 'auto'"
-                :placeholder="post.image && index > 0 ? img(post.image, { height: 20, width: 35, format: 'webp', blur: 5, quality: 30 } as any) : undefined"
-                class="object-cover object-top w-full h-full transform transition-all duration-500 group-hover/blog-post:scale-110"
-                :class="imageLoadedMap[post.path] || index === 0 ? 'blur-0' : 'blur-xl scale-105'"
-                @load="onImageLoaded(post.path)"
-                @error="onImageLoaded(post.path)"
-              />
-              <!-- Category badge overlay on image -->
+        <template #header>
+          <div class="relative overflow-hidden aspect-video bg-gray-100 dark:bg-gray-800">
+            <NuxtImg
+              :src="post.image"
+              :alt="post.title"
+              format="webp"
+              quality="80"
+              width="600"
+              :loading="index === 0 ? 'eager' : 'lazy'"
+              :fetchpriority="index === 0 ? 'high' : 'auto'"
+              :placeholder="post.image && index > 0 ? img(post.image, { height: 20, width: 35, format: 'webp', blur: 5, quality: 30 } as any) : undefined"
+              class="object-cover object-top w-full h-full transform transition-all duration-500 group-hover/blog-post:scale-110"
+              :class="imageLoadedMap[post.path] || index === 0 ? 'blur-0' : 'blur-xl scale-105'"
+              @load="onImageLoaded(post.path)"
+              @error="onImageLoaded(post.path)"
+            />
+            <!-- Category badge overlay on image -->
+            <UBadge
+              v-if="post.category"
+              color="neutral"
+              variant="solid"
+              size="sm"
+              class="absolute top-3 right-3 z-10"
+            >
+              {{ t(`categories.${post.category}`) }}
+            </UBadge>
+          </div>
+        </template>
+
+        <template #badge />
+
+        <template #date>
+          <ClientOnly>
+            {{ formatDate(post.date) }}
+          </ClientOnly>
+        </template>
+
+        <template #footer>
+          <div class="flex items-center justify-between w-full">
+            <div class="flex items-center gap-2">
               <UBadge
-                v-if="post.category"
+                v-if="post.readingTime"
                 color="neutral"
-                variant="solid"
-                size="sm"
-                class="absolute top-3 right-3 z-10"
-              >
-                {{ t(`categories.${post.category}`) }}
-              </UBadge>
+                variant="subtle"
+                icon="i-narr-time"
+                :label="`${post.readingTime} min`"
+              />
             </div>
-          </template>
 
-          <template #badge />
-
-          <template #date>
             <ClientOnly>
-              {{ formatDate(post.date) }}
-            </ClientOnly>
-          </template>
-
-          <template #footer>
-            <div class="flex items-center justify-between w-full">
-              <div class="flex items-center gap-2">
-                <UBadge
-                  v-if="post.readingTime"
-                  color="neutral"
-                  variant="subtle"
-                  icon="i-narr-time"
-                  :label="`${post.readingTime} min`"
-                />
+              <div v-if="reactionsLoading && post.idBlog" class="flex items-center gap-1">
+                <USkeleton class="h-6 w-14 rounded-md" />
+                <USkeleton class="h-6 w-14 rounded-md" />
+                <USkeleton class="h-6 w-14 rounded-md" />
               </div>
 
-              <ClientOnly>
-                <div v-if="reactionsLoading && post.idBlog" class="flex items-center gap-1">
-                  <USkeleton class="h-6 w-14 rounded-md" />
-                  <USkeleton class="h-6 w-14 rounded-md" />
-                  <USkeleton class="h-6 w-14 rounded-md" />
-                </div>
-
-                <div v-else-if="post.idBlog && getTotalReactions(post.idBlog) > 0" class="flex items-center gap-1">
-                  <UButton
-                    v-if="reactionCounts[post.idBlog]?.love"
-                    color="error"
-                    variant="subtle"
-                    size="xs"
-                    icon="i-narr-love"
-                    :label="String(reactionCounts[post.idBlog]?.love ?? 0)"
-                  />
-                  <UButton
-                    v-if="reactionCounts[post.idBlog]?.like"
-                    color="info"
-                    variant="subtle"
-                    size="xs"
-                    icon="i-narr-lovefinger"
-                    :label="String(reactionCounts[post.idBlog]?.like ?? 0)"
-                  />
-                  <UButton
-                    v-if="reactionCounts[post.idBlog]?.sad"
-                    color="warning"
-                    variant="subtle"
-                    size="xs"
-                    icon="i-narr-like"
-                    :label="String(reactionCounts[post.idBlog]?.sad ?? 0)"
-                  />
-                </div>
-              </ClientOnly>
-            </div>
-          </template>
-        </UBlogPost>
-      </Motion>
+              <div v-else-if="post.idBlog && getTotalReactions(post.idBlog) > 0" class="flex items-center gap-1">
+                <UButton
+                  v-if="reactionCounts[post.idBlog]?.love"
+                  color="error"
+                  variant="subtle"
+                  size="xs"
+                  icon="i-narr-love"
+                  :label="String(reactionCounts[post.idBlog]?.love ?? 0)"
+                />
+                <UButton
+                  v-if="reactionCounts[post.idBlog]?.like"
+                  color="info"
+                  variant="subtle"
+                  size="xs"
+                  icon="i-narr-lovefinger"
+                  :label="String(reactionCounts[post.idBlog]?.like ?? 0)"
+                />
+                <UButton
+                  v-if="reactionCounts[post.idBlog]?.sad"
+                  color="warning"
+                  variant="subtle"
+                  size="xs"
+                  icon="i-narr-like"
+                  :label="String(reactionCounts[post.idBlog]?.sad ?? 0)"
+                />
+              </div>
+            </ClientOnly>
+          </div>
+        </template>
+      </UBlogPost>
     </UBlogPosts>
 
     <div v-else class="text-center py-20 bg-gray-50 dark:bg-gray-800/50 rounded-3xl border-2 border-dashed border-gray-200 dark:border-gray-800">

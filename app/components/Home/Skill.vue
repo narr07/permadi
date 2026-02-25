@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Motion } from 'motion-v'
 
 const props = withDefaults(defineProps<{
   frontend?: SkillItem[]
@@ -68,39 +67,33 @@ const categories = [
 
 <template>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <Motion
-      v-for="(category, index) in categories"
+    <UPageCard
+      v-for="category in categories"
       :key="category.title"
-      :initial="{ opacity: 0, transform: 'scale(0.95)' }"
-      :in-view="{ opacity: 1, transform: 'scale(1)' }"
-      :transition="{ delay: 0.05 * index, duration: 0.4 }"
+      variant="outline"
+      :title="category.title"
+      :description="category.description"
+      :icon="category.icon"
+      spotlight
+      spotlight-color="primary"
+      class="h-full"
     >
-      <UPageCard
-        variant="outline"
-        :title="category.title"
-        :description="category.description"
-        :icon="category.icon"
-        spotlight
-        spotlight-color="primary"
-        class="h-full"
-      >
-        <div class="flex flex-wrap justify-evenly gap-2 mt-4">
-          <div
-            v-for="skill in category.skills"
-            :key="skill.title"
-          >
-            <UTooltip :text="skill.title">
-              <NuxtLink
-                :to="skill.link"
-                target="_blank"
-              >
-                <UIcon :name="skill.icon" class="size-10" />
-                <span class="sr-only">{{ skill.title }}</span>
-              </NuxtLink>
-            </UTooltip>
-          </div>
+      <div class="flex flex-wrap justify-evenly gap-2 mt-4">
+        <div
+          v-for="skill in category.skills"
+          :key="skill.title"
+        >
+          <UTooltip :text="skill.title">
+            <NuxtLink
+              :to="skill.link"
+              target="_blank"
+            >
+              <UIcon :name="skill.icon" class="size-10" />
+              <span class="sr-only">{{ skill.title }}</span>
+            </NuxtLink>
+          </UTooltip>
         </div>
-      </UPageCard>
-    </Motion>
+      </div>
+    </UPageCard>
   </div>
 </template>

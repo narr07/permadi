@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Motion } from 'motion-v'
-
 const { locale, t } = useI18n()
 const img = useImage()
 
@@ -192,87 +190,81 @@ function getImageKey(imagePath: string): string {
 
     <!-- Gallery Masonry -->
     <UPageColumns :key="`${currentPage}-${selectedCategory}-${selectedTool}`">
-      <Motion
+      <div
         v-for="(gallery, index) in paginatedGalleries"
         :key="gallery.stem"
-        :initial="{ opacity: 0, transform: 'scale(0.95)' }"
-        :in-view="{ opacity: 1, transform: 'scale(1)' }"
-        :transition="{ delay: 0.02 * index, duration: 0.4 }"
+        class="group overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800 hover:border-primary-500 transition-all hover:shadow"
       >
+        <!-- Image (clickable to open modal) -->
         <div
-          class="group overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800 hover:border-primary-500 transition-all hover:shadow"
+          class="relative cursor-pointer overflow-hidden bg-gray-100 dark:bg-gray-800"
+          @click="openGalleryModal(gallery)"
         >
-          <!-- Image (clickable to open modal) -->
+          <!-- Image with blur-up loading effect -->
+          <NuxtImg
+            provider="cloudinary"
+            :src="gallery.image"
+            :alt="gallery.title"
+            format="webp"
+            quality="80"
+            width="400"
+            densities="1x 2x"
+            :loading="index < 8 ? 'eager' : 'lazy'"
+            :fetchpriority="index < 4 ? 'high' : 'auto'"
+            :placeholder="index < 8 ? undefined : img(gallery.image, { provider: 'cloudinary', height: 35, width: 25, format: 'webp', blur: 5, quality: 30 } as any)"
+            class="w-full h-auto transform transition-all duration-500 group-hover:scale-110"
+            :class="imageLoadedMap[gallery.stem] || index < 8 ? 'blur-0' : 'blur-xl scale-105'"
+            @load="onImageLoaded(gallery.stem)"
+          />
+          <!-- Loading indicator overlay (centered without breaking height) -->
           <div
-            class="relative cursor-pointer overflow-hidden bg-gray-100 dark:bg-gray-800"
-            @click="openGalleryModal(gallery)"
+            v-if="!imageLoadedMap[gallery.stem] && index >= 8"
+            class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none"
           >
-            <!-- Image with blur-up loading effect -->
-            <NuxtImg
-              provider="cloudinary"
-              :src="gallery.image"
-              :alt="gallery.title"
-              format="webp"
-              quality="80"
-              width="400"
-              densities="1x 2x"
-              :loading="index < 8 ? 'eager' : 'lazy'"
-              :fetchpriority="index < 4 ? 'high' : 'auto'"
-              :placeholder="index < 8 ? undefined : img(gallery.image, { provider: 'cloudinary', height: 35, width: 25, format: 'webp', blur: 5, quality: 30 } as any)"
-              class="w-full h-auto transform transition-all duration-500 group-hover:scale-110"
-              :class="imageLoadedMap[gallery.stem] || index < 8 ? 'blur-0' : 'blur-xl scale-105'"
-              @load="onImageLoaded(gallery.stem)"
-            />
-            <!-- Loading indicator overlay (centered without breaking height) -->
-            <div
-              v-if="!imageLoadedMap[gallery.stem] && index >= 8"
-              class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none"
-            >
-              <UIcon name="i-narr-loading" class="animate-spin size-6 text-white/50" />
-            </div>
-            <!-- Overlay on Hover -->
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-end">
-              <div class="p-3 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <h3 class="font-semibold line-clamp-1">
-                  {{ gallery.title }}
-                </h3>
-                <p v-if="gallery.category" class="text-xs text-gray-200 mt-1">
-                  {{ ensureArray(gallery.category).join(', ') }}
-                </p>
-              </div>
-            </div>
+            <UIcon name="i-narr-loading" class="animate-spin size-6 text-white/50" />
           </div>
-
-          <!-- Footer: Tool Icon + Like Button -->
-          <div class="flex items-center justify-between px-3 py-2 bg-white dark:bg-gray-900">
-            <!-- Tool Icon (Left) -->
-            <div v-if="gallery.tools && toolIconMap[gallery.tools]" class="flex items-center gap-1.5">
-              <UTooltip :text="toolIconMap[gallery.tools!]?.label">
-                <UIcon
-                  class="size-6"
-                  :name="toolIconMap[gallery.tools!]?.icon"
-                />
-              </UTooltip>
+          <!-- Overlay on Hover -->
+          <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-end">
+            <div class="p-3 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <h3 class="font-semibold line-clamp-1">
+                {{ gallery.title }}
+              </h3>
+              <p v-if="gallery.category" class="text-xs text-gray-200 mt-1">
+                {{ ensureArray(gallery.category).join(', ') }}
+              </p>
             </div>
-            <div v-else />
-            <!-- Like Button (Right) -->
-            <ClientOnly>
-              <USkeleton v-if="likesLoading" class="h-8 w-14 rounded-md" />
-              <UButton
-                v-else
-                :icon="isLikeSubmitting(getImageKey(gallery.image)) ? 'i-narr-loading' : 'i-narr-love'"
-                :label="String(getCount(getImageKey(gallery.image)) || 0)"
-                color="neutral"
-                size="sm"
-                variant="subtle"
-                :class="{ 'animate-pulse': isLikeSubmitting(getImageKey(gallery.image)) }"
-                :disabled="isLikeSubmitting(getImageKey(gallery.image))"
-                @click.stop="addLike(getImageKey(gallery.image))"
-              />
-            </ClientOnly>
           </div>
         </div>
-      </Motion>
+
+        <!-- Footer: Tool Icon + Like Button -->
+        <div class="flex items-center justify-between px-3 py-2 bg-white dark:bg-gray-900">
+          <!-- Tool Icon (Left) -->
+          <div v-if="gallery.tools && toolIconMap[gallery.tools]" class="flex items-center gap-1.5">
+            <UTooltip :text="toolIconMap[gallery.tools!]?.label">
+              <UIcon
+                class="size-6"
+                :name="toolIconMap[gallery.tools!]?.icon"
+              />
+            </UTooltip>
+          </div>
+          <div v-else />
+          <!-- Like Button (Right) -->
+          <ClientOnly>
+            <USkeleton v-if="likesLoading" class="h-8 w-14 rounded-md" />
+            <UButton
+              v-else
+              :icon="isLikeSubmitting(getImageKey(gallery.image)) ? 'i-narr-loading' : 'i-narr-love'"
+              :label="String(getCount(getImageKey(gallery.image)) || 0)"
+              color="neutral"
+              size="sm"
+              variant="subtle"
+              :class="{ 'animate-pulse': isLikeSubmitting(getImageKey(gallery.image)) }"
+              :disabled="isLikeSubmitting(getImageKey(gallery.image))"
+              @click.stop="addLike(getImageKey(gallery.image))"
+            />
+          </ClientOnly>
+        </div>
+      </div>
     </UPageColumns>
     <!-- Empty State -->
     <div v-if="paginatedGalleries.length === 0" class="text-center py-12 text-gray-500">

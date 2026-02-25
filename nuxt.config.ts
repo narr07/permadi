@@ -1,13 +1,18 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import process from 'node:process'
 import { browserFallbackLocale, defaultLocale } from './i18n-constants'
 
 export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
     '@nuxt/content',
-    '@nuxt/a11y',
-    '@nuxt/eslint',
-    '@nuxt/hints',
+    // Dev-only modules omitted in production to reduce bundle & execution time
+    ...(process.env.NODE_ENV !== 'production'
+      ? [
+          '@nuxt/a11y',
+          '@nuxt/eslint',
+          '@nuxt/hints',
+        ]
+      : []),
     '@nuxt/image',
     '@vueuse/nuxt',
     'nuxt-studio',
@@ -180,7 +185,7 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/css/main.css'],
-  devtools: { enabled: true },
+  devtools: { enabled: process.env.NODE_ENV !== 'production' },
   compatibilityDate: '2026-01-01',
 
   routeRules: {
@@ -223,6 +228,21 @@ export default defineNuxtConfig({
 
   experimental: {
     scanPageMeta: true, // Required for defineI18nRoute
+    payloadExtraction: true, // Extracts state to smaller json payloads
+    renderJsonPayloads: true, // Ensures JSON payload is rendered
+  },
+
+  vite: {
+    build: {
+      // Minify logic and removing console.log in production
+      target: 'esnext',
+      minify: 'esbuild',
+      cssMinify: true,
+    },
+    optimizeDeps: {
+      // Opt-in lazy discovery to reduce initial boot delay
+      include: ['vue', 'vue-router', '@vueuse/core'],
+    },
   },
 
   eslint: {
