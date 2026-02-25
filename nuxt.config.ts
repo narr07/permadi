@@ -231,6 +231,20 @@ export default defineNuxtConfig({
       failOnError: false,
       ignore: ['/api'],
     },
+    cloudflare: {
+      pages: {
+        routes: {
+          exclude: [
+            '/blog/*',
+            '/en/blog/*',
+            '/galeri',
+            '/en/gallery',
+            '/projek',
+            '/en/project',
+          ],
+        },
+      },
+    },
   },
 
   experimental: {
