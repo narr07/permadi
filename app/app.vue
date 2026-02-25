@@ -148,7 +148,7 @@ useSchemaOrg([
       />
     </ClientOnly>
     <UMain>
-      <UContainer class="py-6 sm:pt-24">
+      <UContainer class="py-6 pt-16 sm:pt-24">
         <NuxtPage />
       </UContainer>
     </UMain>
