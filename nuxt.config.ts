@@ -5,14 +5,17 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
     '@nuxt/content',
-    // Dev-only modules omitted in production to reduce bundle & execution time
-    ...(process.env.NODE_ENV !== 'production'
-      ? [
-          '@nuxt/a11y',
-          '@nuxt/eslint',
-          '@nuxt/hints',
-        ]
-      : []),
+    '@nuxt/a11y',
+    '@nuxt/eslint',
+    '@nuxt/hints',
+    // // Dev-only modules omitted in production to reduce bundle & execution time
+    // ...(process.env.NODE_ENV !== 'production'
+    //   ? [
+    //       '@nuxt/a11y',
+    //       '@nuxt/eslint',
+    //       '@nuxt/hints',
+    //     ]
+    //   : []),
     '@nuxt/image',
     '@vueuse/nuxt',
     'nuxt-studio',
@@ -23,6 +26,7 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     'nuxt-llms',
     '@stefanobartoletti/nuxt-social-share',
+    'nuxt-delay-hydration',
   ],
   site: {
     url: 'https://permadi.dev',
@@ -95,6 +99,9 @@ export default defineNuxtConfig({
     renderer: {
       anchorLinks: false,
     },
+  },
+  delayHydration: {
+    mode: 'init',
   },
   image: {
     cloudinary: {
