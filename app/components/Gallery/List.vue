@@ -208,17 +208,18 @@ function getImageKey(imagePath: string): string {
             format="webp"
             quality="80"
             width="400"
-            densities="1x 2x"
-            :loading="index < 8 ? 'eager' : 'lazy'"
-            :fetchpriority="index < 4 ? 'high' : 'auto'"
-            :placeholder="index < 8 ? undefined : img(gallery.image, { provider: 'cloudinary', height: 35, width: 25, format: 'webp', blur: 5, quality: 30 } as any)"
+            height="400"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            :loading="index < 4 ? 'eager' : 'lazy'"
+            :fetchpriority="index < 2 ? 'high' : 'auto'"
+            :placeholder="index < 4 ? undefined : img(gallery.image, { provider: 'cloudinary', height: 35, width: 25, format: 'webp', blur: 5, quality: 30 } as any)"
             class="w-full h-auto transform transition-all duration-500 group-hover:scale-110"
-            :class="imageLoadedMap[gallery.stem] || index < 8 ? 'blur-0' : 'blur-xl scale-105'"
+            :class="imageLoadedMap[gallery.stem] || index < 4 ? 'blur-0' : 'blur-xl scale-105'"
             @load="onImageLoaded(gallery.stem)"
           />
           <!-- Loading indicator overlay (centered without breaking height) -->
           <div
-            v-if="!imageLoadedMap[gallery.stem] && index >= 8"
+            v-if="!imageLoadedMap[gallery.stem] && index >= 4"
             class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none"
           >
             <UIcon name="i-narr-loading" class="animate-spin size-6 text-white/50" />

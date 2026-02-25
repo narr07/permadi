@@ -129,10 +129,10 @@ function onImageLoaded(key: string) {
 watchEffect(() => {
   const firstPost = filteredPosts.value?.[0]
   if (firstPost?.image) {
-    const preloadUrl = img(firstPost.image, { width: 600, format: 'webp', quality: 100 } as any)
+    const preloadUrl = img(firstPost.image, { width: 600, quality: 80 } as any)
     useHead({
       link: [
-        { rel: 'preload', as: 'image', href: preloadUrl, imagesrcset: img.getSizes(firstPost.image, { width: 600, format: 'webp' } as any).srcset },
+        { rel: 'preload', as: 'image', href: preloadUrl },
       ],
     })
   }
@@ -190,14 +190,14 @@ watchEffect(() => {
             <NuxtImg
               :src="post.image"
               :alt="post.title"
-              format="webp"
               quality="80"
               width="600"
-              :loading="index === 0 ? 'eager' : 'lazy'"
-              :fetchpriority="index === 0 ? 'high' : 'auto'"
-              :placeholder="post.image && index > 0 ? img(post.image, { height: 20, width: 35, format: 'webp', blur: 5, quality: 30 } as any) : undefined"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              :loading="index < 3 ? 'eager' : 'lazy'"
+              :fetchpriority="index < 3 ? 'high' : 'auto'"
+              :placeholder="post.image && index >= 3 ? img(post.image, { height: 20, width: 35, blur: 5, quality: 30 } as any) : undefined"
               class="object-cover object-top w-full h-full transform transition-all duration-500 group-hover/blog-post:scale-110"
-              :class="imageLoadedMap[post.path] || index === 0 ? 'blur-0' : 'blur-xl scale-105'"
+              :class="imageLoadedMap[post.path] || index < 3 ? 'blur-0' : 'blur-xl scale-105'"
               @load="onImageLoaded(post.path)"
               @error="onImageLoaded(post.path)"
             />
