@@ -148,7 +148,7 @@ useSchemaOrg([
       />
     </ClientOnly>
     <UMain>
-      <UContainer class="py-6 pt-22">
+      <UContainer class="py-6 sm:pt-24">
         <NuxtPage />
       </UContainer>
     </UMain>
@@ -156,10 +156,10 @@ useSchemaOrg([
     <UFooter>
       <template #left>
         <p class="text-muted text-sm">
-          Copyright © narr07 - {{ new Date().getFullYear() }}
+          © 2021-{{ new Date().getFullYear() }} - narr07
         </p>
       </template>
-      <UNavigationMenu :items="items" variant="link" />
+      <!-- <UNavigationMenu :items="items" variant="link" /> -->
       <template #right>
         <UTooltip
           v-for="social in socials"
