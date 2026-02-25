@@ -121,6 +121,9 @@ export default defineNuxtConfig({
     }],
   },
   scripts: {
+    defaultScriptOptions: {
+      bundle: true,
+    },
     registry: {
       googleAnalytics: {
         id: 'G-5LEXR84KHW',
@@ -137,7 +140,6 @@ export default defineNuxtConfig({
       },
     },
   },
-
   i18n: {
     baseUrl: 'https://permadi.dev',
     vueI18n: './i18n.config.ts',
@@ -177,10 +179,8 @@ export default defineNuxtConfig({
       'projek': {
         en: '/project',
       },
-
     },
   },
-
   studio: {
     route: '/narr',
     repository: {
@@ -190,11 +190,9 @@ export default defineNuxtConfig({
       branch: 'master',
     },
   },
-
   css: ['~/assets/css/main.css'],
   devtools: { enabled: process.env.NODE_ENV !== 'production' },
   compatibilityDate: '2026-01-01',
-
   routeRules: {
     '/': { prerender: true },
     '/en': { prerender: true },
@@ -206,7 +204,6 @@ export default defineNuxtConfig({
     '/en/project': { prerender: true },
     '/blog/**': { prerender: true },
     '/en/blog/**': { prerender: true },
-
     '/api/**': { prerender: false },
     // Cache Cloudinary images served via Nuxt Image proxy (IPX)
     '/_ipx/**': {
@@ -219,11 +216,9 @@ export default defineNuxtConfig({
       },
     },
   },
-
   socialShare: {
     baseUrl: 'https://permadi.dev',
   },
-
   nitro: {
     prerender: {
       routes: ['/', '/en'],
@@ -246,14 +241,12 @@ export default defineNuxtConfig({
       },
     },
   },
-
   experimental: {
     scanPageMeta: true, // Required for defineI18nRoute
     payloadExtraction: true, // Extracts state to smaller json payloads
     renderJsonPayloads: true, // Ensures JSON payload is rendered
     // viewTransition: true,
   },
-
   vite: {
     build: {
       // Minify logic and removing console.log in production
@@ -266,30 +259,25 @@ export default defineNuxtConfig({
       include: ['vue', 'vue-router', '@vueuse/core'],
     },
   },
-
   eslint: {
     config: {
       standalone: false,
     },
   },
-
   hooks: {
     'content:file:afterParse': (ctx: any) => {
       // Get file ID (e.g., "id_pages/id/blog/2.Title.md")
       const fileId = ctx.file?.id || ''
-
       // Only apply to blog posts
       if (fileId.includes('/blog/') || fileId.includes('blog/')) {
         // Extract filename from file ID
         const parts = fileId.split('/')
         const filename = parts[parts.length - 1] || ''
-
         // Extract idBlog from filename prefix (e.g., "1.Title.md" -> 1)
         const match = filename.match(/^(\d+)\./)
         if (match) {
           ctx.content.idBlog = Number.parseInt(match[1], 10)
         }
-
         // Calculate reading time based on word count
         const wordsPerMinute = 180
         const text = typeof ctx.file?.body === 'string' ? ctx.file.body : ''
