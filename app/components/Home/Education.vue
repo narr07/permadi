@@ -11,6 +11,11 @@ const pendidikan = [
     avatar: {
       src: '/logo/upi.png',
       alt: t('edu.upi'),
+      size: 'lg',
+      class: 'bg-gray-100 dark:bg-gray-800 p-1',
+      ui: {
+        image: 'object-contain',
+      },
     },
     value: 'upi',
   },
@@ -21,6 +26,11 @@ const pendidikan = [
     avatar: {
       src: '/logo/sma1rjl.png',
       alt: 'SMA Negeri 1 Rajagaluh',
+      size: 'lg',
+      class: 'bg-gray-100 dark:bg-gray-800 p-1',
+      ui: {
+        image: 'object-contain',
+      },
     },
     value: 'sman1rjl',
   },
@@ -31,6 +41,11 @@ const pendidikan = [
     avatar: {
       src: '/logo/smp1rjl.png',
       alt: 'SMP Negeri 1 Rajagaluh',
+      size: 'lg',
+      class: 'bg-gray-100 dark:bg-gray-800 p-1',
+      ui: {
+        image: 'object-contain',
+      },
     },
     value: 'smpn1rjl',
   },
@@ -41,6 +56,11 @@ const pendidikan = [
     avatar: {
       src: '/logo/teja1.png',
       alt: 'SD Negeri Teja 1',
+      size: 'lg',
+      class: 'bg-gray-100 dark:bg-gray-800 p-1',
+      ui: {
+        image: 'object-contain',
+      },
     },
     value: 'sdn1teja',
   },

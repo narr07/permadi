@@ -29,71 +29,68 @@ const items = [
 </script>
 
 <template>
-  <div class="flex gap-4 flex-col md:flex-row items-stretch">
-    <!-- Left Card: Hero Content -->
-    <Motion
-      class="flex-3"
-      :initial="{ opacity: 0, transform: 'scale(0.95)' }"
-      :in-view="{ opacity: 1, transform: 'scale(1)' }"
-      :transition="{ duration: 0.3, type: 'spring', stiffness: 100 }"
-    >
-      <UCard
-        class="h-full"
-        :ui="{ body: 'flex flex-col gap-6 h-full justify-center ' }"
+  <div class="flex flex-col gap-16 lg:gap-24 items-center justify-center py-8">
+    <!-- Top Section: Text & Logo -->
+    <div class="flex flex-col items-center justify-center text-center gap-8 w-full">
+      <Motion
+        class="max-w-5xl"
+        :initial="{ opacity: 0, y: -20 }"
+        :in-view="{ opacity: 1, y: 0 }"
+        :transition="{ duration: 0.5, type: 'spring', stiffness: 100 }"
       >
-        <h1 class="text-g4 font-black font-title leading-[1.1] text-brand-900 dark:text-white uppercase transition-colors">
+        <h1 class="text-4xl md:text-5xl  font-black font-title leading-[1.1] text-brand-900 dark:text-white uppercase transition-colors">
           <slot name="title" mdc-unwrap="p">
             {{ title }}
           </slot>
         </h1>
+      </Motion>
 
-        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed">
+      <Motion
+        :initial="{ opacity: 0, y: 20 }"
+        :in-view="{ opacity: 1, y: 0 }"
+        :transition="{ duration: 0.5, delay: 0.1, type: 'spring', stiffness: 100 }"
+      >
+        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
           <slot name="description" mdc-unwrap="p">
             {{ description }}
           </slot>
         </p>
-      </UCard>
-    </Motion>
+      </Motion>
 
-    <!-- Right Card: Carousel Section -->
-    <Motion
-      class="flex-2 overflow-hidden"
-      :initial="{ opacity: 0, transform: 'scale(0.95)' }"
-      :in-view="{ opacity: 1, transform: 'scale(1)' }"
-      :transition="{ duration: 0.4, type: 'spring', stiffness: 100 }"
-    >
-      <UCard class="h-full" :ui="{ body: 'p-0 h-full flex flex-col relative' }">
-        <!-- Radial Glow Background (Dark Mode Only)
-        <div class="absolute inset-5 top-10 dark:bg-[radial-gradient(circle_at_50%_50%,var(--color-brand-400)_0%,transparent_70%)] hidden dark:block opacity-20 pointer-events-none" /> -->
+      <Motion
+        class="mt-4"
+        :initial="{ opacity: 0, scale: 0.8 }"
+        :in-view="{ opacity: 1, scale: 1 }"
+        :transition="{ duration: 0.6, delay: 0.2, type: 'spring', stiffness: 100 }"
+      >
+        <Logo size="160" />
+      </Motion>
+    </div>
 
-        <UCarousel
-          v-slot="{ item }"
-          loop
-          :autoplay="{ delay: 2000 }"
-          :items="items"
-          :ui="{
-            item: 'basis-full',
-            dots: 'absolute inset-x-0 bottom-6 flex flex-wrap items-center justify-center gap-3',
-          }"
-          dots
-          class="w-full h-full"
+    <!-- Bottom Section: Grid of Cards -->
+    <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      <Motion
+        v-for="(item, index) in items"
+        :key="index"
+        class="h-full"
+        :initial="{ opacity: 0, y: 30 }"
+        :in-view="{ opacity: 1, y: 0 }"
+        :transition="{ duration: 0.5, delay: 0.3 + (index * 0.1), type: 'spring', stiffness: 100 }"
+      >
+        <UCard
+          class="h-full transition-transform duration-300  hover:shadow-xl dark:hover:shadow-primary/10"
+          :ui="{ body: 'p-8 flex flex-col items-center justify-center text-center h-full' }"
         >
-          <div class="flex flex-col items-center justify-center p-8 pb-16 h-full text-center min-h-[400px] relative">
-            <!-- Radial Glow Background -->
+          <component :is="item.component" class="w-full max-h-48 drop-shadow-2xl z-10 mb-8" />
 
-            <component :is="item.component" class="w-full max-h-64 drop-shadow-2xl z-10" />
-
-            <div class="mt-8 space-y-2">
-              <h3 class="text-xl font-black uppercase tracking-tight text-brand-900 dark:text-white font-title leading-tight">
-                {{ item.title }}
-              </h3>
-              <p class="text-sm text-gray-500 dark:text-gray-400 font-medium leading-relaxed max-w-[240px] mx-auto">
-                {{ item.description }}
-              </p>
-            </div>
-          </div>
-        </UCarousel>
-      </UCard>
-    </Motion>
+          <h3 class="text-xl font-black uppercase tracking-tight text-brand-900 dark:text-white font-title leading-tight mb-3">
+            {{ item.title }}
+          </h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 font-medium leading-relaxed max-w-[240px] mx-auto">
+            {{ item.description }}
+          </p>
+        </UCard>
+      </Motion>
+    </div>
   </div>
 </template>

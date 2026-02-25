@@ -160,18 +160,16 @@ function handleTocClick(e: MouseEvent) {
     isMobileTocOpen.value = false
   }
 }
+
+const siteConfig = useSiteConfig()
+const articleUrl = computed(() => article.value ? `${siteConfig.url}${article.value.path}` : '')
+
+const articleTags = computed(() => article.value?.tags?.map((t: string) => t.replace(/\s+/g, '')).join(','))
 </script>
 
 <template>
   <div v-if="article" class="py-8 space-y-4">
     <UPage>
-      <UButton
-        :to="localePath('/blog')"
-        icon="i-narr-chevron-left"
-        variant="subtle"
-      >
-        {{ t('back') || 'Kembali' }}
-      </UButton>
       <!-- <UTooltip :text="copied ? 'Copied!' : 'Copy content'">
         <UButton
           :color="copied ? 'success' : 'neutral'"
@@ -210,19 +208,23 @@ function handleTocClick(e: MouseEvent) {
             <ContentRenderer :value="article" />
           </div>
 
-          <!-- Reaction Buttons -->
-          <div class="py-4">
-            <ClientOnly>
+          <!-- Share Buttons -->
+          <div class="py-4 flex flex-col items-center">
+            <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">
+              {{ t('share') || 'Bagikan' }}
+            </p>
+            <div class="share-buttons">
               <SocialShare
                 v-for="network in ['facebook', 'x', 'linkedin', 'email', 'threads', 'whatsapp']"
                 :key="network"
                 :network="network"
                 :styled="true"
-                :url="article.path"
+                :label="false"
+                :url="articleUrl"
                 :title="article.title"
-                :hashtags="article.tags?.join(',')"
+                :hashtags="articleTags"
               />
-            </ClientOnly>
+            </div>
           </div>
           <!-- Reaction Buttons -->
           <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
@@ -299,3 +301,30 @@ function handleTocClick(e: MouseEvent) {
     </UPage>
   </div>
 </template>
+
+<style scoped>
+.share-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.share-buttons :deep(.social-share-button) {
+  color: #fff !important;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  aspect-ratio: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.share-buttons :deep(.social-share-button:hover) {
+  transform: scale(1.1);
+  opacity: 0.85;
+}
+</style>

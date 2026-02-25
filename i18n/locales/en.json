@@ -44,6 +44,8 @@
   "images_found": "image(s) found",
   "no_images_found": "No images found.",
   "min_read": "min read",
+  "share": "Share",
+  "reaction_label": "React",
   "search": {
     "placeholder": "Search blog..."
   },

@@ -94,7 +94,7 @@ useSchemaOrg([
       >
         <!-- Left: Logo -->
         <NuxtLink :to="localePath('/')" class="flex items-center gap-2 text-brand-500 font-bold uppercase">
-          <Logo size="40" />
+          <LogoNav size="40" />
         </NuxtLink>
         <!-- Center: Desktop Navigation (hidden on mobile) -->
         <UNavigationMenu :items="items" class="hidden sm:flex justify-center uppercase text-xs font-medium" />
