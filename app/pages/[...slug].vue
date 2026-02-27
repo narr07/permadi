@@ -64,7 +64,7 @@ useSeoMeta({
 useSchemaOrg([
   defineWebPage({
     name: 'Permadi',
-    description: 'Dinar Permadi Yusup is a teacher at SDN Teja 2, full-stack developer, and a passionate graphic designer and UI/UX designer. He is also the founder of Permadi.dev and Permadi.id.',
+    description: 'Dinar Permadi Yusup is a teacher at SDN Teja 2, full-stack developer, and a passionate graphic designer and UI/UX designer. He is also the founder of Permadi.dev, a personal website showcasing his projects and design work.',
     image: 'https://permadi.dev/permadi.jpg',
     url: 'https://permadi.dev',
   }),

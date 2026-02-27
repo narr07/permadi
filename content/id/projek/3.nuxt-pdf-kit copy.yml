@@ -1,0 +1,9 @@
+title: Nuxt PDF Kit
+description: Modul viewer PDF lengkap untuk Nuxt yang dibangun dengan Nuxt UI dan Tailwind CSS v4. Lihat, cari, zoom, rotasi, cetak, dan unduh PDF dengan mudah.
+image: /projects/pdfkit.webp
+link: https://nuxtpdfkit.permadi.dev/
+repo: https://github.com/narr07/nuxt-pdf-kit
+tech:
+  - Nuxt
+  - PDF
+  - Module

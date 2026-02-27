@@ -1,0 +1,16 @@
+title: BudgetKu Edu
+description: The BudgetKu Edu app is a self-service bookkeeping tool developed by a private/independent party. This app is NOT affiliated with, in collaboration with, supported by, or representing the Ministry of Education, Culture, Research, and Technology (Kemendikbudristek), the local Education Office, or any government agency.
+image: /projects/budgetkuedu.webp
+images:
+  - /projects/budgetkuedu.webp
+  - /projects/budgetkuedu1.webp
+  - /projects/budgetkuedu2.webp
+  - /projects/budgetkuedu3.webp
+  - /projects/budgetkuedu4.webp
+  - /projects/budgetkuedu5.webp
+link: https://play.google.com/store/apps/details?id=com.permadi.budgetkuedu&hl=en-US
+repo: https://github.com/narr07/keuangan-sekolah
+tech:
+  - Flutter
+  - Dart
+  - APK

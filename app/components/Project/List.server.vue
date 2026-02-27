@@ -6,6 +6,7 @@ const { data: projects } = await useAsyncData(`project-list-${locale.value}`, as
   const collection = `${locale.value}_project` as any
   try {
     return await queryCollection(collection)
+      .order('stem', 'DESC')
       .all()
   }
   catch (e) {

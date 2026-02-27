@@ -68,7 +68,7 @@ const allTools = computed(() => {
 const selectedCategory = ref<string | undefined>(undefined)
 const selectedTool = ref<string | undefined>(undefined)
 const currentPage = ref(1)
-const itemsPerPage = 12
+const itemsPerPage = 16
 
 // Filtered galleries
 const filteredGalleries = computed(() => {
@@ -189,7 +189,7 @@ function getImageKey(imagePath: string): string {
     </div>
 
     <!-- Gallery Masonry -->
-    <UPageColumns :key="`${currentPage}-${selectedCategory}-${selectedTool}`">
+    <UPageColumns :key="`${currentPage}-${selectedCategory}-${selectedTool}`" class="columns-2 md:columns-3 lg:columns-4">
       <div
         v-for="(gallery, index) in paginatedGalleries"
         :key="gallery.stem"

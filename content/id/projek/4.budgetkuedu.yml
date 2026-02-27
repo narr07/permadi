@@ -1,0 +1,16 @@
+title: BudgetKu Edu
+description: Aplikasi BudgetKu Edu adalah alat pembukuan swalayan yang dikembangkan oleh pihak swasta/independen. Aplikasi ini TIDAK berafiliasi dengan, bekerja sama dengan, didukung oleh, atau mewakili Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi (Kemendikbudristek), Dinas Pendidikan setempat, atau lembaga pemerintah mana pun.
+image: /projects/budgetkuedu.webp
+images:
+  - /projects/budgetkuedu.webp
+  - /projects/budgetkuedu1.webp
+  - /projects/budgetkuedu2.webp
+  - /projects/budgetkuedu3.webp
+  - /projects/budgetkuedu4.webp
+  - /projects/budgetkuedu5.webp
+link: https://play.google.com/store/apps/details?id=com.permadi.budgetkuedu&hl=en-US
+repo: https://github.com/narr07/keuangan-sekolah
+tech:
+  - Flutter
+  - Dart
+  - APK

@@ -31,7 +31,7 @@ export default defineNuxtConfig({
   site: {
     url: 'https://permadi.dev',
     name: 'Permadi',
-    description: 'Permadi is a teacher, programmer and designer.',
+    description: 'Dinar Permadi Yusup is a teacher, programmer and designer.',
     defaultLocale: 'id',
   },
   ogImage: {
@@ -51,7 +51,7 @@ export default defineNuxtConfig({
   llms: {
     domain: 'https://permadi.dev',
     title: 'Permadi',
-    description: 'Permadi is a teacher, programmer and designer.',
+    description: 'Dinar Permadi Yusup is a teacher, programmer and designer.',
     sections: [
       {
         title: 'Pages (ID)',
