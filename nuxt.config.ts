@@ -194,17 +194,30 @@ export default defineNuxtConfig({
   devtools: { enabled: process.env.NODE_ENV !== 'production' },
   compatibilityDate: '2026-01-01',
   routeRules: {
+    // Prerender hanya halaman utama (statis, jarang berubah)
     '/': { prerender: true },
     '/en': { prerender: true },
-    '/blog': { prerender: true },
-    '/en/blog': { prerender: true },
-    '/galeri': { prerender: true },
-    '/en/gallery': { prerender: true },
-    '/projek': { prerender: true },
-    '/en/project': { prerender: true },
-    '/blog/**': { prerender: true },
-    '/en/blog/**': { prerender: true },
+
+    // ISR: halaman di-generate on-demand & di-cache 1 jam
+    // Build cepat karena tidak perlu render semua halaman
+    '/blog': { isr: 86400 },
+    '/en/blog': { isr: 86400 },
+    '/galeri': { isr: 86400 },
+    '/en/gallery': { isr: 86400 },
+    '/projek': { isr: 86400 },
+    '/en/project': { isr: 86400 },
+    '/blog/**': { isr: 86400 },
+    '/en/blog/**': { isr: 86400 },
     '/api/**': { prerender: false },
+    // '/blog': { isr: 3600 },
+    // '/en/blog': { isr: 3600 },
+    // '/galeri': { isr: 3600 },
+    // '/en/gallery': { isr: 3600 },
+    // '/projek': { isr: 3600 },
+    // '/en/project': { isr: 3600 },
+    // '/blog/**': { isr: 3600 },
+    // '/en/blog/**': { isr: 3600 },
+    // '/api/**': { prerender: false },
     // Cache Cloudinary images served via Nuxt Image proxy (IPX)
     '/_ipx/**': {
       swr: 86400, // Stale-while-revalidate: serve from cache, revalidate every 24h
@@ -222,7 +235,7 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       routes: ['/', '/en'],
-      crawlLinks: true,
+      crawlLinks: false, // ISR handles dynamic pages on-demand, no need to crawl
       failOnError: false,
       ignore: ['/api'],
     },
@@ -230,12 +243,7 @@ export default defineNuxtConfig({
       pages: {
         routes: {
           exclude: [
-            '/blog/*',
-            '/en/blog/*',
-            '/galeri',
-            '/en/gallery',
-            '/projek',
-            '/en/project',
+            '/_ipx/*',
           ],
         },
       },
