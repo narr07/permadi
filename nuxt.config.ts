@@ -130,8 +130,9 @@ export default defineNuxtConfig({
       },
     },
   },
-  // NuxtHub configuration for D1 database
+  // NuxtHub configuration for D1 database + cache
   hub: {
+    cache: true,
     db: {
       dialect: 'sqlite',
       driver: 'd1',
@@ -198,26 +199,18 @@ export default defineNuxtConfig({
     '/': { prerender: true },
     '/en': { prerender: true },
 
-    // ISR: halaman di-generate on-demand & di-cache 1 jam
-    // Build cepat karena tidak perlu render semua halaman
-    '/blog': { isr: 86400 },
-    '/en/blog': { isr: 86400 },
-    '/galeri': { isr: 86400 },
-    '/en/gallery': { isr: 86400 },
-    '/projek': { isr: 86400 },
-    '/en/project': { isr: 86400 },
-    '/blog/**': { isr: 86400 },
-    '/en/blog/**': { isr: 86400 },
+    // SWR: halaman di-render on-demand lalu di-cache di Cloudflare KV
+    // Build cepat karena tidak perlu render semua halaman saat build
+    // Cache 24 jam, setelah expired akan re-render di background
+    '/blog': { swr: 86400 },
+    '/en/blog': { swr: 86400 },
+    '/galeri': { swr: 86400 },
+    '/en/gallery': { swr: 86400 },
+    '/projek': { swr: 86400 },
+    '/en/project': { swr: 86400 },
+    '/blog/**': { swr: 86400 },
+    '/en/blog/**': { swr: 86400 },
     '/api/**': { prerender: false },
-    // '/blog': { isr: 3600 },
-    // '/en/blog': { isr: 3600 },
-    // '/galeri': { isr: 3600 },
-    // '/en/gallery': { isr: 3600 },
-    // '/projek': { isr: 3600 },
-    // '/en/project': { isr: 3600 },
-    // '/blog/**': { isr: 3600 },
-    // '/en/blog/**': { isr: 3600 },
-    // '/api/**': { prerender: false },
     // Cache Cloudinary images served via Nuxt Image proxy (IPX)
     '/_ipx/**': {
       swr: 86400, // Stale-while-revalidate: serve from cache, revalidate every 24h
