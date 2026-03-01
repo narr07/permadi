@@ -152,7 +152,7 @@ useSchemaOrg([
     <UFooter>
       <template #left>
         <p class="text-muted text-sm">
-          © 2021-{{ new Date().getFullYear() }} - narr07
+          © 2021-<ClientOnly fallback="2026">{{ new Date().getFullYear() }}</ClientOnly> - narr07
         </p>
       </template>
       <!-- <UNavigationMenu :items="items" variant="link" /> -->
