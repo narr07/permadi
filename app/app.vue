@@ -23,11 +23,13 @@ const { data: navigation, refresh: refreshNavigation } = await useAsyncData(
   () => queryCollectionNavigation(`${locale.value}_blog`),
 )
 // Get blog files for search based on current locale (lazy loaded on client)
-const { data: files, refresh: refreshFiles } = useLazyAsyncData(
-  'blog-search-files',
+const { data: files, status: searchStatus, refresh: refreshFiles } = useLazyAsyncData(
+  `blog-search-${locale.value}`,
   () => queryCollectionSearchSections(`${locale.value}_blog`),
   { server: false },
 )
+// Search loading state — data is fetched client-side so search isn't instant
+const isSearchLoading = computed(() => searchStatus.value === 'pending')
 // Refresh data when locale changes
 watch(locale, async () => {
   await Promise.all([
@@ -96,7 +98,7 @@ useSchemaOrg([
         <UNavigationMenu :items="items" class="hidden sm:flex justify-center uppercase text-xs font-medium" />
         <!-- Right: Action buttons -->
         <div class="flex items-center gap-1">
-          <UContentSearchButton collapsed />
+          <UContentSearchButton collapsed :loading="isSearchLoading" />
           <UColorModeButton />
           <!-- Language switcher -->
           <UButton
@@ -141,6 +143,7 @@ useSchemaOrg([
         shortcut="meta_k"
         :color-mode="false"
         :fuse="{ resultLimit: 20 }"
+        hydrate-on-idle
       />
     </ClientOnly>
     <UMain>
@@ -148,17 +151,20 @@ useSchemaOrg([
         <NuxtPage />
       </UContainer>
     </UMain>
-    <BackToTop />
+    <LazyBackToTop hydrate-on-idle />
     <UFooter>
       <template #left>
         <p class="text-muted text-sm">
-          © 2021-<ClientOnly fallback="2026">{{ new Date().getFullYear() }}</ClientOnly> - narr07
+          © 2021-<ClientOnly fallback="2026">
+            {{ new Date().getFullYear() }}
+          </ClientOnly> - narr07
         </p>
       </template>
       <!-- <UNavigationMenu :items="items" variant="link" /> -->
       <template #right>
         <UTooltip
           v-for="social in socials"
+          v-once
           :key="social.label" :text="social.label"
         >
           <UButton

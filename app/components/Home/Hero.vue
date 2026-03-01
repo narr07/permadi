@@ -9,17 +9,17 @@ withDefaults(defineProps<{
 const { t } = useI18n()
 const items = [
   {
-    component: resolveComponent('SvgDev'),
+    component: resolveComponent('LazySvgDev'),
     title: t('developer.title'),
     description: t('developer.description'),
   },
   {
-    component: resolveComponent('SvgDesigner'),
+    component: resolveComponent('LazySvgDesigner'),
     title: t('designer.title'),
     description: t('designer.description'),
   },
   {
-    component: resolveComponent('SvgGuru'),
+    component: resolveComponent('LazySvgGuru'),
     title: t('teacher.title'),
     description: t('teacher.description'),
   },
