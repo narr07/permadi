@@ -100,8 +100,17 @@ export default defineNuxtConfig({
       anchorLinks: false,
     },
   },
+  app: {
+    head: {
+      link: [
+        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/PermadiBody/Permadi-Body-Bold.woff2', crossorigin: 'anonymous' },
+        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/PermadiHeading/Permadi-Heading-Bold.woff2', crossorigin: 'anonymous' },
+      ],
+    },
+  },
   delayHydration: {
-    mode: 'init',
+    mode: 'mount',
+    debug: process.env.NODE_ENV === 'development',
   },
   image: {
     cloudinary: {
@@ -123,6 +132,7 @@ export default defineNuxtConfig({
   scripts: {
     defaultScriptOptions: {
       bundle: true,
+      trigger: 'onNuxtReady',
     },
     registry: {
       googleAnalytics: {
