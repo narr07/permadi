@@ -1,4 +1,8 @@
 {
+  "nuxtSiteConfig": {
+    "name": "Permadi",
+    "description": "Dinar Permadi Yusup adalah seorang guru, programmer, dan desainer."
+  },
   "nav": {
     "home": "Home",
     "blog": "Blog",
@@ -8,15 +12,15 @@
     "menu": "Menu"
   },
   "blog": {
-    "title": "Blog Edukasi & Kreatif oleh Permadi",
+    "title": "Blog Edukasi & Kreatif Dinar Permadi Yusup",
     "description": "Temukan artikel seputar pendidikan, desain, dan teknologi modern. Tips praktis, inspirasi kreatif, serta panduan untuk guru dan desainer."
   },
   "project": {
-    "title": "Portofolio Project: Solusi Digital & Kreatif",
+    "title": "Portofolio Project Dinar Permadi Yusup - Solusi Digital & Kreatif",
     "description": "Kumpulan proyek yang saya kerjakan, mulai dari pengembangan web, aplikasi, hingga solusi digital lainnya."
   },
   "gallery": {
-    "title": "Gallery Karya Desain Grafis Permadi",
+    "title": "Gallery Karya Desain Grafis Dinar Permadi Yusup",
     "description": "Jelajahi kumpulan karya desain grafis saya—logo, poster, ilustrasi, dan eksperimen visual yang memadukan kreativitas dengan detail modern."
   },
   "header": {

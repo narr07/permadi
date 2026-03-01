@@ -4,25 +4,22 @@ import { browserFallbackLocale, defaultLocale } from './i18n-constants'
 export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
+    '@nuxtjs/seo',
     '@nuxt/content',
-    '@nuxt/a11y',
-    '@nuxt/eslint',
-    '@nuxt/hints',
-    // // Dev-only modules omitted in production to reduce bundle & execution time
-    // ...(process.env.NODE_ENV !== 'production'
-    //   ? [
-    //       '@nuxt/a11y',
-    //       '@nuxt/eslint',
-    //       '@nuxt/hints',
-    //     ]
-    //   : []),
+    // Dev-only modules: excluded in production to reduce bundle & startup time
+    ...(process.env.NODE_ENV !== 'production'
+      ? [
+          '@nuxt/a11y',
+          '@nuxt/eslint',
+          '@nuxt/hints',
+        ]
+      : []),
     '@nuxt/image',
     '@vueuse/nuxt',
     'nuxt-studio',
     '@nuxtjs/i18n',
     'motion-v/nuxt',
     '@nuxthub/core',
-    '@nuxtjs/seo',
     '@nuxt/scripts',
     'nuxt-llms',
     '@stefanobartoletti/nuxt-social-share',
@@ -33,6 +30,24 @@ export default defineNuxtConfig({
     name: 'Permadi',
     description: 'Dinar Permadi Yusup is a teacher, programmer and designer.',
     defaultLocale: 'id',
+    trailingSlash: false,
+  },
+  seo: {
+    redirectToCanonicalSiteUrl: true,
+    meta: {
+      author: 'Dinar Permadi Yusup',
+      applicationName: 'Permadi',
+      description: 'Dinar Permadi Yusup is a teacher, programmer and designer.',
+      themeColor: [
+        { content: '#134e43', media: '(prefers-color-scheme: dark)' },
+        { content: '#5eeacf', media: '(prefers-color-scheme: light)' },
+      ],
+      colorScheme: 'dark light',
+    },
+  },
+  sitemap: {
+    sitemaps: true,
+    sources: ['/api/__sitemap__/urls'],
   },
   ogImage: {
     fonts: [
@@ -100,11 +115,40 @@ export default defineNuxtConfig({
       anchorLinks: false,
     },
   },
+  fonts: {
+    defaults: {
+      weights: [400, 700],
+      styles: ['normal'],
+      subsets: ['latin', 'latin-ext'],
+    },
+    families: [
+      {
+        name: 'PermadiBody',
+        provider: 'local',
+        global: true,
+      },
+      {
+        name: 'PermadiHeading',
+        provider: 'local',
+        global: true,
+      },
+    ],
+  },
   app: {
     head: {
-      link: [
-        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/PermadiBody/Permadi-Body-Bold.woff2', crossorigin: 'anonymous' },
-        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/PermadiHeading/Permadi-Heading-Bold.woff2', crossorigin: 'anonymous' },
+      titleTemplate: '%s | Permadi',
+      htmlAttrs: { lang: 'id' },
+    },
+  },
+  schemaOrg: {
+    identity: {
+      type: 'Person',
+      name: 'Dinar Permadi Yusup',
+      url: 'https://permadi.dev',
+      image: '/permadi.jpg',
+      jobTitle: 'Teacher',
+      sameAs: [
+        'https://github.com/narr07',
       ],
     },
   },
@@ -167,11 +211,13 @@ export default defineNuxtConfig({
     locales: [
       {
         code: 'id',
+        language: 'id-ID',
         name: 'Indonesia',
         file: 'id.json',
       },
       {
         code: 'en',
+        language: 'en-US',
         name: 'English',
         file: 'en.json',
       },
@@ -189,6 +235,9 @@ export default defineNuxtConfig({
       },
       'projek': {
         en: '/project',
+      },
+      'projek-slug': {
+        en: '/project/[slug]',
       },
     },
   },
@@ -218,6 +267,8 @@ export default defineNuxtConfig({
     '/en/gallery': { swr: 86400 },
     '/projek': { swr: 86400 },
     '/en/project': { swr: 86400 },
+    '/projek/**': { swr: 86400 },
+    '/en/project/**': { swr: 86400 },
     '/blog/**': { swr: 86400 },
     '/en/blog/**': { swr: 86400 },
     '/api/**': { prerender: false },
@@ -236,6 +287,7 @@ export default defineNuxtConfig({
     baseUrl: 'https://permadi.dev',
   },
   nitro: {
+    compressPublicAssets: true,
     prerender: {
       routes: ['/', '/en'],
       crawlLinks: false, // ISR handles dynamic pages on-demand, no need to crawl

@@ -68,18 +68,14 @@ const socials = [
   { icon: 'i-narr-soc-behance', to: 'https://go.nuxt.com/x', label: 'Behance' },
   { icon: 'i-narr-soc-x', to: 'https://go.nuxt.com/x', label: 'X' },
 ]
+const site = useSiteConfig()
+
 useSchemaOrg([
-  definePerson({
-    name: 'Dinar Permadi Yusup',
-    jobTitle: 'Teacher',
-    description: 'Dinar Permadi Yusup is a teacher at SDN Teja 2, full-stack developer, and a passionate graphic designer and UI/UX designer. He is also the founder of Permadi.dev and Permadi.id.',
-    image: 'https://permadi.dev/permadi.jpg',
-  }),
   defineWebSite({
-    name: 'Permadi',
-    description: 'Dinar Permadi Yusup is a teacher at SDN Teja 2, full-stack developer, and a passionate graphic designer and UI/UX designer. He is also the founder of Permadi.dev and Permadi.id.',
-    image: 'https://permadi.dev/permadi.jpg',
-    url: 'https://permadi.dev',
+    name: site.name,
+    description: site.description,
+    url: site.url,
+    inLanguage: locale.value === 'id' ? 'id-ID' : 'en-US',
   }),
 ])
 </script>

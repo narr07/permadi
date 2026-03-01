@@ -1,4 +1,8 @@
 {
+  "nuxtSiteConfig": {
+    "name": "Permadi (English)",
+    "description": "Dinar Permadi Yusup is a teacher, programmer and designer."
+  },
   "nav": {
     "home": "Home",
     "blog": "Blog",
@@ -8,15 +12,15 @@
     "menu": "Menu"
   },
   "blog": {
-    "title": "Educational & Creative Blog by Permadi",
+    "title": "Educational & Creative Blog by Dinar Permadi Yusup",
     "description": "Discover articles on education, design, and modern technology. Practical tips, creative inspiration, and guides for teachers and designers."
   },
   "project": {
-    "title": "Portfolio Project: Digital & Creative Solutions",
+    "title": "Portfolio Project Dinar Permadi Yusup - Digital & Creative Solutions",
     "description": "A collection of projects I've worked on, ranging from web development, applications, to other digital solutions."
   },
   "gallery": {
-    "title": "Gallery of Permadi's Graphic Design Works",
+    "title": "Gallery of Dinar Permadi Yusup's Graphic Design Works",
     "description": "Explore my collection of graphic design works—logos, posters, illustrations, and visual experiments that blend creativity with modern details."
   },
   "header": {

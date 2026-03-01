@@ -102,9 +102,14 @@ useSeoMeta({
   description: article.value?.description,
   ogDescription: article.value?.description,
   ogImage: article.value?.image,
-  twitterCard: 'summary_large_image',
   ogType: 'article',
-  articleAuthor: ['Permadi'],
+  ogLocale: locale.value === 'id' ? 'id_ID' : 'en_US',
+  ogSiteName: 'Permadi',
+  twitterCard: 'summary_large_image',
+  articleAuthor: ['Dinar Permadi Yusup'],
+  articlePublishedTime: article.value?.date ? new Date(article.value.date).toISOString() : undefined,
+  articleTag: article.value?.tags,
+  articleSection: article.value?.category,
 })
 
 useSchemaOrg([
@@ -113,13 +118,15 @@ useSchemaOrg([
     description: article.value?.description,
     image: article.value?.image,
     datePublished: article.value?.date,
+    inLanguage: locale.value === 'id' ? 'id-ID' : 'en-US',
     author: {
-      name: 'Permadi',
+      name: 'Dinar Permadi Yusup',
       url: 'https://permadi.dev',
     },
     publisher: {
       name: 'Permadi',
     },
+    wordCount: article.value?.readingTime ? article.value.readingTime * 180 : undefined,
   }),
 ])
 

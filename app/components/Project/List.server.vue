@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { locale, t } = useI18n()
+const localePath = useLocalePath()
 const img = useImage()
 
 const { data: projects } = await useAsyncData(`project-list-${locale.value}`, async () => {
@@ -16,6 +17,13 @@ const { data: projects } = await useAsyncData(`project-list-${locale.value}`, as
 }, {
   watch: [locale],
 })
+
+// Generate slug from stem (e.g., "id/projek/1.sdnteja2" → "sdnteja2")
+function stemToSlug(stem: string): string {
+  const parts = stem.split('/')
+  const filename = parts[parts.length - 1] || ''
+  return filename.replace(/^\d+\./, '')
+}
 
 // Extract all unique tech for filter
 const allTech = computed(() => {
@@ -53,16 +61,6 @@ const paginatedProjects = computed(() => {
 watch(selectedTech, () => {
   currentPage.value = 1
 })
-
-const selectedProject = ref<any>(null)
-const isModalOpen = ref(false)
-
-const projectImages = computed<string[]>(() => selectedProject.value?.images || [])
-
-function openProjectModal(project: any) {
-  selectedProject.value = project
-  isModalOpen.value = true
-}
 
 // Track image loaded state for list items
 const imageLoadedMap = reactive<Record<string, boolean>>({})
@@ -117,50 +115,54 @@ watchEffect(() => {
 
     <!-- Projects Grid -->
     <UBlogPosts>
-      <UBlogPost
+      <NuxtLink
         v-for="(project, index) in paginatedProjects"
         :key="project.stem"
-        :title="project.title"
-        variant="outline"
-        class="cursor-pointer group/project-card"
-        @click="openProjectModal(project)"
+        :to="localePath(`/projek/${stemToSlug(project.stem)}`)"
+        class="block"
       >
-        <template #header>
-          <div class="relative overflow-hidden aspect-video bg-gray-100 dark:bg-gray-800">
-            <NuxtImg
-              :src="project.image"
-              :alt="project.title"
-              format="webp"
-              quality="80"
-              width="600"
-              :loading="index === 0 ? 'eager' : 'lazy'"
-              :fetchpriority="index === 0 ? 'high' : 'auto'"
-              :placeholder="project.image && index > 0 ? img(project.image, { height: 20, width: 35, format: 'webp', blur: 5, quality: 30 } as any) : undefined"
-              class="object-cover object-top w-full h-full transform transition-all duration-500 group-hover/project-card:scale-110"
-              :class="imageLoadedMap[project.stem] || index === 0 ? 'blur-0' : 'blur-xl scale-105'"
-              @load="onImageLoaded(project.stem)"
-              @error="onImageLoaded(project.stem)"
-            />
-          </div>
-        </template>
+        <UBlogPost
+          :title="project.title"
+          variant="outline"
+          class="cursor-pointer group/project-card h-full"
+        >
+          <template #header>
+            <div class="relative overflow-hidden aspect-video bg-gray-100 dark:bg-gray-800">
+              <NuxtImg
+                :src="project.image"
+                :alt="project.title"
+                format="webp"
+                quality="80"
+                width="600"
+                :loading="index === 0 ? 'eager' : 'lazy'"
+                :fetchpriority="index === 0 ? 'high' : 'auto'"
+                :placeholder="project.image && index > 0 ? img(project.image, { height: 20, width: 35, format: 'webp', blur: 5, quality: 30 } as any) : undefined"
+                class="object-cover object-top w-full h-full transform transition-all duration-500 group-hover/project-card:scale-110"
+                :class="imageLoadedMap[project.stem] || index === 0 ? 'blur-0' : 'blur-xl scale-105'"
+                @load="onImageLoaded(project.stem)"
+                @error="onImageLoaded(project.stem)"
+              />
+            </div>
+          </template>
 
-        <template #badge>
-          <div class="flex flex-wrap gap-1">
-            <UBadge
-              v-for="item in project.tech?.slice(0, 2)"
-              :key="item"
-              variant="subtle"
-              color="primary"
-              size="xs"
-            >
-              {{ item }}
-            </UBadge>
-            <UBadge v-if="project.tech?.length > 2" variant="subtle" color="neutral" size="xs">
-              +{{ project.tech.length - 2 }}
-            </UBadge>
-          </div>
-        </template>
-      </UBlogPost>
+          <template #badge>
+            <div class="flex flex-wrap gap-1">
+              <UBadge
+                v-for="item in project.tech?.slice(0, 2)"
+                :key="item"
+                variant="subtle"
+                color="primary"
+                size="xs"
+              >
+                {{ item }}
+              </UBadge>
+              <UBadge v-if="project.tech?.length > 2" variant="subtle" color="neutral" size="xs">
+                +{{ project.tech.length - 2 }}
+              </UBadge>
+            </div>
+          </template>
+        </UBlogPost>
+      </NuxtLink>
     </UBlogPosts>
 
     <!-- Empty State -->
@@ -177,95 +179,5 @@ watchEffect(() => {
         show-edges
       />
     </div>
-
-    <!-- Project Detail Modal -->
-    <UModal
-      v-if="selectedProject"
-      v-model:open="isModalOpen"
-      :title="selectedProject.title"
-      :ui="{ footer: 'justify-between' }"
-    >
-      <template #body>
-        <div class="space-y-6">
-          <!-- Project Image(s) -->
-          <div class="relative w-full rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-            <UCarousel
-              v-if="projectImages.length > 1"
-              v-slot="{ item }"
-              :items="projectImages"
-              arrows
-              dots
-              :prev="{ variant: 'solid', color: 'neutral' }"
-              :next="{ variant: 'solid', color: 'neutral' }"
-              class="w-full relative py-6"
-              :ui="{
-                item: 'basis-full flex justify-center items-center',
-                dots: 'absolute inset-x-0 bottom-4 flex justify-center gap-2 z-10',
-              }"
-            >
-              <NuxtImg
-                :src="item"
-                :alt="selectedProject.title"
-                class="w-full h-[45vh] object-contain mx-auto"
-                draggable="false"
-              />
-            </UCarousel>
-            <NuxtImg
-              v-else
-              :src="selectedProject.images && selectedProject.images.length === 1 ? selectedProject.images[0] : selectedProject.image"
-              :alt="selectedProject.title"
-              class="w-full h-[50vh] object-contain mx-auto"
-            />
-          </div>
-
-          <!-- Description -->
-          <div v-if="selectedProject.description">
-            <p class="text-gray-600 dark:text-gray-400">
-              {{ selectedProject.description }}
-            </p>
-          </div>
-
-          <!-- Tech Used -->
-          <div v-if="selectedProject.tech && selectedProject.tech.length">
-            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-              {{ t('tech_used') || 'Technologies' }}
-            </h3>
-            <div class="flex flex-wrap gap-2">
-              <UBadge
-                v-for="item in selectedProject.tech"
-                :key="item"
-                variant="soft"
-                color="neutral"
-              >
-                {{ item }}
-              </UBadge>
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <template #footer>
-        <UButton
-          v-if="selectedProject.repo"
-          :to="selectedProject.repo"
-          target="_blank"
-          color="neutral"
-          variant="outline"
-          icon="i-narr-soc-github"
-        />
-        <div v-else />
-
-        <UButton
-          v-if="selectedProject.link"
-          :to="selectedProject.link"
-          target="_blank"
-          color="primary"
-          icon="i-narr-external"
-          trailing
-        >
-          {{ t('view_project') || 'View Project' }}
-        </UButton>
-      </template>
-    </UModal>
   </UPage>
 </template>
