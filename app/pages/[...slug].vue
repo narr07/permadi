@@ -16,7 +16,7 @@ const slug = computed(() => {
 // Unique key per locale and slug to prevent hydration mismatches
 const dataKey = computed(() => `page-${locale.value}-${slug.value.replace(/\//g, '_')}`)
 
-const { data: page } = await useAsyncData(dataKey.value, async () => {
+const { data: page, status } = await useAsyncData(dataKey.value, async () => {
   const collection = `${locale.value}_pages` as keyof Collections
 
   // Construction of the exact database path: /locale/slug
@@ -85,11 +85,14 @@ onMounted(() => {
   // so we reset to empty to allow normal language switching behavior
   setI18nParams({})
 })
+
+// Only show "not found" after data has fully resolved (not during loading/hydration)
+const showNotFound = computed(() => status.value === 'success' && !page.value)
 </script>
 
 <template>
   <ContentRenderer v-if="page" :value="page" />
-  <div v-else class="text-center py-16">
+  <div v-else-if="showNotFound" class="text-center py-16">
     <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
       Page not found
     </h1>
@@ -104,3 +107,4 @@ onMounted(() => {
     </NuxtLink>
   </div>
 </template>
+

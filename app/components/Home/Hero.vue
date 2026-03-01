@@ -53,7 +53,7 @@ const items = [
         class="h-full transition-transform duration-300 hover:shadow-xl dark:hover:shadow-primary/10"
         :ui="{ body: 'p-8 flex flex-col items-center justify-center text-center h-full' }"
       >
-        <component :is="item.component" class="w-full max-h-48 drop-shadow-2xl z-10 mb-8" />
+        <component :is="item.component" class="w-full h-48 drop-shadow-2xl z-10 mb-8" />
 
         <h3 class="text-xl font-black uppercase tracking-tight text-brand-900 dark:text-white font-title leading-tight mb-3">
           {{ item.title }}

@@ -2,11 +2,30 @@
 @import 'tailwindcss';
 @import '@nuxt/ui';
 
+/* Fallback font metrics to minimize CLS during font swap */
+@font-face {
+  font-family: 'PermadiBody Fallback';
+  src: local('Arial'), local('Helvetica Neue'), local('sans-serif');
+  size-adjust: 100%;
+  ascent-override: 90%;
+  descent-override: 20%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'PermadiHeading Fallback';
+  src: local('Arial Black'), local('Arial'), local('sans-serif');
+  size-adjust: 105%;
+  ascent-override: 90%;
+  descent-override: 20%;
+  line-gap-override: 0%;
+}
+
 @source "../../../content/**/*";
 
 @theme static {
-  --font-sans: 'PermadiBody', sans-serif;
-  --font-title: 'PermadiHeading', sans-serif;
+  --font-sans: 'PermadiBody', 'PermadiBody Fallback', sans-serif;
+  --font-title: 'PermadiHeading', 'PermadiHeading Fallback', sans-serif;
 
   --breakpoint-3xl: 1920px;
 
