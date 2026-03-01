@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 const props = withDefaults(defineProps<{
   frontend?: SkillItem[]
   backend?: SkillItem[]
@@ -66,7 +65,7 @@ const categories = [
 </script>
 
 <template>
-  <div v-once class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <UPageCard
       v-for="category in categories"
       :key="category.title"
