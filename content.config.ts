@@ -95,7 +95,7 @@ locales.forEach((locale) => {
 
   // Specific collections for structured data queries (not for routing)
   collections[`${locale}_project`] = defineCollection({
-    type: 'data',
+    type: 'page',
     source: {
       include: `${locale}/projek/*.yml`,
     },

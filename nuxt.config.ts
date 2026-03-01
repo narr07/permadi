@@ -138,6 +138,11 @@ export default defineNuxtConfig({
     head: {
       titleTemplate: '%s | Permadi',
       htmlAttrs: { lang: 'id' },
+      link: [
+        // Only preload fonts critical for above-the-fold LCP (heading)
+        // PermadiBody Regular loads via @font-face swap — system fallback shown first
+        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/PermadiHeading/Permadi-Heading-Bold.woff2', crossorigin: 'anonymous' },
+      ],
     },
   },
   schemaOrg: {
