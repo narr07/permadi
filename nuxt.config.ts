@@ -62,10 +62,6 @@ export default defineNuxtConfig({
         path: '/fonts/PermadiBody/Permadi-Body-Regular.otf',
       },
     ],
-    // Disable runtime cache for OG images — prerendered images are served as
-    // static .png files and don't need caching. This avoids the Cloudflare KV
-    // "Invalid binding CACHE: undefined" error for any runtime fallback.
-    runtimeCacheStorage: false,
   },
   llms: {
     domain: 'https://permadi.dev',
@@ -188,7 +184,10 @@ export default defineNuxtConfig({
   },
   // NuxtHub configuration for D1 database + cache
   hub: {
-    cache: true,
+    cache: {
+      driver: 'cloudflare-kv-binding',
+      namespaceId: '99e6c81b5117423aa547100f6c336860',
+    },
     db: {
       dialect: 'sqlite',
       driver: 'd1',
@@ -312,6 +311,12 @@ export default defineNuxtConfig({
         routes: {
           exclude: [
             '/_ipx/*',
+            // Wildcard patterns for prerendered pages to avoid Cloudflare 100 routes limit
+            '/blog/*',
+            '/en/blog/*',
+            '/projek/*',
+            '/en/project/*',
+            '/__og-image__/*',
           ],
         },
       },

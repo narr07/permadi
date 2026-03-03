@@ -28,6 +28,11 @@ const { data: posts } = await useAsyncData(`blog-list-${locale.value}`, () => {
   watch: [locale],
 })
 
+// Tell Nuxt to prerender all blog post pages (+ their OG images)
+if (posts.value?.length) {
+  prerenderRoutes(posts.value.map(post => localePath(`/blog/${extractSlug(post.path)}`)))
+}
+
 // Filter states
 const selectedCategory = ref<string | undefined>(undefined)
 

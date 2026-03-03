@@ -25,6 +25,11 @@ function stemToSlug(stem: string): string {
   return filename.replace(/^\d+\./, '')
 }
 
+// Tell Nuxt to prerender all project pages (+ their OG images)
+if (projects.value?.length) {
+  prerenderRoutes(projects.value.map(p => localePath(`/projek/${stemToSlug(p.stem)}`)))
+}
+
 // Extract all unique tech for filter
 const allTech = computed(() => {
   const techSet = new Set<string>()
