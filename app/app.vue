@@ -160,6 +160,7 @@ useSchemaOrg([
           </ClientOnly> - narr07
         </p>
       </template>
+      <Visitor />
       <!-- <UNavigationMenu :items="items" variant="link" /> -->
       <template #right>
         <UTooltip

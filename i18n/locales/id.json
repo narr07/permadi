@@ -85,5 +85,8 @@
     "like_error_msg": "Tidak bisa memberikan like. Coba lagi.",
     "reaction_error_msg": "Tidak bisa menambahkan reaksi. Coba lagi.",
     "load_reactions_error": "Gagal memuat reaksi"
+  },
+  "visitors": {
+    "online": "Pengunjung online"
   }
 }

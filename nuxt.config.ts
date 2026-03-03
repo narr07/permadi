@@ -291,6 +291,9 @@ export default defineNuxtConfig({
   },
   nitro: {
     compressPublicAssets: true,
+    experimental: {
+      websocket: true,
+    },
     prerender: {
       routes: [
         '/',
@@ -304,7 +307,7 @@ export default defineNuxtConfig({
       ],
       crawlLinks: true, // Discover blog/project pages + their OG images
       failOnError: false,
-      ignore: ['/api', '/raw'], // Skip raw routes (nuxt-llms .yml read errors)
+      ignore: ['/api', '/raw', '/ws'], // Skip raw routes (nuxt-llms .yml read errors)
     },
     cloudflare: {
       pages: {

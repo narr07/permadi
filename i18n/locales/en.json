@@ -85,5 +85,8 @@
     "like_error_msg": "Unable to like. Please try again.",
     "reaction_error_msg": "Unable to add reaction. Please try again.",
     "load_reactions_error": "Failed to load reactions"
+  },
+  "visitors": {
+    "online": "Online visitors"
   }
 }
