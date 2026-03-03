@@ -289,10 +289,19 @@ export default defineNuxtConfig({
   nitro: {
     compressPublicAssets: true,
     prerender: {
-      routes: ['/', '/en'],
-      crawlLinks: false, // ISR handles dynamic pages on-demand, no need to crawl
+      routes: [
+        '/',
+        '/en',
+        '/blog',
+        '/en/blog',
+        '/galeri',
+        '/en/gallery',
+        '/projek',
+        '/en/project',
+      ],
+      crawlLinks: true, // Discover blog/project pages + their OG images
       failOnError: false,
-      ignore: ['/api'],
+      ignore: ['/api', '/raw'], // Skip raw routes (nuxt-llms .yml read errors)
     },
     cloudflare: {
       pages: {

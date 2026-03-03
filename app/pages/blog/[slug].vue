@@ -136,33 +136,6 @@ defineOgImageComponent('Permadi', {
   headline: article.value?.category || 'Blog',
 })
 
-// const { copy, copied } = useClipboard()
-
-// // Copy seluruh konten artikel
-// function copyArticle() {
-//   if (!article.value)
-//     return
-
-//   // Ambil teks asli (Markdown) dari rawbody yang sudah kita tambahkan di schema
-//   let content = `${article.value.title}\n\n`
-
-//   if (article.value.description) {
-//     content += `${article.value.description}\n\n`
-//   }
-
-//   // Gunakan rawbody (teks Markdown mentah)
-//   if (article.value.rawbody) {
-//     content += article.value.rawbody
-//   }
-
-//   copy(content)
-// }
-defineOgImageComponent('Permadi', {
-  title: article.value?.title,
-  description: article.value?.description,
-  headline: 'Blog',
-})
-
 const tocColor = computed(() => colorMode.value === 'dark' ? 'warning' : 'info')
 const isMobileTocOpen = ref(false)
 
