@@ -31,7 +31,7 @@ useSeoMeta({
   ogTitle: project.value?.title,
   description: project.value?.description,
   ogDescription: project.value?.description,
-  ogImage: project.value?.image,
+  // ogImage removed: defineOgImageComponent below handles og:image generation
   ogType: 'article',
   ogLocale: locale.value === 'id' ? 'id_ID' : 'en_US',
   ogSiteName: 'Permadi',

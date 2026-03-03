@@ -98,16 +98,9 @@ export default defineNuxtConfig({
         description: 'List of projects',
         contentCollection: 'en_project',
       },
-      {
-        title: 'Gallery (ID)',
-        description: 'Galeri karya',
-        contentCollection: 'id_gallery',
-      },
-      {
-        title: 'Gallery (EN)',
-        description: 'Artwork gallery',
-        contentCollection: 'en_gallery',
-      },
+      // Gallery collections are type: 'data' (not 'page'), so they don't have
+      // a 'path' column. Including them here causes SQL errors during prerender.
+      // Removed: id_gallery, en_gallery
     ],
   },
   content: {
@@ -277,6 +270,8 @@ export default defineNuxtConfig({
     '/blog/**': { swr: 86400 },
     '/en/blog/**': { swr: 86400 },
     '/api/**': { prerender: false },
+    // Cache generated OG images on Cloudflare edge (7 days)
+    '/__og-image__/**': { swr: 86400 * 7 },
     // Cache Cloudinary images served via Nuxt Image proxy (IPX)
     '/_ipx/**': {
       swr: 86400, // Stale-while-revalidate: serve from cache, revalidate every 24h

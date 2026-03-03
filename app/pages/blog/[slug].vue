@@ -101,7 +101,7 @@ useSeoMeta({
   ogTitle: article.value?.title,
   description: article.value?.description,
   ogDescription: article.value?.description,
-  ogImage: article.value?.image,
+  // ogImage removed: defineOgImageComponent below generates dynamic OG image
   ogType: 'article',
   ogLocale: locale.value === 'id' ? 'id_ID' : 'en_US',
   ogSiteName: 'Permadi',
@@ -129,6 +129,12 @@ useSchemaOrg([
     wordCount: article.value?.readingTime ? article.value.readingTime * 180 : undefined,
   }),
 ])
+
+defineOgImageComponent('Permadi', {
+  title: article.value?.title,
+  description: article.value?.description,
+  headline: article.value?.category || 'Blog',
+})
 
 // const { copy, copied } = useClipboard()
 
