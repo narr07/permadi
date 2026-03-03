@@ -316,7 +316,7 @@ export default defineNuxtConfig({
             '/en/blog/*',
             '/projek/*',
             '/en/project/*',
-            '/__og-image__/*',
+            '/__og-image__/static/*',
           ],
         },
       },
