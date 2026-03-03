@@ -88,7 +88,7 @@ defineOgImageComponent('Permadi', {
     <div class="mt-6 relative w-full rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800">
       <UCarousel
         v-if="projectImages.length > 1"
-        v-slot="{ item }"
+        v-slot="{ item, index }"
         :items="projectImages"
         arrows
         dots
@@ -107,6 +107,8 @@ defineOgImageComponent('Permadi', {
           format="webp"
           quality="90"
           draggable="false"
+          :loading="index === 0 ? 'eager' : 'lazy'"
+          :fetchpriority="index === 0 ? 'high' : 'auto'"
         />
       </UCarousel>
       <NuxtImg
@@ -116,6 +118,8 @@ defineOgImageComponent('Permadi', {
         class="w-full max-h-[60vh] object-contain mx-auto"
         format="webp"
         quality="90"
+        loading="eager"
+        fetchpriority="high"
       />
     </div>
 

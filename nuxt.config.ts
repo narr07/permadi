@@ -151,7 +151,7 @@ export default defineNuxtConfig({
     },
   },
   delayHydration: {
-    mode: 'init',
+    mode: 'mount',
     debug: process.env.NODE_ENV === 'development',
   },
   image: {
@@ -337,6 +337,9 @@ export default defineNuxtConfig({
       target: 'esnext',
       minify: 'esbuild',
       cssMinify: true,
+    },
+    esbuild: {
+      drop: process.env.NODE_ENV === 'production' ? ['console', 'debugger'] : [],
     },
     optimizeDeps: {
       // Opt-in lazy discovery to reduce initial boot delay
