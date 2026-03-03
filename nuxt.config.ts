@@ -62,6 +62,10 @@ export default defineNuxtConfig({
         path: '/fonts/PermadiBody/Permadi-Body-Regular.otf',
       },
     ],
+    // Disable runtime cache for OG images — prerendered images are served as
+    // static .png files and don't need caching. This avoids the Cloudflare KV
+    // "Invalid binding CACHE: undefined" error for any runtime fallback.
+    runtimeCacheStorage: false,
   },
   llms: {
     domain: 'https://permadi.dev',
