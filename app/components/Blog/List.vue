@@ -153,103 +153,107 @@ function formatDate(dateStr: string) {
       >
         {{ t('clear') || 'Clear' }}
       </UButton>
-      <span v-if="selectedCategory" class="text-sm text-gray-500">
+      <span v-if="selectedCategory" class="text-sm ">
         {{ filteredPosts.length }} {{ t('articles_found') || 'article(s) found' }}
       </span>
     </div>
 
     <!-- Blog Posts List -->
     <UPageList v-if="filteredPosts && filteredPosts.length > 0" divide>
-      <UPageCard
+      <div
         v-for="post in filteredPosts"
         :key="post.path"
-        variant="ghost"
-        :to="getBlogUrl(post)"
+        role="listitem"
       >
-        <template #leading>
-          <div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 dark:bg-primary/15 shrink-0">
-            <LazySvgDev v-if="post.category === 'programmer'" class="size-7" />
-            <LazySvgGuru v-else-if="post.category === 'pendidikan'" class="size-7" />
-            <LazySvgDesigner v-else-if="post.category === 'desainer'" class="size-7" />
-            <UIcon v-else name="i-lucide-file-text" class="size-5 text-primary" />
-          </div>
-        </template>
-
-        <template #body>
-          <div class="flex flex-col gap-2">
-            <!-- Title & Description (rendered by UPageCard default) -->
-            <div class="flex flex-col gap-1">
-              <h2 class="text-g2 font-semibold  line-clamp-1 group-hover/page-card:text-primary transition-colors">
-                {{ post.title }}
-              </h2>
-              <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
-                {{ post.description }}
-              </p>
+        <UPageCard
+          variant="ghost"
+          :to="getBlogUrl(post)"
+        >
+          <template #leading>
+            <div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 dark:bg-primary/15 shrink-0">
+              <LazySvgDev v-if="post.category === 'programmer'" class="size-8" />
+              <LazySvgGuru v-else-if="post.category === 'pendidikan'" class="size-8" />
+              <LazySvgDesigner v-else-if="post.category === 'desainer'" class="size-8" />
+              <UIcon v-else name="i-lucide-file-text" class="size-5 text-primary" />
             </div>
+          </template>
 
-            <!-- Date + Reading Time -->
-            <div class="flex items-center gap-3 text-xs text-gray-400 dark:text-gray-500">
-              <ClientOnly>
-                <span>{{ formatDate(post.date) }}</span>
-              </ClientOnly>
-              <span v-if="post.readingTime" class="flex items-center gap-1">
-                <UIcon name="i-narr-time" class="size-3.5" />
-                {{ post.readingTime }} min
-              </span>
-            </div>
+          <template #body>
+            <div class="flex flex-col gap-2">
+              <!-- Title & Description (rendered by UPageCard default) -->
+              <div class="flex flex-col gap-1">
+                <h2 class="text-g2 font-semibold  line-clamp-1 group-hover/page-card:text-primary transition-colors">
+                  {{ post.title }}
+                </h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
+                  {{ post.description }}
+                </p>
+              </div>
 
-            <!-- Tags badges -->
-            <div v-if="post.tags && post.tags.length > 0" class="flex flex-wrap gap-1.5">
-              <UBadge
-                v-for="tag in post.tags"
-                :key="tag"
-                class="uppercase"
-                color="neutral"
-                variant="subtle"
-                size="sm"
-                :label="tag"
-              />
-            </div>
-          </div>
-        </template>
+              <!-- Date + Reading Time -->
+              <div class="flex items-center gap-3 text-xs text-gray-400 dark:text-gray-500">
+                <ClientOnly>
+                  <span>{{ formatDate(post.date) }}</span>
+                </ClientOnly>
+                <span v-if="post.readingTime" class="flex items-center gap-1">
+                  <UIcon name="i-narr-time" class="size-3.5" />
+                  {{ post.readingTime }} min
+                </span>
+              </div>
 
-        <template #footer>
-          <ClientOnly>
-            <div v-if="reactionsLoading && post.idBlog" class="flex items-center gap-1">
-              <USkeleton class="h-5 w-12 rounded-md" />
-              <USkeleton class="h-5 w-12 rounded-md" />
-              <USkeleton class="h-5 w-12 rounded-md" />
+              <!-- Tags badges -->
+              <div v-if="post.tags && post.tags.length > 0" class="flex flex-wrap gap-1.5">
+                <UBadge
+                  v-for="tag in post.tags"
+                  :key="tag"
+                  class="uppercase"
+                  color="neutral"
+                  variant="subtle"
+                  size="sm"
+                  :label="tag"
+                />
+              </div>
             </div>
+          </template>
 
-            <div v-else-if="post.idBlog && getTotalReactions(post.idBlog) > 0" class="flex items-center gap-1">
-              <UButton
-                v-if="reactionCounts[post.idBlog]?.love"
-                color="error"
-                variant="subtle"
-                size="xs"
-                icon="i-narr-love"
-                :label="String(reactionCounts[post.idBlog]?.love ?? 0)"
-              />
-              <UButton
-                v-if="reactionCounts[post.idBlog]?.like"
-                color="info"
-                variant="subtle"
-                size="xs"
-                icon="i-narr-lovefinger"
-                :label="String(reactionCounts[post.idBlog]?.like ?? 0)"
-              />
-              <UButton
-                v-if="reactionCounts[post.idBlog]?.sad"
-                color="warning"
-                variant="subtle"
-                size="xs"
-                icon="i-narr-like"
-                :label="String(reactionCounts[post.idBlog]?.sad ?? 0)"
-              />
-            </div>
-          </ClientOnly>
-        </template>
-      </UPageCard>
+          <template #footer>
+            <ClientOnly>
+              <div v-if="reactionsLoading && post.idBlog" class="flex items-center gap-1">
+                <USkeleton class="h-5 w-12 rounded-md" />
+                <USkeleton class="h-5 w-12 rounded-md" />
+                <USkeleton class="h-5 w-12 rounded-md" />
+              </div>
+
+              <div v-else-if="post.idBlog && getTotalReactions(post.idBlog) > 0" class="flex items-center gap-1">
+                <UButton
+                  v-if="reactionCounts[post.idBlog]?.love"
+                  color="error"
+                  variant="subtle"
+                  size="xs"
+                  icon="i-narr-love"
+                  :label="String(reactionCounts[post.idBlog]?.love ?? 0)"
+                />
+                <UButton
+                  v-if="reactionCounts[post.idBlog]?.like"
+                  color="info"
+                  variant="subtle"
+                  size="xs"
+                  icon="i-narr-lovefinger"
+                  :label="String(reactionCounts[post.idBlog]?.like ?? 0)"
+                />
+                <UButton
+                  v-if="reactionCounts[post.idBlog]?.sad"
+                  color="warning"
+                  variant="subtle"
+                  size="xs"
+                  icon="i-narr-like"
+                  :label="String(reactionCounts[post.idBlog]?.sad ?? 0)"
+                />
+              </div>
+            </ClientOnly>
+          </template>
+        </UPageCard>
+      </div>
     </UPageList>
 
     <div v-else class="text-center py-20 bg-gray-50 dark:bg-gray-800/50 rounded-3xl border-2 border-dashed border-gray-200 dark:border-gray-800">

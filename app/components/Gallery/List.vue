@@ -66,10 +66,10 @@ function onImageLoaded(key: string) {
 watchEffect(() => {
   const firstGallery = filteredGalleries.value?.[0]
   if (firstGallery?.image) {
-    const preloadUrl = img(firstGallery.image, { provider: 'cloudinary', width: 400, format: 'webp', quality: 100 } as any)
+    const preloadUrl = img(firstGallery.image, { provider: 'cloudinary', width: 300, format: 'webp', quality: 80 } as any)
     useHead({
       link: [
-        { rel: 'preload', as: 'image', href: preloadUrl, imagesrcset: img.getSizes(firstGallery.image, { provider: 'cloudinary', width: 400, format: 'webp' } as any).srcset },
+        { rel: 'preload', as: 'image', href: preloadUrl, imagesrcset: img.getSizes(firstGallery.image, { provider: 'cloudinary', width: 300, format: 'webp', quality: 80 } as any).srcset },
       ],
     })
   }
@@ -128,8 +128,16 @@ watch(isModalOpen, (val) => {
         <!-- Image (clickable to open modal) -->
         <div
           class="relative cursor-pointer overflow-hidden bg-gray-100 dark:bg-gray-800"
+          :style="{ aspectRatio: `${gallery.width} / ${gallery.height}` }"
           @click="openGalleryModal(gallery)"
         >
+          <!-- Skeleton pulse placeholder (matches aspect-ratio) -->
+          <div
+            v-if="!imageLoadedMap[gallery.public_id] && index >= 4"
+            class="absolute inset-0 animate-pulse bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center z-10"
+          >
+            <UIcon name="i-narr-loading" class="animate-spin size-6 text-gray-400 dark:text-gray-500" />
+          </div>
           <!-- Image with blur-up loading effect -->
           <NuxtImg
             provider="cloudinary"
@@ -137,22 +145,14 @@ watch(isModalOpen, (val) => {
             :alt="gallery.alt || gallery.title"
             format="webp"
             quality="80"
-            width="400"
+            width="300"
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             :loading="index < 4 ? 'eager' : 'lazy'"
-            :fetchpriority="index < 2 ? 'high' : 'auto'"
-            :placeholder="index < 4 ? undefined : img(gallery.image, { provider: 'cloudinary', height: 35, width: 25, format: 'webp', blur: 5, quality: 30 } as any)"
+            :fetchpriority="index === 0 ? 'high' : 'auto'"
             class="w-full h-auto transform transition-all duration-500 group-hover:scale-110"
-            :class="imageLoadedMap[gallery.public_id] || index < 4 ? 'blur-0' : 'blur-xl scale-105'"
+            :class="imageLoadedMap[gallery.public_id] || index < 4 ? 'opacity-100' : 'opacity-0'"
             @load="onImageLoaded(gallery.public_id)"
           />
-          <!-- Loading indicator overlay (centered without breaking height) -->
-          <div
-            v-if="!imageLoadedMap[gallery.public_id] && index >= 4"
-            class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none"
-          >
-            <UIcon name="i-narr-loading" class="animate-spin size-6 text-white/50" />
-          </div>
           <!-- Overlay on Hover -->
           <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-end">
             <div class="p-3 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">

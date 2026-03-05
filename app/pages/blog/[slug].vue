@@ -175,10 +175,10 @@ const articleTags = computed(() => article.value?.tags?.map((t: string) => t.rep
         </template>
         <template #headline>
           <div class="flex flex-col gap-2">
-            <div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 dark:bg-primary/15">
-              <LazySvgDev v-if="article.category === 'programmer'" class="size-7" />
-              <LazySvgGuru v-else-if="article.category === 'pendidikan'" class="size-7" />
-              <LazySvgDesigner v-else-if="article.category === 'desainer'" class="size-7" />
+            <div class="flex items-center justify-center size-24 rounded-lg bg-primary/10 dark:bg-primary/15">
+              <LazySvgDev v-if="article.category === 'programmer'" class="size-20" />
+              <LazySvgGuru v-else-if="article.category === 'pendidikan'" class="size-20" />
+              <LazySvgDesigner v-else-if="article.category === 'desainer'" class="size-20" />
             </div>
             <div v-if="article.readingTime" class="flex items-center gap-1 text-sm text-gray-500">
               <UIcon name="i-narr-time" class="w-4 h-4" />

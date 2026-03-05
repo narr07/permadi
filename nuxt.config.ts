@@ -137,6 +137,11 @@ export default defineNuxtConfig({
       titleTemplate: '%s | Permadi',
       htmlAttrs: { lang: 'id' },
       link: [
+        // Preconnect to third-party origins for faster resource loading
+        { rel: 'preconnect', href: 'https://res.cloudinary.com', crossorigin: 'anonymous' },
+        { rel: 'dns-prefetch', href: 'https://res.cloudinary.com' },
+        { rel: 'preconnect', href: 'https://analytics.google.com', crossorigin: 'anonymous' },
+        { rel: 'dns-prefetch', href: 'https://analytics.google.com' },
         // Preload above-the-fold fonts to prevent CLS from font swap
         { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/PermadiHeading/Permadi-Heading-Bold.woff2', crossorigin: 'anonymous' },
         { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/PermadiBody/Permadi-Body-Regular.woff2', crossorigin: 'anonymous' },

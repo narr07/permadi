@@ -52,6 +52,14 @@ export default defineAppConfig({
           link: 'group lg:ps-2 lg:-ms-2',
         },
       },
+      strong: {
+        base: 'text-primary-700 dark:text-primary-500 font-bold',
+      },
+    },
+    selectMenu: {
+      slots: {
+        placeholder: 'truncate text-muted',
+      },
     },
     icons: {
       arrowDown: 'i-narr-arrow-down',
