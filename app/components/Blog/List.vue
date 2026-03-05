@@ -123,25 +123,6 @@ function formatDate(dateStr: string) {
     year: 'numeric',
   }).format(date)
 }
-
-const img = useImage()
-const imageLoadedMap = reactive<Record<string, boolean>>({})
-function onImageLoaded(key: string) {
-  imageLoadedMap[key] = true
-}
-
-// Preload the first image for LCP optimization
-watchEffect(() => {
-  const firstPost = filteredPosts.value?.[0]
-  if (firstPost?.image) {
-    const preloadUrl = img(firstPost.image, { width: 600, quality: 80 } as any)
-    useHead({
-      link: [
-        { rel: 'preload', as: 'image', href: preloadUrl },
-      ],
-    })
-  }
-})
 </script>
 
 <template>
@@ -177,106 +158,99 @@ watchEffect(() => {
       </span>
     </div>
 
-    <!-- Blog Posts Grid -->
-    <UBlogPosts v-if="filteredPosts && filteredPosts.length > 0">
-      <UBlogPost
-        v-for="(post, index) in filteredPosts"
+    <!-- Blog Posts List -->
+    <UPageList v-if="filteredPosts && filteredPosts.length > 0" divide>
+      <UPageCard
+        v-for="post in filteredPosts"
         :key="post.path"
-        :title="post.title"
-        :description="post.description"
-        :image="{ src: post.image, alt: post.title }"
+        variant="ghost"
         :to="getBlogUrl(post)"
-        variant="outline"
-        class="h-full"
-        :ui="{ title: 'line-clamp-2', description: 'line-clamp-2', footer: 'px-4 sm:px-6 pb-4 sm:pb-6' }"
       >
-        <template #header>
-          <div class="relative overflow-hidden aspect-video bg-gray-100 dark:bg-gray-800">
-            <NuxtImg
-              :src="post.image"
-              :alt="post.title"
-              quality="80"
-              width="600"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              :loading="index < 3 ? 'eager' : 'lazy'"
-              :fetchpriority="index < 3 ? 'high' : 'auto'"
-              :placeholder="post.image && index >= 3 ? img(post.image, { height: 20, width: 35, blur: 5, quality: 30 } as any) : undefined"
-              class="object-cover object-top w-full h-full transform transition-all duration-500 group-hover/blog-post:scale-110"
-              :class="imageLoadedMap[post.path] || index < 3 ? 'blur-0' : 'blur-xl scale-105'"
-              @load="onImageLoaded(post.path)"
-              @error="onImageLoaded(post.path)"
-            />
-            <!-- Category badge overlay on image -->
-            <UBadge
-              v-if="post.category"
-              color="neutral"
-              variant="solid"
-              size="sm"
-              class="absolute top-3 right-3 z-10"
-            >
-              {{ t(`categories.${post.category}`) }}
-            </UBadge>
+        <template #leading>
+          <div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 dark:bg-primary/15 shrink-0">
+            <LazySvgDev v-if="post.category === 'programmer'" class="size-7" />
+            <LazySvgGuru v-else-if="post.category === 'pendidikan'" class="size-7" />
+            <LazySvgDesigner v-else-if="post.category === 'desainer'" class="size-7" />
+            <UIcon v-else name="i-lucide-file-text" class="size-5 text-primary" />
           </div>
         </template>
 
-        <template #badge />
+        <template #body>
+          <div class="flex flex-col gap-2">
+            <!-- Title & Description (rendered by UPageCard default) -->
+            <div class="flex flex-col gap-1">
+              <h2 class="text-g2 font-semibold  line-clamp-1 group-hover/page-card:text-primary transition-colors">
+                {{ post.title }}
+              </h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
+                {{ post.description }}
+              </p>
+            </div>
 
-        <template #date>
-          <ClientOnly>
-            {{ formatDate(post.date) }}
-          </ClientOnly>
+            <!-- Date + Reading Time -->
+            <div class="flex items-center gap-3 text-xs text-gray-400 dark:text-gray-500">
+              <ClientOnly>
+                <span>{{ formatDate(post.date) }}</span>
+              </ClientOnly>
+              <span v-if="post.readingTime" class="flex items-center gap-1">
+                <UIcon name="i-narr-time" class="size-3.5" />
+                {{ post.readingTime }} min
+              </span>
+            </div>
+
+            <!-- Tags badges -->
+            <div v-if="post.tags && post.tags.length > 0" class="flex flex-wrap gap-1.5">
+              <UBadge
+                v-for="tag in post.tags"
+                :key="tag"
+                class="uppercase"
+                color="neutral"
+                variant="subtle"
+                size="sm"
+                :label="tag"
+              />
+            </div>
+          </div>
         </template>
 
         <template #footer>
-          <div class="flex items-center justify-between w-full">
-            <div class="flex items-center gap-2">
-              <UBadge
-                v-if="post.readingTime"
-                color="neutral"
-                variant="subtle"
-                icon="i-narr-time"
-                :label="`${post.readingTime} min`"
-              />
+          <ClientOnly>
+            <div v-if="reactionsLoading && post.idBlog" class="flex items-center gap-1">
+              <USkeleton class="h-5 w-12 rounded-md" />
+              <USkeleton class="h-5 w-12 rounded-md" />
+              <USkeleton class="h-5 w-12 rounded-md" />
             </div>
 
-            <ClientOnly>
-              <div v-if="reactionsLoading && post.idBlog" class="flex items-center gap-1">
-                <USkeleton class="h-6 w-14 rounded-md" />
-                <USkeleton class="h-6 w-14 rounded-md" />
-                <USkeleton class="h-6 w-14 rounded-md" />
-              </div>
-
-              <div v-else-if="post.idBlog && getTotalReactions(post.idBlog) > 0" class="flex items-center gap-1">
-                <UButton
-                  v-if="reactionCounts[post.idBlog]?.love"
-                  color="error"
-                  variant="subtle"
-                  size="xs"
-                  icon="i-narr-love"
-                  :label="String(reactionCounts[post.idBlog]?.love ?? 0)"
-                />
-                <UButton
-                  v-if="reactionCounts[post.idBlog]?.like"
-                  color="info"
-                  variant="subtle"
-                  size="xs"
-                  icon="i-narr-lovefinger"
-                  :label="String(reactionCounts[post.idBlog]?.like ?? 0)"
-                />
-                <UButton
-                  v-if="reactionCounts[post.idBlog]?.sad"
-                  color="warning"
-                  variant="subtle"
-                  size="xs"
-                  icon="i-narr-like"
-                  :label="String(reactionCounts[post.idBlog]?.sad ?? 0)"
-                />
-              </div>
-            </ClientOnly>
-          </div>
+            <div v-else-if="post.idBlog && getTotalReactions(post.idBlog) > 0" class="flex items-center gap-1">
+              <UButton
+                v-if="reactionCounts[post.idBlog]?.love"
+                color="error"
+                variant="subtle"
+                size="xs"
+                icon="i-narr-love"
+                :label="String(reactionCounts[post.idBlog]?.love ?? 0)"
+              />
+              <UButton
+                v-if="reactionCounts[post.idBlog]?.like"
+                color="info"
+                variant="subtle"
+                size="xs"
+                icon="i-narr-lovefinger"
+                :label="String(reactionCounts[post.idBlog]?.like ?? 0)"
+              />
+              <UButton
+                v-if="reactionCounts[post.idBlog]?.sad"
+                color="warning"
+                variant="subtle"
+                size="xs"
+                icon="i-narr-like"
+                :label="String(reactionCounts[post.idBlog]?.sad ?? 0)"
+              />
+            </div>
+          </ClientOnly>
         </template>
-      </UBlogPost>
-    </UBlogPosts>
+      </UPageCard>
+    </UPageList>
 
     <div v-else class="text-center py-20 bg-gray-50 dark:bg-gray-800/50 rounded-3xl border-2 border-dashed border-gray-200 dark:border-gray-800">
       <UIcon name="i-narr-loading" class="w-16 h-16 text-gray-300 dark:text-gray-700 mx-auto mb-4" />
