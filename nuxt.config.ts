@@ -25,6 +25,11 @@ export default defineNuxtConfig({
     '@stefanobartoletti/nuxt-social-share',
     'nuxt-delay-hydration',
   ],
+  runtimeConfig: {
+    cloudinaryCloudName: '',
+    cloudinaryApiKey: '',
+    cloudinaryApiSecret: '',
+  },
   site: {
     url: 'https://permadi.dev',
     name: 'Permadi',

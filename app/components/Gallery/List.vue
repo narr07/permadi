@@ -1,72 +1,26 @@
 <script setup lang="ts">
-const { locale, t } = useI18n()
+import type { GalleryItem } from '~~/server/api/cloudinary-gallery.get'
+
+const { t } = useI18n()
 const img = useImage()
 
-const { data: galleries } = await useAsyncData(`gallery-list-${locale.value}`, async () => {
-  const collection = `${locale.value}_gallery` as any
-  return await queryCollection(collection)
-    .order('date', 'DESC')
-    .all()
-}, {
-  watch: [locale],
+// Fetch gallery from Cloudinary API (cached server route)
+const { data: galleries } = await useFetch<GalleryItem[]>('/api/cloudinary-gallery', {
+  key: 'gallery-list',
+  default: () => [],
 })
 
-function ensureArray(val: any): string[] {
-  if (!val)
-    return []
-  return Array.isArray(val) ? val : [val]
-}
-
-// Tool icon mapping
-const toolIconMap: Record<string, { icon: string, label: string }> = {
-  illustator: { icon: 'i-narr-d-illustrator', label: 'Illustrator' },
-  photoshop: { icon: 'i-narr-d-photoshop', label: 'Photoshop' },
-  affinity: { icon: 'i-narr-d-affinity', label: 'Affinity' },
-  lightroom: { icon: 'i-narr-d-lightroom', label: 'Lightroom' },
-  canva: { icon: 'i-narr-d-canva', label: 'Canva' },
-  figma: { icon: 'i-narr-d-figma', label: 'Figma' },
-}
-
-// Gallery likes
-const { fetchLikes, addLike, getCount, isLikeSubmitting, isLoading: likesLoading } = useGalleryLikes()
-
-// Fetch likes when galleries load
-watch(galleries, (items) => {
-  if (items?.length) {
-    fetchLikes(items.map(g => getImageKey(g.image)))
-  }
-}, { immediate: true })
-
-// Extract all unique categories for filter
-const allCategories = computed(() => {
-  const categorySet = new Set<string>()
+// Extract all unique tags for filter
+const allTags = computed(() => {
+  const tagSet = new Set<string>()
   galleries.value?.forEach((gallery) => {
-    if (gallery.category) {
-      const cats = Array.isArray(gallery.category) ? gallery.category : [gallery.category]
-      cats.forEach((cat: string) => categorySet.add(cat))
-    }
+    gallery.tags?.forEach((tag: string) => tagSet.add(tag))
   })
-  return Array.from(categorySet).sort()
-})
-
-// Extract all unique tools for filter
-const allTools = computed(() => {
-  const toolSet = new Set<string>()
-  galleries.value?.forEach((gallery) => {
-    if (gallery.tools) {
-      toolSet.add(gallery.tools)
-    }
-  })
-  return Array.from(toolSet).sort().map(tool => ({
-    value: tool,
-    label: toolIconMap[tool]?.label || tool,
-    icon: toolIconMap[tool]?.icon || 'i-narr-tools',
-  }))
+  return Array.from(tagSet).sort()
 })
 
 // Filter and pagination state
-const selectedCategory = ref<string | undefined>(undefined)
-const selectedTool = ref<string | undefined>(undefined)
+const selectedTag = ref<string | undefined>(undefined)
 const currentPage = ref(1)
 const itemsPerPage = 16
 
@@ -75,15 +29,9 @@ const filteredGalleries = computed(() => {
   if (!galleries.value)
     return []
   let result = galleries.value
-  if (selectedCategory.value) {
-    result = result.filter((gallery) => {
-      const cats = Array.isArray(gallery.category) ? gallery.category : [gallery.category]
-      return cats.includes(selectedCategory.value!)
-    })
-  }
-  if (selectedTool.value) {
+  if (selectedTag.value) {
     result = result.filter(gallery =>
-      gallery.tools === selectedTool.value,
+      gallery.tags?.includes(selectedTag.value!),
     )
   }
   return result
@@ -97,16 +45,15 @@ const paginatedGalleries = computed(() => {
 })
 
 // Reset page when filter changes
-watch([selectedCategory, selectedTool], () => {
+watch(selectedTag, () => {
   currentPage.value = 1
 })
 
 function clearFilters() {
-  selectedCategory.value = undefined
-  selectedTool.value = undefined
+  selectedTag.value = undefined
 }
 
-const selectedGallery = ref<any>(null)
+const selectedGallery = ref<GalleryItem | null>(null)
 const isModalOpen = ref(false)
 
 // Track image loaded state for list items
@@ -128,7 +75,7 @@ watchEffect(() => {
   }
 })
 
-function openGalleryModal(gallery: any) {
+function openGalleryModal(gallery: GalleryItem) {
   selectedGallery.value = gallery
   isModalOpen.value = true
 }
@@ -138,14 +85,6 @@ watch(isModalOpen, (val) => {
     selectedGallery.value = null
   }
 })
-
-// Reconstruct full Cloudinary URL for likes API key (backward compatibility)
-const CLOUDINARY_BASE = 'https://res.cloudinary.com/daton7ry4/image/upload'
-function getImageKey(imagePath: string): string {
-  if (imagePath.startsWith('http'))
-    return imagePath
-  return `${CLOUDINARY_BASE}${imagePath}`
-}
 </script>
 
 <template>
@@ -158,23 +97,14 @@ function getImageKey(imagePath: string): string {
     <!-- Filter Section -->
     <div class="flex py-4 justify-end flex-wrap items-center gap-3">
       <USelectMenu
-        v-model="selectedCategory"
-        :items="allCategories"
+        v-model="selectedTag"
+        :items="allTags"
         placeholder="Tag"
         class="w-48"
         icon="i-narr-filter"
       />
-      <USelectMenu
-        v-model="selectedTool"
-        :items="allTools"
-        value-key="value"
-        label-key="label"
-        placeholder="Tools"
-        class="w-48"
-        icon="i-narr-tools"
-      />
       <UButton
-        v-if="selectedCategory || selectedTool"
+        v-if="selectedTag"
         size="sm"
         variant="ghost"
         color="neutral"
@@ -183,17 +113,17 @@ function getImageKey(imagePath: string): string {
       >
         {{ t('clear') || 'Clear' }}
       </UButton>
-      <span v-if="selectedCategory || selectedTool" class="text-sm text-gray-500">
+      <span v-if="selectedTag" class="text-sm text-gray-500">
         {{ filteredGalleries.length }} {{ t('images_found') || 'image(s) found' }}
       </span>
     </div>
 
     <!-- Gallery Masonry -->
-    <UPageColumns :key="`${currentPage}-${selectedCategory}-${selectedTool}`" class="columns-2 md:columns-3 lg:columns-4">
+    <div :key="`${currentPage}-${selectedTag}`" class="columns-2 md:columns-3 lg:columns-4 gap-4">
       <div
         v-for="(gallery, index) in paginatedGalleries"
-        :key="gallery.stem"
-        class="group overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800 hover:border-primary-500 transition-all hover:shadow"
+        :key="gallery.public_id"
+        class="group break-inside-avoid mb-4 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800 hover:border-primary-500 transition-all hover:shadow"
       >
         <!-- Image (clickable to open modal) -->
         <div
@@ -204,22 +134,21 @@ function getImageKey(imagePath: string): string {
           <NuxtImg
             provider="cloudinary"
             :src="gallery.image"
-            :alt="gallery.title"
+            :alt="gallery.alt || gallery.title"
             format="webp"
             quality="80"
             width="400"
-            height="400"
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             :loading="index < 4 ? 'eager' : 'lazy'"
             :fetchpriority="index < 2 ? 'high' : 'auto'"
             :placeholder="index < 4 ? undefined : img(gallery.image, { provider: 'cloudinary', height: 35, width: 25, format: 'webp', blur: 5, quality: 30 } as any)"
             class="w-full h-auto transform transition-all duration-500 group-hover:scale-110"
-            :class="imageLoadedMap[gallery.stem] || index < 4 ? 'blur-0' : 'blur-xl scale-105'"
-            @load="onImageLoaded(gallery.stem)"
+            :class="imageLoadedMap[gallery.public_id] || index < 4 ? 'blur-0' : 'blur-xl scale-105'"
+            @load="onImageLoaded(gallery.public_id)"
           />
           <!-- Loading indicator overlay (centered without breaking height) -->
           <div
-            v-if="!imageLoadedMap[gallery.stem] && index >= 4"
+            v-if="!imageLoadedMap[gallery.public_id] && index >= 4"
             class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none"
           >
             <UIcon name="i-narr-loading" class="animate-spin size-6 text-white/50" />
@@ -230,43 +159,14 @@ function getImageKey(imagePath: string): string {
               <h3 class="font-semibold line-clamp-1">
                 {{ gallery.title }}
               </h3>
-              <p v-if="gallery.category" class="text-xs text-gray-200 mt-1">
-                {{ ensureArray(gallery.category).join(', ') }}
+              <p v-if="gallery.tags?.length" class="text-xs text-gray-200 mt-1">
+                {{ gallery.tags.join(', ') }}
               </p>
             </div>
           </div>
         </div>
-
-        <!-- Footer: Tool Icon + Like Button -->
-        <div class="flex items-center justify-between px-3 py-2 bg-white dark:bg-gray-900">
-          <!-- Tool Icon (Left) -->
-          <div v-if="gallery.tools && toolIconMap[gallery.tools]" class="flex items-center gap-1.5">
-            <UTooltip :text="toolIconMap[gallery.tools!]?.label">
-              <UIcon
-                class="size-6"
-                :name="toolIconMap[gallery.tools!]?.icon"
-              />
-            </UTooltip>
-          </div>
-          <div v-else />
-          <!-- Like Button (Right) -->
-          <ClientOnly>
-            <USkeleton v-if="likesLoading" class="h-8 w-14 rounded-md" />
-            <UButton
-              v-else
-              :icon="isLikeSubmitting(getImageKey(gallery.image)) ? 'i-narr-loading' : 'i-narr-love'"
-              :label="String(getCount(getImageKey(gallery.image)) || 0)"
-              color="neutral"
-              size="sm"
-              variant="subtle"
-              :class="{ 'animate-pulse': isLikeSubmitting(getImageKey(gallery.image)) }"
-              :disabled="isLikeSubmitting(getImageKey(gallery.image))"
-              @click.stop="addLike(getImageKey(gallery.image))"
-            />
-          </ClientOnly>
-        </div>
       </div>
-    </UPageColumns>
+    </div>
     <!-- Empty State -->
     <div v-if="paginatedGalleries.length === 0" class="text-center py-12 text-gray-500">
       {{ t('no_images_found') || 'No images found matching the selected filter.' }}
@@ -291,7 +191,7 @@ function getImageKey(imagePath: string): string {
         <NuxtImg
           provider="cloudinary"
           :src="selectedGallery.image"
-          :alt="selectedGallery.title"
+          :alt="selectedGallery.alt || selectedGallery.title"
           format="webp"
           quality="90"
           width="900"
