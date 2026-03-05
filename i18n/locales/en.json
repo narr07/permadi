@@ -88,5 +88,7 @@
   },
   "visitors": {
     "online": "Online visitors"
-  }
+  },
+  "articles_found": "Article Found",
+  "no_articles_found": "No Articles Found"
 }

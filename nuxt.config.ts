@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     'nuxt-llms',
     '@stefanobartoletti/nuxt-social-share',
     'nuxt-delay-hydration',
+    '@nuxtjs/web-vitals',
   ],
   runtimeConfig: {
     cloudinaryCloudName: '',
@@ -190,6 +191,12 @@ export default defineNuxtConfig({
       googleAnalytics: {
         id: 'G-5LEXR84KHW',
       },
+    },
+  },
+  webVitals: {
+    provider: 'ga',
+    ga: {
+      id: 'G-5LEXR84KHW',
     },
   },
   // NuxtHub configuration for D1 database + cache

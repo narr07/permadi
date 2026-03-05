@@ -88,5 +88,7 @@
   },
   "visitors": {
     "online": "Pengunjung online"
-  }
+  },
+  "articles_found": "Artikel Ditemukan",
+  "no_articles_found": "Artikel Tidak Di temukan"
 }
