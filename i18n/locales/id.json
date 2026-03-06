@@ -88,5 +88,16 @@
     "online": "Pengunjung online"
   },
   "articles_found": "Artikel Ditemukan",
-  "no_articles_found": "Artikel Tidak Di temukan"
+  "no_articles_found": "Artikel Tidak Di temukan",
+  "newsletter": {
+    "title": "Berlangganan Newsletter",
+    "description": "Dapatkan notifikasi artikel terbaru langsung ke email kamu.",
+    "email_placeholder": "Masukkan email kamu",
+    "subscribe": "Langganan",
+    "subscribing": "Mendaftar...",
+    "success": "Berhasil berlangganan! Terima kasih.",
+    "already_subscribed": "Email ini sudah terdaftar.",
+    "error": "Gagal mendaftar. Coba lagi nanti.",
+    "invalid_email": "Format email tidak valid."
+  }
 }

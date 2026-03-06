@@ -30,6 +30,9 @@ export default defineNuxtConfig({
     cloudinaryCloudName: '',
     cloudinaryApiKey: '',
     cloudinaryApiSecret: '',
+    resendApiKey: '',
+    resendAudienceId: '',
+    githubWebhookSecret: '',
   },
   site: {
     url: 'https://permadi.dev',

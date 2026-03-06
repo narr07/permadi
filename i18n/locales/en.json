@@ -88,5 +88,16 @@
     "online": "Online visitors"
   },
   "articles_found": "Article Found",
-  "no_articles_found": "No Articles Found"
+  "no_articles_found": "No Articles Found",
+  "newsletter": {
+    "title": "Subscribe to Newsletter",
+    "description": "Get notified when new articles are published.",
+    "email_placeholder": "Enter your email",
+    "subscribe": "Subscribe",
+    "subscribing": "Subscribing...",
+    "success": "Successfully subscribed! Thank you.",
+    "already_subscribed": "This email is already registered.",
+    "error": "Failed to subscribe. Please try again later.",
+    "invalid_email": "Invalid email format."
+  }
 }

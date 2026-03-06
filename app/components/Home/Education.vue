@@ -94,7 +94,7 @@ function onSelect(_e: Event, item: TimelineItem) {
 
       <!-- Kolom Kanan: Gambar & Detail (hidden di mobile) -->
       <UCard
-        class="hidden lg:flex flex-col items-center justify-center text-center h-full min-h-[300px] "
+        class="hidden lg:flex flex-col items-center justify-center text-center h-full min-h-75 "
         spotlight
       >
         <div v-if="activeSchool" class="space-y-6">
