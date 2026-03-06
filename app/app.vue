@@ -84,9 +84,9 @@ useSchemaOrg([
 
 <template>
   <UApp :locale="locales[locale]">
-    <div class="pt-24">
+    <UContainer class="fixed top-20 inset-x-0 z-40">
       <LazyNewsletter />
-    </div>
+    </UContainer>
     <UContainer class="fixed top-2 inset-x-0 z-50">
       <motion.nav
         :animate="{ y: (idle && isMobile) ? -100 : 0 }"

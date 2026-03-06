@@ -58,7 +58,7 @@ const items = [
         <h3 class="text-xl font-black uppercase tracking-tight text-brand-900 dark:text-white font-title leading-tight mb-3">
           {{ item.title }}
         </h3>
-        <p class="text-sm text-gray-500 dark:text-gray-400 font-medium leading-relaxed max-w-[240px] mx-auto">
+        <p class="text-sm text-gray-500 dark:text-gray-400 font-medium leading-relaxed max-w-60 mx-auto">
           {{ item.description }}
         </p>
       </UCard>

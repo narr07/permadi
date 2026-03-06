@@ -62,10 +62,11 @@ async function handleSubscribe() {
   <UBanner
     v-if="!isSubscribed"
     id="newsletter-subscribe"
-    icon="i-lucide-mail"
+    icon="i-narr-soc-mail"
     :title="t('newsletter.description')"
-    color="neutral"
+    color="info"
     close
+    :ui="{ root: 'rounded-lg' }"
   >
     <template #actions>
       <form class="flex items-center gap-2" @submit.prevent="handleSubscribe">
@@ -75,7 +76,7 @@ async function handleSubscribe() {
           :placeholder="t('newsletter.email_placeholder')"
           :disabled="isSubmitting"
           size="xs"
-          class="w-48"
+          class="w-32"
           :ui="{ root: 'ring-0' }"
         />
         <UButton

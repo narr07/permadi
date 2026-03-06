@@ -134,7 +134,7 @@ watch(isModalOpen, (val) => {
           <!-- Skeleton pulse placeholder (matches aspect-ratio) -->
           <div
             v-if="!imageLoadedMap[gallery.public_id] && index >= 4"
-            class="absolute inset-0 animate-pulse bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center z-10"
+            class="absolute inset-0 animate-pulse bg-linear-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center z-10"
           >
             <UIcon name="i-narr-loading" class="animate-spin size-6 text-gray-400 dark:text-gray-500" />
           </div>
