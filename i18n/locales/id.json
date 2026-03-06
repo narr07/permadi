@@ -79,10 +79,8 @@
   },
   "toast": {
     "limit_reached": "Batas tercapai",
-    "like_limit_msg": "Kamu sudah mencapai batas maksimal like. Coba lagi nanti ya!",
     "reaction_limit_msg": "Kamu sudah mencapai batas maksimal reaksi. Coba lagi nanti ya!",
     "error_title": "Gagal",
-    "like_error_msg": "Tidak bisa memberikan like. Coba lagi.",
     "reaction_error_msg": "Tidak bisa menambahkan reaksi. Coba lagi.",
     "load_reactions_error": "Gagal memuat reaksi"
   },

@@ -60,14 +60,6 @@ const projectSchema = pageSchema.extend({
   date: z.string().optional(), // Keep date as it's useful for sorting
 })
 
-const gallerySchema = z.object({
-  title: z.string(),
-  image: z.string(),
-  category: z.array(z.string()),
-  tools: z.enum(['illustator', 'photoshop', 'affinity', 'lightroom', 'canva', 'figma']),
-  date: z.date(),
-})
-
 const collections: any = {}
 
 locales.forEach((locale) => {
@@ -100,12 +92,6 @@ locales.forEach((locale) => {
       include: `${locale}/projek/*.yml`,
     },
     schema: projectSchema,
-  })
-
-  collections[`${locale}_gallery`] = defineCollection({
-    type: 'data',
-    source: `${locale}/galeri/*.yml`,
-    schema: gallerySchema,
   })
 })
 

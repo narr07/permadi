@@ -1,5 +1,5 @@
 import process from 'node:process'
-import { browserFallbackLocale, defaultLocale } from './i18n-constants'
+import { defaultLocale } from './i18n-constants'
 
 export default defineNuxtConfig({
   modules: [
@@ -191,6 +191,9 @@ export default defineNuxtConfig({
       googleAnalytics: {
         id: 'G-5LEXR84KHW',
       },
+      googleTagManager: {
+        id: 'GTM-5XT2J2S5',
+      },
     },
   },
   webVitals: {
@@ -219,13 +222,7 @@ export default defineNuxtConfig({
     strategy: 'prefix_except_default',
     defaultLocale,
     langDir: 'locales',
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: 'i18n_redirected',
-      alwaysRedirect: false,
-      fallbackLocale: browserFallbackLocale,
-      redirectOn: 'root',
-    },
+    detectBrowserLanguage: false,
     locales: [
       {
         code: 'id',

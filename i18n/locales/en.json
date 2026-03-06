@@ -79,10 +79,8 @@
   },
   "toast": {
     "limit_reached": "Limit reached",
-    "like_limit_msg": "You have reached the maximum likes. Please try again later!",
     "reaction_limit_msg": "You have reached the maximum reactions. Please try again later!",
     "error_title": "Failed",
-    "like_error_msg": "Unable to like. Please try again.",
     "reaction_error_msg": "Unable to add reaction. Please try again.",
     "load_reactions_error": "Failed to load reactions"
   },
