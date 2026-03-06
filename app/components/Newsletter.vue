@@ -5,6 +5,7 @@ const toast = useToast()
 const email = ref('')
 const isSubmitting = ref(false)
 const isSubscribed = ref(false)
+const isModalOpen = ref(false)
 
 async function handleSubscribe() {
   if (!email.value)
@@ -44,6 +45,7 @@ async function handleSubscribe() {
       })
     }
     email.value = ''
+    isModalOpen.value = false
   }
   catch {
     toast.add({
@@ -69,26 +71,36 @@ async function handleSubscribe() {
     :ui="{ root: 'rounded-lg' }"
   >
     <template #actions>
-      <form class="flex items-center gap-2" @submit.prevent="handleSubscribe">
+      <UButton
+        size="xs"
+        color="primary"
+        @click="isModalOpen = true"
+      >
+        {{ t('newsletter.subscribe') }}
+      </UButton>
+    </template>
+  </UBanner>
+
+  <UModal v-model:open="isModalOpen" :close="true" title="Newsletter" :description="t('newsletter.description')">
+    <template #body>
+      <form class="flex flex-col gap-4" @submit.prevent="handleSubscribe">
         <UInput
           v-model="email"
           type="email"
+          icon="i-narr-soc-mail"
           :placeholder="t('newsletter.email_placeholder')"
           :disabled="isSubmitting"
-          size="xs"
-          class="w-32"
-          :ui="{ root: 'ring-0' }"
+          size="lg"
         />
         <UButton
           type="submit"
           :loading="isSubmitting"
           :disabled="!email || isSubmitting"
-          size="xs"
-          color="primary"
+          block
         >
           {{ t('newsletter.subscribe') }}
         </UButton>
       </form>
     </template>
-  </UBanner>
+  </UModal>
 </template>
