@@ -84,9 +84,6 @@ useSchemaOrg([
 
 <template>
   <UApp :locale="locales[locale]">
-    <UContainer class="fixed top-20 inset-x-0 z-40">
-      <LazyNewsletter />
-    </UContainer>
     <UContainer class="fixed top-2 inset-x-0 z-50">
       <motion.nav
         :animate="{ y: (idle && isMobile) ? -100 : 0 }"
@@ -155,8 +152,9 @@ useSchemaOrg([
       </UContainer>
     </UMain>
     <LazyBackToTop hydrate-on-idle />
-    <UFooter>
+    <UFooter class="pb-24 sm:pb-0">
       <template #left>
+        <LazyNewsletter />
         <p class="text-muted text-sm">
           © 2021-<ClientOnly fallback="2026">
             {{ new Date().getFullYear() }}

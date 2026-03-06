@@ -132,6 +132,7 @@ function formatDate(dateStr: string) {
       :description="t('blog.description')"
       headline="Blog"
     />
+
     <!-- Filter Section -->
     <div v-if="allCategories.length > 0" class="flex flex-wrap py-4 justify-end items-center gap-3">
       <USelectMenu

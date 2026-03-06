@@ -53,7 +53,7 @@ export default defineAppConfig({
         },
       },
       strong: {
-        base: 'text-primary-700 dark:text-primary-500 font-bold',
+        base: 'text-primary-700 dark:text-primary-300 font-bold',
       },
     },
     selectMenu: {

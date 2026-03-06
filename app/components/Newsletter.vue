@@ -1,3 +1,4 @@
+<!-- eslint-disable unused-imports/no-unused-vars -->
 <script setup lang="ts">
 const { t } = useI18n()
 const toast = useToast()
@@ -5,7 +6,6 @@ const toast = useToast()
 const email = ref('')
 const isSubmitting = ref(false)
 const isSubscribed = ref(false)
-const isModalOpen = ref(false)
 
 async function handleSubscribe() {
   if (!email.value)
@@ -45,9 +45,8 @@ async function handleSubscribe() {
       })
     }
     email.value = ''
-    isModalOpen.value = false
   }
-  catch {
+  catch (e) {
     toast.add({
       title: t('toast.error_title'),
       description: t('newsletter.error'),
@@ -61,46 +60,36 @@ async function handleSubscribe() {
 </script>
 
 <template>
-  <UBanner
-    v-if="!isSubscribed"
-    id="newsletter-subscribe"
-    icon="i-narr-soc-mail"
-    :title="t('newsletter.description')"
-    color="info"
-    close
-    :ui="{ root: 'rounded-lg' }"
-  >
-    <template #actions>
-      <UButton
-        size="xs"
-        color="primary"
-        @click="isModalOpen = true"
+  <div v-if="!isSubscribed" class="w-full py-4">
+    <form @submit.prevent="handleSubscribe">
+      <UFormField
+        name="email"
+        :label="t('newsletter.title') || 'Subscribe to our newsletter'"
+        size="lg"
+        :description="t('newsletter.description') || 'Stay updated on new releases and features, guides, and community updates.'"
+        :ui="{ label: 'font-semibold', container: 'mt-3' }"
       >
-        {{ t('newsletter.subscribe') }}
-      </UButton>
-    </template>
-  </UBanner>
-
-  <UModal v-model:open="isModalOpen" :close="true" title="Newsletter" :description="t('newsletter.description')">
-    <template #body>
-      <form class="flex flex-col gap-4" @submit.prevent="handleSubscribe">
         <UInput
           v-model="email"
           type="email"
-          icon="i-narr-soc-mail"
-          :placeholder="t('newsletter.email_placeholder')"
+          :placeholder="t('newsletter.email_placeholder') || 'you@domain.com'"
+          required
+          autocomplete="off"
+          class="max-w-sm w-full"
           :disabled="isSubmitting"
-          size="lg"
-        />
-        <UButton
-          type="submit"
-          :loading="isSubmitting"
-          :disabled="!email || isSubmitting"
-          block
         >
-          {{ t('newsletter.subscribe') }}
-        </UButton>
-      </form>
-    </template>
-  </UModal>
+          <template #trailing>
+            <UButton
+              type="submit"
+              size="xs"
+              color="neutral"
+              :label="isSubmitting ? t('newsletter.subscribing') || 'Subscribing' : t('newsletter.subscribe') || 'Subscribe'"
+              :loading="isSubmitting"
+              :disabled="!email || isSubmitting"
+            />
+          </template>
+        </UInput>
+      </UFormField>
+    </form>
+  </div>
 </template>
