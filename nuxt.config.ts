@@ -309,9 +309,11 @@ export default defineNuxtConfig({
   nitro: {
     compressPublicAssets: true,
     externals: {
-      inline: [],
-      external: ['@react-email/render'],
+      inline: ['@react-email/render'],
     },
+    // alias: {
+    //   '@react-email/render': 'unenv/runtime/mock/empty',
+    // },
     experimental: {
       websocket: true,
     },
