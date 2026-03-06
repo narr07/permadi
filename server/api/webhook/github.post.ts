@@ -113,8 +113,7 @@ export default defineEventHandler(async (event) => {
         continue
       }
 
-      // Call internal newsletter API to send email
-      const resend = useResend()
+      // Send newsletter to subscribers
       const { audienceId } = useResendConfig()
 
       if (!audienceId) {
@@ -123,12 +122,7 @@ export default defineEventHandler(async (event) => {
       }
 
       // Get subscribers
-      const { data: contacts, error: listError } = await resend.contacts.list({ audienceId })
-
-      if (listError) {
-        results.push({ file: filePath, error: listError.message })
-        continue
-      }
+      const contacts = await resendListContacts(audienceId)
 
       const subscribedEmails = contacts?.data
         ?.filter(c => !c.unsubscribed)
@@ -170,19 +164,22 @@ export default defineEventHandler(async (event) => {
 
       for (let i = 0; i < subscribedEmails.length; i += batchSize) {
         const batch = subscribedEmails.slice(i, i + batchSize)
-        const { error } = await resend.emails.send({
-          from: 'Dinar Permadi <narr@permadi.dev>',
-          to: batch,
-          subject: `📝 Blog Baru: ${frontmatter.title}`,
-          html: htmlContent,
-          tags: [
-            { name: 'category', value: 'newsletter' },
-            { name: 'slug', value: slug },
-          ],
-        })
-
-        if (!error)
+        try {
+          await resendSendEmail({
+            from: 'Dinar Permadi <narr@permadi.dev>',
+            to: batch,
+            subject: `📝 Blog Baru: ${frontmatter.title}`,
+            html: htmlContent,
+            tags: [
+              { name: 'category', value: 'newsletter' },
+              { name: 'slug', value: slug },
+            ],
+          })
           sent += batch.length
+        }
+        catch {
+          // continue with next batch
+        }
       }
 
       results.push({ file: filePath, title: frontmatter.title, slug, sent })

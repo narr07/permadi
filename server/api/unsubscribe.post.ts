@@ -11,7 +11,6 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const resend = useResend()
   const { audienceId } = useResendConfig()
 
   if (!audienceId) {
@@ -22,15 +21,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // Get the contact by email to find their ID
-  const { data: contacts, error: listError } = await resend.contacts.list({ audienceId })
-
-  if (listError) {
-    throw createError({
-      statusCode: 500,
-      message: listError.message || 'Failed to fetch contacts',
-    })
-  }
-
+  const contacts = await resendListContacts(audienceId)
   const contact = contacts?.data?.find(c => c.email === body.email)
 
   if (!contact) {
@@ -40,18 +31,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const { error } = await resend.contacts.update({
-    id: contact.id,
-    audienceId,
-    unsubscribed: true,
-  })
-
-  if (error) {
-    throw createError({
-      statusCode: 500,
-      message: error.message || 'Failed to unsubscribe',
-    })
-  }
+  await resendUpdateContact(audienceId, contact.id, { unsubscribed: true })
 
   return { success: true }
 })

@@ -23,7 +23,6 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const resend = useResend()
   const { audienceId } = useResendConfig()
 
   if (!audienceId) {
@@ -34,14 +33,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // Get all subscribed contacts
-  const { data: contacts, error: listError } = await resend.contacts.list({ audienceId })
-
-  if (listError) {
-    throw createError({
-      statusCode: 500,
-      message: listError.message || 'Failed to fetch contacts',
-    })
-  }
+  const contacts = await resendListContacts(audienceId)
 
   const subscribedEmails = contacts?.data
     ?.filter(c => !c.unsubscribed)
@@ -65,7 +57,7 @@ export default defineEventHandler(async (event) => {
       <div style="background: #f9fafb; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
         <h1 style="font-size: 22px; color: #111827; margin: 0 0 12px 0;">${body.title}</h1>
         <p style="color: #4b5563; font-size: 15px; line-height: 1.6; margin: 0 0 20px 0;">${body.description}</p>
-        <a href="${blogUrl}" style="display: inline-block; background: #134e43; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">Baca Selengkapnya →</a>
+        <a href="${blogUrl}" style="display: inline-block; background: #134e43; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">Baca Selengkapnya &rarr;</a>
       </div>
 
       <div style="text-align: center; padding-top: 16px; border-top: 1px solid #e5e7eb;">
@@ -85,22 +77,21 @@ export default defineEventHandler(async (event) => {
   for (let i = 0; i < subscribedEmails.length; i += batchSize) {
     const batch = subscribedEmails.slice(i, i + batchSize)
 
-    const { error } = await resend.emails.send({
-      from: 'Dinar Permadi <narr@permadi.dev>',
-      to: batch,
-      subject: `📝 Blog Baru: ${body.title}`,
-      html: htmlContent,
-      tags: [
-        { name: 'category', value: 'newsletter' },
-        { name: 'slug', value: body.slug },
-      ],
-    })
-
-    if (error) {
-      errors.push(`Batch ${i / batchSize + 1}: ${error.message}`)
-    }
-    else {
+    try {
+      await resendSendEmail({
+        from: 'Dinar Permadi <narr@permadi.dev>',
+        to: batch,
+        subject: `📝 Blog Baru: ${body.title}`,
+        html: htmlContent,
+        tags: [
+          { name: 'category', value: 'newsletter' },
+          { name: 'slug', value: body.slug },
+        ],
+      })
       totalSent += batch.length
+    }
+    catch (err: any) {
+      errors.push(`Batch ${i / batchSize + 1}: ${err?.data?.message || err?.message}`)
     }
   }
 

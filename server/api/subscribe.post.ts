@@ -20,7 +20,6 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const resend = useResend()
   const { audienceId } = useResendConfig()
 
   if (!audienceId) {
@@ -30,24 +29,19 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const { data, error } = await resend.contacts.create({
-    email: body.email,
-    firstName: body.firstName || '',
-    lastName: body.lastName || '',
-    audienceId,
-    unsubscribed: false,
-  })
-
-  if (error) {
+  try {
+    const data = await resendCreateContact(audienceId, body.email, body.firstName || '', body.lastName || '')
+    return { success: true, id: data?.id }
+  }
+  catch (err: any) {
     // If contact already exists, treat as success
-    if (error.message?.includes('already exists')) {
+    const message = err?.data?.message || err?.message || ''
+    if (message.includes('already exists')) {
       return { success: true, message: 'already_subscribed' }
     }
     throw createError({
       statusCode: 500,
-      message: error.message || 'Failed to subscribe',
+      message: message || 'Failed to subscribe',
     })
   }
-
-  return { success: true, id: data?.id }
 })
