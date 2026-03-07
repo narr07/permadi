@@ -112,11 +112,14 @@ useSeoMeta({
   articleSection: article.value?.category,
 })
 
+const siteConfig = useSiteConfig()
+const ogImageUrl = computed(() => article.value ? `${siteConfig.url}/__og-image__/static${article.value.path}/og.png` : undefined)
+
 useSchemaOrg([
   defineArticle({
     headline: article.value?.title,
     description: article.value?.description,
-    image: article.value?.image,
+    image: ogImageUrl.value,
     datePublished: article.value?.date,
     inLanguage: locale.value === 'id' ? 'id-ID' : 'en-US',
     author: {
@@ -147,7 +150,6 @@ function handleTocClick(e: MouseEvent) {
   }
 }
 
-const siteConfig = useSiteConfig()
 const articleUrl = computed(() => article.value ? `${siteConfig.url}${article.value.path}` : '')
 
 const articleTags = computed(() => article.value?.tags?.map((t: string) => t.replace(/\s+/g, '')).join(','))

@@ -8,6 +8,7 @@ function stemToSlug(stem: string): string {
 }
 
 export default defineSitemapEventHandler(async (e) => {
+  const siteUrl = 'https://permadi.dev'
   const locales = ['id', 'en']
   const urls = []
 
@@ -15,14 +16,14 @@ export default defineSitemapEventHandler(async (e) => {
     // Blog posts
     const blogCollection = `${locale}_blog`
     const posts = await queryCollection(e, blogCollection as any)
-      .select('path', 'date', 'image')
+      .select('path', 'date')
       .all()
 
     for (const post of posts) {
       urls.push({
         loc: post.path,
         lastmod: (post as any).date || undefined,
-        ...((post as any).image ? { images: [{ loc: (post as any).image }] } : {}),
+        images: [{ loc: `${siteUrl}/__og-image__/static${post.path}/og.png` }],
       })
     }
 
@@ -41,7 +42,7 @@ export default defineSitemapEventHandler(async (e) => {
     // Projects — data collection, generate URLs from stem
     const projectCollection = `${locale}_project`
     const projects = await queryCollection(e, projectCollection as any)
-      .select('stem', 'title', 'image')
+      .select('stem', 'title')
       .all()
 
     for (const project of projects) {
@@ -50,7 +51,7 @@ export default defineSitemapEventHandler(async (e) => {
       const loc = locale === 'id' ? `/projek/${slug}` : `/en/project/${slug}`
       urls.push({
         loc,
-        ...((project as any).image ? { images: [{ loc: (project as any).image }] } : {}),
+        images: [{ loc: `${siteUrl}/__og-image__/static${loc}/og.png` }],
       })
     }
   }
