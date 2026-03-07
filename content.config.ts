@@ -29,7 +29,6 @@ const blogSchema = pageSchema.extend({
   readingTime: z.number().optional().editor({ hidden: true }), // Auto-calculated based on word count
   // rawbody: z.string().editor({ hidden: true }),
   date: z.date(),
-  image: z.string().optional(),
   tags: z.array(z.string()).optional(),
   category: z.enum(['pendidikan', 'programmer', 'desainer']).optional(),
   seo: z.intersection(

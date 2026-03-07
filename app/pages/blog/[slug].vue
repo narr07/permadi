@@ -193,7 +193,7 @@ const articleTags = computed(() => article.value?.tags?.map((t: string) => t.rep
         </template>
       </UPageHeader>
 
-      <UPageBody :ui="{ wrapper: 'px-0 sm:px-0' }">
+      <UPageBody :ui="{ base: 'px-0 sm:px-0' }">
         <UCard :ui="{ body: 'p-2 sm:p-4' }">
           <div class="prose dark:prose-invert  max-w-none">
             <ContentRenderer :value="article" />
