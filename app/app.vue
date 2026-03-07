@@ -64,11 +64,11 @@ const items = computed<NavigationMenuItem[]>(() => [
   },
 ])
 const socials = [
-  { icon: 'i-narr-soc-mail', to: 'https://go.nuxt.com/discord', label: 'Email' },
-  { icon: 'i-narr-soc-ig', to: 'https://go.nuxt.com/x', label: 'Instagram' },
-  { icon: 'i-narr-soc-github', to: 'https://github.com/nuxt/nuxt', label: 'GitHub' },
-  { icon: 'i-narr-soc-behance', to: 'https://go.nuxt.com/x', label: 'Behance' },
-  { icon: 'i-narr-soc-x', to: 'https://go.nuxt.com/x', label: 'X' },
+  { icon: 'i-narr-soc-mail', to: 'mailto:dinarpermadi07@gmail.com', label: 'Email' },
+  { icon: 'i-narr-soc-ig', to: 'https://www.instagram.com/narr07/', label: 'Instagram' },
+  { icon: 'i-narr-soc-github', to: 'https://github.com/narr07', label: 'GitHub' },
+  { icon: 'i-narr-soc-behance', to: 'https://www.behance.net/narr07', label: 'Behance' },
+  { icon: 'i-narr-soc-x', to: 'https://x.com/dinarpermadi07', label: 'X' },
 ]
 const site = useSiteConfig()
 
@@ -152,17 +152,31 @@ useSchemaOrg([
       </UContainer>
     </UMain>
     <LazyBackToTop hydrate-on-idle />
-    <UFooter class="pb-24 sm:pb-0">
-      <template #left>
-        <LazyNewsletter />
-        <p class="text-muted text-sm">
-          © 2021-<ClientOnly fallback="2026">
-            {{ new Date().getFullYear() }}
-          </ClientOnly> - narr07
-        </p>
+    <UFooter
+      class="pb-24 sm:pb-0"
+      :ui="{
+        container: 'py-6 lg:py-4 lg:flex lg:items-center lg:justify-between lg:gap-x-3',
+        left: 'flex flex-col items-center lg:items-start lg:flex-1 gap-2 lg:order-1',
+        right: 'flex items-center justify-center lg:justify-end gap-x-1.5 lg:flex-1 lg:order-3 mt-4 lg:mt-0',
+      }"
+    >
+      <template #top>
+        <UContainer class="flex justify-center  lg:justify-start">
+          <LazyNewsletter />
+        </UContainer>
       </template>
-      <Visitor />
-      <!-- <UNavigationMenu :items="items" variant="link" /> -->
+      <template #left>
+        <div class="flex items-center gap-2">
+          <p class="text-muted text-sm">
+            © 2021-<ClientOnly fallback="2026">
+              {{ new Date().getFullYear() }}
+            </ClientOnly> - narr07
+          </p>
+          <ClientOnly>
+            <Visitor />
+          </ClientOnly>
+        </div>
+      </template>
       <template #right>
         <UTooltip
           v-for="social in socials"
