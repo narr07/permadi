@@ -6,7 +6,7 @@ const localePath = useLocalePath()
 // Helper function to generate clean slug from content path
 function extractSlug(path: string): string {
   const parts = path.split('/')
-  const filename = parts[parts.length - 1] || ''
+  const filename = parts.at(-1) || ''
 
   return filename
     .replace(/^\d+\.?\s*/, '') // Remove number prefix like "1." or "1. "
@@ -170,14 +170,14 @@ function formatDate(dateStr: string) {
           variant="ghost"
           :to="getBlogUrl(post)"
         >
-          <template #leading>
+          <!-- <template #leading>
             <div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 dark:bg-primary/15 shrink-0">
               <LazySvgDev v-if="post.category === 'programmer'" class="size-8" />
               <LazySvgGuru v-else-if="post.category === 'pendidikan'" class="size-8" />
               <LazySvgDesigner v-else-if="post.category === 'desainer'" class="size-8" />
               <UIcon v-else name="i-lucide-file-text" class="size-5 text-primary" />
             </div>
-          </template>
+          </template> -->
 
           <template #body>
             <div class="flex flex-col gap-2">
@@ -192,7 +192,7 @@ function formatDate(dateStr: string) {
               </div>
 
               <!-- Date + Reading Time -->
-              <div class="flex items-center gap-3 text-xs text-gray-400 dark:text-gray-500">
+              <div class="flex items-center gap-3 pt-2  pb-1 text-xs text-gray-400 dark:text-gray-500">
                 <ClientOnly>
                   <span>{{ formatDate(post.date) }}</span>
                 </ClientOnly>
@@ -203,7 +203,7 @@ function formatDate(dateStr: string) {
               </div>
 
               <!-- Tags badges -->
-              <div v-if="post.tags && post.tags.length > 0" class="flex flex-wrap gap-1.5">
+              <div v-if="post.tags && post.tags.length > 0" class="flex flex-wrap gap-1.5 ">
                 <UBadge
                   v-for="tag in post.tags"
                   :key="tag"

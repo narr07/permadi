@@ -1,11 +1,11 @@
-import { defineCollection, defineContentConfig } from '@nuxt/content'
+import { defineCollection, defineContentConfig, property } from '@nuxt/content'
 import { z } from 'zod'
 import { locales } from './i18n-constants'
 
 const pageSchema = z.object({
   title: z.string(),
   description: z.string().optional(),
-  seo: z.intersection(
+  seo: property(z.intersection(
     z.object({
       title: z.string().optional(),
       description: z.string().optional(),
@@ -13,25 +13,25 @@ const pageSchema = z.object({
       link: z.array(z.record(z.string(), z.any())).optional(),
     }),
     z.record(z.string(), z.any()),
-  ).optional().default({}).editor({ hidden: true }),
-  navigation: z.union([
+  ).optional().default({})).editor({ hidden: true }),
+  navigation: property(z.union([
     z.boolean(),
     z.object({
       title: z.string(),
       description: z.string(),
       icon: z.string(),
     }),
-  ]).default(true).editor({ hidden: true }),
+  ]).default(true)).editor({ hidden: true }),
 })
 
 const blogSchema = pageSchema.extend({
-  idBlog: z.number().optional().editor({ hidden: true }), // Auto-extracted from filename prefix (e.g., "1. Title.md" -> 1)
-  readingTime: z.number().optional().editor({ hidden: true }), // Auto-calculated based on word count
-  // rawbody: z.string().editor({ hidden: true }),
+  idBlog: property(z.number().optional()).editor({ hidden: true }), // Auto-extracted from filename prefix (e.g., "1. Title.md" -> 1)
+  readingTime: property(z.number().optional()).editor({ hidden: true }), // Auto-calculated based on word count
+  // rawbody: property(z.string()).editor({ hidden: true }),
   date: z.date(),
   tags: z.array(z.string()).optional(),
   category: z.enum(['pendidikan', 'programmer', 'desainer']).optional(),
-  seo: z.intersection(
+  seo: property(z.intersection(
     z.object({
       title: z.string().optional(),
       description: z.string().optional(),
@@ -39,15 +39,15 @@ const blogSchema = pageSchema.extend({
       link: z.array(z.record(z.string(), z.any())).optional(),
     }),
     z.record(z.string(), z.any()),
-  ).optional().default({}).editor({ hidden: true }),
-  navigation: z.union([
+  ).optional().default({})).editor({ hidden: true }),
+  navigation: property(z.union([
     z.boolean(),
     z.object({
       title: z.string(),
       description: z.string(),
       icon: z.string(),
     }),
-  ]).default(true).editor({ hidden: true }),
+  ]).default(true)).editor({ hidden: true }),
 })
 
 const projectSchema = pageSchema.extend({
