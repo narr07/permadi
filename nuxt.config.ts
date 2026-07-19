@@ -23,8 +23,6 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     'nuxt-llms',
     '@stefanobartoletti/nuxt-social-share',
-    'nuxt-delay-hydration',
-    '@nuxtjs/web-vitals',
   ],
   runtimeConfig: {
     cloudinaryCloudName: '',
@@ -164,10 +162,7 @@ export default defineNuxtConfig({
       ],
     },
   },
-  delayHydration: {
-    mode: 'mount',
-    debug: process.env.NODE_ENV === 'development',
-  },
+
   image: {
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/daton7ry4/image/upload/',
@@ -199,12 +194,7 @@ export default defineNuxtConfig({
       },
     },
   },
-  webVitals: {
-    provider: 'ga',
-    ga: {
-      id: 'G-5LEXR84KHW',
-    },
-  },
+
   // NuxtHub configuration for D1 database + cache
   hub: {
     cache: {
@@ -388,6 +378,9 @@ export default defineNuxtConfig({
         const wordCount = text.split(/\s+/).filter(Boolean).length
         ctx.content.readingTime = Math.max(1, Math.ceil(wordCount / wordsPerMinute))
       }
+    },
+    'vite:extendConfig': (config) => {
+      console.log('VITE DEFINE CONFIG:', JSON.stringify(config.define, null, 2))
     },
   },
   colorMode: {
