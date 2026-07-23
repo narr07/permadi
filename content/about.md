@@ -3,6 +3,6 @@ title: About Content Version 3
 description: Back home
 ---
 
-# About Content Version 
+# About Dinar Permadi
 
 [Back home](/)
