@@ -104,6 +104,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
+      routes: ['/', '/about'],
       crawlLinks: true, // Discover blog/project pages + their OG images
     },
   },
