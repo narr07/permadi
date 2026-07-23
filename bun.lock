@@ -9,6 +9,7 @@
         "@nuxt/eslint": "1.16.0",
         "@nuxtjs/seo": "5.3.6",
         "@takumi-rs/core": "^2.4.2",
+        "@takumi-rs/wasm": "^2.4.2",
         "@vueuse/nuxt": "14.3.0",
         "better-sqlite3": "^13.0.1",
         "motion-v": "^2.3.0",
@@ -669,6 +670,8 @@
     "@takumi-rs/core-win32-x64-msvc": ["@takumi-rs/core-win32-x64-msvc@2.4.2", "", { "os": "win32", "cpu": "x64" }, "sha512-p7l6uvV3ofmkhn+kK6qKhyYlmnX/dprOC5xyGkTfp/ao+kfsFOGOTuPfxUba9plBiVjuLDgwzFzockycjv2G6g=="],
 
     "@takumi-rs/helpers": ["@takumi-rs/helpers@2.4.2", "", {}, "sha512-ScoYBNY7n9z5RdjW2PvpA+6zyihmvliJbGARnA3Nc7wTcYGLvqM8KrJwiJQciF8fpDwJoev6yqmalr+oWC0nqQ=="],
+
+    "@takumi-rs/wasm": ["@takumi-rs/wasm@2.4.2", "", { "dependencies": { "@takumi-rs/helpers": "2.4.2" }, "peerDependencies": { "csstype": "*" }, "optionalPeers": ["csstype"] }, "sha512-LVj7R5kuFC8NpzrHM/AbUyFI3CvldSI32eN3VRK8C40PPEXy3boilI5CivUf9aOXmQuPqDWn6UcZnfnIIzVJZw=="],
 
     "@tanstack/table-core": ["@tanstack/table-core@8.21.3", "", {}, "sha512-ldZXEhOBb8Is7xLs01fR3YEc3DERiz5silj8tnGkFZytt1abEvl/GhUmCE0PMLaMPTa3Jk4HbKmRlHmu+gCftg=="],
 
