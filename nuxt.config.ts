@@ -84,16 +84,7 @@ export default defineNuxtConfig({
     },
   },
   schemaOrg: {
-    identity: {
-      type: 'Person',
-      name: 'Dinar Permadi Yusup',
-      url: 'https://permadi.dev',
-      image: '/permadi.jpg',
-      jobTitle: 'Teacher',
-      sameAs: [
-        'https://github.com/narr07',
-      ],
-    },
+    enabled: false,
   },
   linkChecker: {
     runOnBuild: false,
