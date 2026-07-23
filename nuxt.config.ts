@@ -2,6 +2,10 @@
 export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   content: {
+    database: {
+      type: 'd1',
+      bindingName: 'DB',
+    },
     experimental: {
       sqliteConnector: 'native',
     },
@@ -39,11 +43,11 @@ export default defineNuxtConfig({
     sitemaps: true,
     sources: ['/api/__sitemap__/urls'],
   },
-  ogImage: {
-    defaults: {
-      component: 'Permadi',
-    },
-  },
+  // ogImage: {
+  //   defaults: {
+  //     component: 'Permadi',
+  //   },
+  // },
   fonts: {
     defaults: {
       weights: [400, 700],
