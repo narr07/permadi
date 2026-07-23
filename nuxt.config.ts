@@ -98,6 +98,15 @@ export default defineNuxtConfig({
       crawlLinks: true, // Discover blog/project pages + their OG images
     },
   },
+  studio: {
+    route: '/narr',
+    repository: {
+      provider: 'github',
+      owner: 'narr07',
+      repo: 'permadi',
+      branch: 'master',
+    },
+  },
   devtools: { enabled: true },
   compatibilityDate: '2024-04-03',
 })

@@ -48,3 +48,10 @@ skills:
     generator: external
     path: skills/document-writer
     ref: main
+  cloudflare:
+    repo: cloudflare/skills
+    source: github
+    syncedAt: 2026-07-23
+    generator: external
+    path: skills/cloudflare
+    ref: main
