@@ -298,7 +298,7 @@ export default defineNuxtConfig({
     '/en/blog/**': { swr: 86400 },
     '/api/**': { prerender: false },
     // Cache generated OG images on Cloudflare edge (7 days)
-    // '/__og-image__/**': { swr: 86400 * 7 },
+    '/__og-image__/**': { swr: 86400 * 7 },
     // Cache Cloudinary images served via Nuxt Image proxy (IPX)
     '/_ipx/**': {
       swr: 86400, // Stale-while-revalidate: serve from cache, revalidate every 24h
@@ -348,7 +348,7 @@ export default defineNuxtConfig({
             '/en/blog/*',
             '/projek/*',
             '/en/project/*',
-            // '/__og-image__/static/*',
+            '/__og-image__/static/*',
             '/article/*',
             '/logo/*',
             '/projects/*',
