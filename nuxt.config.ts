@@ -331,11 +331,11 @@ export default defineNuxtConfig({
       ignore: ['/api', '/raw', '/ws'], // Skip raw routes and OG image prerendering
     },
     cloudflare: {
-      wrangler: {
-        kv_namespaces: [
-          { binding: 'OG_IMAGE_CACHE', id: 'f06acd0d2d8a4b458e0f546aaeaf1dc9' },
-        ],
-      },
+      // wrangler: {
+      //   kv_namespaces: [
+      //     { binding: 'OG_IMAGE_CACHE', id: 'f06acd0d2d8a4b458e0f546aaeaf1dc9' },
+      //   ],
+      // },
       pages: {
         routes: {
           exclude: [
