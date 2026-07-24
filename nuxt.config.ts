@@ -59,10 +59,13 @@ export default defineNuxtConfig({
     sources: ['/api/__sitemap__/urls'],
   },
   ogImage: {
-    runtimeCacheStorage: {
-      driver: 'cloudflare-kv-binding',
-      binding: 'OG_IMAGE_CACHE',
-    },
+    // Jangan pakai KV cache saat prerender
+    runtimeCacheStorage: process.env.CF_PAGES 
+      ? {
+          driver: 'cloudflare-kv-binding',
+          binding: 'OG_IMAGE_CACHE',
+        }
+      : false,
     fonts: [
       {
         name: 'PermadiHeading',
@@ -328,7 +331,7 @@ export default defineNuxtConfig({
       ],
       crawlLinks: true, // Discover blog/project pages + their OG images
       failOnError: false,
-      ignore: ['/api', '/raw', '/ws'], // Skip raw routes and OG image prerendering
+      ignore: ['/api', '/raw', '/ws', '/__og-image__'], // Skip raw routes and OG image prerendering
     },
     cloudflare: {
       // wrangler: {
