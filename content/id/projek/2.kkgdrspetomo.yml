@@ -1,0 +1,12 @@
+title: Website KKG dr. Soetomo
+description: Website KKG dr. Soetomo di buat dengan Next.js dan Sanity.
+image: /projects/kkg.webp
+images:
+  - /projects/kkg1.webp
+  - /projects/kkg2.webp
+  - /projects/kkg3.webp
+link: https://kkgdrsoetomo.web.id/
+repo: https://github.com/narr07/kkgsoetomo
+tech:
+  - Next.js
+  - Sanity

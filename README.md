@@ -1,75 +1,73 @@
-# Nuxt Content Starter
+# Permadi Website
 
-Look at the [Nuxt Content documentation](https://content.nuxt.com) to learn more.
+Proyek ini adalah website personal yang dibangun menggunakan [Nuxt 4](https://nuxt.com/docs/getting-started/introduction) dan [Nuxt UI v4](https://ui3.nuxt.com/) (menggunakan Tailwind CSS v4).
 
-## Setup
+## 🚀 Setup Proyek dari Awal
 
-Make sure to install dependencies:
+Berikut adalah langkah-langkah yang dilakukan untuk menginstal dan mengonfigurasi proyek ini dari nol:
 
+### 1. Inisialisasi Proyek
+Proyek ini diinisialisasi menggunakan Bun dengan template starter Nuxt Content:
 ```bash
-# npm
-npm install
+bun create nuxt ./
+```
 
-# pnpm
-pnpm install
+### 2. Instalasi Dependensi
+Dependensi utama yang digunakan dalam proyek ini meliputi:
+- **Framework:** Nuxt 4 (Layered structure di `/app`)
+- **UI & Styling:** `@nuxt/ui` (v4), `@nuxt/image`, `@vueuse/nuxt`
+- **Content:** `@nuxt/content` (untuk file Markdown)
+- **Linter & Code Style:** `@nuxt/eslint`, `@antfu/eslint-config`
 
-# yarn
-yarn install
-
-# bun
+Instal semua dependensi menggunakan Bun:
+```bash
 bun install
 ```
 
-## Development Server
+### 3. Konfigurasi Nuxt (`nuxt.config.ts`)
+Konfigurasi penting yang diterapkan:
+- Struktur Nuxt 4 (menggunakan folder `app/` untuk aset, komponen, dan halaman).
+- Integrasi Nuxt UI v4 dengan Tailwind CSS v4.
+- Penonaktifan mode `standalone` pada ESLint agar bisa menggunakan konfigurasi eksternal.
 
-Start the development server on `http://localhost:3000`:
+### 4. Konfigurasi ESLint & Styling (`eslint.config.mjs`)
+Untuk menjaga kualitas kode, proyek ini menggunakan konfigurasi dari **Antfu** (`@antfu/eslint-config`) yang mendukung otomatisasi format untuk Vue, CSS, dan Markdown.
 
+### 5. Pengaturan VS Code (`.vscode/settings.json`)
+Penting untuk menerapkan pengaturan berikut agar format otomatis berjalan lancar (menggunakan ESLint sebagai formatter utama):
+- Mematikan Prettier global.
+- Menghidupkan `source.fixAll.eslint` saat save.
+- Menonaktifkan format otomatis khusus untuk file Markdown (jika ingin edit manual tanpa intervensi linter).
+
+### 6. Struktur Direktori
+- `app/`: Berisi logika aplikasi (pages, components, assets).
+- `content/`: Berisi file Markdown untuk dikelola oleh Nuxt Content.
+- `public/`: Aset statis.
+
+---
+
+## 🛠️ Pengembangan (Development)
+
+Jalankan server pengembangan:
 ```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
 bun run dev
 ```
 
-## Production
+Akses aplikasi di `http://localhost:3000`.
 
-Build the application for production:
+### Perintah Lainnya:
+- **Linting:** `bun run lint`
+- **Fix Linting:** `bun run lint:fix`
+- **Build Produksi:** `bun run build`
+- **Preview Produksi:** `bun run preview`
 
-```bash
-# npm
-npm run build
+---
 
-# pnpm
-pnpm build
+## 🎨 Theme & UI
+Konfigurasi warna dan font kustom dapat ditemukan di:
+- `app/app.config.ts`: Untuk pengaturan warna primary dan neutral Nuxt UI.
+- `app/assets/css/main.css`: Untuk kustomisasi Tailwind CSS v4 (menggunakan `@theme static`).
 
-# yarn
-yarn build
+---
 
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Dibuat dengan ❤️ oleh Antigravity untuk Permadi.

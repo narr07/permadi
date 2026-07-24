@@ -1,0 +1,103 @@
+{
+  "nuxtSiteConfig": {
+    "name": "Permadi",
+    "description": "Dinar Permadi Yusup adalah seorang guru, programmer, dan desainer."
+  },
+  "nav": {
+    "home": "Home",
+    "blog": "Blog",
+    "projects": "Projek",
+    "gallery": "Galeri",
+    "switch_language": "Ganti bahasa",
+    "menu": "Menu"
+  },
+  "blog": {
+    "title": "Blog Edukasi & Kreatif Dinar Permadi Yusup",
+    "description": "Temukan artikel seputar pendidikan, desain, dan teknologi modern. Tips praktis, inspirasi kreatif, serta panduan untuk guru dan desainer."
+  },
+  "project": {
+    "title": "Portofolio Project Dinar Permadi Yusup - Solusi Digital & Kreatif",
+    "description": "Kumpulan proyek yang saya kerjakan, mulai dari pengembangan web, aplikasi, hingga solusi digital lainnya."
+  },
+  "gallery": {
+    "title": "Gallery Karya Desain Grafis Dinar Permadi Yusup",
+    "description": "Jelajahi kumpulan karya desain grafis saya—logo, poster, ilustrasi, dan eksperimen visual yang memadukan kreativitas dengan detail modern."
+  },
+  "header": {
+    "title": "Architect.sys"
+  },
+  "categories": {
+    "pendidikan": "Pendidikan",
+    "programmer": "Programmer",
+    "desainer": "Desainer"
+  },
+  "back": "Kembali",
+  "published": "Dipublikasikan",
+  "back_to_articles": "Kembali ke Artikel",
+  "read_more": "Baca Selengkapnya",
+  "no_articles": "Belum ada artikel yang dipublikasikan.",
+  "filter_by_tech": "Filter berdasarkan teknologi...",
+  "clear": "Hapus",
+  "projects_found": "projek ditemukan",
+  "no_projects_found": "Tidak ada projek yang ditemukan.",
+  "tech_used": "Teknologi",
+  "featured": "Unggulan",
+  "view_project": "Lihat Projek",
+  "close": "Tutup",
+  "filter_by_category": "Tag",
+  "images_found": "gambar ditemukan",
+  "no_images_found": "Tidak ada gambar yang ditemukan.",
+  "min_read": "menit baca",
+  "share": "Bagikan",
+  "reaction_label": "Beri Reaksi",
+  "search": {
+    "placeholder": "Cari blog..."
+  },
+  "skill": {
+    "frontend": "Teknologi untuk membangun UI",
+    "backend": "Teknologi untuk membangun Backend",
+    "tools": "Aplikasi yang saya gunakan untuk desain"
+  },
+  "edu": {
+    "upi": "Universitas Pendidikan Indonesia",
+    "jurusan": "S1 PGSD",
+    "sma": "Sekolah Menengah Atas (IPA)",
+    "smp": "Sekolah Menengah Pertama",
+    "sd": "Sekolah Dasar"
+  },
+  "developer": {
+    "title": "Full-stack Developer",
+    "description": "Menguasai teknologi frontend dan backend untuk membangun aplikasi."
+  },
+  "designer": {
+    "title": "Desainer Grafis",
+    "description": "Menguasai aplikasi desain untuk membuat visual yang estetis dan komunikatif."
+  },
+  "teacher": {
+    "title": "Guru",
+    "description": "Menguasai ilmu pendidikan dalam mengajar siswa."
+  },
+  "toast": {
+    "limit_reached": "Batas tercapai",
+    "reaction_limit_msg": "Kamu sudah mencapai batas maksimal reaksi. Coba lagi nanti ya!",
+    "error_title": "Gagal",
+    "reaction_error_msg": "Tidak bisa menambahkan reaksi. Coba lagi.",
+    "load_reactions_error": "Gagal memuat reaksi"
+  },
+  "visitors": {
+    "online": "Pengunjung online"
+  },
+  "articles_found": "Artikel Ditemukan",
+  "no_articles_found": "Artikel Tidak Di temukan",
+  "newsletter": {
+    "title": "Berlangganan Newsletter",
+    "description": "Dapatkan notifikasi artikel terbaru langsung ke email kamu.",
+    "email_placeholder": "Masukkan email kamu",
+    "subscribe": "Langganan",
+    "subscribing": "Mendaftar...",
+    "success": "Berhasil berlangganan! Terima kasih.",
+    "already_subscribed": "Email ini sudah terdaftar.",
+    "error": "Gagal mendaftar. Coba lagi nanti.",
+    "invalid_email": "Format email tidak valid."
+  }
+}

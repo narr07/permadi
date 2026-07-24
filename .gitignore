@@ -6,6 +6,10 @@
 .cache
 dist
 
+# agent skills
+.agent
+.agents
+.gemini
 # Node dependencies
 node_modules
 
@@ -23,5 +27,4 @@ logs
 .env.*
 !.env.example
 
-# Skilld references (recreated by `skilld install`)
-.skilld
+pnpm-lock.yaml
