@@ -50,9 +50,10 @@
   "min_read": "menit baca",
   "share": "Bagikan",
   "reaction_label": "Beri Reaksi",
+  "table_of_contents": "Daftar Isi",
   "search": {
     "placeholder": "Cari blog..."
-  },
+  },  
   "skill": {
     "frontend": "Teknologi untuk membangun UI",
     "backend": "Teknologi untuk membangun Backend",

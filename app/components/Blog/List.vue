@@ -170,14 +170,14 @@ function formatDate(dateStr: string) {
           variant="ghost"
           :to="getBlogUrl(post)"
         >
-          <template #leading>
+          <!-- <template #leading>
             <div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 dark:bg-primary/15 shrink-0">
               <LazySvgDev v-if="post.category === 'programmer'" class="size-8" />
               <LazySvgGuru v-else-if="post.category === 'pendidikan'" class="size-8" />
               <LazySvgDesigner v-else-if="post.category === 'desainer'" class="size-8" />
               <UIcon v-else name="i-lucide-file-text" class="size-5 text-primary" />
             </div>
-          </template>
+          </template> -->
 
           <template #body>
             <div class="flex flex-col gap-2">

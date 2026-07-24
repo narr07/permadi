@@ -278,11 +278,13 @@ const articleTags = computed(() => article.value?.tags?.map((t: string) => t.rep
           <template #content>
             <div class="p-2 w-64" @click="handleTocClick">
               <UContentToc
+                :default-open="true"
                 :title="t('table_of_contents') || 'Daftar Isi'"
                 highlight
                 highlight-variant="circuit"
                 :links="article.body.toc.links"
                 class="max-h-[60vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700"
+                :ui="{ trigger: 'cursor-default pointer-events-none pb-3 border-b border-gray-200 dark:border-gray-800', trailing: 'hidden' }"
               />
             </div>
           </template>
