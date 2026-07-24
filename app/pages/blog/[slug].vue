@@ -252,9 +252,9 @@ const articleTags = computed(() => article.value?.tags?.map((t: string) => t.rep
       <template v-if="article?.body?.toc?.links?.length" #right>
         <div class="hidden lg:block sticky top-24">
           <UContentToc
-            :color="tocColor"
+            :title="t('table_of_contents') || 'Daftar Isi'"
             highlight
-            :highlight-color="tocColor"
+            highlight-variant="circuit"
             :links="article.body.toc.links"
             class="max-h-[calc(100vh-140px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700"
           />
@@ -276,16 +276,13 @@ const articleTags = computed(() => article.value?.tags?.map((t: string) => t.rep
             aria-label="Table of Contents"
           />
           <template #content>
-            <div class="p-4 w-64" @click="handleTocClick">
+            <div class="p-2 w-64" @click="handleTocClick">
               <UContentToc
-                title="Daftar Isi"
-                :default-open="true"
-                :color="tocColor"
+                :title="t('table_of_contents') || 'Daftar Isi'"
                 highlight
-                :highlight-color="tocColor"
+                highlight-variant="circuit"
                 :links="article.body.toc.links"
                 class="max-h-[60vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700"
-                :ui="{ trigger: 'cursor-default pointer-events-none pb-3 border-b border-gray-200 dark:border-gray-800', trailing: 'hidden' }"
               />
             </div>
           </template>

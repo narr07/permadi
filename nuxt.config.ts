@@ -324,7 +324,7 @@ export default defineNuxtConfig({
       ],
       crawlLinks: true, // Discover blog/project pages + their OG images
       failOnError: false,
-      ignore: ['/api', '/raw', '/ws'], // Skip raw routes (nuxt-llms .yml read errors)
+      ignore: ['/api', '/raw', '/ws', '/__og-image__'], // Skip raw routes and OG image prerendering
     },
     cloudflare: {
       pages: {
@@ -337,6 +337,10 @@ export default defineNuxtConfig({
             '/projek/*',
             '/en/project/*',
             '/__og-image__/static/*',
+            '/article/*',
+            '/logo/*',
+            '/projects/*',
+            '/__nuxt_content/*',
           ],
         },
       },
