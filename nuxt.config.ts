@@ -295,7 +295,7 @@ export default defineNuxtConfig({
     '/en/blog/**': { swr: 86400 },
     '/api/**': { prerender: false },
     // Cache generated OG images on Cloudflare edge (7 days)
-    '/__og-image__/**': { swr: 86400 * 7 },
+    // '/__og-image__/**': { swr: 86400 * 7 },
     // Cache Cloudinary images served via Nuxt Image proxy (IPX)
     '/_ipx/**': {
       swr: 86400, // Stale-while-revalidate: serve from cache, revalidate every 24h
@@ -328,9 +328,14 @@ export default defineNuxtConfig({
       ],
       crawlLinks: true, // Discover blog/project pages + their OG images
       failOnError: false,
-      ignore: ['/api', '/raw', '/ws', '/__og-image__'], // Skip raw routes and OG image prerendering
+      ignore: ['/api', '/raw', '/ws'], // Skip raw routes and OG image prerendering
     },
     cloudflare: {
+      wrangler: {
+        kv_namespaces: [
+          { binding: 'OG_IMAGE_CACHE', id: 'f06acd0d2d8a4b458e0f546aaeaf1dc9' },
+        ],
+      },
       pages: {
         routes: {
           exclude: [
@@ -340,11 +345,11 @@ export default defineNuxtConfig({
             '/en/blog/*',
             '/projek/*',
             '/en/project/*',
-            '/__og-image__/static/*',
+            // '/__og-image__/static/*',
             '/article/*',
             '/logo/*',
             '/projects/*',
-            '/__nuxt_content/*',
+            // '/__nuxt_content/*',
           ],
         },
       },
