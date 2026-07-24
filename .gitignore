@@ -6,6 +6,9 @@
 .cache
 dist
 
+# Wrangler local build artifacts (paths are OS-specific, should not be committed)
+.wrangler
+
 # agent skills
 .agent
 .agents
