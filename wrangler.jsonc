@@ -4,11 +4,11 @@
   "compatibility_date": "2026-07-23",
   "compatibility_flags": [
     "nodejs_compat"
-  ],
-  "assets": {
-    "directory": "./dist",
-    "binding": "ASSETS"
-  }
+  ]
+//   "assets": {
+//     "directory": "./dist",
+//     "binding": "ASSETS"
+//   }
 //   "kv_namespaces": [
 //     {
 //       "binding": "OG_IMAGE_CACHE",
