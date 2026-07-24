@@ -59,6 +59,10 @@ export default defineNuxtConfig({
     sources: ['/api/__sitemap__/urls'],
   },
   ogImage: {
+    runtimeCacheStorage: {
+      driver: 'cloudflare-kv-binding',
+      binding: 'OG_IMAGE_CACHE',
+    },
     fonts: [
       {
         name: 'PermadiHeading',
@@ -327,6 +331,11 @@ export default defineNuxtConfig({
       ignore: ['/api', '/raw', '/ws', '/__og-image__'], // Skip raw routes and OG image prerendering
     },
     cloudflare: {
+      wrangler: {
+        kv_namespaces: [
+          { binding: 'OG_IMAGE_CACHE', id: 'f06acd0d2d8a4b458e0f546aaeaf1dc9' },
+        ],
+      },
       pages: {
         routes: {
           exclude: [
@@ -336,11 +345,11 @@ export default defineNuxtConfig({
             '/en/blog/*',
             '/projek/*',
             '/en/project/*',
-            '/__og-image__/static/*',
+            // '/__og-image__/static/*',
             '/article/*',
             '/logo/*',
             '/projects/*',
-            '/__nuxt_content/*',
+            // '/__nuxt_content/*',
           ],
         },
       },

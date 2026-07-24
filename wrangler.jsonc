@@ -1,8 +1,15 @@
 {
-  "name": "permadi",
-  "pages_build_output_dir": "./dist",
-  "compatibility_date": "2026-07-23",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ]
+	"name": "permadi",
+	"pages_build_output_dir": "./dist",
+	"compatibility_date": "2026-07-23",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"kv_namespaces": [
+		{
+			"binding": "OG_IMAGE_CACHE",
+			"id": "f06acd0d2d8a4b458e0f546aaeaf1dc9",
+			"remote": true
+		}
+	]
 }
