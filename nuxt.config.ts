@@ -60,7 +60,7 @@ export default defineNuxtConfig({
   },
   ogImage: {
     // Jangan pakai KV cache saat prerender
-    // runtimeCacheStorage: process.env.CF_PAGES 
+    // runtimeCacheStorage: process.env.CF_PAGES
     //   ? {
     //       driver: 'cloudflare-kv-binding',
     //       binding: 'OG_IMAGE_CACHE',
@@ -148,14 +148,16 @@ export default defineNuxtConfig({
       titleTemplate: '%s | Permadi',
       htmlAttrs: { lang: 'id' },
       link: [
-        // Preconnect to third-party origins for faster resource loading
-        { rel: 'preconnect', href: 'https://res.cloudinary.com', crossorigin: 'anonymous' },
+        // Preconnect hanya untuk origin yang benar-benar digunakan di initial page load
+        // Cloudinary & GA hanya di-load setelah user interaction / onNuxtReady — tidak perlu preconnect di home
+        // dns-prefetch tetap berguna tanpa blokir render
         { rel: 'dns-prefetch', href: 'https://res.cloudinary.com' },
-        { rel: 'preconnect', href: 'https://analytics.google.com', crossorigin: 'anonymous' },
         { rel: 'dns-prefetch', href: 'https://analytics.google.com' },
-        // Preload above-the-fold fonts to prevent CLS from font swap
+        // Preload SEMUA font yang digunakan di above-the-fold (Regular + Bold)
+        // PageSpeed melaporkan Permadi-Body-Bold.woff2 ada di critical chain tapi tidak di-preload
         { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/PermadiHeading/Permadi-Heading-Bold.woff2', crossorigin: 'anonymous' },
         { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/PermadiBody/Permadi-Body-Regular.woff2', crossorigin: 'anonymous' },
+        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/PermadiBody/Permadi-Body-Bold.woff2', crossorigin: 'anonymous' },
       ],
     },
   },
@@ -206,8 +208,9 @@ export default defineNuxtConfig({
       },
     },
   },
+  // GA tracking sudah ditangani @nuxt/scripts, ini hanya untuk reporting web vitals metrics
   webVitals: {
-    provider: 'ga',
+    // provider di-auto-detect dari key yang tersedia (ga/gtm/api)
     ga: {
       id: 'G-5LEXR84KHW',
     },
@@ -314,7 +317,11 @@ export default defineNuxtConfig({
     baseUrl: 'https://permadi.dev',
   },
   nitro: {
-    compressPublicAssets: true,
+    // Aktifkan Brotli — 20-30% lebih kecil dari gzip, didukung Cloudflare Pages
+    compressPublicAssets: {
+      gzip: true,
+      brotli: true,
+    },
     experimental: {
       websocket: true,
     },
@@ -370,6 +377,40 @@ export default defineNuxtConfig({
       target: 'esnext',
       minify: 'esbuild',
       cssMinify: true,
+      // Naikkan warning limit — false positives akibat banyak vendor chunks
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          // Code-splitting agresif: pisahkan vendor libraries ke chunks terpisah
+          // Browser cache tiap chunk secara independen — update app tidak invalidate vendor cache
+          manualChunks: (id: string) => {
+            // Vue core ecosystem
+            if (id.includes('node_modules/vue/') || id.includes('node_modules/vue-router/') || id.includes('node_modules/@vue/')) {
+              return 'vendor-vue'
+            }
+            // Nuxt UI + Reka UI + Tailwind Variants
+            if (id.includes('node_modules/@nuxt/ui/') || id.includes('node_modules/reka-ui/') || id.includes('node_modules/tailwind-variants/')) {
+              return 'vendor-ui'
+            }
+            // VueUse utilities
+            if (id.includes('node_modules/@vueuse/')) {
+              return 'vendor-vueuse'
+            }
+            // i18n
+            if (id.includes('node_modules/vue-i18n/') || id.includes('node_modules/@intlify/')) {
+              return 'vendor-i18n'
+            }
+            // Motion animations (lazy — hanya jalan client-side)
+            if (id.includes('node_modules/motion-v/') || id.includes('node_modules/motion/')) {
+              return 'vendor-motion'
+            }
+            // Nuxt Content + Shiki (syntax highlighting)
+            if (id.includes('node_modules/@nuxt/content/') || id.includes('node_modules/shiki/') || id.includes('node_modules/@shikijs/')) {
+              return 'vendor-content'
+            }
+          },
+        },
+      },
     },
     esbuild: {
       drop: process.env.NODE_ENV === 'production' ? ['console', 'debugger'] : [],

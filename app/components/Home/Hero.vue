@@ -7,19 +7,20 @@ withDefaults(defineProps<{
   description: '',
 })
 const { t } = useI18n()
+
 const items = [
   {
-    component: resolveComponent('SvgDev'),
+    src: '/illustrations/svgdev.svg',
     title: t('developer.title'),
     description: t('developer.description'),
   },
   {
-    component: resolveComponent('SvgDesigner'),
+    src: '/illustrations/svgdesigner.svg',
     title: t('designer.title'),
     description: t('designer.description'),
   },
   {
-    component: resolveComponent('SvgGuru'),
+    src: '/illustrations/svgguru.svg',
     title: t('teacher.title'),
     description: t('teacher.description'),
   },
@@ -46,6 +47,10 @@ const items = [
     </div>
 
     <!-- Bottom Section: Grid of Cards -->
+    <!-- sr-only heading untuk aksesibilitas (heading hierarchy h1 → h2 → h3) -->
+    <h2 class="sr-only">
+      {{ t('developer.title') }}, {{ t('designer.title') }}, {{ t('teacher.title') }}
+    </h2>
     <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
       <UCard
         v-for="(item, index) in items"
@@ -53,7 +58,16 @@ const items = [
         class="h-full transition-transform duration-300 hover:shadow-xl dark:hover:shadow-primary/10"
         :ui="{ body: 'p-8 flex flex-col items-center justify-center text-center h-full' }"
       >
-        <component :is="item.component" class="w-full h-48 drop-shadow-2xl z-10 mb-8" />
+        <!-- Static SVG via <img> — tidak masuk JS bundle, browser cache friendly -->
+        <img
+          :src="item.src"
+          :alt="item.title"
+          width="492"
+          height="429"
+          loading="lazy"
+          decoding="async"
+          class="w-full h-48 object-contain drop-shadow-2xl mb-8"
+        >
 
         <h3 class="text-xl font-black uppercase tracking-tight text-brand-900 dark:text-white font-title leading-tight mb-3">
           {{ item.title }}

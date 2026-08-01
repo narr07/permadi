@@ -45,7 +45,40 @@ for f in *.jpg *.jpeg *.png; do
 done
 ```
 
-## Contoh Penggunaan
+## Penggunaan di Windows (cwebp di C:\cwebp\bin)
+
+Jika Anda menggunakan sistem operasi Windows dan menginstal `cwebp` di `C:\cwebp\bin`, Anda dapat menggunakan script PowerShell (`.ps1`) atau script Batch (`.bat`) yang sudah disediakan di root folder.
+
+Secara default, script ini akan memproses semua gambar (.png, .jpg, .jpeg) di dalam **seluruh subfolder** `public/` (seperti `public/article/`, `public/projects/`, dll.) secara otomatis, tetapi **mengabaikan** file gambar yang terletak langsung di folder utama `public/` (seperti `logo.png` atau system icon).
+
+### 1. Menggunakan PowerShell Script
+
+Anda dapat menggunakan script `convert-webp.ps1` yang ada di root project.
+
+Jalankan script ini di terminal PowerShell di folder root project:
+
+```powershell [Terminal]
+# Konversi gambar di semua subfolder public/ secara otomatis (akan meminta konfirmasi hapus file asli)
+.\convert-webp.ps1
+
+# Konversi dan langsung hapus file asli tanpa bertanya
+.\convert-webp.ps1 -DeleteSource
+
+# Konversi dengan folder atau kualitas khusus
+.\convert-webp.ps1 -Folder "public/article" -Quality 85
+```
+
+### 2. Menggunakan Batch File (.bat)
+
+Anda juga dapat menjalankan file `convert-webp.bat` langsung dari folder root project dengan double-click atau lewat CMD:
+
+```cmd [Terminal]
+convert-webp.bat
+```
+
+
+## Contoh Penggunaan (macOS/Linux)
+
 
 ```bash
 # Konversi semua gambar di folder public/article

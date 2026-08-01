@@ -85,53 +85,94 @@ useSchemaOrg([
 <template>
   <UApp :locale="locales[locale]">
     <UContainer class="fixed top-2 inset-x-0 z-50">
-      <motion.nav
-        :animate="{ y: (idle && isMobile) ? -100 : 0 }"
-        :transition="{ type: 'spring', stiffness: 200, damping: 20 }"
-        class="flex items-center justify-between border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/60 backdrop-blur-sm px-4 py-2"
-      >
-        <!-- Left: Logo -->
-        <NuxtLink :to="localePath('/')" class="flex items-center gap-2 text-brand-500 font-bold uppercase">
-          <LogoNav size="40" />
-        </NuxtLink>
-        <!-- Center: Desktop Navigation (hidden on mobile) -->
-        <UNavigationMenu :items="items" class="hidden sm:flex justify-center uppercase text-xs font-medium" />
-        <!-- Right: Action buttons -->
-        <div class="flex items-center gap-1">
-          <UContentSearchButton collapsed :loading="isSearchLoading" />
-          <UColorModeButton />
-          <!-- Language switcher -->
-          <UButton
-            color="neutral"
-            variant="ghost"
-            :icon="locale === 'id' ? 'i-narr-en' : 'i-narr-id'"
-            :aria-label="t('nav.switch_language')"
-            @click="setLocale(locale === 'id' ? 'en' : 'id')"
-          />
-        </div>
-      </motion.nav>
+      <!-- SSR fallback: nav statis tanpa animasi saat server render -->
+      <ClientOnly>
+        <motion.nav
+          :animate="{ y: (idle && isMobile) ? -100 : 0 }"
+          :transition="{ type: 'spring', stiffness: 200, damping: 20 }"
+          class="flex items-center justify-between border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/60 backdrop-blur-sm px-4 py-2"
+        >
+          <!-- Left: Logo -->
+          <NuxtLink :to="localePath('/')" class="flex items-center gap-2 text-brand-500 font-bold uppercase">
+            <LogoNav size="40" />
+          </NuxtLink>
+          <!-- Center: Desktop Navigation (hidden on mobile) -->
+          <UNavigationMenu :items="items" class="hidden sm:flex justify-center uppercase text-xs font-medium" />
+          <!-- Right: Action buttons -->
+          <div class="flex items-center gap-1">
+            <UContentSearchButton collapsed :loading="isSearchLoading" />
+            <UColorModeButton />
+            <!-- Language switcher -->
+            <UButton
+              color="neutral"
+              variant="ghost"
+              :icon="locale === 'id' ? 'i-narr-en' : 'i-narr-id'"
+              :aria-label="t('nav.switch_language')"
+              @click="setLocale(locale === 'id' ? 'en' : 'id')"
+            />
+          </div>
+        </motion.nav>
+        <!-- Fallback untuk SSR / sebelum hydration -->
+        <template #fallback>
+          <nav class="flex items-center justify-between border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/60 backdrop-blur-sm px-4 py-2">
+            <NuxtLink :to="localePath('/')" class="flex items-center gap-2 text-brand-500 font-bold uppercase">
+              <LogoNav size="40" />
+            </NuxtLink>
+            <UNavigationMenu :items="items" class="hidden sm:flex justify-center uppercase text-xs font-medium" />
+            <div class="flex items-center gap-1">
+              <UContentSearchButton collapsed :loading="isSearchLoading" />
+              <UColorModeButton />
+              <UButton
+                color="neutral"
+                variant="ghost"
+                :icon="locale === 'id' ? 'i-narr-en' : 'i-narr-id'"
+                :aria-label="t('nav.switch_language')"
+                @click="setLocale(locale === 'id' ? 'en' : 'id')"
+              />
+            </div>
+          </nav>
+        </template>
+      </ClientOnly>
     </UContainer>
 
     <!-- Mobile Bottom Navigation -->
     <UContainer class="sm:hidden fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] inset-x-0 z-50">
-      <motion.nav
-        :animate="{ y: idle ? 150 : 0 }"
-        :transition="{ type: 'spring', stiffness: 200, damping: 20 }"
-        class="flex items-center justify-around border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/80 backdrop-blur-md px-2 py-2 shadow-lg"
-      >
-        <NuxtLink
-          v-for="item in items"
-          :key="item.label"
-          :to="item.to"
-          class="flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-200"
-          :class="item.active
-            ? 'text-primary-500 bg-primary-50 dark:bg-primary-950/50 scale-110'
-            : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100'"
+      <ClientOnly>
+        <motion.nav
+          :animate="{ y: idle ? 150 : 0 }"
+          :transition="{ type: 'spring', stiffness: 200, damping: 20 }"
+          class="flex items-center justify-around border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/80 backdrop-blur-md px-2 py-2 shadow-lg"
         >
-          <UIcon :name="item.icon" class="size-6" />
-          <span class="sr-only">{{ item.label }}</span>
-        </NuxtLink>
-      </motion.nav>
+          <NuxtLink
+            v-for="item in items"
+            :key="item.label"
+            :to="item.to"
+            class="flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-200"
+            :class="item.active
+              ? 'text-primary-500 bg-primary-50 dark:bg-primary-950/50 scale-110'
+              : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100'"
+          >
+            <UIcon :name="item.icon" class="size-6" />
+            <span class="sr-only">{{ item.label }}</span>
+          </NuxtLink>
+        </motion.nav>
+        <template #fallback>
+          <nav class="flex items-center justify-around border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/80 backdrop-blur-md px-2 py-2 shadow-lg">
+            <NuxtLink
+              v-for="item in items"
+              :key="item.label"
+              :to="item.to"
+              class="flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-200"
+              :class="item.active
+                ? 'text-primary-500 bg-primary-50 dark:bg-primary-950/50 scale-110'
+                : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100'"
+            >
+              <UIcon :name="item.icon" class="size-6" />
+              <span class="sr-only">{{ item.label }}</span>
+            </NuxtLink>
+          </nav>
+        </template>
+      </ClientOnly>
     </UContainer>
     <!-- Content Search Modal (Blog only) -->
     <ClientOnly>

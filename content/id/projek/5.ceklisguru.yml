@@ -1,10 +1,10 @@
 title: CeklisGuru
 description: Webbap Checklist Praktik Terbaik Pembelajaran untuk Guru
-image: /projects/CeklisGuru.png
+image: /projects/CeklisGuru.webp
 images:
-  - /projects/CeklisGuru.png
-  - /projects/CeklisGuru1.png
-  - /projects/CeklisGuru2.png
+  - /projects/CeklisGuru.webp
+  - /projects/CeklisGuru1.webp
+  - /projects/CeklisGuru2.webp
 link: https://ceklisguru.permadi.dev/
 repo: https://github.com/narr07/ceklisguru
 tech:
