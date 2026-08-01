@@ -15,7 +15,6 @@ export default defineNuxtConfig({
         ]
       : []),
     '@nuxt/image',
-    '@nuxtjs/fontaine',
     '@vueuse/nuxt',
     'nuxt-studio',
     '@nuxtjs/i18n',
@@ -142,20 +141,9 @@ export default defineNuxtConfig({
         global: true,
       },
     ],
-  },
-  fontMetrics: {
-    fonts: [
-      {
-        family: 'PermadiBody',
-        src: '/fonts/PermadiBody/Permadi-Body-Regular.woff2',
-        fallbacks: ['Arial', 'Helvetica Neue'],
-      },
-      {
-        family: 'PermadiHeading',
-        src: '/fonts/PermadiHeading/Permadi-Heading-Bold.woff2',
-        fallbacks: ['Arial Black', 'Arial'],
-      },
-    ],
+    experimental: {
+      processCSSVariables: true,
+    },
   },
   app: {
     head: {
