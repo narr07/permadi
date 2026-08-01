@@ -25,6 +25,18 @@ const items = [
     description: t('teacher.description'),
   },
 ]
+
+// Preload SVG pertama karena ini LCP element — browser harus fetch sebelum CSS selesai parse
+useHead({
+  link: [
+    {
+      rel: 'preload',
+      as: 'image',
+      href: '/illustrations/svgdev.svg',
+      type: 'image/svg+xml',
+    },
+  ],
+})
 </script>
 
 <template>
@@ -58,13 +70,17 @@ const items = [
         class="h-full transition-transform duration-300 hover:shadow-xl dark:hover:shadow-primary/10"
         :ui="{ body: 'p-8 flex flex-col items-center justify-center text-center h-full' }"
       >
-        <!-- Static SVG via <img> — tidak masuk JS bundle, browser cache friendly -->
+        <!--
+          Card pertama (index=0) = LCP element — JANGAN lazy, harus eager + fetchpriority=high
+          Card berikutnya = lazy load, hemat bandwidth
+        -->
         <img
           :src="item.src"
           :alt="item.title"
           width="492"
           height="429"
-          loading="lazy"
+          :loading="index === 0 ? 'eager' : 'lazy'"
+          :fetchpriority="index === 0 ? 'high' : 'auto'"
           decoding="async"
           class="w-full h-48 object-contain drop-shadow-2xl mb-8"
         >
@@ -79,3 +95,4 @@ const items = [
     </div>
   </div>
 </template>
+

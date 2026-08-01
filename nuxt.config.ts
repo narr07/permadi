@@ -180,9 +180,9 @@ export default defineNuxtConfig({
     },
   },
   delayHydration: {
-    // 'init' = tunda hydration hingga setelah browser render HTML pertama (FCP lebih cepat)
-    // 'mount' terlalu agresif — masih bisa block FCP
-    mode: 'init',
+    // 'idle' = tunda hydration hingga browser idle setelah first paint
+    // Valid modes: mount, idle, manual — 'init' TIDAK valid (menyebabkan 500 error!)
+    mode: 'idle',
     debug: process.env.NODE_ENV === 'development',
   },
   image: {
