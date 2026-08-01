@@ -160,14 +160,14 @@ function formatDate(dateStr: string) {
     </div>
 
     <!-- Blog Posts List -->
-    <UPageList v-if="filteredPosts && filteredPosts.length > 0" divide>
+    <UPageList v-if="filteredPosts && filteredPosts.length > 0" class="flex flex-col gap-4 sm:gap-6">
       <div
         v-for="post in filteredPosts"
         :key="post.path"
         role="listitem"
       >
         <UPageCard
-          variant="ghost"
+          variant="outline"
           :to="getBlogUrl(post)"
         >
           <!-- <template #leading>

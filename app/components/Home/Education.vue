@@ -108,7 +108,7 @@ function onSelect(_e: Event, item: TimelineItem) {
             <h3 class="text-2xl font-bold text-gray-900 dark:text-white">
               {{ activeSchool.title }}
             </h3>
-            <p class="text-gray-800 font-medium">
+            <p class="text-gray-800  dark:text-gray-300 font-medium">
               {{ activeSchool.date }}
             </p>
             <p class="text-gray-800 dark:text-gray-400 max-w-sm mx-auto">

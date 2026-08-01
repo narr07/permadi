@@ -285,8 +285,8 @@ export default defineNuxtConfig({
     // Cache 24 jam, setelah expired akan re-render di background
     '/blog': { swr: 86400 },
     '/en/blog': { swr: 86400 },
-    '/galeri': { swr: 86400 },
-    '/en/gallery': { swr: 86400 },
+    '/galeri': { swr: 3600 }, // Cache 1 jam agar update galeri lebih cepat di Cloudflare
+    '/en/gallery': { swr: 3600 },
     '/projek': { swr: 86400 },
     '/en/project': { swr: 86400 },
     '/projek/**': { swr: 86400 },

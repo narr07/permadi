@@ -110,7 +110,7 @@ export default defineCachedEventHandler(
     return galleries
   },
   {
-    maxAge: 60 * 60, // Cache 1 hour
+    maxAge: 5 * 60, // Cache 5 menit (agar gambar baru cepat muncul)
     swr: true, // Stale-while-revalidate
     name: 'cloudinary-gallery',
     getKey: () => 'gallery',
