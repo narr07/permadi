@@ -7,36 +7,23 @@ withDefaults(defineProps<{
   description: '',
 })
 const { t } = useI18n()
-
 const items = [
   {
-    src: '/illustrations/svgdev.svg',
+    component: resolveComponent('SvgDev'),
     title: t('developer.title'),
     description: t('developer.description'),
   },
   {
-    src: '/illustrations/svgdesigner.svg',
+    component: resolveComponent('SvgDesigner'),
     title: t('designer.title'),
     description: t('designer.description'),
   },
   {
-    src: '/illustrations/svgguru.svg',
+    component: resolveComponent('SvgGuru'),
     title: t('teacher.title'),
     description: t('teacher.description'),
   },
 ]
-
-// Preload SVG pertama karena ini LCP element — browser harus fetch sebelum CSS selesai parse
-useHead({
-  link: [
-    {
-      rel: 'preload',
-      as: 'image',
-      href: '/illustrations/svgdev.svg',
-      type: 'image/svg+xml',
-    },
-  ],
-})
 </script>
 
 <template>
@@ -59,10 +46,6 @@ useHead({
     </div>
 
     <!-- Bottom Section: Grid of Cards -->
-    <!-- sr-only heading untuk aksesibilitas (heading hierarchy h1 → h2 → h3) -->
-    <h2 class="sr-only">
-      {{ t('developer.title') }}, {{ t('designer.title') }}, {{ t('teacher.title') }}
-    </h2>
     <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
       <UCard
         v-for="(item, index) in items"
@@ -70,20 +53,7 @@ useHead({
         class="h-full transition-transform duration-300 hover:shadow-xl dark:hover:shadow-primary/10"
         :ui="{ body: 'p-8 flex flex-col items-center justify-center text-center h-full' }"
       >
-        <!--
-          Card pertama (index=0) = LCP element — JANGAN lazy, harus eager + fetchpriority=high
-          Card berikutnya = lazy load, hemat bandwidth
-        -->
-        <img
-          :src="item.src"
-          :alt="item.title"
-          width="492"
-          height="429"
-          :loading="index === 0 ? 'eager' : 'lazy'"
-          :fetchpriority="index === 0 ? 'high' : 'auto'"
-          decoding="async"
-          class="w-full h-48 object-contain drop-shadow-2xl mb-8"
-        >
+        <component :is="item.component" class="w-full h-48 drop-shadow-2xl z-10 mb-8" />
 
         <h3 class="text-xl font-black uppercase tracking-tight text-brand-900 dark:text-white font-title leading-tight mb-3">
           {{ item.title }}
@@ -95,4 +65,3 @@ useHead({
     </div>
   </div>
 </template>
-

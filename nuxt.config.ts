@@ -60,7 +60,7 @@ export default defineNuxtConfig({
   },
   ogImage: {
     // Jangan pakai KV cache saat prerender
-    // runtimeCacheStorage: process.env.CF_PAGES
+    // runtimeCacheStorage: process.env.CF_PAGES 
     //   ? {
     //       driver: 'cloudflare-kv-binding',
     //       binding: 'OG_IMAGE_CACHE',
@@ -135,17 +135,11 @@ export default defineNuxtConfig({
         name: 'PermadiBody',
         provider: 'local',
         global: true,
-        // Hanya load Regular (400) dan Bold (700) — yang benar-benar dipakai di CSS
-        weights: [400, 700],
-        styles: ['normal'],
       },
       {
         name: 'PermadiHeading',
         provider: 'local',
         global: true,
-        // Hanya load Bold (700) — heading selalu font-black/bold
-        weights: [700],
-        styles: ['normal'],
       },
     ],
   },
@@ -154,16 +148,14 @@ export default defineNuxtConfig({
       titleTemplate: '%s | Permadi',
       htmlAttrs: { lang: 'id' },
       link: [
-        // dns-prefetch ringan — tidak blokir render, hanya resolve DNS lebih awal
+        // Preconnect to third-party origins for faster resource loading
+        { rel: 'preconnect', href: 'https://res.cloudinary.com', crossorigin: 'anonymous' },
         { rel: 'dns-prefetch', href: 'https://res.cloudinary.com' },
+        { rel: 'preconnect', href: 'https://analytics.google.com', crossorigin: 'anonymous' },
         { rel: 'dns-prefetch', href: 'https://analytics.google.com' },
-        // Preload font critical — HANYA yang benar-benar dipakai di above-the-fold
-        // PageSpeed melaporkan PermadiHeading muncul 2x (354ms + 351ms)
-        // Kemungkinan ada 2 variant Heading yang di-load — preload hanya Heading-Bold (dipakai di h1)
+        // Preload above-the-fold fonts to prevent CLS from font swap
         { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/PermadiHeading/Permadi-Heading-Bold.woff2', crossorigin: 'anonymous' },
-        // Body Regular dipakai untuk body text, Bold untuk strong/bold text
         { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/PermadiBody/Permadi-Body-Regular.woff2', crossorigin: 'anonymous' },
-        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/PermadiBody/Permadi-Body-Bold.woff2', crossorigin: 'anonymous' },
       ],
     },
   },
@@ -180,9 +172,7 @@ export default defineNuxtConfig({
     },
   },
   delayHydration: {
-    // 'idle' = tunda hydration hingga browser idle setelah first paint
-    // Valid modes: mount, idle, manual — 'init' TIDAK valid (menyebabkan 500 error!)
-    mode: 'idle',
+    mode: 'mount',
     debug: process.env.NODE_ENV === 'development',
   },
   image: {
@@ -216,9 +206,8 @@ export default defineNuxtConfig({
       },
     },
   },
-  // GA tracking sudah ditangani @nuxt/scripts, ini hanya untuk reporting web vitals metrics
   webVitals: {
-    // provider di-auto-detect dari key yang tersedia (ga/gtm/api)
+    provider: 'ga',
     ga: {
       id: 'G-5LEXR84KHW',
     },
@@ -325,11 +314,7 @@ export default defineNuxtConfig({
     baseUrl: 'https://permadi.dev',
   },
   nitro: {
-    // Aktifkan Brotli — 20-30% lebih kecil dari gzip, didukung Cloudflare Pages
-    compressPublicAssets: {
-      gzip: true,
-      brotli: true,
-    },
+    compressPublicAssets: true,
     experimental: {
       websocket: true,
     },
@@ -385,8 +370,6 @@ export default defineNuxtConfig({
       target: 'esnext',
       minify: 'esbuild',
       cssMinify: true,
-      // Supres chunk size warning — Nuxt bundle size normal untuk SSR app
-      chunkSizeWarningLimit: 1000,
     },
     esbuild: {
       drop: process.env.NODE_ENV === 'production' ? ['console', 'debugger'] : [],

@@ -87,7 +87,6 @@ function onSelect(_e: Event, item: TimelineItem) {
         <UTimeline
           v-model="active"
           :items="pendidikan"
-          :ui="{ date: 'text-gray-600 dark:text-gray-300 text-xs/5' }"
           class="cursor-pointer"
           @select="onSelect"
         />
