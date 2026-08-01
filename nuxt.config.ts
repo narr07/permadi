@@ -59,7 +59,7 @@ export default defineNuxtConfig({
   },
   ogImage: {
     // Jangan pakai KV cache saat prerender
-    // runtimeCacheStorage: process.env.CF_PAGES 
+    // runtimeCacheStorage: process.env.CF_PAGES
     //   ? {
     //       driver: 'cloudflare-kv-binding',
     //       binding: 'OG_IMAGE_CACHE',
@@ -134,11 +134,17 @@ export default defineNuxtConfig({
         name: 'PermadiBody',
         provider: 'local',
         global: true,
+        // Hanya weight yang benar-benar dipakai: regular (400) untuk body text.
+        // Menghindari generate + preload weight yang tidak terpakai di jalur kritis.
+        weights: [400],
       },
       {
         name: 'PermadiHeading',
         provider: 'local',
         global: true,
+        // Heading hanya pakai bold (700). Sebelumnya ikut generate 400 juga,
+        // menghasilkan file font ekstra di jalur kritis (Permadi-Heading-Regular).
+        weights: [700],
       },
     ],
     experimental: {
@@ -150,11 +156,10 @@ export default defineNuxtConfig({
       titleTemplate: '%s | Permadi',
       htmlAttrs: { lang: 'id' },
       link: [
-        // Preconnect to third-party origins for faster resource loading
-        { rel: 'preconnect', href: 'https://res.cloudinary.com', crossorigin: 'anonymous' },
-        { rel: 'dns-prefetch', href: 'https://res.cloudinary.com' },
-        { rel: 'preconnect', href: 'https://analytics.google.com', crossorigin: 'anonymous' },
-        { rel: 'dns-prefetch', href: 'https://analytics.google.com' },
+        // Preconnect hanya untuk origin yang PASTI diminta halaman ini.
+        // res.cloudinary.com: hanya dipakai di halaman galeri/projek, bukan home.
+        // analytics.google.com: GA sudah dihapus (di-handle GTM), preconnect tidak terpakai.
+        // Dihapus keduanya dari global head untuk menghemat koneksi di jalur kritis.
         // Preload above-the-fold fonts to prevent CLS from font swap
         { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/PermadiHeading/Permadi-Heading-Bold.woff2', crossorigin: 'anonymous' },
         { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/PermadiBody/Permadi-Body-Regular.woff2', crossorigin: 'anonymous' },
@@ -199,7 +204,9 @@ export default defineNuxtConfig({
       // bundle: false — jangan masukkan script ke main bundle, load dari CDN langsung
       // Ini kurangi ukuran entry JS chunk secara signifikan
       bundle: false,
-      trigger: 'onNuxtReady',
+      // idleTimeout: muat GTM setelah browser idle 3.5s, jangan bersaing dengan LCP.
+      // Sebelumnya onNuxtReady memuat GTM 109 KiB di jalur kritis.
+      trigger: { idleTimeout: 3500 },
     },
     registry: {
       // Hapus googleAnalytics — GA sudah di-handle GTM, triple loading menyebabkan performa turun

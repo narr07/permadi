@@ -1,7 +1,12 @@
 <script setup lang="ts">
+// Search index (navigation + files) di-fetch dari SERVER API.
+// Sebelumnya queryCollectionSearchSections() dijalankan di client dan memaksa
+// browser mengunduh sqlite3.wasm (386 KiB) + sql_dump.txt (24 KiB) — sumber
+// utama beban jalur kritis. Dipindah ke server: browser hanya menerima JSON.
+import type { ContentNavigationItem } from '@nuxt/content'
 import type { NavigationMenuItem } from '@nuxt/ui'
-import * as locales from '@nuxt/ui/locale'
 
+import * as locales from '@nuxt/ui/locale'
 import { breakpointsTailwind, useBreakpoints, useIdle } from '@vueuse/core'
 import { motion } from 'motion-v'
 
@@ -17,26 +22,29 @@ const searchTerm = ref('')
 
 // Auto-hide mobile navigation on idle (2 seconds timeout)
 const { idle } = useIdle(2000)
-// Get blog navigation based on current locale
-const { data: navigation, refresh: refreshNavigation } = await useAsyncData(
-  'blog-navigation',
-  () => queryCollectionNavigation(`${locale.value}_blog`),
-)
-// Get blog files for search based on current locale (lazy loaded on client)
-const { data: files, status: searchStatus, refresh: refreshFiles } = useLazyAsyncData(
-  `blog-search-${locale.value}`,
-  () => queryCollectionSearchSections(`${locale.value}_blog`),
-  { server: false },
-)
-// Search loading state — data is fetched client-side so search isn't instant
-const isSearchLoading = computed(() => searchStatus.value === 'pending')
-// Refresh data when locale changes
-watch(locale, async () => {
-  await Promise.all([
-    refreshNavigation(),
-    refreshFiles(),
-  ])
+// Struktur yang dikembalikan queryCollectionSearchSections (server) — match
+// dengan prop `files` dari UContentSearch (ContentSearchFile[]).
+interface SearchSection {
+  id: string
+  title: string
+  titles: string[]
+  level: number
+  content: string
+}
+interface SearchIndex {
+  navigation: ContentNavigationItem[]
+  files: SearchSection[]
+}
+const { data: searchIndex, status: searchStatus } = useLazyFetch<SearchIndex>('/api/search', {
+  query: computed(() => ({ locale: locale.value })),
+  // server: false — jangan fetch saat SSR/prerender, hanya di client setelah mount.
+  // useLazyFetch tidak memblokir render, jadi LCP tidak terpengaruh.
+  server: false,
 })
+const navigation = computed(() => searchIndex.value?.navigation ?? [])
+const files = computed(() => searchIndex.value?.files ?? [])
+// Search loading state — data fetched after mount so search isn't instant
+const isSearchLoading = computed(() => searchStatus.value === 'pending')
 const items = computed<NavigationMenuItem[]>(() => [
   {
     label: t('nav.home'),
@@ -91,7 +99,8 @@ useSchemaOrg([
         class="flex items-center justify-between border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/60 backdrop-blur-sm px-4 py-2"
       >
         <!-- Left: Logo -->
-        <NuxtLink :to="localePath('/')" class="flex items-center gap-2 text-brand-500 font-bold uppercase">
+        <!-- no-prefetch: home adalah landing page, hindari unduhan payload rute lain -->
+        <NuxtLink no-prefetch :to="localePath('/')" class="flex items-center gap-2 text-brand-500 font-bold uppercase">
           <LogoNav size="40" />
         </NuxtLink>
         <!-- Center: Desktop Navigation (hidden on mobile) -->
@@ -122,6 +131,7 @@ useSchemaOrg([
         <NuxtLink
           v-for="item in items"
           :key="item.label"
+          no-prefetch
           :to="item.to"
           class="flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-200"
           :class="item.active

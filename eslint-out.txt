@@ -1,0 +1,1 @@
+[@antfu/eslint-config] Detected running in editor, some rules are disabled.
