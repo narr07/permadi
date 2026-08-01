@@ -15,6 +15,7 @@ export default defineNuxtConfig({
         ]
       : []),
     '@nuxt/image',
+    '@nuxtjs/fontaine',
     '@vueuse/nuxt',
     'nuxt-studio',
     '@nuxtjs/i18n',
@@ -24,7 +25,6 @@ export default defineNuxtConfig({
     'nuxt-llms',
     '@stefanobartoletti/nuxt-social-share',
     'nuxt-delay-hydration',
-    '@nuxtjs/web-vitals',
   ],
   runtimeConfig: {
     cloudinaryCloudName: '',
@@ -143,6 +143,20 @@ export default defineNuxtConfig({
       },
     ],
   },
+  fontMetrics: {
+    fonts: [
+      {
+        family: 'PermadiBody',
+        src: '/fonts/PermadiBody/Permadi-Body-Regular.woff2',
+        fallbacks: ['Arial', 'Helvetica Neue'],
+      },
+      {
+        family: 'PermadiHeading',
+        src: '/fonts/PermadiHeading/Permadi-Heading-Bold.woff2',
+        fallbacks: ['Arial Black', 'Arial'],
+      },
+    ],
+  },
   app: {
     head: {
       titleTemplate: '%s | Permadi',
@@ -172,7 +186,7 @@ export default defineNuxtConfig({
     },
   },
   delayHydration: {
-    mode: 'mount',
+    mode: 'init',
     debug: process.env.NODE_ENV === 'development',
   },
   image: {
@@ -194,22 +208,17 @@ export default defineNuxtConfig({
   },
   scripts: {
     defaultScriptOptions: {
-      bundle: true,
+      // bundle: false — jangan masukkan script ke main bundle, load dari CDN langsung
+      // Ini kurangi ukuran entry JS chunk secara signifikan
+      bundle: false,
       trigger: 'onNuxtReady',
     },
     registry: {
-      googleAnalytics: {
-        id: 'G-5LEXR84KHW',
-      },
+      // Hapus googleAnalytics — GA sudah di-handle GTM, triple loading menyebabkan performa turun
+      // GA via GTM sudah cukup untuk tracking events
       googleTagManager: {
         id: 'GTM-5XT2J2S5',
       },
-    },
-  },
-  webVitals: {
-    provider: 'ga',
-    ga: {
-      id: 'G-5LEXR84KHW',
     },
   },
   // NuxtHub configuration for D1 database + cache

@@ -55,9 +55,9 @@ const items = [
       >
         <component :is="item.component" class="w-full h-48 drop-shadow-2xl z-10 mb-8" />
 
-        <h3 class="text-xl font-black uppercase tracking-tight text-brand-900 dark:text-white font-title leading-tight mb-3">
+        <h2 class="text-xl font-black uppercase tracking-tight text-brand-900 dark:text-white font-title leading-tight mb-3">
           {{ item.title }}
-        </h3>
+        </h2>
         <p class="text-sm text-gray-500 dark:text-gray-400 font-medium leading-relaxed max-w-60 mx-auto">
           {{ item.description }}
         </p>
