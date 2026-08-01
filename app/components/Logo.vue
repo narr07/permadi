@@ -14,14 +14,8 @@ const sizeValue = computed(() => {
   return props.size
 })
 
-// Mouse and element tracking for the interactive eyes.
-// OPTIMASI PERFORMA: sebelumnya useMouse() aktif secara global dan
-// watchEffect() membaca bounding box (useElementBounding) pada setiap mousemove
-// — ini memaksa layout reflow berulang kali (PageSpeed: 88ms forced reflow).
-// Sekarang tracking hanya aktif saat pointer berada di atas logo, dibatasi
-// (throttled) dengan requestAnimationFrame, dan bounding box dibaca sekali.
+// Mouse and element tracking for the interactive eyes
 const logoRef = ref<HTMLElement | null>(null)
-const tracking = ref(false)
 const { x: mouseX, y: mouseY } = useMouse({ type: 'client' })
 const { x: logoX, y: logoY, width, height } = useElementBounding(logoRef)
 
@@ -37,12 +31,8 @@ const targetOffsetY = useMotionValue(0)
 const springX = useSpring(targetOffsetX, { stiffness: 150, damping: 15, mass: 0.5 })
 const springY = useSpring(targetOffsetY, { stiffness: 150, damping: 15, mass: 0.5 })
 
-// rAF-throttled updater: baca posisi mouse + bounding box hanya saat frame
-// berikutnya siap dirender, bukan pada setiap event mousemove (yang bisa
-// terjadi puluhan kali per detik). Ini menghilangkan forced reflow berulang.
-let rafId: number | null = null
-function updateEyeTracking() {
-  rafId = null
+// Watch mouse and update the target offset instantly (spring handles the smoothing)
+watchEffect(() => {
   if (!logoRef.value || width.value === 0)
     return
 
@@ -62,37 +52,11 @@ function updateEyeTracking() {
     targetOffsetX.set(0)
     targetOffsetY.set(0)
   }
-}
-
-function scheduleUpdate() {
-  if (rafId === null)
-    rafId = requestAnimationFrame(updateEyeTracking)
-}
-
-watch(tracking, (active) => {
-  if (active) {
-    scheduleUpdate()
-  }
-  else {
-    targetOffsetX.set(0)
-    targetOffsetY.set(0)
-  }
-})
-
-onBeforeUnmount(() => {
-  if (rafId !== null)
-    cancelAnimationFrame(rafId)
 })
 </script>
 
 <template>
-  <div
-    ref="logoRef"
-    :style="{ lineHeight: 0 }"
-    @pointerenter="tracking = true"
-    @pointermove="scheduleUpdate"
-    @pointerleave="tracking = false"
-  >
+  <div ref="logoRef" :style="{ lineHeight: 0 }">
     <svg :style="{ width: sizeValue, height: sizeValue }" class="block" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Logo">
       <g clip-path="url(#clip0_1011_38)">
         <!-- Base Shape -->
