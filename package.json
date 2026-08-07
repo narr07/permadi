@@ -22,7 +22,7 @@
     "@nuxt/ui": "^4.10.0",
     "@nuxthub/core": "^0.10.5",
     "@nuxtjs/i18n": "^10.2.1",
-    "@nuxtjs/seo": "3.4.0",
+    "@nuxtjs/seo": "5.3.10",
     "@stefanobartoletti/nuxt-social-share": "2.3.1",
     "@vueuse/nuxt": "^14.2.1",
     "drizzle-orm": "^0.45.1",
