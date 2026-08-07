@@ -1,0 +1,44 @@
+name: Auto Update Nuxt Modules
+
+on:
+  schedule:
+    # Berjalan setiap hari Senin jam 00:00 UTC
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+jobs:
+  update-modules:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Update dependencies
+        run: bun update
+
+      - name: Verify build
+        run: bun run build
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore(deps): update nuxt modules & dependencies [skip ci]'
+          title: 'chore(deps): Auto update Nuxt modules & dependencies [skip ci]'
+          body: |
+            ### 🤖 Auto Update Nuxt Modules & Dependencies
+            
+            Pembaruan otomatis untuk modul Nuxt dan dependensi npm.
+            
+            - **Build Status**: Verified ✅
+            - **Cloudflare Build**: Skipped via `[skip ci]` tag agar tidak menumpuk di Cloudflare Pages preview builds.
+          branch: chore/auto-update-modules
+          delete-branch: true
