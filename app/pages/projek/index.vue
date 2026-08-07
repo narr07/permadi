@@ -26,7 +26,8 @@ useSchemaOrg([
   }),
 ])
 
-defineOgImageComponent('Permadi', {
+defineOgImage({
+  component: 'Permadi',
   title: () => page.value?.title || t('project.title'),
   description: () => (page.value as any)?.description || t('project.description'),
   headline: 'Permadi',
