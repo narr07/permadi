@@ -8,7 +8,6 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 
 import * as locales from '@nuxt/ui/locale'
 import { breakpointsTailwind, useBreakpoints, useIdle } from '@vueuse/core'
-import { motion } from 'motion-v'
 
 const { locale, setLocale, t } = useI18n()
 const localePath = useLocalePath()
@@ -35,16 +34,14 @@ interface SearchIndex {
   navigation: ContentNavigationItem[]
   files: SearchSection[]
 }
-const { data: searchIndex, status: searchStatus } = useLazyFetch<SearchIndex>('/api/search', {
+const { data: searchIndex } = useLazyFetch<SearchIndex>('/api/search', {
   query: computed(() => ({ locale: locale.value })),
-  // server: false — jangan fetch saat SSR/prerender, hanya di client setelah mount.
-  // useLazyFetch tidak memblokir render, jadi LCP tidak terpengaruh.
+  // server: false — jangan fetch saat SSR/prerender, hanya di client.
   server: false,
 })
+
 const navigation = computed(() => searchIndex.value?.navigation ?? [])
 const files = computed(() => searchIndex.value?.files ?? [])
-// Search loading state — data fetched after mount so search isn't instant
-const isSearchLoading = computed(() => searchStatus.value === 'pending')
 const items = computed<NavigationMenuItem[]>(() => [
   {
     label: t('nav.home'),
@@ -72,7 +69,7 @@ const items = computed<NavigationMenuItem[]>(() => [
   },
 ])
 const socials = [
-  { icon: 'i-narr-soc-mail', to: 'mailto:dinarpermadi07@gmail.com', label: 'Email' },
+  { icon: 'i-narr-soc-mail', to: `mailto:${'dinarpermadi07'}@${'gmail.com'}`, label: 'Email' },
   { icon: 'i-narr-soc-ig', to: 'https://www.instagram.com/narr07/', label: 'Instagram' },
   { icon: 'i-narr-soc-github', to: 'https://github.com/narr07', label: 'GitHub' },
   { icon: 'i-narr-soc-behance', to: 'https://www.behance.net/narr07', label: 'Behance' },
@@ -93,10 +90,9 @@ useSchemaOrg([
 <template>
   <UApp :locale="locales[locale]">
     <UContainer class="fixed top-2 inset-x-0 z-50">
-      <motion.nav
-        :animate="{ y: (idle && isMobile) ? -100 : 0 }"
-        :transition="{ type: 'spring', stiffness: 200, damping: 20 }"
-        class="flex items-center justify-between border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/60 backdrop-blur-sm px-4 py-2"
+      <nav
+        class="flex items-center justify-between border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/60 backdrop-blur-sm px-4 py-2 transition-transform duration-300 ease-in-out"
+        :class="(idle && isMobile) ? '-translate-y-[150%]' : 'translate-y-0'"
       >
         <!-- Left: Logo -->
         <!-- no-prefetch: home adalah landing page, hindari unduhan payload rute lain -->
@@ -107,7 +103,7 @@ useSchemaOrg([
         <UNavigationMenu :items="items" class="hidden sm:flex justify-center uppercase text-xs font-medium" />
         <!-- Right: Action buttons -->
         <div class="flex items-center gap-1">
-          <UContentSearchButton collapsed :loading="isSearchLoading" />
+          <UContentSearchButton collapsed />
           <UColorModeButton />
           <!-- Language switcher -->
           <UButton
@@ -118,15 +114,14 @@ useSchemaOrg([
             @click="setLocale(locale === 'id' ? 'en' : 'id')"
           />
         </div>
-      </motion.nav>
+      </nav>
     </UContainer>
 
     <!-- Mobile Bottom Navigation -->
     <UContainer class="sm:hidden fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] inset-x-0 z-50">
-      <motion.nav
-        :animate="{ y: idle ? 150 : 0 }"
-        :transition="{ type: 'spring', stiffness: 200, damping: 20 }"
-        class="flex items-center justify-around border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/80 backdrop-blur-md px-2 py-2 shadow-lg"
+      <nav
+        class="flex items-center justify-around border dark:border-brand-700 border-brand-900 rounded-lg bg-(--ui-bg)/80 backdrop-blur-md px-2 py-2 shadow-lg transition-transform duration-300 ease-in-out"
+        :class="idle ? 'translate-y-[200%]' : 'translate-y-0'"
       >
         <NuxtLink
           v-for="item in items"
@@ -141,7 +136,7 @@ useSchemaOrg([
           <UIcon :name="item.icon" class="size-6" />
           <span class="sr-only">{{ item.label }}</span>
         </NuxtLink>
-      </motion.nav>
+      </nav>
     </UContainer>
     <!-- Content Search Modal (Blog only) -->
     <ClientOnly>
@@ -153,7 +148,6 @@ useSchemaOrg([
         shortcut="meta_k"
         :color-mode="false"
         :fuse="{ resultLimit: 20 }"
-        hydrate-on-idle
       />
     </ClientOnly>
     <UMain>

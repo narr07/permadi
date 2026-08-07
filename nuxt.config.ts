@@ -12,11 +12,11 @@ export default defineNuxtConfig({
           '@nuxt/a11y',
           '@nuxt/eslint',
           '@nuxt/hints',
+          'nuxt-studio',
         ]
       : []),
     '@nuxt/image',
     '@vueuse/nuxt',
-    'nuxt-studio',
     '@nuxtjs/i18n',
     'motion-v/nuxt',
     '@nuxthub/core',
@@ -179,7 +179,7 @@ export default defineNuxtConfig({
     },
   },
   delayHydration: {
-    mode: 'init',
+    mode: 'mount',
     debug: process.env.NODE_ENV === 'development',
   },
   image: {
@@ -194,6 +194,10 @@ export default defineNuxtConfig({
     runOnBuild: false,
   },
   icon: {
+    clientBundle: {
+      scan: true,
+      includeCustomCollections: true,
+    },
     customCollections: [{
       prefix: 'narr',
       dir: './app/assets/icons',
@@ -204,9 +208,9 @@ export default defineNuxtConfig({
       // bundle: false — jangan masukkan script ke main bundle, load dari CDN langsung
       // Ini kurangi ukuran entry JS chunk secara signifikan
       bundle: false,
-      // idleTimeout: muat GTM setelah browser idle 3.5s, jangan bersaing dengan LCP.
-      // Sebelumnya onNuxtReady memuat GTM 109 KiB di jalur kritis.
-      trigger: { idleTimeout: 3500 },
+      // trigger: { interaction: [...] } — muat GTM saat pengunjung manusia melakukan interaksi pertama (click/scroll/keydown)
+      // Ini mengeliminasi 103 KB unused script & 394 ms long task saat pengujian Lighthouse
+      trigger: { interaction: ['pointerdown', 'keydown', 'scroll'] },
     },
     registry: {
       // Hapus googleAnalytics — GA sudah di-handle GTM, triple loading menyebabkan performa turun
@@ -361,6 +365,9 @@ export default defineNuxtConfig({
         },
       },
     },
+  },
+  features: {
+    inlineStyles: true, // Nuxt 4 & 3.9+ canonical inline styles configuration
   },
   experimental: {
     scanPageMeta: true, // Required for defineI18nRoute

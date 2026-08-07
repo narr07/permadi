@@ -11,6 +11,8 @@ const pendidikan = [
     avatar: {
       src: '/logo/upi.webp',
       alt: t('edu.upi'),
+      width: 64,
+      height: 64,
       size: 'lg',
       class: 'bg-gray-100 dark:bg-gray-800 p-1',
       ui: {
@@ -26,6 +28,8 @@ const pendidikan = [
     avatar: {
       src: '/logo/sma1rjl.webp',
       alt: 'SMA Negeri 1 Rajagaluh',
+      width: 64,
+      height: 64,
       size: 'lg',
       class: 'bg-gray-100 dark:bg-gray-800 p-1',
       ui: {
@@ -41,6 +45,8 @@ const pendidikan = [
     avatar: {
       src: '/logo/smp1rjl.webp',
       alt: 'SMP Negeri 1 Rajagaluh',
+      width: 64,
+      height: 64,
       size: 'lg',
       class: 'bg-gray-100 dark:bg-gray-800 p-1',
       ui: {
@@ -56,6 +62,8 @@ const pendidikan = [
     avatar: {
       src: '/logo/teja1.webp',
       alt: 'SD Negeri Teja 1',
+      width: 64,
+      height: 64,
       size: 'lg',
       class: 'bg-gray-100 dark:bg-gray-800 p-1',
       ui: {
@@ -87,6 +95,9 @@ function onSelect(_e: Event, item: TimelineItem) {
         <UTimeline
           v-model="active"
           :items="pendidikan"
+          :ui="{
+            date: 'text-gray-600 dark:text-gray-300 font-medium text-xs/5',
+          }"
           class="cursor-pointer"
           @select="onSelect"
         />
@@ -100,7 +111,7 @@ function onSelect(_e: Event, item: TimelineItem) {
         <div v-if="activeSchool" class="space-y-6">
           <div class="flex justify-center">
             <div class="w-36 h-36 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20">
-              <NuxtImg :alt="activeSchool.title" :src="activeSchool.avatar!.src" class="w-30 h-30 text-primary" />
+              <NuxtImg :alt="activeSchool.title" :src="activeSchool.avatar!.src" width="120" height="120" class="w-30 h-30 text-primary" />
             </div>
           </div>
 
