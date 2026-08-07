@@ -40,16 +40,20 @@ export default defineNuxtConfig({
     defaultLocale: 'id',
     trailingSlash: false,
   },
+  app: {
+    head: {
+      meta: [
+        { name: 'theme-color', content: '#134e43', media: '(prefers-color-scheme: dark)' },
+        { name: 'theme-color', content: '#5eeacf', media: '(prefers-color-scheme: light)' },
+      ],
+    },
+  },
   seo: {
     redirectToCanonicalSiteUrl: true,
     meta: {
       author: 'Dinar Permadi Yusup',
       applicationName: 'Permadi',
       description: 'Dinar Permadi Yusup is a teacher, programmer and designer.',
-      themeColor: [
-        { content: '#134e43', media: '(prefers-color-scheme: dark)' },
-        { content: '#5eeacf', media: '(prefers-color-scheme: light)' },
-      ],
       colorScheme: 'dark light',
     },
   },
