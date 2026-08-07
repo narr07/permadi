@@ -8,4 +8,4 @@ updates:
     open-pull-requests-limit: 5
     commit-message:
       # [skip ci] dimasukkan ke dalam prefix agar valid dengan skema Dependabot v2
-      prefix: "chore(deps) [skip ci]"
+      prefix: 'chore(deps) [skip ci]'

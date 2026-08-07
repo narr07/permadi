@@ -11,4 +11,12 @@ export default withNuxt(
     },
     vue: true,
   }),
+  {
+    ignores: ['FEATURE SOON.md'],
+  },
+  {
+    rules: {
+      'markdown/no-multiple-h1': 'off',
+    },
+  },
 )

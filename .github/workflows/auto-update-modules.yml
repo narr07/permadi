@@ -35,9 +35,9 @@ jobs:
           title: 'chore(deps): Auto update Nuxt modules & dependencies [skip ci]'
           body: |
             ### 🤖 Auto Update Nuxt Modules & Dependencies
-            
+
             Pembaruan otomatis untuk modul Nuxt dan dependensi npm.
-            
+
             - **Build Status**: Verified ✅
             - **Cloudflare Build**: Skipped via `[skip ci]` tag agar tidak menumpuk di Cloudflare Pages preview builds.
           branch: chore/auto-update-modules
