@@ -46,7 +46,8 @@ useSchemaOrg([
   }),
 ])
 
-defineOgImageComponent('Permadi', {
+defineOgImage({
+  component: 'Permadi',
   title: project.value?.title,
   description: project.value?.description,
   headline: 'Project',
