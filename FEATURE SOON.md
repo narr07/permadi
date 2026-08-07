@@ -267,7 +267,7 @@ main = "src/index.ts"
 compatibility_date = "2026-08-07"
 
 [triggers]
-crons = ["0 0 * * *"]   # Tiap hari jam 00:00 UTC
+crons = [ "0 0 * * *" ] # Tiap hari jam 00:00 UTC
 
 [[d1_databases]]
 binding = "DB"
@@ -280,7 +280,7 @@ database_id = "id-db-anda"
 ```ts
 export default {
   async scheduled(event, env) {
-    const token = env.CF_ANALYTICS_TOKEN  // simpan sebagai secret
+    const token = env.CF_ANALYTICS_TOKEN // simpan sebagai secret
     const zoneTag = env.CF_ZONE_ID
 
     // Ambil data kemarin
@@ -315,7 +315,8 @@ export default {
     const json = await res.json()
     const data = json.data.viewer.zones[0].httpRequests1dGroups[0]
 
-    if (!data) return
+    if (!data)
+      return
 
     // 1. Simpan ke visitors_daily
     await env.DB.prepare(

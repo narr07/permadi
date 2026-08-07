@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { readdir, readFile, writeFile } from 'node:fs/promises'
 import { join, parse } from 'node:path'
 
@@ -8,7 +9,6 @@ async function main() {
   try {
     const iconsJsonContent = await readFile(iconsJsonPath, 'utf-8')
     const iconsData = JSON.parse(iconsJsonContent)
-    const existingIcons = new Set(Object.keys(iconsData.icons))
 
     const files = await readdir(iconsDir)
     const svgFiles = files.filter(file => file.endsWith('.svg'))

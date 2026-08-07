@@ -73,7 +73,8 @@ useSchemaOrg([
   }),
 ])
 
-defineOgImageComponent('Permadi', {
+defineOgImage({
+  component: 'Permadi',
   title: () => page.value?.title,
   description: () => (page.value as any)?.description,
   headline: 'Permadi',
@@ -107,4 +108,3 @@ const showNotFound = computed(() => status.value === 'success' && !page.value)
     </NuxtLink>
   </div>
 </template>
-

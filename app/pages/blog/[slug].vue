@@ -3,7 +3,6 @@ const { locale, locales, t } = useI18n()
 const route = useRoute()
 const localePath = useLocalePath()
 const setI18nParams = useSetI18nParams()
-const colorMode = useColorMode()
 
 // Helper function to generate clean slug from path
 function generateSlug(contentPath: string): string {
@@ -133,13 +132,13 @@ useSchemaOrg([
   }),
 ])
 
-defineOgImageComponent('Permadi', {
+defineOgImage({
+  component: 'Permadi',
   title: article.value?.title,
   description: article.value?.description,
   headline: article.value?.category || 'Blog',
 })
 
-const tocColor = computed(() => colorMode.value === 'dark' ? 'warning' : 'info')
 const isMobileTocOpen = ref(false)
 
 function handleTocClick(e: MouseEvent) {

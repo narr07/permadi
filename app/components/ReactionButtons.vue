@@ -1,10 +1,10 @@
 // app/components/ReactionButtons.vue
 <script setup lang="ts">
-const { t } = useI18n()
-
 const props = defineProps<{
   postId: number | null | undefined
 }>()
+
+const { t } = useI18n()
 
 const { counts, isLoading, isSubmitting, error, addReaction } = useReactions(props.postId)
 
