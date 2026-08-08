@@ -224,7 +224,7 @@ export default defineNuxtConfig({
   hub: {
     cache: {
       driver: 'cloudflare-kv-binding',
-      namespaceId: '99e6c81b5117423aa547100f6c336860',
+      namespaceId: 'a20aa92943c44afe837f2d376523d086',
     },
     db: {
       dialect: 'sqlite',
