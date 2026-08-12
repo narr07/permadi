@@ -58,7 +58,7 @@ useSeoMeta({
     <UFooter>
       <template #left>
         <p class="text-sm text-muted">
-          Built with Nuxt UI • © {{ new Date().getFullYear() }}
+          Test Built with Nuxt UI • © {{ new Date().getFullYear() }}
         </p>
       </template>
 
