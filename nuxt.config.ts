@@ -4,8 +4,16 @@ export default defineNuxtConfig({
     '@nuxt/content',
   ],
   content: {
-    experimental: {
-      sqliteConnector: 'native'
+     database: {
+      type: 'd1',
+      bindingName: 'DB'  // Sesuaikan dengan 'Name' di Cloudflare Dashboard Anda
+    }
+  },
+  nitro: {
+    preset: 'cloudflare_pages', // Pastikan menggunakan preset yang sesuai
+    prerender:{
+      routes: ['/'], // Tambahkan rute yang ingin Anda prerender
+      crawlLinks: true
     }
   },
   devtools: { enabled: true },
