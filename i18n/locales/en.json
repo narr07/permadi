@@ -11,9 +11,20 @@
 		"view_projects": "View Projects",
 		"read_articles": "Read Articles",
 		"subscribe": "Subscribe",
-		"email_placeholder": "your@email.com",
+		"email_placeholder": "your{'@'}email.com",
 		"all_rights_reserved": "All rights reserved.",
 		"language": "Language"
+	},
+	"search": {
+		"placeholder": "Search articles, projects, tags...",
+		"search_blog": "Search blog articles...",
+		"search_projects": "Search projects & case studies...",
+		"no_results": "No results found for",
+		"all_tags": "All Tags",
+		"shortcut": "Search (Ctrl+K)",
+		"articles": "Articles",
+		"projects": "Projects",
+		"close": "Esc to close"
 	},
 	"sections": {
 		"about_summary_title": "Brief About",

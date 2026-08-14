@@ -3,14 +3,15 @@ import { z } from 'zod'
 
 export default defineContentConfig({
 	collections: {
-		// Halaman utama EN (/, /blog, /projek, /galeri, /tentang, /kontak)
+		// Halaman utama EN (/en, /en/blog, /en/projects, /en/gallery, /en/about, /en/contact)
 		pages_en: defineCollection({
 			type: 'page',
 			source: {
 				include: 'en/*.md',
-				prefix: '/',
+				prefix: '/en',
 			},
 			schema: z.object({
+				plainText: z.string().optional(),
 				hero: z
 					.object({
 						name: z.string().optional(),
@@ -30,6 +31,7 @@ export default defineContentConfig({
 				prefix: '/id',
 			},
 			schema: z.object({
+				plainText: z.string().optional(),
 				hero: z
 					.object({
 						name: z.string().optional(),
@@ -46,9 +48,14 @@ export default defineContentConfig({
 			type: 'page',
 			source: {
 				include: 'en/blog/**',
-				prefix: '/blog',
+				prefix: '/en/blog',
 			},
 			schema: z.object({
+				idItem: z.number().optional(),
+				idBlog: z.number().optional(),
+				readingTime: z.number().optional(),
+				slug: z.string().optional(),
+				plainText: z.string().optional(),
 				date: z.string(),
 				tags: z.array(z.string()).default([]),
 				cover: z.string().optional(),
@@ -66,6 +73,11 @@ export default defineContentConfig({
 				prefix: '/id/blog',
 			},
 			schema: z.object({
+				idItem: z.number().optional(),
+				idBlog: z.number().optional(),
+				readingTime: z.number().optional(),
+				slug: z.string().optional(),
+				plainText: z.string().optional(),
 				date: z.string(),
 				tags: z.array(z.string()).default([]),
 				cover: z.string().optional(),
@@ -75,14 +87,19 @@ export default defineContentConfig({
 			}),
 		}),
 
-		// Projek EN
+		// Projects EN
 		projek_en: defineCollection({
 			type: 'page',
 			source: {
-				include: 'en/projek/**',
-				prefix: '/projek',
+				include: 'en/projects/**',
+				prefix: '/en/projects',
 			},
 			schema: z.object({
+				idItem: z.number().optional(),
+				idProjek: z.number().optional(),
+				readingTime: z.number().optional(),
+				slug: z.string().optional(),
+				plainText: z.string().optional(),
 				date: z.string(),
 				tags: z.array(z.string()).default([]),
 				image: z.string().optional(),
@@ -101,6 +118,11 @@ export default defineContentConfig({
 				prefix: '/id/projek',
 			},
 			schema: z.object({
+				idItem: z.number().optional(),
+				idProjek: z.number().optional(),
+				readingTime: z.number().optional(),
+				slug: z.string().optional(),
+				plainText: z.string().optional(),
 				date: z.string(),
 				tags: z.array(z.string()).default([]),
 				image: z.string().optional(),

@@ -21,4 +21,4 @@ Hello! I am **Dinar Permadi Yusup**, a **Frontend Developer & Digital Craftsman*
 
 My journey began with a fascination for how digital interfaces shape user emotions and efficiency. Over time, I specialized in the **Vue.js** and **Nuxt** ecosystem for its reactive elegance and solid fullstack architecture.
 
-Outside coding, I enjoy experimenting with visual explorations, typography, and writing technical articles on my [Blog](/blog).
+Outside coding, I enjoy experimenting with visual explorations, typography, and writing technical articles on my [Blog](/en/blog).

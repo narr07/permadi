@@ -11,9 +11,20 @@
 		"view_projects": "Lihat Proyek",
 		"read_articles": "Baca Tulisan",
 		"subscribe": "Berlangganan",
-		"email_placeholder": "email@kamu.com",
+		"email_placeholder": "email{'@'}kamu.com",
 		"all_rights_reserved": "Hak cipta dilindungi undang-undang.",
 		"language": "Bahasa"
+	},
+	"search": {
+		"placeholder": "Cari artikel, projek, topik...",
+		"search_blog": "Cari artikel blog...",
+		"search_projects": "Cari projek & studi kasus...",
+		"no_results": "Tidak ditemukan hasil untuk",
+		"all_tags": "Semua Topik",
+		"shortcut": "Cari (Ctrl+K)",
+		"articles": "Artikel",
+		"projects": "Projek",
+		"close": "Tekan Esc untuk tutup"
 	},
 	"sections": {
 		"about_summary_title": "Tentang Singkat",
