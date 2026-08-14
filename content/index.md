@@ -1,24 +1,24 @@
-# Welcome to Nuxt Content Starter
+---
+title: "Dinar Permadi Yusup — Frontend Developer & Digital Craftsman"
+description: "Membangun antarmuka yang rapi, cepat, dan enak dipakai dengan fokus pada ekosistem Vue/Nuxt, desain sistem, dan performa web."
+hero:
+  name: "Dinar Permadi Yusup"
+  title: "Frontend Developer & Digital Craftsman"
+  description: "Membangun antarmuka yang rapi, cepat, dan enak dipakai."
+  avatar: "/avatar.jpg"
+---
 
-This is the main page displaying Markdown located at [content/index.md](https://github.com/nuxt/starter/blob/content/content/index.md).
+# Halo, Saya Dinar Permadi Yusup 👋
 
-Move to [about](/about) page.
+Frontend Developer & Digital Craftsman yang berfokus membangun antarmuka web modern dengan standar estetika tinggi, interaktivitas halus, dan performa maksimal.
 
-## Manage your Contents
+## Fokus & Keahlian
 
-Create new pages or modify the existing ones in `content/` directory.
+- **Modern Web Ecosystem**: Mendalami Nuxt, Vue 3, TypeScript, dan Tailwind CSS.
+- **Design Systems & Bento UI**: Merancang sistem token visual, hierarki tipografi berbasis *Golden Ratio* ($\phi \approx 1.618$), dan komponen modular.
+- **Micro-Interactions**: Mengimplementasikan transisi layout dan animasi mikro yang halus menggunakan Motion Vue.
+- **Edge Performance**: Optimasi rendering aplikasi web di atas infrastruktur Cloudflare (Pages & D1).
 
-## Query & Render Pages
+---
 
-You can find an example of querying contents and rendering them in a [catch-all page](https://github.com/nuxt/starter/blob/content/app/pages/%5B...slug%5D.vue)
-
-## Integrate Vue Component
-
-::alert{color="green"}
-The current [alert](https://github.com/nuxt/starter/blob/content/app/components/Alert.vue) and the [counter](https://github.com/nuxt/starter/blob/content/app/components/Counter.vue) below are `Vue` components integrated into the Markdown.
-::
-
-::counter
-::
-
-Checkout out the [documentation](https://content.nuxt.com/docs/getting-started) to learn more.
+> *"Desain yang baik bukan hanya tentang bagaimana sesuatu terlihat, tetapi bagaimana ia bekerja dan dirasakan oleh penggunanya."*
