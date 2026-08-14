@@ -1,0 +1,26 @@
+{
+	"nav": {
+		"home": "Home",
+		"blog": "Blog",
+		"projects": "Projects",
+		"gallery": "Gallery",
+		"about": "About",
+		"contact": "Contact"
+	},
+	"common": {
+		"view_projects": "View Projects",
+		"read_articles": "Read Articles",
+		"subscribe": "Subscribe",
+		"email_placeholder": "your@email.com",
+		"all_rights_reserved": "All rights reserved.",
+		"language": "Language"
+	},
+	"sections": {
+		"about_summary_title": "Brief About",
+		"featured_project_title": "Featured Project",
+		"latest_posts_title": "Latest Posts",
+		"tech_stack_title": "Tech Stack",
+		"connect_title": "Connect",
+		"newsletter_title": "Newsletter"
+	}
+}

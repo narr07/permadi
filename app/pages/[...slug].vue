@@ -1,29 +1,35 @@
 <script setup lang="ts">
 	const route = useRoute()
+	const { locale } = useI18n()
+
 	const cleanPath = computed(() => {
 		const path = route.path.replace(/\/+$/, '')
 		return path === '' ? '/' : path
 	})
+
+	const pagesCollection = computed(() => (locale.value === 'id' ? 'pages_id' : 'pages_en'))
+	const blogCollection = computed(() => (locale.value === 'id' ? 'blog_id' : 'blog_en'))
+	const projekCollection = computed(() => (locale.value === 'id' ? 'projek_id' : 'projek_en'))
 
 	const { data: page } = await useAsyncData(
 		() => 'content-' + cleanPath.value,
 		async () => {
 			const path = cleanPath.value
 
-			// 1. Cek di collection 'pages'
-			const mainPage = await queryCollection('pages').path(path).first()
+			// 1. Cek di collection pages sesuai locale
+			const mainPage = await queryCollection(pagesCollection.value).path(path).first()
 			if (mainPage) {
 				return mainPage
 			}
 
-			// 2. Cek di collection 'blog'
-			const blogPost = await queryCollection('blog').path(path).first()
+			// 2. Cek di collection blog sesuai locale
+			const blogPost = await queryCollection(blogCollection.value).path(path).first()
 			if (blogPost) {
 				return blogPost
 			}
 
-			// 3. Cek di collection 'projek'
-			const projekItem = await queryCollection('projek').path(path).first()
+			// 3. Cek di collection projek sesuai locale
+			const projekItem = await queryCollection(projekCollection.value).path(path).first()
 			if (projekItem) {
 				return projekItem
 			}
@@ -31,14 +37,14 @@
 			return null
 		},
 		{
-			watch: [cleanPath],
+			watch: [cleanPath, locale],
 		}
 	)
 
 	if (!page.value) {
 		throw createError({
 			statusCode: 404,
-			statusMessage: 'Halaman tidak ditemukan',
+			statusMessage: locale.value === 'id' ? 'Halaman tidak ditemukan' : 'Page not found',
 			fatal: false,
 		})
 	}

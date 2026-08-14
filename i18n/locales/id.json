@@ -1,0 +1,26 @@
+{
+	"nav": {
+		"home": "Beranda",
+		"blog": "Blog",
+		"projects": "Projek",
+		"gallery": "Galeri",
+		"about": "Tentang",
+		"contact": "Kontak"
+	},
+	"common": {
+		"view_projects": "Lihat Proyek",
+		"read_articles": "Baca Tulisan",
+		"subscribe": "Berlangganan",
+		"email_placeholder": "email@kamu.com",
+		"all_rights_reserved": "Hak cipta dilindungi undang-undang.",
+		"language": "Bahasa"
+	},
+	"sections": {
+		"about_summary_title": "Tentang Singkat",
+		"featured_project_title": "Proyek Unggulan",
+		"latest_posts_title": "Tulisan Terbaru",
+		"tech_stack_title": "Tech Stack",
+		"connect_title": "Terhubung",
+		"newsletter_title": "Newsletter"
+	}
+}

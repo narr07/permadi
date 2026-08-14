@@ -21,4 +21,4 @@ Halo! Saya **Dinar Permadi Yusup**, seorang **Frontend Developer & Digital Craft
 
 Perjalanan saya dimulai dari ketertarikan mendalam pada bagaimana antarmuka digital dapat memengaruhi emosi dan efisiensi pengguna dalam berinteraksi dengan informasi. Seiring berjalannya waktu, fokus saya terasah pada ekosistem **Vue.js** dan **Nuxt**, karena fleksibilitas reaktivitasnya dan arsitektur fullstack yang kokoh.
 
-Di luar waktu koding, saya sering bereksperimen dengan eksplorasi visual, tipografi, serta berkontribusi pada proyek open-source dan berbagi catatan teknis di [Blog](/blog).
+Di luar waktu koding, saya sering bereksperimen dengan eksplorasi visual, tipografi, serta berkontribusi pada proyek open-source dan berbagi catatan teknis di [Blog](/id/blog).
