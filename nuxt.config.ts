@@ -64,39 +64,40 @@ export default defineNuxtConfig({
 		},
 	},
 	routeRules: {
-		// Prerender halaman utama
+		// Root redirect
 		'/': { redirect: '/en' },
-		'/en': { prerender: true },
-		'/id': { prerender: true },
 
-		// SWR: render on-demand dan di-cache di Cloudflare (24 jam)
-		'/en/blog': { swr: 86400 },
-		'/id/blog': { swr: 86400 },
-		'/en/projects': { swr: 86400 },
-		'/id/projek': { swr: 86400 },
-		'/en/gallery': { swr: 86400 },
-		'/id/galeri': { swr: 86400 },
-		'/en/about': { swr: 86400 },
-		'/id/tentang': { swr: 86400 },
-		'/en/contact': { swr: 86400 },
-		'/id/kontak': { swr: 86400 },
+		// Seluruh halaman HTML: Selalu sajikan versi terbaru tanpa cache browser/edge basi setelah deploy baru
+		'/**': {
+			headers: {
+				'Cache-Control': 'public, max-age=0, must-revalidate',
+			},
+		},
 
-		'/en/blog/**': { swr: 86400 },
-		'/id/blog/**': { swr: 86400 },
-		'/en/projects/**': { swr: 86400 },
-		'/id/projek/**': { swr: 86400 },
+		// Aset statis Nuxt JS/CSS (dengan hash unik di filename): Boleh di-cache secara permanen
+		'/_nuxt/**': {
+			headers: {
+				'Cache-Control': 'public, max-age=31536000, immutable',
+			},
+		},
 
-		'/api/**': { prerender: false },
+		// API routes tidak di-prerender
+		'/api/**': {
+			prerender: false,
+			headers: {
+				'Cache-Control': 'no-store, no-cache, must-revalidate',
+			},
+		},
 
-		// Cache generated OG images di Cloudflare edge (7 hari)
-		'/__og-image__/**': { swr: 86400 * 7 },
+		// Cache gambar OG di Cloudflare edge
+		'/__og-image__/**': {
+			headers: {
+				'Cache-Control': 'public, max-age=604800, s-maxage=86400, stale-while-revalidate=86400',
+			},
+		},
 
 		// Cache gambar IPX / proxy
 		'/_ipx/**': {
-			swr: 86400,
-			cache: {
-				maxAge: 60 * 60 * 24 * 7,
-			},
 			headers: {
 				'Cache-Control': 'public, max-age=604800, s-maxage=86400, stale-while-revalidate=86400',
 			},
