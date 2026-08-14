@@ -9,7 +9,7 @@ export default defineNuxtConfig({
       bindingName: 'DB'  // Sesuaikan dengan 'Name' di Cloudflare Dashboard Anda
     },
     experimental: {
-      sqliteConnector: 'native'
+      sqliteConnector: 'bun'
     }
   },
   nitro: {
