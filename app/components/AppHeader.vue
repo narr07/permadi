@@ -51,8 +51,8 @@
 </script>
 
 <template>
-	<header class="sticky top-4 z-50 px-4">
-		<div class="container-bento flex items-center justify-between gap-2 sm:gap-4">
+	<header class="sticky top-4 z-50 px-4 pointer-events-none">
+		<div class="container-bento flex items-center justify-between gap-2 sm:gap-4 pointer-events-auto">
 			<!-- Island 1: Logo & Brand -->
 			<NuxtLink
 				:to="localePath('/')"

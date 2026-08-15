@@ -93,7 +93,7 @@
 <template>
 	<div class="py-6 sm:py-10">
 		<!-- Mobile Collapsible TOC: Sticky tepat di bawah Floating Header Navbar -->
-		<div v-if="tocLinks.length > 0" class="lg:hidden sticky top-[4.25rem] z-40 px-4 mb-6">
+		<div v-if="tocLinks.length > 0" class="lg:hidden sticky top-[4.75rem] z-40 px-4 mb-6">
 			<ContentToc
 				:links="tocLinks"
 				highlight-variant="circuit"

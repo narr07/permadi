@@ -153,9 +153,16 @@
 		}
 	})
 
+	function toggleMobile(event: Event) {
+		event.stopPropagation()
+		event.preventDefault()
+		mobileOpen.value = !mobileOpen.value
+	}
+
 	// Close on click outside (mobile)
-	function handleClickOutside(event: MouseEvent) {
-		if (mobileContainerRef.value && !mobileContainerRef.value.contains(event.target as Node)) {
+	function handleClickOutside(event: Event) {
+		const target = event.target as Node | null
+		if (mobileContainerRef.value && target && !mobileContainerRef.value.contains(target)) {
 			mobileOpen.value = false
 		}
 	}
@@ -165,6 +172,7 @@
 			updateActiveHeading()
 			window.addEventListener('scroll', updateActiveHeading, { passive: true })
 			document.addEventListener('click', handleClickOutside)
+			document.addEventListener('touchstart', handleClickOutside, { passive: true })
 		})
 	})
 
@@ -181,34 +189,36 @@
 	onUnmounted(() => {
 		window.removeEventListener('scroll', updateActiveHeading)
 		document.removeEventListener('click', handleClickOutside)
+		document.removeEventListener('touchstart', handleClickOutside)
 	})
 </script>
 
 <template>
-	<nav v-if="links && links.length > 0" class="content-toc w-full" aria-label="Table of contents">
+	<nav v-if="links && links.length > 0" class="content-toc w-full pointer-events-auto" aria-label="Table of contents">
 		<!-- 1. Mobile Sticky Island Floating Bar (Fixed persis di bawah Navbar saat di-scroll) -->
 		<div
 			v-if="mode === 'mobile' || mode === 'all'"
 			ref="mobileContainerRef"
-			class="w-full transition-all duration-300"
+			class="w-full transition-all duration-300 pointer-events-auto"
 			:class="mode === 'all' ? 'lg:hidden' : ''"
 		>
 			<div
-				class="bg-white/95 dark:bg-[#002b27]/95 backdrop-blur-xl border border-slate-200/80 dark:border-[#134e43] shadow-md transition-all duration-300"
+				class="bg-white/95 dark:bg-[#002b27]/95 backdrop-blur-xl border border-slate-200/80 dark:border-[#134e43] shadow-md transition-all duration-300 cursor-pointer"
 				:class="mobileOpen ? 'rounded-2xl p-4' : 'rounded-full px-4 py-2.5'"
 			>
 				<!-- Trigger Bar -->
 				<button
 					type="button"
-					class="w-full flex items-center justify-between gap-3 text-left"
+					class="w-full flex items-center justify-between gap-3 text-left cursor-pointer select-none touch-manipulation"
 					aria-label="Toggle Table of Contents"
-					@click="mobileOpen = !mobileOpen"
+					@click.stop="toggleMobile"
+					@touchend.stop="toggleMobile"
 				>
 					<div class="flex items-center gap-2.5 min-w-0 flex-1">
-						<span class="w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-950/80 text-brand-600 dark:text-[#f9bc60] flex items-center justify-center shrink-0">
+						<span class="w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-950/80 text-brand-600 dark:text-[#f9bc60] flex items-center justify-center shrink-0 pointer-events-none">
 							<span class="i-hugeicons-book-open-01 text-xs" />
 						</span>
-						<div class="min-w-0 flex-1">
+						<div class="min-w-0 flex-1 pointer-events-none">
 							<div class="flex items-center gap-1.5 text-xs">
 								<span class="font-heading font-semibold text-slate-900 dark:text-[#f9bc60] uppercase tracking-wider text-[10px]">
 									{{ displayTitle }}
@@ -220,7 +230,7 @@
 						</div>
 					</div>
 
-					<div class="w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-800/80 flex items-center justify-center shrink-0 text-slate-500 dark:text-slate-400">
+					<div class="w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-800/80 flex items-center justify-center shrink-0 text-slate-500 dark:text-slate-400 pointer-events-none">
 						<span
 							:class="mobileOpen ? 'i-hugeicons-arrow-up-01' : 'i-hugeicons-arrow-down-01'"
 							class="text-xs transition-transform duration-200"
