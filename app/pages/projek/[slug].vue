@@ -1,8 +1,24 @@
 <script setup lang="ts">
+	import ProseImg from '~/components/content/ProseImg.vue'
+	import ProsePre from '~/components/content/ProsePre.vue'
+	import ProseCode from '~/components/content/ProseCode.vue'
+
 	const route = useRoute()
 	const { locale, locales } = useI18n()
 	const localePath = useLocalePath()
 	const setI18nParams = useSetI18nParams()
+
+	const mdcComponents = {
+		img: ProseImg,
+		ProseImg,
+		'prose-img': ProseImg,
+		pre: ProsePre,
+		ProsePre,
+		'prose-pre': ProsePre,
+		code: ProseCode,
+		ProseCode,
+		'prose-code': ProseCode,
+	}
 
 	const requestedSlug = computed(() => route.params.slug as string)
 	const collection = computed(() => (locale.value === 'id' ? 'projek_id' : 'projek_en'))
@@ -257,7 +273,10 @@
 
 			<!-- 2. Prose Case Study Content -->
 			<div class="prose prose-slate dark:prose-invert max-w-none font-sans text-slate-700 dark:text-slate-200 leading-relaxed">
-				<ContentRenderer :value="project.doc" />
+				<ContentRenderer
+					:value="project.doc"
+					:components="mdcComponents"
+				/>
 			</div>
 		</article>
 

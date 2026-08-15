@@ -1,4 +1,6 @@
 <script setup lang="ts">
+	import { onClickOutside, useEventListener } from '@vueuse/core'
+
 	const { locales, t, locale } = useI18n()
 	const localePath = useLocalePath()
 	const switchLocalePath = useSwitchLocalePath()
@@ -6,6 +8,19 @@
 	const route = useRoute()
 
 	const mobileOpen = ref(false)
+	const headerContainerRef = ref<HTMLElement | null>(null)
+
+	onClickOutside(headerContainerRef, () => {
+		if (mobileOpen.value) {
+			mobileOpen.value = false
+		}
+	})
+
+	useEventListener('keydown', (e: KeyboardEvent) => {
+		if (e.key === 'Escape' && mobileOpen.value) {
+			mobileOpen.value = false
+		}
+	})
 
 	function toggleColorMode() {
 		colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
@@ -51,7 +66,27 @@
 </script>
 
 <template>
-	<header class="sticky top-4 z-50 px-4 pointer-events-none">
+	<!-- Mobile Backdrop Click-to-Close Overlay -->
+	<Transition
+		enter-active-class="transition-opacity duration-200"
+		enter-from-class="opacity-0"
+		enter-to-class="opacity-100"
+		leave-active-class="transition-opacity duration-150"
+		leave-from-class="opacity-100"
+		leave-to-class="opacity-0"
+	>
+		<div
+			v-if="mobileOpen"
+			class="fixed inset-0 z-40 bg-black/20 dark:bg-black/40 backdrop-blur-xs md:hidden pointer-events-auto"
+			aria-hidden="true"
+			@click="mobileOpen = false"
+		/>
+	</Transition>
+
+	<header
+		ref="headerContainerRef"
+		class="sticky top-4 z-50 pointer-events-none w-full"
+	>
 		<div class="container-bento flex items-center justify-between gap-2 sm:gap-4 pointer-events-auto">
 			<!-- Island 1: Logo & Brand -->
 			<NuxtLink
@@ -84,10 +119,10 @@
 				<!-- Search Modal Trigger -->
 				<AppSearchModal />
 
-				<!-- Dark/Light Mode Toggle -->
+				<!-- Dark/Light Mode Toggle (Desktop only) -->
 				<button
 					type="button"
-					class="icon-btn"
+					class="icon-btn hidden md:flex"
 					:aria-label="colorMode.value === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
 					@click="toggleColorMode"
 				>
@@ -95,8 +130,8 @@
 					<span class="i-hugeicons-moon-02 hidden dark:inline text-lg text-brand-300" />
 				</button>
 
-				<!-- Language Switcher -->
-				<div class="flex items-center gap-1 bg-slate-100 dark:bg-slate-800/80 rounded-full p-0.5 text-xs font-semibold">
+				<!-- Language Switcher (Desktop only) -->
+				<div class="hidden md:flex items-center gap-1 bg-slate-100 dark:bg-slate-800/80 rounded-full p-0.5 text-xs font-semibold">
 					<NuxtLink
 						v-for="loc in locales"
 						:key="loc.code"
@@ -108,10 +143,10 @@
 					</NuxtLink>
 				</div>
 
-				<!-- Contact CTA -->
+				<!-- Contact CTA (Desktop only) -->
 				<NuxtLink
 					:to="contactPath"
-					class="btn-primary !px-3.5 !py-1 text-g0 hidden sm:inline-flex"
+					class="btn-primary !px-3.5 !py-1 text-g0 hidden md:inline-flex"
 					:class="{ 'ring-2 ring-brand-400/50': route.path.startsWith(contactPath) }"
 				>
 					{{ t('nav.contact') }}
@@ -130,29 +165,70 @@
 		</div>
 
 		<!-- Mobile Nav Menu Dropdown -->
-		<nav
-			v-if="mobileOpen"
-			class="container-bento mt-2 md:hidden nav-island flex-col items-stretch p-3 animate-fade-in"
+		<Transition
+			enter-active-class="transition duration-200 ease-out"
+			enter-from-class="opacity-0 -translate-y-2 scale-98"
+			enter-to-class="opacity-100 translate-y-0 scale-100"
+			leave-active-class="transition duration-150 ease-in"
+			leave-from-class="opacity-100 translate-y-0 scale-100"
+			leave-to-class="opacity-0 -translate-y-2 scale-98"
 		>
-			<NuxtLink
-				v-for="item in navItems"
-				:key="item.to"
-				:to="item.to"
-				class="focus-ring block px-4 py-2.5 rounded-bento text-g1 font-medium transition-colors"
-				:class="isItemActive(item)
-					? 'bg-brand-50 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400 bento-highlight font-semibold'
-					: 'text-slate-700 dark:text-slate-200'"
-				@click="mobileOpen = false"
+			<nav
+				v-if="mobileOpen"
+				class="container-bento mt-2 md:hidden pointer-events-auto"
 			>
-				{{ item.label }}
-			</NuxtLink>
-			<NuxtLink
-				:to="contactPath"
-				class="btn-primary mt-2 text-center text-g1"
-				@click="mobileOpen = false"
-			>
-				{{ t('nav.contact') }}
-			</NuxtLink>
-		</nav>
+				<div class="rounded-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-2xl p-3 flex flex-col gap-1">
+					<NuxtLink
+						v-for="item in navItems"
+						:key="item.to"
+						:to="item.to"
+						class="focus-ring block px-4 py-2.5 rounded-xl text-g1 font-medium transition-colors"
+						:class="isItemActive(item)
+							? 'bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 font-semibold border border-brand-500/20'
+							: 'text-slate-700 dark:text-slate-200 hover:bg-slate-100/70 dark:hover:bg-slate-800/50'"
+						@click="mobileOpen = false"
+					>
+						{{ item.label }}
+					</NuxtLink>
+
+					<!-- Mobile Settings: Theme Toggle & Language Switcher -->
+					<div class="grid grid-cols-2 gap-2 pt-2.5 mt-1.5 border-t border-slate-100 dark:border-slate-800/80">
+						<!-- Theme Switcher Button -->
+						<button
+							type="button"
+							class="focus-ring flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-g1 font-medium bg-slate-100/80 dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 transition-colors"
+							@click="toggleColorMode"
+						>
+							<span class="i-hugeicons-sun-01 dark:hidden text-lg text-amber-500" />
+							<span class="i-hugeicons-moon-02 hidden dark:inline text-lg text-brand-300" />
+							<span class="text-xs font-semibold">{{ colorMode.value === 'dark' ? 'Dark' : 'Light' }}</span>
+						</button>
+
+						<!-- Language Switcher Pills -->
+						<div class="flex items-center justify-center gap-1 bg-slate-100/80 dark:bg-slate-800/80 rounded-xl p-1 text-xs font-semibold">
+							<NuxtLink
+								v-for="loc in locales"
+								:key="loc.code"
+								:to="switchLocalePath(loc.code)"
+								class="flex-1 py-1 text-center rounded-lg transition-all text-slate-500 dark:text-slate-400"
+								:class="{ 'bg-white dark:bg-slate-700 text-brand-600 dark:text-brand-300 shadow-xs font-bold': loc.code === locale }"
+								@click="mobileOpen = false"
+							>
+								{{ loc.code.toUpperCase() }}
+							</NuxtLink>
+						</div>
+					</div>
+
+					<!-- Contact CTA Button -->
+					<NuxtLink
+						:to="contactPath"
+						class="btn-primary mt-2 text-center text-g1 !py-2.5 rounded-xl font-semibold"
+						@click="mobileOpen = false"
+					>
+						{{ t('nav.contact') }}
+					</NuxtLink>
+				</div>
+			</nav>
+		</Transition>
 	</header>
 </template>

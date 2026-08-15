@@ -1,8 +1,24 @@
 <script setup lang="ts">
+	import ProseImg from '~/components/content/ProseImg.vue'
+	import ProsePre from '~/components/content/ProsePre.vue'
+	import ProseCode from '~/components/content/ProseCode.vue'
+
 	const route = useRoute()
 	const { locale, locales } = useI18n()
 	const localePath = useLocalePath()
 	const setI18nParams = useSetI18nParams()
+
+	const mdcComponents = {
+		img: ProseImg,
+		ProseImg,
+		'prose-img': ProseImg,
+		pre: ProsePre,
+		ProsePre,
+		'prose-pre': ProsePre,
+		code: ProseCode,
+		ProseCode,
+		'prose-code': ProseCode,
+	}
 
 	const requestedSlug = computed(() => route.params.slug as string)
 	const collection = computed(() => (locale.value === 'id' ? 'blog_id' : 'blog_en'))
@@ -93,10 +109,9 @@
 <template>
 	<div class="py-6 sm:py-10">
 		<!-- Mobile Collapsible TOC: Sticky tepat di bawah Floating Header Navbar -->
-		<div v-if="tocLinks.length > 0" class="lg:hidden sticky top-[4.75rem] z-40 px-4 mb-6">
+		<div v-if="tocLinks.length > 0" class="lg:hidden sticky top-[4.75rem] z-40 mb-6 container-bento">
 			<ContentToc
 				:links="tocLinks"
-				highlight-variant="circuit"
 				mode="mobile"
 			/>
 		</div>
@@ -111,9 +126,9 @@
 			</NuxtLink>
 
 			<!-- Article & Desktop TOC Grid Layout -->
-			<div class="grid grid-cols-1 items-start gap-8" :class="tocLinks.length > 0 ? 'lg:grid-cols-12 lg:gap-10' : 'max-w-3xl mx-auto'">
+			<div class="grid grid-cols-1 items-start gap-8" :class="tocLinks.length > 0 ? 'lg:grid-cols-12 lg:gap-8 xl:gap-10' : 'max-w-4xl mx-auto'">
 				<!-- Article Container -->
-				<article v-if="post?.doc" :class="tocLinks.length > 0 ? 'lg:col-span-8' : 'w-full'">
+				<article v-if="post?.doc" :class="tocLinks.length > 0 ? 'lg:col-span-9' : 'w-full'">
 					<!-- Header -->
 					<header class="mb-10 pb-8 border-b border-slate-200/80 dark:border-slate-800/80">
 						<div class="flex flex-wrap items-center gap-2 mb-4">
@@ -142,7 +157,10 @@
 
 					<!-- Prose Content -->
 					<div class="prose prose-slate dark:prose-invert max-w-none font-sans text-slate-700 dark:text-slate-200 leading-relaxed">
-						<ContentRenderer :value="post.doc" />
+						<ContentRenderer
+							:value="post.doc"
+							:components="mdcComponents"
+						/>
 					</div>
 
 					<!-- Surround Articles Navigation (Bento Cards) -->
@@ -180,14 +198,13 @@
 					</nav>
 				</article>
 
-				<!-- Desktop Sticky TOC Aside (Span 4) -->
+				<!-- Desktop Sticky TOC Aside (Span 3) -->
 				<aside
 					v-if="tocLinks.length > 0"
-					class="hidden lg:block lg:col-span-4 sticky top-20 self-start"
+					class="hidden lg:block lg:col-span-3 sticky top-20 self-start"
 				>
 					<ContentToc
 						:links="tocLinks"
-						highlight-variant="circuit"
 						mode="desktop"
 					/>
 				</aside>

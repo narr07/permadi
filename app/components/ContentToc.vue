@@ -1,4 +1,6 @@
 <script setup lang="ts">
+	import { onClickOutside, useThrottleFn } from '@vueuse/core'
+
 	export interface TocLinkItem {
 		id: string
 		text: string
@@ -10,15 +12,11 @@
 		defineProps<{
 			links?: TocLinkItem[]
 			title?: string
-			highlight?: boolean
-			highlightVariant?: 'circuit' | 'straight'
 			mode?: 'mobile' | 'desktop' | 'all'
 		}>(),
 		{
 			links: () => [],
 			title: '',
-			highlight: true,
-			highlightVariant: 'circuit',
 			mode: 'all',
 		}
 	)
@@ -27,17 +25,18 @@
 
 	const mobileOpen = ref(false)
 	const activeId = ref<string>('')
-	const contentRef = ref<HTMLElement | null>(null)
 	const mobileContainerRef = ref<HTMLElement | null>(null)
+
+	onClickOutside(mobileContainerRef, () => {
+		if (mobileOpen.value) {
+			mobileOpen.value = false
+		}
+	})
 
 	const displayTitle = computed(() => {
 		if (props.title) return props.title
 		return locale.value === 'id' ? 'Daftar Isi' : 'Table of Contents'
 	})
-
-	function flattenLinks(links: TocLinkItem[]): TocLinkItem[] {
-		return links.flatMap((l) => [l, ...(l.children ? flattenLinks(l.children) : [])])
-	}
 
 	function flattenWithLevel(links: TocLinkItem[], level = 0): { link: TocLinkItem, level: number }[] {
 		return links.flatMap((l) => [
@@ -48,16 +47,16 @@
 
 	const flatList = computed(() => flattenWithLevel(props.links || []))
 
-	// Real-time Scrollspy Tracker
-	function updateActiveHeading() {
+	// Throttled Real-time Scrollspy Tracker (ringan & hemat CPU)
+	const updateActiveHeading = useThrottleFn(() => {
 		if (import.meta.server) return
-		const flat = flattenLinks(props.links || [])
+		const flat = flatList.value
 		if (!flat.length) return
 
 		const offset = 120
 
 		for (let i = flat.length - 1; i >= 0; i--) {
-			const item = flat[i]
+			const item = flat[i].link
 			const el = document.getElementById(item.id)
 			if (el) {
 				const rect = el.getBoundingClientRect()
@@ -69,9 +68,9 @@
 		}
 
 		if (flat[0]) {
-			activeId.value = flat[0].id
+			activeId.value = flat[0].link.id
 		}
-	}
+	}, 120)
 
 	function scrollToHeading(id: string) {
 		const target = document.getElementById(id)
@@ -92,87 +91,31 @@
 		mobileOpen.value = false
 	}
 
+	function scrollToTop() {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth',
+		})
+	}
+
 	const activeIndex = computed(() => {
-		return flatList.value.findIndex((item) => item.link.id === activeId.value)
+		const idx = flatList.value.findIndex((item) => item.link.id === activeId.value)
+		return idx >= 0 ? idx : 0
 	})
 
 	const activeHeadingText = computed(() => {
 		return flatList.value.find((i) => i.link.id === activeId.value)?.link.text || flatList.value[0]?.link.text || ''
 	})
 
-	const linkHeight = 2.0 // 2.0rem = 32px per item (h-8)
-
-	// Nuxt UI Circuit SVG Mask Generator: Masking wadah agar warna aktif mengikuti persis alur sirkuit
-	const circuitSvgStyle = computed(() => {
-		if (!props.highlight || props.highlightVariant !== 'circuit' || !flatList.value.length) {
-			return null
-		}
-
-		const flatLinks = flatList.value
-		const svgUnit = 16
-		const svgLinkHeight = linkHeight * svgUnit
-		const svgHeight = flatLinks.length * svgLinkHeight
-		const x0 = 1.5
-		const x1 = 10.5
-
-		let path = ''
-		let currentX = x0
-		let y = 0
-
-		flatLinks.forEach((item, index) => {
-			const targetX = item.level > 0 ? x1 : x0
-			const nextY = y + svgLinkHeight
-
-			if (index === 0) {
-				path += `M${targetX} ${y}`
-				currentX = targetX
-			}
-
-			if (targetX !== currentX) {
-				path += ` L${targetX} ${y + 6}`
-				currentX = targetX
-			}
-
-			path += ` L${currentX} ${nextY - (index < flatLinks.length - 1 && flatLinks[index + 1]?.level !== item.level ? 6 : 0)}`
-			y = nextY
-		})
-
-		const svgPath = encodeURIComponent(
-			`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 ${svgHeight}'><path d='${path}' stroke='black' stroke-width='1.5' fill='none'/></svg>`
-		)
-
-		return {
-			width: '0.75rem',
-			height: `${flatLinks.length * linkHeight}rem`,
-			maskImage: `url("data:image/svg+xml,${svgPath}")`,
-			WebkitMaskImage: `url("data:image/svg+xml,${svgPath}")`,
-			maskRepeat: 'no-repeat',
-			WebkitMaskRepeat: 'no-repeat',
-			maskSize: '100% 100%',
-			WebkitMaskSize: '100% 100%',
-		}
+	const progressPercentage = computed(() => {
+		if (!flatList.value.length) return 0
+		return Math.round(((activeIndex.value + 1) / flatList.value.length) * 100)
 	})
-
-	function toggleMobile(event: Event) {
-		event.stopPropagation()
-		event.preventDefault()
-		mobileOpen.value = !mobileOpen.value
-	}
-
-	// Close on click outside (mobile)
-	function handleClickOutside(event: Event) {
-		const target = event.target as Node | null
-		if (mobileContainerRef.value && target && !mobileContainerRef.value.contains(target)) {
-			mobileOpen.value = false
-		}
-	}
 
 	onMounted(() => {
 		nextTick(() => {
 			updateActiveHeading()
 			window.addEventListener('scroll', updateActiveHeading, { passive: true })
-			document.addEventListener('click', handleClickOutside)
-			document.addEventListener('touchstart', handleClickOutside, { passive: true })
 		})
 	})
 
@@ -188,196 +131,176 @@
 
 	onUnmounted(() => {
 		window.removeEventListener('scroll', updateActiveHeading)
-		document.removeEventListener('click', handleClickOutside)
-		document.removeEventListener('touchstart', handleClickOutside)
 	})
 </script>
 
 <template>
-	<nav v-if="links && links.length > 0" class="content-toc w-full pointer-events-auto" aria-label="Table of contents">
-		<!-- 1. Mobile Sticky Island Floating Bar (Fixed persis di bawah Navbar saat di-scroll) -->
+	<nav
+		v-if="links && links.length > 0"
+		class="content-toc w-full pointer-events-auto"
+		aria-label="Table of contents"
+	>
+		<!-- 1. Mobile Bento Floating Island Bar -->
 		<div
 			v-if="mode === 'mobile' || mode === 'all'"
 			ref="mobileContainerRef"
-			class="w-full transition-all duration-300 pointer-events-auto"
+			class="w-full pointer-events-auto"
 			:class="mode === 'all' ? 'lg:hidden' : ''"
 		>
-			<div
-				class="bg-white/95 dark:bg-[#002b27]/95 backdrop-blur-xl border border-slate-200/80 dark:border-[#134e43] shadow-md transition-all duration-300 cursor-pointer"
-				:class="mobileOpen ? 'rounded-2xl p-4' : 'rounded-full px-4 py-2.5'"
-			>
-				<!-- Trigger Bar -->
+			<div class="rounded-2xl bg-white/95 dark:bg-[#002b27]/95 backdrop-blur-xl border border-slate-200/80 dark:border-[#134e43] shadow-lg p-3">
+				<!-- Trigger Bar Button -->
 				<button
 					type="button"
-					class="w-full flex items-center justify-between gap-3 text-left cursor-pointer select-none touch-manipulation"
+					class="w-full flex items-center justify-between gap-3 text-left cursor-pointer select-none touch-manipulation focus:outline-none"
 					aria-label="Toggle Table of Contents"
-					@click.stop="toggleMobile"
-					@touchend.stop="toggleMobile"
+					@click="mobileOpen = !mobileOpen"
 				>
 					<div class="flex items-center gap-2.5 min-w-0 flex-1">
-						<span class="w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-950/80 text-brand-600 dark:text-[#f9bc60] flex items-center justify-center shrink-0 pointer-events-none">
+						<span class="w-7 h-7 rounded-full bg-brand-50 dark:bg-brand-950/70 text-brand-600 dark:text-brand-400 border border-brand-200/60 dark:border-brand-900/60 flex items-center justify-center shrink-0">
 							<span class="i-hugeicons-book-open-01 text-xs" />
 						</span>
-						<div class="min-w-0 flex-1 pointer-events-none">
-							<div class="flex items-center gap-1.5 text-xs">
-								<span class="font-heading font-semibold text-slate-900 dark:text-[#f9bc60] uppercase tracking-wider text-[10px]">
+						<div class="min-w-0 flex-1">
+							<div class="flex items-center gap-2 text-xs">
+								<span class="section-label text-[10px] font-bold">
 									{{ displayTitle }}
 								</span>
+								<span class="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-brand-50/90 dark:bg-brand-950/70 text-brand-600 dark:text-brand-400">
+									{{ activeIndex + 1 }}/{{ flatList.length }}
+								</span>
 							</div>
-							<p class="text-xs text-slate-600 dark:text-slate-300 font-medium truncate">
+							<p class="text-xs text-slate-800 dark:text-slate-200 font-medium truncate mt-0.5">
 								{{ activeHeadingText }}
 							</p>
 						</div>
 					</div>
 
-					<div class="w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-800/80 flex items-center justify-center shrink-0 text-slate-500 dark:text-slate-400 pointer-events-none">
+					<div class="w-7 h-7 rounded-full bg-slate-100 dark:bg-[#042f27] border border-slate-200/60 dark:border-[#134e43] flex items-center justify-center shrink-0 text-slate-500 dark:text-slate-300">
 						<span
 							:class="mobileOpen ? 'i-hugeicons-arrow-up-01' : 'i-hugeicons-arrow-down-01'"
-							class="text-xs transition-transform duration-200"
+							class="text-xs transition-transform duration-150"
 						/>
 					</div>
 				</button>
 
-				<!-- Expanded Dropdown Menu with EXACT Circuit Line Highlight -->
-				<div
-					v-if="mobileOpen"
-					class="mt-3 pt-3 border-t border-slate-200/60 dark:border-slate-800/60 max-h-[60vh] overflow-y-auto animate-fade-in relative pl-5"
+				<!-- Expanded Dropdown Bento List (Fast Transition) -->
+				<Transition
+					enter-active-class="transition-all duration-200 ease-out"
+					enter-from-class="opacity-0 max-h-0"
+					enter-to-class="opacity-100 max-h-[60vh]"
+					leave-active-class="transition-all duration-150 ease-in"
+					leave-from-class="opacity-100 max-h-[60vh]"
+					leave-to-class="opacity-0 max-h-0"
 				>
-					<!-- Circuit Line Masked Indicator on Mobile -->
 					<div
-						v-if="highlight && highlightVariant === 'circuit' && circuitSvgStyle"
-						class="absolute left-0 top-3 overflow-hidden pointer-events-none"
-						:style="circuitSvgStyle"
+						v-if="mobileOpen"
+						class="mt-3 pt-3 border-t border-slate-200/60 dark:border-slate-800/60 overflow-y-auto space-y-1"
 					>
-						<!-- Inactive Circuit Background -->
-						<div class="absolute inset-0 bg-slate-200 dark:bg-slate-800" />
-						
-						<!-- Active Highlight yang Mengikuti Jalur Sirkuit -->
-						<div
-							v-if="activeIndex >= 0"
-							class="absolute inset-x-0 bg-brand-500 dark:bg-[#f9bc60] transition-all duration-300 ease-out"
-							:style="{
-								top: `${activeIndex * linkHeight}rem`,
-								height: `${linkHeight}rem`
-							}"
-						/>
-					</div>
-
-					<!-- Straight Line Alternative -->
-					<div
-						v-else-if="highlight"
-						class="absolute left-0 top-3 bottom-0 w-[1.5px] bg-slate-200 dark:bg-slate-800 overflow-hidden"
-					>
-						<div
-							v-if="activeIndex >= 0"
-							class="absolute left-0 w-full bg-brand-500 dark:bg-[#f9bc60] transition-all duration-300 ease-out"
-							:style="{
-								top: `${activeIndex * linkHeight}rem`,
-								height: `${linkHeight}rem`
-							}"
-						/>
-					</div>
-
-					<!-- Links List -->
-					<ul class="space-y-0">
-						<li
-							v-for="item in flatList"
+						<a
+							v-for="(item, idx) in flatList"
 							:key="item.link.id"
-							class="h-8 flex items-center"
+							:href="`#${item.link.id}`"
+							class="flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-xs font-medium border border-transparent transition-all group"
+							:class="[
+								item.level > 0 ? 'ml-3 text-[11px]' : '',
+								item.link.id === activeId
+									? 'text-brand-600 dark:text-brand-400 bg-slate-100/80 dark:bg-white/5 font-semibold'
+									: 'text-slate-600 dark:text-slate-300 hover:(text-brand-600 dark:text-brand-400 border-brand-500/30 dark:border-brand-400/20 bg-slate-50/60 dark:bg-white/5)'
+							]"
+							@click.prevent="scrollToHeading(item.link.id)"
 						>
-							<a
-								:href="`#${item.link.id}`"
-								class="text-xs transition-all truncate block w-full py-1 hover:translate-x-0.5"
-								:class="[
-									item.level > 0 ? 'pl-3 text-[11px]' : '',
-									item.link.id === activeId
-										? 'text-brand-600! dark:text-[#f9bc60]! font-semibold'
-										: 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
-								]"
-								@click.prevent="scrollToHeading(item.link.id)"
-							>
+							<span class="truncate flex items-center gap-2">
+								<span
+									class="w-1.5 h-1.5 rounded-full shrink-0 transition-transform"
+									:class="item.link.id === activeId ? 'bg-brand-500 dark:bg-brand-400 scale-125' : 'bg-slate-300 dark:bg-slate-600 group-hover:bg-brand-400'"
+								/>
 								{{ item.link.text }}
-							</a>
-						</li>
-					</ul>
-				</div>
+							</span>
+							<span
+								class="text-[10px] font-mono shrink-0"
+								:class="item.link.id === activeId ? 'opacity-90 font-bold text-brand-600 dark:text-brand-400' : 'opacity-40 group-hover:opacity-75'"
+							>
+								0{{ idx + 1 }}
+							</span>
+						</a>
+					</div>
+				</Transition>
 			</div>
 		</div>
 
-		<!-- 2. Desktop Sticky Sidebar TOC (Fixed di Kolom Kanan saat Artikel di-Scroll) -->
+		<!-- 2. Desktop Bento Sticky Card Widget -->
 		<div
 			v-if="mode === 'desktop' || mode === 'all'"
 			class="w-full"
 			:class="mode === 'all' ? 'hidden lg:block' : ''"
 		>
-			<div class="p-4 rounded-bento bg-white/70 dark:bg-[#002b27]/80 backdrop-blur-md border border-slate-200/70 dark:border-slate-800/70 shadow-xs">
-				<!-- Header Title -->
-				<div class="flex items-center gap-2 mb-3 pb-2 border-b border-slate-200/60 dark:border-slate-800/60">
-					<span class="i-hugeicons-book-open-01 text-brand-500 text-sm" />
-					<h4 class="font-heading font-semibold text-xs text-slate-900 dark:text-[#f9bc60] uppercase tracking-wider">
-						{{ displayTitle }}
-					</h4>
+			<div class="bento-card-clean p-5 relative overflow-hidden backdrop-blur-xl bg-white/90 dark:bg-[#002b27]/90 border border-slate-200/80 dark:border-[#134e43] shadow-sm">
+				<!-- Header Bento Section -->
+				<div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-200/60 dark:border-slate-800/60">
+					<div class="flex items-center gap-2">
+						<span class="w-6 h-6 rounded-lg bg-brand-50 dark:bg-brand-950/70 text-brand-600 dark:text-brand-400 border border-brand-200/60 dark:border-brand-900/60 flex items-center justify-center shrink-0">
+							<span class="i-hugeicons-book-open-01 text-xs" />
+						</span>
+						<span class="section-label font-bold text-[11px]">
+							{{ displayTitle }}
+						</span>
+					</div>
+					<span class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-brand-50/90 dark:bg-brand-950/70 text-brand-600 dark:text-brand-400 border border-brand-200/50 dark:border-brand-900/50">
+						{{ activeIndex + 1 }} / {{ flatList.length }}
+					</span>
 				</div>
 
-				<!-- Tree List Container dengan Circuit Line Masking -->
-				<div ref="contentRef" class="relative pl-5 max-h-[calc(100vh-12rem)] overflow-y-auto">
-					<!-- Circuit Line Structure (Warna Jalur Aktif & Pasif Mengikuti Persis Lekukan Sirkuit) -->
+				<!-- Reading Progress Bar -->
+				<div class="w-full bg-slate-100 dark:bg-slate-800/80 h-1 rounded-full mb-4 overflow-hidden">
 					<div
-						v-if="highlight && highlightVariant === 'circuit' && circuitSvgStyle"
-						class="absolute left-0 top-0 overflow-hidden pointer-events-none"
-						:style="circuitSvgStyle"
-					>
-						<!-- Inactive Circuit Background -->
-						<div class="absolute inset-0 bg-slate-200 dark:bg-slate-800" />
-						
-						<!-- Active Highlight yang Mengikuti Jalur Sirkuit -->
-						<div
-							v-if="activeIndex >= 0"
-							class="absolute inset-x-0 bg-brand-500 dark:bg-[#f9bc60] transition-all duration-300 ease-out"
-							:style="{
-								top: `${activeIndex * linkHeight}rem`,
-								height: `${linkHeight}rem`
-							}"
-						/>
-					</div>
+						class="bg-brand-500 dark:bg-brand-400 h-full transition-all duration-300 ease-out"
+						:style="{ width: `${progressPercentage}%` }"
+					/>
+				</div>
 
-					<!-- Straight Line Indicator Alternatif -->
-					<div
-						v-else-if="highlight"
-						class="absolute left-0 top-0 bottom-0 w-[1.5px] bg-slate-200 dark:bg-slate-800 overflow-hidden"
+				<!-- Bento Items List (Active like Hover, Hover with Outline) -->
+				<div class="max-h-[calc(100vh-16rem)] overflow-y-auto pr-1 space-y-1">
+					<a
+						v-for="(item, idx) in flatList"
+						:key="item.link.id"
+						:href="`#${item.link.id}`"
+						class="flex items-center justify-between gap-2.5 px-3 py-2 rounded-xl text-xs font-medium border border-transparent transition-all group"
+						:class="[
+							item.level > 0 ? 'ml-3.5 text-[11.5px]' : '',
+							item.link.id === activeId
+								? 'text-brand-600 dark:text-brand-400 bg-slate-100/80 dark:bg-white/5 font-semibold'
+								: 'text-slate-600 dark:text-slate-300 hover:(text-brand-600 dark:text-brand-400 border-brand-500/30 dark:border-brand-400/20 bg-slate-50/60 dark:bg-white/5)'
+						]"
+						@click.prevent="scrollToHeading(item.link.id)"
 					>
-						<div
-							v-if="activeIndex >= 0"
-							class="absolute left-0 w-full bg-brand-500 dark:bg-[#f9bc60] transition-all duration-300 ease-out"
-							:style="{
-								top: `${activeIndex * linkHeight}rem`,
-								height: `${linkHeight}rem`
-							}"
-						/>
-					</div>
-
-					<!-- Link List -->
-					<ul class="space-y-0">
-						<li
-							v-for="item in flatList"
-							:key="item.link.id"
-							class="h-8 flex items-center"
+						<div class="min-w-0 flex items-center gap-2 truncate">
+							<span
+								class="w-1.5 h-1.5 rounded-full shrink-0 transition-all"
+								:class="item.link.id === activeId ? 'bg-brand-500 dark:bg-brand-400 scale-125' : 'bg-slate-300 dark:bg-slate-700 group-hover:bg-brand-400'"
+							/>
+							<span class="truncate">{{ item.link.text }}</span>
+						</div>
+						<span
+							class="text-[10px] font-mono shrink-0 transition-opacity"
+							:class="item.link.id === activeId ? 'opacity-90 font-bold text-brand-600 dark:text-brand-400' : 'opacity-40 group-hover:opacity-75'"
 						>
-							<a
-								:href="`#${item.link.id}`"
-								class="text-xs transition-all truncate block w-full py-1 hover:translate-x-0.5"
-								:class="[
-									item.level > 0 ? 'pl-3 text-[11px]' : '',
-									item.link.id === activeId
-										? 'text-brand-600! dark:text-[#f9bc60]! font-semibold'
-										: 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
-								]"
-								@click.prevent="scrollToHeading(item.link.id)"
-							>
-								{{ item.link.text }}
-							</a>
-						</li>
-					</ul>
+							{{ idx < 9 ? `0${idx + 1}` : idx + 1 }}
+						</span>
+					</a>
+				</div>
+
+				<!-- Bento Footer Action (Back to top) -->
+				<div class="mt-4 pt-3 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between text-[11px]">
+					<span class="text-slate-400 dark:text-slate-500 font-mono">
+						{{ progressPercentage }}% {{ locale === 'id' ? 'dibaca' : 'read' }}
+					</span>
+					<button
+						type="button"
+						class="inline-flex items-center gap-1 font-semibold text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors cursor-pointer"
+						@click="scrollToTop"
+					>
+						<span>{{ locale === 'id' ? 'Ke Atas' : 'Top' }}</span>
+						<span class="i-hugeicons-arrow-up-01 text-xs" />
+					</button>
 				</div>
 			</div>
 		</div>
@@ -390,6 +313,9 @@
 }
 .content-toc ::-webkit-scrollbar-thumb {
 	background: rgba(100, 116, 139, 0.2);
-	border-radius: 2px;
+	border-radius: 4px;
+}
+.dark .content-toc ::-webkit-scrollbar-thumb {
+	background: rgba(148, 163, 184, 0.2);
 }
 </style>

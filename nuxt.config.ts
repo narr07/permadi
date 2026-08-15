@@ -8,6 +8,15 @@ export default defineNuxtConfig({
 		'@nuxt/image',
 		'nuxt-studio',
 	],
+	components: {
+		dirs: [
+			{
+				path: '~/components/content',
+				global: true,
+			},
+			'~/components',
+		],
+	},
 	css: [
 		'~/assets/css/main.css',
 	],

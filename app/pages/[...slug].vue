@@ -1,7 +1,23 @@
 <script setup lang="ts">
+	import ProseImg from '~/components/content/ProseImg.vue'
+	import ProsePre from '~/components/content/ProsePre.vue'
+	import ProseCode from '~/components/content/ProseCode.vue'
+
 	const route = useRoute()
 	const { locale, locales } = useI18n()
 	const setI18nParams = useSetI18nParams()
+
+	const mdcComponents = {
+		img: ProseImg,
+		ProseImg,
+		'prose-img': ProseImg,
+		pre: ProsePre,
+		ProsePre,
+		'prose-pre': ProsePre,
+		code: ProseCode,
+		ProseCode,
+		'prose-code': ProseCode,
+	}
 
 	const cleanPath = computed(() => {
 		const path = route.path.replace(/\/+$/, '')
@@ -179,7 +195,10 @@
 			</header>
 
 			<div class="prose prose-slate dark:prose-invert max-w-none font-sans text-slate-700 dark:text-slate-200 leading-relaxed">
-				<ContentRenderer :value="page.doc" />
+				<ContentRenderer
+					:value="page.doc"
+					:components="mdcComponents"
+				/>
 			</div>
 		</article>
 	</div>
