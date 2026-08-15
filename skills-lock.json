@@ -48,6 +48,24 @@
       "sourceType": "github",
       "skillPath": "skills/nuxthub/SKILL.md",
       "computedHash": "f366b6a08c9a6806a4b0de604fd2128116455eb70bace08a8701023f9c7853e1"
+    },
+    "pinia": {
+      "source": "antfu/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pinia/SKILL.md",
+      "computedHash": "8e8346fac8cb76d6f186462b712352d5a651c9c049076ea73559f47210c874ef"
+    },
+    "unocss": {
+      "source": "antfu/skills",
+      "sourceType": "github",
+      "skillPath": "skills/unocss/SKILL.md",
+      "computedHash": "1054e69977e1d2d3b7c8479adf16b4db43191bf775f150ce8a06a0b1c191318b"
+    },
+    "vueuse-functions": {
+      "source": "antfu/skills",
+      "sourceType": "github",
+      "skillPath": "skills/vueuse-functions/SKILL.md",
+      "computedHash": "0a762ae555673c6a7705749bd58d74e2ae9b07007a2cde8168f1f6c480b8d8d9"
     }
   }
 }
