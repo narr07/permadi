@@ -38,7 +38,6 @@ export default defineNuxtConfig({
 		},
 	},
 	studio: {
-		enabled: true,
 		repository: {
 			provider: 'github',
 			owner: 'narr07',
@@ -177,8 +176,22 @@ export default defineNuxtConfig({
 	nitro: {
 		preset: 'cloudflare_pages',
 		prerender: {
-			routes: ['/en', '/id'],
+			routes: [
+				'/en',
+				'/id',
+				'/en/projects',
+				'/id/projek',
+				'/en/about',
+				'/id/tentang',
+				'/en/contact',
+				'/id/kontak',
+				'/en/gallery',
+				'/id/galeri',
+				'/en/blog',
+				'/id/blog',
+			],
 			crawlLinks: true,
+			failOnError: false,
 		},
 		cloudflare: {
 			nodeCompat: true,

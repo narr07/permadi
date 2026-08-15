@@ -80,6 +80,10 @@
 		{ watch: [locale, post] }
 	)
 
+	const tocLinks = computed(() => {
+		return post.value?.doc?.body?.toc?.links || post.value?.doc?.toc?.links || []
+	})
+
 	useSeoMeta({
 		title: computed(() => post.value?.doc?.title),
 		description: computed(() => post.value?.doc?.description),
@@ -87,81 +91,107 @@
 </script>
 
 <template>
-	<div class="container-bento py-10 sm:py-14">
-		<!-- Back Button -->
-		<NuxtLink
-			:to="localePath('/blog')"
-			class="focus-ring inline-flex items-center gap-1.5 text-meta text-xs font-semibold hover:text-brand-600 dark:hover:text-brand-400 transition-colors mb-8"
-		>
-			<span class="i-hugeicons-arrow-left-01 text-sm" /> {{ locale === 'id' ? 'Kembali ke Blog' : 'Back to Blog' }}
-		</NuxtLink>
+	<div class="py-6 sm:py-10">
+		<!-- Mobile Collapsible TOC: Sticky tepat di bawah Floating Header Navbar -->
+		<div v-if="tocLinks.length > 0" class="lg:hidden sticky top-[4.25rem] z-40 px-4 mb-6">
+			<ContentToc
+				:links="tocLinks"
+				highlight-variant="circuit"
+				mode="mobile"
+			/>
+		</div>
 
-		<!-- Article Container -->
-		<article v-if="post?.doc" class="max-w-3xl mx-auto">
-			<!-- Header -->
-			<header class="mb-10 pb-8 border-b border-slate-200/80 dark:border-slate-800/80">
-				<div class="flex flex-wrap items-center gap-2 mb-4">
-					<span v-for="tag in post.doc.tags" :key="tag" class="badge-neutral text-xs">
-						#{{ tag }}
-					</span>
-				</div>
-				<h1 class="heading-hero text-slate-900 dark:text-white text-3xl sm:text-4xl md:text-5xl leading-tight">
-					{{ post.doc.title }}
-				</h1>
-				<p class="text-body text-slate-600 dark:text-slate-300 text-lg mt-4 leading-relaxed">
-					{{ post.doc.description }}
-				</p>
-				<div class="flex items-center gap-4 text-meta text-xs mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
-					<span class="flex items-center gap-1.5 font-medium">
-						<span class="i-hugeicons-calendar-03 text-sm text-brand-500" />
-						{{ post.doc.date }}
-					</span>
-					<span>•</span>
-					<span class="flex items-center gap-1.5 font-medium">
-						<span class="i-hugeicons-clock-01 text-sm text-brand-500" />
-						{{ post.doc.readingTime || 5 }} min read
-					</span>
-				</div>
-			</header>
+		<div class="container-bento">
+			<!-- Back Button -->
+			<NuxtLink
+				:to="localePath('/blog')"
+				class="focus-ring inline-flex items-center gap-1.5 text-meta text-xs font-semibold hover:text-brand-600 dark:hover:text-brand-400 transition-colors mb-6"
+			>
+				<span class="i-hugeicons-arrow-left-01 text-sm" /> {{ locale === 'id' ? 'Kembali ke Blog' : 'Back to Blog' }}
+			</NuxtLink>
 
-			<!-- Prose Content -->
-			<div class="prose prose-slate dark:prose-invert max-w-none font-sans text-slate-700 dark:text-slate-200 leading-relaxed">
-				<ContentRenderer :value="post.doc" />
+			<!-- Article & Desktop TOC Grid Layout -->
+			<div class="grid grid-cols-1 items-start gap-8" :class="tocLinks.length > 0 ? 'lg:grid-cols-12 lg:gap-10' : 'max-w-3xl mx-auto'">
+				<!-- Article Container -->
+				<article v-if="post?.doc" :class="tocLinks.length > 0 ? 'lg:col-span-8' : 'w-full'">
+					<!-- Header -->
+					<header class="mb-10 pb-8 border-b border-slate-200/80 dark:border-slate-800/80">
+						<div class="flex flex-wrap items-center gap-2 mb-4">
+							<span v-for="tag in post.doc.tags" :key="tag" class="badge-neutral text-xs">
+								#{{ tag }}
+							</span>
+						</div>
+						<h1 class="font-heading font-semibold text-slate-900 dark:text-white text-3xl sm:text-4xl md:text-5xl leading-tight">
+							{{ post.doc.title }}
+						</h1>
+						<p class="text-body text-slate-600 dark:text-slate-300 text-lg mt-4 leading-relaxed">
+							{{ post.doc.description }}
+						</p>
+						<div class="flex items-center gap-4 text-meta text-xs mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
+							<span class="flex items-center gap-1.5 font-medium">
+								<span class="i-hugeicons-calendar-03 text-sm text-brand-500" />
+								{{ post.doc.date }}
+							</span>
+							<span>•</span>
+							<span class="flex items-center gap-1.5 font-medium">
+								<span class="i-hugeicons-clock-01 text-sm text-brand-500" />
+								{{ post.doc.readingTime || 5 }} min read
+							</span>
+						</div>
+					</header>
+
+					<!-- Prose Content -->
+					<div class="prose prose-slate dark:prose-invert max-w-none font-sans text-slate-700 dark:text-slate-200 leading-relaxed">
+						<ContentRenderer :value="post.doc" />
+					</div>
+
+					<!-- Surround Articles Navigation (Bento Cards) -->
+					<nav
+						v-if="surround && (surround[0] || surround[1])"
+						class="mt-14 pt-8 border-t border-slate-200/80 dark:border-slate-800/80 grid grid-cols-1 sm:grid-cols-2 gap-4"
+						aria-label="Article Navigation"
+					>
+						<NuxtLink
+							v-if="surround[0]"
+							:to="`/${locale}/blog/${surround[0].slug || cleanSlug(surround[0].path)}`"
+							class="bento-card-clean bento-lift flex flex-col justify-between group p-4 rounded-bento"
+						>
+							<span class="text-meta text-xs uppercase font-semibold flex items-center gap-1 text-slate-400 group-hover:text-brand-500 transition-colors">
+								<span class="i-hugeicons-arrow-left-01 text-xs" /> {{ locale === 'id' ? 'Artikel Sebelumnya' : 'Previous Article' }}
+							</span>
+							<strong class="font-heading font-semibold text-g1 text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mt-2 block">
+								{{ surround[0].title }}
+							</strong>
+						</NuxtLink>
+						<div v-else class="hidden sm:block" />
+
+						<NuxtLink
+							v-if="surround[1]"
+							:to="`/${locale}/blog/${surround[1].slug || cleanSlug(surround[1].path)}`"
+							class="bento-card-clean bento-lift flex flex-col justify-between group p-4 rounded-bento text-right"
+						>
+							<span class="text-meta text-xs uppercase font-semibold flex items-center justify-end gap-1 text-slate-400 group-hover:text-brand-500 transition-colors">
+								{{ locale === 'id' ? 'Artikel Selanjutnya' : 'Next Article' }} <span class="i-hugeicons-arrow-right-01 text-xs" />
+							</span>
+							<strong class="font-heading font-semibold text-g1 text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mt-2 block">
+								{{ surround[1].title }}
+							</strong>
+						</NuxtLink>
+					</nav>
+				</article>
+
+				<!-- Desktop Sticky TOC Aside (Span 4) -->
+				<aside
+					v-if="tocLinks.length > 0"
+					class="hidden lg:block lg:col-span-4 sticky top-20 self-start"
+				>
+					<ContentToc
+						:links="tocLinks"
+						highlight-variant="circuit"
+						mode="desktop"
+					/>
+				</aside>
 			</div>
-		</article>
-
-		<!-- Surround Articles Navigation (Bento Cards) -->
-		<nav
-			v-if="surround && (surround[0] || surround[1])"
-			class="max-w-3xl mx-auto mt-14 pt-8 border-t border-slate-200/80 dark:border-slate-800/80 grid grid-cols-1 sm:grid-cols-2 gap-4"
-			aria-label="Article Navigation"
-		>
-			<NuxtLink
-				v-if="surround[0]"
-				:to="`/${locale}/blog/${surround[0].slug || cleanSlug(surround[0].path)}`"
-				class="bento-card-outline bento-lift flex flex-col justify-between group p-4 rounded-bento"
-			>
-				<span class="text-meta text-xs uppercase font-semibold flex items-center gap-1 text-slate-400 group-hover:text-brand-500 transition-colors">
-					<span class="i-hugeicons-arrow-left-01 text-xs" /> {{ locale === 'id' ? 'Artikel Sebelumnya' : 'Previous Article' }}
-				</span>
-				<strong class="font-heading font-semibold text-g1 text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mt-2 block">
-					{{ surround[0].title }}
-				</strong>
-			</NuxtLink>
-			<div v-else class="hidden sm:block" />
-
-			<NuxtLink
-				v-if="surround[1]"
-				:to="`/${locale}/blog/${surround[1].slug || cleanSlug(surround[1].path)}`"
-				class="bento-card-outline bento-lift flex flex-col justify-between group p-4 rounded-bento text-right"
-			>
-				<span class="text-meta text-xs uppercase font-semibold flex items-center justify-end gap-1 text-slate-400 group-hover:text-brand-500 transition-colors">
-					{{ locale === 'id' ? 'Artikel Selanjutnya' : 'Next Article' }} <span class="i-hugeicons-arrow-right-01 text-xs" />
-				</span>
-				<strong class="font-heading font-semibold text-g1 text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mt-2 block">
-					{{ surround[1].title }}
-				</strong>
-			</NuxtLink>
-		</nav>
+		</div>
 	</div>
 </template>

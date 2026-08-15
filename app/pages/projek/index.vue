@@ -1,59 +1,57 @@
 <script setup lang="ts">
-	const { locale, t } = useI18n()
+	const { locale } = useI18n()
 	const localePath = useLocalePath()
-	const pageCollection = computed(() => (locale.value === 'id' ? 'pages_id' : 'pages_en'))
-	const projectCollection = computed(() => (locale.value === 'id' ? 'projek_id' : 'projek_en'))
+
+	const collection = computed(() => (locale.value === 'id' ? 'projek_id' : 'projek_en'))
 	const currentPath = computed(() => (locale.value === 'id' ? '/id/projek' : '/en/projects'))
 
-	const searchQuery = ref('')
-	const selectedTag = ref<string>('ALL')
-
+	// Data halaman projek (deskripsi dan header)
 	const { data: page } = await useAsyncData(
-		() => 'projek-index-' + locale.value,
-		() => queryCollection(pageCollection.value).path(currentPath.value).first(),
+		() => `projek-page-${locale.value}`,
+		() => queryCollection(locale.value === 'id' ? 'pages_id' : 'pages_en').path(currentPath.value).first(),
 		{ watch: [locale] }
 	)
 
+	// Koleksi semua studi kasus projek
 	const { data: projects } = await useAsyncData(
-		() => 'projek-list-' + locale.value,
-		() => queryCollection(projectCollection.value).order('date', 'DESC').all(),
+		() => `projek-list-${locale.value}`,
+		() => queryCollection(collection.value).order('date', 'DESC').all(),
 		{ watch: [locale] }
 	)
 
-	function cleanSlug(pathStr: string): string {
-		const parts = pathStr.split('/')
-		const lastPart = parts[parts.length - 1] || ''
-		return lastPart.replace(/^\d+\./, '')
-	}
+	// State filter tag & search
+	const selectedTag = ref('ALL')
+	const searchQuery = ref('')
 
+	// Daftar seluruh tag teknologi unik
 	const allTags = computed(() => {
 		if (!projects.value) return []
-		const tagSet = new Set<string>()
-		for (const item of projects.value) {
-			if (Array.isArray(item.tags)) {
-				item.tags.forEach((tag: string) => tagSet.add(tag))
-			}
-		}
-		return Array.from(tagSet)
+		const tagsSet = new Set<string>()
+		projects.value.forEach((item: any) => {
+			const tags = item.tags || item.tech || []
+			tags.forEach((t: string) => tagsSet.add(t))
+		})
+		return Array.from(tagsSet)
 	})
 
+	// Filter projek berdasarkan pencarian teks dan tag
 	const filteredProjects = computed(() => {
 		if (!projects.value) return []
 		return projects.value
 			.filter((item: any) => {
-				const q = searchQuery.value.trim().toLowerCase()
-				const matchesQuery =
-					!q ||
-					item.title?.toLowerCase().includes(q) ||
-					item.description?.toLowerCase().includes(q) ||
-					item.tags?.some((tag: string) => tag.toLowerCase().includes(q)) ||
-					item.plainText?.toLowerCase().includes(q)
+				const matchesTag = selectedTag.value === 'ALL'
+					|| (item.tags && item.tags.includes(selectedTag.value))
+					|| (item.tech && item.tech.includes(selectedTag.value))
 
-				const matchesTag = selectedTag.value === 'ALL' || item.tags?.includes(selectedTag.value)
-				return matchesQuery && matchesTag
+				const query = searchQuery.value.toLowerCase().trim()
+				const matchesQuery = !query
+					|| item.title?.toLowerCase().includes(query)
+					|| item.description?.toLowerCase().includes(query)
+
+				return matchesTag && matchesQuery
 			})
 			.map((item: any) => {
-				const projectSlug = item.slug || cleanSlug(item.path)
+				const projectSlug = item.slug || (item.path ? item.path.split('/').pop() : item.stem)
 				const basePath = locale.value === 'id' ? `/id/projek/${projectSlug}` : `/en/projects/${projectSlug}`
 				return {
 					...item,
@@ -72,19 +70,19 @@
 	<div class="container-bento py-10 sm:py-14">
 		<!-- Page Header -->
 		<header class="max-w-3xl mb-8 sm:mb-12">
-			<span class="badge-neutral text-brand-600 dark:text-brand-400 font-semibold mb-3">
-				<span class="i-hugeicons-code-folder text-xs mr-1 inline-block" /> {{ locale === 'id' ? 'Karya & Eksplorasi' : 'Work & Explorations' }}
+			<span class="section-label text-brand-600 dark:text-brand-400 font-bold mb-3 block">
+				{{ locale === 'id' ? 'Karya & Eksplorasi' : 'Work & Explorations' }}
 			</span>
-			<h1 class="heading-hero text-slate-900 dark:text-white">
+			<h1 class="font-heading font-semibold text-slate-900 dark:text-white text-4xl sm:text-6xl leading-[0.95] tracking-tight mb-4">
 				{{ page?.title || (locale === 'id' ? 'Projek & Studi Kasus' : 'Projects & Case Studies') }}
 			</h1>
-			<p class="text-body text-slate-600 dark:text-slate-300 mt-2 text-lg">
+			<p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed max-w-xl">
 				{{ page?.description || (locale === 'id' ? 'Koleksi aplikasi web terkurasi, modul UI, dan studi kasus sistem performa tinggi.' : 'A curated collection of web applications, UI modules, and high-performance case studies.') }}
 			</p>
 		</header>
 
 		<!-- Filter & Search Toolbar -->
-		<div class="bento-card-subtle mb-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+		<div class="bento-card-clean p-4 sm:p-5 mb-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
 			<!-- Search Input -->
 			<div class="relative flex-1 max-w-md">
 				<span class="i-hugeicons-search-01 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm" />
@@ -92,7 +90,7 @@
 					v-model="searchQuery"
 					type="text"
 					:placeholder="locale === 'id' ? 'Cari projek berdasarkan nama atau topik...' : 'Search project by name or tech stack...'"
-					class="focus-ring w-full pl-10 pr-4 py-2 text-xs rounded-bento bg-white/70 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400"
+					class="focus-ring w-full pl-10 pr-4 py-2 text-xs rounded-bento bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400"
 				>
 			</div>
 
@@ -125,9 +123,9 @@
 				v-for="(item, index) in filteredProjects"
 				:key="item.url"
 				:to="item.url"
-				class="bento-card-outline bento-lift flex flex-col justify-between group block overflow-hidden"
+				class="bento-card-clean flex flex-col justify-between group block overflow-hidden p-5 sm:p-6"
 				:class="index === 0
-					? 'lg:col-span-2 sm:col-span-2 md:flex-row md:items-center md:gap-6 bg-brand-50/25 dark:bg-brand-950/25 bento-highlight'
+					? 'lg:col-span-2 sm:col-span-2 md:flex-row md:items-center md:gap-6 bg-brand-50/20 dark:bg-brand-950/20'
 					: 'col-span-1'"
 			>
 				<!-- Thumbnail (Hanya 1 Gambar) -->
@@ -141,7 +139,7 @@
 						:alt="item.title"
 						format="webp"
 						quality="85"
-						class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+						class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
 						loading="lazy"
 					/>
 				</div>
@@ -151,33 +149,33 @@
 					<div>
 						<div class="flex items-center justify-between gap-2 mb-2.5">
 							<div class="flex flex-wrap gap-1.5">
-								<span v-if="index === 0" class="badge-neutral text-xs font-semibold text-brand-600 dark:text-brand-400 bg-brand-100/70 dark:bg-brand-900/50">
-									<span class="i-hugeicons-sparkles text-[11px] mr-0.5" /> Terbaru
+								<span v-if="index === 0" class="px-2.5 py-0.5 rounded-full text-xs font-semibold text-brand-700 dark:text-brand-300 bg-brand-100/80 dark:bg-brand-900/60">
+									<span class="i-hugeicons-sparkles text-[11px] mr-0.5" /> {{ locale === 'id' ? 'Terbaru' : 'Latest' }}
 								</span>
-								<span v-for="tag in (item.tags || item.tech || [])" :key="tag" class="badge-neutral text-xs">
+								<span v-for="tag in (item.tags || item.tech || [])" :key="tag" class="px-2 py-0.5 rounded-full text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
 									{{ tag }}
 								</span>
 							</div>
-							<span class="text-meta text-xs">
+							<span class="text-xs font-mono text-slate-400">
 								{{ item.date }}
 							</span>
 						</div>
 
 						<h2
-							class="font-heading font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors"
-							:class="index === 0 ? 'text-g2 sm:text-g3' : 'text-g1 sm:text-g2'"
+							class="font-heading font-semibold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors"
+							:class="index === 0 ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'"
 						>
 							{{ item.title }}
 						</h2>
 
-						<p class="text-body mt-2 text-slate-600 dark:text-slate-300 text-sm line-clamp-3">
+						<p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mt-2 line-clamp-3 leading-relaxed">
 							{{ item.description }}
 						</p>
 					</div>
 
-					<div class="mt-5 pt-3.5 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between text-meta text-xs">
-						<span class="text-brand-600 dark:text-brand-400 font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-1">
-							Lihat Detail Case Study <span class="i-hugeicons-arrow-right-01 text-xs" />
+					<div class="mt-5 pt-3.5 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between text-xs">
+						<span class="text-brand-600 dark:text-brand-400 font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1">
+							{{ locale === 'id' ? 'Lihat Studi Kasus' : 'Explore Case Study' }} <span>↗</span>
 						</span>
 						<div v-if="item.demoUrl || item.link || item.githubUrl || item.repo" class="flex items-center gap-2" @click.stop>
 							<a
@@ -206,13 +204,22 @@
 			</NuxtLink>
 		</div>
 
-		<!-- Empty State -->
-		<EmptyState
-			v-else
-			icon="i-hugeicons-code-folder"
-			title="Tidak Ada Projek Ditemukan"
-			description="Coba gunakan kata kunci pencarian yang lain atau reset filter kategori."
-			:actions="[{ label: 'Lihat Semua Projek', to: '/id/projek' }]"
-		/>
+		<!-- Empty State Jika Tidak Ada Hasil Pencarian -->
+		<div v-else class="bento-card-clean p-12 text-center my-8">
+			<span class="i-hugeicons-folder-open text-4xl text-slate-400 mx-auto block mb-3" />
+			<h3 class="font-heading font-semibold text-lg text-slate-900 dark:text-white">
+				{{ locale === 'id' ? 'Tidak ada projek ditemukan' : 'No projects found' }}
+			</h3>
+			<p class="text-xs text-slate-500 mt-1 mb-4">
+				{{ locale === 'id' ? 'Coba ubah kata kunci pencarian atau bersihkan filter tag.' : 'Try changing search keywords or resetting active tag filters.' }}
+			</p>
+			<button
+				type="button"
+				class="px-4 py-2 rounded-full text-xs font-bold bg-brand-500 text-white"
+				@click="selectedTag = 'ALL'; searchQuery = ''"
+			>
+				{{ locale === 'id' ? 'Reset Pencarian' : 'Reset Filter' }}
+			</button>
+		</div>
 	</div>
 </template>

@@ -15,6 +15,35 @@
 	--color-brand-800: #115e4f;
 	--color-brand-900: #134e43;
 	--color-brand-950: #042f27;
+
+	--color-yellow-200: #fdeed6;
+	--color-yellow-300: #fcddaf;
+	--color-yellow-400: #facd87;
+	--color-yellow-500: #f9bc60;
+	--color-yellow-600: #f7a52a;
+	--color-yellow-700: #e08a08;
+
+	--canvas: #eff6f5;
+	--ink: #002b27;
+	--heading: #002b27;
+	--card: #ffffff;
+	--border-clean: #c5d9d7;
+	--muted: #537c77;
+	--sand: #facd87;
+	--gold: #f9bc60;
+	--sky: #7dd3fc;
+}
+
+.dark {
+	--canvas: #042f27;
+	--ink: #eff6f5;
+	--heading: #f9bc60;
+	--card: #002b27;
+	--border-clean: #134e43;
+	--muted: #84a8a4;
+	--sand: #facd87;
+	--gold: #f9bc60;
+	--sky: #7dd3fc;
 }
 
 /* Fallback & Custom Font-Family Definition */
@@ -26,6 +55,8 @@
 
 html {
 	font-family: 'TikTok Sans', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+	background-color: var(--canvas);
+	color: var(--ink);
 	scroll-behavior: smooth;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -36,14 +67,104 @@ h2,
 h3,
 h4,
 h5,
-h6 {
-	font-family: 'Barlow', 'TikTok Sans', 'Plus Jakarta Sans', sans-serif;
-	letter-spacing: -0.02em;
+h6,
+.font-heading {
+	font-family: 'Barlow', 'TikTok Sans', sans-serif;
+	letter-spacing: -0.04em;
+	color: var(--heading);
+}
+
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+	color: #f9bc60;
 }
 
 body {
 	min-height: 100vh;
-	transition: background-color 0.3s ease, color 0.3s ease;
+	background-color: var(--canvas);
+	color: var(--ink);
+	transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Ambient Subtle Noise Texture */
+.noise {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	opacity: 0.035;
+	z-index: 999;
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E");
+}
+
+/* Bento Card Style Classes */
+.bento-card-clean {
+	background: var(--card);
+	border: 1px solid var(--border-clean);
+	border-radius: 20px;
+	box-shadow: 0 10px 30px rgba(0, 43, 39, 0.035);
+	overflow: hidden;
+	transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.bento-card-clean:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 16px 35px rgba(0, 43, 39, 0.09);
+	border-color: #14b898;
+}
+
+.hero-card-clean {
+	background: #002b27;
+	color: #eff6f5;
+	border: 1px solid #134e43;
+	border-radius: 20px;
+	box-shadow: 0 14px 40px rgba(0, 43, 39, 0.12);
+}
+
+.sand-card-clean {
+	background: #facd87;
+	color: #002b27;
+	border: 1px solid #facd87;
+	border-radius: 20px;
+}
+
+.sky-card-clean {
+	background: #7dd3fc;
+	color: #002b27;
+	border: 1px solid #7dd3fc;
+	border-radius: 20px;
+}
+
+.status-dot {
+	width: 8px;
+	height: 8px;
+	background: #14b898;
+	border-radius: 50%;
+	display: inline-block;
+	box-shadow: 0 0 0 4px #ccfbf2;
+}
+
+.dark .status-dot {
+	box-shadow: 0 0 0 4px rgba(20, 184, 152, 0.2);
+}
+
+.section-label,
+.eyebrow,
+.kicker {
+	text-transform: uppercase;
+	letter-spacing: 0.15em;
+	font-size: 11px;
+	font-weight: 700;
+	color: #537c77;
+}
+
+.dark .section-label,
+.dark .eyebrow,
+.dark .kicker {
+	color: #f9bc60;
 }
 
 /* Custom scrollbar */
@@ -67,8 +188,4 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
 	background: rgba(100, 116, 139, 0.4);
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-	background: rgba(148, 163, 184, 0.4);
 }

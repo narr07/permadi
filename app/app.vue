@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	const { t, locale } = useI18n()
+	const { locale } = useI18n()
 
 	useHead({
 		htmlAttrs: {
@@ -12,7 +12,8 @@
 </script>
 
 <template>
-	<div class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:(bg-brand-500 text-white) transition-colors duration-300 flex flex-col justify-between">
+	<div class="min-h-screen selection:(bg-brand-500 text-white) flex flex-col justify-between relative">
+		<div class="noise" aria-hidden="true" />
 		<NuxtRouteAnnouncer />
 		<AppHeader />
 		

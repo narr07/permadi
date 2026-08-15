@@ -134,7 +134,7 @@
 	<div class="container-bento py-10 sm:py-14">
 		<!-- Back Button -->
 		<NuxtLink
-			:to="localePath('/projek')"
+			:to="locale === 'id' ? '/id/projek' : '/en/projects'"
 			class="focus-ring inline-flex items-center gap-1.5 text-meta text-xs font-semibold hover:text-brand-600 dark:hover:text-brand-400 transition-colors mb-8"
 		>
 			<span class="i-hugeicons-arrow-left-01 text-sm" /> {{ locale === 'id' ? 'Kembali ke Semua Projek' : 'Back to All Projects' }}
@@ -207,7 +207,7 @@
 				<div class="grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-12 gap-3 sm:gap-4">
 					<!-- Hero Bento Card (Span 8 if multiple, span 12 if single) -->
 					<div
-						class="bento-card-outline bento-lift !p-0 overflow-hidden cursor-pointer group relative bg-slate-100 dark:bg-slate-800/80 rounded-bento"
+						class="bento-card-clean !p-0 overflow-hidden cursor-pointer group relative bg-slate-100 dark:bg-slate-800/80 rounded-bento"
 						:class="allScreenshots.length === 1 ? 'col-span-12 aspect-video' : 'col-span-12 lg:col-span-8 aspect-video'"
 						@click="openLightbox(0)"
 					>
@@ -233,7 +233,7 @@
 						<div
 							v-for="(img, idx) in allScreenshots.slice(1)"
 							:key="idx"
-							class="bento-card-outline bento-lift !p-0 overflow-hidden cursor-pointer group relative bg-slate-100 dark:bg-slate-800/80 rounded-bento"
+							class="bento-card-clean !p-0 overflow-hidden cursor-pointer group relative bg-slate-100 dark:bg-slate-800/80 rounded-bento"
 							:class="allScreenshots.length === 2 ? 'col-span-12 lg:col-span-4 aspect-video' : (idx === 0 ? 'col-span-12 sm:col-span-6 lg:col-span-4 aspect-video' : 'col-span-6 sm:col-span-3 lg:col-span-4 aspect-video')"
 							@click="openLightbox(idx + 1)"
 						>
