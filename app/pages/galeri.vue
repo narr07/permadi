@@ -13,37 +13,13 @@
 		{ watch: [locale] }
 	)
 
-	// 2. Fetch gallery items dari Cloudinary API (dengan fallback ke Nuxt Content jika kosong)
+	// 2. Fetch gallery items dari Cloudinary API
 	const { data: cloudinaryItems } = await useAsyncData<GalleryItem[]>(
 		'cloudinary-gallery-list',
 		() => $fetch('/api/cloudinary-gallery').catch(() => [])
 	)
 
-	const { data: localItems } = await useAsyncData(
-		'local-gallery-list',
-		() => queryCollection('galeri').order('order', 'ASC').all().catch(() => [])
-	)
-
-	// Gabungkan items: Prioritaskan Cloudinary jika ada, atau gunakan local items
-	const allItems = computed(() => {
-		if (cloudinaryItems.value && cloudinaryItems.value.length > 0) {
-			return cloudinaryItems.value
-		}
-		if (localItems.value && localItems.value.length > 0) {
-			return localItems.value.map((item: any, idx: number) => ({
-				public_id: item.image || `local-${idx}`,
-				title: item.title || (locale.value === 'id' ? 'Foto Galeri' : 'Gallery Photo'),
-				alt: item.title || (locale.value === 'id' ? 'Dokumentasi Visual' : 'Visual Documentation'),
-				image: item.image,
-				tags: item.tags || ['dokumentasi'],
-				created_at: '',
-				width: 800,
-				height: 600,
-				aspectRatio: item.aspectRatio || (idx % 3 === 0 ? 'aspect-photo' : 'aspect-video'),
-			}))
-		}
-		return []
-	})
+	const allItems = computed(() => cloudinaryItems.value || [])
 
 	// Filter Tag
 	const selectedTag = ref<string>('ALL')

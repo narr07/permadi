@@ -1,0 +1,42 @@
+title: Contact & Collaboration — Dinar Permadi Yusup
+description: Get in touch with Dinar Permadi Yusup for collaboration opportunities, web engineering, or interface consulting.
+section_label: Get in Touch
+headline: Contact & Collaboration
+lead: Interested in discussing new projects, frontend consulting, or just sharing thoughts? Feel free to reach out.
+
+email_card:
+  label: Direct Inquiries
+  email: hi@permadi.dev
+  description: Response within 1-2 business days for collaboration or project inquiries.
+  button_text: Send Email Now
+  meta: Available Worldwide
+
+status_card:
+  label: Availability Status
+  title: Open for Projects & Consulting
+  description: Based in Bandung, Indonesia (UTC+7). Experienced in working remotely with global teams.
+  location: Bandung, ID
+  timezone: GMT+7
+
+social_card:
+  label: Social Channels
+  title: Connect across the web
+  description: Open source code repositories, design experiments, and visual captures.
+  items:
+    - name: GitHub
+      url: https://github.com/narr07
+      icon: i-hugeicons-github
+    - name: X / Twitter
+      url: https://x.com/dinarpermadi07
+      icon: i-hugeicons-new-twitter
+    - name: Instagram
+      url: https://www.instagram.com/narr07/
+      icon: i-hugeicons-instagram
+    - name: Behance
+      url: https://www.behance.net/narr07
+      icon: i-hugeicons-behance-02
+
+newsletter_card:
+  label: Newsletter
+  title: Newsletter Subscription
+  description: Get curated insights on web performance, Vue/Nuxt engineering, and design systems.

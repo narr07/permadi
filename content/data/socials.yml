@@ -1,0 +1,26 @@
+links:
+  - name: GitHub
+    username: narr07
+    url: https://github.com/narr07
+    icon: i-simple-icons-github
+    ariaLabel: GitHub
+  - name: Instagram
+    username: narr07
+    url: https://www.instagram.com/narr07/
+    icon: i-simple-icons-instagram
+    ariaLabel: Instagram
+  - name: X
+    username: dinarpermadi07
+    url: https://x.com/dinarpermadi07
+    icon: i-simple-icons-x
+    ariaLabel: X
+  - name: Behance
+    username: narr07
+    url: https://www.behance.net/narr07
+    icon: i-simple-icons-behance
+    ariaLabel: Behance
+  - name: Email
+    username: hi@permadi.dev
+    url: mailto:hi@permadi.dev
+    icon: i-lucide-mail
+    ariaLabel: Email

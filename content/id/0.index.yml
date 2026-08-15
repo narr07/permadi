@@ -1,0 +1,49 @@
+title: Dinar Permadi Yusup — Frontend Developer & Digital Craftsman
+description: Arsip hidup berisi karya, eksperimen antarmuka, fotografi, dan catatan oleh frontend developer di Bandung.
+eyebrow: Permadi / Ruang Kerja Personal
+headline: Sudut kecil di belantara internet.
+
+hero:
+  status: Tersedia untuk proyek terpilih
+  kicker: Frontend Developer / Digital Craftsman
+  headline: Membangun antarmuka
+  headline_italic: bermakna
+  headline_suffix: dengan ketelitian.
+  description: Mengubah gagasan kompleks menjadi pengalaman digital yang tenang, rapi, dan berperforma tinggi.
+  location: Bandung, ID
+  timezone: GMT+7 / Local time
+  links:
+    - label: Lihat Portofolio
+      to: /id/projek
+      icon: i-hugeicons-arrow-up-right-01
+      variant: primary
+    - label: Hubungi Saya
+      to: /id/kontak
+      variant: outline
+
+project_section:
+  label: Projek Terpilih
+  fallback_title: Empat proyek, banyak pelajaran berharga.
+  fallback_description: Koleksi studi kasus sistem web dan eksplorasi desain modular.
+  all_link_text: Buka Semua Projek
+
+philosophy:
+  number: 01 / 04
+  quote: Desain yang baik itu tenang.
+  quote_bold: Desain luar biasa akan selalu membekas.
+  label: Permadi Philosophy
+
+explore:
+  label: Eksplorasi Saat Ini
+  text: Antarmuka yang terasa natural dan tenang.
+
+archive:
+  label: Arsip Visual
+  title: Gambar, dokumentasi, dan observasi visual.
+  description: Dokumentasi fotografi karya dan setup ruang kerja yang terorganisir di Cloudinary CDN.
+  link_text: Buka Galeri Lengkap
+
+writing:
+  label: Tulisan & Catatan
+  title: Catatan terbaru seputar web & sistem.
+  all_link_text: Lihat Semua Tulisan

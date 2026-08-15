@@ -9,14 +9,6 @@
 		{ watch: [locale] }
 	)
 
-	const techTools = [
-		{ name: 'Vue 3 & Nuxt 4', desc: 'Frontend Framework & SSR' },
-		{ name: 'TypeScript', desc: 'Type-Safe Architecture' },
-		{ name: 'UnoCSS & Tailwind', desc: 'Design Tokens & Atomic Styling' },
-		{ name: 'Cloudflare D1 & Nitro', desc: 'Edge Database & Serverless Engine' },
-		{ name: 'Figma', desc: 'Design Systems & Interface Prototyping' },
-	]
-
 	useSeoMeta({
 		title: computed(() => page.value?.title || (locale.value === 'id' ? 'Tentang — Dinar Permadi Yusup' : 'About — Dinar Permadi Yusup')),
 		description: computed(() => page.value?.description || (locale.value === 'id' ? 'Profil, filosofi rekayasa antarmuka, dan latar belakang profesional Dinar Permadi Yusup.' : 'Profile, interface engineering philosophy, and professional background of Dinar Permadi Yusup.')),
@@ -27,54 +19,86 @@
 	<div class="container-bento py-10 sm:py-14">
 		<!-- Page Intro Header -->
 		<div class="max-w-3xl mb-10 sm:mb-12">
-			<span class="section-label text-brand-600 dark:text-brand-400 font-bold mb-3 block">
-				{{ locale === 'id' ? 'Tentang Saya' : 'A Little About Me' }}
+			<span
+				v-if="page?.section_label"
+				class="section-label text-brand-600 dark:text-brand-400 font-bold mb-3 block"
+			>
+				{{ page.section_label }}
 			</span>
 			<h1 class="font-heading font-semibold text-slate-900 dark:text-white text-4xl sm:text-6xl leading-[0.95] tracking-tight mb-4">
-				{{ locale === 'id' ? 'Selalu ingin tahu. Bertindak dengan penuh niat.' : 'Curious by default. Intentional by choice.' }}
+				{{ page?.headline || (locale === 'id' ? 'Selalu ingin tahu. Bertindak dengan penuh niat.' : 'Curious by default. Intentional by choice.') }}
 			</h1>
 			<p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed max-w-xl">
-				{{ page?.description || (locale === 'id' ? 'Fokus pada irisan antara desain antarmuka dan rekayasa perangkat lunak — mengubah interaksi bermakna menjadi produk yang bermanfaat.' : 'I care about the space between design and engineering — where a thoughtful interaction becomes a useful product.') }}
+				{{ page?.lead || page?.description || (locale === 'id' ? 'Fokus pada irisan antara desain antarmuka dan rekayasa perangkat lunak — mengubah interaksi bermakna menjadi produk yang bermanfaat.' : 'I care about the space between design and engineering — where a thoughtful interaction becomes a useful product.') }}
 			</p>
 		</div>
 
 		<!-- Bento About Grid -->
 		<div class="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-5 mb-12">
 			<!-- Main Biography Card (Span 7) -->
-			<div class="bento-card-clean md:col-span-7 p-6 sm:p-8 flex flex-col justify-between">
+			<div
+				v-if="page?.story_card"
+				class="bento-card-clean md:col-span-7 p-6 sm:p-8 flex flex-col justify-between"
+			>
 				<div>
-					<span class="section-label text-brand-600 dark:text-brand-400 block mb-3">
-						{{ locale === 'id' ? 'Filosofi & Profil' : 'Philosophy & Story' }}
+					<span
+						v-if="page.story_card.label"
+						class="section-label text-brand-600 dark:text-brand-400 block mb-3"
+					>
+						{{ page.story_card.label }}
 					</span>
 					<h2 class="font-heading font-semibold text-2xl sm:text-3xl text-slate-900 dark:text-white leading-tight mb-4">
-						{{ locale === 'id' ? 'Saya Permadi, frontend developer & pendidik yang berbasis di Bandung.' : "I'm Permadi, a frontend developer & educator based in Bandung." }}
+						{{ page.story_card.title }}
 					</h2>
-					<p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
-						{{ locale === 'id' ? 'Saya bekerja menjembatani sistem desain, tipografi berpresisi tinggi, dan arsitektur kode modern untuk menciptakan produk digital yang terasa natural, cepat, dan manusiawi.' : 'I work across interface design, type systems, and performant code to make digital products feel clear, effortless, and human.' }}
+					<p
+						v-if="page.story_card.lead"
+						class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed mb-4"
+					>
+						{{ page.story_card.lead }}
 					</p>
-					<p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
-						{{ locale === 'id' ? 'Di luar editor kode, Anda akan menemukan saya mengumpulkan buku, menyeduh kopi manual, atau merancang modul pembelajaran interaktif.' : 'Outside the code editor, you will find me reading books, brewing manual coffee, or designing interactive learning modules.' }}
+					<p
+						v-if="page.story_card.bio"
+						class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed"
+					>
+						{{ page.story_card.bio }}
 					</p>
 				</div>
 
 				<div class="mt-8 pt-4 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between text-xs text-brand-600 dark:text-brand-400 font-bold">
-					<NuxtLink :to="locale === 'id' ? '/id/projek' : '/en/projects'" class="hover:underline flex items-center gap-1">
-						{{ locale === 'id' ? 'Eksplorasi Studi Kasus Projek' : 'Explore Project Case Studies' }} <span>↗</span>
+					<NuxtLink
+						:to="locale === 'id' ? '/id/projek' : '/en/projects'"
+						class="hover:underline flex items-center gap-1"
+					>
+						{{ page.story_card.link_text || (locale === 'id' ? 'Eksplorasi Studi Kasus Projek' : 'Explore Project Case Studies') }}
+						<span>↗</span>
 					</NuxtLink>
 				</div>
 			</div>
 
 			<!-- Toolkit & Tech Stack Card (Span 5) -->
-			<div class="bento-card-clean md:col-span-5 p-6 sm:p-7 flex flex-col justify-between">
+			<div
+				v-if="page?.toolkit_card"
+				class="bento-card-clean md:col-span-5 p-6 sm:p-7 flex flex-col justify-between"
+			>
 				<div>
-					<span class="section-label text-brand-600 dark:text-brand-400 block mb-3">
-						{{ locale === 'id' ? 'Peralatan Utama' : 'My Toolkit' }}
+					<span
+						v-if="page.toolkit_card.label"
+						class="section-label text-brand-600 dark:text-brand-400 block mb-3"
+					>
+						{{ page.toolkit_card.label }}
 					</span>
 					<h3 class="font-heading font-semibold text-xl sm:text-2xl text-slate-900 dark:text-white mb-4">
-						Tech Stack & Tools
+						{{ page.toolkit_card.title }}
 					</h3>
-					<ul class="space-y-3 divide-y divide-slate-200/50 dark:divide-slate-800/50">
-						<li v-for="t in techTools" :key="t.name" class="pt-2.5 first:pt-0 flex items-center justify-between text-xs">
+					<ul
+						v-if="page.toolkit_card.tools && page.toolkit_card.tools.length > 0"
+						class="space-y-3 divide-y divide-slate-200/50 dark:divide-slate-800/50"
+					>
+						<li
+							v-for="t in page.toolkit_card.tools"
+							:key="t.name"
+							class="pt-2.5 first:pt-0 flex items-center justify-between text-xs"
+						>
 							<span class="font-semibold text-slate-900 dark:text-white">{{ t.name }}</span>
 							<span class="text-slate-400 font-mono text-[11px]">{{ t.desc }}</span>
 						</li>

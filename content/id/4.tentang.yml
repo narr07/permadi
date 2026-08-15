@@ -1,0 +1,39 @@
+title: Tentang Dinar Permadi Yusup
+description: Fokus pada irisan antara desain antarmuka dan rekayasa perangkat lunak — mengubah interaksi bermakna menjadi produk yang bermanfaat.
+section_label: Tentang Saya
+headline: Selalu ingin tahu. Bertindak dengan penuh niat.
+lead: Fokus pada irisan antara desain antarmuka dan rekayasa perangkat lunak — mengubah interaksi bermakna menjadi produk yang bermanfaat.
+
+story_card:
+  label: Filosofi & Profil
+  title: Saya Permadi, frontend developer & pendidik yang berbasis di Bandung.
+  lead: Saya bekerja menjembatani sistem desain, tipografi berpresisi tinggi, dan arsitektur kode modern untuk menciptakan produk digital yang terasa natural, cepat, dan manusiawi.
+  bio: Di luar editor kode, Anda akan menemukan saya mengumpulkan buku, menyeduh kopi manual, atau merancang modul pembelajaran interaktif.
+  link_text: Eksplorasi Studi Kasus Projek
+
+toolkit_card:
+  label: Toolkit & Framework
+  title: Teknologi Pilihan
+  tools:
+    - name: Vue 3 & Nuxt 4
+      desc: Frontend Framework & SSR
+    - name: TypeScript
+      desc: Type-Safe Architecture
+    - name: UnoCSS & Tailwind
+      desc: Design Tokens & Atomic Styling
+    - name: Cloudflare D1 & Nitro
+      desc: Edge Database & Serverless Engine
+    - name: Figma
+      desc: Design Systems & Interface Prototyping
+
+principles:
+  - title: Konsistensi Visual
+    description: Menerapkan design tokens yang terstruktur dengan 11 tingkat shade warna dan skala tipografi matematis berbasis Golden Ratio.
+  - title: Pengalaman Pengguna (DX & UX)
+    description: Membangun antarmuka yang intuitif, aksesibel, serta memberikan umpan balik mikro yang memuaskan.
+  - title: Performa Tinggi
+    description: Mengoptimalkan Core Web Vitals, SSR caching, dan integrasi edge computing (Cloudflare Pages, D1).
+
+journey:
+  title: Perjalanan & Latar Belakang
+  description: Perjalanan saya dimulai dari ketertarikan mendalam pada bagaimana antarmuka digital dapat memengaruhi emosi dan efisiensi pengguna dalam berinteraksi dengan informasi. Seiring berjalannya waktu, fokus saya terasah pada ekosistem Vue.js dan Nuxt.

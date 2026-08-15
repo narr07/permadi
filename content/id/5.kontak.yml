@@ -1,0 +1,42 @@
+title: Kontak & Kolaborasi — Dinar Permadi Yusup
+description: Hubungi Dinar Permadi Yusup untuk peluang kolaborasi, proyek pengembangan web, atau konsultasi antarmuka.
+section_label: Mari Terhubung
+headline: Kontak & Kolaborasi
+lead: Tertarik berdiskusi tentang proyek baru, konsultasi frontend, atau sekadar bertukar pikiran? Silakan hubungi saya.
+
+email_card:
+  label: Direct Inquiries
+  email: hi@permadi.dev
+  description: Respon dalam 1-2 hari kerja untuk peluang kolaborasi atau penawaran kerja sama.
+  button_text: Kirim Email Sekarang
+  meta: Available Worldwide
+
+status_card:
+  label: Status Ketersediaan
+  title: Open for Projects & Consulting
+  description: Berbasis di Bandung, Indonesia (GMT+7). Terbiasa bekerja secara remote dengan tim global.
+  location: Bandung, ID
+  timezone: GMT+7
+
+social_card:
+  label: Saluran Sosial
+  title: Temukan saya di platform digital
+  description: Tautan portofolio, repositori kode sumber, dan aktivitas harian.
+  items:
+    - name: GitHub
+      url: https://github.com/narr07
+      icon: i-hugeicons-github
+    - name: X / Twitter
+      url: https://x.com/dinarpermadi07
+      icon: i-hugeicons-new-twitter
+    - name: Instagram
+      url: https://www.instagram.com/narr07/
+      icon: i-hugeicons-instagram
+    - name: Behance
+      url: https://www.behance.net/narr07
+      icon: i-hugeicons-behance-02
+
+newsletter_card:
+  label: Newsletter
+  title: Berlangganan Newsletter
+  description: Dapatkan artikel berkala seputar web performance, Vue/Nuxt, dan design system.
