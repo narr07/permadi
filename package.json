@@ -7,7 +7,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "prepare": "npx skilld prepare || true"
+    "prepare": "nuxt prepare"
   },
   "dependencies": {
     "@nuxt/content": "^3.15.2",
@@ -37,6 +37,7 @@
     "@unocss/transformer-directives": "^66.7.5",
     "@unocss/transformer-variant-group": "^66.7.5",
     "@vee-validate/zod": "^4.15.1",
+    "nuxt-og-image": "^6.7.8",
     "nuxtseo-layer-devtools": "^5.3.12",
     "satori": "^0.29.0",
     "unocss": "^66.7.5",
