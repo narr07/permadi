@@ -69,7 +69,7 @@
 		<!-- Page Header -->
 		<header class="max-w-3xl mb-8 sm:mb-12">
 			<span class="badge-neutral text-brand-600 dark:text-brand-400 font-semibold mb-3">
-				<span class="i-lucide-book-open text-xs mr-1 inline-block" /> Articles & Essays
+				<span class="i-hugeicons-book-open-01 text-xs mr-1 inline-block" /> Articles & Essays
 			</span>
 			<h1 class="heading-hero text-slate-900 dark:text-white">
 				{{ page?.title || 'Blog & Tulisan' }}
@@ -83,7 +83,7 @@
 		<div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-8">
 			<!-- Live Search Input -->
 			<div class="relative max-w-md w-full">
-				<span class="i-lucide-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base pointer-events-none" />
+				<span class="i-hugeicons-search-01 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base pointer-events-none" />
 				<input
 					v-model="searchQuery"
 					type="search"
@@ -97,7 +97,7 @@
 					aria-label="Bersihkan pencarian"
 					@click="searchQuery = ''"
 				>
-					<span class="i-lucide-x text-sm" />
+					<span class="i-hugeicons-cancel-01 text-sm" />
 				</button>
 			</div>
 
@@ -134,6 +134,17 @@
 				:class="index === 0 && !searchQuery && selectedTag === 'ALL' ? 'lg:col-span-12 md:col-span-12 bento-highlight bg-brand-50/20 dark:bg-brand-950/20' : 'lg:col-span-6 md:col-span-6'"
 			>
 				<div>
+					<div v-if="post.cover" class="mb-4 rounded-bento overflow-hidden bg-slate-100 dark:bg-slate-800 aspect-video border border-slate-200/50 dark:border-slate-800/50">
+						<NuxtImg
+							:src="post.cover"
+							:alt="post.title"
+							format="webp"
+							quality="85"
+							class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+							loading="lazy"
+						/>
+					</div>
+
 					<div class="flex items-center justify-between gap-2 mb-3">
 						<div class="flex flex-wrap gap-1.5">
 							<span v-for="tag in post.tags" :key="tag" class="badge-neutral text-xs">
@@ -159,11 +170,11 @@
 
 				<div class="mt-6 pt-4 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between text-meta text-xs">
 					<span class="flex items-center gap-1">
-						<span class="i-lucide-clock text-xs text-brand-500" />
+						<span class="i-hugeicons-clock-01 text-xs text-brand-500" />
 						{{ post.readingTime || 5 }} min read
 					</span>
 					<span class="text-brand-600 dark:text-brand-400 font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-0.5">
-						Baca Artikel <span class="i-lucide-arrow-right text-xs" />
+						Baca Artikel <span class="i-hugeicons-arrow-right-01 text-xs" />
 					</span>
 				</div>
 			</NuxtLink>
@@ -172,7 +183,7 @@
 		<!-- Empty State -->
 		<EmptyState
 			v-else
-			icon="i-lucide-search-x"
+			icon="i-hugeicons-search-01"
 			title="Tidak Ada Artikel Ditemukan"
 			description="Coba ubah kata kunci pencarian atau pilih filter kategori topik lain."
 			:actions="[{ label: 'Reset Filter', to: localePath('/blog') }]"

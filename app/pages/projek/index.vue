@@ -9,13 +9,15 @@
 	const selectedTag = ref<string>('ALL')
 
 	const { data: page } = await useAsyncData(
-		() => 'projek-index-id',
-		() => queryCollection('pages_id').path('/id/projek').first()
+		() => 'projek-index-' + locale.value,
+		() => queryCollection(pageCollection.value).path(currentPath.value).first(),
+		{ watch: [locale] }
 	)
 
 	const { data: projects } = await useAsyncData(
-		() => 'projek-list-id',
-		() => queryCollection('projek_id').order('date', 'DESC').all()
+		() => 'projek-list-' + locale.value,
+		() => queryCollection(projectCollection.value).order('date', 'DESC').all(),
+		{ watch: [locale] }
 	)
 
 	function cleanSlug(pathStr: string): string {
@@ -50,15 +52,19 @@
 				const matchesTag = selectedTag.value === 'ALL' || item.tags?.includes(selectedTag.value)
 				return matchesQuery && matchesTag
 			})
-			.map((item: any) => ({
-				...item,
-				url: `/id/projek/${item.slug || cleanSlug(item.path)}`,
-			}))
+			.map((item: any) => {
+				const projectSlug = item.slug || cleanSlug(item.path)
+				const basePath = locale.value === 'id' ? `/id/projek/${projectSlug}` : `/en/projects/${projectSlug}`
+				return {
+					...item,
+					url: basePath,
+				}
+			})
 	})
 
 	useSeoMeta({
-		title: computed(() => page.value?.title || 'Projek — Dinar Permadi Yusup'),
-		description: computed(() => page.value?.description || 'Portofolio karya, sistem desain, dan aplikasi web yang dibangun dengan standar performa tinggi.'),
+		title: computed(() => page.value?.title || (locale.value === 'id' ? 'Projek — Dinar Permadi Yusup' : 'Projects — Dinar Permadi Yusup')),
+		description: computed(() => page.value?.description || (locale.value === 'id' ? 'Portofolio karya, sistem desain, dan aplikasi web yang dibangun dengan standar performa tinggi.' : 'Curated portfolio of frontend engineering, design systems, and web projects.')),
 	})
 </script>
 
@@ -67,47 +73,38 @@
 		<!-- Page Header -->
 		<header class="max-w-3xl mb-8 sm:mb-12">
 			<span class="badge-neutral text-brand-600 dark:text-brand-400 font-semibold mb-3">
-				<span class="i-lucide-folder-git-2 text-xs mr-1 inline-block" /> Karya & Eksplorasi
+				<span class="i-hugeicons-code-folder text-xs mr-1 inline-block" /> {{ locale === 'id' ? 'Karya & Eksplorasi' : 'Work & Explorations' }}
 			</span>
 			<h1 class="heading-hero text-slate-900 dark:text-white">
-				{{ page?.title || 'Projek & Studi Kasus' }}
+				{{ page?.title || (locale === 'id' ? 'Projek & Studi Kasus' : 'Projects & Case Studies') }}
 			</h1>
 			<p class="text-body text-slate-600 dark:text-slate-300 mt-2 text-lg">
-				{{ page?.description || 'Studi kasus implementasi sistem desain, frontend engineering, dan arsitektur web modern.' }}
+				{{ page?.description || (locale === 'id' ? 'Koleksi aplikasi web terkurasi, modul UI, dan studi kasus sistem performa tinggi.' : 'A curated collection of web applications, UI modules, and high-performance case studies.') }}
 			</p>
 		</header>
 
-		<!-- Search & Tag Filter Bar -->
-		<div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-8">
-			<!-- Live Search Input -->
-			<div class="relative max-w-md w-full">
-				<span class="i-lucide-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base pointer-events-none" />
+		<!-- Filter & Search Toolbar -->
+		<div class="bento-card-subtle mb-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+			<!-- Search Input -->
+			<div class="relative flex-1 max-w-md">
+				<span class="i-hugeicons-search-01 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm" />
 				<input
 					v-model="searchQuery"
-					type="search"
-					class="focus-ring w-full pl-10 pr-10 py-2 rounded-bento border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-g1 placeholder:text-slate-400 text-slate-900 dark:text-white"
-					:placeholder="t('search.search_projects', 'Cari projek atau teknologi...')"
+					type="text"
+					:placeholder="locale === 'id' ? 'Cari projek berdasarkan nama atau topik...' : 'Search project by name or tech stack...'"
+					class="focus-ring w-full pl-10 pr-4 py-2 text-xs rounded-bento bg-white/70 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400"
 				>
-				<button
-					v-if="searchQuery"
-					type="button"
-					class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
-					aria-label="Bersihkan pencarian"
-					@click="searchQuery = ''"
-				>
-					<span class="i-lucide-x text-sm" />
-				</button>
 			</div>
 
-			<!-- Tag Filter Pills -->
-			<div v-if="allTags.length > 0" class="flex flex-wrap items-center gap-1.5 overflow-x-auto pb-1">
+			<!-- Filter Tags -->
+			<div class="flex items-center gap-1.5 flex-wrap">
 				<button
 					type="button"
-					class="focus-ring px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer"
-					:class="selectedTag === 'ALL' ? 'bg-brand-500 text-white shadow-xs' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'"
+					class="focus-ring px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer"
+					:class="selectedTag === 'ALL' ? 'bg-brand-500 text-white shadow-xs font-semibold' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'"
 					@click="selectedTag = 'ALL'"
 				>
-					Semua ({{ projects?.length || 0 }})
+					{{ locale === 'id' ? 'Semua' : 'All' }}
 				</button>
 				<button
 					v-for="tag in allTags"
@@ -122,64 +119,88 @@
 			</div>
 		</div>
 
-		<!-- Bento Grid Projects -->
-		<div v-if="filteredProjects.length > 0" class="bento-grid">
+		<!-- Bento Grid Projects (1 col mobile, 2 col tablet, 3 col desktop) -->
+		<div v-if="filteredProjects.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
 			<NuxtLink
 				v-for="(item, index) in filteredProjects"
 				:key="item.url"
 				:to="item.url"
 				class="bento-card-outline bento-lift flex flex-col justify-between group block overflow-hidden"
-				:class="index === 0 && !searchQuery && selectedTag === 'ALL' ? 'lg:col-span-12 md:col-span-12 bento-highlight' : 'lg:col-span-6 md:col-span-6'"
+				:class="index === 0
+					? 'lg:col-span-2 sm:col-span-2 md:flex-row md:items-center md:gap-6 bg-brand-50/25 dark:bg-brand-950/25 bento-highlight'
+					: 'col-span-1'"
 			>
-				<div>
-					<div class="flex items-center justify-between gap-2 mb-3">
-						<div class="flex flex-wrap gap-1.5">
-							<span v-for="tag in item.tags" :key="tag" class="badge-neutral text-xs">
-								{{ tag }}
-							</span>
-						</div>
-						<span class="text-meta text-xs">
-							{{ item.date }}
-						</span>
-					</div>
-
-					<h2
-						class="font-heading font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors"
-						:class="index === 0 && !searchQuery && selectedTag === 'ALL' ? 'text-g3 md:text-g4' : 'text-g2'"
-					>
-						{{ item.title }}
-					</h2>
-
-					<p class="text-body mt-2 text-slate-600 dark:text-slate-300 line-clamp-3">
-						{{ item.description }}
-					</p>
+				<!-- Thumbnail (Hanya 1 Gambar) -->
+				<div
+					v-if="item.image || (item.images && item.images[0])"
+					class="mb-4 rounded-bento overflow-hidden bg-slate-100 dark:bg-slate-800 aspect-video border border-slate-200/50 dark:border-slate-800/50 shrink-0"
+					:class="index === 0 ? 'md:mb-0 md:w-1/2' : 'w-full'"
+				>
+					<NuxtImg
+						:src="item.image || item.images[0]"
+						:alt="item.title"
+						format="webp"
+						quality="85"
+						class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+						loading="lazy"
+					/>
 				</div>
 
-				<div class="mt-6 pt-4 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between text-meta text-xs">
-					<span class="text-brand-600 dark:text-brand-400 font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-1">
-						Lihat Detail Case Study <span class="i-lucide-arrow-right text-xs" />
-					</span>
-					<div v-if="item.demoUrl || item.githubUrl" class="flex items-center gap-2" @click.stop>
-						<a
-							v-if="item.githubUrl"
-							:href="item.githubUrl"
-							target="_blank"
-							rel="noopener"
-							class="icon-btn !w-7 !h-7"
-							aria-label="GitHub Repository"
+				<!-- Content & Details -->
+				<div class="flex-1 flex flex-col justify-between" :class="index === 0 ? 'md:py-2' : ''">
+					<div>
+						<div class="flex items-center justify-between gap-2 mb-2.5">
+							<div class="flex flex-wrap gap-1.5">
+								<span v-if="index === 0" class="badge-neutral text-xs font-semibold text-brand-600 dark:text-brand-400 bg-brand-100/70 dark:bg-brand-900/50">
+									<span class="i-hugeicons-sparkles text-[11px] mr-0.5" /> Terbaru
+								</span>
+								<span v-for="tag in (item.tags || item.tech || [])" :key="tag" class="badge-neutral text-xs">
+									{{ tag }}
+								</span>
+							</div>
+							<span class="text-meta text-xs">
+								{{ item.date }}
+							</span>
+						</div>
+
+						<h2
+							class="font-heading font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors"
+							:class="index === 0 ? 'text-g2 sm:text-g3' : 'text-g1 sm:text-g2'"
 						>
-							<span class="i-simple-icons-github text-xs" />
-						</a>
-						<a
-							v-if="item.demoUrl"
-							:href="item.demoUrl"
-							target="_blank"
-							rel="noopener"
-							class="icon-btn !w-7 !h-7"
-							aria-label="Live Demo"
-						>
-							<span class="i-lucide-external-link text-xs" />
-						</a>
+							{{ item.title }}
+						</h2>
+
+						<p class="text-body mt-2 text-slate-600 dark:text-slate-300 text-sm line-clamp-3">
+							{{ item.description }}
+						</p>
+					</div>
+
+					<div class="mt-5 pt-3.5 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between text-meta text-xs">
+						<span class="text-brand-600 dark:text-brand-400 font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-1">
+							Lihat Detail Case Study <span class="i-hugeicons-arrow-right-01 text-xs" />
+						</span>
+						<div v-if="item.demoUrl || item.link || item.githubUrl || item.repo" class="flex items-center gap-2" @click.stop>
+							<a
+								v-if="item.githubUrl || item.repo"
+								:href="item.githubUrl || item.repo"
+								target="_blank"
+								rel="noopener"
+								class="icon-btn !w-7 !h-7"
+								aria-label="GitHub Repository"
+							>
+								<span class="i-hugeicons-github text-xs" />
+							</a>
+							<a
+								v-if="item.demoUrl || item.link"
+								:href="item.demoUrl || item.link"
+								target="_blank"
+								rel="noopener"
+								class="icon-btn !w-7 !h-7"
+								aria-label="Live Demo"
+							>
+								<span class="i-hugeicons-link-square-02 text-xs" />
+							</a>
+						</div>
 					</div>
 				</div>
 			</NuxtLink>
@@ -188,7 +209,7 @@
 		<!-- Empty State -->
 		<EmptyState
 			v-else
-			icon="i-lucide-folder-x"
+			icon="i-hugeicons-code-folder"
 			title="Tidak Ada Projek Ditemukan"
 			description="Coba gunakan kata kunci pencarian yang lain atau reset filter kategori."
 			:actions="[{ label: 'Lihat Semua Projek', to: '/id/projek' }]"

@@ -4,13 +4,14 @@
 	const currentPath = computed(() => (locale.value === 'id' ? '/id/tentang' : '/en/about'))
 
 	const { data: page } = await useAsyncData(
-		() => 'tentang-page-id',
-		() => queryCollection('pages_id').path('/id/tentang').first()
+		() => `tentang-page-${locale.value}`,
+		() => queryCollection(collection.value).path(currentPath.value).first(),
+		{ watch: [locale] }
 	)
 
 	useSeoMeta({
-		title: computed(() => page.value?.title || 'Tentang — Dinar Permadi Yusup'),
-		description: computed(() => page.value?.description || 'Profil, filosofi rekayasa antarmuka, dan latar belakang profesional Dinar Permadi Yusup.'),
+		title: computed(() => page.value?.title || (locale.value === 'id' ? 'Tentang — Dinar Permadi Yusup' : 'About — Dinar Permadi Yusup')),
+		description: computed(() => page.value?.description || (locale.value === 'id' ? 'Profil, filosofi rekayasa antarmuka, dan latar belakang profesional Dinar Permadi Yusup.' : 'Profile, interface engineering philosophy, and professional background of Dinar Permadi Yusup.')),
 	})
 </script>
 
@@ -19,7 +20,7 @@
 		<article v-if="page" class="max-w-3xl mx-auto">
 			<header class="mb-10 pb-8 border-b border-slate-200/80 dark:border-slate-800/80">
 				<span class="badge-neutral text-brand-600 dark:text-brand-400 font-semibold mb-3">
-					<span class="i-lucide-user text-xs mr-1 inline-block" /> Profil & Latar Belakang
+					<span class="i-hugeicons-user-circle text-xs mr-1 inline-block" /> {{ locale === 'id' ? 'Profil & Latar Belakang' : 'Profile & Background' }}
 				</span>
 				<h1 class="heading-hero text-slate-900 dark:text-white text-3xl sm:text-4xl md:text-5xl leading-tight">
 					{{ page.title }}

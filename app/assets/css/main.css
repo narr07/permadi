@@ -1,5 +1,8 @@
 @import '@unocss/reset/tailwind.css';
 
+/* Import Google Fonts for Barlow, Plus Jakarta Sans, and JetBrains Mono */
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 :root {
 	--color-brand-50: #f0fdfa;
 	--color-brand-100: #ccfbf2;
@@ -14,8 +17,15 @@
 	--color-brand-950: #042f27;
 }
 
+/* Fallback & Custom Font-Family Definition */
+@font-face {
+	font-family: 'TikTok Sans';
+	src: local('TikTok Sans'), local('TikTok Display'), local('Plus Jakarta Sans'), local('Inter'), local('Segoe UI');
+	font-display: swap;
+}
+
 html {
-	font-family: 'TikTok Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+	font-family: 'TikTok Sans', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 	scroll-behavior: smooth;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -27,7 +37,7 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	font-family: 'Barlow', 'TikTok Sans', 'Plus Jakarta Sans', sans-serif;
 	letter-spacing: -0.02em;
 }
 
@@ -57,4 +67,8 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
 	background: rgba(100, 116, 139, 0.4);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+	background: rgba(148, 163, 184, 0.4);
 }

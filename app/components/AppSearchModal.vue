@@ -1,9 +1,11 @@
 <script setup lang="ts">
 	const { locale, t } = useI18n()
+	const localePath = useLocalePath()
 	const isOpen = ref(false)
 	const searchQuery = ref('')
 	const inputRef = ref<HTMLInputElement | null>(null)
 	const results = ref<any[]>([])
+	const selectedIndex = ref(-1)
 
 	// Koleksi aktif berdasarkan bahasa
 	const collections = computed(() => {
@@ -12,13 +14,14 @@
 			: (['blog_en', 'projek_en', 'pages_en'] as const)
 	})
 
-	// Composable resmi Nuxt Content: useSearchCollection (FTS5 + BM25 + Snippets)
+	// Composable resmi Nuxt Content: useSearchCollection
 	const { status, search, init } = useSearchCollection(collections as any, {
 		immediate: true,
 	})
 
 	// Jalankan pencarian saat query berubah
 	watch(searchQuery, async (newVal) => {
+		selectedIndex.value = -1
 		const trimmed = newVal.trim()
 		if (!trimmed) {
 			results.value = []
@@ -53,6 +56,89 @@
 		return results.value.filter((r) => r.collection?.includes('pages'))
 	})
 
+	// List Links default dengan Hugeicons
+	const defaultLinks = computed(() => [
+		{
+			label: 'Ask AI',
+			description: locale.value === 'id' ? 'Tanya seputar pengalaman & profil' : 'Ask about experience & profile',
+			icon: 'i-hugeicons-sparkles',
+			kbds: ['CTRL', 'I'],
+			to: localePath('/kontak'),
+		},
+		{
+			label: t('nav.home', 'Home'),
+			description: locale.value === 'id' ? 'Halaman utama & ringkasan profil' : 'Overview & main landing',
+			icon: 'i-hugeicons-home-01',
+			to: localePath('/'),
+		},
+		{
+			label: t('nav.blog', 'Blog'),
+			description: locale.value === 'id' ? 'Artikel teknis, tutorial, dan catatan pengembangan' : 'Technical articles, tutorials & dev notes',
+			icon: 'i-hugeicons-book-open-01',
+			to: localePath('/blog'),
+		},
+		{
+			label: t('nav.projects', 'Projects'),
+			description: locale.value === 'id' ? 'Koleksi studi kasus aplikasi & demo karya' : 'Explore case studies and live demos',
+			icon: 'i-hugeicons-code-folder',
+			to: localePath('/projek'),
+		},
+		{
+			label: t('nav.gallery', 'Gallery'),
+			description: locale.value === 'id' ? 'Koleksi foto visual & cuplikan karya' : 'Visual snapshots, photos & design',
+			icon: 'i-hugeicons-image-02',
+			to: localePath('/galeri'),
+		},
+		{
+			label: t('nav.about', 'About'),
+			description: locale.value === 'id' ? 'Biografi singkat, keahlian, dan riwayat karir' : 'Biography, skillset, and career',
+			icon: 'i-hugeicons-user-circle',
+			to: localePath('/tentang'),
+		},
+		{
+			label: t('nav.contact', 'Contact'),
+			description: locale.value === 'id' ? 'Diskusikan projek baru atau kirim pesan' : 'Discuss new projects or get in touch',
+			icon: 'i-hugeicons-mail-01',
+			to: localePath('/kontak'),
+		},
+		{
+			label: 'GitHub',
+			description: 'github.com/narr07',
+			icon: 'i-hugeicons-github',
+			href: 'https://github.com/narr07',
+			target: '_blank',
+		},
+		{
+			label: 'X (Twitter)',
+			description: 'x.com/dinarpermadi07',
+			icon: 'i-hugeicons-new-twitter',
+			href: 'https://x.com/dinarpermadi07',
+			target: '_blank',
+		},
+		{
+			label: 'Behance',
+			description: 'behance.net/narr07',
+			icon: 'i-hugeicons-behance-02',
+			href: 'https://www.behance.net/narr07',
+			target: '_blank',
+		},
+		{
+			label: 'Instagram',
+			description: 'instagram.com/narr07',
+			icon: 'i-hugeicons-instagram',
+			href: 'https://www.instagram.com/narr07/',
+			target: '_blank',
+		},
+	])
+
+	// Seluruh hasil aktif untuk keyboard navigation
+	const activeItems = computed(() => {
+		if (!searchQuery.value.trim()) {
+			return defaultLinks.value
+		}
+		return [...articleResults.value, ...projectResults.value, ...pageResults.value]
+	})
+
 	function getTargetUrl(result: any): string {
 		if (result.id) {
 			return result.id
@@ -62,6 +148,7 @@
 
 	async function openModal() {
 		isOpen.value = true
+		selectedIndex.value = -1
 		if (status.value === 'idle') {
 			await init()
 		}
@@ -74,11 +161,50 @@
 		isOpen.value = false
 		searchQuery.value = ''
 		results.value = []
+		selectedIndex.value = -1
 	}
 
-	// Tangkap shortcut keyboard Ctrl+K / Cmd+K & Esc
+	async function handleItemSelect(item: any) {
+		closeModal()
+		if (item.href) {
+			window.open(item.href, item.target || '_blank')
+		} else if (item.to) {
+			await navigateTo(item.to)
+		} else {
+			await navigateTo(getTargetUrl(item))
+		}
+	}
+
+	// Keyboard Navigation (Up, Down, Enter, Esc)
+	function handleModalKeydown(e: KeyboardEvent) {
+		if (!isOpen.value) return
+
+		const total = activeItems.value.length
+
+		if (e.key === 'ArrowDown') {
+			e.preventDefault()
+			if (total > 0) {
+				selectedIndex.value = (selectedIndex.value + 1) % total
+			}
+		} else if (e.key === 'ArrowUp') {
+			e.preventDefault()
+			if (total > 0) {
+				selectedIndex.value = (selectedIndex.value - 1 + total) % total
+			}
+		} else if (e.key === 'Enter') {
+			if (selectedIndex.value >= 0 && selectedIndex.value < total) {
+				e.preventDefault()
+				const item = activeItems.value[selectedIndex.value]
+				if (item) {
+					handleItemSelect(item)
+				}
+			}
+		}
+	}
+
+	// Shortcut global Ctrl+K / Cmd+K & Esc
 	onMounted(() => {
-		function handleKeyDown(e: KeyboardEvent) {
+		function handleGlobalKeyDown(e: KeyboardEvent) {
 			if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
 				e.preventDefault()
 				if (isOpen.value) {
@@ -91,26 +217,26 @@
 				closeModal()
 			}
 		}
-		window.addEventListener('keydown', handleKeyDown)
+		window.addEventListener('keydown', handleGlobalKeyDown)
 		onUnmounted(() => {
-			window.removeEventListener('keydown', handleKeyDown)
+			window.removeEventListener('keydown', handleGlobalKeyDown)
 		})
 	})
 </script>
 
 <template>
 	<div class="relative inline-flex items-center">
-		<!-- Trigger Button (Icon Only) -->
+		<!-- Trigger Button -->
 		<button
 			type="button"
-			class="icon-btn"
-			:aria-label="t('search.shortcut', 'Cari (Ctrl K)')"
+			class="icon-btn transition-transform active:scale-95"
+			:aria-label="t('search.shortcut', 'Cari (Ctrl+K)')"
 			@click="openModal"
 		>
-			<span class="i-lucide-search text-base text-slate-600 dark:text-slate-300" />
+			<span class="i-hugeicons-search-01 text-base text-slate-600 dark:text-slate-300" />
 		</button>
 
-		<!-- Modal Dialog Backdrop -->
+		<!-- Modal Backdrop & Blur -->
 		<Teleport to="body">
 			<Transition
 				enter-active-class="transition duration-200 ease-out"
@@ -122,116 +248,275 @@
 			>
 				<div
 					v-if="isOpen"
-					class="fixed inset-0 z-50 flex items-start justify-center p-4 pt-16 sm:pt-24 bg-slate-950/60 backdrop-blur-sm"
+					class="fixed inset-0 z-100 flex items-start justify-center p-3 sm:p-4 md:p-6 pt-16 sm:pt-24 bg-slate-950/70 dark:bg-slate-950/80 backdrop-blur-md transition-all overflow-y-auto"
 					@click.self="closeModal"
+					@keydown="handleModalKeydown"
 				>
-					<div class="w-full max-w-2xl rounded-bento bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[80vh] animate-scale-in">
-						<!-- Search Header -->
-						<div class="flex items-center gap-3 px-4 py-3.5 border-b border-slate-100 dark:border-slate-800">
-							<span class="i-lucide-search text-xl text-brand-500" />
+					<!-- Bento Command Palette Card -->
+					<div class="w-full max-w-2xl rounded-bento bg-white/95 dark:bg-slate-900/95 border border-slate-200/80 dark:border-slate-800/80 shadow-2xl backdrop-blur-xl overflow-hidden flex flex-col max-h-[80vh] transition-all animate-scale-in">
+						<!-- Top Search Bar -->
+						<div class="flex items-center gap-3 px-4 py-3.5 border-b border-slate-100 dark:border-slate-800/80">
+							<span class="i-hugeicons-search-01 text-lg text-slate-400 dark:text-slate-500 shrink-0" />
+							
 							<input
 								ref="inputRef"
 								v-model="searchQuery"
 								type="search"
-								class="flex-1 bg-transparent border-none outline-none text-slate-900 dark:text-white placeholder:text-slate-400 text-g1 font-sans"
-								:placeholder="t('search.placeholder', 'Ketik kata kunci pencarian...')"
+								class="flex-1 bg-transparent border-none outline-none text-slate-900 dark:text-white placeholder:text-slate-400 text-sm sm:text-base font-sans"
+								:placeholder="t('search.placeholder', 'Type a command or search...')"
+								autocomplete="off"
+								spellcheck="false"
 							>
-							<span v-if="status === 'loading'" class="i-lucide-loader-2 text-lg text-brand-500 animate-spin" />
+
+							<span
+								v-if="status === 'loading'"
+								class="i-hugeicons-loading-03 text-base text-brand-500 animate-spin shrink-0"
+							/>
+
 							<button
 								type="button"
-								class="icon-btn text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
-								aria-label="Tutup pencarian"
+								class="p-1 rounded-md text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors shrink-0"
+								aria-label="Tutup"
 								@click="closeModal"
 							>
-								<span class="i-lucide-x text-lg" />
+								<span class="i-hugeicons-cancel-01 text-base" />
 							</button>
 						</div>
 
-						<!-- Search Body / Results -->
-						<div class="flex-1 overflow-y-auto p-4 space-y-5">
-							<!-- Empty Query / Hints -->
-							<div v-if="!searchQuery.trim()" class="py-8 text-center text-slate-400">
-								<span class="i-lucide-command text-3xl mx-auto mb-2 block opacity-40" />
-								<p class="text-g1 font-medium">{{ t('search.placeholder', 'Pencarian FTS5 Cepat') }}</p>
-								<p class="text-meta mt-1">Cari artikel, studi kasus projek, atau dokumentasi.</p>
+						<!-- Body: Links / Search Results -->
+						<div class="flex-1 overflow-y-auto p-2 sm:p-2.5 space-y-3">
+							<!-- 1. DEFAULT LINKS LIST (seperti di Nuxt UI docs) -->
+							<div
+								v-if="!searchQuery.trim()"
+								class="space-y-1"
+							>
+								<div class="px-3 py-1.5 text-xs font-semibold text-slate-400 dark:text-slate-500 tracking-wide uppercase">
+									Links
+								</div>
+
+								<ul class="space-y-0.5">
+									<li
+										v-for="(item, idx) in defaultLinks"
+										:key="item.label"
+									>
+										<!-- Link Internal (NuxtLink) -->
+										<NuxtLink
+											v-if="item.to"
+											:to="item.to"
+											class="flex items-center justify-between px-3 py-2.5 rounded-bento text-sm transition-all duration-150 group cursor-pointer border border-transparent"
+											:class="idx === selectedIndex
+												? 'bg-brand-50/90 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400 border-brand-200/60 dark:border-brand-800/50'
+												: 'text-slate-700 dark:text-slate-200 hover:bg-slate-100/80 dark:hover:bg-slate-800/60 hover:border-slate-200/50 dark:hover:border-slate-700/50'"
+											@click="closeModal"
+										>
+											<div class="flex items-center gap-3 min-w-0 flex-1">
+												<span
+													:class="item.icon"
+													class="text-base text-slate-400 group-hover:text-brand-500 transition-colors shrink-0"
+												/>
+												<div class="flex items-center gap-2 truncate">
+													<span class="font-medium text-slate-900 dark:text-white shrink-0">{{ item.label }}</span>
+													<span class="text-xs text-slate-400 dark:text-slate-500 truncate">{{ item.description }}</span>
+												</div>
+											</div>
+
+											<div
+												v-if="item.kbds"
+												class="flex items-center gap-1 shrink-0 ml-2"
+											>
+												<kbd
+													v-for="k in item.kbds"
+													:key="k"
+													class="px-1.5 py-0.5 rounded text-[10px] font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200/60 dark:border-slate-700/60"
+												>
+													{{ k }}
+												</kbd>
+											</div>
+										</NuxtLink>
+
+										<!-- Link Eksternal (a) -->
+										<a
+											v-else-if="item.href"
+											:href="item.href"
+											:target="item.target"
+											rel="noopener"
+											class="flex items-center justify-between px-3 py-2.5 rounded-bento text-sm transition-all duration-150 group cursor-pointer border border-transparent"
+											:class="idx === selectedIndex
+												? 'bg-brand-50/90 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400 border-brand-200/60 dark:border-brand-800/50'
+												: 'text-slate-700 dark:text-slate-200 hover:bg-slate-100/80 dark:hover:bg-slate-800/60 hover:border-slate-200/50 dark:hover:border-slate-700/50'"
+											@click="closeModal"
+										>
+											<div class="flex items-center gap-3 min-w-0 flex-1">
+												<span
+													:class="item.icon"
+													class="text-base text-slate-400 group-hover:text-brand-500 transition-colors shrink-0"
+												/>
+												<div class="flex items-center gap-2 truncate">
+													<span class="font-medium text-slate-900 dark:text-white shrink-0">{{ item.label }}</span>
+													<span class="text-xs text-slate-400 dark:text-slate-500 truncate">{{ item.description }}</span>
+												</div>
+											</div>
+										</a>
+									</li>
+								</ul>
 							</div>
 
-							<!-- No Results -->
-							<div v-else-if="results.length === 0 && status !== 'loading'" class="py-8 text-center text-slate-400">
-								<span class="i-lucide-search-x text-3xl mx-auto mb-2 block opacity-40" />
-								<p class="text-g1">{{ t('search.no_results', 'Tidak ditemukan hasil untuk') }} "<strong>{{ searchQuery }}</strong>"</p>
+							<!-- 2. NO RESULTS STATE -->
+							<div
+								v-else-if="results.length === 0 && status !== 'loading'"
+								class="py-10 text-center"
+							>
+								<span class="i-hugeicons-search-01 text-2xl text-slate-400 mx-auto mb-2 block opacity-40" />
+								<p class="text-sm font-medium text-slate-700 dark:text-slate-300">
+									{{ t('search.no_results', 'Tidak ada hasil untuk') }} "<strong>{{ searchQuery }}</strong>"
+								</p>
 							</div>
 
-							<!-- Results Lists -->
-							<div v-else class="space-y-4">
-								<!-- Articles Group -->
-								<section v-if="articleResults.length > 0">
-									<h3 class="text-meta uppercase tracking-wider font-semibold text-slate-400 dark:text-slate-500 mb-2 px-1 flex items-center gap-1.5">
-										<span class="i-lucide-book-open text-xs text-brand-500" />
-										{{ t('search.articles', 'Artikel') }} ({{ articleResults.length }})
-									</h3>
-									<ul class="space-y-1">
-										<li v-for="item in articleResults" :key="item.id + (item.level || 0)">
+							<!-- 3. SEARCH RESULTS LIST -->
+							<div
+								v-else
+								class="space-y-3"
+							>
+								<!-- Group: Artikel -->
+								<div
+									v-if="articleResults.length > 0"
+									class="space-y-1"
+								>
+									<div class="px-3 py-1 text-xs font-semibold text-slate-400 dark:text-slate-500 tracking-wide uppercase flex items-center justify-between">
+										<span>{{ t('search.articles', 'Artikel') }}</span>
+										<span>{{ articleResults.length }}</span>
+									</div>
+									<ul class="space-y-0.5">
+										<li
+											v-for="item in articleResults"
+											:key="item.id + (item.level || 0)"
+										>
 											<NuxtLink
 												:to="getTargetUrl(item)"
-												class="focus-ring block p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors border border-transparent hover:border-slate-200/60 dark:hover:border-slate-700/60"
+												class="block px-3 py-2 rounded-bento text-sm transition-all duration-150 group cursor-pointer border border-transparent"
+												:class="activeItems.indexOf(item) === selectedIndex
+													? 'bg-brand-50/90 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400 border-brand-200/60 dark:border-brand-800/50'
+													: 'hover:bg-slate-100/80 dark:hover:bg-slate-800/60 hover:border-slate-200/50 dark:hover:border-slate-700/50'"
 												@click="closeModal"
 											>
-												<div class="font-heading font-semibold text-g1 text-slate-900 dark:text-white" v-html="item.snippets?.title || item.title" />
-												<div v-if="item.snippets?.content" class="text-meta text-slate-500 dark:text-slate-400 mt-1 line-clamp-2" v-html="item.snippets.content" />
+												<div class="flex items-center justify-between gap-2">
+													<div
+														class="font-medium text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors"
+														v-html="item.snippets?.title || item.title"
+													/>
+													<span class="i-hugeicons-arrow-right-01 text-xs text-slate-400 group-hover:text-brand-500 shrink-0" />
+												</div>
+												<div
+													v-if="item.snippets?.content"
+													class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1"
+													v-html="item.snippets.content"
+												/>
 											</NuxtLink>
 										</li>
 									</ul>
-								</section>
+								</div>
 
-								<!-- Projects Group -->
-								<section v-if="projectResults.length > 0">
-									<h3 class="text-meta uppercase tracking-wider font-semibold text-slate-400 dark:text-slate-500 mb-2 px-1 flex items-center gap-1.5">
-										<span class="i-lucide-folder-git-2 text-xs text-blue-500" />
-										{{ t('search.projects', 'Projek') }} ({{ projectResults.length }})
-									</h3>
-									<ul class="space-y-1">
-										<li v-for="item in projectResults" :key="item.id + (item.level || 0)">
+								<!-- Group: Projek -->
+								<div
+									v-if="projectResults.length > 0"
+									class="space-y-1"
+								>
+									<div class="px-3 py-1 text-xs font-semibold text-slate-400 dark:text-slate-500 tracking-wide uppercase flex items-center justify-between">
+										<span>{{ t('search.projects', 'Projek') }}</span>
+										<span>{{ projectResults.length }}</span>
+									</div>
+									<ul class="space-y-0.5">
+										<li
+											v-for="item in projectResults"
+											:key="item.id + (item.level || 0)"
+										>
 											<NuxtLink
 												:to="getTargetUrl(item)"
-												class="focus-ring block p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors border border-transparent hover:border-slate-200/60 dark:hover:border-slate-700/60"
+												class="block px-3 py-2 rounded-bento text-sm transition-all duration-150 group cursor-pointer border border-transparent"
+												:class="activeItems.indexOf(item) === selectedIndex
+													? 'bg-blue-50/90 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 border-blue-200/60 dark:border-blue-800/50'
+													: 'hover:bg-slate-100/80 dark:hover:bg-slate-800/60 hover:border-slate-200/50 dark:hover:border-slate-700/50'"
 												@click="closeModal"
 											>
-												<div class="font-heading font-semibold text-g1 text-slate-900 dark:text-white" v-html="item.snippets?.title || item.title" />
-												<div v-if="item.snippets?.content" class="text-meta text-slate-500 dark:text-slate-400 mt-1 line-clamp-2" v-html="item.snippets.content" />
+												<div class="flex items-center justify-between gap-2">
+													<div
+														class="font-medium text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors"
+														v-html="item.snippets?.title || item.title"
+													/>
+													<span class="i-hugeicons-arrow-right-01 text-xs text-slate-400 group-hover:text-blue-500 shrink-0" />
+												</div>
+												<div
+													v-if="item.snippets?.content"
+													class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1"
+													v-html="item.snippets.content"
+												/>
 											</NuxtLink>
 										</li>
 									</ul>
-								</section>
+								</div>
 
-								<!-- Pages Group -->
-								<section v-if="pageResults.length > 0">
-									<h3 class="text-meta uppercase tracking-wider font-semibold text-slate-400 dark:text-slate-500 mb-2 px-1 flex items-center gap-1.5">
-										<span class="i-lucide-file-text text-xs text-amber-500" />
-										Halaman ({{ pageResults.length }})
-									</h3>
-									<ul class="space-y-1">
-										<li v-for="item in pageResults" :key="item.id + (item.level || 0)">
+								<!-- Group: Halaman -->
+								<div
+									v-if="pageResults.length > 0"
+									class="space-y-1"
+								>
+									<div class="px-3 py-1 text-xs font-semibold text-slate-400 dark:text-slate-500 tracking-wide uppercase flex items-center justify-between">
+										<span>Halaman</span>
+										<span>{{ pageResults.length }}</span>
+									</div>
+									<ul class="space-y-0.5">
+										<li
+											v-for="item in pageResults"
+											:key="item.id + (item.level || 0)"
+										>
 											<NuxtLink
 												:to="getTargetUrl(item)"
-												class="focus-ring block p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors border border-transparent hover:border-slate-200/60 dark:hover:border-slate-700/60"
+												class="block px-3 py-2 rounded-bento text-sm transition-all duration-150 group cursor-pointer border border-transparent"
+												:class="activeItems.indexOf(item) === selectedIndex
+													? 'bg-amber-50/90 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 border-amber-200/60 dark:border-amber-800/50'
+													: 'hover:bg-slate-100/80 dark:hover:bg-slate-800/60 hover:border-slate-200/50 dark:hover:border-slate-700/50'"
 												@click="closeModal"
 											>
-												<div class="font-heading font-semibold text-g1 text-slate-900 dark:text-white" v-html="item.snippets?.title || item.title" />
-												<div v-if="item.snippets?.content" class="text-meta text-slate-500 dark:text-slate-400 mt-1 line-clamp-2" v-html="item.snippets.content" />
+												<div class="flex items-center justify-between gap-2">
+													<div
+														class="font-medium text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors"
+														v-html="item.snippets?.title || item.title"
+													/>
+													<span class="i-hugeicons-arrow-right-01 text-xs text-slate-400 group-hover:text-amber-500 shrink-0" />
+												</div>
+												<div
+													v-if="item.snippets?.content"
+													class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1"
+													v-html="item.snippets.content"
+												/>
 											</NuxtLink>
 										</li>
 									</ul>
-								</section>
+								</div>
 							</div>
 						</div>
 
-						<!-- Search Footer -->
-						<div class="px-4 py-2.5 bg-slate-50 dark:bg-slate-950/60 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
-							<span class="flex items-center gap-1">
-								<span class="i-lucide-zap text-xs text-amber-400" /> SQLite FTS5 Engine
-							</span>
-							<span>Tekan <kbd class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono">ESC</kbd> untuk menutup</span>
+						<!-- Footer Bar -->
+						<div class="px-4 py-2.5 bg-slate-50/80 dark:bg-slate-950/80 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+							<div class="flex items-center gap-3">
+								<span class="flex items-center gap-1">
+									<kbd class="px-1 py-0.2 rounded bg-slate-200/70 dark:bg-slate-800 font-mono text-[10px]">↑↓</kbd>
+									<span>Pilih</span>
+								</span>
+								<span class="flex items-center gap-1">
+									<kbd class="px-1 py-0.2 rounded bg-slate-200/70 dark:bg-slate-800 font-mono text-[10px]">↵</kbd>
+									<span>Buka</span>
+								</span>
+								<span class="flex items-center gap-1">
+									<kbd class="px-1 py-0.2 rounded bg-slate-200/70 dark:bg-slate-800 font-mono text-[10px]">ESC</kbd>
+									<span>Tutup</span>
+								</span>
+							</div>
+
+							<div class="flex items-center gap-1 text-brand-600 dark:text-brand-400 font-medium">
+								<span class="i-hugeicons-sparkles text-xs text-amber-500" />
+								<span>SQLite FTS5</span>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -242,13 +527,14 @@
 
 <style>
 mark {
-	background-color: rgba(43, 212, 181, 0.25);
+	background-color: rgba(20, 184, 152, 0.22);
 	color: inherit;
-	border-radius: 2px;
-	padding: 0 2px;
+	border-radius: 4px;
+	padding: 0 3px;
+	font-weight: 600;
 }
 .dark mark {
-	background-color: rgba(43, 212, 181, 0.35);
+	background-color: rgba(43, 212, 181, 0.3);
 	color: #5eeacf;
 }
 </style>

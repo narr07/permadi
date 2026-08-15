@@ -49,7 +49,7 @@ export default defineConfig({
 		presetWebFonts({
 			provider: 'google',
 			fonts: {
-				sans: 'TikTok Sans:400,500,600,700',
+				sans: 'Plus Jakarta Sans:400,500,600,700',
 				heading: 'Barlow:400,500,600,700,800,900',
 				mono: 'JetBrains Mono:400,600',
 			},
@@ -63,7 +63,7 @@ export default defineConfig({
 
 	theme: {
 		fontFamily: {
-			sans: ['TikTok Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+			sans: ['TikTok Sans', 'Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
 			heading: ['Barlow', 'sans-serif'],
 			mono: ['JetBrains Mono', 'monospace'],
 		},
@@ -209,8 +209,8 @@ export default defineConfig({
 		'bento-card-ghost': 'bento-card-base bg-transparent hover:bg-slate-100/70 dark:hover:bg-slate-800/50 border border-transparent hover:border-slate-200/60 dark:hover:border-slate-800/60',
 
 		'bento-lift': 'hover:-translate-y-0.5',
-		'bento-highlight': 'ring-1 ring-brand-500/40',
-		'focus-ring': 'outline-none focus-visible:(outline-2 outline-offset-2 outline-brand-500)',
+		'bento-highlight': 'border border-brand-500/30 dark:border-brand-400/20',
+		'focus-ring': 'focus:outline-none focus-visible:(outline-none ring-2 ring-brand-500/70 ring-offset-1 ring-offset-white dark:ring-offset-slate-900)',
 
 		'bento-spotlight': 'relative overflow-hidden before:(content-empty absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none) before:bg-[radial-gradient(400px_circle_at_var(--x,_50%)_var(--y,_50%),rgba(43,212,181,0.15),transparent_70%)]',
 

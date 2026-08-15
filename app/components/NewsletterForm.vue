@@ -46,10 +46,10 @@
 				:class="{ 'border-red-500! ring-1 ring-red-500/50': errors.email }"
 			>
 			<p v-if="errors.email" class="text-meta text-red-500 mt-1.5 flex items-center gap-1">
-				<span class="i-lucide-alert-circle text-xs" /> {{ errors.email }}
+				<span class="i-hugeicons-alert-circle text-xs" /> {{ errors.email }}
 			</p>
 			<p v-if="isSuccess" class="text-meta text-emerald-500 mt-1.5 flex items-center gap-1">
-				<span class="i-lucide-check-circle text-xs" /> {{ successMessage }}
+				<span class="i-hugeicons-checkmark-circle-02 text-xs" /> {{ successMessage }}
 			</p>
 		</div>
 		<button
@@ -57,9 +57,9 @@
 			class="btn-primary !py-2.5 self-start sm:self-auto cursor-pointer"
 			:disabled="isSubmitting"
 		>
-			<span v-if="isSubmitting" class="i-lucide-loader-2 animate-spin text-lg" />
+			<span v-if="isSubmitting" class="i-hugeicons-loading-03 animate-spin text-lg" />
 			<span v-else class="flex items-center gap-1.5">
-				Subscribe <span class="i-lucide-send text-xs" />
+				Subscribe <span class="i-hugeicons-sent text-xs" />
 			</span>
 		</button>
 	</form>

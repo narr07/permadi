@@ -5,6 +5,8 @@ export default defineNuxtConfig({
 		'@nuxtjs/color-mode',
 		'@nuxt/content',
 		'@nuxtjs/i18n',
+		'@nuxt/image',
+		'nuxt-studio',
 	],
 	css: [
 		'~/assets/css/main.css',
@@ -14,13 +16,41 @@ export default defineNuxtConfig({
 		preference: 'system',
 		fallback: 'dark',
 	},
-	features: {
-		inlineStyles: true,
+	runtimeConfig: {
+		cloudinaryCloudName: process.env.NUXT_CLOUDINARY_CLOUD_NAME || 'daton7ry4',
+		cloudinaryApiKey: process.env.NUXT_CLOUDINARY_API_KEY || '',
+		cloudinaryApiSecret: process.env.NUXT_CLOUDINARY_API_SECRET || '',
+	},
+	image: {
+		cloudinary: {
+			baseURL: 'https://res.cloudinary.com/daton7ry4/image/upload/',
+		},
+		format: ['webp', 'avif'],
+		quality: 85,
+		domains: ['res.cloudinary.com'],
+		screens: {
+			xs: 320,
+			sm: 640,
+			md: 768,
+			lg: 1024,
+			xl: 1280,
+			xxl: 1536,
+		},
+	},
+	studio: {
+		enabled: true,
+		repository: {
+			provider: 'github',
+			owner: 'narr07',
+			repo: 'permadi',
+			branch: 'main',
+		},
 	},
 	i18n: {
 		baseUrl: 'https://permadi.dev',
 		defaultLocale: 'en',
 		strategy: 'prefix',
+		customRoutes: 'config',
 		locales: [
 			{
 				code: 'en',
@@ -35,6 +65,28 @@ export default defineNuxtConfig({
 				file: 'id.json',
 			},
 		],
+		pages: {
+			'projek/index': {
+				id: '/projek',
+				en: '/projects',
+			},
+			'projek/[slug]': {
+				id: '/projek/[slug]',
+				en: '/projects/[slug]',
+			},
+			'tentang': {
+				id: '/tentang',
+				en: '/about',
+			},
+			'kontak': {
+				id: '/kontak',
+				en: '/contact',
+			},
+			'galeri': {
+				id: '/galeri',
+				en: '/gallery',
+			},
+		},
 		detectBrowserLanguage: {
 			useCookie: true,
 			cookieKey: 'i18n_redirected',

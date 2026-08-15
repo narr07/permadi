@@ -32,16 +32,16 @@
 				</div>
 				<div class="flex items-center gap-3 text-lg text-slate-400 dark:text-slate-500">
 					<a href="https://github.com/narr07" target="_blank" rel="noopener" class="hover:text-brand-500 transition-colors" aria-label="GitHub">
-						<span class="i-simple-icons-github" />
+						<span class="i-hugeicons-github" />
 					</a>
 					<a href="https://x.com/dinarpermadi07" target="_blank" rel="noopener" class="hover:text-brand-500 transition-colors" aria-label="X">
-						<span class="i-simple-icons-x" />
+						<span class="i-hugeicons-new-twitter" />
 					</a>
 					<a href="https://www.instagram.com/narr07/" target="_blank" rel="noopener" class="hover:text-brand-500 transition-colors" aria-label="Instagram">
-						<span class="i-simple-icons-instagram" />
+						<span class="i-hugeicons-instagram" />
 					</a>
 					<a href="https://www.behance.net/narr07" target="_blank" rel="noopener" class="hover:text-brand-500 transition-colors" aria-label="Behance">
-						<span class="i-simple-icons-behance" />
+						<span class="i-hugeicons-behance-02" />
 					</a>
 				</div>
 			</div>

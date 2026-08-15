@@ -29,10 +29,16 @@
 		{ watch: [locale] }
 	)
 
-	// 4. Cuplikan galeri
+	// 4. Cuplikan galeri (Cloudinary API dengan fallback)
 	const { data: galleryItems } = await useAsyncData(
 		() => 'home-galeri-preview',
-		() => queryCollection('galeri').order('order', 'ASC').limit(4).all()
+		async () => {
+			try {
+				const cloud = await $fetch<any[]>('/api/cloudinary-gallery')
+				if (cloud && cloud.length > 0) return cloud.slice(0, 4)
+			} catch {}
+			return queryCollection('galeri').order('order', 'ASC').limit(4).all()
+		}
 	)
 
 	const techStack = [
@@ -79,10 +85,10 @@
 				</div>
 				<div class="flex flex-wrap gap-2.5 mt-6 pt-4 border-t border-slate-200/60 dark:border-slate-800/60">
 					<NuxtLink
-						:to="locale === 'id' ? localePath('/projek') : localePath('/projects')"
+						:to="localePath('/projek')"
 						class="btn-primary"
 					>
-						{{ t('nav.projects', 'Lihat Proyek') }} <span class="i-lucide-arrow-right text-sm" />
+						{{ t('nav.projects', 'Lihat Proyek') }} <span class="i-hugeicons-arrow-right-01 text-sm" />
 					</NuxtLink>
 					<NuxtLink
 						:to="localePath('/blog')"
@@ -95,61 +101,51 @@
 
 			<!-- 2. Tentang Singkat - 2x1 (6 col x 1 row) -->
 			<NuxtLink
-				:to="locale === 'id' ? localePath('/tentang') : localePath('/about')"
+				:to="localePath('/tentang')"
 				class="bento-card-soft bento-lift lg:col-span-6 lg:row-span-1 group block"
 			>
 				<div class="flex items-center justify-between mb-2">
 					<h3 class="heading-card-md group-hover:text-brand-600 transition-colors">
 						{{ t('nav.about', 'Tentang Singkat') }}
 					</h3>
-					<span class="i-lucide-arrow-up-right text-slate-400 group-hover:(text-brand-500 translate-x-0.5 -translate-y-0.5) transition-transform" />
+					<span class="i-hugeicons-arrow-right-01 text-slate-400 group-hover:(text-brand-500 translate-x-0.5) transition-transform" />
 				</div>
 				<p class="text-body text-slate-600 dark:text-slate-300 line-clamp-2">
 					Fokus di ekosistem Vue & Nuxt, menyukai konsistensi desain sistem, tipografi golden ratio, dan kecepatan rendering edge.
 				</p>
 			</NuxtLink>
 
-			<!-- 3. Proyek Unggulan (Spotlight Card) - 2x2 (6 col x 2 row) -->
-			<div
-				ref="spotlightEl"
-				class="bento-card-outline bento-spotlight bento-lift lg:col-span-6 lg:row-span-2 flex flex-col justify-between group"
-				@mousemove="onMove"
+			<!-- 3. Proyek Unggulan Bento Card - 2x1 (6 col x 1 row) -->
+			<NuxtLink
+				v-if="featuredProject"
+				:to="localePath(`/projek/${featuredProject.slug}`)"
+				class="bento-card-outline bento-lift bento-highlight lg:col-span-6 lg:row-span-1 flex flex-col justify-between group block overflow-hidden"
 			>
 				<div>
 					<div class="flex items-center justify-between mb-2">
-						<span class="text-meta uppercase font-semibold text-brand-600 dark:text-brand-400 flex items-center gap-1">
-							<span class="i-lucide-sparkles text-xs" /> Proyek Unggulan
+						<span class="text-meta text-xs uppercase font-semibold text-brand-600 dark:text-brand-400 flex items-center gap-1">
+							<span class="i-hugeicons-sparkles text-xs" /> {{ locale === 'id' ? 'Projek Unggulan' : 'Featured Project' }}
 						</span>
-						<NuxtLink
-							v-if="featuredProject"
-							:to="featuredProject.path"
-							class="text-meta hover:text-brand-500 flex items-center gap-1 font-medium"
-						>
-							Detail <span class="i-lucide-arrow-right text-xs" />
-						</NuxtLink>
+						<span class="text-meta text-xs">{{ featuredProject.date }}</span>
 					</div>
-					<h3 class="heading-card-lg group-hover:text-brand-500 transition-colors">
-						{{ featuredProject?.title || 'Personal Portfolio & Bento Design System' }}
+					<h3 class="heading-card-md group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+						{{ featuredProject.title }}
 					</h3>
-					<p class="text-body mt-2 line-clamp-3">
-						{{ featuredProject?.description || 'Redesign sistem bento grid komprehensif dengan Nuxt 4, UnoCSS, dan Cloudflare D1.' }}
+					<p class="text-body text-slate-600 dark:text-slate-300 text-sm mt-1 line-clamp-2">
+						{{ featuredProject.description }}
 					</p>
 				</div>
-				<div class="mt-4 pt-4 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between">
-					<div class="flex flex-wrap gap-1.5">
-						<span v-for="tag in (featuredProject?.tags || ['Nuxt', 'UnoCSS', 'Cloudflare'])" :key="tag" class="badge-neutral text-xs">
+				<div class="mt-3 pt-2 border-t border-slate-200/50 dark:border-slate-800/50 flex items-center justify-between text-meta text-xs">
+					<span class="text-brand-600 dark:text-brand-400 font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-1">
+						{{ locale === 'id' ? 'Lihat Studi Kasus' : 'Explore Case Study' }} <span class="i-hugeicons-arrow-right-01 text-xs" />
+					</span>
+					<div class="flex flex-wrap gap-1">
+						<span v-for="tag in (featuredProject.tags || []).slice(0, 2)" :key="tag" class="badge-neutral text-[10px]">
 							{{ tag }}
 						</span>
 					</div>
-					<NuxtLink
-						v-if="featuredProject"
-						:to="featuredProject.path"
-						class="btn-primary !px-3 !py-1 text-xs"
-					>
-						Explore Case Study
-					</NuxtLink>
 				</div>
-			</div>
+			</NuxtLink>
 
 			<!-- 4. Tulisan Terbaru - 1x2 (3 col x 2 row) -->
 			<div class="bento-card-soft lg:col-span-3 lg:row-span-2 flex flex-col justify-between">
@@ -157,7 +153,7 @@
 					<div class="flex items-center justify-between mb-3">
 						<h3 class="heading-card-md">{{ t('nav.blog', 'Tulisan') }}</h3>
 						<NuxtLink :to="localePath('/blog')" class="text-meta hover:text-brand-500 text-xs font-semibold flex items-center gap-0.5">
-							Semua <span class="i-lucide-arrow-right text-[10px]" />
+							{{ locale === 'id' ? 'Semua' : 'All' }} <span class="i-hugeicons-arrow-right-01 text-[10px]" />
 						</NuxtLink>
 					</div>
 					<ul v-if="latestPosts?.length" class="space-y-3 divide-y divide-slate-200/60 dark:divide-slate-800/60">
@@ -166,26 +162,26 @@
 								<h4 class="font-heading font-semibold text-g1 text-slate-800 dark:text-slate-200 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors line-clamp-2">
 									{{ post.title }}
 								</h4>
-								<span class="text-meta text-xs mt-1 block">{{ post.readingTime || 5 }} min read</span>
+								<span class="text-meta text-xs mt-1 block">{{ post.readingTime || 5 }} min read • {{ post.date }}</span>
 							</NuxtLink>
 						</li>
 					</ul>
-					<p v-else class="text-meta text-xs">Belum ada tulisan.</p>
+					<p v-else class="text-meta text-xs">{{ locale === 'id' ? 'Belum ada tulisan.' : 'No articles found.' }}</p>
 				</div>
 				<NuxtLink :to="localePath('/blog')" class="btn-ghost !px-3 !py-1.5 text-xs text-center mt-3 border border-slate-200 dark:border-slate-700">
-					Buka Halaman Blog
+					{{ locale === 'id' ? 'Buka Halaman Blog' : 'Explore All Articles' }}
 				</NuxtLink>
 			</div>
 
 			<!-- 5. Cuplikan Galeri - 1x2 (3 col x 2 row) -->
 			<NuxtLink
-				:to="locale === 'id' ? localePath('/galeri') : localePath('/gallery')"
+				:to="localePath('/galeri')"
 				class="bento-card-ghost bento-lift lg:col-span-3 lg:row-span-2 flex flex-col justify-between group block"
 			>
 				<div>
 					<div class="flex items-center justify-between mb-3">
 						<h3 class="heading-card-md group-hover:text-brand-600 transition-colors">{{ t('nav.gallery', 'Galeri') }}</h3>
-						<span class="i-lucide-arrow-up-right text-slate-400 group-hover:(text-brand-500 translate-x-0.5 -translate-y-0.5) transition-transform" />
+						<span class="i-hugeicons-arrow-right-01 text-slate-400 group-hover:(text-brand-500 translate-x-0.5) transition-transform" />
 					</div>
 					<div v-if="galleryItems?.length" class="grid grid-cols-2 gap-2">
 						<div
@@ -194,21 +190,25 @@
 							class="rounded-bento overflow-hidden bg-slate-200 dark:bg-slate-800"
 							:class="i % 2 === 0 ? 'aspect-profile' : 'aspect-photo'"
 						>
-							<img
+							<NuxtImg
 								:src="item.image"
-								:alt="item.title || 'Foto galeri'"
+								:alt="item.title || (locale === 'id' ? 'Foto galeri' : 'Gallery photo')"
+								:provider="item.image.startsWith('http') || item.image.startsWith('/projects') || item.image.startsWith('/galeri') ? undefined : 'cloudinary'"
+								format="webp"
+								quality="75"
+								width="300"
 								class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
 								loading="lazy"
-							>
+							/>
 						</div>
 					</div>
 					<div v-else class="py-6 text-center text-meta">
-						<span class="i-lucide-image text-2xl mx-auto block opacity-40 mb-1" />
-						Koleksi visual
+						<span class="i-hugeicons-image-02 text-2xl mx-auto block opacity-40 mb-1" />
+						{{ locale === 'id' ? 'Koleksi visual' : 'Visual collection' }}
 					</div>
 				</div>
 				<span class="text-meta text-xs font-semibold text-brand-600 dark:text-brand-400 mt-2 block">
-					Lihat semua karya visual & foto →
+					{{ locale === 'id' ? 'Lihat semua karya visual & foto →' : 'Explore all visual snapshots →' }}
 				</span>
 			</NuxtLink>
 
@@ -227,19 +227,19 @@
 				<h3 class="heading-card-md mb-2.5">Terhubung</h3>
 				<div class="flex items-center gap-1.5 flex-wrap">
 					<a href="https://github.com/narr07" target="_blank" rel="noopener" class="icon-btn" aria-label="GitHub">
-						<span class="i-simple-icons-github text-base" />
+						<span class="i-hugeicons-github text-base" />
 					</a>
 					<a href="https://x.com/dinarpermadi07" target="_blank" rel="noopener" class="icon-btn" aria-label="X">
-						<span class="i-simple-icons-x text-base" />
+						<span class="i-hugeicons-new-twitter text-base" />
 					</a>
 					<a href="https://www.instagram.com/narr07/" target="_blank" rel="noopener" class="icon-btn" aria-label="Instagram">
-						<span class="i-simple-icons-instagram text-base" />
+						<span class="i-hugeicons-instagram text-base" />
 					</a>
 					<a href="https://www.behance.net/narr07" target="_blank" rel="noopener" class="icon-btn" aria-label="Behance">
-						<span class="i-simple-icons-behance text-base" />
+						<span class="i-hugeicons-behance-02 text-base" />
 					</a>
 					<a href="mailto:hi@permadi.dev" class="icon-btn" aria-label="Email">
-						<span class="i-lucide-mail text-base" />
+						<span class="i-hugeicons-mail-01 text-base" />
 					</a>
 				</div>
 			</div>

@@ -93,7 +93,7 @@
 			:to="localePath('/blog')"
 			class="focus-ring inline-flex items-center gap-1.5 text-meta text-xs font-semibold hover:text-brand-600 dark:hover:text-brand-400 transition-colors mb-8"
 		>
-			<span class="i-lucide-arrow-left text-sm" /> {{ locale === 'id' ? 'Kembali ke Blog' : 'Back to Blog' }}
+			<span class="i-hugeicons-arrow-left-01 text-sm" /> {{ locale === 'id' ? 'Kembali ke Blog' : 'Back to Blog' }}
 		</NuxtLink>
 
 		<!-- Article Container -->
@@ -113,12 +113,12 @@
 				</p>
 				<div class="flex items-center gap-4 text-meta text-xs mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
 					<span class="flex items-center gap-1.5 font-medium">
-						<span class="i-lucide-calendar text-sm text-brand-500" />
+						<span class="i-hugeicons-calendar-03 text-sm text-brand-500" />
 						{{ post.doc.date }}
 					</span>
 					<span>•</span>
 					<span class="flex items-center gap-1.5 font-medium">
-						<span class="i-lucide-clock text-sm text-brand-500" />
+						<span class="i-hugeicons-clock-01 text-sm text-brand-500" />
 						{{ post.doc.readingTime || 5 }} min read
 					</span>
 				</div>
@@ -142,7 +142,7 @@
 				class="bento-card-outline bento-lift flex flex-col justify-between group p-4 rounded-bento"
 			>
 				<span class="text-meta text-xs uppercase font-semibold flex items-center gap-1 text-slate-400 group-hover:text-brand-500 transition-colors">
-					<span class="i-lucide-arrow-left text-xs" /> {{ locale === 'id' ? 'Artikel Sebelumnya' : 'Previous Article' }}
+					<span class="i-hugeicons-arrow-left-01 text-xs" /> {{ locale === 'id' ? 'Artikel Sebelumnya' : 'Previous Article' }}
 				</span>
 				<strong class="font-heading font-semibold text-g1 text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mt-2 block">
 					{{ surround[0].title }}
@@ -156,7 +156,7 @@
 				class="bento-card-outline bento-lift flex flex-col justify-between group p-4 rounded-bento text-right"
 			>
 				<span class="text-meta text-xs uppercase font-semibold flex items-center justify-end gap-1 text-slate-400 group-hover:text-brand-500 transition-colors">
-					{{ locale === 'id' ? 'Artikel Selanjutnya' : 'Next Article' }} <span class="i-lucide-arrow-right text-xs" />
+					{{ locale === 'id' ? 'Artikel Selanjutnya' : 'Next Article' }} <span class="i-hugeicons-arrow-right-01 text-xs" />
 				</span>
 				<strong class="font-heading font-semibold text-g1 text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mt-2 block">
 					{{ surround[1].title }}

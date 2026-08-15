@@ -3,6 +3,7 @@
 	const localePath = useLocalePath()
 	const switchLocalePath = useSwitchLocalePath()
 	const colorMode = useColorMode()
+	const route = useRoute()
 
 	const mobileOpen = ref(false)
 
@@ -11,14 +12,42 @@
 	}
 
 	const navItems = computed(() => [
-		{ label: t('nav.home'), to: localePath('/') },
-		{ label: t('nav.blog'), to: localePath('/blog') },
-		{ label: t('nav.projects'), to: locale.value === 'id' ? localePath('/projek') : localePath('/projects') },
-		{ label: t('nav.gallery'), to: locale.value === 'id' ? localePath('/galeri') : localePath('/gallery') },
-		{ label: t('nav.about'), to: locale.value === 'id' ? localePath('/tentang') : localePath('/about') },
+		{
+			label: t('nav.home'),
+			to: localePath('/'),
+			prefix: `/${locale.value}`,
+			exact: true,
+		},
+		{
+			label: t('nav.blog'),
+			to: localePath('/blog'),
+			prefix: `/${locale.value}/blog`,
+		},
+		{
+			label: t('nav.projects'),
+			to: locale.value === 'id' ? '/id/projek' : '/en/projects',
+			prefix: locale.value === 'id' ? '/id/projek' : '/en/projects',
+		},
+		{
+			label: t('nav.gallery'),
+			to: locale.value === 'id' ? '/id/galeri' : '/en/gallery',
+			prefix: locale.value === 'id' ? '/id/galeri' : '/en/gallery',
+		},
+		{
+			label: t('nav.about'),
+			to: locale.value === 'id' ? '/id/tentang' : '/en/about',
+			prefix: locale.value === 'id' ? '/id/tentang' : '/en/about',
+		},
 	])
 
-	const contactPath = computed(() => (locale.value === 'id' ? localePath('/kontak') : localePath('/contact')))
+	const contactPath = computed(() => (locale.value === 'id' ? '/id/kontak' : '/en/contact'))
+
+	function isItemActive(item: { to: string, prefix: string, exact?: boolean }): boolean {
+		if (item.exact) {
+			return route.path === `/${locale.value}` || route.path === `/${locale.value}/`
+		}
+		return route.path.startsWith(item.prefix)
+	}
 </script>
 
 <template>
@@ -41,8 +70,10 @@
 					v-for="item in navItems"
 					:key="item.to"
 					:to="item.to"
-					class="focus-ring px-3.5 py-1.5 rounded-bento-island text-g1 font-medium text-slate-600 dark:text-slate-300 transition-all hover:(text-brand-600 dark:text-brand-400)"
-					active-class="bg-brand-50/90 dark:bg-brand-950/70 text-brand-600! dark:text-brand-400! bento-highlight"
+					class="focus-ring px-3.5 py-1.5 rounded-bento-island text-g1 font-medium transition-all"
+					:class="isItemActive(item)
+						? 'bg-brand-50/90 dark:bg-brand-950/70 text-brand-600 dark:text-brand-400 font-semibold shadow-2xs'
+						: 'text-slate-600 dark:text-slate-300 hover:(text-brand-600 dark:text-brand-400)'"
 				>
 					{{ item.label }}
 				</NuxtLink>
@@ -60,8 +91,8 @@
 					:aria-label="colorMode.value === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
 					@click="toggleColorMode"
 				>
-					<span class="i-lucide-sun dark:hidden text-lg text-amber-500" />
-					<span class="i-lucide-moon hidden dark:inline text-lg text-brand-300" />
+					<span class="i-hugeicons-sun-01 dark:hidden text-lg text-amber-500" />
+					<span class="i-hugeicons-moon-02 hidden dark:inline text-lg text-brand-300" />
 				</button>
 
 				<!-- Language Switcher -->
@@ -81,6 +112,7 @@
 				<NuxtLink
 					:to="contactPath"
 					class="btn-primary !px-3.5 !py-1 text-g0 hidden sm:inline-flex"
+					:class="{ 'ring-2 ring-brand-400/50': route.path.startsWith(contactPath) }"
 				>
 					{{ t('nav.contact') }}
 				</NuxtLink>
@@ -92,7 +124,7 @@
 					aria-label="Toggle navigation menu"
 					@click="mobileOpen = !mobileOpen"
 				>
-					<span :class="mobileOpen ? 'i-lucide-x' : 'i-lucide-menu'" class="text-xl" />
+					<span :class="mobileOpen ? 'i-hugeicons-cancel-01' : 'i-hugeicons-menu-01'" class="text-xl" />
 				</button>
 			</div>
 		</div>
@@ -106,8 +138,10 @@
 				v-for="item in navItems"
 				:key="item.to"
 				:to="item.to"
-				class="focus-ring block px-4 py-2.5 rounded-bento text-g1 font-medium text-slate-700 dark:text-slate-200 transition-colors"
-				active-class="bg-brand-50 dark:bg-brand-950/50 text-brand-600! dark:text-brand-400! bento-highlight font-semibold"
+				class="focus-ring block px-4 py-2.5 rounded-bento text-g1 font-medium transition-colors"
+				:class="isItemActive(item)
+					? 'bg-brand-50 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400 bento-highlight font-semibold'
+					: 'text-slate-700 dark:text-slate-200'"
 				@click="mobileOpen = false"
 			>
 				{{ item.label }}
