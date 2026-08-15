@@ -14,7 +14,7 @@
 		<h1 v-if="headline" class="font-heading font-extrabold text-brand-950  text-4xl sm:text-6xl md:text-7xl leading-[0.95]  mb-4">
 			{{ headline }}
 		</h1>
-		<p v-if="description" class="text-brand-800 dark:text-brand-300 text-base sm:text-lg leading-relaxed max-w-xl">
+		<p v-if="description" class="text-brand-800 dark:text-brand-200 text-base sm:text-lg leading-relaxed max-w-xl">
 			{{ description }}
 		</p>
 	</div>

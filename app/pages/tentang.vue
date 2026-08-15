@@ -123,7 +123,7 @@
 						{{ locale === 'id' ? 'Lokasi & Zona Waktu' : 'Location & Timezone' }}
 					</span>
 					<h3 class="font-heading font-semibold text-2xl text-slate-900 mb-2">
-						Bandung, Indonesia
+						Majalengka, Indonesia
 					</h3>
 					<p class="text-slate-800 text-xs sm:text-sm leading-relaxed">
 						{{ locale === 'id' ? 'Bekerja secara remote dan berkolaborasi dengan tim di berbagai belahan dunia.' : 'Working remotely and collaborating with teams across the globe.' }}

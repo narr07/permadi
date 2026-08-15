@@ -1,23 +1,37 @@
-title: Dinar Permadi Yusup — Frontend Developer & Digital Craftsman
+title: Dinar Permadi Yusup — Frontend Developer & Graphic Designer
+# ^ "Digital Craftsman" hampir tidak ada orang yang mencari istilah ini di search engine;
+#   "Graphic Designer" punya search volume nyata
+
 archive:
   label: The Archive
   title: Images, objects, and quiet observations.
-  description: Curated visual captures and workspace documentation organized in Cloudinary CDN.
+  description: Curated captures of graphic design work and workspace documentation, organized in Cloudinary CDN.
+  # ^ menambahkan "graphic design work" agar konsisten dengan versi ID
   link_text: Open Gallery
-description: A living archive of work, experiments, images, and notes by a frontend developer in Bandung.
+
+description: A living archive of work, interface experiments, photography, and notes by an elementary school teacher who's also a frontend developer and graphic designer.
+# ^ ditambahkan "elementary school teacher" (niche, minim kompetitor) dan
+#   "based in" (bukan "in Majalengka" agar tidak menyiratkan mengajar di sana)
+
 explore:
   label: Currently Exploring
   text: Interfaces that feel inevitable and calm.
-eyebrow: Permadi / Personal Workspace
+
+eyebrow: Permadi / Teacher, Developer & Designer
+# ^ eyebrow ini terbaca search engine — sayang kalau kosong keyword
+
 headline: A small corner of the internet.
+# tetap — biarkan H1 tetap puitis untuk branding
+
 hero:
   status: Available for select projects
-  kicker: Frontend Developer / Digital Craftsman
+  kicker: Frontend Developer · Graphic Designer · Elementary School Teacher
   headline: Building useful
   headline_italic: things
   headline_suffix: with care.
-  description: I turn complex ideas into calm, considered digital experiences.
-  location: Bandung, ID
+  description: I turn complex ideas into calm, considered digital experiences — with a teacher's clarity and a designer's eye for detail.
+  # ^ menyisipkan identitas unik kamu tanpa mengubah nada aslinya
+  location: Majalengka, ID
   timezone: GMT+7 / Local time
   links:
     - label: Browse Work
@@ -27,20 +41,27 @@ hero:
     - label: Get in Touch
       to: /en/contact
       variant: outline
+
 philosophy:
   number: 01 / 04
   quote: Good design is quiet.
   quote_bold: Great design stays with you.
   label: Permadi Philosophy
+
 project_section:
   label: Selected Work
   fallback_title: Four projects, many lessons.
-  fallback_description: A collection of web systems case studies and modular design.
+  fallback_description: A collection of web systems case studies and modular design — from education tools to digital products.
+  # ^ diperluas agar tersambung ke latar belakang pendidikan kamu (mis. BudgetKu Edu)
   all_link_text: Browse All Work
+
 writing:
   label: Recent Writing
-  title: Notes on code, craft, and systems.
+  title: Notes on code, design, and education.
+  # ^ "education" mencerminkan isi asli tulisan kamu (Accelerated Learning,
+  #   Merdeka Curriculum) — H2 sebaiknya jujur ke konten, bukan cuma "code, craft, and systems"
   all_link_text: Read All Notes
+
 channels: {}
 social_card:
   items: []

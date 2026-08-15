@@ -49,12 +49,24 @@
 /* Fallback & Custom Font-Family Definition */
 @font-face {
 	font-family: 'TikTok Sans';
-	src: local('TikTok Sans'), local('TikTok Display'), local('Plus Jakarta Sans'), local('Inter'), local('Segoe UI');
+	src:
+		local('TikTok Sans'), local('TikTok Display'), local('Plus Jakarta Sans'),
+		local('Inter'), local('Segoe UI');
 	font-display: swap;
 }
 
 html {
-	font-family: 'TikTok Sans', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+	font-family:
+		'TikTok Sans',
+		'Plus Jakarta Sans',
+		-apple-system,
+		BlinkMacSystemFont,
+		'Segoe UI',
+		Roboto,
+		Oxygen,
+		Ubuntu,
+		Cantarell,
+		sans-serif;
 	background-color: var(--canvas);
 	color: var(--ink);
 	scroll-behavior: smooth;
@@ -87,7 +99,9 @@ body {
 	min-height: 100vh;
 	background-color: var(--canvas);
 	color: var(--ink);
-	transition: background-color 0.25s ease, color 0.25s ease;
+	transition:
+		background-color 0.25s ease,
+		color 0.25s ease;
 }
 
 /* Ambient Subtle Noise Texture */
@@ -107,7 +121,10 @@ body {
 	border-radius: 20px;
 	box-shadow: 0 10px 30px rgba(0, 43, 39, 0.035);
 	overflow: hidden;
-	transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+	transition:
+		transform 0.25s ease,
+		box-shadow 0.25s ease,
+		border-color 0.25s ease;
 }
 
 .bento-card-clean:hover {
@@ -189,3 +206,44 @@ body {
 ::-webkit-scrollbar-thumb:hover {
 	background: rgba(100, 116, 139, 0.4);
 }
+
+/* Disable all focus rings & outlines globally */
+*,
+*:focus,
+*:focus-visible,
+button:focus,
+button:focus-visible,
+a:focus,
+a:focus-visible,
+input:focus,
+input:focus-visible {
+	outline: none !important;
+	--un-ring-offset-width: 0px !important;
+	--un-ring-width: 0px !important;
+	--un-ring-color: transparent !important;
+	--un-ring-shadow: none !important;
+}
+
+/* Circular Ripple View Transitions (UnoCSS & VitePress Style) */
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation: none;
+	mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+	z-index: 1;
+}
+
+::view-transition-new(root) {
+	z-index: 9999;
+}
+
+.dark::view-transition-old(root) {
+	z-index: 9999;
+}
+
+.dark::view-transition-new(root) {
+	z-index: 1;
+}
+

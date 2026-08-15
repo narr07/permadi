@@ -19,9 +19,8 @@
 		{ watch: [locale] }
 	)
 
-	// State filter tag & search
+	// State filter tag
 	const selectedTag = ref('ALL')
-	const searchQuery = ref('')
 
 	// Daftar seluruh tag teknologi unik
 	const allTags = computed(() => {
@@ -34,21 +33,27 @@
 		return Array.from(tagsSet)
 	})
 
-	// Filter projek berdasarkan pencarian teks dan tag
+	const tagCounts = computed(() => {
+		const map: Record<string, number> = {}
+		if (projects.value) {
+			for (const item of projects.value) {
+				const tags = item.tags || item.tech || []
+				for (const tag of tags) {
+					map[tag] = (map[tag] || 0) + 1
+				}
+			}
+		}
+		return map
+	})
+
+	// Filter projek berdasarkan tag
 	const filteredProjects = computed(() => {
 		if (!projects.value) return []
 		return projects.value
 			.filter((item: any) => {
-				const matchesTag = selectedTag.value === 'ALL'
+				return selectedTag.value === 'ALL'
 					|| (item.tags && item.tags.includes(selectedTag.value))
 					|| (item.tech && item.tech.includes(selectedTag.value))
-
-				const query = searchQuery.value.toLowerCase().trim()
-				const matchesQuery = !query
-					|| item.title?.toLowerCase().includes(query)
-					|| item.description?.toLowerCase().includes(query)
-
-				return matchesTag && matchesQuery
 			})
 			.map((item: any) => {
 				const projectSlug = item.slug || (item.path ? item.path.split('/').pop() : item.stem)
@@ -76,11 +81,11 @@
 <template>
 	<div class="container-bento py-10 sm:py-14">
 		<!-- Page Header -->
-		<header class="max-w-3xl mb-8 sm:mb-12">
+		<header class="max-w-3xl mb-8 sm:mb-10">
 			<span class="section-label text-brand-600 dark:text-brand-400 font-bold mb-3 block">
 				{{ locale === 'id' ? 'Karya & Eksplorasi' : 'Work & Explorations' }}
 			</span>
-			<h1 class="font-heading font-semibold text-slate-900 dark:text-white text-4xl sm:text-6xl leading-[0.95] tracking-tight mb-4">
+			<h1 class="font-heading font-black text-slate-900  text-4xl sm:text-6xl leading-[0.95] tracking-tight mb-4">
 				{{ page?.title || (locale === 'id' ? 'Projek & Studi Kasus' : 'Projects & Case Studies') }}
 			</h1>
 			<p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed max-w-xl">
@@ -88,41 +93,14 @@
 			</p>
 		</header>
 
-		<!-- Filter & Search Toolbar -->
-		<div class="bento-card-clean p-4 sm:p-5 mb-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-			<!-- Search Input -->
-			<div class="relative flex-1 max-w-md">
-				<span class="i-hugeicons-search-01 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm" />
-				<input
-					v-model="searchQuery"
-					type="text"
-					:placeholder="locale === 'id' ? 'Cari projek berdasarkan nama atau topik...' : 'Search project by name or tech stack...'"
-					class="focus-ring w-full pl-10 pr-4 py-2 text-xs rounded-bento bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400"
-				>
-			</div>
-
-			<!-- Filter Tags -->
-			<div class="flex items-center gap-1.5 flex-wrap">
-				<button
-					type="button"
-					class="focus-ring px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer"
-					:class="selectedTag === 'ALL' ? 'bg-brand-500 text-white shadow-xs font-semibold' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'"
-					@click="selectedTag = 'ALL'"
-				>
-					{{ locale === 'id' ? 'Semua' : 'All' }}
-				</button>
-				<button
-					v-for="tag in allTags"
-					:key="tag"
-					type="button"
-					class="focus-ring px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer"
-					:class="selectedTag === tag ? 'bg-brand-500 text-white shadow-xs font-semibold' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'"
-					@click="selectedTag = tag"
-				>
-					#{{ tag }}
-				</button>
-			</div>
-		</div>
+		<!-- Bento Topic / Tag Filter Toolbar -->
+		<BentoTagFilter
+			v-model="selectedTag"
+			:tags="allTags"
+			:counts="tagCounts"
+			:total-count="filteredProjects.length"
+			type="project"
+		/>
 
 		<!-- Bento Grid Projects (1 col mobile, 2 col tablet, 3 col desktop) -->
 		<div v-if="filteredProjects.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">

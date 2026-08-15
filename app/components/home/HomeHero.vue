@@ -82,7 +82,7 @@
 		<div class="mt-8 pt-4 border-t border-brand-900/60 flex items-center justify-between text-xs text-brand-400/80">
 			<span class="flex items-center gap-1">
 				<span class="i-hugeicons-location-01 text-sm text-brand-300" />
-				{{ hero.location || 'Bandung, ID' }}
+				{{ hero.location || 'Majalengka, ID' }}
 			</span>
 			<span>{{ hero.timezone || 'GMT+7 / Local time' }}</span>
 		</div>

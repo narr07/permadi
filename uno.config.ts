@@ -210,7 +210,7 @@ export default defineConfig({
 
 		'bento-lift': 'hover:-translate-y-0.5',
 		'bento-highlight': 'border border-brand-500/30 dark:border-brand-400/20',
-		'focus-ring': 'focus:outline-none focus-visible:(outline-none ring-2 ring-brand-500/70 ring-offset-1 ring-offset-white dark:ring-offset-slate-900)',
+		'focus-ring': 'outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0',
 
 		'bento-spotlight': 'relative overflow-hidden before:(content-empty absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none) before:bg-[radial-gradient(400px_circle_at_var(--x,_50%)_var(--y,_50%),rgba(43,212,181,0.15),transparent_70%)]',
 

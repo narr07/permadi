@@ -1,16 +1,19 @@
-title: Dinar Permadi Yusup — Frontend Developer & Digital Craftsman
-description: Arsip hidup berisi karya, eksperimen antarmuka, fotografi, dan catatan oleh frontend developer di Bandung.
-eyebrow: Permadi / Ruang Kerja Personal
+title: Dinar Permadi Yusup — Frontend Developer & Desainer Grafis
+
+description: Arsip hidup berisi karya, eksperimen antarmuka, fotografi, dan catatan oleh seorang guru SD yang juga frontend developer dan desainer grafis.
+
+eyebrow: Permadi / Guru, Developer & Desainer
+
 headline: Sudut kecil di belantara internet.
 
 hero:
   status: Tersedia untuk proyek terpilih
-  kicker: Frontend Developer / Digital Craftsman
+  kicker: Frontend Developer · Desainer Grafis · Guru SD
   headline: Membangun antarmuka
-  headline_italic: bermakna
-  headline_suffix: dengan ketelitian.
-  description: Mengubah gagasan kompleks menjadi pengalaman digital yang tenang, rapi, dan berperforma tinggi.
-  location: Bandung, ID
+  headline_italic: yang terasa pas
+  headline_suffix: di setiap detail.
+  description: Saya mengubah ide yang rumit menjadi pengalaman digital yang sederhana, rapi, dan nyaman digunakan — dengan ketelitian seorang guru dan kepekaan seorang desainer.
+  location: __ISI_KOTA__, ID
   timezone: GMT+7 / Local time
   links:
     - label: Lihat Portofolio
@@ -24,7 +27,7 @@ hero:
 project_section:
   label: Projek Terpilih
   fallback_title: Empat proyek, banyak pelajaran berharga.
-  fallback_description: Koleksi studi kasus sistem web dan eksplorasi desain modular.
+  fallback_description: Koleksi studi kasus sistem web dan eksplorasi desain modular — dari kebutuhan pendidikan hingga produk digital.
   all_link_text: Buka Semua Projek
 
 philosophy:
@@ -40,10 +43,10 @@ explore:
 archive:
   label: Arsip Visual
   title: Gambar, dokumentasi, dan observasi visual.
-  description: Dokumentasi fotografi karya dan setup ruang kerja yang terorganisir di Cloudinary CDN.
+  description: Dokumentasi fotografi karya desain grafis dan setup ruang kerja, terorganisir di Cloudinary CDN.
   link_text: Buka Galeri Lengkap
 
 writing:
   label: Tulisan & Catatan
-  title: Catatan terbaru seputar web & sistem.
+  title: Catatan seputar web, desain, dan dunia pendidikan.
   all_link_text: Lihat Semua Tulisan

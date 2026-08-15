@@ -4,7 +4,7 @@
 	const { locales, t, locale } = useI18n()
 	const localePath = useLocalePath()
 	const switchLocalePath = useSwitchLocalePath()
-	const colorMode = useColorMode()
+	const { toggleDark, isDark } = useThemeToggle()
 	const route = useRoute()
 
 	const mobileOpen = ref(false)
@@ -21,10 +21,6 @@
 			mobileOpen.value = false
 		}
 	})
-
-	function toggleColorMode() {
-		colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
-	}
 
 	const navItems = computed(() => [
 		{
@@ -91,11 +87,10 @@
 			<!-- Island 1: Logo & Brand -->
 			<NuxtLink
 				:to="localePath('/')"
-				class="nav-island focus-ring px-3 py-1.5 hover:(border-brand-500/40 -translate-y-0.5) transition-all"
+				class="nav-island px-2.5 py-1.5 hover:(border-brand-500/40 -translate-y-0.5) transition-all flex items-center gap-2"
+				aria-label="permadi.dev"
 			>
-				<div class="w-7 h-7 rounded-full bg-brand-500 text-white flex items-center justify-center font-heading font-bold text-xs">
-					P
-				</div>
+				<Logo size="28" />
 				<span class="text-g1 font-heading font-semibold text-slate-900 dark:text-white hidden sm:inline tracking-tight">permadi.dev</span>
 			</NuxtLink>
 
@@ -105,7 +100,7 @@
 					v-for="item in navItems"
 					:key="item.to"
 					:to="item.to"
-					class="focus-ring px-3.5 py-1.5 rounded-bento-island text-g1 font-medium transition-all"
+					class="px-3.5 py-1.5 rounded-bento-island text-g1 font-medium transition-all"
 					:class="isItemActive(item)
 						? 'bg-brand-50/90 dark:bg-brand-950/70 text-brand-600 dark:text-brand-400 font-semibold shadow-2xs'
 						: 'text-slate-600 dark:text-slate-300 hover:(text-brand-600 dark:text-brand-400)'"
@@ -123,8 +118,8 @@
 				<button
 					type="button"
 					class="icon-btn hidden md:flex"
-					:aria-label="colorMode.value === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
-					@click="toggleColorMode"
+					:aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+					@click="toggleDark($event)"
 				>
 					<span class="i-hugeicons-sun-01 dark:hidden text-lg text-amber-500" />
 					<span class="i-hugeicons-moon-02 hidden dark:inline text-lg text-brand-300" />
@@ -147,7 +142,7 @@
 				<NuxtLink
 					:to="contactPath"
 					class="btn-primary !px-3.5 !py-1 text-g0 hidden md:inline-flex"
-					:class="{ 'ring-2 ring-brand-400/50': route.path.startsWith(contactPath) }"
+					:class="{ 'bg-brand-600': route.path.startsWith(contactPath) }"
 				>
 					{{ t('nav.contact') }}
 				</NuxtLink>
@@ -182,7 +177,7 @@
 						v-for="item in navItems"
 						:key="item.to"
 						:to="item.to"
-						class="focus-ring block px-4 py-2.5 rounded-xl text-g1 font-medium transition-colors"
+						class="block px-4 py-2.5 rounded-xl text-g1 font-medium transition-colors"
 						:class="isItemActive(item)
 							? 'bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 font-semibold border border-brand-500/20'
 							: 'text-slate-700 dark:text-slate-200 hover:bg-slate-100/70 dark:hover:bg-slate-800/50'"
@@ -196,12 +191,12 @@
 						<!-- Theme Switcher Button -->
 						<button
 							type="button"
-							class="focus-ring flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-g1 font-medium bg-slate-100/80 dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 transition-colors"
-							@click="toggleColorMode"
+							class="flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-g1 font-medium bg-slate-100/80 dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 transition-colors cursor-pointer"
+							@click="toggleDark($event)"
 						>
 							<span class="i-hugeicons-sun-01 dark:hidden text-lg text-amber-500" />
 							<span class="i-hugeicons-moon-02 hidden dark:inline text-lg text-brand-300" />
-							<span class="text-xs font-semibold">{{ colorMode.value === 'dark' ? 'Dark' : 'Light' }}</span>
+							<span class="text-xs font-semibold">{{ isDark ? 'Dark' : 'Light' }}</span>
 						</button>
 
 						<!-- Language Switcher Pills -->

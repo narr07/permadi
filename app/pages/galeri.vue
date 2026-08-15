@@ -34,6 +34,18 @@
 		return Array.from(tagSet).sort()
 	})
 
+	const tagCounts = computed(() => {
+		const map: Record<string, number> = {}
+		allItems.value.forEach((item: any) => {
+			if (Array.isArray(item.tags)) {
+				item.tags.forEach((tag: string) => {
+					map[tag] = (map[tag] || 0) + 1
+				})
+			}
+		})
+		return map
+	})
+
 	const filteredGallery = computed(() => {
 		if (selectedTag.value === 'ALL') return allItems.value
 		return allItems.value.filter((item: any) => item.tags?.includes(selectedTag.value))
@@ -128,12 +140,12 @@
 <template>
 	<div class="container-bento py-10 sm:py-14">
 		<!-- Header -->
-		<header class="max-w-3xl mb-8">
+		<header class="max-w-3xl mb-8 sm:mb-10">
 			<span class="badge-neutral text-brand-600 dark:text-brand-400 font-semibold mb-3">
 				<span class="i-hugeicons-image-02 text-xs mr-1 inline-block" />
 				{{ locale === 'id' ? 'Snapshot & Dokumentasi' : 'Snapshots & Visuals' }}
 			</span>
-			<h1 class="heading-hero text-slate-900 dark:text-white">
+			<h1 class="heading-hero text-slate-900 ">
 				{{ page?.title || (locale === 'id' ? 'Galeri Visual' : 'Visual Gallery') }}
 			</h1>
 			<p class="text-body text-slate-600 dark:text-slate-300 mt-2 text-lg">
@@ -141,42 +153,29 @@
 			</p>
 		</header>
 
-		<!-- Tag Filter Bar -->
-		<div v-if="availableTags.length > 0" class="bento-card-subtle mb-8 flex items-center justify-between gap-4 flex-wrap">
-			<div class="flex items-center gap-1.5 flex-wrap">
-				<button
-					type="button"
-					class="focus-ring px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer"
-					:class="selectedTag === 'ALL' ? 'bg-brand-500 text-white shadow-xs font-semibold' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'"
-					@click="selectedTag = 'ALL'"
-				>
-					{{ locale === 'id' ? 'Semua' : 'All' }} ({{ allItems.length }})
-				</button>
-				<button
-					v-for="tag in availableTags"
-					:key="tag"
-					type="button"
-					class="focus-ring px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer"
-					:class="selectedTag === tag ? 'bg-brand-500 text-white shadow-xs font-semibold' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'"
-					@click="selectedTag = tag"
-				>
-					#{{ tag }}
-				</button>
-			</div>
-
-			<span class="text-meta text-xs">
-				{{ locale === 'id' ? `Menampilkan ${displayedItems.length} dari ${filteredGallery.length} foto` : `Showing ${displayedItems.length} of ${filteredGallery.length} photos` }}
-			</span>
-		</div>
+		<!-- Bento Topic / Tag Filter Toolbar -->
+		<BentoTagFilter
+			v-model="selectedTag"
+			:tags="availableTags"
+			:counts="tagCounts"
+			:total-count="filteredGallery.length"
+			type="blog"
+			:item-label="locale === 'id' ? 'foto' : 'photos'"
+		/>
 
 		<!-- Bento Grid Gallery (List Menggunakan Kualitas Rendah & Ringan width=400, quality=65) -->
 		<div v-if="displayedItems.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4">
 			<div
 				v-for="(item, i) in displayedItems"
 				:key="item.public_id || i"
+				tabindex="0"
+				role="button"
+				:aria-label="item.title || (locale === 'id' ? 'Buka foto galeri' : 'Open gallery photo')"
 				class="bento-card-outline bento-lift overflow-hidden !p-0 group relative cursor-pointer bg-slate-100 dark:bg-slate-800 rounded-bento"
 				:class="i % 5 === 0 ? 'lg:col-span-8 aspect-video' : (i % 5 === 1 ? 'lg:col-span-4 aspect-video sm:aspect-auto' : 'lg:col-span-4 aspect-video')"
 				@click="openModal(item)"
+				@keydown.enter.prevent="openModal(item)"
+				@keydown.space.prevent="openModal(item)"
 			>
 				<!-- Gambar List Cepat & Ringan -->
 				<NuxtImg
