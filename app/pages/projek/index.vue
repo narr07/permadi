@@ -61,8 +61,15 @@
 	})
 
 	useSeoMeta({
-		title: computed(() => page.value?.title || (locale.value === 'id' ? 'Projek — Dinar Permadi Yusup' : 'Projects — Dinar Permadi Yusup')),
-		description: computed(() => page.value?.description || (locale.value === 'id' ? 'Portofolio karya, sistem desain, dan aplikasi web yang dibangun dengan standar performa tinggi.' : 'Curated portfolio of frontend engineering, design systems, and web projects.')),
+		title: computed(() => page.value?.title),
+		description: computed(() => page.value?.description),
+		ogTitle: computed(() => page.value?.title),
+		ogDescription: computed(() => page.value?.description),
+	})
+
+	defineOgImage('Bento', {
+		title: page.value?.title,
+		description: page.value?.description,
 	})
 </script>
 

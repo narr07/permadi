@@ -59,8 +59,15 @@
 	})
 
 	useSeoMeta({
-		title: computed(() => page.value?.title || 'Blog — Dinar Permadi Yusup'),
-		description: computed(() => page.value?.description || 'Kumpulan tulisan dan eksplorasi mengenai arsitektur web, sistem desain, dan frontend engineering.'),
+		title: computed(() => page.value?.title),
+		description: computed(() => page.value?.description),
+		ogTitle: computed(() => page.value?.title),
+		ogDescription: computed(() => page.value?.description),
+	})
+
+	defineOgImage('Bento', {
+		title: page.value?.title,
+		description: page.value?.description,
 	})
 </script>
 

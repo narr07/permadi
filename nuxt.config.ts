@@ -7,7 +7,16 @@ export default defineNuxtConfig({
 		'@nuxtjs/i18n',
 		'@nuxt/image',
 		'nuxt-studio',
+		'@nuxtjs/seo',
 	],
+	site: {
+		url: 'https://permadi.dev',
+		name: 'Permadi',
+		description: 'Web Developer & Designer portfolio and technical blog of Permadi.',
+		defaultLocale: 'en',
+		indexable: true,
+	},
+
 	components: {
 		dirs: [
 			{

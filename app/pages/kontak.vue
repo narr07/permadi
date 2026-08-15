@@ -10,8 +10,15 @@
 	)
 
 	useSeoMeta({
-		title: computed(() => page.value?.title || (locale.value === 'id' ? 'Kontak & Kolaborasi — Dinar Permadi Yusup' : 'Contact & Collaboration — Dinar Permadi Yusup')),
-		description: computed(() => page.value?.description || (locale.value === 'id' ? 'Hubungi Dinar Permadi Yusup untuk peluang kolaborasi, proyek pengembangan web, atau konsultasi antarmuka.' : 'Get in touch with Dinar Permadi Yusup for collaboration opportunities, web engineering, or interface consulting.')),
+		title: computed(() => page.value?.title),
+		description: computed(() => page.value?.description),
+		ogTitle: computed(() => page.value?.title),
+		ogDescription: computed(() => page.value?.description),
+	})
+
+	defineOgImage('Bento', {
+		title: page.value?.title,
+		description: page.value?.description,
 	})
 </script>
 

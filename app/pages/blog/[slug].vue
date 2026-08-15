@@ -103,6 +103,14 @@
 	useSeoMeta({
 		title: computed(() => post.value?.doc?.title),
 		description: computed(() => post.value?.doc?.description),
+		ogTitle: computed(() => post.value?.doc?.title),
+		ogDescription: computed(() => post.value?.doc?.description),
+	})
+
+	defineOgImage('Bento', {
+		title: post.value?.doc?.title,
+		description: post.value?.doc?.description,
+		category: locale.value === 'id' ? 'Artikel Blog' : 'Blog Article',
 	})
 </script>
 

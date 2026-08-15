@@ -179,6 +179,14 @@
 	useSeoMeta({
 		title: computed(() => page.value?.doc?.title),
 		description: computed(() => page.value?.doc?.description),
+		ogTitle: computed(() => page.value?.doc?.title),
+		ogDescription: computed(() => page.value?.doc?.description),
+	})
+
+	defineOgImage('Bento', {
+		title: page.value?.doc?.title,
+		description: page.value?.doc?.description,
+		category: 'Documentation & Pages',
 	})
 </script>
 

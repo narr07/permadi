@@ -94,6 +94,14 @@
 	useSeoMeta({
 		title: computed(() => project.value?.doc?.title),
 		description: computed(() => project.value?.doc?.description),
+		ogTitle: computed(() => project.value?.doc?.title),
+		ogDescription: computed(() => project.value?.doc?.description),
+	})
+
+	defineOgImage('Bento', {
+		title: project.value?.doc?.title,
+		description: project.value?.doc?.description,
+		category: locale.value === 'id' ? 'Studi Kasus Projek' : 'Project Case Study',
 	})
 
 	// Koleksi tangkapan layar untuk Bento Gallery

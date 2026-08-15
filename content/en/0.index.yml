@@ -1,8 +1,15 @@
 title: Dinar Permadi Yusup — Frontend Developer & Digital Craftsman
+archive:
+  label: The Archive
+  title: Images, objects, and quiet observations.
+  description: Curated visual captures and workspace documentation organized in Cloudinary CDN.
+  link_text: Open Gallery
 description: A living archive of work, experiments, images, and notes by a frontend developer in Bandung.
+explore:
+  label: Currently Exploring
+  text: Interfaces that feel inevitable and calm.
 eyebrow: Permadi / Personal Workspace
 headline: A small corner of the internet.
-
 hero:
   status: Available for select projects
   kicker: Frontend Developer / Digital Craftsman
@@ -20,30 +27,22 @@ hero:
     - label: Get in Touch
       to: /en/contact
       variant: outline
-
-project_section:
-  label: Selected Work
-  fallback_title: Four projects, many lessons.
-  fallback_description: A collection of web systems case studies and modular design.
-  all_link_text: Browse All Work
-
 philosophy:
   number: 01 / 04
   quote: Good design is quiet.
   quote_bold: Great design stays with you.
   label: Permadi Philosophy
-
-explore:
-  label: Currently Exploring
-  text: Interfaces that feel inevitable and calm.
-
-archive:
-  label: The Archive
-  title: Images, objects, and quiet observations.
-  description: Curated visual captures and workspace documentation organized in Cloudinary CDN.
-  link_text: Open Gallery
-
+project_section:
+  label: Selected Work
+  fallback_title: Four projects, many lessons.
+  fallback_description: A collection of web systems case studies and modular design.
+  all_link_text: Browse All Work
 writing:
   label: Recent Writing
   title: Notes on code, craft, and systems.
   all_link_text: Read All Notes
+channels: {}
+social_card:
+  items: []
+toolkit_card:
+  tools: []

@@ -6,12 +6,15 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "preview": "nuxt preview"
+    "preview": "nuxt preview",
+    "prepare": "npx skilld prepare || true"
   },
   "dependencies": {
     "@nuxt/content": "^3.15.2",
     "@nuxt/image": "2.1.0",
     "@nuxtjs/i18n": "^10.6.0",
+    "@nuxtjs/seo": "5.3.12",
+    "@resvg/resvg-js": "^2.6.2",
     "better-sqlite3": "^12.5.0",
     "nuxt": "^4.5.2",
     "nuxt-studio": "1.7.0",
@@ -24,6 +27,7 @@
     "@iconify-json/lucide": "^1.2.123",
     "@iconify-json/simple-icons": "^1.2.93",
     "@nuxtjs/color-mode": "^4.0.1",
+    "@resvg/resvg-wasm": "^2.6.2",
     "@types/better-sqlite3": "^9.6.0",
     "@unocss/nuxt": "^66.7.5",
     "@unocss/preset-icons": "^66.7.5",
@@ -33,6 +37,8 @@
     "@unocss/transformer-directives": "^66.7.5",
     "@unocss/transformer-variant-group": "^66.7.5",
     "@vee-validate/zod": "^4.15.1",
+    "nuxtseo-layer-devtools": "^5.3.12",
+    "satori": "^0.29.0",
     "unocss": "^66.7.5",
     "vee-validate": "^4.15.1"
   }

@@ -9,6 +9,20 @@
 			{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
 		],
 	})
+
+	useSeoMeta({
+		titleTemplate: (titleChunk) => {
+			return titleChunk ? `${titleChunk} — Permadi` : 'Permadi — Web Developer & Designer'
+		},
+		ogSiteName: 'Permadi',
+		twitterCard: 'summary_large_image',
+	})
+
+	defineOgImage('Bento', {
+		title: 'Permadi — Web Developer & Designer',
+		description: 'Personal Portfolio, Showcase of Projects & Technical Blog of Permadi.',
+		category: 'Portfolio & Articles',
+	})
 </script>
 
 <template>

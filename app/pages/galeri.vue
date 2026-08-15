@@ -113,8 +113,15 @@
 	})
 
 	useSeoMeta({
-		title: computed(() => page.value?.title || (locale.value === 'id' ? 'Galeri Visual — Dinar Permadi Yusup' : 'Visual Gallery — Dinar Permadi Yusup')),
-		description: computed(() => page.value?.description || (locale.value === 'id' ? 'Dokumentasi visual, fotografi, dan eksplorasi antarmuka digital dari Cloudinary.' : 'Visual documentation, photography, and digital interface explorations from Cloudinary.')),
+		title: computed(() => page.value?.title),
+		description: computed(() => page.value?.description),
+		ogTitle: computed(() => page.value?.title),
+		ogDescription: computed(() => page.value?.description),
+	})
+
+	defineOgImage('Bento', {
+		title: page.value?.title,
+		description: page.value?.description,
 	})
 </script>
 

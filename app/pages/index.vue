@@ -34,8 +34,15 @@
 	)
 
 	useSeoMeta({
-		title: computed(() => page.value?.title || 'Dinar Permadi Yusup — Software Craftsman'),
-		description: computed(() => page.value?.description || 'Frontend Developer & Digital Craftsman. Membangun antarmuka yang rapi, cepat, dan berperforma tinggi.'),
+		title: computed(() => page.value?.title),
+		description: computed(() => page.value?.description),
+		ogTitle: computed(() => page.value?.title),
+		ogDescription: computed(() => page.value?.description),
+	})
+
+	defineOgImage('Bento', {
+		title: page.value?.title,
+		description: page.value?.description,
 	})
 </script>
 
