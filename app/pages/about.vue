@@ -9,33 +9,30 @@
 		{ watch: [locale] }
 	)
 
-	if (!page.value) {
-		throw createError({
-			statusCode: 404,
-			statusMessage: 'Page not found',
-		})
-	}
-
 	useSeoMeta({
-		title: computed(() => page.value?.title),
-		description: computed(() => page.value?.description),
+		title: computed(() => page.value?.title || 'About — Dinar Permadi Yusup'),
+		description: computed(() => page.value?.description || 'Profil, filosofi rekayasa antarmuka, dan latar belakang profesional Dinar Permadi Yusup.'),
 	})
 </script>
 
 <template>
-	<main class="page-container">
-		<article v-if="page">
-			<ContentRenderer :value="page" />
-		</article>
-	</main>
-</template>
+	<div class="container-bento py-10 sm:py-14">
+		<article v-if="page" class="max-w-3xl mx-auto">
+			<header class="mb-10 pb-8 border-b border-slate-200/80 dark:border-slate-800/80">
+				<span class="badge-neutral text-brand-600 dark:text-brand-400 font-semibold mb-3">
+					<span class="i-lucide-user text-xs mr-1 inline-block" /> Profile & Background
+				</span>
+				<h1 class="heading-hero text-slate-900 dark:text-white text-3xl sm:text-4xl md:text-5xl leading-tight">
+					{{ page.title }}
+				</h1>
+				<p class="text-body text-slate-600 dark:text-slate-300 text-lg mt-3 leading-relaxed">
+					{{ page.description }}
+				</p>
+			</header>
 
-<style scoped>
-	.page-container {
-		max-width: 800px;
-		margin: 0 auto;
-		padding: 2rem 1rem;
-		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-		line-height: 1.6;
-	}
-</style>
+			<div class="prose prose-slate dark:prose-invert max-w-none font-sans text-slate-700 dark:text-slate-200 leading-relaxed">
+				<ContentRenderer :value="page" />
+			</div>
+		</article>
+	</div>
+</template>

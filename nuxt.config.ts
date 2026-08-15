@@ -1,9 +1,22 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	modules: [
+		'@unocss/nuxt',
+		'@nuxtjs/color-mode',
 		'@nuxt/content',
 		'@nuxtjs/i18n',
 	],
+	css: [
+		'~/assets/css/main.css',
+	],
+	colorMode: {
+		classSuffix: '',
+		preference: 'system',
+		fallback: 'dark',
+	},
+	features: {
+		inlineStyles: true,
+	},
 	i18n: {
 		baseUrl: 'https://permadi.dev',
 		defaultLocale: 'en',

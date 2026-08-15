@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	const route = useRoute()
 	const { locale, locales } = useI18n()
+	const localePath = useLocalePath()
 	const setI18nParams = useSetI18nParams()
 
 	const requestedSlug = computed(() => route.params.slug as string)
@@ -86,104 +87,81 @@
 </script>
 
 <template>
-	<main class="page-container">
-		<article v-if="post?.doc">
-			<ContentRenderer :value="post.doc" />
+	<div class="container-bento py-10 sm:py-14">
+		<!-- Back Button -->
+		<NuxtLink
+			:to="localePath('/blog')"
+			class="focus-ring inline-flex items-center gap-1.5 text-meta text-xs font-semibold hover:text-brand-600 dark:hover:text-brand-400 transition-colors mb-8"
+		>
+			<span class="i-lucide-arrow-left text-sm" /> {{ locale === 'id' ? 'Kembali ke Blog' : 'Back to Blog' }}
+		</NuxtLink>
+
+		<!-- Article Container -->
+		<article v-if="post?.doc" class="max-w-3xl mx-auto">
+			<!-- Header -->
+			<header class="mb-10 pb-8 border-b border-slate-200/80 dark:border-slate-800/80">
+				<div class="flex flex-wrap items-center gap-2 mb-4">
+					<span v-for="tag in post.doc.tags" :key="tag" class="badge-neutral text-xs">
+						#{{ tag }}
+					</span>
+				</div>
+				<h1 class="heading-hero text-slate-900 dark:text-white text-3xl sm:text-4xl md:text-5xl leading-tight">
+					{{ post.doc.title }}
+				</h1>
+				<p class="text-body text-slate-600 dark:text-slate-300 text-lg mt-4 leading-relaxed">
+					{{ post.doc.description }}
+				</p>
+				<div class="flex items-center gap-4 text-meta text-xs mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
+					<span class="flex items-center gap-1.5 font-medium">
+						<span class="i-lucide-calendar text-sm text-brand-500" />
+						{{ post.doc.date }}
+					</span>
+					<span>•</span>
+					<span class="flex items-center gap-1.5 font-medium">
+						<span class="i-lucide-clock text-sm text-brand-500" />
+						{{ post.doc.readingTime || 5 }} min read
+					</span>
+				</div>
+			</header>
+
+			<!-- Prose Content -->
+			<div class="prose prose-slate dark:prose-invert max-w-none font-sans text-slate-700 dark:text-slate-200 leading-relaxed">
+				<ContentRenderer :value="post.doc" />
+			</div>
 		</article>
 
-		<!-- Navigasi Artikel Sebelumnya & Selanjutnya (queryCollectionItemSurroundings) -->
+		<!-- Surround Articles Navigation (Bento Cards) -->
 		<nav
-			v-if="surround"
-			class="surround-nav"
+			v-if="surround && (surround[0] || surround[1])"
+			class="max-w-3xl mx-auto mt-14 pt-8 border-t border-slate-200/80 dark:border-slate-800/80 grid grid-cols-1 sm:grid-cols-2 gap-4"
 			aria-label="Article Navigation"
 		>
 			<NuxtLink
 				v-if="surround[0]"
 				:to="`/${locale}/blog/${surround[0].slug || cleanSlug(surround[0].path)}`"
-				class="surround-card prev"
+				class="bento-card-outline bento-lift flex flex-col justify-between group p-4 rounded-bento"
 			>
-				<span class="surround-dir">← {{ locale === 'id' ? 'Artikel Sebelumnya' : 'Previous Article' }}</span>
-				<strong class="surround-title">{{ surround[0].title }}</strong>
+				<span class="text-meta text-xs uppercase font-semibold flex items-center gap-1 text-slate-400 group-hover:text-brand-500 transition-colors">
+					<span class="i-lucide-arrow-left text-xs" /> {{ locale === 'id' ? 'Artikel Sebelumnya' : 'Previous Article' }}
+				</span>
+				<strong class="font-heading font-semibold text-g1 text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mt-2 block">
+					{{ surround[0].title }}
+				</strong>
 			</NuxtLink>
-			<div
-				v-else
-				class="surround-empty"
-			/>
+			<div v-else class="hidden sm:block" />
 
 			<NuxtLink
 				v-if="surround[1]"
 				:to="`/${locale}/blog/${surround[1].slug || cleanSlug(surround[1].path)}`"
-				class="surround-card next"
+				class="bento-card-outline bento-lift flex flex-col justify-between group p-4 rounded-bento text-right"
 			>
-				<span class="surround-dir">{{ locale === 'id' ? 'Artikel Selanjutnya' : 'Next Article' }} →</span>
-				<strong class="surround-title">{{ surround[1].title }}</strong>
+				<span class="text-meta text-xs uppercase font-semibold flex items-center justify-end gap-1 text-slate-400 group-hover:text-brand-500 transition-colors">
+					{{ locale === 'id' ? 'Artikel Selanjutnya' : 'Next Article' }} <span class="i-lucide-arrow-right text-xs" />
+				</span>
+				<strong class="font-heading font-semibold text-g1 text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mt-2 block">
+					{{ surround[1].title }}
+				</strong>
 			</NuxtLink>
 		</nav>
-	</main>
+	</div>
 </template>
-
-<style scoped>
-	.page-container {
-		max-width: 800px;
-		margin: 0 auto;
-		padding: 2rem 1rem;
-		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-		line-height: 1.6;
-	}
-
-	.surround-nav {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-		gap: 1rem;
-		margin-top: 3rem;
-		padding-top: 2rem;
-		border-top: 1px solid #e4e4e7;
-	}
-
-	.surround-card {
-		display: flex;
-		flex-direction: column;
-		padding: 1rem 1.25rem;
-		border: 1px solid #e4e4e7;
-		border-radius: 8px;
-		text-decoration: none;
-		color: inherit;
-		background: #fafafa;
-		transition: all 0.2s ease;
-	}
-
-	.surround-card:hover {
-		border-color: #18181b;
-		background: #ffffff;
-		transform: translateY(-2px);
-		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-	}
-
-	.surround-card.next {
-		text-align: right;
-	}
-
-	.surround-dir {
-		font-size: 0.75rem;
-		color: #71717a;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		margin-bottom: 0.35rem;
-	}
-
-	.surround-title {
-		font-size: 0.95rem;
-		color: #18181b;
-		line-height: 1.4;
-	}
-
-	.surround-empty {
-		display: none;
-	}
-
-	@media (min-width: 600px) {
-		.surround-empty {
-			display: block;
-		}
-	}
-</style>

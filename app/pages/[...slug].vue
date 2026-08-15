@@ -65,9 +65,6 @@
 			}
 
 			const parts = path.split('/').filter(Boolean)
-			// parts = ['en', 'blog', 'building-bento-grid-design-system']
-			// atau ['en', 'projects', 'personal-portfolio-bento-redesign']
-			// atau ['id', 'projek', 'redesign-sistem-bento-portfolio-pribadi']
 			const section = parts[1]
 			const requestedSlug = parts[2]
 
@@ -170,21 +167,20 @@
 </script>
 
 <template>
-	<main class="page-container">
-		<article v-if="page?.doc">
-			<ContentRenderer
-				:value="page.doc"
-			/>
-		</article>
-	</main>
-</template>
+	<div class="container-bento py-10 sm:py-14">
+		<article v-if="page?.doc" class="max-w-3xl mx-auto">
+			<header class="mb-10 pb-8 border-b border-slate-200/80 dark:border-slate-800/80">
+				<h1 class="heading-hero text-slate-900 dark:text-white text-3xl sm:text-4xl md:text-5xl leading-tight">
+					{{ page.doc.title }}
+				</h1>
+				<p v-if="page.doc.description" class="text-body text-slate-600 dark:text-slate-300 text-lg mt-3 leading-relaxed">
+					{{ page.doc.description }}
+				</p>
+			</header>
 
-<style scoped>
-	.page-container {
-		max-width: 800px;
-		margin: 0 auto;
-		padding: 2rem 1rem;
-		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-		line-height: 1.6;
-	}
-</style>
+			<div class="prose prose-slate dark:prose-invert max-w-none font-sans text-slate-700 dark:text-slate-200 leading-relaxed">
+				<ContentRenderer :value="page.doc" />
+			</div>
+		</article>
+	</div>
+</template>

@@ -99,173 +99,126 @@
 </script>
 
 <template>
-	<div class="search-wrapper">
-		<!-- Trigger button di header -->
+	<div class="relative inline-flex items-center">
+		<!-- Trigger Button (Icon Only) -->
 		<button
 			type="button"
-			class="search-trigger"
-			:aria-label="t('search.shortcut')"
+			class="icon-btn"
+			:aria-label="t('search.shortcut', 'Cari (Ctrl K)')"
 			@click="openModal"
 		>
-			<span class="search-icon">🔍</span>
-			<span class="search-label">{{ t('search.placeholder') }}</span>
-			<kbd class="search-kbd">Ctrl K</kbd>
+			<span class="i-lucide-search text-base text-slate-600 dark:text-slate-300" />
 		</button>
 
-		<!-- Modal overlay -->
+		<!-- Modal Dialog Backdrop -->
 		<Teleport to="body">
-			<Transition name="fade">
+			<Transition
+				enter-active-class="transition duration-200 ease-out"
+				enter-from-class="opacity-0"
+				enter-to-class="opacity-100"
+				leave-active-class="transition duration-150 ease-in"
+				leave-from-class="opacity-100"
+				leave-to-class="opacity-0"
+			>
 				<div
 					v-if="isOpen"
-					class="search-modal-backdrop"
+					class="fixed inset-0 z-50 flex items-start justify-center p-4 pt-16 sm:pt-24 bg-slate-950/60 backdrop-blur-sm"
 					@click.self="closeModal"
 				>
-					<div
-						class="search-modal"
-						role="dialog"
-						aria-modal="true"
-					>
-						<div class="search-modal-header">
-							<span class="modal-search-icon">🔍</span>
+					<div class="w-full max-w-2xl rounded-bento bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[80vh] animate-scale-in">
+						<!-- Search Header -->
+						<div class="flex items-center gap-3 px-4 py-3.5 border-b border-slate-100 dark:border-slate-800">
+							<span class="i-lucide-search text-xl text-brand-500" />
 							<input
 								ref="inputRef"
 								v-model="searchQuery"
 								type="search"
-								class="search-modal-input"
-								:placeholder="t('search.placeholder')"
-							/>
-							<span
-								v-if="status === 'loading'"
-								class="status-indicator"
+								class="flex-1 bg-transparent border-none outline-none text-slate-900 dark:text-white placeholder:text-slate-400 text-g1 font-sans"
+								:placeholder="t('search.placeholder', 'Ketik kata kunci pencarian...')"
 							>
-								⏳
-							</span>
+							<span v-if="status === 'loading'" class="i-lucide-loader-2 text-lg text-brand-500 animate-spin" />
 							<button
 								type="button"
-								class="search-close-btn"
+								class="icon-btn text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+								aria-label="Tutup pencarian"
 								@click="closeModal"
 							>
-								✕
+								<span class="i-lucide-x text-lg" />
 							</button>
 						</div>
 
-						<div class="search-modal-body">
-							<!-- Hasil Pencarian Kosong -->
-							<div
-								v-if="searchQuery.trim() && results.length === 0 && status !== 'loading'"
-								class="search-empty"
-							>
-								<p>{{ t('search.no_results') }} "<strong>{{ searchQuery }}</strong>"</p>
+						<!-- Search Body / Results -->
+						<div class="flex-1 overflow-y-auto p-4 space-y-5">
+							<!-- Empty Query / Hints -->
+							<div v-if="!searchQuery.trim()" class="py-8 text-center text-slate-400">
+								<span class="i-lucide-command text-3xl mx-auto mb-2 block opacity-40" />
+								<p class="text-g1 font-medium">{{ t('search.placeholder', 'Pencarian FTS5 Cepat') }}</p>
+								<p class="text-meta mt-1">Cari artikel, studi kasus projek, atau dokumentasi.</p>
 							</div>
 
-							<!-- Prompt Awal -->
-							<div
-								v-else-if="!searchQuery.trim()"
-								class="search-hints"
-							>
-								<p class="hints-title">{{ t('search.placeholder') }}</p>
-								<p class="hints-desc">{{ t('search.close') }}</p>
+							<!-- No Results -->
+							<div v-else-if="results.length === 0 && status !== 'loading'" class="py-8 text-center text-slate-400">
+								<span class="i-lucide-search-x text-3xl mx-auto mb-2 block opacity-40" />
+								<p class="text-g1">{{ t('search.no_results', 'Tidak ditemukan hasil untuk') }} "<strong>{{ searchQuery }}</strong>"</p>
 							</div>
 
-							<!-- Daftar Hasil Pencarian (FTS5 + BM25 Ranked) -->
-							<div
-								v-else
-								class="search-results"
-							>
-								<!-- Grup Artikel Blog -->
-								<section
-									v-if="articleResults.length > 0"
-									class="result-group"
-								>
-									<h3 class="group-title">{{ t('search.articles') }} ({{ articleResults.length }})</h3>
-									<ul class="result-list">
-										<li
-											v-for="item in articleResults"
-											:key="item.id + (item.level || 0)"
-											class="result-item"
-										>
+							<!-- Results Lists -->
+							<div v-else class="space-y-4">
+								<!-- Articles Group -->
+								<section v-if="articleResults.length > 0">
+									<h3 class="text-meta uppercase tracking-wider font-semibold text-slate-400 dark:text-slate-500 mb-2 px-1 flex items-center gap-1.5">
+										<span class="i-lucide-book-open text-xs text-brand-500" />
+										{{ t('search.articles', 'Artikel') }} ({{ articleResults.length }})
+									</h3>
+									<ul class="space-y-1">
+										<li v-for="item in articleResults" :key="item.id + (item.level || 0)">
 											<NuxtLink
 												:to="getTargetUrl(item)"
-												class="result-link"
+												class="focus-ring block p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors border border-transparent hover:border-slate-200/60 dark:hover:border-slate-700/60"
 												@click="closeModal"
 											>
-												<div
-													class="result-title"
-													v-html="item.snippets?.title || item.title"
-												/>
-												<div
-													v-if="item.snippets?.content"
-													class="result-snippet"
-													v-html="item.snippets.content"
-												/>
-												<div
-													v-else-if="item.content"
-													class="result-desc"
-												>
-													{{ item.content.slice(0, 120) }}...
-												</div>
+												<div class="font-heading font-semibold text-g1 text-slate-900 dark:text-white" v-html="item.snippets?.title || item.title" />
+												<div v-if="item.snippets?.content" class="text-meta text-slate-500 dark:text-slate-400 mt-1 line-clamp-2" v-html="item.snippets.content" />
 											</NuxtLink>
 										</li>
 									</ul>
 								</section>
 
-								<!-- Grup Projek -->
-								<section
-									v-if="projectResults.length > 0"
-									class="result-group"
-								>
-									<h3 class="group-title">{{ t('search.projects') }} ({{ projectResults.length }})</h3>
-									<ul class="result-list">
-										<li
-											v-for="item in projectResults"
-											:key="item.id + (item.level || 0)"
-											class="result-item"
-										>
+								<!-- Projects Group -->
+								<section v-if="projectResults.length > 0">
+									<h3 class="text-meta uppercase tracking-wider font-semibold text-slate-400 dark:text-slate-500 mb-2 px-1 flex items-center gap-1.5">
+										<span class="i-lucide-folder-git-2 text-xs text-blue-500" />
+										{{ t('search.projects', 'Projek') }} ({{ projectResults.length }})
+									</h3>
+									<ul class="space-y-1">
+										<li v-for="item in projectResults" :key="item.id + (item.level || 0)">
 											<NuxtLink
 												:to="getTargetUrl(item)"
-												class="result-link"
+												class="focus-ring block p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors border border-transparent hover:border-slate-200/60 dark:hover:border-slate-700/60"
 												@click="closeModal"
 											>
-												<div
-													class="result-title"
-													v-html="item.snippets?.title || item.title"
-												/>
-												<div
-													v-if="item.snippets?.content"
-													class="result-snippet"
-													v-html="item.snippets.content"
-												/>
+												<div class="font-heading font-semibold text-g1 text-slate-900 dark:text-white" v-html="item.snippets?.title || item.title" />
+												<div v-if="item.snippets?.content" class="text-meta text-slate-500 dark:text-slate-400 mt-1 line-clamp-2" v-html="item.snippets.content" />
 											</NuxtLink>
 										</li>
 									</ul>
 								</section>
 
-								<!-- Grup Halaman -->
-								<section
-									v-if="pageResults.length > 0"
-									class="result-group"
-								>
-									<h3 class="group-title">Halaman ({{ pageResults.length }})</h3>
-									<ul class="result-list">
-										<li
-											v-for="item in pageResults"
-											:key="item.id + (item.level || 0)"
-											class="result-item"
-										>
+								<!-- Pages Group -->
+								<section v-if="pageResults.length > 0">
+									<h3 class="text-meta uppercase tracking-wider font-semibold text-slate-400 dark:text-slate-500 mb-2 px-1 flex items-center gap-1.5">
+										<span class="i-lucide-file-text text-xs text-amber-500" />
+										Halaman ({{ pageResults.length }})
+									</h3>
+									<ul class="space-y-1">
+										<li v-for="item in pageResults" :key="item.id + (item.level || 0)">
 											<NuxtLink
 												:to="getTargetUrl(item)"
-												class="result-link"
+												class="focus-ring block p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors border border-transparent hover:border-slate-200/60 dark:hover:border-slate-700/60"
 												@click="closeModal"
 											>
-												<div
-													class="result-title"
-													v-html="item.snippets?.title || item.title"
-												/>
-												<div
-													v-if="item.snippets?.content"
-													class="result-snippet"
-													v-html="item.snippets.content"
-												/>
+												<div class="font-heading font-semibold text-g1 text-slate-900 dark:text-white" v-html="item.snippets?.title || item.title" />
+												<div v-if="item.snippets?.content" class="text-meta text-slate-500 dark:text-slate-400 mt-1 line-clamp-2" v-html="item.snippets.content" />
 											</NuxtLink>
 										</li>
 									</ul>
@@ -273,9 +226,12 @@
 							</div>
 						</div>
 
-						<div class="search-modal-footer">
-							<span class="engine-badge">⚡ SQLite FTS5 Engine</span>
-							<span>{{ t('search.close') }}</span>
+						<!-- Search Footer -->
+						<div class="px-4 py-2.5 bg-slate-50 dark:bg-slate-950/60 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+							<span class="flex items-center gap-1">
+								<span class="i-lucide-zap text-xs text-amber-400" /> SQLite FTS5 Engine
+							</span>
+							<span>Tekan <kbd class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono">ESC</kbd> untuk menutup</span>
 						</div>
 					</div>
 				</div>
@@ -284,231 +240,15 @@
 	</div>
 </template>
 
-<style scoped>
-	.search-trigger {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		padding: 0.35rem 0.75rem;
-		background: #f4f4f5;
-		border: 1px solid #e4e4e7;
-		border-radius: 6px;
-		cursor: pointer;
-		font-size: 0.85rem;
-		color: #52525b;
-		transition: all 0.2s ease;
-	}
-
-	.search-trigger:hover {
-		border-color: #a1a1aa;
-		background: #ececee;
-	}
-
-	.search-icon {
-		font-size: 0.8rem;
-	}
-
-	.search-label {
-		color: #71717a;
-	}
-
-	.search-kbd {
-		background: #ffffff;
-		border: 1px solid #d4d4d8;
-		border-radius: 4px;
-		padding: 0.1rem 0.35rem;
-		font-size: 0.75rem;
-		font-family: inherit;
-		color: #71717a;
-	}
-
-	/* Modal Backdrop & Container */
-	.search-modal-backdrop {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100vw;
-		height: 100vh;
-		background: rgba(0, 0, 0, 0.45);
-		backdrop-filter: blur(4px);
-		z-index: 9999;
-		display: flex;
-		justify-content: center;
-		align-items: flex-start;
-		padding-top: 10vh;
-	}
-
-	.search-modal {
-		background: #ffffff;
-		width: 90%;
-		max-width: 620px;
-		max-height: 80vh;
-		border-radius: 12px;
-		box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-		border: 1px solid #e4e4e7;
-		display: flex;
-		flex-direction: column;
-		overflow: hidden;
-	}
-
-	.search-modal-header {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-		padding: 0.85rem 1.25rem;
-		border-bottom: 1px solid #e4e4e7;
-	}
-
-	.modal-search-icon {
-		font-size: 1.1rem;
-		color: #71717a;
-	}
-
-	.search-modal-input {
-		flex: 1;
-		border: none;
-		outline: none;
-		font-size: 1rem;
-		color: #18181b;
-		background: transparent;
-	}
-
-	.status-indicator {
-		font-size: 0.85rem;
-	}
-
-	.search-close-btn {
-		background: none;
-		border: none;
-		cursor: pointer;
-		font-size: 1.1rem;
-		color: #71717a;
-		padding: 0.25rem;
-	}
-
-	.search-modal-body {
-		padding: 1rem 1.25rem;
-		overflow-y: auto;
-		max-height: 55vh;
-	}
-
-	.search-empty,
-	.search-hints {
-		text-align: center;
-		padding: 2rem 1rem;
-		color: #71717a;
-	}
-
-	.hints-title {
-		font-weight: 600;
-		color: #27272a;
-		margin-bottom: 0.25rem;
-	}
-
-	.hints-desc {
-		font-size: 0.85rem;
-	}
-
-	.result-group {
-		margin-bottom: 1.25rem;
-	}
-
-	.group-title {
-		font-size: 0.8rem;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		color: #71717a;
-		margin-bottom: 0.5rem;
-	}
-
-	.result-list {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-	}
-
-	.result-link {
-		display: block;
-		padding: 0.75rem 1rem;
-		border-radius: 8px;
-		text-decoration: none;
-		color: inherit;
-		background: #fbfbfb;
-		border: 1px solid #f0f0f0;
-		transition: all 0.2s ease;
-	}
-
-	.result-link:hover {
-		background: #f4f4f5;
-		border-color: #d4d4d8;
-	}
-
-	.result-title {
-		font-weight: 600;
-		color: #18181b;
-		margin-bottom: 0.25rem;
-	}
-
-	.result-title :deep(mark) {
-		background: #fef08a;
-		color: #854d0e;
-		padding: 0 0.15rem;
-		border-radius: 2px;
-	}
-
-	.result-snippet {
-		font-size: 0.825rem;
-		color: #3f3f46;
-		background: #f4f4f5;
-		padding: 0.35rem 0.6rem;
-		border-radius: 4px;
-		margin-top: 0.25rem;
-		line-height: 1.45;
-		border-left: 2px solid #18181b;
-	}
-
-	.result-snippet :deep(mark) {
-		background: #fef08a;
-		color: #854d0e;
-		font-weight: 600;
-		padding: 0 0.15rem;
-		border-radius: 2px;
-	}
-
-	.result-desc {
-		font-size: 0.85rem;
-		color: #52525b;
-		margin-top: 0.25rem;
-		line-height: 1.4;
-	}
-
-	.search-modal-footer {
-		padding: 0.6rem 1.25rem;
-		background: #fafafa;
-		border-top: 1px solid #e4e4e7;
-		font-size: 0.75rem;
-		color: #71717a;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	.engine-badge {
-		font-weight: 500;
-		color: #52525b;
-	}
-
-	/* Transitions */
-	.fade-enter-active,
-	.fade-leave-active {
-		transition: opacity 0.15s ease;
-	}
-
-	.fade-enter-from,
-	.fade-leave-to {
-		opacity: 0;
-	}
+<style>
+mark {
+	background-color: rgba(43, 212, 181, 0.25);
+	color: inherit;
+	border-radius: 2px;
+	padding: 0 2px;
+}
+.dark mark {
+	background-color: rgba(43, 212, 181, 0.35);
+	color: #5eeacf;
+}
 </style>
