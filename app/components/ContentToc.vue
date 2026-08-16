@@ -138,7 +138,7 @@
 	<nav
 		v-if="links && links.length > 0"
 		class="content-toc w-full pointer-events-auto"
-		aria-label="Table of contents"
+		:aria-label="locale === 'id' ? 'Daftar Isi Artikel' : 'Table of Contents'"
 	>
 		<!-- 1. Mobile Bento Floating Island Bar -->
 		<div
@@ -147,34 +147,26 @@
 			class="w-full pointer-events-auto"
 			:class="mode === 'all' ? 'lg:hidden' : ''"
 		>
-			<div class="rounded-2xl bg-white/95 dark:bg-[#002b27]/95 backdrop-blur-xl border border-slate-200/80 dark:border-[#134e43] shadow-lg p-3">
+			<div class="rounded-2xl bg-white/95 dark:bg-[#002b27]/95 backdrop-blur-xl border border-slate-200/80 dark:border-[#134e43] shadow-md px-3.5 py-2 sm:p-3">
 				<!-- Trigger Bar Button -->
 				<button
 					type="button"
 					class="w-full flex items-center justify-between gap-3 text-left cursor-pointer select-none touch-manipulation focus:outline-none"
-					aria-label="Toggle Table of Contents"
+					:aria-expanded="mobileOpen"
+					aria-controls="mobile-toc-list"
+					:aria-label="locale === 'id' ? 'Buka atau tutup daftar isi' : 'Toggle Table of Contents'"
 					@click="mobileOpen = !mobileOpen"
 				>
-					<div class="flex items-center gap-2.5 min-w-0 flex-1">
-						<span class="w-7 h-7 rounded-full bg-brand-50 dark:bg-brand-950/70 text-brand-600 dark:text-brand-400 border border-brand-200/60 dark:border-brand-900/60 flex items-center justify-center shrink-0">
-							<span class="i-hugeicons-book-open-01 text-xs" />
+					<div class="flex items-center gap-2">
+						<span class="section-label text-[10px] font-bold text-brand-700 dark:text-brand-400 uppercase tracking-wider">
+							{{ displayTitle }}
 						</span>
-						<div class="min-w-0 flex-1">
-							<div class="flex items-center gap-2 text-xs">
-								<span class="section-label text-[10px] font-bold">
-									{{ displayTitle }}
-								</span>
-								<span class="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-brand-50/90 dark:bg-brand-950/70 text-brand-600 dark:text-brand-400">
-									{{ activeIndex + 1 }}/{{ flatList.length }}
-								</span>
-							</div>
-							<p class="text-xs text-slate-800 dark:text-slate-200 font-medium truncate mt-0.5">
-								{{ activeHeadingText }}
-							</p>
-						</div>
+						<span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-brand-50/90 dark:bg-brand-950/70 text-brand-800 dark:text-brand-400 font-bold border border-brand-200/50 dark:border-brand-900/50">
+							{{ activeIndex + 1 }}/{{ flatList.length }}
+						</span>
 					</div>
 
-					<div class="w-7 h-7 rounded-full bg-slate-100 dark:bg-[#042f27] border border-slate-200/60 dark:border-[#134e43] flex items-center justify-center shrink-0 text-slate-500 dark:text-slate-300">
+					<div class="w-6 h-6 rounded-full bg-slate-100 dark:bg-[#042f27] border border-slate-200/60 dark:border-[#134e43] flex items-center justify-center shrink-0 text-slate-700 dark:text-slate-300">
 						<span
 							:class="mobileOpen ? 'i-hugeicons-arrow-up-01' : 'i-hugeicons-arrow-down-01'"
 							class="text-xs transition-transform duration-150"
@@ -193,33 +185,42 @@
 				>
 					<div
 						v-if="mobileOpen"
-						class="mt-3 pt-3 border-t border-slate-200/60 dark:border-slate-800/60 overflow-y-auto space-y-1"
+						id="mobile-toc-list"
+						class="mt-3 pt-3 border-t border-slate-200/60 dark:border-[#134e43] max-h-60 overflow-y-auto space-y-1"
 					>
+						<div
+							role="progressbar"
+							:aria-valuenow="progressPercentage"
+							aria-valuemin="0"
+							aria-valuemax="100"
+							:aria-label="locale === 'id' ? 'Progres Membaca' : 'Reading Progress'"
+							class="w-full bg-slate-100 dark:bg-[#042f27] h-1 rounded-full mb-3 overflow-hidden"
+						>
+							<div
+								class="bg-brand-700 dark:bg-brand-400 h-full transition-all duration-300 ease-out"
+								:style="{ width: `${progressPercentage}%` }"
+							/>
+						</div>
+
 						<a
 							v-for="(item, idx) in flatList"
 							:key="item.link.id"
 							:href="`#${item.link.id}`"
-							class="flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-xs font-medium border border-transparent transition-all group"
+							class="flex items-center justify-between gap-2 rounded-xl text-xs font-medium border border-transparent transition-all group"
 							:class="[
-								item.level > 0 ? 'ml-3 text-[11px]' : '',
+								item.level > 0 ? 'pl-5 pr-3 py-1.5 text-[11.5px]' : 'px-3 py-2',
 								item.link.id === activeId
-									? 'text-brand-600 dark:text-brand-400 bg-slate-100/80 dark:bg-white/5 font-semibold'
-									: 'text-slate-600 dark:text-slate-300 hover:(text-brand-600 dark:text-brand-400 border-brand-500/30 dark:border-brand-400/20 bg-slate-50/60 dark:bg-white/5)'
+									? 'text-brand-900 dark:text-brand-400 bg-slate-100/80 dark:bg-white/5 font-bold'
+									: 'text-slate-700 dark:text-slate-300 hover:(text-brand-900 dark:text-brand-400 border-brand-500/30 dark:border-brand-400/20 bg-slate-50/60 dark:bg-white/5)'
 							]"
 							@click.prevent="scrollToHeading(item.link.id)"
 						>
-							<span class="truncate flex items-center gap-2">
-								<span
-									class="w-1.5 h-1.5 rounded-full shrink-0 transition-transform"
-									:class="item.link.id === activeId ? 'bg-brand-500 dark:bg-brand-400 scale-125' : 'bg-slate-300 dark:bg-slate-600 group-hover:bg-brand-400'"
-								/>
-								{{ item.link.text }}
-							</span>
+							<span class="truncate">{{ item.link.text }}</span>
 							<span
 								class="text-[10px] font-mono shrink-0"
-								:class="item.link.id === activeId ? 'opacity-90 font-bold text-brand-600 dark:text-brand-400' : 'opacity-40 group-hover:opacity-75'"
+								:class="item.link.id === activeId ? 'opacity-90 font-bold text-brand-900 dark:text-brand-400' : 'opacity-60 group-hover:opacity-100'"
 							>
-								0{{ idx + 1 }}
+								{{ idx < 9 ? `0${idx + 1}` : idx + 1 }}
 							</span>
 						</a>
 					</div>
@@ -234,25 +235,27 @@
 			:class="mode === 'all' ? 'hidden lg:block' : ''"
 		>
 			<div class="bento-card-clean p-5 relative overflow-hidden backdrop-blur-xl bg-white/90 dark:bg-[#002b27]/90 border border-slate-200/80 dark:border-[#134e43] shadow-sm">
-				<!-- Header Bento Section -->
-				<div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-200/60 dark:border-slate-800/60">
-					<div class="flex items-center gap-2">
-						<span class="w-6 h-6 rounded-lg bg-brand-50 dark:bg-brand-950/70 text-brand-600 dark:text-brand-400 border border-brand-200/60 dark:border-brand-900/60 flex items-center justify-center shrink-0">
-							<span class="i-hugeicons-book-open-01 text-xs" />
-						</span>
-						<span class="section-label font-bold text-[11px]">
-							{{ displayTitle }}
-						</span>
-					</div>
-					<span class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-brand-50/90 dark:bg-brand-950/70 text-brand-600 dark:text-brand-400 border border-brand-200/50 dark:border-brand-900/50">
-						{{ activeIndex + 1 }} / {{ flatList.length }}
+				<!-- Header Bento Section (Single-row clean alignment) -->
+				<div class="flex items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-200/60 dark:border-slate-800/60">
+					<span class="text-[11px] font-bold tracking-wider text-brand-700 dark:text-brand-400 uppercase font-sans whitespace-nowrap">
+						{{ displayTitle }}
+					</span>
+					<span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-brand-50/90 dark:bg-brand-950/70 text-brand-800 dark:text-brand-400 border border-brand-200/50 dark:border-brand-900/50 font-bold shrink-0 whitespace-nowrap">
+						{{ activeIndex + 1 }}/{{ flatList.length }}
 					</span>
 				</div>
 
 				<!-- Reading Progress Bar -->
-				<div class="w-full bg-slate-100 dark:bg-slate-800/80 h-1 rounded-full mb-4 overflow-hidden">
+				<div
+					role="progressbar"
+					:aria-valuenow="progressPercentage"
+					aria-valuemin="0"
+					aria-valuemax="100"
+					:aria-label="locale === 'id' ? 'Progres Membaca' : 'Reading Progress'"
+					class="w-full bg-slate-100 dark:bg-slate-800/80 h-1 rounded-full mb-4 overflow-hidden"
+				>
 					<div
-						class="bg-brand-500 dark:bg-brand-400 h-full transition-all duration-300 ease-out"
+						class="bg-brand-700 dark:bg-brand-400 h-full transition-all duration-300 ease-out"
 						:style="{ width: `${progressPercentage}%` }"
 					/>
 				</div>
@@ -263,25 +266,19 @@
 						v-for="(item, idx) in flatList"
 						:key="item.link.id"
 						:href="`#${item.link.id}`"
-						class="flex items-center justify-between gap-2.5 px-3 py-2 rounded-xl text-xs font-medium border border-transparent transition-all group"
+						class="flex items-center justify-between gap-2.5 rounded-xl text-xs font-medium border border-transparent transition-all group"
 						:class="[
-							item.level > 0 ? 'ml-3.5 text-[11.5px]' : '',
+							item.level > 0 ? 'pl-5 pr-3 py-1.5 text-[11.5px]' : 'px-3 py-2',
 							item.link.id === activeId
-								? 'text-brand-600 dark:text-brand-400 bg-slate-100/80 dark:bg-white/5 font-semibold'
-								: 'text-slate-600 dark:text-slate-300 hover:(text-brand-600 dark:text-brand-400 border-brand-500/30 dark:border-brand-400/20 bg-slate-50/60 dark:bg-white/5)'
+								? 'text-brand-900 dark:text-brand-400 bg-slate-100/80 dark:bg-white/5 font-bold'
+								: 'text-slate-700 dark:text-slate-300 hover:(text-brand-900 dark:text-brand-400 border-brand-500/30 dark:border-brand-400/20 bg-slate-50/60 dark:bg-white/5)'
 						]"
 						@click.prevent="scrollToHeading(item.link.id)"
 					>
-						<div class="min-w-0 flex items-center gap-2 truncate">
-							<span
-								class="w-1.5 h-1.5 rounded-full shrink-0 transition-all"
-								:class="item.link.id === activeId ? 'bg-brand-500 dark:bg-brand-400 scale-125' : 'bg-slate-300 dark:bg-slate-700 group-hover:bg-brand-400'"
-							/>
-							<span class="truncate">{{ item.link.text }}</span>
-						</div>
+						<span class="truncate">{{ item.link.text }}</span>
 						<span
 							class="text-[10px] font-mono shrink-0 transition-opacity"
-							:class="item.link.id === activeId ? 'opacity-90 font-bold text-brand-600 dark:text-brand-400' : 'opacity-40 group-hover:opacity-75'"
+							:class="item.link.id === activeId ? 'opacity-90 font-bold text-brand-900 dark:text-brand-400' : 'opacity-60 group-hover:opacity-100'"
 						>
 							{{ idx < 9 ? `0${idx + 1}` : idx + 1 }}
 						</span>
@@ -290,12 +287,13 @@
 
 				<!-- Bento Footer Action (Back to top) -->
 				<div class="mt-4 pt-3 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between text-[11px]">
-					<span class="text-slate-400 dark:text-slate-500 font-mono">
+					<span class="text-slate-600 dark:text-slate-400 font-mono">
 						{{ progressPercentage }}% {{ locale === 'id' ? 'dibaca' : 'read' }}
 					</span>
 					<button
 						type="button"
-						class="inline-flex items-center gap-1 font-semibold text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors cursor-pointer"
+						class="inline-flex items-center gap-1 font-semibold text-slate-700 dark:text-slate-300 hover:text-brand-800 dark:hover:text-brand-400 transition-colors cursor-pointer"
+						:aria-label="locale === 'id' ? 'Kembali ke atas artikel' : 'Scroll to top of article'"
 						@click="scrollToTop"
 					>
 						<span>{{ locale === 'id' ? 'Ke Atas' : 'Top' }}</span>

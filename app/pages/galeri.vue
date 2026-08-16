@@ -201,7 +201,7 @@
 				<div class="grid grid-cols-2 md:flex md:flex-col gap-2.5 w-full md:w-auto shrink-0 z-20">
 					<!-- Mini Bento Stat Pill: Total Foto -->
 					<div class="h-11 px-3.5 sm:px-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/60 shadow-xs flex items-center gap-2 md:w-48">
-						<span class="i-hugeicons-image-02 text-brand-600 dark:text-brand-400 text-sm shrink-0" />
+						<span class="i-hugeicons-image-02 text-brand-700 dark:text-brand-400 text-sm shrink-0" />
 						<span class="text-xs font-bold text-slate-800 dark:text-slate-100 font-mono truncate">
 							{{ allItems?.length || 0 }} {{ locale === 'id' ? 'Foto' : 'Photos' }}
 						</span>
@@ -216,8 +216,8 @@
 							type="button"
 							class="w-full h-11 flex items-center justify-between gap-2 px-3.5 sm:px-4 rounded-xl text-xs font-semibold transition-all cursor-pointer border shadow-xs"
 							:class="selectedTag !== 'ALL'
-								? 'bg-brand-500 text-white border-brand-400 shadow-brand-500/20'
-								: 'bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 border-slate-200/70 dark:border-slate-700/60 hover:bg-slate-50 dark:hover:bg-slate-800'"
+								? 'bg-brand-700 text-white border-brand-600 shadow-brand-700/20'
+								: 'bg-white dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 border-slate-200/70 dark:border-slate-700/60 hover:bg-slate-50 dark:hover:bg-slate-800'"
 							:aria-expanded="isTagDropdownOpen"
 							aria-label="Pilih topik filter"
 							@click="isTagDropdownOpen = !isTagDropdownOpen"
@@ -225,7 +225,7 @@
 							<span class="flex items-center gap-2 truncate">
 								<span
 									class="i-hugeicons-filter-horizontal text-sm shrink-0"
-									:class="selectedTag !== 'ALL' ? 'text-white' : 'text-brand-600 dark:text-brand-400'"
+									:class="selectedTag !== 'ALL' ? 'text-white' : 'text-brand-700 dark:text-brand-400'"
 								/>
 								<span class="truncate">
 									{{ selectedTag === 'ALL' ? (locale === 'id' ? 'Semua Topik' : 'All Topics') : `#${selectedTag}` }}
@@ -256,12 +256,12 @@
 									class="px-1 pb-2 mb-1.5 border-b border-slate-100 dark:border-white/10"
 								>
 									<div class="relative">
-										<span class="i-hugeicons-search-01 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs" />
+										<span class="i-hugeicons-search-01 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs" />
 										<input
 											v-model="tagSearchQuery"
 											type="text"
 											:placeholder="locale === 'id' ? 'Cari tag...' : 'Search tags...'"
-											class="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg bg-slate-50 dark:bg-[#002420] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none"
+											class="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg bg-slate-50 dark:bg-[#002420] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none"
 										>
 									</div>
 								</div>
@@ -273,7 +273,7 @@
 										type="button"
 										class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors text-left cursor-pointer"
 										:class="selectedTag === 'ALL'
-											? 'bg-brand-500/15 dark:bg-brand-500/25 text-brand-600 dark:text-brand-400 font-semibold'
+											? 'bg-brand-500/15 dark:bg-brand-500/25 text-brand-800 dark:text-brand-300 font-bold'
 											: 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'"
 										@click="selectTag('ALL')"
 									>
@@ -281,7 +281,7 @@
 											<span class="i-hugeicons-grid-view text-xs" />
 											{{ locale === 'id' ? 'Semua Topik' : 'All Topics' }}
 										</span>
-										<span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-400 font-mono font-medium">
+										<span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-400 font-mono font-medium">
 											{{ allItems?.length || 0 }}
 										</span>
 									</button>
@@ -293,7 +293,7 @@
 										type="button"
 										class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors text-left cursor-pointer"
 										:class="selectedTag === tag
-											? 'bg-brand-500/15 dark:bg-brand-500/25 text-brand-600 dark:text-brand-400 font-semibold'
+											? 'bg-brand-500/15 dark:bg-brand-500/25 text-brand-800 dark:text-brand-300 font-bold'
 											: 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'"
 										@click="selectTag(tag)"
 									>
@@ -303,7 +303,7 @@
 										</span>
 										<span
 											v-if="tagCounts[tag]"
-											class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-400 font-mono font-medium shrink-0 ml-2"
+											class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-400 font-mono font-medium shrink-0 ml-2"
 										>
 											{{ tagCounts[tag] }}
 										</span>
@@ -312,7 +312,7 @@
 									<!-- Empty Filter Search -->
 									<div
 										v-if="filteredDropdownTags.length === 0"
-										class="py-4 text-center text-xs text-slate-400"
+										class="py-4 text-center text-xs text-slate-500"
 									>
 										{{ locale === 'id' ? 'Tag tidak ditemukan' : 'No tag found' }}
 									</div>
@@ -372,7 +372,7 @@
 
 		<!-- Infinite Scroll Trigger Sentinel & Loading Indicator -->
 		<div ref="sentinelEl" class="py-8 flex flex-col items-center justify-center">
-			<div v-if="isLoadingMore" class="flex items-center gap-2 text-meta text-xs text-brand-600 dark:text-brand-400">
+			<div v-if="isLoadingMore" class="flex items-center gap-2 text-meta text-xs text-brand-800 dark:text-brand-400 font-medium">
 				<span class="i-hugeicons-loading-03 animate-spin text-base" />
 				{{ locale === 'id' ? 'Memuat foto lainnya...' : 'Loading more photos...' }}
 			</div>
@@ -380,7 +380,7 @@
 			<button
 				v-else-if="hasMore"
 				type="button"
-				class="btn-ghost text-xs border border-slate-200 dark:border-slate-700 px-5 py-2 inline-flex items-center gap-1.5 cursor-pointer hover:border-brand-500"
+				class="btn-ghost text-xs border border-slate-300 dark:border-slate-700 px-5 py-2 inline-flex items-center gap-1.5 cursor-pointer hover:border-brand-700 dark:hover:border-brand-500 font-semibold"
 				@click="loadMore"
 			>
 				<span class="i-hugeicons-arrow-down-01 text-sm" />

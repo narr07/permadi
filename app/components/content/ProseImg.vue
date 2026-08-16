@@ -89,13 +89,18 @@
 			:alt="alt"
 			:width="width"
 			:height="height"
+			:tabindex="isZoomEnabled ? 0 : undefined"
+			:role="isZoomEnabled ? 'button' : undefined"
+			:aria-label="isZoomEnabled ? (alt ? `Perbesar gambar: ${alt}` : 'Perbesar gambar') : undefined"
 			:class="[
-				'rounded-2xl border border-slate-200/80 dark:border-[#134e43] shadow-sm max-w-full h-auto mx-auto block transition-all duration-300 hover:shadow-md',
+				'rounded-2xl border border-slate-200/80 dark:border-[#134e43] shadow-sm max-w-full h-auto mx-auto block transition-all duration-300 hover:shadow-md focus-ring',
 				isZoomEnabled ? 'cursor-zoom-in hover:brightness-[1.02]' : '',
 				props.class
 			]"
 			loading="lazy"
 			@click="openZoom"
+			@keydown.enter.prevent="openZoom"
+			@keydown.space.prevent="openZoom"
 		/>
 
 		<!-- Fullscreen Zoom Lightbox Dialog (Teleport to body) -->
@@ -104,10 +109,12 @@
 				<div
 					v-if="isZoomed"
 					class="fixed inset-0 z-[1000] flex items-center justify-center p-4 sm:p-8 bg-black/80 dark:bg-[#001715]/90 backdrop-blur-md cursor-zoom-out select-none"
-					tabindex="0"
+					tabindex="-1"
 					role="dialog"
 					aria-modal="true"
+					aria-label="Pratinjau gambar layar penuh"
 					@click="closeZoom"
+					@keydown.escape="closeZoom"
 				>
 					<!-- Close Button Top-Right -->
 					<button

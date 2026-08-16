@@ -1,111 +1,12 @@
 @import '@unocss/reset/tailwind.css';
 
-/* Import Google Fonts for Barlow, Plus Jakarta Sans, and JetBrains Mono */
-@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap');
-
 :root {
-	--color-brand-50: #f0fdfa;
-	--color-brand-100: #ccfbf2;
-	--color-brand-200: #99f6e4;
-	--color-brand-300: #5eeacf;
-	--color-brand-400: #2bd4b5;
-	--color-brand-500: #14b898;
-	--color-brand-600: #0d947a;
-	--color-brand-700: #0f7662;
-	--color-brand-800: #115e4f;
-	--color-brand-900: #134e43;
-	--color-brand-950: #042f27;
-
-	--color-gray-50: #f9fafa;
-	--color-gray-100: #f2f5f4;
-	--color-gray-200: #e3e8e7;
-	--color-gray-300: #ced7d5;
-	--color-gray-400: #93a5a0;
-	--color-gray-500: #627770;
-	--color-gray-600: #435a53;
-	--color-gray-700: #2d473f;
-	--color-gray-800: #152e28;
-	--color-gray-900: #041d18;
-	--color-gray-950: #000b07;
-
-	--color-slate-50: #f8fafa;
-	--color-slate-100: #eff6f5;
-	--color-slate-200: #deeae9;
-	--color-slate-300: #c5d9d7;
-	--color-slate-400: #84a8a4;
-	--color-slate-500: #537c77;
-	--color-slate-600: #375c58;
-	--color-slate-700: #224844;
-	--color-slate-800: #0a2f2c;
-	--color-slate-900: #001e1c;
-	--color-slate-950: #000c0a;
-
-	--color-yellow-50: #ffffff;
-	--color-yellow-100: #fffefd;
-	--color-yellow-200: #fdeed6;
-	--color-yellow-300: #fcddaf;
-	--color-yellow-400: #facd87;
-	--color-yellow-500: #f9bc60;
-	--color-yellow-600: #f7a52a;
-	--color-yellow-700: #e08a08;
-	--color-yellow-800: #aa6906;
-	--color-yellow-900: #744804;
-	--color-yellow-950: #593703;
-
-	--color-blue-50: #f0f9ff;
-	--color-blue-100: #e0f2fe;
-	--color-blue-200: #bae6fd;
-	--color-blue-300: #7dd3fc;
-	--color-blue-400: #38bdf8;
-	--color-blue-500: #0ea5e9;
-	--color-blue-600: #0284c7;
-	--color-blue-700: #0369a1;
-	--color-blue-800: #075985;
-	--color-blue-900: #0c4a6e;
-	--color-blue-950: #082f49;
-
-	--color-red-50: #fefbfb;
-	--color-red-100: #fbeaea;
-	--color-red-200: #f5c8c8;
-	--color-red-300: #eea6a6;
-	--color-red-400: #e88384;
-	--color-red-500: #e16162;
-	--color-red-600: #d83233;
-	--color-red-700: #b02123;
-	--color-red-800: #811919;
-	--color-red-900: #521010;
-	--color-red-950: #3a0b0b;
-
-	--color-green-50: #eefbf4;
-	--color-green-100: #d7f4e3;
-	--color-green-200: #b1e9ca;
-	--color-green-300: #7fd6ad;
-	--color-green-400: #4abd8a;
-	--color-green-500: #2cb67d;
-	--color-green-600: #198258;
-	--color-green-700: #146849;
-	--color-green-800: #12533c;
-	--color-green-900: #104432;
-	--color-green-950: #08261d;
-
-	--color-purple-50: #f7f5fd;
-	--color-purple-100: #f0edfa;
-	--color-purple-200: #e4ddf7;
-	--color-purple-300: #cec2f0;
-	--color-purple-400: #b69ee7;
-	--color-purple-500: #a786df;
-	--color-purple-600: #8c59ce;
-	--color-purple-700: #7c47ba;
-	--color-purple-800: #673b9c;
-	--color-purple-900: #563280;
-	--color-purple-950: #361f56;
-
 	--canvas: #eff6f5;
 	--ink: #002b27;
 	--heading: #002b27;
 	--card: #ffffff;
 	--border-clean: #c5d9d7;
-	--muted: #537c77;
+	--muted: #0f7662;
 	--sand: #facd87;
 	--gold: #f9bc60;
 	--sky: #7dd3fc;
@@ -123,30 +24,19 @@
 	--sky: #7dd3fc;
 }
 
-/* Fallback & Custom Font-Family Definition */
-@font-face {
-	font-family: 'TikTok Sans';
-	src:
-		local('TikTok Sans'), local('TikTok Display'), local('Plus Jakarta Sans'),
-		local('Inter'), local('Segoe UI');
-	font-display: swap;
-}
-
 html {
 	font-family:
-		'TikTok Sans',
 		'Plus Jakarta Sans',
+		system-ui,
 		-apple-system,
 		BlinkMacSystemFont,
 		'Segoe UI',
 		Roboto,
-		Oxygen,
-		Ubuntu,
-		Cantarell,
 		sans-serif;
 	background-color: var(--canvas);
 	color: var(--ink);
 	scroll-behavior: smooth;
+	scroll-padding-top: 5.5rem;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
@@ -158,7 +48,7 @@ h4,
 h5,
 h6,
 .font-heading {
-	font-family: 'Barlow', 'TikTok Sans', sans-serif;
+	font-family: 'Barlow', 'Plus Jakarta Sans', sans-serif;
 	letter-spacing: -0.04em;
 	color: var(--heading);
 }
@@ -284,7 +174,7 @@ body {
 	letter-spacing: 0.15em;
 	font-size: 11px;
 	font-weight: 700;
-	color: #537c77;
+	color: #0f7662;
 }
 
 .dark .section-label,
@@ -354,4 +244,179 @@ input:focus-visible {
 
 .dark::view-transition-new(root) {
 	z-index: 1;
+}
+
+/* ==========================================================================
+   BENTO PROSE & MARKDOWN TYPOGRAPHY (Nuxt Content)
+   ========================================================================== */
+
+/* Prose Headings (h1 - h6) */
+.prose :where(h1, h2, h3, h4, h5, h6) {
+	font-family: 'Barlow', 'Plus Jakarta Sans', sans-serif !important;
+	font-weight: 700 !important;
+	letter-spacing: -0.03em !important;
+	color: #001e1c !important; /* Rich crisp ink in light mode */
+	margin-top: 2em !important;
+	margin-bottom: 0.75em !important;
+	line-height: 1.25 !important;
+}
+
+.dark .prose :where(h1, h2, h3, h4, h5, h6) {
+	color: #f9bc60 !important; /* Gold in dark mode - high contrast against dark canvas */
+}
+
+/* Heading Anchor Links inside Nuxt Content (Fix green/dashed look) */
+.prose :where(h1, h2, h3, h4, h5, h6) a {
+	color: inherit !important;
+	text-decoration: none !important;
+	border-bottom: none !important;
+	font-weight: inherit !important;
+}
+
+.prose :where(h1, h2, h3, h4, h5, h6) a:hover {
+	border-bottom: none !important;
+	color: #0f7662 !important;
+}
+
+.dark .prose :where(h1, h2, h3, h4, h5, h6) a:hover {
+	color: #facd87 !important;
+}
+
+/* Body Links (Clean & Accessible) */
+.prose :where(p, li, blockquote) a {
+	color: #0f7662 !important; /* brand-700 in light mode */
+	font-weight: 600 !important;
+	text-decoration: underline !important;
+	text-decoration-thickness: 1.5px !important;
+	text-underline-offset: 3px !important;
+	border-bottom: none !important;
+	transition: color 0.15s ease !important;
+}
+
+.prose :where(p, li, blockquote) a:hover {
+	color: #042f27 !important;
+}
+
+.dark .prose :where(p, li, blockquote) a {
+	color: #5eeacf !important; /* brand-300 in dark mode */
+}
+
+.dark .prose :where(p, li, blockquote) a:hover {
+	color: #99f6e4 !important;
+}
+
+/* Strong / Bold Text (Ultra High Contrast WCAG AAA > 13:1) */
+.prose :where(strong, b) {
+	color: #042f27 !important; /* brand-950: 13.5:1 contrast against light canvas/card */
+	font-weight: 700 !important;
+}
+
+.dark .prose :where(strong, b) {
+	color: #ffffff !important; /* Pure White: 14.2:1 contrast against dark canvas */
+	font-weight: 700 !important;
+}
+
+/* Bento Style Blockquotes */
+.prose :where(blockquote) {
+	font-style: normal !important;
+	font-weight: 400 !important;
+	color: #224844 !important;
+	background: #eff6f5 !important;
+	border-left: 4px solid #0f7662 !important;
+	border-radius: 0 16px 16px 0 !important;
+	padding: 1rem 1.25rem !important;
+	margin: 1.75rem 0 !important;
+	box-shadow: 0 2px 8px rgba(0, 43, 39, 0.03) !important;
+}
+
+.dark .prose :where(blockquote) {
+	color: #deeae9 !important;
+	background: rgba(0, 30, 28, 0.6) !important;
+	border-left: 4px solid #f9bc60 !important;
+}
+
+/* Lists & Bullets */
+.prose :where(ul > li)::marker {
+	color: #0f7662 !important;
+}
+
+.dark .prose :where(ul > li)::marker {
+	color: #f9bc60 !important;
+}
+
+.prose :where(ol > li)::marker {
+	font-family: 'Barlow', sans-serif !important;
+	font-weight: 700 !important;
+	color: #0f7662 !important;
+}
+
+.dark .prose :where(ol > li)::marker {
+	color: #f9bc60 !important;
+}
+
+/* Inline Code */
+.prose :where(:not(pre) > code) {
+	font-family: 'JetBrains Mono', monospace !important;
+	font-size: 0.875em !important;
+	font-weight: 600 !important;
+	color: #115e4f !important;
+	background: #eff6f5 !important;
+	border: 1px solid #deeae9 !important;
+	border-radius: 6px !important;
+	padding: 0.15em 0.4em !important;
+}
+
+.dark .prose :where(:not(pre) > code) {
+	color: #5eeacf !important;
+	background: #001e1c !important;
+	border-color: #134e43 !important;
+}
+
+/* Tables (Bento Style) */
+.prose :where(table) {
+	border-collapse: separate !important;
+	border-spacing: 0 !important;
+	width: 100% !important;
+	border: 1px solid #deeae9 !important;
+	border-radius: 12px !important;
+	overflow: hidden !important;
+	margin: 2rem 0 !important;
+}
+
+.dark .prose :where(table) {
+	border-color: #134e43 !important;
+}
+
+.prose :where(th) {
+	background: #eff6f5 !important;
+	color: #001e1c !important;
+	font-family: 'Barlow', sans-serif !important;
+	font-weight: 700 !important;
+	padding: 0.75rem 1rem !important;
+	border-bottom: 1px solid #deeae9 !important;
+}
+
+.dark .prose :where(th) {
+	background: #001e1c !important;
+	color: #f9bc60 !important;
+	border-bottom-color: #134e43 !important;
+}
+
+.prose :where(td) {
+	padding: 0.75rem 1rem !important;
+	border-bottom: 1px solid #eff6f5 !important;
+}
+
+.dark .prose :where(td) {
+	border-bottom-color: #0a2f2c !important;
+}
+
+/* Horizontal Rule */
+.prose :where(hr) {
+	border-top: 1px solid #deeae9 !important;
+	margin: 2.5rem 0 !important;
+}
+
+.dark .prose :where(hr) {
+	border-top-color: #134e43 !important;
 }

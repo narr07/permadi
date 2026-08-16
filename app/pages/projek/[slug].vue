@@ -159,38 +159,56 @@
 		<!-- Back Button -->
 		<NuxtLink
 			:to="locale === 'id' ? '/id/projek' : '/en/projects'"
-			class="focus-ring inline-flex items-center gap-1.5 text-meta text-xs font-semibold hover:text-brand-600 dark:hover:text-brand-400 transition-colors mb-8"
+			class="focus-ring inline-flex items-center gap-1.5 text-slate-700 dark:text-slate-200 text-xs font-semibold hover:text-brand-900 dark:hover:text-brand-300 transition-colors mb-6"
 		>
 			<span class="i-hugeicons-arrow-left-01 text-sm" /> {{ locale === 'id' ? 'Kembali ke Semua Projek' : 'Back to All Projects' }}
 		</NuxtLink>
 
 		<!-- Project Article Container -->
 		<article v-if="project?.doc" class="max-w-4xl mx-auto">
-			<!-- Header -->
-			<header class="mb-10 pb-8 border-b border-slate-200/80 dark:border-slate-800/80">
-				<div class="flex flex-wrap items-center gap-2 mb-4">
-					<span v-for="tag in (project.doc.tags || project.doc.tech || [])" :key="tag" class="badge-neutral text-xs">
+			<!-- Bento Card Header (Clean, No Spotlight) -->
+			<header
+				class="bento-card-clean relative overflow-hidden p-6 sm:p-8 md:p-9 mb-10 rounded-bento bg-white/90 dark:bg-[#002b27]/90 border border-slate-200/80 dark:border-[#134e43] shadow-sm"
+			>
+				<!-- Category & Tags Badge Row -->
+				<div class="flex flex-wrap items-center gap-2 mb-3.5">
+					<span
+						v-if="project.doc.category"
+						class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-brand-100/80 dark:bg-brand-950 text-brand-800 dark:text-brand-300 border border-brand-200/60 dark:border-brand-800/60 uppercase tracking-wider"
+					>
+						<span class="status-dot animate-pulse" />
+						{{ project.doc.category }}
+					</span>
+					<span
+						v-for="tag in (project.doc.tags || project.doc.tech || [])"
+						:key="tag"
+						class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60"
+					>
 						#{{ tag }}
 					</span>
 				</div>
-				<h1 class="heading-hero  text-3xl sm:text-4xl md:text-5xl leading-tight">
+
+				<!-- Title (Barlow, Bold, Responsive) -->
+				<h1 class="font-heading font-extrabold text-slate-900 dark:text-white text-2xl sm:text-3xl md:text-4xl lg:text-[2.5rem] leading-[1.18] tracking-tight">
 					{{ project.doc.title }}
 				</h1>
-				<p class="text-body text-slate-600 dark:text-slate-300 text-lg mt-4 leading-relaxed">
+
+				<!-- Description Lead Text (Refined compact size) -->
+				<p class="text-body text-slate-600 dark:text-slate-300 text-sm sm:text-[15px] mt-3.5 leading-relaxed max-w-3xl">
 					{{ project.doc.description }}
 				</p>
 
-				<div class="flex flex-wrap items-center justify-between gap-4 text-meta text-xs mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
-					<div class="flex items-center gap-4">
-						<span class="flex items-center gap-1.5 font-medium">
-							<span class="i-hugeicons-calendar-03 text-sm text-brand-500" />
-							{{ project.doc.date || '2025' }}
-						</span>
-						<span>•</span>
-						<span class="flex items-center gap-1.5 font-medium">
-							<span class="i-hugeicons-clock-01 text-sm text-brand-500" />
-							{{ project.doc.readingTime || 4 }} min read
-						</span>
+				<!-- Bento Metadata & Action Footer -->
+				<div class="flex flex-wrap items-center justify-between gap-4 mt-8 pt-5 border-t border-slate-200/70 dark:border-slate-800/70 text-xs">
+					<div class="flex flex-wrap items-center gap-2 sm:gap-3">
+						<div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100/80 dark:bg-[#042f27] border border-slate-200/60 dark:border-[#134e43] text-slate-700 dark:text-slate-200 font-medium">
+							<span class="i-hugeicons-calendar-03 text-sm text-brand-700 dark:text-brand-400" />
+							<span>{{ project.doc.date || '2025' }}</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100/80 dark:bg-[#042f27] border border-slate-200/60 dark:border-[#134e43] text-slate-700 dark:text-slate-200 font-medium">
+							<span class="i-hugeicons-clock-01 text-sm text-brand-700 dark:text-brand-400" />
+							<span>{{ project.doc.readingTime || 4 }} min read</span>
+						</div>
 					</div>
 
 					<!-- External Links -->
@@ -200,7 +218,7 @@
 							:href="project.doc.githubUrl || project.doc.repo"
 							target="_blank"
 							rel="noopener"
-							class="btn-ghost !px-3.5 !py-1.5 text-xs border border-slate-200 dark:border-slate-700 inline-flex items-center gap-1.5"
+							class="btn-ghost !px-3.5 !py-1.5 text-xs border border-slate-200 dark:border-slate-700 inline-flex items-center gap-1.5 font-semibold"
 						>
 							<span class="i-hugeicons-github text-xs" /> Source Code
 						</a>
@@ -220,7 +238,7 @@
 			<!-- 1. BENTO SHOWCASE GALLERY (Bento Style Grid) -->
 			<section v-if="allScreenshots.length > 0" class="mb-12">
 				<div class="flex items-center justify-between mb-4">
-					<span class="text-meta text-xs uppercase font-semibold text-brand-600 dark:text-brand-400 flex items-center gap-1.5">
+					<span class="text-meta text-xs uppercase font-semibold text-brand-800 dark:text-brand-400 flex items-center gap-1.5">
 						<span class="i-hugeicons-image-02 text-xs" /> {{ locale === 'id' ? 'Galeri Pratinjau & Tangkapan Layar' : 'Screenshots & Visual Preview' }}
 					</span>
 					<span class="text-meta text-xs">
@@ -231,9 +249,14 @@
 				<div class="grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-12 gap-3 sm:gap-4">
 					<!-- Hero Bento Card (Span 8 if multiple, span 12 if single) -->
 					<div
-						class="bento-card-clean !p-0 overflow-hidden cursor-pointer group relative bg-slate-100 dark:bg-slate-800/80 rounded-bento"
+						role="button"
+						tabindex="0"
+						:aria-label="locale === 'id' ? 'Buka galeri pratinjau gambar utama' : 'Open main preview screenshot'"
+						class="bento-card-clean !p-0 overflow-hidden cursor-pointer group relative bg-slate-100 dark:bg-slate-800/80 rounded-bento focus-ring"
 						:class="allScreenshots.length === 1 ? 'col-span-12 aspect-video' : 'col-span-12 lg:col-span-8 aspect-video'"
 						@click="openLightbox(0)"
+						@keydown.enter.prevent="openLightbox(0)"
+						@keydown.space.prevent="openLightbox(0)"
 					>
 						<NuxtImg
 							:src="allScreenshots[0]"
@@ -257,9 +280,14 @@
 						<div
 							v-for="(img, idx) in allScreenshots.slice(1)"
 							:key="idx"
-							class="bento-card-clean !p-0 overflow-hidden cursor-pointer group relative bg-slate-100 dark:bg-slate-800/80 rounded-bento"
+							role="button"
+							tabindex="0"
+							:aria-label="`${project.doc.title} - ${locale === 'id' ? 'Buka gambar pratinjau' : 'Open screenshot preview'} ${idx + 2}`"
+							class="bento-card-clean !p-0 overflow-hidden cursor-pointer group relative bg-slate-100 dark:bg-slate-800/80 rounded-bento focus-ring"
 							:class="allScreenshots.length === 2 ? 'col-span-12 lg:col-span-4 aspect-video' : (idx === 0 ? 'col-span-12 sm:col-span-6 lg:col-span-4 aspect-video' : 'col-span-6 sm:col-span-3 lg:col-span-4 aspect-video')"
 							@click="openLightbox(idx + 1)"
+							@keydown.enter.prevent="openLightbox(idx + 1)"
+							@keydown.space.prevent="openLightbox(idx + 1)"
 						>
 							<NuxtImg
 								:src="img"

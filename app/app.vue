@@ -38,24 +38,24 @@
 		<footer class="mt-16 border-t border-slate-200/80 dark:border-slate-800/80 py-8">
 			<div class="container-bento flex flex-col sm:flex-row items-center justify-between gap-4 text-meta text-center sm:text-left">
 				<div>
-					<p class="font-heading font-semibold text-slate-700 dark:text-slate-300">
-						permadi.dev <span class="font-normal text-slate-400">© {{ new Date().getFullYear() }}</span>
+					<p class="font-heading font-semibold text-slate-800 dark:text-slate-300">
+						permadi.dev <span class="font-normal text-slate-600 dark:text-slate-400">© {{ new Date().getFullYear() }}</span>
 					</p>
-					<p class="text-xs text-slate-400 dark:text-slate-500 mt-0.5">
+					<p class="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
 						Crafted with Nuxt, UnoCSS & Cloudflare D1.
 					</p>
 				</div>
-				<div class="flex items-center gap-3 text-lg text-slate-400 dark:text-slate-500">
-					<a href="https://github.com/narr07" target="_blank" rel="noopener" class="hover:text-brand-500 transition-colors" aria-label="GitHub">
+				<div class="flex items-center gap-3 text-lg text-slate-600 dark:text-slate-400">
+					<a href="https://github.com/narr07" target="_blank" rel="noopener" class="hover:text-brand-800 dark:hover:text-brand-300 transition-colors" aria-label="GitHub">
 						<span class="i-hugeicons-github" />
 					</a>
-					<a href="https://x.com/dinarpermadi07" target="_blank" rel="noopener" class="hover:text-brand-500 transition-colors" aria-label="X">
+					<a href="https://x.com/dinarpermadi07" target="_blank" rel="noopener" class="hover:text-brand-800 dark:hover:text-brand-300 transition-colors" aria-label="X">
 						<span class="i-hugeicons-new-twitter" />
 					</a>
-					<a href="https://www.instagram.com/narr07/" target="_blank" rel="noopener" class="hover:text-brand-500 transition-colors" aria-label="Instagram">
+					<a href="https://www.instagram.com/narr07/" target="_blank" rel="noopener" class="hover:text-brand-800 dark:hover:text-brand-300 transition-colors" aria-label="Instagram">
 						<span class="i-hugeicons-instagram" />
 					</a>
-					<a href="https://www.behance.net/narr07" target="_blank" rel="noopener" class="hover:text-brand-500 transition-colors" aria-label="Behance">
+					<a href="https://www.behance.net/narr07" target="_blank" rel="noopener" class="hover:text-brand-800 dark:hover:text-brand-300 transition-colors" aria-label="Behance">
 						<span class="i-hugeicons-behance-02" />
 					</a>
 				</div>

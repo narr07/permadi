@@ -85,7 +85,7 @@
 					type="button"
 					class="flex items-center gap-2.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer border"
 					:class="modelValue !== 'ALL'
-						? 'bg-brand-500 text-white border-brand-400 shadow-xs'
+						? 'bg-brand-700 text-white border-brand-600 shadow-xs'
 						: 'bg-slate-100 dark:bg-[#002420] text-slate-800 dark:text-slate-200 border-slate-200/80 dark:border-[#134e43] hover:bg-slate-200/80 dark:hover:bg-[#00332c]'"
 					:aria-expanded="isOpen"
 					aria-label="Pilih topik filter"
@@ -115,12 +115,12 @@
 						<!-- Tag Search Input inside Dropdown if more than 5 tags -->
 						<div v-if="tags.length > 5" class="px-1 pb-2 mb-1.5 border-b border-slate-100 dark:border-white/10">
 							<div class="relative">
-								<span class="i-hugeicons-search-01 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs" />
+								<span class="i-hugeicons-search-01 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs" />
 								<input
 									v-model="tagSearchQuery"
 									type="text"
 									:placeholder="locale === 'id' ? 'Cari tag...' : 'Search tags...'"
-									class="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg bg-slate-50 dark:bg-[#002420] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400"
+									class="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg bg-slate-50 dark:bg-[#002420] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-500"
 								>
 							</div>
 						</div>
@@ -132,7 +132,7 @@
 								type="button"
 								class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs transition-colors text-left cursor-pointer"
 								:class="modelValue === 'ALL'
-									? 'bg-brand-500/15 dark:bg-brand-500/25 text-brand-600 dark:text-brand-400 font-semibold'
+									? 'bg-brand-500/15 dark:bg-brand-500/25 text-brand-800 dark:text-brand-300 font-bold'
 									: 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'"
 								@click="selectTag('ALL')"
 							>
@@ -140,7 +140,7 @@
 									<span class="i-hugeicons-grid-view text-xs" />
 									{{ defaultAllLabel }}
 								</span>
-								<span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-400 font-mono font-medium">
+								<span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-400 font-mono font-medium">
 									{{ totalCount }}
 								</span>
 							</button>
@@ -152,7 +152,7 @@
 								type="button"
 								class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs transition-colors text-left cursor-pointer"
 								:class="modelValue === tag
-									? 'bg-brand-500/15 dark:bg-brand-500/25 text-brand-600 dark:text-brand-400 font-semibold'
+									? 'bg-brand-500/15 dark:bg-brand-500/25 text-brand-800 dark:text-brand-300 font-bold'
 									: 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'"
 								@click="selectTag(tag)"
 							>
@@ -162,14 +162,14 @@
 								</span>
 								<span
 									v-if="counts[tag]"
-									class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-400 font-mono font-medium shrink-0 ml-2"
+									class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-400 font-mono font-medium shrink-0 ml-2"
 								>
 									{{ counts[tag] }}
 								</span>
 							</button>
 
 							<!-- Empty Filter Search -->
-							<div v-if="filteredDropdownTags.length === 0" class="py-4 text-center text-xs text-slate-400">
+							<div v-if="filteredDropdownTags.length === 0" class="py-4 text-center text-xs text-slate-500">
 								{{ locale === 'id' ? 'Tag tidak ditemukan' : 'No tag found' }}
 							</div>
 						</div>
@@ -180,7 +180,7 @@
 			<!-- Right: Total Count & Quick Reset -->
 			<div class="flex items-center gap-3 shrink-0">
 				<!-- Count Indicator -->
-				<span class="text-xs text-slate-500 dark:text-slate-400 font-medium">
+				<span class="text-xs text-slate-700 dark:text-slate-400 font-medium">
 					{{ totalCount }} {{ defaultItemUnit }}
 				</span>
 
@@ -188,7 +188,7 @@
 				<button
 					v-if="modelValue !== 'ALL'"
 					type="button"
-					class="focus-ring inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium text-brand-600 dark:text-brand-400 hover:bg-brand-50 dark:hover:bg-brand-950/40 transition-colors cursor-pointer"
+					class="focus-ring inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium text-brand-800 dark:text-brand-400 hover:bg-brand-50 dark:hover:bg-brand-950/40 transition-colors cursor-pointer"
 					@click="resetFilter"
 				>
 					<span class="i-hugeicons-cancel-01 text-xs" />

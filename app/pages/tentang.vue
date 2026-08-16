@@ -9,6 +9,14 @@
 		{ watch: [locale] }
 	)
 
+	function onHeaderMouseMove(e: MouseEvent) {
+		const target = e.currentTarget as HTMLElement
+		if (!target) return
+		const rect = target.getBoundingClientRect()
+		target.style.setProperty('--x', `${e.clientX - rect.left}px`)
+		target.style.setProperty('--y', `${e.clientY - rect.top}px`)
+	}
+
 	useSeoMeta({
 		title: computed(() => page.value?.title),
 		description: computed(() => page.value?.description),
@@ -24,21 +32,48 @@
 
 <template>
 	<div class="container-bento py-10 sm:py-14">
-		<!-- Page Intro Header -->
-		<div class="max-w-3xl mb-10 sm:mb-12">
-			<span
-				v-if="page?.section_label"
-				class="section-label text-brand-600 dark:text-brand-400 font-bold mb-3 block"
-			>
-				{{ page.section_label }}
-			</span>
-			<h1 class="font-heading font-semibold text-slate-900 dark:text-white text-4xl sm:text-6xl leading-[0.95] tracking-tight mb-4">
-				{{ page?.headline || (locale === 'id' ? 'Selalu ingin tahu. Bertindak dengan penuh niat.' : 'Curious by default. Intentional by choice.') }}
-			</h1>
-			<p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed max-w-xl">
-				{{ page?.lead || page?.description || (locale === 'id' ? 'Fokus pada irisan antara desain antarmuka dan rekayasa perangkat lunak — mengubah interaksi bermakna menjadi produk yang bermanfaat.' : 'I care about the space between design and engineering — where a thoughtful interaction becomes a useful product.') }}
-			</p>
-		</div>
+		<!-- Page Header with Bento Spotlight Effect -->
+		<header
+			class="bento-card-clean bento-spotlight relative z-10 p-6 sm:p-8 mb-8 sm:mb-10 bg-slate-50/50 dark:bg-slate-900/40"
+			@mousemove="onHeaderMouseMove"
+		>
+			<!-- Ambient Glow Subtle Background -->
+			<div class="absolute inset-0 rounded-[20px] overflow-hidden pointer-events-none">
+				<div class="absolute -right-16 -top-16 w-64 h-64 bg-brand-400/10 dark:bg-brand-400/5 rounded-full blur-3xl" />
+			</div>
+
+			<div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+				<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
+				<div class="max-w-2xl">
+					<div class="flex items-center justify-between gap-3 mb-3.5">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-100/70 dark:bg-brand-950 text-brand-700 dark:text-brand-300 border border-brand-200/60 dark:border-brand-800/60">
+							<span class="status-dot animate-pulse" />
+							<span>{{ page?.section_label || (locale === 'id' ? 'Tentang Saya' : 'About Me') }}</span>
+						</div>
+
+						<!-- Logo Compact Badge di Mobile -->
+						<div class="md:hidden shrink-0 p-1.5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/60 shadow-xs flex items-center justify-center">
+							<Logo :size="36" />
+						</div>
+					</div>
+
+					<h1 class="heading-page">
+						{{ page?.headline || page?.title || (locale === 'id' ? 'Selalu ingin tahu. Bertindak dengan penuh niat.' : 'Curious by default. Intentional by choice.') }}
+					</h1>
+
+					<p class="heading-page-sub">
+						{{ page?.lead || page?.description || (locale === 'id' ? 'Fokus pada irisan antara desain antarmuka dan rekayasa perangkat lunak — mengubah interaksi bermakna menjadi produk yang bermanfaat.' : 'I care about the space between design and engineering — where a thoughtful interaction becomes a useful product.') }}
+					</p>
+				</div>
+
+				<!-- Sisi Kanan: Interactive Logo Bento Widget (Desktop) -->
+				<div class="hidden md:flex shrink-0 items-center justify-center">
+					<div class="p-4 rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/60 shadow-xs flex items-center justify-center hover:border-brand-500 dark:hover:border-brand-400 transition-colors duration-100">
+						<Logo :size="84" />
+					</div>
+				</div>
+			</div>
+		</header>
 
 		<!-- Bento About Grid -->
 		<div class="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-5 mb-12">
@@ -50,7 +85,7 @@
 				<div>
 					<span
 						v-if="page.story_card.label"
-						class="section-label text-brand-600 dark:text-brand-400 block mb-3"
+						class="section-label text-brand-700 dark:text-brand-400 block mb-3"
 					>
 						{{ page.story_card.label }}
 					</span>
@@ -59,22 +94,22 @@
 					</h2>
 					<p
 						v-if="page.story_card.lead"
-						class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed mb-4"
+						class="text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed mb-4"
 					>
 						{{ page.story_card.lead }}
 					</p>
 					<p
 						v-if="page.story_card.bio"
-						class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed"
+						class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed"
 					>
 						{{ page.story_card.bio }}
 					</p>
 				</div>
 
-				<div class="mt-8 pt-4 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between text-xs text-brand-600 dark:text-brand-400 font-bold">
+				<div class="mt-8 pt-4 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between text-xs text-brand-800 dark:text-brand-400 font-bold">
 					<NuxtLink
 						:to="locale === 'id' ? '/id/projek' : '/en/projects'"
-						class="hover:underline flex items-center gap-1"
+						class="hover:underline flex items-center gap-1 hover:text-brand-950"
 					>
 						{{ page.story_card.link_text || (locale === 'id' ? 'Eksplorasi Studi Kasus Projek' : 'Explore Project Case Studies') }}
 						<span>↗</span>
@@ -90,7 +125,7 @@
 				<div>
 					<span
 						v-if="page.toolkit_card.label"
-						class="section-label text-brand-600 dark:text-brand-400 block mb-3"
+						class="section-label text-brand-700 dark:text-brand-400 block mb-3"
 					>
 						{{ page.toolkit_card.label }}
 					</span>
@@ -107,11 +142,11 @@
 							class="pt-2.5 first:pt-0 flex items-center justify-between text-xs"
 						>
 							<span class="font-semibold text-slate-900 dark:text-white">{{ t.name }}</span>
-							<span class="text-slate-400 font-mono text-[11px]">{{ t.desc }}</span>
+							<span class="text-slate-600 dark:text-slate-400 font-mono text-[11px]">{{ t.desc }}</span>
 						</li>
 					</ul>
 				</div>
-				<div class="mt-6 pt-3 border-t border-slate-200/60 dark:border-slate-800/60 text-xs text-slate-400 font-mono">
+				<div class="mt-6 pt-3 border-t border-slate-200/60 dark:border-slate-800/60 text-xs text-slate-600 dark:text-slate-400 font-mono">
 					Nuxt 4 / UnoCSS / Cloudflare
 				</div>
 			</div>

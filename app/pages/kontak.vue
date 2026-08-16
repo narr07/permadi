@@ -9,6 +9,14 @@
 		{ watch: [locale] }
 	)
 
+	function onHeaderMouseMove(e: MouseEvent) {
+		const target = e.currentTarget as HTMLElement
+		if (!target) return
+		const rect = target.getBoundingClientRect()
+		target.style.setProperty('--x', `${e.clientX - rect.left}px`)
+		target.style.setProperty('--y', `${e.clientY - rect.top}px`)
+	}
+
 	useSeoMeta({
 		title: computed(() => page.value?.title),
 		description: computed(() => page.value?.description),
@@ -24,20 +32,47 @@
 
 <template>
 	<div class="container-bento py-10 sm:py-14">
-		<!-- Page Header -->
-		<header class="max-w-3xl mb-8 sm:mb-12">
-			<span
-				v-if="page?.section_label"
-				class="section-label text-brand-600 dark:text-brand-400 font-bold mb-3 block"
-			>
-				{{ page.section_label }}
-			</span>
-			<h1 class="font-heading font-semibold text-slate-900 dark:text-white text-4xl sm:text-6xl leading-[0.95] tracking-tight mb-4">
-				{{ page?.headline || page?.title || (locale === 'id' ? 'Kontak & Kolaborasi' : 'Contact & Collaboration') }}
-			</h1>
-			<p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed max-w-xl">
-				{{ page?.lead || page?.description || (locale === 'id' ? 'Tertarik berdiskusi tentang proyek baru, konsultasi frontend, atau sekadar bertukar pikiran? Silakan hubungi saya.' : 'Interested in discussing new projects, frontend consulting, or just sharing thoughts? Feel free to reach out.') }}
-			</p>
+		<!-- Page Header with Bento Spotlight Effect -->
+		<header
+			class="bento-card-clean bento-spotlight relative z-10 p-6 sm:p-8 mb-8 sm:mb-10 bg-slate-50/50 dark:bg-slate-900/40"
+			@mousemove="onHeaderMouseMove"
+		>
+			<!-- Ambient Glow Subtle Background -->
+			<div class="absolute inset-0 rounded-[20px] overflow-hidden pointer-events-none">
+				<div class="absolute -right-16 -top-16 w-64 h-64 bg-brand-400/10 dark:bg-brand-400/5 rounded-full blur-3xl" />
+			</div>
+
+			<div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+				<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
+				<div class="max-w-2xl">
+					<div class="flex items-center justify-between gap-3 mb-3.5">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-100/70 dark:bg-brand-950 text-brand-700 dark:text-brand-300 border border-brand-200/60 dark:border-brand-800/60">
+							<span class="status-dot animate-pulse" />
+							<span>{{ page?.section_label || (locale === 'id' ? 'Kontak & Kolaborasi' : 'Contact & Connect') }}</span>
+						</div>
+
+						<!-- Logo Compact Badge di Mobile -->
+						<div class="md:hidden shrink-0 p-1.5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/60 shadow-xs flex items-center justify-center">
+							<Logo :size="36" />
+						</div>
+					</div>
+
+					<h1 class="heading-page">
+						{{ page?.headline || page?.title || (locale === 'id' ? 'Kontak & Kolaborasi' : 'Contact & Collaboration') }}
+					</h1>
+
+					<p class="heading-page-sub">
+						{{ page?.lead || page?.description || (locale === 'id' ? 'Tertarik berdiskusi tentang proyek baru, konsultasi frontend, atau sekadar bertukar pikiran? Silakan hubungi saya.' : 'Interested in discussing new projects, frontend consulting, or just sharing thoughts? Feel free to reach out.') }}
+					</p>
+				</div>
+
+				<!-- Sisi Kanan: Interactive Logo Bento Widget (Desktop) -->
+				<div class="hidden md:flex shrink-0 items-center justify-center">
+					<div class="p-4 rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/60 shadow-xs flex items-center justify-center hover:border-brand-500 dark:hover:border-brand-400 transition-colors duration-100">
+						<Logo :size="84" />
+					</div>
+				</div>
+			</div>
 		</header>
 
 		<!-- Bento Contact Grid -->
@@ -120,7 +155,7 @@
 				<div>
 					<span
 						v-if="page.social_card.label"
-						class="section-label text-brand-600 dark:text-brand-400 block mb-2"
+						class="section-label text-brand-700 dark:text-brand-400 block mb-2"
 					>
 						{{ page.social_card.label }}
 					</span>
@@ -129,7 +164,7 @@
 					</h3>
 					<p
 						v-if="page.social_card.description"
-						class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mt-1 mb-5 leading-relaxed"
+						class="text-slate-700 dark:text-slate-300 text-xs sm:text-sm mt-1 mb-5 leading-relaxed"
 					>
 						{{ page.social_card.description }}
 					</p>
@@ -144,7 +179,7 @@
 						:href="item.url"
 						target="_blank"
 						rel="noopener"
-						class="focus-ring p-3 rounded-bento bg-slate-50 dark:bg-slate-800/60 hover:(bg-brand-50 text-brand-600) dark:hover:(bg-brand-950/40 text-brand-400) transition-all text-center group block"
+						class="focus-ring p-3 rounded-bento bg-slate-50 dark:bg-slate-800/60 hover:(bg-brand-50 text-brand-800) dark:hover:(bg-brand-950/40 text-brand-400) transition-all text-center group block"
 					>
 						<span
 							:class="item.icon || 'i-hugeicons-link-01'"
@@ -163,7 +198,7 @@
 				<div>
 					<span
 						v-if="page.newsletter_card.label"
-						class="section-label text-brand-600 dark:text-brand-400 block mb-2"
+						class="section-label text-brand-700 dark:text-brand-400 block mb-2"
 					>
 						{{ page.newsletter_card.label }}
 					</span>
@@ -172,7 +207,7 @@
 					</h3>
 					<p
 						v-if="page.newsletter_card.description"
-						class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mt-1 mb-5 leading-relaxed"
+						class="text-slate-700 dark:text-slate-300 text-xs sm:text-sm mt-1 mb-5 leading-relaxed"
 					>
 						{{ page.newsletter_card.description }}
 					</p>

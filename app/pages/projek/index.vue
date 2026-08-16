@@ -143,7 +143,7 @@
 				<div class="grid grid-cols-2 md:flex md:flex-col gap-2.5 w-full md:w-auto shrink-0 z-20">
 					<!-- Mini Bento Stat Pill: Total Karya -->
 					<div class="h-11 px-3.5 sm:px-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/60 shadow-xs flex items-center gap-2 md:w-48">
-						<span class="i-hugeicons-folder-02 text-brand-600 dark:text-brand-400 text-sm shrink-0" />
+						<span class="i-hugeicons-folder-02 text-brand-700 dark:text-brand-400 text-sm shrink-0" />
 						<span class="text-xs font-bold text-slate-800 dark:text-slate-100 font-mono truncate">
 							{{ projects?.length || 0 }} {{ locale === 'id' ? 'Projek' : 'Projects' }}
 						</span>
@@ -158,8 +158,8 @@
 							type="button"
 							class="w-full h-11 flex items-center justify-between gap-2 px-3.5 sm:px-4 rounded-xl text-xs font-semibold transition-all cursor-pointer border shadow-xs"
 							:class="selectedTag !== 'ALL'
-								? 'bg-brand-500 text-white border-brand-400 shadow-brand-500/20'
-								: 'bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 border-slate-200/70 dark:border-slate-700/60 hover:bg-slate-50 dark:hover:bg-slate-800'"
+								? 'bg-brand-700 text-white border-brand-600 shadow-brand-700/20'
+								: 'bg-white dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 border-slate-200/70 dark:border-slate-700/60 hover:bg-slate-50 dark:hover:bg-slate-800'"
 							:aria-expanded="isTagDropdownOpen"
 							aria-label="Pilih topik filter"
 							@click="isTagDropdownOpen = !isTagDropdownOpen"
@@ -167,7 +167,7 @@
 							<span class="flex items-center gap-2 truncate">
 								<span
 									class="i-hugeicons-filter-horizontal text-sm shrink-0"
-									:class="selectedTag !== 'ALL' ? 'text-white' : 'text-brand-600 dark:text-brand-400'"
+									:class="selectedTag !== 'ALL' ? 'text-white' : 'text-brand-700 dark:text-brand-400'"
 								/>
 								<span class="truncate">
 									{{ selectedTag === 'ALL' ? (locale === 'id' ? 'Semua Topik' : 'All Topics') : `#${selectedTag}` }}
@@ -198,12 +198,12 @@
 									class="px-1 pb-2 mb-1.5 border-b border-slate-100 dark:border-white/10"
 								>
 									<div class="relative">
-										<span class="i-hugeicons-search-01 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs" />
+										<span class="i-hugeicons-search-01 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs" />
 										<input
 											v-model="tagSearchQuery"
 											type="text"
 											:placeholder="locale === 'id' ? 'Cari tag...' : 'Search tags...'"
-											class="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg bg-slate-50 dark:bg-[#002420] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none"
+											class="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg bg-slate-50 dark:bg-[#002420] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none"
 										>
 									</div>
 								</div>
@@ -215,7 +215,7 @@
 										type="button"
 										class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors text-left cursor-pointer"
 										:class="selectedTag === 'ALL'
-											? 'bg-brand-500/15 dark:bg-brand-500/25 text-brand-600 dark:text-brand-400 font-semibold'
+											? 'bg-brand-500/15 dark:bg-brand-500/25 text-brand-800 dark:text-brand-300 font-bold'
 											: 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'"
 										@click="selectTag('ALL')"
 									>
@@ -223,7 +223,7 @@
 											<span class="i-hugeicons-grid-view text-xs" />
 											{{ locale === 'id' ? 'Semua Topik' : 'All Topics' }}
 										</span>
-										<span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-400 font-mono font-medium">
+										<span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-400 font-mono font-medium">
 											{{ projects?.length || 0 }}
 										</span>
 									</button>
@@ -235,7 +235,7 @@
 										type="button"
 										class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors text-left cursor-pointer"
 										:class="selectedTag === tag
-											? 'bg-brand-500/15 dark:bg-brand-500/25 text-brand-600 dark:text-brand-400 font-semibold'
+											? 'bg-brand-500/15 dark:bg-brand-500/25 text-brand-800 dark:text-brand-300 font-bold'
 											: 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'"
 										@click="selectTag(tag)"
 									>
@@ -245,7 +245,7 @@
 										</span>
 										<span
 											v-if="tagCounts[tag]"
-											class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-400 font-mono font-medium shrink-0 ml-2"
+											class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-400 font-mono font-medium shrink-0 ml-2"
 										>
 											{{ tagCounts[tag] }}
 										</span>
@@ -312,7 +312,7 @@
 									:class="[
 										index === 0 && selectedTag === 'ALL'
 											? 'bg-brand-800/70 dark:bg-brand-300/70 text-brand-200 dark:text-brand-950 border border-brand-700/70 dark:border-brand-400/60'
-											: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300',
+											: 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300',
 										tIdx > (index === 0 && selectedTag === 'ALL' ? 0 : 1) ? 'hidden sm:inline-block' : '',
 									]"
 								>
@@ -323,7 +323,7 @@
 								class="text-[11px] font-mono shrink-0"
 								:class="index === 0 && selectedTag === 'ALL'
 									? 'text-brand-300 dark:text-brand-800 font-medium'
-									: 'text-slate-400 dark:text-slate-500'"
+									: 'text-slate-600 dark:text-slate-400'"
 							>
 								{{ item.date }}
 							</span>
@@ -342,7 +342,7 @@
 							class="text-xs sm:text-sm mt-2 line-clamp-3 leading-relaxed"
 							:class="index === 0 && selectedTag === 'ALL'
 								? 'text-brand-200/90 dark:text-brand-900/90'
-								: 'text-slate-600 dark:text-slate-300'"
+								: 'text-slate-700 dark:text-slate-300'"
 						>
 							{{ item.description }}
 						</p>
@@ -358,7 +358,7 @@
 							class="font-bold group-hover:translate-x-1 transition-all flex items-center gap-1"
 							:class="index === 0 && selectedTag === 'ALL'
 								? 'text-white dark:text-brand-950 group-hover:text-yellow-400 dark:group-hover:text-brand-700'
-								: 'text-brand-600 dark:text-brand-400 group-hover:text-brand-600 dark:group-hover:text-yellow-600'"
+								: 'text-brand-800 dark:text-brand-400 group-hover:text-brand-950 dark:group-hover:text-yellow-600'"
 						>
 							{{ locale === 'id' ? 'Lihat Studi Kasus' : 'Explore Case Study' }} <span>↗</span>
 						</span>
@@ -397,12 +397,12 @@
 			<h3 class="font-heading font-semibold text-lg text-slate-900 dark:text-white">
 				{{ locale === 'id' ? 'Tidak ada projek ditemukan' : 'No projects found' }}
 			</h3>
-			<p class="text-xs text-slate-500 mt-1 mb-4">
+			<p class="text-xs text-slate-600 dark:text-slate-400 mt-1 mb-4">
 				{{ locale === 'id' ? 'Coba ubah kata kunci pencarian atau bersihkan filter tag.' : 'Try changing search keywords or resetting active tag filters.' }}
 			</p>
 			<button
 				type="button"
-				class="px-4 py-2 rounded-full text-xs font-bold bg-brand-500 text-white"
+				class="px-4 py-2 rounded-full text-xs font-bold bg-brand-700 text-white hover:bg-brand-800 transition-colors"
 				@click="selectedTag = 'ALL'; searchQuery = ''"
 			>
 				{{ locale === 'id' ? 'Reset Pencarian' : 'Reset Filter' }}

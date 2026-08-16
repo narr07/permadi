@@ -21,8 +21,8 @@
 <template>
 	<div class="sand-card-clean md:col-span-5 p-6 sm:p-7 flex flex-col justify-between">
 		<div class="flex items-center justify-between">
-			<span class="i-hugeicons-sparkles text-lg text-brand-900" />
-			<span class="text-xs font-mono text-brand-700 font-semibold">
+			<span class="i-hugeicons-sparkles text-lg text-brand-950" />
+			<span class="text-xs font-mono text-brand-950 font-bold">
 				{{ philosophy.number || '01 / 04' }}
 			</span>
 		</div>
@@ -30,7 +30,7 @@
 			{{ philosophy.quote || (locale === 'id' ? 'Desain yang baik itu tenang.' : 'Good design is quiet.') }}<br>
 			<strong>{{ philosophy.quote_bold || (locale === 'id' ? 'Desain luar biasa akan selalu membekas.' : 'Great design stays with you.') }}</strong>
 		</p>
-		<span class="text-xs uppercase tracking-wider font-mono text-brand-950">
+		<span class="text-xs uppercase tracking-wider font-mono text-brand-950 font-bold">
 			{{ philosophy.label || 'Permadi Philosophy' }}
 		</span>
 	</div>

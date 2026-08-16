@@ -249,6 +249,9 @@
 				<div
 					v-if="isOpen"
 					class="fixed inset-0 z-100 flex items-start justify-center p-3 sm:p-4 md:p-6 pt-16 sm:pt-24 bg-slate-950/70 dark:bg-slate-950/80 backdrop-blur-md transition-all overflow-y-auto"
+					role="dialog"
+					aria-modal="true"
+					:aria-label="t('search.placeholder', 'Pencarian')"
 					@click.self="closeModal"
 					@keydown="handleModalKeydown"
 				>
@@ -262,6 +265,10 @@
 								ref="inputRef"
 								v-model="searchQuery"
 								type="search"
+								role="combobox"
+								aria-autocomplete="list"
+								:aria-expanded="Boolean(searchQuery.trim())"
+								:aria-label="t('search.placeholder', 'Ketik kata kunci pencarian...')"
 								class="flex-1 bg-transparent border-none outline-none text-slate-900 dark:text-white placeholder:text-slate-400 text-sm sm:text-base font-sans"
 								:placeholder="t('search.placeholder', 'Type a command or search...')"
 								autocomplete="off"
@@ -271,6 +278,7 @@
 							<span
 								v-if="status === 'loading'"
 								class="i-hugeicons-loading-03 text-base text-brand-500 animate-spin shrink-0"
+								aria-live="polite"
 							/>
 
 							<button

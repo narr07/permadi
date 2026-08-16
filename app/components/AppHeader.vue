@@ -156,8 +156,8 @@
 					:data-active="isItemActive(item)"
 					class="relative z-10 px-3.5 py-1.5 rounded-bento-island text-g1 font-medium transition-colors duration-200"
 					:class="isItemActive(item)
-						? 'text-brand-600 dark:text-brand-400 font-semibold'
-						: 'text-slate-600 dark:text-slate-300 hover:(text-brand-600 dark:text-brand-400)'"
+						? 'text-brand-900 dark:text-brand-200 font-bold'
+						: 'text-slate-700 dark:text-slate-300 hover:(text-brand-900 dark:text-brand-200)'"
 				>
 					{{ item.label }}
 				</NuxtLink>
@@ -175,12 +175,16 @@
 					:aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
 					@click="toggleDark($event)"
 				>
-					<span class="i-hugeicons-sun-01 dark:hidden text-lg text-amber-500" />
+					<span class="i-hugeicons-sun-01 dark:hidden text-lg text-amber-600" />
 					<span class="i-hugeicons-moon-02 hidden dark:inline text-lg text-brand-300" />
 				</button>
 
-				<!-- Sliding Language Switcher (Desktop only) -->
-				<div class="relative hidden md:grid grid-cols-2 items-center bg-slate-100 dark:bg-slate-800/80 rounded-full p-0.5 text-xs font-semibold select-none border border-slate-200/50 dark:border-slate-700/50 w-20">
+				<!-- Language Switcher Links -->
+				<div
+					role="group"
+					:aria-label="locale === 'id' ? 'Pilih Bahasa' : 'Choose Language'"
+					class="relative hidden md:grid grid-cols-2 items-center bg-slate-100 dark:bg-slate-800/80 rounded-full p-0.5 text-xs font-semibold select-none border border-slate-200/50 dark:border-slate-700/50 w-20"
+				>
 					<!-- Animated Sliding Pill Indicator -->
 					<div
 						class="absolute top-0.5 bottom-0.5 left-0.5 w-[calc(50%-2px)] rounded-full bg-white dark:bg-slate-700 shadow-xs transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] pointer-events-none"
@@ -191,10 +195,11 @@
 						v-for="loc in locales"
 						:key="loc.code"
 						:to="switchLocalePath(loc.code)"
+						:aria-label="loc.name || loc.code.toUpperCase()"
 						class="relative z-10 py-1 text-center rounded-full transition-colors duration-200"
 						:class="loc.code === locale
-							? 'text-brand-600 dark:text-brand-300 font-bold'
-							: 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'"
+							? 'text-brand-950 dark:text-brand-200 font-bold'
+							: 'text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white'"
 					>
 						{{ loc.code.toUpperCase() }}
 					</NuxtLink>
@@ -204,7 +209,7 @@
 				<NuxtLink
 					:to="contactPath"
 					class="btn-primary !px-3.5 !py-1 text-g0 hidden md:inline-flex"
-					:class="{ 'bg-brand-600': route.path.startsWith(contactPath) }"
+					:class="{ 'bg-brand-800': route.path.startsWith(contactPath) }"
 				>
 					{{ t('nav.contact') }}
 				</NuxtLink>
@@ -214,6 +219,8 @@
 					type="button"
 					class="icon-btn md:hidden"
 					aria-label="Toggle navigation menu"
+					:aria-expanded="mobileOpen"
+					aria-controls="mobile-navigation"
 					@click="mobileOpen = !mobileOpen"
 				>
 					<span :class="mobileOpen ? 'i-hugeicons-cancel-01' : 'i-hugeicons-menu-01'" class="text-xl" />
@@ -232,6 +239,8 @@
 		>
 			<nav
 				v-if="mobileOpen"
+				id="mobile-navigation"
+				aria-label="Mobile Navigation"
 				class="container-bento mt-2 md:hidden pointer-events-auto"
 			>
 				<div class="rounded-2xl bg-brand-50/95 dark:bg-brand-900/95 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-2xl p-3 flex flex-col gap-1">
@@ -241,8 +250,8 @@
 						:to="item.to"
 						class="block px-4 py-2.5 rounded-xl text-g1 font-medium transition-colors"
 						:class="isItemActive(item)
-							? 'bg-brand-200 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 font-semibold border border-brand-500/20'
-							: 'text-slate-700 dark:text-slate-200 hover:bg-slate-100/70 dark:hover:bg-slate-800/50'"
+							? 'bg-brand-200 dark:bg-brand-950/60 text-brand-900 dark:text-brand-200 font-semibold border border-brand-500/20'
+							: 'text-slate-800 dark:text-slate-200 hover:bg-slate-100/70 dark:hover:bg-slate-800/50'"
 						@click="mobileOpen = false"
 					>
 						{{ item.label }}
@@ -253,7 +262,7 @@
 						<!-- Theme Switcher Button -->
 						<button
 							type="button"
-							class="flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-g1 font-medium bg-brand-200 dark:bg-brand-800/80 text-brand-700 dark:text-brand-200 hover:bg-brand-200/80 dark:hover:bg-brand-700/80 transition-colors cursor-pointer"
+							class="flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-g1 font-medium bg-brand-200 dark:bg-brand-800/80 text-brand-900 dark:text-brand-200 hover:bg-brand-200/80 dark:hover:bg-brand-700/80 transition-colors cursor-pointer"
 							@click="toggleDark($event)"
 						>
 							<span class="i-hugeicons-sun-01 dark:hidden text-lg text-brand-900" />
@@ -276,7 +285,7 @@
 								class="relative z-10 py-1 text-center rounded-lg transition-colors duration-200"
 								:class="loc.code === locale
 									? 'text-brand-950 dark:text-brand-100 font-bold'
-									: 'text-brand-800 dark:text-brand-50 hover:text-slate-900 dark:hover:text-white'"
+									: 'text-brand-900 dark:text-brand-50 hover:text-slate-900 dark:hover:text-white'"
 								@click="mobileOpen = false"
 							>
 								{{ loc.code.toUpperCase() }}
