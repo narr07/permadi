@@ -1,123 +1,128 @@
 <script setup lang="ts">
-	import ProseImg from '~/components/content/ProseImg.vue'
-	import ProsePre from '~/components/content/ProsePre.vue'
-	import ProseCode from '~/components/content/ProseCode.vue'
+import ProseCode from '~/components/content/ProseCode.vue'
+import ProseImg from '~/components/content/ProseImg.vue'
+import ProsePre from '~/components/content/ProsePre.vue'
 
-	const route = useRoute()
-	const { locale, locales } = useI18n()
-	const localePath = useLocalePath()
-	const setI18nParams = useSetI18nParams()
+const route = useRoute()
+const { locale, locales } = useI18n()
+const localePath = useLocalePath()
+const setI18nParams = useSetI18nParams()
 
-	const mdcComponents = {
-		img: ProseImg,
-		ProseImg,
-		'prose-img': ProseImg,
-		pre: ProsePre,
-		ProsePre,
-		'prose-pre': ProsePre,
-		code: ProseCode,
-		ProseCode,
-		'prose-code': ProseCode,
-	}
+const mdcComponents = {
+	'img': ProseImg,
+	ProseImg,
+	'prose-img': ProseImg,
+	'pre': ProsePre,
+	ProsePre,
+	'prose-pre': ProsePre,
+	'code': ProseCode,
+	ProseCode,
+	'prose-code': ProseCode,
+}
 
-	const requestedSlug = computed(() => route.params.slug as string)
-	const collection = computed(() => (locale.value === 'id' ? 'blog_id' : 'blog_en'))
+const requestedSlug = computed(() => route.params.slug as string)
+const collection = computed(() => (locale.value === 'id' ? 'blog_id' : 'blog_en'))
 
-	function cleanSlug(pathStr: string): string {
-		const parts = pathStr.split('/')
-		const lastPart = parts[parts.length - 1] || ''
-		return lastPart.replace(/^\d+\./, '')
-	}
+function cleanSlug(pathStr: string): string {
+	const parts = pathStr.split('/')
+	const lastPart = parts[parts.length - 1] || ''
+	return lastPart.replace(/^\d+\./, '')
+}
 
-	const { data: post } = await useAsyncData(
-		() => `blog-post-${locale.value}-${requestedSlug.value}`,
-		async () => {
-			const allPosts = await queryCollection(collection.value).all()
-			let matched = allPosts.find((p: any) => {
+const { data: post } = await useAsyncData(
+	() => `blog-post-${locale.value}-${requestedSlug.value}`,
+	async () => {
+		const allPosts = await queryCollection(collection.value).all()
+		let matched = allPosts.find((p: any) => {
+			return p.slug === requestedSlug.value || cleanSlug(p.path) === requestedSlug.value
+		})
+
+		// Fallback: Jika slug bahasa lain diakses di locale ini, temukan padanannya via idBlog
+		if (!matched) {
+			const otherCollection = (locale.value === 'id' ? 'blog_en' : 'blog_id') as any
+			const otherPosts = await queryCollection(otherCollection).all()
+			const otherMatched = otherPosts.find((p: any) => {
 				return p.slug === requestedSlug.value || cleanSlug(p.path) === requestedSlug.value
 			})
+			if (otherMatched) {
+				matched = allPosts.find((p: any) => p.idBlog === otherMatched.idBlog || p.idItem === otherMatched.idItem)
+			}
+		}
 
-			// Fallback: Jika slug bahasa lain diakses di locale ini, temukan padanannya via idBlog
-			if (!matched) {
-				const otherCollection = (locale.value === 'id' ? 'blog_en' : 'blog_id') as any
-				const otherPosts = await queryCollection(otherCollection).all()
-				const otherMatched = otherPosts.find((p: any) => {
-					return p.slug === requestedSlug.value || cleanSlug(p.path) === requestedSlug.value
-				})
-				if (otherMatched) {
-					matched = allPosts.find((p: any) => p.idBlog === otherMatched.idBlog || p.idItem === otherMatched.idItem)
+		if (!matched)
+			return null
+
+		// Cari padanan artikel di semua bahasa terdaftar berdasarkan idBlog / idItem
+		const translations: Record<string, { slug: string }> = {}
+		for (const loc of locales.value) {
+			const locCode = typeof loc === 'string' ? loc : loc.code
+			const locCol = (locCode === 'id' ? 'blog_id' : 'blog_en') as any
+			const locPosts = await queryCollection(locCol).all()
+			const trDoc = locPosts.find((p: any) => p.idBlog === matched.idBlog || p.idItem === matched.idItem)
+			if (trDoc) {
+				translations[locCode] = {
+					slug: trDoc.slug || cleanSlug(trDoc.path),
 				}
 			}
+		}
 
-			if (!matched) return null
+		return {
+			doc: matched,
+			translations,
+		}
+	},
+	{ watch: [locale, requestedSlug] },
+)
 
-			// Cari padanan artikel di semua bahasa terdaftar berdasarkan idBlog / idItem
-			const translations: Record<string, { slug: string }> = {}
-			for (const loc of locales.value) {
-				const locCode = typeof loc === 'string' ? loc : loc.code
-				const locCol = (locCode === 'id' ? 'blog_id' : 'blog_en') as any
-				const locPosts = await queryCollection(locCol).all()
-				const trDoc = locPosts.find((p: any) => p.idBlog === matched.idBlog || p.idItem === matched.idItem)
-				if (trDoc) {
-					translations[locCode] = {
-						slug: trDoc.slug || cleanSlug(trDoc.path),
-					}
-				}
-			}
+if (post.value?.translations) {
+	setI18nParams(post.value.translations)
+}
 
-			return {
-				doc: matched,
-				translations,
-			}
-		},
-		{ watch: [locale, requestedSlug] }
-	)
+if (!post.value?.doc) {
+	throw createError({
+		statusCode: 404,
+		statusMessage: locale.value === 'id' ? 'Artikel tidak ditemukan' : 'Post not found',
+	})
+}
 
-	if (post.value?.translations) {
-		setI18nParams(post.value.translations)
-	}
-
-	if (!post.value?.doc) {
-		throw createError({
-			statusCode: 404,
-			statusMessage: locale.value === 'id' ? 'Artikel tidak ditemukan' : 'Post not found',
+// Composable resmi Nuxt Content: queryCollectionItemSurroundings
+const { data: surround } = await useAsyncData(
+	() => `blog-surround-${locale.value}-${post.value?.doc?.path}`,
+	async () => {
+		if (!post.value?.doc?.path)
+			return [null, null]
+		return queryCollectionItemSurroundings(collection.value as any, post.value.doc.path, {
+			fields: ['title', 'description', 'slug'] as any,
 		})
-	}
+	},
+	{ watch: [locale, post] },
+)
 
-	// Composable resmi Nuxt Content: queryCollectionItemSurroundings
-	const { data: surround } = await useAsyncData(
-		() => `blog-surround-${locale.value}-${post.value?.doc?.path}`,
-		async () => {
-			if (!post.value?.doc?.path) return [null, null]
-			return queryCollectionItemSurroundings(collection.value as any, post.value.doc.path, {
-				fields: ['title', 'description', 'slug'] as any,
-			})
-		},
-		{ watch: [locale, post] }
-	)
+const tocLinks = computed(() => {
+	return post.value?.doc?.body?.toc?.links || post.value?.doc?.toc?.links || []
+})
 
-	const tocLinks = computed(() => {
-		return post.value?.doc?.body?.toc?.links || post.value?.doc?.toc?.links || []
-	})
+useSeoMeta({
+	title: computed(() => post.value?.doc?.title),
+	description: computed(() => post.value?.doc?.description),
+	ogTitle: computed(() => post.value?.doc?.title),
+	ogDescription: computed(() => post.value?.doc?.description),
+})
 
-	useSeoMeta({
-		title: computed(() => post.value?.doc?.title),
-		description: computed(() => post.value?.doc?.description),
-		ogTitle: computed(() => post.value?.doc?.title),
-		ogDescription: computed(() => post.value?.doc?.description),
-	})
-
-	defineOgImage('Bento', {
-		title: post.value?.doc?.title,
-		description: post.value?.doc?.description,
-		category: locale.value === 'id' ? 'Artikel Blog' : 'Blog Article',
-	})
+defineOgImage('Bento', {
+	title: post.value?.doc?.title,
+	description: post.value?.doc?.description,
+	category: locale.value === 'id' ? 'Artikel Blog' : 'Blog Article',
+})
 </script>
 
 <template>
 	<div class="py-6 sm:py-10">
 		<!-- Mobile Collapsible TOC: Sticky tepat di bawah Floating Header Navbar -->
-		<div v-if="tocLinks.length > 0" class="lg:hidden sticky top-[4.75rem] z-40 mb-6 container-bento">
+		<div
+			v-if="tocLinks.length > 0"
+			class="sticky top-[4.75rem] z-40 container-bento mb-6 lg:hidden"
+		>
 			<ContentToc
 				:links="tocLinks"
 				mode="mobile"
@@ -128,24 +133,30 @@
 			<!-- Back Button -->
 			<NuxtLink
 				:to="localePath('/blog')"
-				class="focus-ring inline-flex items-center gap-1.5 text-slate-700 dark:text-slate-200 text-xs font-semibold hover:text-brand-900 dark:hover:text-brand-300 transition-colors mb-6"
+				class="mb-6 inline-flex items-center gap-1.5 text-xs text-slate-700 font-semibold transition-colors dark:text-slate-200 hover:text-brand-900 focus-ring dark:hover:text-brand-300"
 			>
 				<span class="i-hugeicons-arrow-left-01 text-sm" /> {{ locale === 'id' ? 'Kembali ke Blog' : 'Back to Blog' }}
 			</NuxtLink>
 
 			<!-- Article & Desktop TOC Grid Layout -->
-			<div class="grid grid-cols-1 items-start gap-8" :class="tocLinks.length > 0 ? 'lg:grid-cols-12 lg:gap-8 xl:gap-10' : 'max-w-4xl mx-auto'">
+			<div
+				class="grid grid-cols-1 items-start gap-8"
+				:class="tocLinks.length > 0 ? 'lg:grid-cols-12 lg:gap-8 xl:gap-10' : 'max-w-4xl mx-auto'"
+			>
 				<!-- Article Container -->
-				<article v-if="post?.doc" :class="tocLinks.length > 0 ? 'lg:col-span-9' : 'w-full'">
+				<article
+					v-if="post?.doc"
+					:class="tocLinks.length > 0 ? 'lg:col-span-9' : 'w-full'"
+				>
 					<!-- Bento Card Header (Clean, No Spotlight) -->
 					<header
-						class="bento-card-clean relative overflow-hidden p-6 sm:p-8 md:p-9 mb-10 rounded-bento bg-white/90 dark:bg-[#002b27]/90 border border-slate-200/80 dark:border-[#134e43] shadow-sm"
+						class="bento-card-clean relative mb-10 overflow-hidden border border-slate-200/80 rounded-bento bg-white/90 p-6 shadow-sm dark:border-[#134e43] dark:bg-[#002b27]/90 md:p-9 sm:p-8"
 					>
 						<!-- Category & Tags Badge Row -->
-						<div class="flex flex-wrap items-center gap-2 mb-3.5">
+						<div class="mb-3.5 flex flex-wrap items-center gap-2">
 							<span
 								v-if="post.doc.category"
-								class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-brand-100/80 dark:bg-brand-950 text-brand-800 dark:text-brand-300 border border-brand-200/60 dark:border-brand-800/60 uppercase tracking-wider"
+								class="inline-flex items-center gap-1.5 border border-brand-200/60 rounded-full bg-brand-100/80 px-3 py-1 text-xs text-brand-800 font-semibold tracking-wider uppercase dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300"
 							>
 								<span class="status-dot animate-pulse" />
 								{{ post.doc.category }}
@@ -153,37 +164,37 @@
 							<span
 								v-for="tag in post.doc.tags"
 								:key="tag"
-								class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60"
+								class="border border-slate-200/60 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs text-slate-700 font-medium dark:border-slate-700/60 dark:bg-slate-800/80 dark:text-slate-300"
 							>
 								#{{ tag }}
 							</span>
 						</div>
 
 						<!-- Title (Barlow, Bold, Responsive) -->
-						<h1 class="font-heading font-extrabold text-slate-900 dark:text-white text-2xl sm:text-3xl md:text-4xl lg:text-[2.5rem] leading-[1.18] tracking-tight">
+						<h1 class="text-2xl text-slate-900 font-extrabold leading-[1.18] tracking-tight font-heading lg:text-[2.5rem] md:text-4xl sm:text-3xl dark:text-white">
 							{{ post.doc.title }}
 						</h1>
 
 						<!-- Description Lead Text (Refined compact size) -->
-						<p class="text-body text-slate-600 dark:text-slate-300 text-sm sm:text-[15px] mt-3.5 leading-relaxed max-w-3xl">
+						<p class="mt-3.5 max-w-3xl text-body text-sm text-slate-600 leading-relaxed sm:text-[15px] dark:text-slate-300">
 							{{ post.doc.description }}
 						</p>
 
 						<!-- Bento Metadata Footer Pills -->
-						<div class="relative z-10 flex flex-wrap items-center justify-between gap-4 mt-8 pt-5 border-t border-slate-200/70 dark:border-slate-800/70 text-xs">
+						<div class="relative z-10 mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-slate-200/70 pt-5 text-xs dark:border-slate-800/70">
 							<div class="flex flex-wrap items-center gap-2 sm:gap-3">
-								<div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100/80 dark:bg-[#042f27] border border-slate-200/60 dark:border-[#134e43] text-slate-700 dark:text-slate-200 font-medium">
+								<div class="inline-flex items-center gap-1.5 border border-slate-200/60 rounded-xl bg-slate-100/80 px-3 py-1.5 text-slate-700 font-medium dark:border-[#134e43] dark:bg-[#042f27] dark:text-slate-200">
 									<span class="i-hugeicons-calendar-03 text-sm text-brand-700 dark:text-brand-400" />
 									<span>{{ post.doc.date }}</span>
 								</div>
-								<div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100/80 dark:bg-[#042f27] border border-slate-200/60 dark:border-[#134e43] text-slate-700 dark:text-slate-200 font-medium">
+								<div class="inline-flex items-center gap-1.5 border border-slate-200/60 rounded-xl bg-slate-100/80 px-3 py-1.5 text-slate-700 font-medium dark:border-[#134e43] dark:bg-[#042f27] dark:text-slate-200">
 									<span class="i-hugeicons-clock-01 text-sm text-brand-700 dark:text-brand-400" />
 									<span>{{ post.doc.readingTime || 5 }} min read</span>
 								</div>
 							</div>
 
-							<div class="inline-flex items-center gap-2 text-slate-600 dark:text-slate-300 font-medium text-xs">
-								<span class="w-6 h-6 rounded-full bg-brand-700 dark:bg-brand-500 text-white flex items-center justify-center font-heading font-bold text-[10px]">
+							<div class="inline-flex items-center gap-2 text-xs text-slate-600 font-medium dark:text-slate-300">
+								<span class="h-6 w-6 flex items-center justify-center rounded-full bg-brand-700 text-[10px] text-white font-bold font-heading dark:bg-brand-500">
 									DP
 								</span>
 								<span>Dinar Permadi</span>
@@ -192,7 +203,7 @@
 					</header>
 
 					<!-- Prose Content -->
-					<div class="prose prose-slate dark:prose-invert max-w-none font-sans text-slate-700 dark:text-slate-200 leading-relaxed">
+					<div class="max-w-none text-slate-700 leading-relaxed font-sans prose prose-slate dark:text-slate-200 dark:prose-invert">
 						<ContentRenderer
 							:value="post.doc"
 							:components="mdcComponents"
@@ -208,32 +219,35 @@
 					<!-- Surround Articles Navigation (Bento Cards) -->
 					<nav
 						v-if="surround && (surround[0] || surround[1])"
-						class="mt-10 pt-8 border-t border-slate-200/80 dark:border-slate-800/80 grid grid-cols-1 sm:grid-cols-2 gap-4"
+						class="grid grid-cols-1 mt-10 gap-4 border-t border-slate-200/80 pt-8 sm:grid-cols-2 dark:border-slate-800/80"
 						aria-label="Article Navigation"
 					>
 						<NuxtLink
 							v-if="surround[0]"
 							:to="`/${locale}/blog/${surround[0].slug || cleanSlug(surround[0].path)}`"
-							class="bento-card-clean bento-lift flex flex-col justify-between group p-4 rounded-bento"
+							class="bento-card-clean group flex flex-col justify-between bento-lift rounded-bento p-4"
 						>
-							<span class="text-meta text-xs uppercase font-semibold flex items-center gap-1 text-slate-600 dark:text-slate-400 group-hover:text-brand-800 dark:group-hover:text-brand-400 transition-colors">
+							<span class="flex items-center gap-1 text-meta text-xs text-slate-600 font-semibold uppercase transition-colors dark:text-slate-400 group-hover:text-brand-800 dark:group-hover:text-brand-400">
 								<span class="i-hugeicons-arrow-left-01 text-xs" /> {{ locale === 'id' ? 'Artikel Sebelumnya' : 'Previous Article' }}
 							</span>
-							<strong class="font-heading font-semibold text-g1 text-slate-900 dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300 transition-colors mt-2 block">
+							<strong class="mt-2 block text-g1 text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
 								{{ surround[0].title }}
 							</strong>
 						</NuxtLink>
-						<div v-else class="hidden sm:block" />
+						<div
+							v-else
+							class="hidden sm:block"
+						/>
 
 						<NuxtLink
 							v-if="surround[1]"
 							:to="`/${locale}/blog/${surround[1].slug || cleanSlug(surround[1].path)}`"
-							class="bento-card-clean bento-lift flex flex-col justify-between group p-4 rounded-bento text-right"
+							class="bento-card-clean group flex flex-col justify-between bento-lift rounded-bento p-4 text-right"
 						>
-							<span class="text-meta text-xs uppercase font-semibold flex items-center justify-end gap-1 text-slate-600 dark:text-slate-400 group-hover:text-brand-800 dark:group-hover:text-brand-400 transition-colors">
+							<span class="flex items-center justify-end gap-1 text-meta text-xs text-slate-600 font-semibold uppercase transition-colors dark:text-slate-400 group-hover:text-brand-800 dark:group-hover:text-brand-400">
 								{{ locale === 'id' ? 'Artikel Selanjutnya' : 'Next Article' }} <span class="i-hugeicons-arrow-right-01 text-xs" />
 							</span>
-							<strong class="font-heading font-semibold text-g1 text-slate-900 dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300 transition-colors mt-2 block">
+							<strong class="mt-2 block text-g1 text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
 								{{ surround[1].title }}
 							</strong>
 						</NuxtLink>
@@ -244,7 +258,7 @@
 				<aside
 					v-if="tocLinks.length > 0"
 					:aria-label="locale === 'id' ? 'Daftar Isi Artikel' : 'Table of Contents'"
-					class="hidden lg:block lg:col-span-3 sticky top-20 self-start"
+					class="sticky top-20 hidden self-start lg:col-span-3 lg:block"
 				>
 					<ContentToc
 						:links="tocLinks"

@@ -1,8 +1,8 @@
-import { defineContentConfig, defineCollection, property } from '@nuxt/content'
+import { defineCollection, defineContentConfig, property } from '@nuxt/content'
 import { z } from 'zod'
 
-const createLinkSchema = () =>
-	z.object({
+function createLinkSchema() {
+	return z.object({
 		label: z.string(),
 		to: z.string(),
 		icon: z.string().optional(),
@@ -10,6 +10,7 @@ const createLinkSchema = () =>
 		target: z.string().optional(),
 		variant: z.string().optional(),
 	})
+}
 
 const pageSchema = z.object({
 	// Sembunyikan field bawaan Nuxt Content (seo & navigation) di Studio UI menggunakan helper property()
@@ -19,7 +20,7 @@ const pageSchema = z.object({
 				title: z.string().optional(),
 				description: z.string().optional(),
 			})
-			.optional()
+			.optional(),
 	).editor({ hidden: true }),
 
 	navigation: property(
@@ -32,7 +33,7 @@ const pageSchema = z.object({
 					icon: z.string().optional(),
 				}),
 			])
-			.optional()
+			.optional(),
 	).editor({ hidden: true }),
 
 	// Field terstruktur halaman utama & kontak
@@ -71,7 +72,7 @@ const pageSchema = z.object({
 						name: z.string(),
 						url: z.string(),
 						icon: z.string().optional(),
-					})
+					}),
 				)
 				.optional(),
 		})
@@ -120,7 +121,7 @@ const pageSchema = z.object({
 			z.object({
 				title: z.string(),
 				description: z.string(),
-			})
+			}),
 		)
 		.optional(),
 	journey: z
@@ -147,7 +148,7 @@ const pageSchema = z.object({
 					z.object({
 						name: z.string(),
 						desc: z.string(),
-					})
+					}),
 				)
 				.optional(),
 		})

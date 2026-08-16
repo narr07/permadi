@@ -1,157 +1,163 @@
 <script setup lang="ts">
-	import ProseImg from '~/components/content/ProseImg.vue'
-	import ProsePre from '~/components/content/ProsePre.vue'
-	import ProseCode from '~/components/content/ProseCode.vue'
+import ProseCode from '~/components/content/ProseCode.vue'
+import ProseImg from '~/components/content/ProseImg.vue'
+import ProsePre from '~/components/content/ProsePre.vue'
 
-	const route = useRoute()
-	const { locale, locales } = useI18n()
-	const localePath = useLocalePath()
-	const setI18nParams = useSetI18nParams()
+const route = useRoute()
+const { locale, locales } = useI18n()
+const setI18nParams = useSetI18nParams()
 
-	const mdcComponents = {
-		img: ProseImg,
-		ProseImg,
-		'prose-img': ProseImg,
-		pre: ProsePre,
-		ProsePre,
-		'prose-pre': ProsePre,
-		code: ProseCode,
-		ProseCode,
-		'prose-code': ProseCode,
-	}
+const mdcComponents = {
+	'img': ProseImg,
+	ProseImg,
+	'prose-img': ProseImg,
+	'pre': ProsePre,
+	ProsePre,
+	'prose-pre': ProsePre,
+	'code': ProseCode,
+	ProseCode,
+	'prose-code': ProseCode,
+}
 
-	const requestedSlug = computed(() => route.params.slug as string)
-	const collection = computed(() => (locale.value === 'id' ? 'projek_id' : 'projek_en'))
+const requestedSlug = computed(() => route.params.slug as string)
+const collection = computed(() => (locale.value === 'id' ? 'projek_id' : 'projek_en'))
 
-	function cleanSlug(pathStr: string): string {
-		const parts = pathStr.split('/')
-		const lastPart = parts[parts.length - 1] || ''
-		return lastPart.replace(/^\d+\./, '')
-	}
+function cleanSlug(pathStr: string): string {
+	const parts = pathStr.split('/')
+	const lastPart = parts[parts.length - 1] || ''
+	return lastPart.replace(/^\d+\./, '')
+}
 
-	const { data: project } = await useAsyncData(
-		() => `projek-item-${locale.value}-${requestedSlug.value}`,
-		async () => {
-			const colName = collection.value
-			const allProjects = await queryCollection(colName).all()
-			let matched = allProjects.find((p: any) => {
+const { data: project } = await useAsyncData(
+	() => `projek-item-${locale.value}-${requestedSlug.value}`,
+	async () => {
+		const colName = collection.value
+		const allProjects = await queryCollection(colName).all()
+		let matched = allProjects.find((p: any) => {
+			return p.slug === requestedSlug.value || cleanSlug(p.path) === requestedSlug.value
+		})
+
+		// Fallback: Jika slug bahasa lain diakses
+		if (!matched) {
+			const otherCol = (locale.value === 'id' ? 'projek_en' : 'projek_id') as any
+			const otherProjects = await queryCollection(otherCol).all()
+			const otherMatched = otherProjects.find((p: any) => {
 				return p.slug === requestedSlug.value || cleanSlug(p.path) === requestedSlug.value
 			})
+			if (otherMatched) {
+				matched = allProjects.find((p: any) => p.idProjek === otherMatched.idProjek || p.idItem === otherMatched.idItem)
+			}
+		}
 
-			// Fallback: Jika slug bahasa lain diakses
-			if (!matched) {
-				const otherCol = (locale.value === 'id' ? 'projek_en' : 'projek_id') as any
-				const otherProjects = await queryCollection(otherCol).all()
-				const otherMatched = otherProjects.find((p: any) => {
-					return p.slug === requestedSlug.value || cleanSlug(p.path) === requestedSlug.value
-				})
-				if (otherMatched) {
-					matched = allProjects.find((p: any) => p.idProjek === otherMatched.idProjek || p.idItem === otherMatched.idItem)
+		if (!matched)
+			return null
+
+		// Cari padanan projek di bahasa lain berdasarkan idProjek / idItem
+		const translations: Record<string, { slug: string }> = {}
+		for (const loc of locales.value) {
+			const locCode = typeof loc === 'string' ? loc : loc.code
+			const locCol = (locCode === 'id' ? 'projek_id' : 'projek_en') as any
+			const locProjects = await queryCollection(locCol).all()
+			const trDoc = locProjects.find((p: any) => p.idProjek === matched.idProjek || p.idItem === matched.idItem)
+			if (trDoc) {
+				translations[locCode] = {
+					slug: trDoc.slug || cleanSlug(trDoc.path),
 				}
 			}
-
-			if (!matched) return null
-
-			// Cari padanan projek di bahasa lain berdasarkan idProjek / idItem
-			const translations: Record<string, { slug: string }> = {}
-			for (const loc of locales.value) {
-				const locCode = typeof loc === 'string' ? loc : loc.code
-				const locCol = (locCode === 'id' ? 'projek_id' : 'projek_en') as any
-				const locProjects = await queryCollection(locCol).all()
-				const trDoc = locProjects.find((p: any) => p.idProjek === matched.idProjek || p.idItem === matched.idItem)
-				if (trDoc) {
-					translations[locCode] = {
-						slug: trDoc.slug || cleanSlug(trDoc.path),
-					}
-				}
-			}
-
-			return {
-				doc: matched,
-				translations,
-			}
-		},
-		{ watch: [locale, requestedSlug] }
-	)
-
-	watch(
-		() => project.value?.translations,
-		(newTranslations) => {
-			if (newTranslations) {
-				setI18nParams(newTranslations)
-			}
-		},
-		{ immediate: true }
-	)
-
-	if (!project.value?.doc) {
-		throw createError({
-			statusCode: 404,
-			statusMessage: locale.value === 'id' ? 'Projek tidak ditemukan' : 'Project not found',
-		})
-	}
-
-	useSeoMeta({
-		title: computed(() => project.value?.doc?.title),
-		description: computed(() => project.value?.doc?.description),
-		ogTitle: computed(() => project.value?.doc?.title),
-		ogDescription: computed(() => project.value?.doc?.description),
-	})
-
-	defineOgImage('Bento', {
-		title: project.value?.doc?.title,
-		description: project.value?.doc?.description,
-		category: locale.value === 'id' ? 'Studi Kasus Projek' : 'Project Case Study',
-	})
-
-	// Koleksi tangkapan layar untuk Bento Gallery
-	const allScreenshots = computed(() => {
-		const doc = project.value?.doc
-		if (!doc) return []
-		const list: string[] = []
-		if (doc.images && Array.isArray(doc.images)) {
-			list.push(...doc.images)
-		} else if (doc.image) {
-			list.push(doc.image)
 		}
-		// Hapus duplikasi jika ada
-		return Array.from(new Set(list))
+
+		return {
+			doc: matched,
+			translations,
+		}
+	},
+	{ watch: [locale, requestedSlug] },
+)
+
+watch(
+	() => project.value?.translations,
+	(newTranslations) => {
+		if (newTranslations) {
+			setI18nParams(newTranslations)
+		}
+	},
+	{ immediate: true },
+)
+
+if (!project.value?.doc) {
+	throw createError({
+		statusCode: 404,
+		statusMessage: locale.value === 'id' ? 'Projek tidak ditemukan' : 'Project not found',
 	})
+}
 
-	// State & Handler Lightbox interaktif
-	const activeLightboxIndex = ref<number | null>(null)
+useSeoMeta({
+	title: computed(() => project.value?.doc?.title),
+	description: computed(() => project.value?.doc?.description),
+	ogTitle: computed(() => project.value?.doc?.title),
+	ogDescription: computed(() => project.value?.doc?.description),
+})
 
-	function openLightbox(index: number) {
-		activeLightboxIndex.value = index
+defineOgImage('Bento', {
+	title: project.value?.doc?.title,
+	description: project.value?.doc?.description,
+	category: locale.value === 'id' ? 'Studi Kasus Projek' : 'Project Case Study',
+})
+
+// Koleksi tangkapan layar untuk Bento Gallery
+const allScreenshots = computed(() => {
+	const doc = project.value?.doc
+	if (!doc)
+		return []
+	const list: string[] = []
+	if (doc.images && Array.isArray(doc.images)) {
+		list.push(...doc.images)
 	}
-
-	function closeLightbox() {
-		activeLightboxIndex.value = null
+	else if (doc.image) {
+		list.push(doc.image)
 	}
+	// Hapus duplikasi jika ada
+	return Array.from(new Set(list))
+})
 
-	function nextImage() {
-		if (activeLightboxIndex.value !== null && allScreenshots.value.length > 0) {
-			activeLightboxIndex.value = (activeLightboxIndex.value + 1) % allScreenshots.value.length
-		}
+// State & Handler Lightbox interaktif
+const activeLightboxIndex = ref<number | null>(null)
+
+function openLightbox(index: number) {
+	activeLightboxIndex.value = index
+}
+
+function closeLightbox() {
+	activeLightboxIndex.value = null
+}
+
+function nextImage() {
+	if (activeLightboxIndex.value !== null && allScreenshots.value.length > 0) {
+		activeLightboxIndex.value = (activeLightboxIndex.value + 1) % allScreenshots.value.length
 	}
+}
 
-	function prevImage() {
-		if (activeLightboxIndex.value !== null && allScreenshots.value.length > 0) {
-			activeLightboxIndex.value =
-				(activeLightboxIndex.value - 1 + allScreenshots.value.length) % allScreenshots.value.length
-		}
+function prevImage() {
+	if (activeLightboxIndex.value !== null && allScreenshots.value.length > 0) {
+		activeLightboxIndex.value
+			= (activeLightboxIndex.value - 1 + allScreenshots.value.length) % allScreenshots.value.length
 	}
+}
 
-	onMounted(() => {
-		function handleKeydown(e: KeyboardEvent) {
-			if (activeLightboxIndex.value === null) return
-			if (e.key === 'Escape') closeLightbox()
-			else if (e.key === 'ArrowRight') nextImage()
-			else if (e.key === 'ArrowLeft') prevImage()
-		}
-		window.addEventListener('keydown', handleKeydown)
-		onUnmounted(() => window.removeEventListener('keydown', handleKeydown))
-	})
+onMounted(() => {
+	function handleKeydown(e: KeyboardEvent) {
+		if (activeLightboxIndex.value === null)
+			return
+		if (e.key === 'Escape')
+			closeLightbox()
+		else if (e.key === 'ArrowRight')
+			nextImage()
+		else if (e.key === 'ArrowLeft')
+			prevImage()
+	}
+	window.addEventListener('keydown', handleKeydown)
+	onUnmounted(() => window.removeEventListener('keydown', handleKeydown))
+})
 </script>
 
 <template>
@@ -159,22 +165,25 @@
 		<!-- Back Button -->
 		<NuxtLink
 			:to="locale === 'id' ? '/id/projek' : '/en/projects'"
-			class="focus-ring inline-flex items-center gap-1.5 text-slate-700 dark:text-slate-200 text-xs font-semibold hover:text-brand-900 dark:hover:text-brand-300 transition-colors mb-6"
+			class="mb-6 inline-flex items-center gap-1.5 text-xs text-slate-700 font-semibold transition-colors dark:text-slate-200 hover:text-brand-900 focus-ring dark:hover:text-brand-300"
 		>
 			<span class="i-hugeicons-arrow-left-01 text-sm" /> {{ locale === 'id' ? 'Kembali ke Semua Projek' : 'Back to All Projects' }}
 		</NuxtLink>
 
 		<!-- Project Article Container -->
-		<article v-if="project?.doc" class="max-w-4xl mx-auto">
+		<article
+			v-if="project?.doc"
+			class="mx-auto max-w-4xl"
+		>
 			<!-- Bento Card Header (Clean, No Spotlight) -->
 			<header
-				class="bento-card-clean relative overflow-hidden p-6 sm:p-8 md:p-9 mb-10 rounded-bento bg-white/90 dark:bg-[#002b27]/90 border border-slate-200/80 dark:border-[#134e43] shadow-sm"
+				class="bento-card-clean relative mb-10 overflow-hidden border border-slate-200/80 rounded-bento bg-white/90 p-6 shadow-sm dark:border-[#134e43] dark:bg-[#002b27]/90 md:p-9 sm:p-8"
 			>
 				<!-- Category & Tags Badge Row -->
-				<div class="flex flex-wrap items-center gap-2 mb-3.5">
+				<div class="mb-3.5 flex flex-wrap items-center gap-2">
 					<span
 						v-if="project.doc.category"
-						class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-brand-100/80 dark:bg-brand-950 text-brand-800 dark:text-brand-300 border border-brand-200/60 dark:border-brand-800/60 uppercase tracking-wider"
+						class="inline-flex items-center gap-1.5 border border-brand-200/60 rounded-full bg-brand-100/80 px-3 py-1 text-xs text-brand-800 font-semibold tracking-wider uppercase dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300"
 					>
 						<span class="status-dot animate-pulse" />
 						{{ project.doc.category }}
@@ -182,30 +191,30 @@
 					<span
 						v-for="tag in (project.doc.tags || project.doc.tech || [])"
 						:key="tag"
-						class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60"
+						class="border border-slate-200/60 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs text-slate-700 font-medium dark:border-slate-700/60 dark:bg-slate-800/80 dark:text-slate-300"
 					>
 						#{{ tag }}
 					</span>
 				</div>
 
 				<!-- Title (Barlow, Bold, Responsive) -->
-				<h1 class="font-heading font-extrabold text-slate-900 dark:text-white text-2xl sm:text-3xl md:text-4xl lg:text-[2.5rem] leading-[1.18] tracking-tight">
+				<h1 class="text-2xl text-slate-900 font-extrabold leading-[1.18] tracking-tight font-heading lg:text-[2.5rem] md:text-4xl sm:text-3xl dark:text-white">
 					{{ project.doc.title }}
 				</h1>
 
 				<!-- Description Lead Text (Refined compact size) -->
-				<p class="text-body text-slate-600 dark:text-slate-300 text-sm sm:text-[15px] mt-3.5 leading-relaxed max-w-3xl">
+				<p class="mt-3.5 max-w-3xl text-body text-sm text-slate-600 leading-relaxed sm:text-[15px] dark:text-slate-300">
 					{{ project.doc.description }}
 				</p>
 
 				<!-- Bento Metadata & Action Footer -->
-				<div class="flex flex-wrap items-center justify-between gap-4 mt-8 pt-5 border-t border-slate-200/70 dark:border-slate-800/70 text-xs">
+				<div class="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-slate-200/70 pt-5 text-xs dark:border-slate-800/70">
 					<div class="flex flex-wrap items-center gap-2 sm:gap-3">
-						<div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100/80 dark:bg-[#042f27] border border-slate-200/60 dark:border-[#134e43] text-slate-700 dark:text-slate-200 font-medium">
+						<div class="inline-flex items-center gap-1.5 border border-slate-200/60 rounded-xl bg-slate-100/80 px-3 py-1.5 text-slate-700 font-medium dark:border-[#134e43] dark:bg-[#042f27] dark:text-slate-200">
 							<span class="i-hugeicons-calendar-03 text-sm text-brand-700 dark:text-brand-400" />
 							<span>{{ project.doc.date || '2025' }}</span>
 						</div>
-						<div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100/80 dark:bg-[#042f27] border border-slate-200/60 dark:border-[#134e43] text-slate-700 dark:text-slate-200 font-medium">
+						<div class="inline-flex items-center gap-1.5 border border-slate-200/60 rounded-xl bg-slate-100/80 px-3 py-1.5 text-slate-700 font-medium dark:border-[#134e43] dark:bg-[#042f27] dark:text-slate-200">
 							<span class="i-hugeicons-clock-01 text-sm text-brand-700 dark:text-brand-400" />
 							<span>{{ project.doc.readingTime || 4 }} min read</span>
 						</div>
@@ -218,7 +227,7 @@
 							:href="project.doc.githubUrl || project.doc.repo"
 							target="_blank"
 							rel="noopener"
-							class="btn-ghost !px-3.5 !py-1.5 text-xs border border-slate-200 dark:border-slate-700 inline-flex items-center gap-1.5 font-semibold"
+							class="btn-ghost inline-flex items-center gap-1.5 border border-slate-200 text-xs font-semibold dark:border-slate-700 !px-3.5 !py-1.5"
 						>
 							<span class="i-hugeicons-github text-xs" /> Source Code
 						</a>
@@ -227,7 +236,7 @@
 							:href="project.doc.demoUrl || project.doc.link"
 							target="_blank"
 							rel="noopener"
-							class="btn-primary !px-4 !py-1.5 text-xs inline-flex items-center gap-1.5"
+							class="btn-primary inline-flex items-center gap-1.5 text-xs !px-4 !py-1.5"
 						>
 							<span class="i-hugeicons-link-square-02 text-xs" /> Live Demo
 						</a>
@@ -236,9 +245,12 @@
 			</header>
 
 			<!-- 1. BENTO SHOWCASE GALLERY (Bento Style Grid) -->
-			<section v-if="allScreenshots.length > 0" class="mb-12">
-				<div class="flex items-center justify-between mb-4">
-					<span class="text-meta text-xs uppercase font-semibold text-brand-800 dark:text-brand-400 flex items-center gap-1.5">
+			<section
+				v-if="allScreenshots.length > 0"
+				class="mb-12"
+			>
+				<div class="mb-4 flex items-center justify-between">
+					<span class="flex items-center gap-1.5 text-meta text-xs text-brand-800 font-semibold uppercase dark:text-brand-400">
 						<span class="i-hugeicons-image-02 text-xs" /> {{ locale === 'id' ? 'Galeri Pratinjau & Tangkapan Layar' : 'Screenshots & Visual Preview' }}
 					</span>
 					<span class="text-meta text-xs">
@@ -246,13 +258,13 @@
 					</span>
 				</div>
 
-				<div class="grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-12 gap-3 sm:gap-4">
+				<div class="grid grid-cols-1 gap-3 lg:grid-cols-12 sm:grid-cols-6 sm:gap-4">
 					<!-- Hero Bento Card (Span 8 if multiple, span 12 if single) -->
 					<div
 						role="button"
 						tabindex="0"
 						:aria-label="locale === 'id' ? 'Buka galeri pratinjau gambar utama' : 'Open main preview screenshot'"
-						class="bento-card-clean !p-0 overflow-hidden cursor-pointer group relative bg-slate-100 dark:bg-slate-800/80 rounded-bento focus-ring"
+						class="bento-card-clean group relative cursor-pointer overflow-hidden rounded-bento bg-slate-100 dark:bg-slate-800/80 !p-0 focus-ring"
 						:class="allScreenshots.length === 1 ? 'col-span-12 aspect-video' : 'col-span-12 lg:col-span-8 aspect-video'"
 						@click="openLightbox(0)"
 						@keydown.enter.prevent="openLightbox(0)"
@@ -263,13 +275,13 @@
 							:alt="project.doc.title"
 							format="webp"
 							quality="85"
-							class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+							class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 						/>
-						<div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4">
-							<span class="text-white text-xs font-semibold flex items-center gap-1.5 bg-slate-900/80 px-2.5 py-1 rounded-full backdrop-blur-md border border-white/10">
+						<div class="absolute inset-0 flex items-end justify-between from-slate-950/80 via-transparent to-transparent bg-gradient-to-t p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+							<span class="flex items-center gap-1.5 border border-white/10 rounded-full bg-slate-900/80 px-2.5 py-1 text-xs text-white font-semibold backdrop-blur-md">
 								<span class="i-hugeicons-image-02 text-xs text-brand-400" /> {{ locale === 'id' ? 'Tampilan Utama' : 'Featured Preview' }}
 							</span>
-							<span class="text-white text-xs font-medium bg-brand-500/90 px-2.5 py-1 rounded-full backdrop-blur-md shadow-xs">
+							<span class="shadow-xs rounded-full bg-brand-500/90 px-2.5 py-1 text-xs text-white font-medium backdrop-blur-md">
 								{{ locale === 'id' ? 'Buka Pratinjau' : 'Open Preview' }}
 							</span>
 						</div>
@@ -283,7 +295,7 @@
 							role="button"
 							tabindex="0"
 							:aria-label="`${project.doc.title} - ${locale === 'id' ? 'Buka gambar pratinjau' : 'Open screenshot preview'} ${idx + 2}`"
-							class="bento-card-clean !p-0 overflow-hidden cursor-pointer group relative bg-slate-100 dark:bg-slate-800/80 rounded-bento focus-ring"
+							class="bento-card-clean group relative cursor-pointer overflow-hidden rounded-bento bg-slate-100 dark:bg-slate-800/80 !p-0 focus-ring"
 							:class="allScreenshots.length === 2 ? 'col-span-12 lg:col-span-4 aspect-video' : (idx === 0 ? 'col-span-12 sm:col-span-6 lg:col-span-4 aspect-video' : 'col-span-6 sm:col-span-3 lg:col-span-4 aspect-video')"
 							@click="openLightbox(idx + 1)"
 							@keydown.enter.prevent="openLightbox(idx + 1)"
@@ -294,11 +306,11 @@
 								:alt="`${project.doc.title} - Screenshot ${idx + 2}`"
 								format="webp"
 								quality="85"
-								class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+								class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 								loading="lazy"
 							/>
-							<div class="absolute inset-0 bg-slate-950/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
-								<span class="p-2 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/20">
+							<div class="absolute inset-0 flex items-center justify-center bg-slate-950/50 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+								<span class="border border-white/20 rounded-full bg-white/20 p-2 text-white backdrop-blur-md">
 									<span class="i-hugeicons-search-01 text-base" />
 								</span>
 							</div>
@@ -308,7 +320,7 @@
 			</section>
 
 			<!-- 2. Prose Case Study Content -->
-			<div class="prose prose-slate dark:prose-invert max-w-none font-sans text-slate-700 dark:text-slate-200 leading-relaxed">
+			<div class="max-w-none text-slate-700 leading-relaxed font-sans prose prose-slate dark:text-slate-200 dark:prose-invert">
 				<ContentRenderer
 					:value="project.doc"
 					:components="mdcComponents"
@@ -328,14 +340,14 @@
 			>
 				<div
 					v-if="activeLightboxIndex !== null"
-					class="fixed inset-0 z-100 flex items-center justify-center p-3 sm:p-6 bg-slate-950/90 backdrop-blur-md"
+					class="fixed inset-0 z-100 flex items-center justify-center bg-slate-950/90 p-3 backdrop-blur-md sm:p-6"
 					@click.self="closeLightbox"
 				>
 					<div class="relative max-w-5xl w-full flex flex-col items-center">
 						<!-- Close Button -->
 						<button
 							type="button"
-							class="absolute -top-12 right-0 sm:right-0 p-2 rounded-full text-white/70 hover:text-white bg-slate-900/60 border border-white/10 backdrop-blur-md transition-colors"
+							class="absolute right-0 border border-white/10 rounded-full bg-slate-900/60 p-2 text-white/70 backdrop-blur-md transition-colors -top-12 sm:right-0 hover:text-white"
 							aria-label="Tutup"
 							@click="closeLightbox"
 						>
@@ -343,18 +355,18 @@
 						</button>
 
 						<!-- Image Container -->
-						<div class="relative w-full rounded-bento overflow-hidden border border-white/10 shadow-2xl bg-slate-900/80 flex items-center justify-center max-h-[82vh]">
+						<div class="relative max-h-[82vh] w-full flex items-center justify-center overflow-hidden border border-white/10 rounded-bento bg-slate-900/80 shadow-2xl">
 							<img
 								:src="allScreenshots[activeLightboxIndex]"
 								:alt="project?.doc?.title"
-								class="max-h-[80vh] w-auto max-w-full object-contain rounded-bento"
+								class="max-h-[80vh] max-w-full w-auto rounded-bento object-contain"
 							>
 
 							<!-- Prev / Next Navigation -->
 							<button
 								v-if="allScreenshots.length > 1"
 								type="button"
-								class="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-slate-900/70 hover:bg-slate-900 text-white border border-white/10 backdrop-blur-md transition-all active:scale-95"
+								class="absolute left-3 top-1/2 border border-white/10 rounded-full bg-slate-900/70 p-2.5 text-white backdrop-blur-md transition-all -translate-y-1/2 active:scale-95 hover:bg-slate-900"
 								aria-label="Sebelumnya"
 								@click="prevImage"
 							>
@@ -363,7 +375,7 @@
 							<button
 								v-if="allScreenshots.length > 1"
 								type="button"
-								class="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-slate-900/70 hover:bg-slate-900 text-white border border-white/10 backdrop-blur-md transition-all active:scale-95"
+								class="absolute right-3 top-1/2 border border-white/10 rounded-full bg-slate-900/70 p-2.5 text-white backdrop-blur-md transition-all -translate-y-1/2 active:scale-95 hover:bg-slate-900"
 								aria-label="Selanjutnya"
 								@click="nextImage"
 							>
@@ -372,8 +384,8 @@
 						</div>
 
 						<!-- Lightbox Caption & Thumbnails Strip -->
-						<div class="mt-4 flex items-center justify-between w-full text-xs text-white/70 px-2">
-							<span class="font-medium text-white truncate mr-4">
+						<div class="mt-4 w-full flex items-center justify-between px-2 text-xs text-white/70">
+							<span class="mr-4 truncate text-white font-medium">
 								{{ project?.doc?.title }} ({{ activeLightboxIndex + 1 }} / {{ allScreenshots.length }})
 							</span>
 							<div class="flex items-center gap-1.5 overflow-x-auto py-1">
@@ -381,11 +393,14 @@
 									v-for="(thumb, tIdx) in allScreenshots"
 									:key="tIdx"
 									type="button"
-									class="w-10 h-7 rounded overflow-hidden border transition-all cursor-pointer shrink-0"
+									class="h-7 w-10 shrink-0 cursor-pointer overflow-hidden border rounded transition-all"
 									:class="tIdx === activeLightboxIndex ? 'border-brand-400 ring-2 ring-brand-400/50 scale-105' : 'border-white/20 opacity-50 hover:opacity-100'"
 									@click="openLightbox(tIdx)"
 								>
-									<img :src="thumb" class="w-full h-full object-cover">
+									<img
+										:src="thumb"
+										class="h-full w-full object-cover"
+									>
 								</button>
 							</div>
 						</div>

@@ -1,222 +1,223 @@
 <script setup lang="ts">
-	import { marked } from 'marked'
+import { marked } from 'marked'
 
-	// Konfigurasi marked untuk line breaks dan GitHub Flavored Markdown
-	marked.setOptions({
-		breaks: true,
-		gfm: true,
-	})
+// Konfigurasi marked untuk line breaks dan GitHub Flavored Markdown
+marked.setOptions({
+	breaks: true,
+	gfm: true,
+})
 
-	interface Message {
-		id: string
-		role: 'user' | 'assistant'
-		content: string
-		timestamp: Date
+interface Message {
+	id: string
+	role: 'user' | 'assistant'
+	content: string
+	timestamp: Date
+}
+
+const { locale } = useI18n()
+const isOpen = ref(false)
+const inputPrompt = ref('')
+const isLoading = ref(false)
+const messagesContainer = ref<HTMLElement | null>(null)
+const copiedMsgId = ref<string | null>(null)
+const sharedMsgId = ref<string | null>(null)
+const remainingQuota = ref<number | null>(null)
+
+const defaultWelcomeId = 'Halo! Saya **Permadi AI Assistant**, asisten cerdas untuk portofolio dan website Dinar Permadi Yusup. Ada yang ingin Anda ketahui tentang karya, projek, keahlian teknis, atau artikel blog saya?'
+const defaultWelcomeEn = 'Hello! I am **Permadi AI Assistant**, the intelligent assistant for Dinar Permadi Yusup\'s portfolio and website. Feel free to ask anything about my projects, tech stack, articles, or design philosophy!'
+
+const messages = ref<Message[]>([
+	{
+		id: 'welcome',
+		role: 'assistant',
+		content: locale.value === 'id' ? defaultWelcomeId : defaultWelcomeEn,
+		timestamp: new Date(),
+	},
+])
+
+// Update welcome message jika bahasa berubah dan belum ada chat
+watch(locale, (newLoc) => {
+	if (messages.value.length === 1 && messages.value[0]?.id === 'welcome') {
+		messages.value[0].content = newLoc === 'id' ? defaultWelcomeId : defaultWelcomeEn
 	}
+})
 
-	const { locale } = useI18n()
-	const isOpen = ref(false)
-	const inputPrompt = ref('')
-	const isLoading = ref(false)
-	const messagesContainer = ref<HTMLElement | null>(null)
-	const copiedMsgId = ref<string | null>(null)
-	const sharedMsgId = ref<string | null>(null)
-	const remainingQuota = ref<number | null>(null)
+const starterSuggestions = computed(() => {
+	if (locale.value === 'id') {
+		return [
+			{ text: 'Apa keahlian & tech stack utama Permadi?', icon: '⚡' },
+			{ text: 'Ceritakan tentang projek Portal SDN Teja II', icon: '🏫' },
+			{ text: 'Apa itu metode Accelerated Learning?', icon: '🧠' },
+			{ text: 'Bagaimana cara menghubungi Permadi?', icon: '📬' },
+		]
+	}
+	return [
+		{ text: 'What is Permadi\'s core tech stack?', icon: '⚡' },
+		{ text: 'Tell me about the SDN Teja II project', icon: '🏫' },
+		{ text: 'What is Accelerated Learning?', icon: '🧠' },
+		{ text: 'How can I get in touch with Permadi?', icon: '📬' },
+	]
+})
 
-	const defaultWelcomeId = 'Halo! Saya **Permadi AI Assistant**, asisten cerdas untuk portofolio dan website Dinar Permadi Yusup. Ada yang ingin Anda ketahui tentang karya, projek, keahlian teknis, atau artikel blog saya?'
-	const defaultWelcomeEn = 'Hello! I am **Permadi AI Assistant**, the intelligent assistant for Dinar Permadi Yusup\'s portfolio and website. Feel free to ask anything about my projects, tech stack, articles, or design philosophy!'
+function toggleChat() {
+	isOpen.value = !isOpen.value
+	if (isOpen.value) {
+		nextTick(() => scrollToBottom())
+	}
+}
 
-	const messages = ref<Message[]>([
+function scrollToBottom() {
+	if (messagesContainer.value) {
+		messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight
+	}
+}
+
+function clearChat() {
+	messages.value = [
 		{
 			id: 'welcome',
 			role: 'assistant',
 			content: locale.value === 'id' ? defaultWelcomeId : defaultWelcomeEn,
 			timestamp: new Date(),
 		},
-	])
+	]
+}
 
-	// Update welcome message jika bahasa berubah dan belum ada chat
-	watch(locale, (newLoc) => {
-		if (messages.value.length === 1 && messages.value[0]?.id === 'welcome') {
-			messages.value[0].content = newLoc === 'id' ? defaultWelcomeId : defaultWelcomeEn
-		}
-	})
-
-	const starterSuggestions = computed(() => {
-		if (locale.value === 'id') {
-			return [
-				{ text: 'Apa keahlian & tech stack utama Permadi?', icon: '⚡' },
-				{ text: 'Ceritakan tentang projek Portal SDN Teja II', icon: '🏫' },
-				{ text: 'Apa itu metode Accelerated Learning?', icon: '🧠' },
-				{ text: 'Bagaimana cara menghubungi Permadi?', icon: '📬' },
-			]
-		}
-		return [
-			{ text: 'What is Permadi\'s core tech stack?', icon: '⚡' },
-			{ text: 'Tell me about the SDN Teja II project', icon: '🏫' },
-			{ text: 'What is Accelerated Learning?', icon: '🧠' },
-			{ text: 'How can I get in touch with Permadi?', icon: '📬' },
-		]
-	})
-
-	function toggleChat() {
-		isOpen.value = !isOpen.value
-		if (isOpen.value) {
-			nextTick(() => scrollToBottom())
+async function copyMessage(msg: Message) {
+	try {
+		if (navigator.clipboard) {
+			await navigator.clipboard.writeText(msg.content)
+			copiedMsgId.value = msg.id
+			setTimeout(() => {
+				if (copiedMsgId.value === msg.id) {
+					copiedMsgId.value = null
+				}
+			}, 2000)
 		}
 	}
+	catch {
+		// Fallback
+	}
+}
 
-	function scrollToBottom() {
-		if (messagesContainer.value) {
-			messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight
+async function shareMessage(msg: Message) {
+	const shareText = `${msg.content}\n\n— Permadi AI (https://permadi.dev/${locale.value})`
+	try {
+		if (navigator.share) {
+			await navigator.share({
+				title: 'Permadi AI Answer',
+				text: shareText,
+				url: `https://permadi.dev/${locale.value}`,
+			})
+		}
+		else if (navigator.clipboard) {
+			await navigator.clipboard.writeText(shareText)
+			sharedMsgId.value = msg.id
+			setTimeout(() => {
+				if (sharedMsgId.value === msg.id) {
+					sharedMsgId.value = null
+				}
+			}, 2000)
 		}
 	}
+	catch {
+		// User dismissed share dialog
+	}
+}
 
-	function clearChat() {
-		messages.value = [
-			{
-				id: 'welcome',
-				role: 'assistant',
-				content: locale.value === 'id' ? defaultWelcomeId : defaultWelcomeEn,
-				timestamp: new Date(),
+async function sendMessage(customText?: string) {
+	const textToSend = (customText || inputPrompt.value).trim()
+	if (!textToSend || isLoading.value)
+		return
+
+	const userMsg: Message = {
+		id: String(Date.now()),
+		role: 'user',
+		content: textToSend,
+		timestamp: new Date(),
+	}
+
+	messages.value.push(userMsg)
+	inputPrompt.value = ''
+	isLoading.value = true
+
+	nextTick(() => scrollToBottom())
+
+	try {
+		const payloadMessages = messages.value
+			.filter(m => m.id !== 'welcome')
+			.map(m => ({
+				role: m.role,
+				content: m.content,
+			}))
+
+		const res: any = await $fetch('/api/chat', {
+			method: 'POST',
+			body: {
+				messages: payloadMessages,
+				locale: locale.value,
 			},
-		]
-	}
+		})
 
-	async function copyMessage(msg: Message) {
-		try {
-			if (navigator.clipboard) {
-				await navigator.clipboard.writeText(msg.content)
-				copiedMsgId.value = msg.id
-				setTimeout(() => {
-					if (copiedMsgId.value === msg.id) {
-						copiedMsgId.value = null
-					}
-				}, 2000)
-			}
+		if (typeof res.remainingQuota === 'number') {
+			remainingQuota.value = res.remainingQuota
 		}
-		catch {
-			// Fallback
-		}
-	}
 
-	async function shareMessage(msg: Message) {
-		const shareText = `${msg.content}\n\n— Permadi AI (https://permadi.dev/${locale.value})`
-		try {
-			if (navigator.share) {
-				await navigator.share({
-					title: 'Permadi AI Answer',
-					text: shareText,
-					url: `https://permadi.dev/${locale.value}`,
-				})
-			}
-			else if (navigator.clipboard) {
-				await navigator.clipboard.writeText(shareText)
-				sharedMsgId.value = msg.id
-				setTimeout(() => {
-					if (sharedMsgId.value === msg.id) {
-						sharedMsgId.value = null
-					}
-				}, 2000)
-			}
-		}
-		catch {
-			// User dismissed share dialog
-		}
-	}
-
-	async function sendMessage(customText?: string) {
-		const textToSend = (customText || inputPrompt.value).trim()
-		if (!textToSend || isLoading.value) return
-
-		const userMsg: Message = {
-			id: String(Date.now()),
-			role: 'user',
-			content: textToSend,
+		messages.value.push({
+			id: String(Date.now() + 1),
+			role: 'assistant',
+			content: res.content || (locale.value === 'id' ? 'Maaf, terjadi kendala saat memproses jawaban.' : 'Sorry, an error occurred while processing the response.'),
 			timestamp: new Date(),
-		}
-
-		messages.value.push(userMsg)
-		inputPrompt.value = ''
-		isLoading.value = true
-
+		})
+	}
+	catch (err: any) {
+		const errMsg = err?.data?.statusMessage || err?.message || (locale.value === 'id' ? 'Gagal terhubung ke AI Service.' : 'Failed to connect to AI Service.')
+		messages.value.push({
+			id: String(Date.now() + 1),
+			role: 'assistant',
+			content: `⚠️ **Pemberitahuan**: ${errMsg}`,
+			timestamp: new Date(),
+		})
+	}
+	finally {
+		isLoading.value = false
 		nextTick(() => scrollToBottom())
-
-		try {
-			const payloadMessages = messages.value
-				.filter(m => m.id !== 'welcome')
-				.map(m => ({
-					role: m.role,
-					content: m.content,
-				}))
-
-			const res: any = await $fetch('/api/chat', {
-				method: 'POST',
-				body: {
-					messages: payloadMessages,
-					locale: locale.value,
-				},
-			})
-
-			if (typeof res.remainingQuota === 'number') {
-				remainingQuota.value = res.remainingQuota
-			}
-
-			messages.value.push({
-				id: String(Date.now() + 1),
-				role: 'assistant',
-				content: res.content || (locale.value === 'id' ? 'Maaf, terjadi kendala saat memproses jawaban.' : 'Sorry, an error occurred while processing the response.'),
-				timestamp: new Date(),
-			})
-		}
-		catch (err: any) {
-			const errMsg = err?.data?.statusMessage || err?.message || (locale.value === 'id' ? 'Gagal terhubung ke AI Service.' : 'Failed to connect to AI Service.')
-			messages.value.push({
-				id: String(Date.now() + 1),
-				role: 'assistant',
-				content: `⚠️ **Pemberitahuan**: ${errMsg}`,
-				timestamp: new Date(),
-			})
-		}
-		finally {
-			isLoading.value = false
-			nextTick(() => scrollToBottom())
-		}
 	}
+}
 
-	function handleKeydown(e: KeyboardEvent) {
-		if (e.key === 'Enter' && !e.shiftKey) {
-			e.preventDefault()
-			sendMessage()
-		}
+function handleKeydown(e: KeyboardEvent) {
+	if (e.key === 'Enter' && !e.shiftKey) {
+		e.preventDefault()
+		sendMessage()
 	}
+}
 
-	function renderMarkdown(text: string): string {
-		try {
-			return marked.parse(text) as string
-		}
-		catch {
-			return text
-		}
+function renderMarkdown(text: string): string {
+	try {
+		return marked.parse(text) as string
 	}
+	catch {
+		return text
+	}
+}
 </script>
 
 <template>
-	<div class="fixed bottom-5 right-5 sm:bottom-7 sm:right-7 z-50 font-sans">
+	<div class="fixed bottom-5 right-5 z-50 font-sans sm:bottom-7 sm:right-7">
 		<!-- Floating Launcher Trigger Button -->
 		<button
 			type="button"
-			class="ai-trigger-btn focus-ring group relative flex items-center gap-2.5 px-4 py-2.5 sm:py-3 rounded-full bg-[#002b27] dark:bg-[#002420] !text-white border border-emerald-700/60 dark:border-[#134e43] shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer overflow-hidden"
+			class="ai-trigger-btn group relative flex cursor-pointer items-center gap-2.5 overflow-hidden border border-emerald-700/60 rounded-full bg-[#002b27] px-4 py-2.5 shadow-xl transition-all duration-300 hover:scale-105 dark:border-[#134e43] dark:bg-[#002420] sm:py-3 !text-white hover:shadow-2xl focus-ring"
 			:aria-expanded="isOpen"
 			aria-label="Toggle Permadi AI Assistant"
 			@click="toggleChat"
 		>
-			<span class="absolute inset-0 bg-gradient-to-r from-emerald-600/30 to-teal-500/30 opacity-0 group-hover:opacity-100 transition-opacity" />
-			
-			<div class="relative flex items-center justify-center w-6 h-6 rounded-full bg-emerald-500 text-slate-950 text-xs shadow-md shrink-0">
+			<span class="absolute inset-0 from-emerald-600/30 to-teal-500/30 bg-gradient-to-r opacity-0 transition-opacity group-hover:opacity-100" />
+
+			<div class="relative h-6 w-6 flex shrink-0 items-center justify-center rounded-full bg-emerald-500 text-xs text-slate-950 shadow-md">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
-					class="w-3.5 h-3.5 text-slate-950 group-hover:rotate-12 transition-transform duration-300"
+					class="h-3.5 w-3.5 text-slate-950 transition-transform duration-300 group-hover:rotate-12"
 					viewBox="0 0 24 24"
 					fill="none"
 					stroke="currentColor"
@@ -232,13 +233,13 @@
 				</svg>
 			</div>
 
-			<span class="ai-trigger-label relative font-bold text-xs sm:text-sm tracking-wide !text-white">
+			<span class="ai-trigger-label relative text-xs font-bold tracking-wide sm:text-sm !text-white">
 				{{ isOpen ? (locale === 'id' ? 'Tutup AI' : 'Close AI') : (locale === 'id' ? 'Tanya AI Permadi' : 'Ask Permadi AI') }}
 			</span>
 
-			<span class="relative flex h-2 w-2 shrink-0">
-				<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-80" />
-				<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+			<span class="relative h-2 w-2 flex shrink-0">
+				<span class="absolute h-full w-full inline-flex animate-ping rounded-full bg-emerald-400 opacity-80" />
+				<span class="relative h-2 w-2 inline-flex rounded-full bg-emerald-400" />
 			</span>
 		</button>
 
@@ -253,26 +254,26 @@
 		>
 			<div
 				v-if="isOpen"
-				class="bento-card-clean absolute bottom-14 right-0 w-[360px] sm:w-[450px] max-w-[calc(100vw-2rem)] h-[590px] max-h-[calc(100vh-5rem)] rounded-bento bg-white/95 dark:bg-[#002420]/95 backdrop-blur-xl border border-slate-200/80 dark:border-[#134e43] shadow-2xl flex flex-col overflow-hidden z-50"
+				class="bento-card-clean absolute bottom-14 right-0 z-50 h-[590px] max-h-[calc(100vh-5rem)] max-w-[calc(100vw-2rem)] w-[360px] flex flex-col overflow-hidden border border-slate-200/80 rounded-bento bg-white/95 shadow-2xl backdrop-blur-xl sm:w-[450px] dark:border-[#134e43] dark:bg-[#002420]/95"
 			>
 				<!-- Modal Header -->
-				<div class="p-3.5 sm:p-4 border-b border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between bg-slate-50/80 dark:bg-[#042f27]/50">
+				<div class="flex items-center justify-between border-b border-slate-200/70 bg-slate-50/80 p-3.5 dark:border-slate-800/80 dark:bg-[#042f27]/50 sm:p-4">
 					<div class="flex items-center gap-2.5">
-						<div class="relative w-8 h-8 rounded-full flex items-center justify-center shadow-sm shrink-0">
+						<div class="relative h-8 w-8 flex shrink-0 items-center justify-center rounded-full shadow-sm">
 							<StaticLogo size="32" />
-							<span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white dark:border-[#002420]" />
+							<span class="absolute bottom-0 right-0 h-2.5 w-2.5 border-2 border-white rounded-full bg-emerald-500 dark:border-[#002420]" />
 						</div>
 						<div>
 							<div class="flex items-center gap-1.5">
-								<h3 class="font-heading font-bold text-slate-900 dark:text-white text-xs sm:text-sm">
+								<h3 class="text-xs text-slate-900 font-bold font-heading sm:text-sm dark:text-white">
 									Permadi AI
 								</h3>
-								<span class="px-1.5 py-0.2 rounded text-[10px] font-mono font-medium bg-brand-100 dark:bg-brand-950 text-brand-800 dark:text-brand-300 border border-brand-200/60 dark:border-brand-800/60">
+								<span class="border border-brand-200/60 rounded bg-brand-100 px-1.5 py-0.2 text-[10px] text-brand-800 font-medium font-mono dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
 									Gemini
 								</span>
 								<span
 									v-if="remainingQuota !== null"
-									class="px-1.5 py-0.2 rounded text-[10px] font-mono font-medium bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/60"
+									class="border border-emerald-200/60 rounded bg-emerald-100 px-1.5 py-0.2 text-[10px] text-emerald-800 font-medium font-mono dark:border-emerald-800/60 dark:bg-emerald-950 dark:text-emerald-300"
 									:title="locale === 'id' ? `Sisa kuota pertanyaan per jam: ${remainingQuota}/15` : `Remaining queries this hour: ${remainingQuota}/15`"
 								>
 									{{ remainingQuota }}/15
@@ -287,7 +288,7 @@
 					<div class="flex items-center gap-1">
 						<button
 							type="button"
-							class="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800/60 transition-colors"
+							class="rounded-lg p-1.5 text-slate-500 transition-colors hover:bg-slate-200/60 dark:text-slate-400 hover:text-slate-900 dark:hover:bg-slate-800/60 dark:hover:text-white"
 							:title="locale === 'id' ? 'Bersihkan Obrolan' : 'Clear Chat'"
 							aria-label="Clear chat"
 							@click="clearChat"
@@ -296,7 +297,7 @@
 						</button>
 						<button
 							type="button"
-							class="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800/60 transition-colors"
+							class="rounded-lg p-1.5 text-slate-500 transition-colors hover:bg-slate-200/60 dark:text-slate-400 hover:text-slate-900 dark:hover:bg-slate-800/60 dark:hover:text-white"
 							:title="locale === 'id' ? 'Tutup' : 'Close'"
 							aria-label="Close chat"
 							@click="isOpen = false"
@@ -309,7 +310,7 @@
 				<!-- Message Feed Area -->
 				<div
 					ref="messagesContainer"
-					class="flex-1 p-4 overflow-y-auto space-y-4 text-xs leading-relaxed"
+					class="flex-1 overflow-y-auto p-4 text-xs leading-relaxed space-y-4"
 				>
 					<div
 						v-for="msg in messages"
@@ -318,20 +319,20 @@
 						:class="msg.role === 'user' ? 'items-end' : 'items-start'"
 					>
 						<div
-							class="flex gap-2.5 max-w-full"
+							class="max-w-full flex gap-2.5"
 							:class="msg.role === 'user' ? 'justify-end' : 'justify-start'"
 						>
 							<!-- Assistant Avatar (Static Logo) -->
 							<div
 								v-if="msg.role === 'assistant'"
-								class="w-6 h-6 shrink-0 rounded-full flex items-center justify-center shadow-sm mt-0.5"
+								class="mt-0.5 h-6 w-6 flex shrink-0 items-center justify-center rounded-full shadow-sm"
 							>
 								<StaticLogo size="24" />
 							</div>
 
 							<!-- Bubble -->
 							<div
-								class="max-w-[88%] px-3.5 py-2.5 rounded-2xl overflow-hidden shadow-sm"
+								class="max-w-[88%] overflow-hidden rounded-2xl px-3.5 py-2.5 shadow-sm"
 								:class="msg.role === 'user'
 									? 'bg-brand-700 dark:bg-brand-600 text-white rounded-br-xs font-medium'
 									: 'bg-slate-100/90 dark:bg-[#042f27] text-slate-800 dark:text-slate-200 border border-slate-200/60 dark:border-[#134e43] rounded-bl-xs'"
@@ -346,12 +347,12 @@
 						<!-- Assistant Message Action Bar (Bento Style Copy & Share) -->
 						<div
 							v-if="msg.role === 'assistant' && msg.id !== 'welcome'"
-							class="flex items-center gap-2 ml-8 mt-0.5 text-[11px]"
+							class="ml-8 mt-0.5 flex items-center gap-2 text-[11px]"
 						>
 							<!-- Copy Button -->
 							<button
 								type="button"
-								class="bento-action-pill inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100/90 dark:bg-[#042f27]/90 hover:bg-slate-200 dark:hover:bg-[#073d32] border border-slate-200/80 dark:border-[#134e43] text-slate-700 dark:text-slate-300 transition-all duration-200 cursor-pointer shadow-2xs hover:scale-102"
+								class="bento-action-pill shadow-2xs inline-flex cursor-pointer items-center gap-1.5 border border-slate-200/80 rounded-lg bg-slate-100/90 px-2.5 py-1 text-slate-700 transition-all duration-200 hover:scale-102 dark:border-[#134e43] dark:bg-[#042f27]/90 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-[#073d32]"
 								:aria-label="locale === 'id' ? 'Salin jawaban' : 'Copy answer'"
 								@click="copyMessage(msg)"
 							>
@@ -365,7 +366,7 @@
 							<!-- Share Button -->
 							<button
 								type="button"
-								class="bento-action-pill inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100/90 dark:bg-[#042f27]/90 hover:bg-slate-200 dark:hover:bg-[#073d32] border border-slate-200/80 dark:border-[#134e43] text-slate-700 dark:text-slate-300 transition-all duration-200 cursor-pointer shadow-2xs hover:scale-102"
+								class="bento-action-pill shadow-2xs inline-flex cursor-pointer items-center gap-1.5 border border-slate-200/80 rounded-lg bg-slate-100/90 px-2.5 py-1 text-slate-700 transition-all duration-200 hover:scale-102 dark:border-[#134e43] dark:bg-[#042f27]/90 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-[#073d32]"
 								:aria-label="locale === 'id' ? 'Bagikan jawaban' : 'Share answer'"
 								@click="shareMessage(msg)"
 							>
@@ -381,15 +382,24 @@
 					<!-- Loading Thinking Bubble -->
 					<div
 						v-if="isLoading"
-						class="flex gap-2.5 justify-start items-center"
+						class="flex items-center justify-start gap-2.5"
 					>
-						<div class="w-6 h-6 shrink-0 rounded-full flex items-center justify-center shadow-sm">
+						<div class="h-6 w-6 flex shrink-0 items-center justify-center rounded-full shadow-sm">
 							<StaticLogo size="24" />
 						</div>
-						<div class="px-3.5 py-2.5 rounded-2xl bg-slate-100 dark:bg-[#042f27] border border-slate-200/60 dark:border-[#134e43] text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
-							<span class="w-1.5 h-1.5 rounded-full bg-brand-600 animate-bounce" style="animation-delay: 0ms;" />
-							<span class="w-1.5 h-1.5 rounded-full bg-brand-600 animate-bounce" style="animation-delay: 150ms;" />
-							<span class="w-1.5 h-1.5 rounded-full bg-brand-600 animate-bounce" style="animation-delay: 300ms;" />
+						<div class="flex items-center gap-1.5 border border-slate-200/60 rounded-2xl bg-slate-100 px-3.5 py-2.5 text-slate-600 dark:border-[#134e43] dark:bg-[#042f27] dark:text-slate-300">
+							<span
+								class="h-1.5 w-1.5 animate-bounce rounded-full bg-brand-600"
+								style="animation-delay: 0ms;"
+							/>
+							<span
+								class="h-1.5 w-1.5 animate-bounce rounded-full bg-brand-600"
+								style="animation-delay: 150ms;"
+							/>
+							<span
+								class="h-1.5 w-1.5 animate-bounce rounded-full bg-brand-600"
+								style="animation-delay: 300ms;"
+							/>
 						</div>
 					</div>
 
@@ -398,7 +408,7 @@
 						v-if="messages.length === 1 && !isLoading"
 						class="pt-2"
 					>
-						<p class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+						<p class="mb-2 text-[11px] text-slate-500 font-semibold tracking-wider uppercase dark:text-slate-400">
 							{{ locale === 'id' ? 'Pertanyaan Cepat:' : 'Quick Questions:' }}
 						</p>
 						<div class="flex flex-col gap-1.5">
@@ -406,7 +416,7 @@
 								v-for="sug in starterSuggestions"
 								:key="sug.text"
 								type="button"
-								class="text-left px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-[#002b27]/80 hover:bg-slate-100 dark:hover:bg-[#073d32] border border-slate-200/70 dark:border-[#134e43] text-slate-700 dark:text-slate-300 transition-all hover:translate-x-1 cursor-pointer flex items-center gap-2"
+								class="flex cursor-pointer items-center gap-2 border border-slate-200/70 rounded-xl bg-slate-50 px-3 py-2 text-left text-xs text-slate-700 transition-all hover:translate-x-1 dark:border-[#134e43] dark:bg-[#002b27]/80 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-[#073d32]"
 								@click="sendMessage(sug.text)"
 							>
 								<span>{{ sug.icon }}</span>
@@ -417,18 +427,18 @@
 				</div>
 
 				<!-- Footer Input -->
-				<div class="p-3 border-t border-slate-200/70 dark:border-slate-800/80 bg-white dark:bg-[#002420]">
+				<div class="border-t border-slate-200/70 bg-white p-3 dark:border-slate-800/80 dark:bg-[#002420]">
 					<div class="relative flex items-center gap-2">
 						<textarea
 							v-model="inputPrompt"
 							rows="1"
 							:placeholder="locale === 'id' ? 'Tanyakan seputar karya Permadi...' : 'Ask about Permadi\'s work...'"
-							class="w-full pl-3.5 pr-3 py-2.5 rounded-xl text-xs bg-slate-100/90 dark:bg-[#042f27] border border-slate-200/80 dark:border-[#134e43] text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 resize-none leading-relaxed"
+							class="w-full resize-none border border-slate-200/80 rounded-xl bg-slate-100/90 py-2.5 pl-3.5 pr-3 text-xs text-slate-900 leading-relaxed dark:border-[#134e43] dark:bg-[#042f27] dark:text-white focus:outline-none focus:ring-1 focus:ring-brand-500 placeholder-slate-400 dark:placeholder-slate-500"
 							@keydown="handleKeydown"
 						/>
 						<button
 							type="button"
-							class="shrink-0 flex items-center justify-center w-8 h-8 rounded-xl bg-brand-700 dark:bg-brand-500 hover:bg-brand-800 dark:hover:bg-brand-600 text-white shadow-sm disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 active:scale-95 cursor-pointer"
+							class="h-8 w-8 flex shrink-0 cursor-pointer items-center justify-center rounded-xl bg-brand-700 text-white shadow-sm transition-all duration-200 active:scale-95 disabled:cursor-not-allowed dark:bg-brand-500 hover:bg-brand-800 disabled:opacity-40 dark:hover:bg-brand-600"
 							:disabled="!inputPrompt.trim() || isLoading"
 							:title="locale === 'id' ? 'Kirim pesan' : 'Send message'"
 							aria-label="Send message"
@@ -436,7 +446,7 @@
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
-								class="w-4 h-4 text-white"
+								class="h-4 w-4 text-white"
 								viewBox="0 0 24 24"
 								fill="currentColor"
 							>
@@ -444,7 +454,7 @@
 							</svg>
 						</button>
 					</div>
-					<div class="flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400 mt-1.5 px-0.5">
+					<div class="mt-1.5 flex items-center justify-between px-0.5 text-[10px] text-slate-500 dark:text-slate-400">
 						<span>{{ locale === 'id' ? 'Didukung Google Gemini' : 'Powered by Google Gemini' }}</span>
 						<span>{{ locale === 'id' ? 'Maks. 15 pesan/jam per IP' : 'Max 15 msgs/hour per IP' }}</span>
 					</div>

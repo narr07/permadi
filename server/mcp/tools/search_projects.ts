@@ -18,11 +18,11 @@ export default defineMcpTool({
 			if (query) {
 				const q = query.toLowerCase()
 				results = results.filter((item: any) =>
-					item.title?.toLowerCase().includes(q) ||
-					item.description?.toLowerCase().includes(q) ||
-					item.plainText?.toLowerCase().includes(q) ||
-					(Array.isArray(item.tech) && item.tech.some((t: string) => t.toLowerCase().includes(q))) ||
-					(Array.isArray(item.tags) && item.tags.some((t: string) => t.toLowerCase().includes(q)))
+					item.title?.toLowerCase().includes(q)
+					|| item.description?.toLowerCase().includes(q)
+					|| item.plainText?.toLowerCase().includes(q)
+					|| (Array.isArray(item.tech) && item.tech.some((t: string) => t.toLowerCase().includes(q)))
+					|| (Array.isArray(item.tags) && item.tags.some((t: string) => t.toLowerCase().includes(q))),
 				)
 			}
 

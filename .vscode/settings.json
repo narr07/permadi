@@ -1,3 +1,22 @@
 {
-	"i18n-ally.localesPaths": ["i18n", "i18n/locales"]
+	"i18n-ally.localesPaths": ["i18n", "i18n/locales"],
+	"eslint.useFlatConfig": true,
+	"prettier.enable": false,
+	"editor.formatOnSave": false,
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit",
+		"source.organizeImports": "never"
+	},
+	"eslint.validate": [
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+		"vue",
+		"html",
+		"json",
+		"jsonc",
+		"yaml",
+		"css"
+	]
 }

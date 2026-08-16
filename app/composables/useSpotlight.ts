@@ -3,7 +3,8 @@ export function useSpotlight() {
 
 	function onMove(e: MouseEvent) {
 		const target = el.value || (e.currentTarget as HTMLElement)
-		if (!target) return
+		if (!target)
+			return
 		const rect = target.getBoundingClientRect()
 		target.style.setProperty('--x', `${e.clientX - rect.left}px`)
 		target.style.setProperty('--y', `${e.clientY - rect.top}px`)

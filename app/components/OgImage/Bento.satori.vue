@@ -1,83 +1,108 @@
 <script setup lang="ts">
-	withDefaults(
-		defineProps<{
-			title?: string
-			description?: string
-			badge?: string
-			category?: string
-		}>(),
-		{
-			title: 'Permadi — Web Developer & Designer',
-			description: 'Personal Portfolio, Showcase of Projects & Technical Blog of Permadi.',
-			badge: 'permadi.dev',
-			category: 'Portfolio & Articles',
-		}
-	)
+withDefaults(
+	defineProps<{
+		title?: string
+		description?: string
+		badge?: string
+		category?: string
+	}>(),
+	{
+		title: 'Permadi — Web Developer & Designer',
+		description: 'Personal Portfolio, Showcase of Projects & Technical Blog of Permadi.',
+		badge: 'permadi.dev',
+		category: 'Portfolio & Articles',
+	},
+)
 </script>
 
 <template>
-	<div class="w-full h-full flex flex-col justify-between p-12 bg-[#000f0d] text-white font-sans relative overflow-hidden">
+	<div class="relative h-full w-full flex flex-col justify-between overflow-hidden bg-[#000f0d] p-12 text-white font-sans">
 		<!-- Top Bento Header Bar -->
-		<div class="flex items-center justify-between w-full">
+		<div class="w-full flex items-center justify-between">
 			<!-- Logo / Badge -->
-			<div class="flex items-center gap-3 px-4 py-2 rounded-full bg-[#002420] border border-[#134e43]">
-				<div class="w-3 h-3 rounded-full bg-[#2bd4b5]" />
-				<span class="text-sm font-semibold tracking-wider text-[#2bd4b5] uppercase">
+			<div class="flex items-center gap-3 border border-[#134e43] rounded-full bg-[#002420] px-4 py-2">
+				<div class="h-3 w-3 rounded-full bg-[#2bd4b5]" />
+				<span class="text-sm text-[#2bd4b5] font-semibold tracking-wider uppercase">
 					{{ badge }}
 				</span>
 			</div>
 
 			<!-- Category / Section -->
-			<div class="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-slate-300">
+			<div class="border border-white/10 rounded-full bg-white/5 px-4 py-1.5 text-xs text-slate-300 font-medium">
 				{{ category }}
 			</div>
 		</div>
 
 		<!-- Main Bento Content Card -->
-		<div class="flex flex-col justify-center my-auto p-10 rounded-3xl bg-[#001e1a] border border-[#134e43]">
-			<h1 class="text-5xl font-bold text-white tracking-tight leading-[1.15] line-clamp-2">
+		<div class="my-auto flex flex-col justify-center border border-[#134e43] rounded-3xl bg-[#001e1a] p-10">
+			<h1 class="line-clamp-2 text-5xl text-white font-bold leading-[1.15] tracking-tight">
 				{{ title }}
 			</h1>
-			<p v-if="description" class="text-xl text-slate-300 font-normal mt-4 line-clamp-2 leading-relaxed">
+			<p
+				v-if="description"
+				class="line-clamp-2 mt-4 text-xl text-slate-300 font-normal leading-relaxed"
+			>
 				{{ description }}
 			</p>
 		</div>
 
 		<!-- Bottom Bento Footer Bar -->
-		<div class="flex items-center justify-between pt-4 border-t border-white/10 w-full">
+		<div class="w-full flex items-center justify-between border-t border-white/10 pt-4">
 			<!-- Author Profile -->
 			<div class="flex items-center gap-3">
-				<div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center shrink-0 shadow-sm">
-				<svg width="40" height="40" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_1011_38)">
-<path d="M400 800C620.914 800 800 620.914 800 400C800 179.086 620.914 0 400 0C179.086 0 0 179.086 0 400C0 620.914 179.086 800 400 800Z" fill="#99F6E4"/>
-<path d="M530.53 445.35C555.53 445.35 575.88 425.01 575.88 400C575.88 374.99 555.54 354.66 530.53 354.66C505.52 354.66 485.18 375 485.18 400C485.18 425 505.52 445.35 530.53 445.35Z" fill="#134E4A"/>
-<path d="M224.31 400C224.31 425 244.65 445.35 269.66 445.35C294.67 445.35 315.01 425.01 315.01 400C315.01 374.99 294.67 354.66 269.66 354.66C244.65 354.66 224.31 375 224.31 400Z" fill="#134E4A"/>
-<path d="M682.84 117.16C607.3 41.62 506.84 0 400 0C293.16 0 192.7 41.6 117.16 117.16C41.6 192.7 0 293.16 0 400C0 506.84 41.6 607.29 117.16 682.84C192.7 758.38 293.16 800 400 800C506.84 800 607.3 758.4 682.84 682.84C758.4 607.3 800 506.84 800 400C800 293.16 758.4 192.71 682.84 117.16ZM661.54 611.19C614.32 669.73 548.33 710.98 475.38 727.68V401.16C475.38 348 518.11 304.75 570.62 304.75H571.25C596.76 304.91 620.66 315.04 638.55 333.24C656.44 351.43 666.14 375.53 665.87 401.07C665.3 452.99 622.6 495.24 570.66 495.26C560.31 495.26 550.14 493.63 540.44 490.39C537.14 489.29 533.73 488.72 530.31 488.72C512.74 488.72 498.44 503.05 498.44 520.67C498.44 534.45 507.27 546.64 520.39 551C536.53 556.37 553.44 559.1 570.63 559.1C612.68 559.1 652.33 542.85 682.28 513.34C712.18 483.86 729.03 444.53 729.69 402.58C730.37 359.77 714.4 319.42 684.72 288.93C655.07 258.45 615.2 241.41 572.45 240.93C571.85 240.93 571.23 240.91 570.62 240.91C528.03 240.91 488.02 257.53 457.95 287.69C428.01 317.72 411.52 357.61 411.52 400.01V735.98C407.66 736.11 403.79 736.17 399.98 736.17C214.62 736.17 63.82 585.36 63.82 400.01C63.82 323.47 90.33 248.47 138.44 188.82C185.66 130.28 251.65 89.03 324.6 72.33V398.85C324.6 452.01 281.87 495.26 229.36 495.26H228.72C203.21 495.1 179.31 484.97 161.42 466.77C143.53 448.58 133.83 424.48 134.1 398.94C134.67 347.02 177.37 304.77 229.31 304.75C239.66 304.75 249.83 306.38 259.53 309.62C262.83 310.72 266.24 311.29 269.66 311.29C287.23 311.29 301.53 296.96 301.53 279.34C301.53 265.56 292.7 253.37 279.58 249.01C263.44 243.64 246.53 240.91 229.34 240.91C187.29 240.91 147.64 257.16 117.69 286.67C87.79 316.15 70.94 355.48 70.28 397.43C69.6 440.24 85.57 480.59 115.25 511.08C144.9 541.56 184.77 558.6 227.52 559.08C228.12 559.08 228.74 559.1 229.35 559.1C271.94 559.1 311.95 542.48 342.02 512.32C371.96 482.29 388.45 442.4 388.45 400V64.03C392.31 63.9 396.18 63.84 399.99 63.84C585.36 63.84 736.15 214.65 736.15 400C736.15 476.54 709.64 551.54 661.53 611.19H661.54Z" fill="#134E4A"/>
-</g>
-<defs>
-<clipPath id="clip0_1011_38">
-<rect width="800" height="800" fill="white"/>
-</clipPath>
-</defs>
-</svg>
+				<div class="h-10 w-10 flex shrink-0 items-center justify-center overflow-hidden rounded-full shadow-sm">
+					<svg
+						width="40"
+						height="40"
+						viewBox="0 0 800 800"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<g clip-path="url(#clip0_1011_38)">
+							<path
+								d="M400 800C620.914 800 800 620.914 800 400C800 179.086 620.914 0 400 0C179.086 0 0 179.086 0 400C0 620.914 179.086 800 400 800Z"
+								fill="#99F6E4"
+							/>
+							<path
+								d="M530.53 445.35C555.53 445.35 575.88 425.01 575.88 400C575.88 374.99 555.54 354.66 530.53 354.66C505.52 354.66 485.18 375 485.18 400C485.18 425 505.52 445.35 530.53 445.35Z"
+								fill="#134E4A"
+							/>
+							<path
+								d="M224.31 400C224.31 425 244.65 445.35 269.66 445.35C294.67 445.35 315.01 425.01 315.01 400C315.01 374.99 294.67 354.66 269.66 354.66C244.65 354.66 224.31 375 224.31 400Z"
+								fill="#134E4A"
+							/>
+							<path
+								d="M682.84 117.16C607.3 41.62 506.84 0 400 0C293.16 0 192.7 41.6 117.16 117.16C41.6 192.7 0 293.16 0 400C0 506.84 41.6 607.29 117.16 682.84C192.7 758.38 293.16 800 400 800C506.84 800 607.3 758.4 682.84 682.84C758.4 607.3 800 506.84 800 400C800 293.16 758.4 192.71 682.84 117.16ZM661.54 611.19C614.32 669.73 548.33 710.98 475.38 727.68V401.16C475.38 348 518.11 304.75 570.62 304.75H571.25C596.76 304.91 620.66 315.04 638.55 333.24C656.44 351.43 666.14 375.53 665.87 401.07C665.3 452.99 622.6 495.24 570.66 495.26C560.31 495.26 550.14 493.63 540.44 490.39C537.14 489.29 533.73 488.72 530.31 488.72C512.74 488.72 498.44 503.05 498.44 520.67C498.44 534.45 507.27 546.64 520.39 551C536.53 556.37 553.44 559.1 570.63 559.1C612.68 559.1 652.33 542.85 682.28 513.34C712.18 483.86 729.03 444.53 729.69 402.58C730.37 359.77 714.4 319.42 684.72 288.93C655.07 258.45 615.2 241.41 572.45 240.93C571.85 240.93 571.23 240.91 570.62 240.91C528.03 240.91 488.02 257.53 457.95 287.69C428.01 317.72 411.52 357.61 411.52 400.01V735.98C407.66 736.11 403.79 736.17 399.98 736.17C214.62 736.17 63.82 585.36 63.82 400.01C63.82 323.47 90.33 248.47 138.44 188.82C185.66 130.28 251.65 89.03 324.6 72.33V398.85C324.6 452.01 281.87 495.26 229.36 495.26H228.72C203.21 495.1 179.31 484.97 161.42 466.77C143.53 448.58 133.83 424.48 134.1 398.94C134.67 347.02 177.37 304.77 229.31 304.75C239.66 304.75 249.83 306.38 259.53 309.62C262.83 310.72 266.24 311.29 269.66 311.29C287.23 311.29 301.53 296.96 301.53 279.34C301.53 265.56 292.7 253.37 279.58 249.01C263.44 243.64 246.53 240.91 229.34 240.91C187.29 240.91 147.64 257.16 117.69 286.67C87.79 316.15 70.94 355.48 70.28 397.43C69.6 440.24 85.57 480.59 115.25 511.08C144.9 541.56 184.77 558.6 227.52 559.08C228.12 559.08 228.74 559.1 229.35 559.1C271.94 559.1 311.95 542.48 342.02 512.32C371.96 482.29 388.45 442.4 388.45 400V64.03C392.31 63.9 396.18 63.84 399.99 63.84C585.36 63.84 736.15 214.65 736.15 400C736.15 476.54 709.64 551.54 661.53 611.19H661.54Z"
+								fill="#134E4A"
+							/>
+						</g>
+						<defs>
+							<clipPath id="clip0_1011_38">
+								<rect
+									width="800"
+									height="800"
+									fill="white"
+								/>
+							</clipPath>
+						</defs>
+					</svg>
 
 				</div>
 				<div class="flex flex-col">
-					<span class="text-sm font-bold text-white leading-tight">Permadi</span>
+					<span class="text-sm text-white font-bold leading-tight">Permadi</span>
 					<span class="text-xs text-[#2bd4b5] leading-tight">Web Developer & Designer</span>
 				</div>
 			</div>
 
 			<!-- Bento Tech Pills -->
 			<div class="flex items-center gap-2">
-				<span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs text-slate-300 font-mono">
+				<span class="border border-white/10 rounded-lg bg-white/5 px-3 py-1 text-xs text-slate-300 font-mono">
 					Nuxt 4
 				</span>
-				<span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs text-slate-300 font-mono">
+				<span class="border border-white/10 rounded-lg bg-white/5 px-3 py-1 text-xs text-slate-300 font-mono">
 					Vue 3
 				</span>
-				<span class="px-3 py-1 rounded-lg bg-[#002420] border border-[#134e43] text-xs text-[#2bd4b5] font-mono">
+				<span class="border border-[#134e43] rounded-lg bg-[#002420] px-3 py-1 text-xs text-[#2bd4b5] font-mono">
 					Bento UI
 				</span>
 			</div>

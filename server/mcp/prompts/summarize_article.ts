@@ -1,4 +1,4 @@
-import { defineMcpPrompt, completable } from '@nuxtjs/mcp-toolkit/server'
+import { completable, defineMcpPrompt } from '@nuxtjs/mcp-toolkit/server'
 import { z } from 'zod'
 
 export default defineMcpPrompt({
@@ -27,14 +27,14 @@ export default defineMcpPrompt({
 						'rpp-accelerated-learning-master-sd-1-pertemuan',
 					]
 				}
-			}
+			},
 		),
 		audience: completable(
 			z.string().optional().default('general').describe('Target pembaca rangkuman (general, teacher, developer)'),
 			(value) => {
 				const audiences = ['general', 'teacher', 'developer', 'student']
 				return audiences.filter(aud => aud.toLowerCase().includes((value || '').toLowerCase()))
-			}
+			},
 		),
 	},
 	handler: async ({ articleSlug, audience }) => {

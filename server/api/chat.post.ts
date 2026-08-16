@@ -1,4 +1,4 @@
-import { defineEventHandler, readBody, createError, getHeader } from 'h3'
+import { createError, defineEventHandler, getHeader, readBody } from 'h3'
 
 // Rate Limiter per IP: Maksimal 15 pesan per IP dalam jendela 1 jam (60 menit)
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000 // 1 jam
@@ -41,9 +41,12 @@ function getClientIp(event: any): string {
 	const xForwardedFor = getHeader(event, 'x-forwarded-for')
 	const xRealIp = getHeader(event, 'x-real-ip')
 
-	if (cfIp) return cfIp.trim()
-	if (xForwardedFor) return xForwardedFor.split(',')[0].trim()
-	if (xRealIp) return xRealIp.trim()
+	if (cfIp)
+		return cfIp.trim()
+	if (xForwardedFor)
+		return xForwardedFor.split(',')[0].trim()
+	if (xRealIp)
+		return xRealIp.trim()
 	return '127.0.0.1'
 }
 

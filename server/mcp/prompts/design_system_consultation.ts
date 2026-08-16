@@ -1,4 +1,4 @@
-import { defineMcpPrompt, completable } from '@nuxtjs/mcp-toolkit/server'
+import { completable, defineMcpPrompt } from '@nuxtjs/mcp-toolkit/server'
 import { z } from 'zod'
 
 export default defineMcpPrompt({
@@ -11,7 +11,7 @@ export default defineMcpPrompt({
 			(value) => {
 				const topics = ['bento-grid', 'golden-ratio-typography', 'unocss-tokens', 'wcag-accessibility', 'micro-interactions']
 				return topics.filter(t => t.toLowerCase().includes((value || '').toLowerCase()))
-			}
+			},
 		),
 	},
 	handler: async ({ topic }) => {

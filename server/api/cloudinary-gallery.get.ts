@@ -36,7 +36,7 @@ export interface GalleryItem {
 }
 
 export default defineCachedEventHandler(
-	async (event) => {
+	async (_event) => {
 		const { cloudName, apiKey, apiSecret } = useCloudinaryConfig()
 
 		if (!cloudName || !apiKey || !apiSecret) {
@@ -94,7 +94,7 @@ export default defineCachedEventHandler(
 						.replace(/[_-]/g, ' ')
 						.replace(/\s+/g, ' ')
 						.trim()
-						.replace(/\b\w/g, (c) => c.toUpperCase())
+						.replace(/\b\w/g, c => c.toUpperCase())
 
 					return {
 						public_id: resource.public_id,
@@ -109,7 +109,8 @@ export default defineCachedEventHandler(
 				})
 
 			return galleries
-		} catch (err: any) {
+		}
+		catch (err: any) {
 			console.error('[Cloudinary Gallery Error]:', err?.message || err)
 			return []
 		}
@@ -119,5 +120,5 @@ export default defineCachedEventHandler(
 		swr: true, // Stale-while-revalidate
 		name: 'cloudinary-gallery',
 		getKey: () => 'gallery',
-	}
+	},
 )

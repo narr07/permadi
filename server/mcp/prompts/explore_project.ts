@@ -1,4 +1,4 @@
-import { defineMcpPrompt, completable } from '@nuxtjs/mcp-toolkit/server'
+import { completable, defineMcpPrompt } from '@nuxtjs/mcp-toolkit/server'
 import { z } from 'zod'
 
 export default defineMcpPrompt({
@@ -20,14 +20,14 @@ export default defineMcpPrompt({
 				catch {
 					return ['sdnteja2', 'kkgdrspetomo', 'nuxt-pdf-kit', 'budgetkuedu']
 				}
-			}
+			},
 		),
 		aspect: completable(
 			z.string().optional().default('all').describe('Fokus aspek analisis (architecture, ui-ux, performance, atau all)'),
 			(value) => {
 				const aspects = ['all', 'architecture', 'ui-ux', 'performance', 'tech-stack']
 				return aspects.filter(a => a.toLowerCase().includes((value || '').toLowerCase()))
-			}
+			},
 		),
 	},
 	handler: async ({ projectSlug, aspect }) => {

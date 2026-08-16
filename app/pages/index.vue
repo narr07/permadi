@@ -1,49 +1,49 @@
 <script setup lang="ts">
-	const { locale } = useI18n()
+const { locale } = useI18n()
 
-	const blogCollection = computed(() => (locale.value === 'id' ? 'blog_id' : 'blog_en'))
-	const projectCollection = computed(() => (locale.value === 'id' ? 'projek_id' : 'projek_en'))
-	const pageCollection = computed(() => (locale.value === 'id' ? 'pages_id' : 'pages_en'))
-	const currentPath = computed(() => `/${locale.value}`)
+const blogCollection = computed(() => (locale.value === 'id' ? 'blog_id' : 'blog_en'))
+const projectCollection = computed(() => (locale.value === 'id' ? 'projek_id' : 'projek_en'))
+const pageCollection = computed(() => (locale.value === 'id' ? 'pages_id' : 'pages_en'))
+const currentPath = computed(() => `/${locale.value}`)
 
-	// 1. Data halaman beranda dari Nuxt Content (index.md / pages_id / pages_en)
-	const { data: page } = await useAsyncData(
-		() => `home-${locale.value}`,
-		() => queryCollection(pageCollection.value).path(currentPath.value).first(),
-		{ watch: [locale] }
-	)
+// 1. Data halaman beranda dari Nuxt Content (index.md / pages_id / pages_en)
+const { data: page } = await useAsyncData(
+	() => `home-${locale.value}`,
+	() => queryCollection(pageCollection.value).path(currentPath.value).first(),
+	{ watch: [locale] },
+)
 
-	// 2. Tulisan terbaru
-	const { data: latestPosts } = await useAsyncData(
-		() => `home-latest-posts-${locale.value}`,
-		() => queryCollection(blogCollection.value).order('date', 'DESC').limit(4).all(),
-		{ watch: [locale] }
-	)
+// 2. Tulisan terbaru
+const { data: latestPosts } = await useAsyncData(
+	() => `home-latest-posts-${locale.value}`,
+	() => queryCollection(blogCollection.value).order('date', 'DESC').limit(4).all(),
+	{ watch: [locale] },
+)
 
-	// 3. Proyek unggulan terbaru
-	const { data: featuredProject } = await useAsyncData(
-		() => `home-featured-proj-${locale.value}`,
-		() => queryCollection(projectCollection.value).order('date', 'DESC').first(),
-		{ watch: [locale] }
-	)
+// 3. Proyek unggulan terbaru
+const { data: featuredProject } = await useAsyncData(
+	() => `home-featured-proj-${locale.value}`,
+	() => queryCollection(projectCollection.value).order('date', 'DESC').first(),
+	{ watch: [locale] },
+)
 
-	// 4. Cuplikan galeri dari Cloudinary API
-	const { data: galleryItems } = await useAsyncData(
-		'home-galeri-preview',
-		() => $fetch<any[]>('/api/cloudinary-gallery').catch(() => [])
-	)
+// 4. Cuplikan galeri dari Cloudinary API
+const { data: galleryItems } = await useAsyncData(
+	'home-galeri-preview',
+	() => $fetch<any[]>('/api/cloudinary-gallery').catch(() => []),
+)
 
-	useSeoMeta({
-		title: computed(() => page.value?.title),
-		description: computed(() => page.value?.description),
-		ogTitle: computed(() => page.value?.title),
-		ogDescription: computed(() => page.value?.description),
-	})
+useSeoMeta({
+	title: computed(() => page.value?.title),
+	description: computed(() => page.value?.description),
+	ogTitle: computed(() => page.value?.title),
+	ogDescription: computed(() => page.value?.description),
+})
 
-	defineOgImage('Bento', {
-		title: page.value?.title,
-		description: page.value?.description,
-	})
+defineOgImage('Bento', {
+	title: page.value?.title,
+	description: page.value?.description,
+})
 </script>
 
 <template>
@@ -56,7 +56,7 @@
 		/>
 
 		<!-- 2. Bento Grid Utama (12 Kolom Komponen Modular) -->
-		<div class="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-5">
+		<div class="grid grid-cols-1 gap-4 md:grid-cols-12 sm:gap-5">
 			<!-- Hero Card Utama -->
 			<HomeHero :hero="page?.hero" />
 

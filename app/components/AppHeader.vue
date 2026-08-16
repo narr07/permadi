@@ -1,104 +1,105 @@
 <script setup lang="ts">
-	import { onClickOutside, useEventListener } from '@vueuse/core'
+import { onClickOutside, useEventListener } from '@vueuse/core'
 
-	const { locales, t, locale } = useI18n()
-	const localePath = useLocalePath()
-	const switchLocalePath = useSwitchLocalePath()
-	const { toggleDark, isDark } = useThemeToggle()
-	const route = useRoute()
+const { locales, t, locale } = useI18n()
+const localePath = useLocalePath()
+const switchLocalePath = useSwitchLocalePath()
+const { toggleDark, isDark } = useThemeToggle()
+const route = useRoute()
 
-	const mobileOpen = ref(false)
-	const headerContainerRef = ref<HTMLElement | null>(null)
+const mobileOpen = ref(false)
+const headerContainerRef = ref<HTMLElement | null>(null)
 
-	onClickOutside(headerContainerRef, () => {
-		if (mobileOpen.value) {
-			mobileOpen.value = false
-		}
-	})
-
-	useEventListener('keydown', (e: KeyboardEvent) => {
-		if (e.key === 'Escape' && mobileOpen.value) {
-			mobileOpen.value = false
-		}
-	})
-
-	const navItems = computed(() => [
-		{
-			label: t('nav.home'),
-			to: localePath('/'),
-			prefix: `/${locale.value}`,
-			exact: true,
-		},
-		{
-			label: t('nav.blog'),
-			to: localePath('/blog'),
-			prefix: `/${locale.value}/blog`,
-		},
-		{
-			label: t('nav.projects'),
-			to: locale.value === 'id' ? '/id/projek' : '/en/projects',
-			prefix: locale.value === 'id' ? '/id/projek' : '/en/projects',
-		},
-		{
-			label: t('nav.gallery'),
-			to: locale.value === 'id' ? '/id/galeri' : '/en/gallery',
-			prefix: locale.value === 'id' ? '/id/galeri' : '/en/gallery',
-		},
-		{
-			label: t('nav.about'),
-			to: locale.value === 'id' ? '/id/tentang' : '/en/about',
-			prefix: locale.value === 'id' ? '/id/tentang' : '/en/about',
-		},
-	])
-
-	const contactPath = computed(() => (locale.value === 'id' ? '/id/kontak' : '/en/contact'))
-
-	function isItemActive(item: { to: string, prefix: string, exact?: boolean }): boolean {
-		if (item.exact) {
-			return route.path === `/${locale.value}` || route.path === `/${locale.value}/`
-		}
-		return route.path.startsWith(item.prefix)
+onClickOutside(headerContainerRef, () => {
+	if (mobileOpen.value) {
+		mobileOpen.value = false
 	}
+})
 
-	// Sliding Nav Pill Indicator
-	const navContainerRef = ref<HTMLElement | null>(null)
-	const indicatorStyle = ref({
-		left: '0px',
-		width: '0px',
-		opacity: 0,
-	})
-
-	function updateNavIndicator() {
-		nextTick(() => {
-			if (!navContainerRef.value) return
-			const activeEl = navContainerRef.value.querySelector<HTMLElement>('[data-active="true"]')
-			if (activeEl) {
-				const containerRect = navContainerRef.value.getBoundingClientRect()
-				const activeRect = activeEl.getBoundingClientRect()
-				indicatorStyle.value = {
-					left: `${activeRect.left - containerRect.left}px`,
-					width: `${activeRect.width}px`,
-					opacity: 1,
-				}
-			}
-			else {
-				indicatorStyle.value.opacity = 0
-			}
-		})
+useEventListener('keydown', (e: KeyboardEvent) => {
+	if (e.key === 'Escape' && mobileOpen.value) {
+		mobileOpen.value = false
 	}
+})
 
-	watch(() => [route.path, locale.value], () => {
-		updateNavIndicator()
-	}, { immediate: true })
+const navItems = computed(() => [
+	{
+		label: t('nav.home'),
+		to: localePath('/'),
+		prefix: `/${locale.value}`,
+		exact: true,
+	},
+	{
+		label: t('nav.blog'),
+		to: localePath('/blog'),
+		prefix: `/${locale.value}/blog`,
+	},
+	{
+		label: t('nav.projects'),
+		to: locale.value === 'id' ? '/id/projek' : '/en/projects',
+		prefix: locale.value === 'id' ? '/id/projek' : '/en/projects',
+	},
+	{
+		label: t('nav.gallery'),
+		to: locale.value === 'id' ? '/id/galeri' : '/en/gallery',
+		prefix: locale.value === 'id' ? '/id/galeri' : '/en/gallery',
+	},
+	{
+		label: t('nav.about'),
+		to: locale.value === 'id' ? '/id/tentang' : '/en/about',
+		prefix: locale.value === 'id' ? '/id/tentang' : '/en/about',
+	},
+])
 
-	onMounted(() => {
-		updateNavIndicator()
-		window.addEventListener('resize', updateNavIndicator)
+const contactPath = computed(() => (locale.value === 'id' ? '/id/kontak' : '/en/contact'))
+
+function isItemActive(item: { to: string, prefix: string, exact?: boolean }): boolean {
+	if (item.exact) {
+		return route.path === `/${locale.value}` || route.path === `/${locale.value}/`
+	}
+	return route.path.startsWith(item.prefix)
+}
+
+// Sliding Nav Pill Indicator
+const navContainerRef = ref<HTMLElement | null>(null)
+const indicatorStyle = ref({
+	left: '0px',
+	width: '0px',
+	opacity: 0,
+})
+
+function updateNavIndicator() {
+	nextTick(() => {
+		if (!navContainerRef.value)
+			return
+		const activeEl = navContainerRef.value.querySelector<HTMLElement>('[data-active="true"]')
+		if (activeEl) {
+			const containerRect = navContainerRef.value.getBoundingClientRect()
+			const activeRect = activeEl.getBoundingClientRect()
+			indicatorStyle.value = {
+				left: `${activeRect.left - containerRect.left}px`,
+				width: `${activeRect.width}px`,
+				opacity: 1,
+			}
+		}
+		else {
+			indicatorStyle.value.opacity = 0
+		}
 	})
+}
 
-	onUnmounted(() => {
-		window.removeEventListener('resize', updateNavIndicator)
-	})
+watch(() => [route.path, locale.value], () => {
+	updateNavIndicator()
+}, { immediate: true })
+
+onMounted(() => {
+	updateNavIndicator()
+	window.addEventListener('resize', updateNavIndicator)
+})
+
+onUnmounted(() => {
+	window.removeEventListener('resize', updateNavIndicator)
+})
 </script>
 
 <template>
@@ -113,7 +114,7 @@
 	>
 		<div
 			v-if="mobileOpen"
-			class="fixed inset-0 z-40 bg-black/20 dark:bg-black/40 backdrop-blur-xs md:hidden pointer-events-auto"
+			class="backdrop-blur-xs pointer-events-auto fixed inset-0 z-40 bg-black/20 md:hidden dark:bg-black/40"
 			aria-hidden="true"
 			@click="mobileOpen = false"
 		/>
@@ -121,27 +122,27 @@
 
 	<header
 		ref="headerContainerRef"
-		class="sticky top-4 z-50 pointer-events-none w-full"
+		class="pointer-events-none sticky top-4 z-50 w-full"
 	>
-		<div class="container-bento flex items-center justify-between gap-2 sm:gap-4 pointer-events-auto">
+		<div class="pointer-events-auto container-bento flex items-center justify-between gap-2 sm:gap-4">
 			<!-- Island 1: Logo & Brand -->
 			<NuxtLink
 				:to="localePath('/')"
-				class="nav-island px-2.5 py-1.5 hover:(border-brand-500/40) transition-all flex items-center gap-2"
+				class="flex nav-island items-center gap-2 px-2.5 py-1.5 transition-all hover:(border-brand-500/40)"
 				aria-label="permadi.dev"
 			>
 				<Logo size="28" />
-				<span class="text-g1 font-heading font-semibold text-slate-900 dark:text-white hidden sm:inline tracking-tight">permadi.dev</span>
+				<span class="hidden text-g1 text-slate-900 font-semibold tracking-tight font-heading sm:inline dark:text-white">permadi.dev</span>
 			</NuxtLink>
 
 			<!-- Island 2: Navigasi Utama (Sliding Pill Nav Bento) -->
 			<nav
 				ref="navContainerRef"
-				class="nav-island relative px-1.5 py-1 hidden md:flex items-center"
+				class="relative hidden nav-island items-center px-1.5 py-1 md:flex"
 			>
 				<!-- Animated Sliding Indicator Pill -->
 				<div
-					class="absolute top-1 bottom-1 rounded-bento-island bg-brand-100/90 dark:bg-brand-800/70 shadow-2xs pointer-events-none transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+					class="shadow-2xs pointer-events-none absolute bottom-1 top-1 rounded-bento-island bg-brand-100/90 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] dark:bg-brand-800/70"
 					:style="{
 						left: indicatorStyle.left,
 						width: indicatorStyle.width,
@@ -154,7 +155,7 @@
 					:key="item.to"
 					:to="item.to"
 					:data-active="isItemActive(item)"
-					class="relative z-10 px-3.5 py-1.5 rounded-bento-island text-g1 font-medium transition-colors duration-200"
+					class="relative z-10 rounded-bento-island px-3.5 py-1.5 text-g1 font-medium transition-colors duration-200"
 					:class="isItemActive(item)
 						? 'text-brand-900 dark:text-brand-200 font-bold'
 						: 'text-slate-700 dark:text-slate-300 hover:(text-brand-900 dark:text-brand-200)'"
@@ -164,30 +165,30 @@
 			</nav>
 
 			<!-- Island 3: Aksi (Search + Theme + Lang + Contact + Mobile Toggle) -->
-			<div class="nav-island px-2.5 py-1.5 flex items-center gap-2">
+			<div class="flex nav-island items-center gap-2 px-2.5 py-1.5">
 				<!-- Search Modal Trigger -->
 				<AppSearchModal />
 
 				<!-- Dark/Light Mode Toggle -->
 				<button
 					type="button"
-					class="icon-btn hidden md:flex items-center justify-center cursor-pointer"
+					class="hidden icon-btn cursor-pointer items-center justify-center md:flex"
 					:aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
 					@click="toggleDark($event)"
 				>
-					<span class="i-hugeicons-sun-01 dark:hidden text-lg text-amber-500" />
-					<span class="i-hugeicons-moon-02 hidden dark:inline text-lg text-brand-300" />
+					<span class="i-hugeicons-sun-01 text-lg text-amber-500 dark:hidden" />
+					<span class="i-hugeicons-moon-02 hidden text-lg text-brand-300 dark:inline" />
 				</button>
 
 				<!-- Language Switcher Links -->
 				<div
 					role="group"
 					:aria-label="locale === 'id' ? 'Pilih Bahasa' : 'Choose Language'"
-					class="relative hidden md:grid grid-cols-2 items-center bg-slate-100 dark:bg-slate-800/80 rounded-full p-0.5 text-xs font-semibold select-none border border-slate-200/50 dark:border-slate-700/50 w-20"
+					class="relative grid-cols-2 hidden w-20 select-none items-center border border-slate-200/50 rounded-full bg-slate-100 p-0.5 text-xs font-semibold md:grid dark:border-slate-700/50 dark:bg-slate-800/80"
 				>
 					<!-- Animated Sliding Pill Indicator -->
 					<div
-						class="absolute top-0.5 bottom-0.5 left-0.5 w-[calc(50%-2px)] rounded-full bg-white dark:bg-slate-700 shadow-xs transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] pointer-events-none"
+						class="shadow-xs pointer-events-none absolute bottom-0.5 left-0.5 top-0.5 w-[calc(50%-2px)] rounded-full bg-white transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] dark:bg-slate-700"
 						:style="{ transform: locale === 'id' ? 'translateX(100%)' : 'translateX(0%)' }"
 					/>
 
@@ -196,7 +197,7 @@
 						:key="loc.code"
 						:to="switchLocalePath(loc.code)"
 						:aria-label="loc.name || loc.code.toUpperCase()"
-						class="relative z-10 py-1 text-center rounded-full transition-colors duration-200"
+						class="relative z-10 rounded-full py-1 text-center transition-colors duration-200"
 						:class="loc.code === locale
 							? 'text-brand-950 dark:text-brand-200 font-bold'
 							: 'text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white'"
@@ -208,7 +209,7 @@
 				<!-- Contact CTA (Desktop only) -->
 				<NuxtLink
 					:to="contactPath"
-					class="btn-primary !px-3.5 !py-1 text-g0 hidden md:inline-flex"
+					class="hidden btn-primary text-g0 md:inline-flex !px-3.5 !py-1"
 					:class="{ 'bg-brand-800': route.path.startsWith(contactPath) }"
 				>
 					{{ t('nav.contact') }}
@@ -223,7 +224,10 @@
 					aria-controls="mobile-navigation"
 					@click="mobileOpen = !mobileOpen"
 				>
-					<span :class="mobileOpen ? 'i-hugeicons-cancel-01' : 'i-hugeicons-menu-01'" class="text-xl" />
+					<span
+						:class="mobileOpen ? 'i-hugeicons-cancel-01' : 'i-hugeicons-menu-01'"
+						class="text-xl"
+					/>
 				</button>
 			</div>
 		</div>
@@ -241,14 +245,14 @@
 				v-if="mobileOpen"
 				id="mobile-navigation"
 				aria-label="Mobile Navigation"
-				class="container-bento mt-2 md:hidden pointer-events-auto"
+				class="pointer-events-auto container-bento mt-2 md:hidden"
 			>
-				<div class="rounded-2xl bg-brand-50/95 dark:bg-brand-900/95 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-2xl p-3 flex flex-col gap-1">
+				<div class="flex flex-col gap-1 border border-slate-200/80 rounded-2xl bg-brand-50/95 p-3 shadow-2xl backdrop-blur-xl dark:border-slate-800/80 dark:bg-brand-900/95">
 					<NuxtLink
 						v-for="item in navItems"
 						:key="item.to"
 						:to="item.to"
-						class="block px-4 py-2.5 rounded-xl text-g1 font-medium transition-colors"
+						class="block rounded-xl px-4 py-2.5 text-g1 font-medium transition-colors"
 						:class="isItemActive(item)
 							? 'bg-brand-200 dark:bg-brand-950/60 text-brand-900 dark:text-brand-200 font-semibold border border-brand-500/20'
 							: 'text-slate-800 dark:text-slate-200 hover:bg-slate-100/70 dark:hover:bg-slate-800/50'"
@@ -258,23 +262,23 @@
 					</NuxtLink>
 
 					<!-- Mobile Settings: Theme Toggle & Language Switcher -->
-					<div class="grid grid-cols-2 gap-2 pt-2.5 mt-1.5 border-t border-slate-100 dark:border-slate-800/80">
+					<div class="grid grid-cols-2 mt-1.5 gap-2 border-t border-slate-100 pt-2.5 dark:border-slate-800/80">
 						<!-- Theme Switcher Button -->
 						<button
 							type="button"
-							class="flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-g1 font-medium bg-brand-200 dark:bg-brand-800/80 text-brand-900 dark:text-brand-200 hover:bg-brand-200/80 dark:hover:bg-brand-700/80 transition-colors cursor-pointer"
+							class="flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-brand-200 px-3 py-2 text-g1 text-brand-900 font-medium transition-colors dark:bg-brand-800/80 hover:bg-brand-200/80 dark:text-brand-200 dark:hover:bg-brand-700/80"
 							@click="toggleDark($event)"
 						>
-							<span class="i-hugeicons-sun-01 dark:hidden text-lg text-brand-900" />
-							<span class="i-hugeicons-moon-02 hidden dark:inline text-lg text-brand-100" />
+							<span class="i-hugeicons-sun-01 text-lg text-brand-900 dark:hidden" />
+							<span class="i-hugeicons-moon-02 hidden text-lg text-brand-100 dark:inline" />
 							<span class="text-xs font-semibold">{{ isDark ? 'Dark' : 'Light' }}</span>
 						</button>
 
 						<!-- Sliding Language Switcher Pills (Mobile) -->
-						<div class="relative grid grid-cols-2 items-center bg-brand-100 dark:bg-slate-800/80 rounded-xl p-1 text-xs font-semibold select-none border border-brand-200/50 dark:border-brand-700/50 ">
+						<div class="relative grid grid-cols-2 select-none items-center border border-brand-200/50 rounded-xl bg-brand-100 p-1 text-xs font-semibold dark:border-brand-700/50 dark:bg-slate-800/80">
 							<!-- Animated Sliding Pill Indicator -->
 							<div
-								class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-lg bg-brand-300  dark:bg-brand-700 shadow-xs transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] pointer-events-none"
+								class="shadow-xs pointer-events-none absolute bottom-1 left-1 top-1 w-[calc(50%-4px)] rounded-lg bg-brand-300 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] dark:bg-brand-700"
 								:style="{ transform: locale === 'id' ? 'translateX(100%)' : 'translateX(0%)' }"
 							/>
 
@@ -282,7 +286,7 @@
 								v-for="loc in locales"
 								:key="loc.code"
 								:to="switchLocalePath(loc.code)"
-								class="relative z-10 py-1 text-center rounded-lg transition-colors duration-200"
+								class="relative z-10 rounded-lg py-1 text-center transition-colors duration-200"
 								:class="loc.code === locale
 									? 'text-brand-950 dark:text-brand-100 font-bold'
 									: 'text-brand-900 dark:text-brand-50 hover:text-slate-900 dark:hover:text-white'"
@@ -296,7 +300,7 @@
 					<!-- Contact CTA Button -->
 					<NuxtLink
 						:to="contactPath"
-						class="btn-primary mt-2 text-center text-g1 !py-2.5 rounded-xl font-semibold"
+						class="mt-2 btn-primary rounded-xl text-center text-g1 font-semibold !py-2.5"
 						@click="mobileOpen = false"
 					>
 						{{ t('nav.contact') }}

@@ -1,23 +1,26 @@
 <script setup lang="ts">
-	const props = withDefaults(defineProps<{
-		size?: number | string
-	}>(), {
-		size: 24,
-	})
+const props = withDefaults(defineProps<{
+	size?: number | string
+}>(), {
+	size: 24,
+})
 
-	const sizeValue = computed(() => {
-		if (typeof props.size === 'number' || /^\d+$/.test(String(props.size))) {
-			return `${props.size}px`
-		}
-		return String(props.size)
-	})
+const sizeValue = computed(() => {
+	if (typeof props.size === 'number' || /^\d+$/.test(String(props.size))) {
+		return `${props.size}px`
+	}
+	return String(props.size)
+})
 </script>
 
 <template>
-	<div class="inline-flex items-center justify-center shrink-0" :style="{ width: sizeValue, height: sizeValue }">
+	<div
+		class="inline-flex shrink-0 items-center justify-center"
+		:style="{ width: sizeValue, height: sizeValue }"
+	>
 		<svg
 			:style="{ width: sizeValue, height: sizeValue }"
-			class="block w-full h-full rounded-full"
+			class="block h-full w-full rounded-full"
 			viewBox="0 0 800 800"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
