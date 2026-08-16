@@ -75,5 +75,7 @@
 				</div>
 			</div>
 		</footer>
+
+		<AppAiChat />
 	</div>
 </template>

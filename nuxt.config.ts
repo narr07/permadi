@@ -56,6 +56,13 @@ export default defineNuxtConfig({
 																],
 								},
 
+								runtimeConfig: {
+																geminiApiKey: process.env.GEMINI_API_KEY || '',
+																public: {
+																								cloudflareAnalyticsToken: process.env.NUXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN || '',
+																},
+								},
+
 								app: {
 																head: {
 																								link: [

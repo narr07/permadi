@@ -164,18 +164,18 @@
 			</nav>
 
 			<!-- Island 3: Aksi (Search + Theme + Lang + Contact + Mobile Toggle) -->
-			<div class="nav-island px-2 py-1.5">
+			<div class="nav-island px-2.5 py-1.5 flex items-center gap-2">
 				<!-- Search Modal Trigger -->
 				<AppSearchModal />
 
-				<!-- Dark/Light Mode Toggle (Desktop only) -->
+				<!-- Dark/Light Mode Toggle -->
 				<button
 					type="button"
-					class="icon-btn hidden md:flex"
+					class="icon-btn hidden md:flex items-center justify-center cursor-pointer"
 					:aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
 					@click="toggleDark($event)"
 				>
-					<span class="i-hugeicons-sun-01 dark:hidden text-lg text-amber-600" />
+					<span class="i-hugeicons-sun-01 dark:hidden text-lg text-amber-500" />
 					<span class="i-hugeicons-moon-02 hidden dark:inline text-lg text-brand-300" />
 				</button>
 
