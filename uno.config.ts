@@ -201,14 +201,14 @@ export default defineConfig({
 
 	shortcuts: {
 		// Bento Card variants
-		'bento-card-base': 'relative rounded-bento p-6 transition-all duration-200',
+		'bento-card-base': 'relative rounded-bento p-6 transition-all duration-100 ease-out',
 		'bento-card-solid': 'bento-card-base bg-brand-500 text-white hover:bg-brand-600',
-		'bento-card-outline': 'bento-card-base border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-900/50',
-		'bento-card-soft': 'bento-card-base bg-brand-50/70 dark:bg-brand-950/30 border border-brand-100/50 dark:border-brand-900/30 hover:bg-brand-100/80 dark:hover:bg-brand-950/50',
-		'bento-card-subtle': 'bento-card-base bg-slate-50/80 dark:bg-slate-900/80 border border-slate-200/60 dark:border-slate-800/60',
+		'bento-card-outline': 'bento-card-base border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-brand-500 dark:hover:border-brand-400',
+		'bento-card-soft': 'bento-card-base bg-brand-50/70 dark:bg-brand-950/30 border border-brand-100/50 dark:border-brand-900/30 hover:border-brand-500/60 dark:hover:border-brand-400/60',
+		'bento-card-subtle': 'bento-card-base bg-slate-50/80 dark:bg-slate-900/80 border border-slate-200/60 dark:border-slate-800/60 hover:border-brand-500/60 dark:hover:border-brand-400/60',
 		'bento-card-ghost': 'bento-card-base bg-transparent hover:bg-slate-100/70 dark:hover:bg-slate-800/50 border border-transparent hover:border-slate-200/60 dark:hover:border-slate-800/60',
 
-		'bento-lift': 'hover:-translate-y-0.5',
+		'bento-lift': 'hover:border-brand-500 dark:hover:border-brand-400',
 		'bento-highlight': 'border border-brand-500/30 dark:border-brand-400/20',
 		'focus-ring': 'outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0',
 
@@ -219,7 +219,11 @@ export default defineConfig({
 
 		'nav-island': 'flex items-center gap-2 rounded-bento-island bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/70 dark:border-slate-800/70 shadow-sm',
 
-		'heading-hero': 'font-heading font-800 text-g4 tracking-tight text-slate-900 dark:text-white',
+		'heading-page':'font-heading font-800 text-3xl sm:text-5xl lg:text-6xl tracking-tight text-slate-900 dark:text-white leading-[1.05] mb-3',
+		'heading-page-sub': 'text-brand-800 dark:text-brand-200 text-base sm:text-lg leading-relaxed max-w-xl text-slate-600 dark:text-slate-300',
+
+		'heading-hero': 'font-heading font-800 mb-4  text-4xl sm:text-6xl leading-[0.95] tracking-tight text-brand-950 dark:text-yellow-600',
+		'heading-sub': 'text-brand-800 dark:text-brand-200 text-base sm:text-lg leading-relaxed max-w-xl',
 		'heading-card-lg': 'font-heading font-700 text-g3 tracking-tight text-slate-900 dark:text-white',
 		'heading-card-md': 'font-heading font-600 text-g2 text-slate-900 dark:text-white',
 		'text-body': 'font-sans text-g1 text-slate-600 dark:text-slate-300',

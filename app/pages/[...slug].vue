@@ -194,7 +194,7 @@
 	<div class="container-bento py-10 sm:py-14">
 		<article v-if="page?.doc" class="max-w-3xl mx-auto">
 			<header class="mb-10 pb-8 border-b border-slate-200/80 dark:border-slate-800/80">
-				<h1 class="heading-hero text-slate-900 dark:text-white text-3xl sm:text-4xl md:text-5xl leading-tight">
+				<h1 class="heading-hero  text-3xl sm:text-4xl md:text-5xl leading-tight">
 					{{ page.doc.title }}
 				</h1>
 				<p v-if="page.doc.description" class="text-body text-slate-600 dark:text-slate-300 text-lg mt-3 leading-relaxed">
