@@ -1,5 +1,13 @@
 <script setup lang="ts">
 	const { locale } = useI18n()
+	const config = useRuntimeConfig()
+
+	// Cloudflare Web Analytics via @nuxt/scripts
+	if (config.public.cloudflareAnalyticsToken) {
+		useScriptCloudflareWebAnalytics({
+			token: config.public.cloudflareAnalyticsToken,
+		})
+	}
 
 	useHead({
 		htmlAttrs: {
