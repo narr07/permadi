@@ -1,12 +1,28 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-				modules: ['@unocss/nuxt', '@nuxtjs/color-mode', '@nuxt/content', '@nuxtjs/i18n', '@nuxt/image', 'nuxt-studio', '@nuxtjs/seo', 'nuxt-llms', '@nuxt/scripts'],
+				modules: [
+								'@unocss/nuxt',
+								'@nuxtjs/color-mode',
+								'@nuxt/content',
+								'@nuxtjs/i18n',
+								'@nuxt/image',
+								'nuxt-studio',
+								'@nuxtjs/seo',
+								'nuxt-llms',
+								'@nuxt/scripts',
+								'@nuxtjs/mcp-toolkit',
+				],
 				site: {
 								url: 'https://permadi.dev',
 								name: 'Permadi',
 								description: 'Web Developer & Designer portfolio and technical blog of Permadi.',
 								defaultLocale: 'en',
 								indexable: true,
+				},
+				mcp: {
+								name: 'Permadi Dev MCP Server',
+								route: '/mcp',
+								dir: 'mcp',
 				},
 				llms: {
 								domain: 'https://permadi.dev',

@@ -87,7 +87,7 @@
 						<span class="i-hugeicons-mail-01 text-xs" /> {{ page.email_card.label || 'Direct Inquiries' }}
 					</span>
 					<h3 class="font-heading font-semibold text-3xl sm:text-5xl text-white tracking-tight">
-						{{ page.email_card.email || 'hi@permadi.dev' }}
+						{{ page.email_card.email || 'dinar@permadi.dev' }}
 					</h3>
 					<p
 						v-if="page.email_card.description"
@@ -98,7 +98,7 @@
 				</div>
 				<div class="mt-8 pt-4 border-t border-brand-900/60 flex items-center justify-between">
 					<a
-						:href="`mailto:${page.email_card.email || 'hi@permadi.dev'}`"
+						:href="`mailto:${page.email_card.email || 'dinar@permadi.dev'}`"
 						class="px-5 py-2.5 rounded-full text-xs font-bold bg-brand-400 text-slate-950 hover:bg-brand-300 transition-all inline-flex items-center gap-1.5"
 					>
 						{{ page.email_card.button_text || (locale === 'id' ? 'Kirim Email Sekarang' : 'Send Email Now') }}
