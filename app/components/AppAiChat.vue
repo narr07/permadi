@@ -15,8 +15,9 @@ interface Message {
 }
 
 const { locale } = useI18n()
-const isOpen = ref(false)
+const { isOpen, toggleAiChat } = useAiChat()
 const inputPrompt = ref('')
+const textareaRef = ref<HTMLTextAreaElement | null>(null)
 const isLoading = ref(false)
 const messagesContainer = ref<HTMLElement | null>(null)
 const copiedMsgId = ref<string | null>(null)
@@ -60,11 +61,19 @@ const starterSuggestions = computed(() => {
 })
 
 function toggleChat() {
-	isOpen.value = !isOpen.value
-	if (isOpen.value) {
-		nextTick(() => scrollToBottom())
-	}
+	toggleAiChat()
 }
+
+watch(isOpen, (newVal) => {
+	if (newVal) {
+		nextTick(() => {
+			scrollToBottom()
+			setTimeout(() => {
+				textareaRef.value?.focus()
+			}, 100)
+		})
+	}
+})
 
 function scrollToBottom() {
 	if (messagesContainer.value) {
@@ -430,6 +439,7 @@ function renderMarkdown(text: string): string {
 				<div class="border-t border-slate-200/70 bg-white p-3 dark:border-slate-800/80 dark:bg-[#002420]">
 					<div class="relative flex items-center gap-2">
 						<textarea
+							ref="textareaRef"
 							v-model="inputPrompt"
 							rows="1"
 							:placeholder="locale === 'id' ? 'Tanyakan seputar karya Permadi...' : 'Ask about Permadi\'s work...'"

@@ -60,11 +60,12 @@ const pageResults = computed(() => {
 // List Links default dengan Hugeicons
 const defaultLinks = computed(() => [
 	{
+		id: 'ask-ai',
 		label: 'Ask AI',
 		description: locale.value === 'id' ? 'Tanya seputar pengalaman & profil' : 'Ask about experience & profile',
 		icon: 'i-hugeicons-sparkles',
 		kbds: ['CTRL', 'I'],
-		to: localePath('/kontak'),
+		action: 'ai-chat',
 	},
 	{
 		label: t('nav.home', 'Home'),
@@ -147,6 +148,8 @@ function getTargetUrl(result: any): string {
 	return `/${locale.value}`
 }
 
+const { openAiChat, toggleAiChat } = useAiChat()
+
 async function openModal() {
 	isOpen.value = true
 	selectedIndex.value = -1
@@ -166,6 +169,11 @@ function closeModal() {
 }
 
 async function handleItemSelect(item: any) {
+	if (item.action === 'ai-chat' || item.id === 'ask-ai') {
+		closeModal()
+		openAiChat()
+		return
+	}
 	closeModal()
 	if (item.href) {
 		window.open(item.href, item.target || '_blank')
@@ -208,7 +216,7 @@ function handleModalKeydown(e: KeyboardEvent) {
 	}
 }
 
-// Shortcut global Ctrl+K / Cmd+K & Esc
+// Shortcut global Ctrl+K / Cmd+K, Ctrl+I / Cmd+I & Esc
 onMounted(() => {
 	function handleGlobalKeyDown(e: KeyboardEvent) {
 		if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
@@ -219,6 +227,11 @@ onMounted(() => {
 			else {
 				openModal()
 			}
+		}
+		if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'i') {
+			e.preventDefault()
+			closeModal()
+			toggleAiChat()
 		}
 		if (e.key === 'Escape' && isOpen.value) {
 			closeModal()
@@ -314,9 +327,44 @@ onMounted(() => {
 										v-for="(item, idx) in defaultLinks"
 										:key="item.label"
 									>
+										<!-- Action Button (Ask AI) -->
+										<button
+											v-if="item.action === 'ai-chat'"
+											type="button"
+											class="group w-full flex cursor-pointer items-center justify-between border border-transparent rounded-bento px-3 py-2.5 text-left text-sm transition-all duration-150"
+											:class="idx === selectedIndex
+												? 'bg-brand-50/90 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400 border-brand-200/60 dark:border-brand-800/50'
+												: 'text-slate-700 dark:text-slate-200 hover:bg-slate-100/80 dark:hover:bg-slate-800/60 hover:border-slate-200/50 dark:hover:border-slate-700/50'"
+											@click="handleItemSelect(item)"
+										>
+											<div class="min-w-0 flex flex-1 items-center gap-3">
+												<span
+													:class="item.icon"
+													class="shrink-0 text-base text-emerald-600 transition-colors dark:text-emerald-400 group-hover:text-brand-500"
+												/>
+												<div class="flex items-center gap-2 truncate">
+													<span class="shrink-0 text-slate-900 font-medium dark:text-white">{{ item.label }}</span>
+													<span class="truncate text-xs text-slate-400 dark:text-slate-500">{{ item.description }}</span>
+												</div>
+											</div>
+
+											<div
+												v-if="item.kbds"
+												class="ml-2 flex shrink-0 items-center gap-1"
+											>
+												<kbd
+													v-for="k in item.kbds"
+													:key="k"
+													class="border border-slate-200/60 rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-500 font-medium font-mono dark:border-slate-700/60 dark:bg-slate-800 dark:text-slate-400"
+												>
+													{{ k }}
+												</kbd>
+											</div>
+										</button>
+
 										<!-- Link Internal (NuxtLink) -->
 										<NuxtLink
-											v-if="item.to"
+											v-else-if="item.to"
 											:to="item.to"
 											class="group flex cursor-pointer items-center justify-between border border-transparent rounded-bento px-3 py-2.5 text-sm transition-all duration-150"
 											:class="idx === selectedIndex
