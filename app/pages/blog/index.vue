@@ -269,51 +269,99 @@
 				v-for="(post, index) in filteredPosts"
 				:key="post.url"
 				:to="post.url"
-				class="bento-card-outline bento-lift flex flex-col justify-between group block"
-				:class="index === 0 && selectedTag === 'ALL' ? 'lg:col-span-12 md:col-span-12 bento-highlight bg-brand-50/20 dark:bg-brand-950/20' : 'lg:col-span-6 md:col-span-6'"
+				class="bento-card-outline bento-lift p-5 sm:p-6 flex flex-col justify-between group block"
+				:class="index === 0 && selectedTag === 'ALL'
+					? 'lg:col-span-12 md:col-span-12 bg-brand-900 dark:bg-brand-200 border-brand-800 dark:border-brand-300 shadow-md'
+					: 'lg:col-span-6 md:col-span-6'"
 			>
 				<div>
-					<div v-if="post.cover" class="mb-4 rounded-bento overflow-hidden bg-slate-100 dark:bg-slate-800 aspect-video border border-slate-200/50 dark:border-slate-800/50">
-						<NuxtImg
-							:src="post.cover"
-							:alt="post.title"
-							format="webp"
-							quality="85"
-							class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-							loading="lazy"
-						/>
-					</div>
+					<div class="flex items-center justify-between gap-2 mb-3.5">
+						<div class="flex items-center gap-1.5 min-w-0 overflow-hidden">
+							<!-- Latest Article Badge -->
+							<span
+								v-if="index === 0 && selectedTag === 'ALL'"
+								class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-brand-800/90 dark:bg-brand-300/90 text-brand-200 dark:text-brand-950 border border-brand-700 dark:border-brand-400/80 shrink-0"
+							>
+								<span class="i-hugeicons-sparkles text-[11px]" />
+								{{ locale === 'id' ? 'Terbaru' : 'Latest' }}
+							</span>
 
-					<div class="flex items-center justify-between gap-2 mb-3">
-						<div class="flex flex-wrap gap-1.5">
-							<span v-for="tag in post.tags" :key="tag" class="badge-neutral text-xs">
-								#{{ tag }}
+							<!-- Primary Tag -->
+							<span
+								v-if="post.tags?.[0]"
+								class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium truncate max-w-[130px] sm:max-w-none"
+								:class="index === 0 && selectedTag === 'ALL'
+									? 'bg-brand-800/70 dark:bg-brand-300/70 text-brand-200 dark:text-brand-950 border border-brand-700/70 dark:border-brand-400/60'
+									: 'bg-brand-500/10 dark:bg-brand-400/10 text-brand-700 dark:text-brand-300 border border-brand-500/20 dark:border-brand-400/20'"
+							>
+								#{{ post.tags[0] }}
+							</span>
+
+							<!-- Secondary Tag (Desktop only) -->
+							<span
+								v-if="post.tags?.[1]"
+								class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium truncate"
+								:class="index === 0 && selectedTag === 'ALL'
+									? 'bg-brand-800/50 dark:bg-brand-300/50 text-brand-200 dark:text-brand-950 border border-brand-700/50 dark:border-brand-400/50'
+									: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50'"
+							>
+								#{{ post.tags[1] }}
 							</span>
 						</div>
-						<span class="text-meta text-xs whitespace-nowrap">
+
+						<!-- Date -->
+						<span
+							class="text-[11px] font-mono shrink-0"
+							:class="index === 0 && selectedTag === 'ALL'
+								? 'text-brand-300 dark:text-brand-800 font-medium'
+								: 'text-slate-400 dark:text-slate-500'"
+						>
 							{{ post.date }}
 						</span>
 					</div>
 
+					<!-- Title -->
 					<h2
-						class="font-heading font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors"
-						:class="index === 0 && !searchQuery && selectedTag === 'ALL' ? 'text-g3 md:text-g4' : 'text-g2'"
+						class="font-heading font-bold transition-colors duration-200 text-lg sm:text-xl leading-snug tracking-normal line-clamp-2"
+						:class="index === 0 && selectedTag === 'ALL'
+							? 'text-white dark:text-brand-950 group-hover:text-yellow-400 dark:group-hover:text-brand-700 md:text-2xl lg:text-3xl'
+							: 'text-brand-950 dark:text-brand-100 group-hover:text-brand-900 dark:group-hover:text-yellow-600'"
 					>
 						{{ post.title }}
 					</h2>
 
-					<p class="text-body mt-2.5 text-slate-600 dark:text-slate-300 line-clamp-3">
+					<!-- Description -->
+					<p
+						class="text-xs sm:text-sm line-clamp-2 leading-relaxed mt-2"
+						:class="index === 0 && selectedTag === 'ALL'
+							? 'text-brand-200/90 dark:text-brand-900/90'
+							: 'text-brand-900 dark:text-brand-300'"
+					>
 						{{ post.description }}
 					</p>
 				</div>
 
-				<div class="mt-6 pt-4 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between text-meta text-xs">
-					<span class="flex items-center gap-1">
-						<span class="i-hugeicons-clock-01 text-xs text-brand-500" />
+				<!-- Footer Meta -->
+				<div
+					class="mt-5 pt-3.5 border-t flex items-center justify-between text-xs"
+					:class="index === 0 && selectedTag === 'ALL'
+						? 'border-brand-800/80 dark:border-brand-300/80 text-brand-300 dark:text-brand-900'
+						: 'border-slate-200/60 dark:border-slate-800/60 text-slate-400 dark:text-slate-500'"
+				>
+					<span class="flex items-center gap-1.5 font-mono text-[11px]">
+						<span
+							class="i-hugeicons-clock-01 text-xs"
+							:class="index === 0 && selectedTag === 'ALL' ? 'text-brand-400 dark:text-brand-700' : 'text-brand-500'"
+						/>
 						{{ post.readingTime || 5 }} min read
 					</span>
-					<span class="text-brand-600 dark:text-brand-400 font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-0.5">
-						Baca Artikel <span class="i-hugeicons-arrow-right-01 text-xs" />
+					<span
+						class="font-semibold group-hover:translate-x-0.5 transition-all flex items-center gap-1 text-xs"
+						:class="index === 0 && selectedTag === 'ALL'
+							? 'text-white dark:text-brand-950 group-hover:text-yellow-400 dark:group-hover:text-brand-700 font-bold'
+							: 'text-brand-600 dark:text-brand-400 group-hover:text-brand-600 dark:group-hover:text-yellow-600'"
+					>
+						{{ locale === 'id' ? 'Baca Artikel' : 'Read Article' }} <span class="i-hugeicons-arrow-right-01 text-xs" />
 					</span>
 				</div>
 			</NuxtLink>

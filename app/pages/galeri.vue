@@ -324,16 +324,16 @@
 			</div>
 		</header>
 
-		<!-- Bento Grid Gallery (List Menggunakan Kualitas Rendah & Ringan width=400, quality=65) -->
-		<div v-if="displayedItems.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4">
+		<!-- Bento Grid Gallery (2 Kolom di Mobile, 12 Kolom di Desktop) -->
+		<div v-if="displayedItems.length > 0" class="grid grid-cols-2 lg:grid-cols-12 gap-3 sm:gap-4">
 			<div
 				v-for="(item, i) in displayedItems"
 				:key="item.public_id || i"
 				tabindex="0"
 				role="button"
 				:aria-label="item.title || (locale === 'id' ? 'Buka foto galeri' : 'Open gallery photo')"
-				class="bento-card-outline bento-lift overflow-hidden !p-0 group relative cursor-pointer bg-slate-100 dark:bg-slate-800 rounded-bento"
-				:class="i % 5 === 0 ? 'lg:col-span-8 aspect-video' : (i % 5 === 1 ? 'lg:col-span-4 aspect-video sm:aspect-auto' : 'lg:col-span-4 aspect-video')"
+				class="bento-card-outline bento-lift overflow-hidden !p-0 group relative cursor-pointer bg-slate-100 dark:bg-slate-800 rounded-xl sm:rounded-bento"
+				:class="i % 5 === 0 ? 'col-span-2 lg:col-span-8 aspect-video' : (i % 5 === 1 ? 'col-span-1 lg:col-span-4 aspect-square sm:aspect-auto' : 'col-span-1 lg:col-span-4 aspect-square sm:aspect-video')"
 				@click="openModal(item)"
 				@keydown.enter.prevent="openModal(item)"
 				@keydown.space.prevent="openModal(item)"
@@ -346,23 +346,23 @@
 					format="webp"
 					quality="65"
 					width="450"
-					sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+					sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
 					class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
 					loading="lazy"
 				/>
 
 				<!-- Overlay on Hover -->
-				<div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 text-white">
-					<div class="flex items-center justify-between gap-2">
-						<h3 class="font-heading font-semibold text-g1 text-white truncate">
+				<div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-2.5 sm:p-4 text-white">
+					<div class="flex items-center justify-between gap-1 sm:gap-2">
+						<h3 class="font-heading font-semibold text-xs sm:text-g1 text-white group-hover:text-brand-300 dark:group-hover:text-yellow-600 transition-colors duration-100 truncate">
 							{{ item.title }}
 						</h3>
-						<span class="p-1.5 rounded-full bg-white/20 backdrop-blur-md shrink-0">
-							<span class="i-hugeicons-search-01 text-xs" />
+						<span class="p-1 sm:p-1.5 rounded-full bg-white/20 backdrop-blur-md shrink-0">
+							<span class="i-hugeicons-search-01 text-[10px] sm:text-xs" />
 						</span>
 					</div>
-					<div v-if="item.tags && item.tags.length" class="flex flex-wrap gap-1 mt-1.5">
-						<span v-for="tag in item.tags" :key="tag" class="px-2 py-0.5 rounded-full bg-white/10 backdrop-blur-md text-[10px] text-slate-200">
+					<div v-if="item.tags && item.tags.length" class="flex flex-wrap gap-1 mt-1 sm:mt-1.5">
+						<span v-for="tag in item.tags.slice(0, 2)" :key="tag" class="px-1.5 sm:px-2 py-0.5 rounded-full bg-white/10 backdrop-blur-md text-[9px] sm:text-[10px] text-slate-200 truncate max-w-[80px]">
 							#{{ tag }}
 						</span>
 					</div>

@@ -273,15 +273,15 @@
 				:key="item.url"
 				:to="item.url"
 				class="bento-card-clean flex flex-col justify-between group block overflow-hidden p-5 sm:p-6"
-				:class="index === 0
-					? 'lg:col-span-2 sm:col-span-2 md:flex-row md:items-center md:gap-6 bg-brand-50/20 dark:bg-brand-950/20'
+				:class="index === 0 && selectedTag === 'ALL'
+					? 'lg:col-span-2 sm:col-span-2 md:flex-row md:items-center md:gap-6 bg-brand-900 dark:bg-brand-200 border-brand-800 dark:border-brand-300 shadow-md'
 					: 'col-span-1'"
 			>
 				<!-- Thumbnail (Hanya 1 Gambar) -->
 				<div
 					v-if="item.image || (item.images && item.images[0])"
 					class="mb-4 rounded-bento overflow-hidden bg-slate-100 dark:bg-slate-800 aspect-video border border-slate-200/50 dark:border-slate-800/50 shrink-0"
-					:class="index === 0 ? 'md:mb-0 md:w-1/2' : 'w-full'"
+					:class="index === 0 && selectedTag === 'ALL' ? 'md:mb-0 md:w-1/2' : 'w-full'"
 				>
 					<NuxtImg
 						:src="item.image || item.images[0]"
@@ -294,36 +294,72 @@
 				</div>
 
 				<!-- Content & Details -->
-				<div class="flex-1 flex flex-col justify-between" :class="index === 0 ? 'md:py-2' : ''">
+				<div class="flex-1 flex flex-col justify-between" :class="index === 0 && selectedTag === 'ALL' ? 'md:py-2' : ''">
 					<div>
 						<div class="flex items-center justify-between gap-2 mb-2.5">
-							<div class="flex flex-wrap gap-1.5">
-								<span v-if="index === 0" class="px-2.5 py-0.5 rounded-full text-xs font-semibold text-brand-700 dark:text-brand-300 bg-brand-100/80 dark:bg-brand-900/60">
-									<span class="i-hugeicons-sparkles text-[11px] mr-0.5" /> {{ locale === 'id' ? 'Terbaru' : 'Latest' }}
+							<div class="flex items-center gap-1.5 min-w-0 overflow-hidden">
+								<span
+									v-if="index === 0 && selectedTag === 'ALL'"
+									class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-brand-800/90 dark:bg-brand-300/90 text-brand-200 dark:text-brand-950 border border-brand-700 dark:border-brand-400/80 shrink-0"
+								>
+									<span class="i-hugeicons-sparkles text-[11px]" />
+									{{ locale === 'id' ? 'Terbaru' : 'Latest' }}
 								</span>
-								<span v-for="tag in (item.tags || item.tech || [])" :key="tag" class="px-2 py-0.5 rounded-full text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+								<span
+									v-for="(tag, tIdx) in (item.tags || item.tech || []).slice(0, 3)"
+									:key="tag"
+									class="px-2 py-0.5 rounded-full text-[11px] font-medium truncate"
+									:class="[
+										index === 0 && selectedTag === 'ALL'
+											? 'bg-brand-800/70 dark:bg-brand-300/70 text-brand-200 dark:text-brand-950 border border-brand-700/70 dark:border-brand-400/60'
+											: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300',
+										tIdx > (index === 0 && selectedTag === 'ALL' ? 0 : 1) ? 'hidden sm:inline-block' : '',
+									]"
+								>
 									{{ tag }}
 								</span>
 							</div>
-							<span class="text-xs font-mono text-slate-400">
+							<span
+								class="text-[11px] font-mono shrink-0"
+								:class="index === 0 && selectedTag === 'ALL'
+									? 'text-brand-300 dark:text-brand-800 font-medium'
+									: 'text-slate-400 dark:text-slate-500'"
+							>
 								{{ item.date }}
 							</span>
 						</div>
 
 						<h2
-							class="font-heading font-semibold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors"
-							:class="index === 0 ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'"
+							class="font-heading font-bold transition-colors duration-200 text-lg sm:text-xl leading-snug tracking-normal line-clamp-2"
+							:class="index === 0 && selectedTag === 'ALL'
+								? 'text-white dark:text-brand-950 group-hover:text-yellow-400 dark:group-hover:text-brand-700 md:text-2xl lg:text-3xl'
+								: 'text-brand-950 dark:text-brand-100 group-hover:text-brand-900 dark:group-hover:text-yellow-600'"
 						>
 							{{ item.title }}
 						</h2>
 
-						<p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mt-2 line-clamp-3 leading-relaxed">
+						<p
+							class="text-xs sm:text-sm mt-2 line-clamp-3 leading-relaxed"
+							:class="index === 0 && selectedTag === 'ALL'
+								? 'text-brand-200/90 dark:text-brand-900/90'
+								: 'text-slate-600 dark:text-slate-300'"
+						>
 							{{ item.description }}
 						</p>
 					</div>
 
-					<div class="mt-5 pt-3.5 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between text-xs">
-						<span class="text-brand-600 dark:text-brand-400 font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1">
+					<div
+						class="mt-5 pt-3.5 border-t flex items-center justify-between text-xs"
+						:class="index === 0 && selectedTag === 'ALL'
+							? 'border-brand-800/80 dark:border-brand-300/80'
+							: 'border-slate-200/60 dark:border-slate-800/60'"
+					>
+						<span
+							class="font-bold group-hover:translate-x-1 transition-all flex items-center gap-1"
+							:class="index === 0 && selectedTag === 'ALL'
+								? 'text-white dark:text-brand-950 group-hover:text-yellow-400 dark:group-hover:text-brand-700'
+								: 'text-brand-600 dark:text-brand-400 group-hover:text-brand-600 dark:group-hover:text-yellow-600'"
+						>
 							{{ locale === 'id' ? 'Lihat Studi Kasus' : 'Explore Case Study' }} <span>↗</span>
 						</span>
 						<div v-if="item.demoUrl || item.link || item.githubUrl || item.repo" class="flex items-center gap-2" @click.stop>
@@ -333,6 +369,7 @@
 								target="_blank"
 								rel="noopener"
 								class="icon-btn !w-7 !h-7"
+								:class="index === 0 && selectedTag === 'ALL' ? 'text-brand-200 dark:text-brand-900 hover:bg-white/10 dark:hover:bg-black/10' : ''"
 								aria-label="GitHub Repository"
 							>
 								<span class="i-hugeicons-github text-xs" />
@@ -343,6 +380,7 @@
 								target="_blank"
 								rel="noopener"
 								class="icon-btn !w-7 !h-7"
+								:class="index === 0 && selectedTag === 'ALL' ? 'text-brand-200 dark:text-brand-900 hover:bg-white/10 dark:hover:bg-black/10' : ''"
 								aria-label="Live Demo"
 							>
 								<span class="i-hugeicons-link-square-02 text-xs" />

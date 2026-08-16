@@ -31,7 +31,7 @@
 				</span>
 				<span class="i-hugeicons-arrow-right-01 text-slate-400 group-hover:(text-brand-500 translate-x-1) transition-transform" />
 			</div>
-			<h3 class="font-heading font-semibold text-2xl sm:text-4xl text-slate-900 dark:text-white leading-tight">
+			<h3 class="font-heading font-semibold text-2xl sm:text-4xl text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-yellow-600 transition-colors duration-100 leading-tight">
 				{{ archive.title || (locale === 'id' ? 'Gambar, dokumentasi, dan observasi visual.' : 'Images, objects, and quiet observations.') }}
 			</h3>
 			<p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mt-2 max-w-lg">

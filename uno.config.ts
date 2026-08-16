@@ -219,8 +219,8 @@ export default defineConfig({
 
 		'nav-island': 'flex items-center gap-2 rounded-bento-island bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/70 dark:border-slate-800/70 shadow-sm',
 
-		'heading-page':'font-heading font-800 text-3xl sm:text-5xl lg:text-6xl tracking-tight text-slate-900 dark:text-white leading-[1.05] mb-3',
-		'heading-page-sub': 'text-brand-800 dark:text-brand-200 text-base sm:text-lg leading-relaxed max-w-xl text-slate-600 dark:text-slate-300',
+		'heading-page':'font-heading font-800 text-3xl sm:text-5xl lg:text-6xl tracking-tight text-brand-900 dark:text-brand-200 leading-[1.05] mb-3',
+		'heading-page-sub': 'text-brand-800 dark:text-brand-400 text-base sm:text-lg leading-relaxed max-w-xl',
 
 		'heading-hero': 'font-heading font-800 mb-4  text-4xl sm:text-6xl leading-[0.95] tracking-tight text-brand-950 dark:text-yellow-600',
 		'heading-sub': 'text-brand-800 dark:text-brand-200 text-base sm:text-lg leading-relaxed max-w-xl',
