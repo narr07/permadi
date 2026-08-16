@@ -199,10 +199,16 @@
 						/>
 					</div>
 
+					<!-- Bento Social Share Card -->
+					<ArticleShare
+						:title="post.doc.title"
+						:description="post.doc.description"
+					/>
+
 					<!-- Surround Articles Navigation (Bento Cards) -->
 					<nav
 						v-if="surround && (surround[0] || surround[1])"
-						class="mt-14 pt-8 border-t border-slate-200/80 dark:border-slate-800/80 grid grid-cols-1 sm:grid-cols-2 gap-4"
+						class="mt-10 pt-8 border-t border-slate-200/80 dark:border-slate-800/80 grid grid-cols-1 sm:grid-cols-2 gap-4"
 						aria-label="Article Navigation"
 					>
 						<NuxtLink

@@ -15,6 +15,9 @@
 		},
 		link: [
 			{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+			{ rel: 'alternate', type: 'application/rss+xml', title: 'Permadi — RSS Feed (RSS 2.0)', href: '/feed.xml' },
+			{ rel: 'alternate', type: 'application/atom+xml', title: 'Permadi — Atom Feed (Atom 1.0)', href: '/feed.atom' },
+			{ rel: 'alternate', type: 'application/feed+json', title: 'Permadi — JSON Feed (JSON 1.0)', href: '/feed.json' },
 		],
 	})
 
@@ -65,6 +68,9 @@
 					</a>
 					<a href="https://www.behance.net/narr07" target="_blank" rel="noopener" class="hover:text-brand-800 dark:hover:text-brand-300 transition-colors" aria-label="Behance">
 						<span class="i-hugeicons-behance-02" />
+					</a>
+					<a href="/feed.xml" target="_blank" rel="noopener" class="hover:text-brand-800 dark:hover:text-brand-300 transition-colors" :title="locale === 'id' ? 'Berlangganan RSS Feed' : 'Subscribe via RSS'" aria-label="RSS Feed">
+						<span class="i-hugeicons-rss" />
 					</a>
 				</div>
 			</div>

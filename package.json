@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "node --max-old-space-size=4096 node_modules/nuxt/bin/nuxt.mjs build",
-    "dev": "nuxt dev",
+    "dev": "node --max-old-space-size=4096 node_modules/nuxt/bin/nuxt.mjs dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "prepare": "nuxt prepare"
@@ -19,6 +19,7 @@
     "@nuxtjs/mcp-toolkit": "^0.19.0",
     "@nuxtjs/seo": "5.3.12",
     "@resvg/resvg-js": "^2.6.2",
+    "@stefanobartoletti/nuxt-social-share": "3.2.0",
     "agents": "^0.20.1",
     "better-sqlite3": "^12.5.0",
     "nuxt": "^4.5.2",
