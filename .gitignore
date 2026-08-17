@@ -5,26 +5,50 @@
 .nitro
 .cache
 dist
+
+# Legacy / Non-production directories
 personal-sitenextjs
 src-nuxt-ui
 permadi-web2025
 
-# Node dependencies
+# Node & Package Managers
 node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+bun.report*
+.npm-cache
+.pnpm-store
 
 # Logs
 logs
 *.log
 
-# Misc
+# OS / Editor Files
 .DS_Store
+Thumbs.db
 .fleet
 .idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
 
 # Local env files
 .env
 .env.*
 !.env.example
 
-# Skilld references (recreated by `skilld install`)
+# Temporary / Scratchpad generator & reference notes in root
+gem-artikel-generator.md
+gem-gambar-artikel-generator*.md
+gem-transalter-artikel-generator.md
+SEO-SKILL.md
+*copy.md
+search di nuxt ui doc.md
+Design-System-Permadi-Dev-Bento-NuxtUI (1).md
+Uno CSS Design-System-Permadi-Dev-Bento-NuxtUI (1) copy.md
+
+# Skilld & Agent cache
 .skilld
