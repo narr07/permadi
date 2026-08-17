@@ -1,17 +1,12 @@
 ---
 name: en-artikelgen
-description: In-depth SEO-driven blog article generator for English content powered by Google Trends intelligence, bilingual technical translator (EN <-> ID) with Nuxt Content MDC syntax protection, and flat design visual illustration generator with teal/emerald brand palette (#14b898). Use when drafting new English blog posts, researching real-time Google search trends, optimizing on-page SEO, translating articles (content/en <-> content/id), or generating blog prompt assets.
+description: In-depth SEO-driven blog article generator for English content powered by Google Trends intelligence, bilingual technical translator (EN <-> ID) with Nuxt Content MDC syntax protection, and flat design visual illustration generator with teal/emerald brand palette (#14b898). Fully compatible with Gemini Spark and IDEs. Use when drafting new English blog posts, researching real-time Google search trends, optimizing on-page SEO, translating articles (content/en <-> content/id), or generating blog prompt assets.
 license: MIT
 ---
 
-# EN-ArtikelGen: SEO Content (Google Trends Driven), Translator & Visual Studio
+# EN-ArtikelGen: SEO Content (Google Trends Intelligence), Translator & Visual Studio
 
-Specialized skill for the English blog publishing workflow within the Nuxt Content ecosystem (`content/en/blog` & `content/id/blog`). It integrates 4 primary capabilities:
-
-1. **Google Trends Intelligence**: Fetch real-time Google search trend data (`daily-trends`, `realtime-trends`, `autocomplete`, `related-queries`, `related-topics`) to discover rising breakout queries, evaluate search interest, and provide trending angle suggestions before drafting.
-2. **Article Generator (English SEO-Driven & MDC)**: Craft 1,500–2,000+ word comprehensive articles using the BLUF methodology, active voice, trend-backed on-page SEO, and native Nuxt MDC components.
-3. **Technical Translator (EN ↔ ID)**: Accurately translate blog articles while preserving 100% of MDC syntax, frontmatter schema, code blocks, and internal asset paths.
-4. **Brand Visual Generator**: Produce flat vector illustration prompts and guidelines (16:9 Landscape) strictly tailored to the brand's teal/emerald palette (#14b898).
+Specialized skill for the English blog publishing workflow within the Nuxt Content ecosystem (`content/en/blog` & `content/id/blog`), fully tailored for **Gemini Spark** (`gemini.google.com`) and **Antigravity IDE**.
 
 ---
 
@@ -25,26 +20,20 @@ Specialized skill for the English blog publishing workflow within the Nuxt Conte
 
 ---
 
-## 0. Google Trends Research Workflow (Pre-Writing)
+## 0. Google Trends Research in Gemini Spark (Pre-Writing Intelligence)
 
-Before drafting an article, leverage Google Trends script commands to identify rising search interest:
+Gemini Spark utilizes native **Google Search & Google Trends web grounding** to discover real-time search interest before drafting:
 
-```bash
-# Autocomplete search suggestions
-node .agents/skills/en-artikelgen/scripts/trends.mjs autocomplete "<keyword>" --hl en-US
-
-# Daily / real-time trending topics
-node .agents/skills/en-artikelgen/scripts/trends.mjs daily-trends --geo US
-node .agents/skills/en-artikelgen/scripts/trends.mjs realtime-trends --geo US --hours 24
-
-# Related queries & breakout topics
-node .agents/skills/en-artikelgen/scripts/trends.mjs related-queries "<keyword>" --geo US
-node .agents/skills/en-artikelgen/scripts/trends.mjs related-topics "<keyword>" --geo US
-```
-
-Provide a brief **Google Trends Recommendation Summary** to the user prior to the code block:
-- *Top Trending Angle*: The highest intent sub-topic or current breakout theme.
-- *Recommended Secondary Keywords*: High-velocity search terms to incorporate.
+1. **Trend Discovery & Query Mapping**:
+   - Extract current breakout queries and rising topics from Google Trends.
+   - Aggregate high-frequency *People Also Ask* queries and search autocomplete patterns.
+2. **Present Trending Angle Summary (Before Code Block)**:
+   - *Top Trending Angle*: 2–3 high-interest angles backed by actual search intent.
+   - *Recommended Secondary Keywords*: High-velocity target search terms.
+3. **Integrate into Content Hierarchy**:
+   - Primary breakout keyword must appear in the **H1 Title** and within the **first 100 words**.
+   - Sub-queries are converted into section subheadings (`##` and `###`).
+   - Frequent user questions are mapped into `::faq` + `::faq-item` components.
 
 ---
 
@@ -134,6 +123,6 @@ Every illustration and featured banner must strictly conform to the brand visual
 
 ## Detailed References (Load as Needed)
 
-- 📖 [references/article-generator-seo.md](references/article-generator-seo.md): Google Trends Integration, English 9-Stage SEO Checklist, BLUF guidelines, wordiness elimination table, and complete draft template.
+- 📖 [references/article-generator-seo.md](references/article-generator-seo.md): Google Trends Research, English 9-Stage SEO Checklist, BLUF guidelines, wordiness elimination table, and complete draft template.
 - 🎨 [references/image-generator.md](references/image-generator.md): AI prompt templates, visual composition rules, and WebP asset standards.
 - 🌐 [references/translator.md](references/translator.md): Technical translation workflow preserving MDC and code integrity.

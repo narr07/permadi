@@ -18,6 +18,7 @@ export default withNuxt(
 			'permadi-web2025/**',
 			'personal-sitenextjs/**',
 			'src-nuxt-ui/**',
+			'scripts/convert-webp.ts',
 		],
 		stylistic: {
 			indent: 'tab',

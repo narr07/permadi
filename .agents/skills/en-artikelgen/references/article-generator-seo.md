@@ -4,24 +4,17 @@ Comprehensive operational guide for leveraging real-time search trends, strategi
 
 ---
 
-## 1. Stage 0: Google Trends Intelligence & Angle Recommendations
+## 1. Stage 0: Google Trends Intelligence & Angle Recommendations (Gemini Spark & IDE)
 
-Before drafting any post, execute real-time search trend queries to discover user intent velocity and breakout topics:
+Before drafting any post, analyze real-time search trend data to discover user intent velocity and breakout topics:
 
-### Google Trends CLI Commands:
-```bash
-# 1. Discover high-demand keyword variations & autocomplete queries
-node .agents/skills/en-artikelgen/scripts/trends.mjs autocomplete "<keyword>" --hl en-US
-
-# 2. Extract rising breakout queries and related searches
-node .agents/skills/en-artikelgen/scripts/trends.mjs related-queries "<keyword>" --geo US
-
-# 3. Discover high-interest adjacent topics
-node .agents/skills/en-artikelgen/scripts/trends.mjs related-topics "<keyword>" --geo US
-
-# 4. Check daily trending stories
-node .agents/skills/en-artikelgen/scripts/trends.mjs daily-trends --geo US
-```
+### Trend Research Workflow (Native Gemini Spark / Grounded Search):
+1. **Identify Breakout & Rising Queries**:
+   - Extract rising topic spikes and search queries from Google Trends for target regions.
+2. **Aggregate Common User Questions**:
+   - Analyze *People Also Ask* queries and search autocomplete patterns surrounding the seed topic.
+3. **Map Search Intent**:
+   - Differentiate whether users need a step-by-step tutorial (*informational*), deep comparison (*commercial investigation*), or immediate tool/solution (*transactional*).
 
 ### Applying Google Trends Data to Content:
 1. **Trending Angle Presentation**: Provide a 2–3 point trend recommendation summary to the user before the code block.
@@ -35,7 +28,7 @@ node .agents/skills/en-artikelgen/scripts/trends.mjs daily-trends --geo US
 
 Before drafting, ensure these 5 core parameters are clear:
 1. **Primary Keyword**: Validated via Google Trends.
-2. **Secondary / LSI Keywords**: Sourced from *related-queries* and *autocomplete*.
+2. **Secondary / LSI Keywords**: Sourced from related searches and autocomplete queries.
 3. **Target Audience**: (e.g., beginners, UI/UX designers, developers, business owners).
 4. **Search Intent**:
    - *Informational*: In-depth explanation, historical overview, step-by-step guides.

@@ -1,27 +1,20 @@
 # Panduan Penulisan Artikel & SEO Berbasis Google Trends (Article Generator)
 
-Panduan operasional lengkap untuk meriset tren, menyusun strategi kata kunci, dan menghasilkan artikel blog berkualitas tinggi yang ramah pembaca dan mendominasi SERP Google dengan format native Nuxt Content.
+Panduan operasional lengkap untuk meriset tren pencarian pengguna, menyusun strategi kata kunci, dan menghasilkan artikel blog berkualitas tinggi yang ramah pembaca dan mendominasi SERP Google dengan format native Nuxt Content.
 
 ---
 
-## 1. Tahap 0: Riset & Rekomendasi Google Trends (Pre-Writing Intelligence)
+## 1. Tahap 0: Riset Tren Google (Pre-Writing Intelligence di Gemini Spark & IDE)
 
 Sebelum menulis draf, lakukan analisis tren pencarian real-time untuk memvalidasi sudut pandang artikel:
 
-### Perintah Google Trends CLI:
-```bash
-# 1. Menemukan variasi kata kunci dan autocomplete yang sering diketik orang
-node .agents/skills/artikelgen/scripts/trends.mjs autocomplete "<kata-kunci>" --hl id
-
-# 2. Menemukan query turunan dan lonjakan pencarian (rising queries)
-node .agents/skills/artikelgen/scripts/trends.mjs related-queries "<kata-kunci>" --geo ID
-
-# 3. Menemukan topik yang sedang hangat berkaitan dengan tema
-node .agents/skills/artikelgen/scripts/trends.mjs related-topics "<kata-kunci>" --geo ID
-
-# 4. Mengecek tren harian untuk momen / berita terkini
-node .agents/skills/artikelgen/scripts/trends.mjs daily-trends --geo ID
-```
+### Langkah Riset Tren (Native Gemini Spark / Grounded Search):
+1. **Identifikasi Kueri Lonjakan (*Rising / Breakout Queries*)**:
+   - Telusuri lonjakan topik dan istilah pencarian yang sedang melonjak di Google Trends Indonesia (`geo: ID`).
+2. **Kumpulkan Pola Pertanyaan Populer**:
+   - Analisis *People Also Ask* dan saran *Autocomplete* Google seputar kata kunci utama.
+3. **Analisis Kebutuhan Konten (*Search Intent Mapping*)**:
+   - Pastikan apakah pengguna mencari tutorial langkah-demi-langkah (*informational*), perbandingan mendalam (*commercial investigation*), atau solusi instan (*transactional*).
 
 ### Cara Memanfaatkan Data Google Trends ke Dalam Konten:
 1. **Saran Sudut Pandang (Angle Recommendation)**: Berikan ringkasan singkat 2–3 poin rekomendasi tren kepada pengguna sebelum blok kode artikel.
@@ -35,7 +28,7 @@ node .agents/skills/artikelgen/scripts/trends.mjs daily-trends --geo ID
 
 Pastikan 5 parameter kunci berikut telah terdefinisi:
 1. **Topik & Kata Kunci Utama (Primary Keyword)**: Divalidasi dengan Google Trends.
-2. **Kata Kunci Turunan / LSI (Secondary Keywords)**: Dari hasil *related-queries* / *autocomplete*.
+2. **Kata Kunci Turunan / LSI (Secondary Keywords)**: Dari hasil kueri penelusuran terkait.
 3. **Target Audiens** (mis. pemula/awam, desainer, praktisi profesional, pemilik bisnis).
 4. **Search Intent**:
    - *Informational*: Fokus edukasi komprehensif, solusi langkah-demi-langkah.
@@ -43,7 +36,8 @@ Pastikan 5 parameter kunci berikut telah terdefinisi:
    - *Transactional*: Rekomendasi tindakan langsung, implementasi alat/solusi.
 5. **Gaya Bahasa / Brand Voice**: Profesional, komunikatif, mudah dicerna, tanpa jargon kosong.
 
-> *Catatan*: Jika pengguna hanya memberikan topik singkat, jalankan riset tren, buat asumsi rasional, sebutkan saran tren secara singkat di awal pesan (di luar blok kode), dan langsung lanjutkan penulisan draf artikel utuh.
+> *Catatan & Aturan Mutlak Output*: 
+> Setiap kali pengguna meminta pembuatan artikel, Anda **WAJIB LANGSUNG MENGHASILKAN 2 BLOK KODE `.md` LENGKAP** (Versi Bahasa Indonesia `content/id/blog/...` dan Versi Bahasa Inggris `content/en/blog/...`) yang siap disalin langsung (*copy-paste ready*) beserta saran nama file dan prompt gambar brand. Tidak perlu menunggu pengguna meminta terjemahan secara terpisah.
 
 ---
 
