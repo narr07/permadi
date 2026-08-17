@@ -3,6 +3,7 @@ import { onClickOutside } from '@vueuse/core'
 
 const { locale } = useI18n()
 const localePath = useLocalePath()
+const { getCategoryLabel } = useCategoryLabel()
 const pageCollection = computed(() => (locale.value === 'id' ? 'pages_id' : 'pages_en'))
 const blogCollection = computed(() => (locale.value === 'id' ? 'blog_id' : 'blog_en'))
 const currentPath = computed(() => `/${locale.value}/blog`)
@@ -41,6 +42,9 @@ const allTags = computed(() => {
 		return []
 	const tagSet = new Set<string>()
 	for (const post of posts.value) {
+		if (post.category) {
+			tagSet.add(post.category)
+		}
 		if (Array.isArray(post.tags)) {
 			post.tags.forEach((tag: string) => tagSet.add(tag))
 		}
@@ -65,6 +69,9 @@ const tagCounts = computed(() => {
 	const map: Record<string, number> = {}
 	if (posts.value) {
 		for (const post of posts.value) {
+			if (post.category) {
+				map[post.category] = (map[post.category] || 0) + 1
+			}
 			if (Array.isArray(post.tags)) {
 				for (const tag of post.tags) {
 					map[tag] = (map[tag] || 0) + 1
@@ -80,7 +87,9 @@ const filteredPosts = computed(() => {
 		return []
 	return posts.value
 		.filter((post: any) => {
-			return selectedTag.value === 'ALL' || post.tags?.includes(selectedTag.value)
+			return selectedTag.value === 'ALL'
+				|| post.category === selectedTag.value
+				|| post.tags?.includes(selectedTag.value)
 		})
 		.map((post: any) => ({
 			...post,
@@ -171,7 +180,7 @@ defineOgImage('Bento', {
 									:class="selectedTag !== 'ALL' ? 'text-white' : 'text-brand-700 dark:text-brand-400'"
 								/>
 								<span class="truncate">
-									{{ selectedTag === 'ALL' ? (locale === 'id' ? 'Semua Topik' : 'All Topics') : `#${selectedTag}` }}
+									{{ selectedTag === 'ALL' ? (locale === 'id' ? 'Semua Topik' : 'All Topics') : `#${getCategoryLabel(selectedTag)}` }}
 								</span>
 							</span>
 							<span
@@ -242,7 +251,7 @@ defineOgImage('Bento', {
 									>
 										<span class="flex items-center gap-2 truncate">
 											<span class="i-hugeicons-tag-01 shrink-0 text-xs" />
-											<span class="truncate">#{{ tag }}</span>
+											<span class="truncate">#{{ getCategoryLabel(tag) }}</span>
 										</span>
 										<span
 											v-if="tagCounts[tag]"
@@ -255,9 +264,9 @@ defineOgImage('Bento', {
 									<!-- Empty Filter Search -->
 									<div
 										v-if="filteredDropdownTags.length === 0"
-										class="py-4 text-center text-xs text-slate-400"
+										class="px-3 py-4 text-center text-xs text-slate-500"
 									>
-										{{ locale === 'id' ? 'Tag tidak ditemukan' : 'No tag found' }}
+										{{ locale === 'id' ? 'Topik tidak ditemukan' : 'No topics found' }}
 									</div>
 								</div>
 							</div>
@@ -291,6 +300,17 @@ defineOgImage('Bento', {
 							>
 								<span class="i-hugeicons-sparkles text-[11px]" />
 								{{ locale === 'id' ? 'Terbaru' : 'Latest' }}
+							</span>
+
+							<!-- Category Badge -->
+							<span
+								v-if="post.category"
+								class="inline-flex shrink-0 items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold tracking-wide uppercase"
+								:class="index === 0 && selectedTag === 'ALL'
+									? 'bg-brand-800 text-brand-200 dark:bg-brand-300 dark:text-brand-950 border border-brand-700'
+									: 'bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-300 border border-brand-200/60 dark:border-brand-800/60'"
+							>
+								{{ getCategoryLabel(post.category) }}
 							</span>
 
 							<!-- Primary Tag -->

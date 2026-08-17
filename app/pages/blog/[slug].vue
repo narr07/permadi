@@ -28,6 +28,7 @@ const route = useRoute()
 const { locale, locales } = useI18n()
 const localePath = useLocalePath()
 const setI18nParams = useSetI18nParams()
+const { getCategoryLabel } = useCategoryLabel()
 
 const mdcComponents = {
 	'img': ProseImg,
@@ -252,7 +253,7 @@ defineOgImage('Bento', {
 								class="inline-flex items-center gap-1.5 border border-brand-200/60 rounded-full bg-brand-100/80 px-3 py-1 text-xs text-brand-800 font-semibold tracking-wider uppercase dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300"
 							>
 								<span class="status-dot animate-pulse" />
-								{{ post.doc.category }}
+								{{ getCategoryLabel(post.doc.category) }}
 							</span>
 							<span
 								v-for="tag in post.doc.tags"

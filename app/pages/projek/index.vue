@@ -2,6 +2,7 @@
 import { onClickOutside } from '@vueuse/core'
 
 const { locale } = useI18n()
+const { getCategoryLabel } = useCategoryLabel()
 
 const collection = computed(() => (locale.value === 'id' ? 'projek_id' : 'projek_en'))
 const currentPath = computed(() => (locale.value === 'id' ? '/id/projek' : '/en/projects'))
@@ -38,6 +39,8 @@ const allTags = computed(() => {
 		return []
 	const tagsSet = new Set<string>()
 	projects.value.forEach((item: any) => {
+		if (item.category)
+			tagsSet.add(item.category)
 		const tags = item.tags || item.tech || []
 		tags.forEach((t: string) => tagsSet.add(t))
 	})
@@ -61,6 +64,9 @@ const tagCounts = computed(() => {
 	const map: Record<string, number> = {}
 	if (projects.value) {
 		for (const item of projects.value) {
+			if (item.category) {
+				map[item.category] = (map[item.category] || 0) + 1
+			}
 			const tags = item.tags || item.tech || []
 			for (const tag of tags) {
 				map[tag] = (map[tag] || 0) + 1
@@ -70,13 +76,14 @@ const tagCounts = computed(() => {
 	return map
 })
 
-// Filter projek berdasarkan tag
+// Filter projek berdasarkan tag / kategori
 const filteredProjects = computed(() => {
 	if (!projects.value)
 		return []
 	return projects.value
 		.filter((item: any) => {
 			return selectedTag.value === 'ALL'
+				|| item.category === selectedTag.value
 				|| (item.tags && item.tags.includes(selectedTag.value))
 				|| (item.tech && item.tech.includes(selectedTag.value))
 		})
@@ -173,7 +180,7 @@ defineOgImage('Bento', {
 									:class="selectedTag !== 'ALL' ? 'text-white' : 'text-brand-700 dark:text-brand-400'"
 								/>
 								<span class="truncate">
-									{{ selectedTag === 'ALL' ? (locale === 'id' ? 'Semua Topik' : 'All Topics') : `#${selectedTag}` }}
+									{{ selectedTag === 'ALL' ? (locale === 'id' ? 'Semua Topik' : 'All Topics') : `#${getCategoryLabel(selectedTag)}` }}
 								</span>
 							</span>
 							<span
@@ -244,7 +251,7 @@ defineOgImage('Bento', {
 									>
 										<span class="flex items-center gap-2 truncate">
 											<span class="i-hugeicons-tag-01 shrink-0 text-xs" />
-											<span class="truncate">#{{ tag }}</span>
+											<span class="truncate">#{{ getCategoryLabel(tag) }}</span>
 										</span>
 										<span
 											v-if="tagCounts[tag]"
@@ -257,9 +264,9 @@ defineOgImage('Bento', {
 									<!-- Empty Filter Search -->
 									<div
 										v-if="filteredDropdownTags.length === 0"
-										class="py-4 text-center text-xs text-slate-400"
+										class="px-3 py-4 text-center text-xs text-slate-500"
 									>
-										{{ locale === 'id' ? 'Tag tidak ditemukan' : 'No tag found' }}
+										{{ locale === 'id' ? 'Topik tidak ditemukan' : 'No topics found' }}
 									</div>
 								</div>
 							</div>
@@ -314,6 +321,18 @@ defineOgImage('Bento', {
 									<span class="i-hugeicons-sparkles text-[11px]" />
 									{{ locale === 'id' ? 'Terbaru' : 'Latest' }}
 								</span>
+
+								<!-- Category Badge -->
+								<span
+									v-if="item.category"
+									class="inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-[11px] font-semibold tracking-wide uppercase"
+									:class="index === 0 && selectedTag === 'ALL'
+										? 'bg-brand-800 text-brand-200 dark:bg-brand-300 dark:text-brand-950 border border-brand-700'
+										: 'bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-300 border border-brand-200/60 dark:border-brand-800/60'"
+								>
+									{{ getCategoryLabel(item.category) }}
+								</span>
+
 								<span
 									v-for="(tag, tIdx) in (item.tags || item.tech || []).slice(0, 3)"
 									:key="tag"

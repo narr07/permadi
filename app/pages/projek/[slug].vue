@@ -27,6 +27,7 @@ import ProseWarning from '~/components/content/ProseWarning.vue'
 const route = useRoute()
 const { locale, locales } = useI18n()
 const setI18nParams = useSetI18nParams()
+const { getCategoryLabel } = useCategoryLabel()
 
 const mdcComponents = {
 	'img': ProseImg,
@@ -244,7 +245,7 @@ onMounted(() => {
 						class="inline-flex items-center gap-1.5 border border-brand-200/60 rounded-full bg-brand-100/80 px-3 py-1 text-xs text-brand-800 font-semibold tracking-wider uppercase dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300"
 					>
 						<span class="status-dot animate-pulse" />
-						{{ project.doc.category }}
+						{{ getCategoryLabel(project.doc.category) }}
 					</span>
 					<span
 						v-for="tag in (project.doc.tags || project.doc.tech || [])"
@@ -281,22 +282,22 @@ onMounted(() => {
 					<!-- External Links -->
 					<div class="flex items-center gap-2">
 						<a
-							v-if="project.doc.githubUrl || project.doc.repo"
-							:href="project.doc.githubUrl || project.doc.repo"
+							v-if="project.doc.repo"
+							:href="project.doc.repo"
 							target="_blank"
 							rel="noopener"
 							class="btn-ghost inline-flex items-center gap-1.5 border border-slate-200 text-xs font-semibold dark:border-slate-700 !px-3.5 !py-1.5"
 						>
-							<span class="i-hugeicons-github text-xs" /> Source Code
+							<span class="i-hugeicons-github text-xs" /> {{ locale === 'id' ? 'Kode Sumber' : 'Source Code' }}
 						</a>
 						<a
-							v-if="project.doc.demoUrl || project.doc.link"
-							:href="project.doc.demoUrl || project.doc.link"
+							v-if="project.doc.link"
+							:href="project.doc.link"
 							target="_blank"
 							rel="noopener"
 							class="btn-primary inline-flex items-center gap-1.5 text-xs !px-4 !py-1.5"
 						>
-							<span class="i-hugeicons-link-square-02 text-xs" /> Live Demo
+							<span class="i-hugeicons-link-square-02 text-xs" /> {{ locale === 'id' ? 'Kunjungi Web' : 'Live Demo' }}
 						</a>
 					</div>
 				</div>

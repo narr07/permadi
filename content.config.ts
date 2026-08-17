@@ -3,12 +3,12 @@ import { z } from 'zod'
 
 function createLinkSchema() {
 	return z.object({
-		label: z.string(),
-		to: z.string(),
-		icon: z.string().optional(),
-		trailing: z.boolean().optional(),
-		target: z.string().optional(),
-		variant: z.string().optional(),
+		label: property(z.string()).editor({ label: 'Teks Tombol / Label' }),
+		to: property(z.string()).editor({ label: 'Tautan Tujuan (URL/Path)', tooltip: 'Contoh: /projek atau https://github.com' }),
+		icon: property(z.string().optional()).editor({ input: 'icon', iconLibraries: ['hugeicons', 'simple-icons'], label: 'Ikon' }),
+		trailing: property(z.boolean().optional()).editor({ label: 'Ikon di Kanan' }),
+		target: property(z.string().optional()).editor({ label: 'Target', tooltip: '_blank untuk tab baru' }),
+		variant: property(z.string().optional()).editor({ label: 'Varian Tombol' }),
 	})
 }
 
@@ -39,58 +39,58 @@ const homeSchema = z.object({
 	navigation: hiddenNavigation,
 
 	// Header / Intro Paling Atas
-	eyebrow: z.string().optional(),
-	headline: z.string().optional(),
-	description: z.string().optional(),
+	eyebrow: property(z.string().optional()).editor({ label: 'Teks Badge / Eyebrow', description: 'Teks kecil di atas headline' }),
+	headline: property(z.string().optional()).editor({ label: 'Headline Utama' }),
+	description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Singkat', description: 'Deskripsi intro beranda' }),
 
 	// Hero Card Utama (Kiri Atas)
 	hero: z.object({
-		status: z.string().optional(),
-		kicker: z.string().optional(),
-		headline: z.string().optional(),
-		headline_italic: z.string().optional(),
-		headline_suffix: z.string().optional(),
-		description: z.string().optional(),
-		location: z.string().optional(),
-		timezone: z.string().optional(),
+		status: property(z.string().optional()).editor({ label: 'Status Ketersediaan', tooltip: 'Contoh: Tersedia untuk Projek Baru' }),
+		kicker: property(z.string().optional()).editor({ label: 'Sub-judul Kicker' }),
+		headline: property(z.string().optional()).editor({ label: 'Headline Hero' }),
+		headline_italic: property(z.string().optional()).editor({ label: 'Kata Bercetak Miring' }),
+		headline_suffix: property(z.string().optional()).editor({ label: 'Akhiran Headline' }),
+		description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Hero Card' }),
+		location: property(z.string().optional()).editor({ label: 'Lokasi' }),
+		timezone: property(z.string().optional()).editor({ label: 'Zona Waktu' }),
 		links: z.array(createLinkSchema()).optional(),
 	}).optional(),
 
 	// Projek Terpilih (Kanan Atas)
 	project_section: z.object({
-		label: z.string().optional(),
-		fallback_title: z.string().optional(),
-		fallback_description: z.string().optional(),
-		all_link_text: z.string().optional(),
+		label: property(z.string().optional()).editor({ label: 'Label Bagian' }),
+		fallback_title: property(z.string().optional()).editor({ label: 'Judul Cadangan' }),
+		fallback_description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Cadangan' }),
+		all_link_text: property(z.string().optional()).editor({ label: 'Teks Link Lihat Semua' }),
 	}).optional(),
 
 	// Filosofi Bento (Kiri Tengah - Kartu Kuning)
 	philosophy: z.object({
-		number: z.string().optional(),
-		quote: z.string().optional(),
-		quote_bold: z.string().optional(),
-		label: z.string().optional(),
+		number: property(z.string().optional()).editor({ label: 'Nomor Urut', tooltip: 'Contoh: 01' }),
+		quote: property(z.string().optional()).editor({ input: 'textarea', label: 'Kutipan / Filosofi' }),
+		quote_bold: property(z.string().optional()).editor({ label: 'Bagian Kutipan yang Tebal' }),
+		label: property(z.string().optional()).editor({ label: 'Label Kartu' }),
 	}).optional(),
 
 	// Eksplorasi Visual (Tengah)
 	explore: z.object({
-		label: z.string().optional(),
-		text: z.string().optional(),
+		label: property(z.string().optional()).editor({ label: 'Label Eksplorasi' }),
+		text: property(z.string().optional()).editor({ input: 'textarea', label: 'Teks Eksplorasi' }),
 	}).optional(),
 
 	// Arsip Visual / Galeri (Kanan Tengah)
 	archive: z.object({
-		label: z.string().optional(),
-		title: z.string().optional(),
-		description: z.string().optional(),
-		link_text: z.string().optional(),
+		label: property(z.string().optional()).editor({ label: 'Label Galeri' }),
+		title: property(z.string().optional()).editor({ label: 'Judul Galeri' }),
+		description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Galeri' }),
+		link_text: property(z.string().optional()).editor({ label: 'Teks Tautan Galeri' }),
 	}).optional(),
 
 	// Tulisan & Catatan Terbaru (Paling Bawah / 12 Kolom Penuh)
 	writing: z.object({
-		label: z.string().optional(),
-		title: z.string().optional(),
-		all_link_text: z.string().optional(),
+		label: property(z.string().optional()).editor({ label: 'Label Tulisan' }),
+		title: property(z.string().optional()).editor({ label: 'Judul Bagian Blog' }),
+		all_link_text: property(z.string().optional()).editor({ label: 'Teks Link Semua Artikel' }),
 	}).optional(),
 })
 
@@ -101,36 +101,36 @@ const aboutSchema = z.object({
 	seo: hiddenSeo,
 	navigation: hiddenNavigation,
 
-	section_label: z.string().optional(),
-	headline: z.string().optional(),
-	lead: z.string().optional(),
-	description: z.string().optional(),
+	section_label: property(z.string().optional()).editor({ label: 'Label Halaman' }),
+	headline: property(z.string().optional()).editor({ label: 'Headline Halaman' }),
+	lead: property(z.string().optional()).editor({ input: 'textarea', label: 'Teks Pembuka (Lead)' }),
+	description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Lengkap' }),
 
 	story_card: z.object({
-		label: z.string().optional(),
-		title: z.string().optional(),
-		lead: z.string().optional(),
-		bio: z.string().optional(),
-		link_text: z.string().optional(),
+		label: property(z.string().optional()).editor({ label: 'Label Cerita' }),
+		title: property(z.string().optional()).editor({ label: 'Judul Cerita' }),
+		lead: property(z.string().optional()).editor({ input: 'textarea', label: 'Lead Cerita' }),
+		bio: property(z.string().optional()).editor({ input: 'textarea', label: 'Biografi Singkat' }),
+		link_text: property(z.string().optional()).editor({ label: 'Teks Link' }),
 	}).optional(),
 
 	toolkit_card: z.object({
-		label: z.string().optional(),
-		title: z.string().optional(),
+		label: property(z.string().optional()).editor({ label: 'Label Toolkit' }),
+		title: property(z.string().optional()).editor({ label: 'Judul Toolkit' }),
 		tools: z.array(z.object({
-			name: z.string(),
-			desc: z.string(),
+			name: property(z.string()).editor({ label: 'Nama Tool/Teknologi' }),
+			desc: property(z.string()).editor({ label: 'Keterangan Singkat' }),
 		})).optional(),
 	}).optional(),
 
 	principles: z.array(z.object({
-		title: z.string(),
-		description: z.string(),
+		title: property(z.string()).editor({ label: 'Judul Prinsip' }),
+		description: property(z.string()).editor({ input: 'textarea', label: 'Penjelasan Prinsip' }),
 	})).optional(),
 
 	journey: z.object({
-		title: z.string().optional(),
-		description: z.string().optional(),
+		title: property(z.string().optional()).editor({ label: 'Judul Perjalanan' }),
+		description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Perjalanan' }),
 	}).optional(),
 })
 
@@ -141,42 +141,42 @@ const contactSchema = z.object({
 	seo: hiddenSeo,
 	navigation: hiddenNavigation,
 
-	section_label: z.string().optional(),
-	headline: z.string().optional(),
-	lead: z.string().optional(),
-	description: z.string().optional(),
+	section_label: property(z.string().optional()).editor({ label: 'Label Halaman' }),
+	headline: property(z.string().optional()).editor({ label: 'Headline Kontak' }),
+	lead: property(z.string().optional()).editor({ input: 'textarea', label: 'Teks Pembuka (Lead)' }),
+	description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Kontak' }),
 
 	email_card: z.object({
-		label: z.string().optional(),
-		email: z.string().optional(),
-		description: z.string().optional(),
-		button_text: z.string().optional(),
-		meta: z.string().optional(),
+		label: property(z.string().optional()).editor({ label: 'Label Kartu Email' }),
+		email: property(z.string().optional()).editor({ label: 'Alamat Email' }),
+		description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Email' }),
+		button_text: property(z.string().optional()).editor({ label: 'Teks Tombol Email' }),
+		meta: property(z.string().optional()).editor({ label: 'Keterangan Tambahan' }),
 	}).optional(),
 
 	status_card: z.object({
-		label: z.string().optional(),
-		title: z.string().optional(),
-		description: z.string().optional(),
-		location: z.string().optional(),
-		timezone: z.string().optional(),
+		label: property(z.string().optional()).editor({ label: 'Label Status' }),
+		title: property(z.string().optional()).editor({ label: 'Judul Status' }),
+		description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Status' }),
+		location: property(z.string().optional()).editor({ label: 'Lokasi' }),
+		timezone: property(z.string().optional()).editor({ label: 'Zona Waktu' }),
 	}).optional(),
 
 	social_card: z.object({
-		label: z.string().optional(),
-		title: z.string().optional(),
-		description: z.string().optional(),
+		label: property(z.string().optional()).editor({ label: 'Label Media Sosial' }),
+		title: property(z.string().optional()).editor({ label: 'Judul Media Sosial' }),
+		description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi' }),
 		items: z.array(z.object({
-			name: z.string(),
-			url: z.string(),
-			icon: z.string().optional(),
+			name: property(z.string()).editor({ label: 'Nama Jejaring' }),
+			url: property(z.string()).editor({ label: 'Tautan URL' }),
+			icon: property(z.string().optional()).editor({ input: 'icon', iconLibraries: ['hugeicons', 'simple-icons'], label: 'Ikon' }),
 		})).optional(),
 	}).optional(),
 
 	newsletter_card: z.object({
-		label: z.string().optional(),
-		title: z.string().optional(),
-		description: z.string().optional(),
+		label: property(z.string().optional()).editor({ label: 'Label Newsletter' }),
+		title: property(z.string().optional()).editor({ label: 'Judul Newsletter' }),
+		description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Newsletter' }),
 	}).optional(),
 })
 
@@ -187,9 +187,9 @@ const catalogSchema = z.object({
 	seo: hiddenSeo,
 	navigation: hiddenNavigation,
 
-	eyebrow: z.string().optional(),
-	title: z.string().optional(),
-	description: z.string().optional(),
+	eyebrow: property(z.string().optional()).editor({ label: 'Teks Badge / Eyebrow' }),
+	title: property(z.string().optional()).editor({ label: 'Judul Halaman' }),
+	description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Halaman' }),
 })
 
 export default defineContentConfig({
@@ -263,14 +263,12 @@ export default defineContentConfig({
 				readingTime: property(z.number().optional()).editor({ hidden: true }),
 				slug: property(z.string().optional()).editor({ hidden: true }),
 				plainText: property(z.string().optional()).editor({ hidden: true }),
-				category: z.string().optional(),
-				date: z.union([z.string(), z.date()]).transform(d => typeof d === 'string' ? d : d.toISOString().split('T')[0]).default('2025-01-01'),
-				tags: z.array(z.string()).default([]),
-				cover: z.string().optional(),
-				coverAlt: z.string().optional(),
-				coverCaption: z.string().optional(),
-				draft: z.boolean().default(false),
-				featured: z.boolean().default(false),
+				category: property(z.enum(['edu', 'tech', 'art']).optional()).editor({
+					label: 'Kategori / Category',
+					tooltip: 'edu (Pendidikan / Education), tech (Teknologi / Technology), art (Seni / Art)',
+				}),
+				date: property(z.date()).editor({ label: 'Publication Date', description: 'Choose the article publication date' }),
+				tags: property(z.array(z.string()).default([])).editor({ label: 'Tags & Topics', description: 'Add tags for classification' }),
 			}),
 		}),
 		blog_id: defineCollection({
@@ -287,14 +285,12 @@ export default defineContentConfig({
 				readingTime: property(z.number().optional()).editor({ hidden: true }),
 				slug: property(z.string().optional()).editor({ hidden: true }),
 				plainText: property(z.string().optional()).editor({ hidden: true }),
-				category: z.string().optional(),
-				date: z.union([z.string(), z.date()]).transform(d => typeof d === 'string' ? d : d.toISOString().split('T')[0]).default('2025-01-01'),
-				tags: z.array(z.string()).default([]),
-				cover: z.string().optional(),
-				coverAlt: z.string().optional(),
-				coverCaption: z.string().optional(),
-				draft: z.boolean().default(false),
-				featured: z.boolean().default(false),
+				category: property(z.enum(['edu', 'tech', 'art']).optional()).editor({
+					label: 'Kategori / Category',
+					tooltip: 'edu (Pendidikan / Education), tech (Teknologi / Technology), art (Seni / Art)',
+				}),
+				date: property(z.date()).editor({ label: 'Tanggal Publikasi', description: 'Pilih tanggal rilis artikel' }),
+				tags: property(z.array(z.string()).default([])).editor({ label: 'Tag & Topik', description: 'Daftar topik pembahasan artikel' }),
 			}),
 		}),
 
@@ -313,17 +309,19 @@ export default defineContentConfig({
 				readingTime: property(z.number().optional()).editor({ hidden: true }),
 				slug: property(z.string().optional()).editor({ hidden: true }),
 				plainText: property(z.string().optional()).editor({ hidden: true }),
-				category: z.string().optional(),
-				date: z.union([z.string(), z.date()]).transform(d => typeof d === 'string' ? d : d.toISOString().split('T')[0]).default('2025-01-01'),
-				tags: z.array(z.string()).default([]),
-				tools: z.array(z.string()).default([]),
-				demo: z.string().optional(),
-				repo: z.string().optional(),
-				cover: z.string().optional(),
-				coverAlt: z.string().optional(),
-				coverCaption: z.string().optional(),
-				draft: z.boolean().default(false),
-				featured: z.boolean().default(false),
+				category: property(z.enum(['web', 'mobile', 'design']).optional()).editor({
+					label: 'Kategori / Category',
+					tooltip: 'web (Web App), mobile (Mobile App), design (Desain / Design)',
+				}),
+				date: property(z.date()).editor({ label: 'Release Date', description: 'Pick launch / release date' }),
+				tags: property(z.array(z.string()).default([])).editor({ label: 'Technologies & Tags', description: 'List of tech stack and tags' }),
+				image: property(z.string()).editor({ input: 'media', label: 'Primary Thumbnail', description: 'Main project cover image' }).optional(),
+				images: property(z.array(property(z.string()).editor({ input: 'media', label: 'Screenshot Image' }))).editor({
+					label: 'Gallery & Screenshots',
+					description: 'Screenshot images for the Bento showcase gallery',
+				}).default([]),
+				link: property(z.string().optional()).editor({ label: 'Live Demo URL', tooltip: 'URL to live website or interactive demo' }),
+				repo: property(z.string().optional()).editor({ label: 'GitHub Repository URL', tooltip: 'Source code repository link on GitHub' }),
 			}),
 		}),
 		projek_id: defineCollection({
@@ -340,17 +338,19 @@ export default defineContentConfig({
 				readingTime: property(z.number().optional()).editor({ hidden: true }),
 				slug: property(z.string().optional()).editor({ hidden: true }),
 				plainText: property(z.string().optional()).editor({ hidden: true }),
-				category: z.string().optional(),
-				date: z.union([z.string(), z.date()]).transform(d => typeof d === 'string' ? d : d.toISOString().split('T')[0]).default('2025-01-01'),
-				tags: z.array(z.string()).default([]),
-				tools: z.array(z.string()).default([]),
-				demo: z.string().optional(),
-				repo: z.string().optional(),
-				cover: z.string().optional(),
-				coverAlt: z.string().optional(),
-				coverCaption: z.string().optional(),
-				draft: z.boolean().default(false),
-				featured: z.boolean().default(false),
+				category: property(z.enum(['web', 'mobile', 'design']).optional()).editor({
+					label: 'Kategori / Category',
+					tooltip: 'web (Web App), mobile (Mobile App), design (Desain / Design)',
+				}),
+				date: property(z.date()).editor({ label: 'Tanggal Rilis', description: 'Pilih tanggal peluncuran projek' }),
+				tags: property(z.array(z.string()).default([])).editor({ label: 'Teknologi & Tag', description: 'Daftar teknologi yang digunakan' }),
+				image: property(z.string()).editor({ input: 'media', label: 'Thumbnail Utama', description: 'Gambar cover utama projek' }).optional(),
+				images: property(z.array(property(z.string()).editor({ input: 'media', label: 'Gambar Screenshot' }))).editor({
+					label: 'Galeri Tangkapan Layar',
+					description: 'Koleksi tangkapan layar untuk showcase Bento gallery',
+				}).default([]),
+				link: property(z.string().optional()).editor({ label: 'Tautan Live Demo (URL)', tooltip: 'URL website atau demo langsung yang bisa dikunjungi' }),
+				repo: property(z.string().optional()).editor({ label: 'Repository GitHub (Source Code)', tooltip: 'URL repositori source code di GitHub' }),
 			}),
 		}),
 	},
