@@ -1,11 +1,10 @@
 <script setup lang="ts">
 const { locale } = useI18n()
-const collection = computed(() => (locale.value === 'id' ? 'pages_id' : 'pages_en'))
-const currentPath = computed(() => (locale.value === 'id' ? '/id/tentang' : '/en/about'))
+const collection = computed(() => (locale.value === 'id' ? 'tentang_id' : 'tentang_en'))
 
 const { data: page } = await useAsyncData(
 	() => `tentang-page-${locale.value}`,
-	() => queryCollection(collection.value).path(currentPath.value).first(),
+	() => queryCollection(collection.value).first(),
 	{ watch: [locale] },
 )
 

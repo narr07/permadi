@@ -6,6 +6,9 @@ export default defineNuxtConfig({
 			standalone: false,
 		},
 	},
+	experimental: {
+		viewTransition: true,
+	},
 	site: {
 		url: 'https://permadi.dev',
 		name: 'Permadi',
@@ -142,6 +145,44 @@ export default defineNuxtConfig({
 			owner: 'narr07',
 			repo: 'permadi',
 			branch: 'main',
+		},
+	},
+	content: {
+		build: {
+			markdown: {
+				highlight: {
+					theme: {
+						default: 'vitesse-dark',
+						dark: 'vitesse-dark',
+					},
+					langs: [
+						'ts',
+						'tsx',
+						'js',
+						'jsx',
+						'json',
+						'vue',
+						'html',
+						'css',
+						'bash',
+						'sh',
+						'yaml',
+						'yml',
+						'md',
+						'mdc',
+						'diff',
+						'py',
+						'python',
+						'dart',
+						'go',
+						'kotlin',
+						'sql',
+						'rust',
+						'graphql',
+						'dockerfile',
+					],
+				},
+			},
 		},
 	},
 	i18n: {

@@ -261,7 +261,7 @@ onUnmounted(() => {
 				</div>
 
 				<!-- Bento Items List (Active like Hover, Hover with Outline) -->
-				<div class="max-h-[calc(100vh-16rem)] overflow-y-auto pr-1 space-y-1">
+				<div class="max-h-[38vh] min-h-[5rem] overflow-y-auto pr-1 space-y-1">
 					<a
 						v-for="(item, idx) in flatList"
 						:key="item.link.id"

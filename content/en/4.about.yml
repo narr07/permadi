@@ -1,16 +1,24 @@
 title: About Dinar Permadi Yusup
 description: I care about the space between design and engineering — where a thoughtful interaction becomes a useful product.
-section_label: A Little About Me
 headline: Curious by default. Intentional by choice.
+journey:
+  title: Journey & Background
+  description: My journey began with a deep fascination for how digital interfaces shape user emotion and information efficiency. Over time, I specialized in Vue.js and Nuxt for their reactivity model and robust fullstack architecture.
 lead: I care about the space between design and engineering — where a thoughtful interaction becomes a useful product.
-
+principles:
+  - title: Visual Consistency
+    description: Implementing structured design tokens with 11-shade color scales and mathematical Golden Ratio typography.
+  - title: Developer & User Experience (DX & UX)
+    description: Crafting intuitive, accessible interfaces with delightful and responsive micro-interactions.
+  - title: Edge Performance
+    description: Optimizing Core Web Vitals, SSR caching, and Cloudflare edge computing integration (Pages, D1).
+section_label: A Little About Me
 story_card:
   label: Philosophy & Story
   title: I'm Permadi, a frontend developer & educator based in Majalengka.
   lead: I work across interface design, type systems, and performant code to make digital products feel clear, effortless, and human.
   bio: Outside the code editor, you will find me reading books, brewing manual coffee, or designing interactive learning modules.
   link_text: Explore Project Case Studies
-
 toolkit_card:
   label: Toolkit & Frameworks
   title: Core Technologies
@@ -25,15 +33,3 @@ toolkit_card:
       desc: Edge Database & Serverless Engine
     - name: Figma
       desc: Design Systems & Interface Prototyping
-
-principles:
-  - title: Visual Consistency
-    description: Implementing structured design tokens with 11-shade color scales and mathematical Golden Ratio typography.
-  - title: Developer & User Experience (DX & UX)
-    description: Crafting intuitive, accessible interfaces with delightful and responsive micro-interactions.
-  - title: Edge Performance
-    description: Optimizing Core Web Vitals, SSR caching, and Cloudflare edge computing integration (Pages, D1).
-
-journey:
-  title: Journey & Background
-  description: My journey began with a deep fascination for how digital interfaces shape user emotion and information efficiency. Over time, I specialized in Vue.js and Nuxt for their reactivity model and robust fullstack architecture.

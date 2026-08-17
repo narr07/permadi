@@ -129,7 +129,7 @@ defineOgImage('Bento', {
 				<div class="max-w-2xl">
 					<div class="mb-3.5 inline-flex items-center gap-2 border border-brand-200/60 rounded-full bg-brand-100/70 px-3 py-1 text-xs text-brand-700 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
 						<span class="status-dot animate-pulse" />
-						<span>{{ locale === 'id' ? 'Karya & Eksplorasi' : 'Work & Case Studies' }}</span>
+						<span>{{ page?.eyebrow || (locale === 'id' ? 'Karya & Eksplorasi' : 'Work & Case Studies') }}</span>
 					</div>
 
 					<h1 class="heading-page">

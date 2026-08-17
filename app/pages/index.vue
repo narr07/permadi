@@ -3,13 +3,12 @@ const { locale } = useI18n()
 
 const blogCollection = computed(() => (locale.value === 'id' ? 'blog_id' : 'blog_en'))
 const projectCollection = computed(() => (locale.value === 'id' ? 'projek_id' : 'projek_en'))
-const pageCollection = computed(() => (locale.value === 'id' ? 'pages_id' : 'pages_en'))
-const currentPath = computed(() => `/${locale.value}`)
+const pageCollection = computed(() => (locale.value === 'id' ? 'home_id' : 'home_en'))
 
-// 1. Data halaman beranda dari Nuxt Content (index.md / pages_id / pages_en)
+// 1. Data halaman beranda dari Nuxt Content (home_id / home_en)
 const { data: page } = await useAsyncData(
 	() => `home-${locale.value}`,
-	() => queryCollection(pageCollection.value).path(currentPath.value).first(),
+	() => queryCollection(pageCollection.value).first(),
 	{ watch: [locale] },
 )
 

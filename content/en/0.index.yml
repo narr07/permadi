@@ -1,16 +1,11 @@
 title: Dinar Permadi Yusup — Frontend Developer & Graphic Designer
-archive:
-  label: The Archive
-  title: Images, objects, and quiet observations.
-  description: Curated captures of graphic design work and workspace documentation, organized in Cloudinary CDN.
-  link_text: Open Gallery
-channels: {}
+
 description: A living archive of work, interface experiments, photography, and notes by an elementary school teacher who's also a frontend developer and graphic designer.
-explore:
-  label: Currently Exploring
-  text: Interfaces that feel inevitable and calm.
+
 eyebrow: Permadi / Teacher, Developer & Designer
+
 headline: A small corner of the internet.
+
 hero:
   status: Available for select projects
   kicker: Frontend Developer · Graphic Designer · Elementary School Teacher
@@ -28,20 +23,29 @@ hero:
     - label: Get in Touch
       to: /en/contact
       variant: outline
-philosophy:
-  number: 01 / 04
-  quote: Good design is quiet.
-  quote_bold: Great design stays with you.
-  label: Permadi Philosophy
+
 project_section:
   label: Selected Work
   fallback_title: Four projects, many lessons.
   fallback_description: A collection of web systems case studies and modular design — from education tools to digital products.
   all_link_text: Browse All Work
-social_card:
-  items: []
-toolkit_card:
-  tools: []
+
+philosophy:
+  number: 01 / 04
+  quote: Good design is quiet.
+  quote_bold: Great design stays with you.
+  label: Permadi Philosophy
+
+explore:
+  label: Currently Exploring
+  text: Interfaces that feel inevitable and calm.
+
+archive:
+  label: The Archive
+  title: Images, objects, and quiet observations.
+  description: Curated captures of graphic design work and workspace documentation, organized in Cloudinary CDN.
+  link_text: Open Gallery
+
 writing:
   label: Recent Writing
   title: Notes on code, design, and education.

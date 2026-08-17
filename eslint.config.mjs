@@ -17,6 +17,7 @@ export default withNuxt(
 			'.nuxt/**',
 			'permadi-web2025/**',
 			'personal-sitenextjs/**',
+			'src-nuxt-ui/**',
 		],
 		stylistic: {
 			indent: 'tab',

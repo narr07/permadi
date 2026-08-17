@@ -1,6 +1,103 @@
 @import '@unocss/reset/tailwind.css';
 
 :root {
+	 --color-brand-50: #f0fdfa;
+  --color-brand-100: #ccfbf2;
+  --color-brand-200: #99f6e4;
+  --color-brand-300: #5eeacf;
+  --color-brand-400: #2bd4b5;
+  --color-brand-500: #14b898;
+  --color-brand-600: #0d947a;
+  --color-brand-700: #0f7662;
+  --color-brand-800: #115e4f;
+  --color-brand-900: #134e43;
+  --color-brand-950: #042f27;
+
+  --color-gray-50: #f9fafa;
+  --color-gray-100: #f2f5f4;
+  --color-gray-200: #e3e8e7;
+  --color-gray-300: #ced7d5;
+  --color-gray-400: #93a5a0;
+  --color-gray-500: #627770;
+  --color-gray-600: #435a53;
+  --color-gray-700: #2d473f;
+  --color-gray-800: #152e28;
+  --color-gray-900: #041d18;
+  --color-gray-950: #000b07;
+
+	 --color-slate-50: #f8fafa;
+  --color-slate-100: #eff6f5;
+  --color-slate-200: #deeae9;
+  --color-slate-300: #c5d9d7;
+  --color-slate-400: #84a8a4;
+  --color-slate-500: #537c77;
+  --color-slate-600: #375c58;
+  --color-slate-700: #224844;
+  --color-slate-800: #0a2f2c;
+  --color-slate-900: #001e1c;
+  --color-slate-950: #000c0a;
+
+  --color-yellow-50: #ffffff;
+  --color-yellow-100: #fffefd;
+  --color-yellow-200: #fdeed6;
+  --color-yellow-300: #fcddaf;
+  --color-yellow-400: #facd87;
+  --color-yellow-500: #f9bc60;
+  --color-yellow-600: #f7a52a;
+  --color-yellow-700: #e08a08;
+  --color-yellow-800: #aa6906;
+  --color-yellow-900: #744804;
+  --color-yellow-950: #593703;
+
+  --color-blue-50: #f0f9ff;
+  --color-blue-100: #e0f2fe;
+  --color-blue-200: #bae6fd;
+  --color-blue-300: #7dd3fc;
+  --color-blue-400: #38bdf8;
+  --color-blue-500: #0ea5e9;
+  --color-blue-600: #0284c7;
+  --color-blue-700: #0369a1;
+  --color-blue-800: #075985;
+  --color-blue-900: #0c4a6e;
+  --color-blue-950: #082f49;
+
+  --color-red-50: #fefbfb;
+  --color-red-100: #fbeaea;
+  --color-red-200: #f5c8c8;
+  --color-red-300: #eea6a6;
+  --color-red-400: #e88384;
+  --color-red-500: #e16162;
+  --color-red-600: #d83233;
+  --color-red-700: #b02123;
+  --color-red-800: #811919;
+  --color-red-900: #521010;
+  --color-red-950: #3a0b0b;
+
+  --color-green-50: #eefbf4;
+  --color-green-100: #d7f4e3;
+  --color-green-200: #b1e9ca;
+  --color-green-300: #7fd6ad;
+  --color-green-400: #4abd8a;
+  --color-green-500: #2cb67d;
+  --color-green-600: #198258;
+  --color-green-700: #146849;
+  --color-green-800: #12533c;
+  --color-green-900: #104432;
+  --color-green-950: #08261d;
+
+  --color-purple-50: #f7f5fd;
+  --color-purple-100: #f0edfa;
+  --color-purple-200: #e4ddf7;
+  --color-purple-300: #cec2f0;
+  --color-purple-400: #b69ee7;
+  --color-purple-500: #a786df;
+  --color-purple-600: #8c59ce;
+  --color-purple-700: #7c47ba;
+  --color-purple-800: #673b9c;
+  --color-purple-900: #563280;
+  --color-purple-950: #361f56;
+
+	
 	--canvas: #eff6f5;
 	--ink: #002b27;
 	--heading: #002b27;
@@ -13,7 +110,7 @@
 }
 
 .dark {
-	--canvas: #042f27;
+	--canvas: #000b07;
 	--ink: #eff6f5;
 	--heading: #f9bc60;
 	--card: #002b27;
@@ -354,6 +451,30 @@ input:focus-visible {
 	color: #f9bc60 !important;
 }
 
+/* Remove default backtick quotes added by typography prose */
+.prose code::before,
+.prose code::after,
+.prose pre code::before,
+.prose pre code::after,
+:where(code):not(:where([class~="not-prose"],[class~="not-prose"] *))::before,
+:where(code):not(:where([class~="not-prose"],[class~="not-prose"] *))::after {
+	content: "" !important;
+}
+
+/* Shiki Syntax Highlighting */
+.shiki span {
+	color: var(--shiki-default, inherit);
+}
+
+html.dark .shiki span,
+.dark .shiki span {
+	color: var(--shiki-dark, inherit) !important;
+	background-color: var(--shiki-dark-bg, transparent) !important;
+	font-style: var(--shiki-dark-font-style) !important;
+	font-weight: var(--shiki-dark-font-weight) !important;
+	text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
 /* Inline Code */
 .prose :where(:not(pre) > code) {
 	font-family: 'JetBrains Mono', monospace !important;
@@ -420,3 +541,19 @@ input:focus-visible {
 .dark .prose :where(hr) {
 	border-top-color: #134e43 !important;
 }
+
+/* Native Browser View Transitions API */
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: 0.25s;
+	animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-group(*),
+	::view-transition-old(*),
+	::view-transition-new(*) {
+		animation: none !important;
+	}
+}
+

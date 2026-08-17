@@ -1,11 +1,15 @@
 title: Dinar Permadi Yusup — Frontend Developer & Desainer Grafis
-
+archive:
+  label: Arsip Visual
+  title: Gambar, dokumentasi, dan observasi visual.
+  description: Dokumentasi fotografi karya desain grafis dan setup ruang kerja, terorganisir di Cloudinary CDN.
+  link_text: Buka Galeri Lengkap
 description: Arsip hidup berisi karya, eksperimen antarmuka, fotografi, dan catatan oleh seorang guru SD yang juga frontend developer dan desainer grafis.
-
+explore:
+  label: Eksplorasi Saat Ini
+  text: Antarmuka yang terasa natural dan tenang.
 eyebrow: Permadi / Guru, Developer & Desainer
-
 headline: Sudut kecil di belantara internet.
-
 hero:
   status: Tersedia untuk proyek terpilih
   kicker: Frontend Developer · Desainer Grafis · Guru SD
@@ -23,30 +27,22 @@ hero:
     - label: Hubungi Saya
       to: /id/kontak
       variant: outline
-
-project_section:
-  label: Projek Terpilih
-  fallback_title: Empat proyek, banyak pelajaran berharga.
-  fallback_description: Koleksi studi kasus sistem web dan eksplorasi desain modular — dari kebutuhan pendidikan hingga produk digital.
-  all_link_text: Buka Semua Projek
-
 philosophy:
   number: 01 / 04
   quote: Desain yang baik itu tenang.
   quote_bold: Desain luar biasa akan selalu membekas.
   label: Permadi Philosophy
-
-explore:
-  label: Eksplorasi Saat Ini
-  text: Antarmuka yang terasa natural dan tenang.
-
-archive:
-  label: Arsip Visual
-  title: Gambar, dokumentasi, dan observasi visual.
-  description: Dokumentasi fotografi karya desain grafis dan setup ruang kerja, terorganisir di Cloudinary CDN.
-  link_text: Buka Galeri Lengkap
-
+project_section:
+  label: Projek Terbaru
+  fallback_title: Empat proyek, banyak pelajaran berharga.
+  fallback_description: Koleksi studi kasus sistem web dan eksplorasi desain modular — dari kebutuhan pendidikan hingga produk digital.
+  all_link_text: Buka Semua Projek
 writing:
   label: Tulisan & Catatan
   title: Catatan seputar web, desain, dan dunia pendidikan.
   all_link_text: Lihat Semua Tulisan
+channels: {}
+toolkit_card:
+  tools: []
+social_card:
+  items: []

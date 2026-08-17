@@ -1,23 +1,18 @@
 title: Kontak & Kolaborasi — Dinar Permadi Yusup
 description: Hubungi Dinar Permadi Yusup untuk peluang kolaborasi, proyek pengembangan web, atau konsultasi antarmuka.
-section_label: Mari Terhubung
-headline: Kontak & Kolaborasi
-lead: Tertarik berdiskusi tentang proyek baru, konsultasi frontend, atau sekadar bertukar pikiran? Silakan hubungi saya.
-
 email_card:
   label: Direct Inquiries
   email: dinar@permadi.dev
   description: Respon dalam 1-2 hari kerja untuk peluang kolaborasi atau penawaran kerja sama.
   button_text: Kirim Email Sekarang
   meta: Available Worldwide
-
-status_card:
-  label: Status Ketersediaan
-  title: Open for Projects & Consulting
-  description: Berbasis di Majalengka, Indonesia (GMT+7). Terbiasa bekerja secara remote dengan tim global.
-  location: Majalengka, ID
-  timezone: GMT+7
-
+headline: Kontak & Kolaborasi
+lead: Tertarik berdiskusi tentang proyek baru, konsultasi frontend, atau sekadar bertukar pikiran? Silakan hubungi saya.
+newsletter_card:
+  label: Newsletter
+  title: Berlangganan Newsletter
+  description: Dapatkan artikel berkala seputar web performance, Vue/Nuxt, dan design system.
+section_label: Mari Terhubung
 social_card:
   label: Saluran Sosial
   title: Temukan saya di platform digital
@@ -35,8 +30,9 @@ social_card:
     - name: Behance
       url: https://www.behance.net/narr07
       icon: i-hugeicons-behance-02
-
-newsletter_card:
-  label: Newsletter
-  title: Berlangganan Newsletter
-  description: Dapatkan artikel berkala seputar web performance, Vue/Nuxt, dan design system.
+status_card:
+  label: Status Ketersediaan
+  title: Open for Projects & Consulting
+  description: Berbasis di Majalengka, Indonesia (GMT+7). Terbiasa bekerja secara remote dengan tim global.
+  location: Majalengka, ID
+  timezone: GMT+7

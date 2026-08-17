@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import type { ComputedRef, Ref } from 'vue'
 import { withBase } from 'ufo'
-import { computed, onMounted, onUnmounted, ref, useRuntimeConfig } from '#imports'
+import { computed, inject, isRef, onMounted, onUnmounted, ref, useRuntimeConfig } from '#imports'
 
 const props = withDefaults(
 	defineProps<{
@@ -20,6 +21,24 @@ const props = withDefaults(
 		class: undefined,
 	},
 )
+
+const pageTitle = inject<Ref<string> | ComputedRef<string> | string>('pageTitle', '')
+const resolvedTitle = computed(() => {
+	if (isRef(pageTitle)) {
+		return pageTitle.value || ''
+	}
+	return (typeof pageTitle === 'string' ? pageTitle : '') || ''
+})
+
+const resolvedAlt = computed(() => {
+	if (props.alt && props.alt.trim().length > 0) {
+		return props.alt.trim()
+	}
+	if (resolvedTitle.value && resolvedTitle.value.trim().length > 0) {
+		return resolvedTitle.value.trim()
+	}
+	return 'Permadi Portfolio'
+})
 
 const isZoomed = ref(false)
 
@@ -82,18 +101,18 @@ onUnmounted(() => {
 </script>
 
 <template>
-	<span class="prose-img-wrapper my-6 inline-block w-full">
+	<figure class="prose-img-wrapper my-8 flex flex-col items-center">
 		<!-- Main Image with Zoom Cursor and Bento styling -->
 		<NuxtImg
 			v-if="refinedSrc"
 			:src="refinedSrc"
-			:alt="alt"
+			:alt="resolvedAlt"
 			:width="width"
 			:height="height"
 			:tabindex="isZoomEnabled ? 0 : undefined"
 			:role="isZoomEnabled ? 'button' : undefined"
-			:aria-label="isZoomEnabled ? (alt ? `Perbesar gambar: ${alt}` : 'Perbesar gambar') : undefined"
-			class="mx-auto block h-auto max-w-full border border-slate-200/80 rounded-2xl shadow-sm transition-all duration-300 dark:border-[#134e43] hover:shadow-md focus-ring"
+			:aria-label="isZoomEnabled ? `Perbesar gambar: ${resolvedAlt}` : undefined"
+			class="shadow-xs mx-auto block h-auto max-w-full border border-slate-200/80 rounded-2xl transition-all duration-300 dark:border-[#134e43]/70 hover:shadow-md focus-ring"
 			:class="[
 				isZoomEnabled ? 'cursor-zoom-in hover:brightness-[1.02]' : '',
 				props.class,
@@ -104,16 +123,24 @@ onUnmounted(() => {
 			@keydown.space.prevent="openZoom"
 		/>
 
+		<!-- Caption Fallback: Shows alt or project/article title -->
+		<figcaption
+			v-if="resolvedAlt"
+			class="mt-2.5 max-w-xl text-center text-xs text-slate-500 tracking-wide font-sans dark:text-slate-400"
+		>
+			{{ resolvedAlt }}
+		</figcaption>
+
 		<!-- Fullscreen Zoom Lightbox Dialog (Teleport to body) -->
 		<Teleport to="body">
 			<Transition name="zoom-fade">
 				<div
 					v-if="isZoomed"
-					class="fixed inset-0 z-[1000] flex cursor-zoom-out select-none items-center justify-center bg-black/80 p-4 backdrop-blur-md dark:bg-[#001715]/90 sm:p-8"
+					class="fixed inset-0 z-[1000] flex cursor-zoom-out select-none items-center justify-center bg-black/85 p-4 backdrop-blur-md dark:bg-[#001715]/95 sm:p-8"
 					tabindex="-1"
 					role="dialog"
 					aria-modal="true"
-					aria-label="Pratinjau gambar layar penuh"
+					:aria-label="`Pratinjau layar penuh: ${resolvedAlt}`"
 					@click="closeZoom"
 					@keydown.escape="closeZoom"
 				>
@@ -134,20 +161,20 @@ onUnmounted(() => {
 					>
 						<NuxtImg
 							:src="refinedSrc"
-							:alt="alt"
+							:alt="resolvedAlt"
 							class="h-auto max-h-[90vh] max-w-[95vw] w-full border border-white/15 rounded-2xl object-contain shadow-2xl"
 						/>
 						<p
-							v-if="alt"
-							class="mt-3 max-w-xl border border-white/10 rounded-full bg-black/50 px-4 py-1.5 text-center text-xs text-slate-300 font-medium backdrop-blur-md"
+							v-if="resolvedAlt"
+							class="mt-3 max-w-xl border border-white/10 rounded-full bg-black/60 px-4 py-1.5 text-center text-xs text-slate-200 font-medium backdrop-blur-md"
 						>
-							{{ alt }}
+							{{ resolvedAlt }}
 						</p>
 					</div>
 				</div>
 			</Transition>
 		</Teleport>
-	</span>
+	</figure>
 </template>
 
 <style scoped>

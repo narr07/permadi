@@ -1,11 +1,10 @@
 <script setup lang="ts">
 const { locale } = useI18n()
-const collection = computed(() => (locale.value === 'id' ? 'pages_id' : 'pages_en'))
-const currentPath = computed(() => (locale.value === 'id' ? '/id/kontak' : '/en/contact'))
+const collection = computed(() => (locale.value === 'id' ? 'kontak_id' : 'kontak_en'))
 
 const { data: page } = await useAsyncData(
 	() => `kontak-page-${locale.value}`,
-	() => queryCollection(collection.value).path(currentPath.value).first(),
+	() => queryCollection(collection.value).first(),
 	{ watch: [locale] },
 )
 

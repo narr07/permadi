@@ -6,6 +6,7 @@
 .cache
 dist
 personal-sitenextjs
+src-nuxt-ui
 permadi-web2025
 
 # Node dependencies

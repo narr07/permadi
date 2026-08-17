@@ -1,7 +1,28 @@
 <script setup lang="ts">
-import ProseCode from '~/components/content/ProseCode.vue'
+import Conclusion from '~/components/content/Conclusion.vue'
+import Faq from '~/components/content/Faq.vue'
+import FaqItem from '~/components/content/FaqItem.vue'
+import ProseAccordion from '~/components/content/ProseAccordion.vue'
+import ProseAccordionItem from '~/components/content/ProseAccordionItem.vue'
+import ProseBadge from '~/components/content/ProseBadge.vue'
+import ProseCallout from '~/components/content/ProseCallout.vue'
+import ProseCard from '~/components/content/ProseCard.vue'
+import ProseCardGroup from '~/components/content/ProseCardGroup.vue'
+import ProseCaution from '~/components/content/ProseCaution.vue'
+import ProseCodeGroup from '~/components/content/ProseCodeGroup.vue'
+import ProseCodeInline from '~/components/content/ProseCodeInline.vue'
+import ProseCollapsible from '~/components/content/ProseCollapsible.vue'
+import ProseFaq from '~/components/content/ProseFaq.vue'
 import ProseImg from '~/components/content/ProseImg.vue'
+import ProseNote from '~/components/content/ProseNote.vue'
 import ProsePre from '~/components/content/ProsePre.vue'
+import ProsePrompt from '~/components/content/ProsePrompt.vue'
+import ProseSteps from '~/components/content/ProseSteps.vue'
+import ProseTable from '~/components/content/ProseTable.vue'
+import ProseTabs from '~/components/content/ProseTabs.vue'
+import ProseTabsItem from '~/components/content/ProseTabsItem.vue'
+import ProseTip from '~/components/content/ProseTip.vue'
+import ProseWarning from '~/components/content/ProseWarning.vue'
 
 const route = useRoute()
 const { locale, locales } = useI18n()
@@ -10,14 +31,49 @@ const setI18nParams = useSetI18nParams()
 
 const mdcComponents = {
 	'img': ProseImg,
-	ProseImg,
-	'prose-img': ProseImg,
 	'pre': ProsePre,
-	ProsePre,
-	'prose-pre': ProsePre,
-	'code': ProseCode,
-	ProseCode,
-	'prose-code': ProseCode,
+	'code-inline': ProseCodeInline,
+	'prose-code-inline': ProseCodeInline,
+	'accordion': ProseAccordion,
+	'accordion-item': ProseAccordionItem,
+	'code-group': ProseCodeGroup,
+	'tabs': ProseTabs,
+	'tabs-item': ProseTabsItem,
+	'callout': ProseCallout,
+	'steps': ProseSteps,
+	'collapsible': ProseCollapsible,
+	'card': ProseCard,
+	'card-group': ProseCardGroup,
+	'faq': Faq,
+	'faq-item': FaqItem,
+	'conclusion': Conclusion,
+	'prompt': ProsePrompt,
+	'note': ProseNote,
+	'tip': ProseTip,
+	'warning': ProseWarning,
+	'caution': ProseCaution,
+	'badge': ProseBadge,
+	'table': ProseTable,
+	Conclusion,
+	Faq,
+	FaqItem,
+	ProseFaq,
+	ProsePrompt,
+	ProseNote,
+	ProseTip,
+	ProseWarning,
+	ProseCaution,
+	ProseBadge,
+	ProseAccordion,
+	ProseAccordionItem,
+	ProseCodeGroup,
+	ProseTabs,
+	ProseTabsItem,
+	ProseCallout,
+	ProseSteps,
+	ProseCollapsible,
+	ProseCard,
+	ProseCardGroup,
 }
 
 const requestedSlug = computed(() => route.params.slug as string)
@@ -78,6 +134,8 @@ if (post.value?.translations) {
 	setI18nParams(post.value.translations)
 }
 
+provide('pageTitle', computed(() => post.value?.doc?.title || ''))
+
 if (!post.value?.doc) {
 	throw createError({
 		statusCode: 404,
@@ -99,7 +157,42 @@ const { data: surround } = await useAsyncData(
 )
 
 const tocLinks = computed(() => {
-	return post.value?.doc?.body?.toc?.links || post.value?.doc?.toc?.links || []
+	const rawLinks = post.value?.doc?.body?.toc?.links || post.value?.doc?.toc?.links || []
+	const links = [...rawLinks]
+
+	const bodyStr = JSON.stringify(post.value?.doc?.body || '').toLowerCase()
+	const hasConclusion = bodyStr.includes('conclusion')
+	const hasFaq = bodyStr.includes('faq')
+
+	const alreadyHasConclusion = links.some((l: any) => {
+		const id = (l.id || '').toLowerCase()
+		const text = (l.text || '').toLowerCase()
+		return id.includes('kesimpulan') || id.includes('conclusion') || text.includes('kesimpulan') || text.includes('conclusion')
+	})
+
+	const alreadyHasFaq = links.some((l: any) => {
+		const id = (l.id || '').toLowerCase()
+		const text = (l.text || '').toLowerCase()
+		return id.includes('faq') || text.includes('faq')
+	})
+
+	if (hasConclusion && !alreadyHasConclusion) {
+		links.push({
+			id: locale.value === 'id' ? 'kesimpulan' : 'conclusion',
+			text: locale.value === 'id' ? 'Kesimpulan' : 'Conclusion',
+			depth: 2,
+		})
+	}
+
+	if (hasFaq && !alreadyHasFaq) {
+		links.push({
+			id: 'faq',
+			text: 'FAQ',
+			depth: 2,
+		})
+	}
+
+	return links
 })
 
 useSeoMeta({
@@ -210,11 +303,13 @@ defineOgImage('Bento', {
 						/>
 					</div>
 
-					<!-- Bento Social Share Card -->
-					<ArticleShare
-						:title="post.doc.title"
-						:description="post.doc.description"
-					/>
+					<!-- Mobile/Tablet Social Share Card (under article) -->
+					<div :class="tocLinks.length > 0 ? 'lg:hidden' : ''">
+						<ArticleShare
+							:title="post.doc.title"
+							:description="post.doc.description"
+						/>
+					</div>
 
 					<!-- Surround Articles Navigation (Bento Cards) -->
 					<nav
@@ -254,15 +349,22 @@ defineOgImage('Bento', {
 					</nav>
 				</article>
 
-				<!-- Desktop Sticky TOC Aside (Span 3) -->
+				<!-- Desktop Sticky Sidebar (TOC & Compact Share Card, Span 3) -->
 				<aside
 					v-if="tocLinks.length > 0"
-					:aria-label="locale === 'id' ? 'Daftar Isi Artikel' : 'Table of Contents'"
-					class="sticky top-20 hidden self-start lg:col-span-3 lg:block"
+					:aria-label="locale === 'id' ? 'Daftar Isi dan Bagikan' : 'Table of Contents and Share'"
+					class="sticky top-20 hidden flex-col self-start gap-3.5 lg:col-span-3 lg:flex"
 				>
 					<ContentToc
 						:links="tocLinks"
 						mode="desktop"
+					/>
+
+					<!-- Bento Share Card on Desktop under TOC -->
+					<ArticleShare
+						:title="post.doc.title"
+						:description="post.doc.description"
+						variant="sidebar"
 					/>
 				</aside>
 			</div>

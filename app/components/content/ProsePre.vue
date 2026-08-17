@@ -51,47 +51,71 @@ const fileIcon = computed(() => {
 	switch (ext) {
 		case 'ts':
 		case 'typescript':
-			return 'i-simple-icons-typescript text-sky-400'
+			return 'i-vscode-icons-file-type-typescript'
+		case 'tsx':
+			return 'i-vscode-icons-file-type-reactts'
+		case 'jsx':
+		case 'react':
+			return 'i-vscode-icons-file-type-reactjs'
 		case 'js':
 		case 'javascript':
 		case 'mjs':
 		case 'cjs':
-			return 'i-simple-icons-javascript text-amber-300'
+			return 'i-vscode-icons-file-type-js'
 		case 'vue':
-			return 'i-simple-icons-vuedotjs text-emerald-400'
+			return 'i-vscode-icons-file-type-vue'
+		case 'dart':
+		case 'flutter':
+			return 'i-vscode-icons-file-type-dartlang'
+		case 'go':
+		case 'golang':
+			return 'i-vscode-icons-file-type-go'
+		case 'kt':
+		case 'kotlin':
+			return 'i-vscode-icons-file-type-kotlin'
+		case 'sql':
+		case 'mysql':
+		case 'pgsql':
+		case 'postgres':
+		case 'sqlite':
+			return 'i-vscode-icons-file-type-sql'
 		case 'html':
-			return 'i-simple-icons-html5 text-orange-500'
+			return 'i-vscode-icons-file-type-html'
 		case 'css':
 		case 'scss':
 		case 'less':
-			return 'i-simple-icons-css3 text-blue-400'
+			return 'i-vscode-icons-file-type-css'
 		case 'json':
-			return 'i-simple-icons-json text-amber-400'
+			return 'i-vscode-icons-file-type-json'
 		case 'yaml':
 		case 'yml':
-			return 'i-simple-icons-yaml text-red-400'
+			return 'i-vscode-icons-file-type-yaml'
 		case 'md':
 		case 'mdc':
 		case 'markdown':
-			return 'i-simple-icons-markdown text-slate-300'
+			return 'i-vscode-icons-file-type-markdown'
 		case 'sh':
 		case 'bash':
 		case 'zsh':
 		case 'shell':
 		case 'terminal':
-			return 'i-lucide-terminal text-emerald-400'
+			return 'i-vscode-icons-file-type-shell'
 		case 'py':
 		case 'python':
-			return 'i-simple-icons-python text-yellow-300'
-		case 'go':
-			return 'i-simple-icons-go text-cyan-400'
+			return 'i-vscode-icons-file-type-python'
 		case 'rs':
 		case 'rust':
-			return 'i-simple-icons-rust text-orange-400'
+			return 'i-vscode-icons-file-type-rust'
+		case 'graphql':
+		case 'gql':
+			return 'i-vscode-icons-file-type-graphql'
+		case 'docker':
+		case 'dockerfile':
+			return 'i-vscode-icons-file-type-docker'
 		case 'diff':
-			return 'i-lucide-git-compare text-indigo-400'
+			return 'i-vscode-icons-file-type-git'
 		default:
-			return 'i-lucide-file-code text-slate-400'
+			return 'i-vscode-icons-default-file'
 	}
 })
 
@@ -103,9 +127,9 @@ function handleCopy() {
 </script>
 
 <template>
-	<div class="group relative my-6 overflow-hidden border border-slate-800/80 rounded-2xl bg-[#0f172a] shadow-xl transition-all duration-300 prose-code-block dark:border-[#134e43]/60 dark:bg-[#001412]">
+	<div class="group relative my-6 overflow-hidden border border-[#115e4f]/30 rounded-2xl bg-[#042f27] shadow-xl transition-all duration-300 prose-code-block dark:border-[#134e43]/60 dark:bg-[#001412]">
 		<!-- Code Block Header (File Info & Copy Button) -->
-		<div class="flex select-none items-center justify-between border-b border-slate-800 bg-slate-900/90 px-4 py-2.5 text-xs font-mono dark:border-[#134e43]/50 dark:bg-[#001c19]/90">
+		<div class="flex select-none items-center justify-between border-b border-[#115e4f]/40 bg-[#02211c]/95 px-4 py-2.5 text-xs font-mono dark:border-[#134e43]/50 dark:bg-[#001c19]/90">
 			<!-- Left: File Icon & Filename & Language Tag -->
 			<div class="min-w-0 flex items-center gap-2.5">
 				<span
@@ -114,13 +138,13 @@ function handleCopy() {
 				/>
 				<span
 					v-if="resolvedFilename"
-					class="truncate text-xs text-slate-200 font-medium"
+					class="truncate text-xs text-brand-100 font-medium"
 				>
 					{{ resolvedFilename }}
 				</span>
 				<span
 					v-if="displayLanguage"
-					class="rounded-md bg-white/10 px-1.5 py-0.5 text-[10px] text-slate-300 font-semibold tracking-wider uppercase"
+					class="border border-brand-500/30 rounded-md bg-brand-500/15 px-1.5 py-0.5 text-[10px] text-brand-300 font-semibold tracking-wider uppercase"
 				>
 					{{ displayLanguage }}
 				</span>
@@ -129,7 +153,7 @@ function handleCopy() {
 			<!-- Right: Copy Code Button -->
 			<button
 				type="button"
-				class="flex cursor-pointer items-center gap-1.5 border border-white/10 rounded-lg bg-slate-800 px-2.5 py-1 text-xs text-slate-300 transition-all dark:bg-white/10 hover:bg-slate-700 hover:text-white focus:outline-none focus:ring-1 focus:ring-brand-500/50 dark:hover:bg-white/15"
+				class="flex cursor-pointer items-center gap-1.5 border border-brand-500/30 rounded-lg bg-brand-900/70 px-2.5 py-1 text-xs text-brand-200 transition-all dark:border-white/10 dark:bg-white/10 hover:bg-brand-800 hover:text-white focus:outline-none focus:ring-1 focus:ring-brand-400/50 dark:hover:bg-white/15"
 				:aria-label="copied ? 'Copied to clipboard' : 'Copy code to clipboard'"
 				@click="handleCopy"
 			>
@@ -144,8 +168,11 @@ function handleCopy() {
 		</div>
 
 		<!-- Pre / Code Slot Container with Shiki Syntax Highlighting -->
-		<div class="custom-scrollbar relative overflow-x-auto p-4 text-[13px] text-slate-100 leading-relaxed font-mono sm:text-sm">
-			<slot />
+		<div class="custom-scrollbar relative overflow-x-auto p-4 text-[13px] leading-relaxed font-mono sm:text-sm">
+			<pre
+				:class="props.class"
+				:style="props.style"
+			><slot /></pre>
 		</div>
 	</div>
 </template>
@@ -173,6 +200,8 @@ function handleCopy() {
 	border: none !important;
 	font-family: inherit !important;
 	overflow-x: visible !important;
+	white-space: pre !important;
+	word-wrap: normal !important;
 }
 
 :deep(code) {
@@ -181,6 +210,27 @@ function handleCopy() {
 	border: none !important;
 	font-family: inherit !important;
 	font-size: inherit !important;
-	color: inherit !important;
+	display: block !important;
+	white-space: pre !important;
+	word-wrap: normal !important;
+}
+
+:deep(.shiki span),
+:deep(pre span) {
+	color: var(--shiki-dark, inherit);
+}
+
+:deep(.line) {
+	display: block !important;
+	min-height: 1.5rem;
+}
+
+:deep(.line.highlight) {
+	background-color: rgba(20, 184, 152, 0.15) !important;
+	margin-left: -1rem;
+	margin-right: -1rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	border-left: 2px solid #14b898;
 }
 </style>

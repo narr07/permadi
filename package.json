@@ -39,6 +39,7 @@
 		"@iconify-json/hugeicons": "^1.2.32",
 		"@iconify-json/lucide": "^1.2.123",
 		"@iconify-json/simple-icons": "^1.2.93",
+		"@iconify-json/vscode-icons": "^1.2.73",
 		"@nuxt/eslint": "^1.17.0",
 		"@nuxtjs/color-mode": "^4.0.1",
 		"@resvg/resvg-wasm": "^2.6.2",

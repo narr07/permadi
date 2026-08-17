@@ -10,8 +10,8 @@ const selectedIndex = ref(-1)
 // Koleksi aktif berdasarkan bahasa
 const collections = computed(() => {
 	return locale.value === 'id'
-		? (['blog_id', 'projek_id', 'pages_id'] as const)
-		: (['blog_en', 'projek_en', 'pages_en'] as const)
+		? (['blog_id', 'projek_id', 'home_id', 'tentang_id', 'kontak_id', 'pages_id'] as const)
+		: (['blog_en', 'projek_en', 'home_en', 'tentang_en', 'kontak_en', 'pages_en'] as const)
 })
 
 // Composable resmi Nuxt Content: useSearchCollection
