@@ -285,141 +285,193 @@ defineOgImage('Bento', {
 				v-for="(item, index) in filteredProjects"
 				:key="item.url"
 				:to="item.url"
-				class="bento-card-clean group block flex flex-col justify-between overflow-hidden p-5 sm:p-6"
+				class="bento-card-clean group block flex flex-col justify-between overflow-hidden transition-all duration-300"
 				:class="index === 0 && selectedTag === 'ALL'
-					? 'lg:col-span-2 sm:col-span-2 md:flex-row md:items-center md:gap-6 bg-brand-900 dark:bg-brand-200 border-brand-800 dark:border-brand-300 shadow-md'
-					: 'col-span-1'"
+					? 'lg:col-span-3 sm:col-span-2 col-span-1 p-6 sm:p-7 lg:p-8 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/30 dark:from-[#002b27] dark:via-[#002420] dark:to-[#001916] border-brand-300/70 dark:border-brand-700/60 shadow-lg shadow-brand-950/5'
+					: 'col-span-1 p-5 sm:p-6 bg-white dark:bg-[#002b27] border-slate-200/80 dark:border-slate-800/80 hover:border-brand-500/80 dark:hover:border-brand-400/80'"
 			>
-				<!-- Thumbnail (Hanya 1 Gambar) -->
-				<div
-					v-if="item.image || (item.images && item.images[0])"
-					class="mb-4 aspect-video shrink-0 overflow-hidden border border-slate-200/50 rounded-bento bg-slate-100 dark:border-slate-800/50 dark:bg-slate-800"
-					:class="index === 0 && selectedTag === 'ALL' ? 'md:mb-0 md:w-1/2' : 'w-full'"
-				>
-					<NuxtImg
-						:src="item.image || item.images[0]"
-						:alt="item.title"
-						format="webp"
-						quality="85"
-						class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-						loading="lazy"
-					/>
-				</div>
+				<!-- Hero Featured Layout (Ketika Item Pertama & Filter ALL) -->
+				<template v-if="index === 0 && selectedTag === 'ALL'">
+					<div class="grid grid-cols-1 w-full items-center gap-6 lg:grid-cols-12 md:grid-cols-12 sm:gap-8">
+						<!-- Thumbnail Featured Showcase -->
+						<div
+							v-if="item.image || (item.images && item.images[0])"
+							class="aspect-video w-full overflow-hidden border border-brand-200/70 rounded-2xl bg-slate-100 shadow-sm lg:col-span-7 md:col-span-6 dark:border-brand-800/50 dark:bg-slate-900/60"
+						>
+							<NuxtImg
+								:src="item.image || item.images[0]"
+								:alt="item.title"
+								format="webp"
+								quality="85"
+								class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+								loading="lazy"
+							/>
+						</div>
 
-				<!-- Content & Details -->
-				<div
-					class="flex flex-1 flex-col justify-between"
-					:class="index === 0 && selectedTag === 'ALL' ? 'md:py-2' : ''"
-				>
-					<div>
-						<div class="mb-2.5 flex items-center justify-between gap-2">
-							<div class="min-w-0 flex items-center gap-1.5 overflow-hidden">
-								<span
-									v-if="index === 0 && selectedTag === 'ALL'"
-									class="inline-flex shrink-0 items-center gap-1 border border-brand-700 rounded-full bg-brand-800/90 px-2.5 py-0.5 text-[11px] text-brand-200 font-semibold dark:border-brand-400/80 dark:bg-brand-300/90 dark:text-brand-950"
-								>
-									<span class="i-hugeicons-sparkles text-[11px]" />
-									{{ locale === 'id' ? 'Terbaru' : 'Latest' }}
+						<!-- Details Featured Showcase -->
+						<div class="flex flex-1 flex-col justify-between lg:col-span-5 md:col-span-6">
+							<div>
+								<!-- Header Badges & Date -->
+								<div class="mb-3.5 flex flex-wrap items-center justify-between gap-2">
+									<div class="flex flex-wrap items-center gap-1.5">
+										<span class="inline-flex shrink-0 items-center gap-1 border border-brand-300 rounded-full bg-brand-500 px-2.5 py-0.5 text-[11px] text-white font-bold dark:border-brand-600 dark:bg-brand-600">
+											<span class="i-hugeicons-sparkles text-[11px]" />
+											{{ locale === 'id' ? 'Terbaru' : 'Latest' }}
+										</span>
+
+										<span
+											v-if="item.category"
+											class="inline-flex shrink-0 items-center border border-brand-200/80 rounded-full bg-brand-50 px-2.5 py-0.5 text-[11px] text-brand-800 font-semibold tracking-wide uppercase dark:border-brand-700/60 dark:bg-brand-950/80 dark:text-brand-300"
+										>
+											{{ getCategoryLabel(item.category) }}
+										</span>
+
+										<span
+											v-for="tag in (item.tags || item.tech || []).slice(0, 3)"
+											:key="tag"
+											class="inline-flex items-center border border-slate-200/70 rounded-full bg-slate-100/80 px-2 py-0.5 text-[11px] text-slate-700 font-medium dark:border-slate-700/60 dark:bg-slate-800/80 dark:text-slate-300"
+										>
+											#{{ tag }}
+										</span>
+									</div>
+
+									<span class="text-xs text-slate-500 font-mono dark:text-slate-400">
+										{{ item.date }}
+									</span>
+								</div>
+
+								<!-- Title -->
+								<h2 class="text-xl text-slate-900 font-bold font-heading transition-colors duration-200 lg:text-3xl sm:text-2xl dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-300">
+									{{ item.title }}
+								</h2>
+
+								<!-- Description -->
+								<p class="mt-3 text-sm text-slate-600 leading-relaxed dark:text-slate-300 line-clamp-3 sm:line-clamp-4">
+									{{ item.description }}
+								</p>
+							</div>
+
+							<!-- Action Links Footer -->
+							<div class="mt-6 flex items-center justify-between border-t border-slate-200/70 pt-4 text-xs dark:border-slate-700/60">
+								<span class="flex items-center gap-1.5 text-brand-700 font-bold transition-all dark:text-brand-400 group-hover:translate-x-1">
+									{{ locale === 'id' ? 'Lihat Studi Kasus' : 'Explore Case Study' }} <span>↗</span>
 								</span>
-
-								<!-- Category Badge -->
-								<span
-									v-if="item.category"
-									class="inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-[11px] font-semibold tracking-wide uppercase"
-									:class="index === 0 && selectedTag === 'ALL'
-										? 'bg-brand-800 text-brand-200 dark:bg-brand-300 dark:text-brand-950 border border-brand-700'
-										: 'bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-300 border border-brand-200/60 dark:border-brand-800/60'"
+								<div
+									v-if="item.demoUrl || item.link || item.githubUrl || item.repo"
+									class="flex items-center gap-2"
+									@click.stop
 								>
-									{{ getCategoryLabel(item.category) }}
-								</span>
+									<a
+										v-if="item.githubUrl || item.repo"
+										:href="item.githubUrl || item.repo"
+										target="_blank"
+										rel="noopener"
+										class="icon-btn !h-8 !w-8 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+										aria-label="GitHub Repository"
+									>
+										<span class="i-hugeicons-github text-sm" />
+									</a>
+									<a
+										v-if="item.demoUrl || item.link"
+										:href="item.demoUrl || item.link"
+										target="_blank"
+										rel="noopener"
+										class="icon-btn !h-8 !w-8 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+										aria-label="Live Demo"
+									>
+										<span class="i-hugeicons-link-square-02 text-sm" />
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</template>
 
-								<span
-									v-for="(tag, tIdx) in (item.tags || item.tech || []).slice(0, 3)"
-									:key="tag"
-									class="truncate rounded-full px-2 py-0.5 text-[11px] font-medium"
-									:class="[
-										index === 0 && selectedTag === 'ALL'
-											? 'bg-brand-800/70 dark:bg-brand-300/70 text-brand-200 dark:text-brand-950 border border-brand-700/70 dark:border-brand-400/60'
-											: 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300',
-										tIdx > (index === 0 && selectedTag === 'ALL' ? 0 : 1) ? 'hidden sm:inline-block' : '',
-									]"
-								>
-									{{ tag }}
+				<!-- Standard Card Layout (Untuk Projek Lainnya) -->
+				<template v-else>
+					<!-- Thumbnail -->
+					<div
+						v-if="item.image || (item.images && item.images[0])"
+						class="mb-4 aspect-video w-full shrink-0 overflow-hidden border border-slate-200/50 rounded-xl bg-slate-100 dark:border-slate-800/50 dark:bg-slate-800"
+					>
+						<NuxtImg
+							:src="item.image || item.images[0]"
+							:alt="item.title"
+							format="webp"
+							quality="85"
+							class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+							loading="lazy"
+						/>
+					</div>
+
+					<!-- Content & Details -->
+					<div class="flex flex-1 flex-col justify-between">
+						<div>
+							<div class="mb-2.5 flex items-center justify-between gap-2">
+								<div class="min-w-0 flex items-center gap-1.5 overflow-hidden">
+									<span
+										v-if="item.category"
+										class="inline-flex shrink-0 items-center border border-brand-200/60 rounded-full bg-brand-100 px-2 py-0.5 text-[11px] text-brand-800 font-semibold tracking-wide uppercase dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300"
+									>
+										{{ getCategoryLabel(item.category) }}
+									</span>
+
+									<span
+										v-for="(tag, tIdx) in (item.tags || item.tech || []).slice(0, 2)"
+										:key="tag"
+										class="truncate rounded-full bg-slate-100 px-2 py-0.5 text-[11px] text-slate-700 font-medium dark:bg-slate-800 dark:text-slate-300"
+										:class="tIdx > 0 ? 'hidden sm:inline-block' : ''"
+									>
+										#{{ tag }}
+									</span>
+								</div>
+								<span class="shrink-0 text-[11px] text-slate-500 font-mono dark:text-slate-400">
+									{{ item.date }}
 								</span>
 							</div>
-							<span
-								class="shrink-0 text-[11px] font-mono"
-								:class="index === 0 && selectedTag === 'ALL'
-									? 'text-brand-300 dark:text-brand-800 font-medium'
-									: 'text-slate-600 dark:text-slate-400'"
-							>
-								{{ item.date }}
+
+							<h2 class="text-base text-brand-950 font-bold font-heading leading-snug tracking-normal transition-colors duration-200 sm:text-lg dark:text-brand-100 group-hover:text-brand-700 dark:group-hover:text-yellow-500">
+								{{ item.title }}
+							</h2>
+
+							<p class="mt-2 text-xs text-slate-600 leading-relaxed sm:text-sm dark:text-slate-300 line-clamp-3">
+								{{ item.description }}
+							</p>
+						</div>
+
+						<div class="mt-5 flex items-center justify-between border-t border-slate-200/60 pt-3.5 text-xs dark:border-slate-800/60">
+							<span class="flex items-center gap-1 text-brand-800 font-bold transition-all dark:text-brand-400 group-hover:translate-x-1 group-hover:text-brand-950 dark:group-hover:text-yellow-500">
+								{{ locale === 'id' ? 'Lihat Studi Kasus' : 'Explore Case Study' }} <span>↗</span>
 							</span>
-						</div>
-
-						<h2
-							class="line-clamp-2 text-lg font-bold leading-snug tracking-normal font-heading transition-colors duration-200 sm:text-xl"
-							:class="index === 0 && selectedTag === 'ALL'
-								? 'text-white dark:text-brand-950 group-hover:text-yellow-400 dark:group-hover:text-brand-700 md:text-2xl lg:text-3xl'
-								: 'text-brand-950 dark:text-brand-100 group-hover:text-brand-900 dark:group-hover:text-yellow-600'"
-						>
-							{{ item.title }}
-						</h2>
-
-						<p
-							class="line-clamp-3 mt-2 text-xs leading-relaxed sm:text-sm"
-							:class="index === 0 && selectedTag === 'ALL'
-								? 'text-brand-200/90 dark:text-brand-900/90'
-								: 'text-slate-700 dark:text-slate-300'"
-						>
-							{{ item.description }}
-						</p>
-					</div>
-
-					<div
-						class="mt-5 flex items-center justify-between border-t pt-3.5 text-xs"
-						:class="index === 0 && selectedTag === 'ALL'
-							? 'border-brand-800/80 dark:border-brand-300/80'
-							: 'border-slate-200/60 dark:border-slate-800/60'"
-					>
-						<span
-							class="flex items-center gap-1 font-bold transition-all group-hover:translate-x-1"
-							:class="index === 0 && selectedTag === 'ALL'
-								? 'text-white dark:text-brand-950 group-hover:text-yellow-400 dark:group-hover:text-brand-700'
-								: 'text-brand-800 dark:text-brand-400 group-hover:text-brand-950 dark:group-hover:text-yellow-600'"
-						>
-							{{ locale === 'id' ? 'Lihat Studi Kasus' : 'Explore Case Study' }} <span>↗</span>
-						</span>
-						<div
-							v-if="item.demoUrl || item.link || item.githubUrl || item.repo"
-							class="flex items-center gap-2"
-							@click.stop
-						>
-							<a
-								v-if="item.githubUrl || item.repo"
-								:href="item.githubUrl || item.repo"
-								target="_blank"
-								rel="noopener"
-								class="icon-btn !h-7 !w-7"
-								:class="index === 0 && selectedTag === 'ALL' ? 'text-brand-200 dark:text-brand-900 hover:bg-white/10 dark:hover:bg-black/10' : ''"
-								aria-label="GitHub Repository"
+							<div
+								v-if="item.demoUrl || item.link || item.githubUrl || item.repo"
+								class="flex items-center gap-2"
+								@click.stop
 							>
-								<span class="i-hugeicons-github text-xs" />
-							</a>
-							<a
-								v-if="item.demoUrl || item.link"
-								:href="item.demoUrl || item.link"
-								target="_blank"
-								rel="noopener"
-								class="icon-btn !h-7 !w-7"
-								:class="index === 0 && selectedTag === 'ALL' ? 'text-brand-200 dark:text-brand-900 hover:bg-white/10 dark:hover:bg-black/10' : ''"
-								aria-label="Live Demo"
-							>
-								<span class="i-hugeicons-link-square-02 text-xs" />
-							</a>
+								<a
+									v-if="item.githubUrl || item.repo"
+									:href="item.githubUrl || item.repo"
+									target="_blank"
+									rel="noopener"
+									class="icon-btn !h-7 !w-7"
+									aria-label="GitHub Repository"
+								>
+									<span class="i-hugeicons-github text-xs" />
+								</a>
+								<a
+									v-if="item.demoUrl || item.link"
+									:href="item.demoUrl || item.link"
+									target="_blank"
+									rel="noopener"
+									class="icon-btn !h-7 !w-7"
+									aria-label="Live Demo"
+								>
+									<span class="i-hugeicons-link-square-02 text-xs" />
+								</a>
+							</div>
 						</div>
 					</div>
-				</div>
+				</template>
 			</NuxtLink>
 		</div>
 

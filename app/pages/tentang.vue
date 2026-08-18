@@ -157,7 +157,7 @@ defineOgImage('Bento', {
 					<span class="mb-2 block text-xs text-slate-800 font-semibold tracking-wider font-mono uppercase">
 						{{ locale === 'id' ? 'Lokasi & Zona Waktu' : 'Location & Timezone' }}
 					</span>
-					<h3 class="mb-2 text-2xl text-slate-900 font-semibold font-heading">
+					<h3 class="mb-2 text-2xl text-brand-950 font-semibold font-heading dark:text-brand-950">
 						Majalengka, Indonesia
 					</h3>
 					<p class="text-xs text-slate-800 leading-relaxed sm:text-sm">
