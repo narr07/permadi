@@ -50,12 +50,20 @@ function getClientIp(event: any): string {
 	return '127.0.0.1'
 }
 
-async function buildDynamicSystemInstruction(event: any, locale: 'id' | 'en'): Promise<string> {
+interface CurrentContext {
+	path?: string
+	title?: string
+	url?: string
+	content?: string
+}
+
+async function buildDynamicSystemInstruction(event: any, locale: 'id' | 'en', currentContext?: CurrentContext): Promise<string> {
 	const isIndonesian = locale === 'id'
 	const domain = 'https://permadi.dev'
 
 	let projectsList = ''
 	let articlesList = ''
+	let activeContextSection = ''
 
 	try {
 		const projectCollection = isIndonesian ? 'projek_id' : 'projek_en'
@@ -83,6 +91,50 @@ async function buildDynamicSystemInstruction(event: any, locale: 'id' | 'en'): P
 			const rawContent = a.plainText ? `\n   - Isi Materi & Gagasan: ${a.plainText.slice(0, 2000)}` : ''
 			return `### ${i + 1}. [${a.title}](${url})${cat}\n   - Deskripsi: ${desc}${rawContent}`
 		}).join('\n\n')
+
+		// 🔍 Deteksi & Tangkap Seluruh Halaman yang Sedang Dibuka Pengunjung (Apapun Halamannya)
+		if (currentContext?.path || currentContext?.content) {
+			const cleanPath = (currentContext.path || '').split('?')[0].split('#')[0]
+			const segments = cleanPath.split('/').filter(Boolean)
+			const slug = segments[segments.length - 1] || ''
+
+			// Cocokkan dengan artikel atau projek jika ada
+			const matchedArticle = articles.find((a: any) => {
+				return a.slug === slug
+					|| (a.path && (a.path.endsWith(`/${slug}`) || a.path.includes(slug)))
+					|| (a.stem && a.stem.includes(slug))
+			})
+
+			const matchedProject = !matchedArticle ? projects.find((p: any) => {
+				return p.slug === slug
+					|| (p.path && (p.path.endsWith(`/${slug}`) || p.path.includes(slug)))
+					|| (p.stem && p.stem.includes(slug))
+			}) : null
+
+			const pageTitle = currentContext.title || matchedArticle?.title || matchedProject?.title || 'Halaman Website'
+			const pageUrl = currentContext.url || `${domain}${cleanPath}`
+			const rawPageContent = currentContext.content || matchedArticle?.plainText || matchedProject?.plainText || ''
+
+			activeContextSection = isIndonesian
+				? `\n\n📌 REAL-TIME KONTEKS: HALAMAN & TAMPILAN YANG SEDANG DIAKSES PENGUNJUNG SAAT INI:
+- URL / Lokasi Halaman: ${pageUrl} (Path: ${cleanPath})
+- Judul Halaman Browser: "${pageTitle}"
+${matchedArticle ? `- Tipe Halaman: Artikel Blog (${matchedArticle.category || 'Umum'})` : ''}
+${matchedProject ? `- Tipe Halaman: Portofolio Projek (${matchedProject.category || 'Web App'})` : ''}
+- Teks & Informasi Lengkap yang Sedang Tampil di Layar Pengunjung:
+"""
+${rawPageContent}
+"""`
+				: `\n\n📌 REAL-TIME CONTEXT: THE EXACT PAGE & SCREEN CURRENTLY ACCESSED BY THE VISITOR:
+- Page URL / Location: ${pageUrl} (Path: ${cleanPath})
+- Page Title: "${pageTitle}"
+${matchedArticle ? `- Page Type: Blog Article (${matchedArticle.category || 'General'})` : ''}
+${matchedProject ? `- Page Type: Portfolio Project (${matchedProject.category || 'Web App'})` : ''}
+- Full Text & Information Visible on the Visitor's Screen:
+"""
+${rawPageContent}
+"""`
+		}
 	}
 	catch (err) {
 		console.warn('Gagal mengambil data dinamis dari Nuxt Content:', err)
@@ -106,6 +158,7 @@ KEAHLIAN TEKNIS & TECH STACK:
 - Frontend: Nuxt 4, Vue 3, Vite, UnoCSS, Tailwind CSS, TypeScript.
 - Konten & Database: Nuxt Content v3, Cloudflare D1 (SQLite), Nuxt Studio.
 - Arsitektur: Cloudflare Pages Edge SSG, Model Context Protocol (MCP), RSS/Atom Feeds.
+${activeContextSection}
 
 DATABASE PENGETAHUAN LENGKAP DARI ARTIKEL BLOG PERMADI (RAW CONTENT):
 ${articlesList}
@@ -114,10 +167,18 @@ DATABASE PENGETAHUAN LENGKAP DARI STUDI KASUS PROJEK (RAW CONTENT):
 ${projectsList}
 
 PANDUAN MENJAWAB:
-1. Jika pengunjung bertanya tentang materi mendalam yang dibahas di blog (seperti: perbedaan format font TTF vs OTF, jenis-jenis font, metode Accelerated Learning, cara belajar cepat, RPP Kurikulum Merdeka, tipografi rasio emas), JAWAB DENGAN MENDALAM DAN AKURAT menggunakan isi materi dari database di atas.
-2. Selalu sertakan tautan artikel/projek terkait menggunakan format Markdown ([Judul](url)) agar pengunjung bisa membaca tulisan aslinya.
-3. Gunakan format Markdown rapi: heading kecil (###), daftar poin (bullet points), dan teks tebal (**bold**).
-4. Tolak dengan sopan jika ditanya hal di luar karya/website Permadi.`
+1. KESADARAN HALAMAN REAL-TIME (REAL-TIME CONTEXT AWARENESS):
+   - Anda SELALU TAHU halaman apa yang sedang dibuka oleh user (apakah Beranda, Tentang Saya, Kontak, Galeri, List Blog, Detail Artikel tertentu, atau Detail Projek tertentu).
+   - Jika user bertanya hal kontekstual seperti:
+     * "halaman apa ini?" / "saya sedang buka apa?"
+     * "inti dari halaman ini apa?" / "rangkum halaman ini"
+     * "siapa yang diceritakan di sini?" / "ada info apa saja di halaman ini?"
+     * atau pertanyaan apapun yang merujuk pada halaman saat ini tanpa menyebut judul secara spesifik,
+     👉 JAWAB SECARA CERDAS DAN LANGSUNG berdasarkan teks pada "REAL-TIME KONTEKS" di atas!
+2. Jika user bertanya materi umum atau mencari artikel/projek lain di luar halaman saat ini, gunakan database pengetahuan di atas.
+3. Selalu sertakan tautan artikel/projek terkait ([Judul](url)) jika relevan.
+4. Gunakan format Markdown rapi: heading kecil (###), daftar poin (bullet points), dan teks tebal (**bold**).
+5. Tolak dengan sopan jika ditanya hal di luar karya/website Permadi.`
 	}
 
 	return `You are "Permadi AI Assistant", the official intelligent portfolio assistant for Dinar Permadi Yusup (known as Permadi).
@@ -132,6 +193,7 @@ ABOUT DINAR PERMADI YUSUP:
 - GitHub: https://github.com/narr07
 - X / Twitter: https://x.com/dinarpermadi07
 - Core Principles: Bento Grid aesthetics, Golden Ratio typography scaling, high contrast accessibility (WCAG AA), performance-first engineering.
+${activeContextSection}
 
 COMPLETE KNOWLEDGE BASE FROM PERMADI'S BLOG ARTICLES (RAW CONTENT):
 ${articlesList}
@@ -140,10 +202,14 @@ COMPLETE KNOWLEDGE BASE FROM PROJECT CASE STUDIES (RAW CONTENT):
 ${projectsList}
 
 ANSWERING GUIDELINES:
-1. When visitors ask deep or specific questions regarding topics covered in the articles (e.g. TTF vs OTF font history, typography rules, Accelerated Learning methods, Merdeka Curriculum, technical Nuxt 4 details), ANSWER IN-DEPTH AND ACCURATELY based on the raw content provided in the database above.
-2. Always provide relevant clickable markdown links ([Title](url)) pointing to the respective article or project so visitors can read the original post.
-3. Format with clean GitHub Markdown (headings, bullet points, bold highlights).
-4. Strictly focus on Permadi's portfolio, articles, skills, and projects. Politely decline unrelated general queries.`
+1. REAL-TIME CONTEXT AWARENESS (HIGH PRIORITY):
+   - You ALWAYS know which page the visitor is currently looking at (Home, About, Contact, Gallery, Blog post, Project case study, etc.).
+   - When visitors ask contextual questions such as "what page is this?", "what is the core summary of this page?", "summarize this page", "what info is on this screen?", or any question referring to the active page:
+     👉 ANSWER DIRECTLY AND ACCURATELY based on the "REAL-TIME CONTEXT" text provided above!
+2. When visitors ask deep or general questions about other articles or projects, answer based on the knowledge base above.
+3. Always provide relevant clickable markdown links ([Title](url)).
+4. Format with clean GitHub Markdown (headings, bullet points, bold highlights).
+5. Strictly focus on Permadi's portfolio, articles, skills, and projects.`
 }
 
 export default defineEventHandler(async (event) => {
@@ -160,6 +226,7 @@ export default defineEventHandler(async (event) => {
 	const body = await readBody(event)
 	const messages = body?.messages || []
 	const locale: 'id' | 'en' = body?.locale === 'en' ? 'en' : 'id'
+	const currentContext: CurrentContext | undefined = body?.currentContext
 
 	if (!Array.isArray(messages) || messages.length === 0) {
 		throw createError({
@@ -182,8 +249,8 @@ export default defineEventHandler(async (event) => {
 		})
 	}
 
-	// Bangun system instruction dinamis berisi seluruh raw content artikel & projek
-	const systemInstruction = await buildDynamicSystemInstruction(event, locale)
+	// Bangun system instruction dinamis berisi seluruh raw content artikel & projek + halaman aktif
+	const systemInstruction = await buildDynamicSystemInstruction(event, locale, currentContext)
 
 	// Format percakapan untuk Gemini REST API
 	const contents = messages.map((m: { role: string, content: string }) => ({

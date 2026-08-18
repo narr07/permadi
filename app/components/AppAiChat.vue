@@ -14,6 +14,7 @@ interface Message {
 	timestamp: Date
 }
 
+const route = useRoute()
 const { locale } = useI18n()
 const { isOpen, toggleAiChat } = useAiChat()
 const inputPrompt = ref('')
@@ -134,6 +135,35 @@ async function shareMessage(msg: Message) {
 	}
 }
 
+function getCurrentPageContext() {
+	if (typeof window === 'undefined' || typeof document === 'undefined') {
+		return {
+			path: route.fullPath,
+			title: '',
+			url: '',
+			content: '',
+		}
+	}
+
+	const mainEl = document.querySelector('main')
+	let pageText = ''
+	if (mainEl) {
+		const clone = mainEl.cloneNode(true) as HTMLElement
+		clone.querySelectorAll('script, style, svg').forEach(el => el.remove())
+		pageText = (clone.innerText || clone.textContent || '')
+			.replace(/\s+/g, ' ')
+			.trim()
+			.slice(0, 4500)
+	}
+
+	return {
+		path: route.fullPath,
+		title: document.title || '',
+		url: window.location.href,
+		content: pageText,
+	}
+}
+
 async function sendMessage(customText?: string) {
 	const textToSend = (customText || inputPrompt.value).trim()
 	if (!textToSend || isLoading.value)
@@ -165,6 +195,7 @@ async function sendMessage(customText?: string) {
 			body: {
 				messages: payloadMessages,
 				locale: locale.value,
+				currentContext: getCurrentPageContext(),
 			},
 		})
 
