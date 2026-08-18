@@ -542,7 +542,7 @@ html.dark .shiki span,
 	border-top-color: #134e43 !important;
 }
 
-/* Native Browser View Transitions API */
+/* Native Browser View Transitions API
 ::view-transition-old(root),
 ::view-transition-new(root) {
 	animation-duration: 0.25s;
@@ -555,5 +555,5 @@ html.dark .shiki span,
 	::view-transition-new(*) {
 		animation: none !important;
 	}
-}
+} */
 

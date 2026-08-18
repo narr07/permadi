@@ -9,6 +9,7 @@
 		"preview": "nuxt preview",
 		"prepare": "nuxt prepare",
 		"convert:webp": "bun scripts/convert-webp.ts",
+		"research": "bun scripts/research-trends.ts",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix"
 	},
