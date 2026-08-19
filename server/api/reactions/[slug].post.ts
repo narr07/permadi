@@ -89,7 +89,7 @@ export default defineEventHandler(async (event) => {
 		console.error('Error saving reaction to NuxtHub D1:', error)
 		throw createError({
 			statusCode: 500,
-			statusMessage: 'Failed to record reaction',
+			statusMessage: error?.message || 'Failed to record reaction',
 		})
 	}
 })

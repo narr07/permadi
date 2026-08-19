@@ -164,6 +164,10 @@ export default defineNuxtConfig({
 		},
 	},
 	content: {
+		database: {
+			type: 'd1',
+			bindingName: 'DB',
+		},
 		build: {
 			markdown: {
 				highlight: {
@@ -321,12 +325,6 @@ export default defineNuxtConfig({
 			headers: {
 				'Cache-Control': 'public, max-age=604800, s-maxage=86400, stale-while-revalidate=86400',
 			},
-		},
-	},
-	content: {
-		database: {
-			type: 'd1',
-			bindingName: 'DB',
 		},
 	},
 	nitro: {
