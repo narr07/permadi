@@ -109,6 +109,7 @@ tags:
 4. **Komponen MDC Pendukung**:
    - `::steps` (jika ada tutorial bertahap, tanpa nomor di judul `###`).
    - `::tip`, `::note`, atau `::warning` untuk peringatan praktis / kesalahan umum lapangan.
+   - ````mermaid ``` ````: Jika membuat diagram alur, **WAJIB gunakan `graph TD` (vertikal ke bawah)** agar teks selalu besar, jelas, dan proporsional di layar mobile maupun desktop.
 5. **Kesimpulan (`::conclusion`)**: Bukan sekadar rangkuman ulang, melainkan **Panduan Keputusan Aksi (*Actionable Decision Framework*)**.
 6. **FAQ Accordion (`::faq`)**: 3–5 pertanyaan riil yang sering ditanyakan pencari Google, dijawab dengan lugas & to-the-point via `::faq-item{question="..."}`.
 
