@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 const props = defineProps<{
 	code: string
@@ -21,12 +21,12 @@ async function renderDiagram() {
 	try {
 		let mermaid: any
 		try {
-			// @ts-ignore
+			// @ts-expect-error dynamic CDN import
 			const m = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs')
 			mermaid = m.default || m
 		}
 		catch {
-			// @ts-ignore
+			// @ts-expect-error dynamic fallback import
 			mermaid = (await import('mermaid')).default
 		}
 
@@ -96,7 +96,7 @@ watch(() => props.code, () => {
 				<span class="i-lucide-alert-triangle text-amber-400" />
 				<span>Diagram Mermaid tidak valid:</span>
 			</div>
-			<p class="mt-1 text-[11px] opacity-80 font-mono">
+			<p class="mt-1 text-[11px] font-mono opacity-80">
 				{{ errorMessage }}
 			</p>
 		</div>

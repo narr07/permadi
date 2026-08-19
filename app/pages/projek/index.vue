@@ -346,14 +346,14 @@ defineOgImage('Bento', {
 								</h2>
 
 								<!-- Description -->
-								<p class="mt-3 text-sm text-slate-600 leading-relaxed dark:text-slate-300 line-clamp-3 sm:line-clamp-4">
+								<p class="line-clamp-3 mt-3 text-sm text-slate-600 leading-relaxed sm:line-clamp-4 dark:text-slate-300">
 									{{ item.description }}
 								</p>
 							</div>
 
 							<!-- Action Links Footer -->
 							<div class="mt-6 flex items-center justify-between border-t border-slate-200/70 pt-4 text-xs dark:border-slate-700/60">
-								<span class="flex items-center gap-1.5 text-brand-700 font-bold transition-all dark:text-brand-400 group-hover:translate-x-1">
+								<span class="flex items-center gap-1.5 text-brand-700 font-bold transition-all group-hover:translate-x-1 dark:text-brand-400">
 									{{ locale === 'id' ? 'Lihat Studi Kasus' : 'Explore Case Study' }} <span>↗</span>
 								</span>
 								<div
@@ -366,7 +366,7 @@ defineOgImage('Bento', {
 										:href="item.githubUrl || item.repo"
 										target="_blank"
 										rel="noopener"
-										class="icon-btn !h-8 !w-8 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+										class="icon-btn text-slate-600 !h-8 !w-8 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
 										aria-label="GitHub Repository"
 									>
 										<span class="i-hugeicons-github text-sm" />
@@ -376,7 +376,7 @@ defineOgImage('Bento', {
 										:href="item.demoUrl || item.link"
 										target="_blank"
 										rel="noopener"
-										class="icon-btn !h-8 !w-8 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+										class="icon-btn text-slate-600 !h-8 !w-8 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
 										aria-label="Live Demo"
 									>
 										<span class="i-hugeicons-link-square-02 text-sm" />
@@ -430,17 +430,17 @@ defineOgImage('Bento', {
 								</span>
 							</div>
 
-							<h2 class="text-base text-brand-950 font-bold font-heading leading-snug tracking-normal transition-colors duration-200 sm:text-lg dark:text-brand-100 group-hover:text-brand-700 dark:group-hover:text-yellow-500">
+							<h2 class="text-base text-brand-950 font-bold leading-snug tracking-normal font-heading transition-colors duration-200 sm:text-lg dark:text-brand-100 group-hover:text-brand-700 dark:group-hover:text-yellow-500">
 								{{ item.title }}
 							</h2>
 
-							<p class="mt-2 text-xs text-slate-600 leading-relaxed sm:text-sm dark:text-slate-300 line-clamp-3">
+							<p class="line-clamp-3 mt-2 text-xs text-slate-600 leading-relaxed sm:text-sm dark:text-slate-300">
 								{{ item.description }}
 							</p>
 						</div>
 
 						<div class="mt-5 flex items-center justify-between border-t border-slate-200/60 pt-3.5 text-xs dark:border-slate-800/60">
-							<span class="flex items-center gap-1 text-brand-800 font-bold transition-all dark:text-brand-400 group-hover:translate-x-1 group-hover:text-brand-950 dark:group-hover:text-yellow-500">
+							<span class="flex items-center gap-1 text-brand-800 font-bold transition-all group-hover:translate-x-1 dark:text-brand-400 group-hover:text-brand-950 dark:group-hover:text-yellow-500">
 								{{ locale === 'id' ? 'Lihat Studi Kasus' : 'Explore Case Study' }} <span>↗</span>
 							</span>
 							<div

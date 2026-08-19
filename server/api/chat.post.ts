@@ -105,11 +105,13 @@ async function buildDynamicSystemInstruction(event: any, locale: 'id' | 'en', cu
 					|| (a.stem && a.stem.includes(slug))
 			})
 
-			const matchedProject = !matchedArticle ? projects.find((p: any) => {
-				return p.slug === slug
-					|| (p.path && (p.path.endsWith(`/${slug}`) || p.path.includes(slug)))
-					|| (p.stem && p.stem.includes(slug))
-			}) : null
+			const matchedProject = !matchedArticle
+				? projects.find((p: any) => {
+						return p.slug === slug
+							|| (p.path && (p.path.endsWith(`/${slug}`) || p.path.includes(slug)))
+							|| (p.stem && p.stem.includes(slug))
+					})
+				: null
 
 			const pageTitle = currentContext.title || matchedArticle?.title || matchedProject?.title || 'Halaman Website'
 			const pageUrl = currentContext.url || `${domain}${cleanPath}`

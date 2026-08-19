@@ -1,7 +1,6 @@
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import https from 'node:https'
 import { join } from 'node:path'
-import querystring from 'node:querystring'
 
 // --- HTTP Client Layer untuk Google Trends API ---
 const BASE_URL = 'trends.google.com'
@@ -22,7 +21,9 @@ async function fetchGoogle(path: string, method = 'GET', body?: string, headers:
 			},
 			(res) => {
 				let data = ''
-				res.on('data', (chunk) => { data += chunk })
+				res.on('data', (chunk) => {
+					data += chunk
+				})
 				res.on('end', () => resolve(data))
 			},
 		)
