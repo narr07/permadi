@@ -1,6 +1,27 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-	modules: ['@nuxt/eslint', '@unocss/nuxt', '@nuxtjs/color-mode', '@nuxt/content', '@nuxtjs/i18n', '@nuxt/image', 'nuxt-studio', '@nuxtjs/seo', 'nuxt-llms', '@nuxt/scripts', '@nuxtjs/mcp-toolkit', '@stefanobartoletti/nuxt-social-share'],
+	modules: [
+		'@nuxthub/core',
+		'@pinia/nuxt',
+		'motion-v/nuxt',
+		'@nuxt/eslint',
+		'@unocss/nuxt',
+		'@nuxtjs/color-mode',
+		'@nuxt/content',
+		'@nuxtjs/i18n',
+		'@nuxt/image',
+		'nuxt-studio',
+		'@nuxtjs/seo',
+		'nuxt-llms',
+		'@nuxt/scripts',
+		'@nuxtjs/mcp-toolkit',
+		'@stefanobartoletti/nuxt-social-share',
+	],
+	hub: {
+		db: 'sqlite',
+		dir: '.data',
+		remote: false,
+	},
 	eslint: {
 		config: {
 			standalone: false,
@@ -64,13 +85,6 @@ export default defineNuxtConfig({
 		],
 	},
 
-	runtimeConfig: {
-		geminiApiKey: process.env.GEMINI_API_KEY || '',
-		public: {
-			cloudflareAnalyticsToken: process.env.NUXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN || '',
-		},
-	},
-
 	app: {
 		head: {
 			link: [
@@ -109,6 +123,8 @@ export default defineNuxtConfig({
 		fallback: 'dark',
 	},
 	runtimeConfig: {
+		geminiApiKey: process.env.GEMINI_API_KEY || '',
+		sessionSalt: process.env.NUXT_SESSION_SALT || 'permadi-reactions-salt-key-2026',
 		cloudinaryCloudName: process.env.NUXT_CLOUDINARY_CLOUD_NAME || 'daton7ry4',
 		cloudinaryApiKey: process.env.NUXT_CLOUDINARY_API_KEY || '',
 		cloudinaryApiSecret: process.env.NUXT_CLOUDINARY_API_SECRET || '',

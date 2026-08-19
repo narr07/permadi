@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { useReactionsStore } from '~/stores/useReactionsStore'
+
 interface Props {
 	title?: string
 	description?: string
 	url?: string
+	slug?: string
 	variant?: 'default' | 'sidebar'
 }
 
@@ -10,11 +13,24 @@ const props = withDefaults(defineProps<Props>(), {
 	title: '',
 	description: '',
 	url: '',
+	slug: '',
 	variant: 'default',
 })
 
+const route = useRoute()
 const { locale } = useI18n()
 const copied = ref(false)
+const store = useReactionsStore()
+
+const currentSlug = computed(() => {
+	return props.slug || (route.params.slug as string) || ''
+})
+
+function onShareClick(network: string) {
+	if (currentSlug.value) {
+		store.recordShare(currentSlug.value, network)
+	}
+}
 
 const networks = [
 	{
@@ -67,6 +83,7 @@ async function handleCopyLink() {
 		if (navigator.clipboard) {
 			await navigator.clipboard.writeText(shareUrl)
 			copied.value = true
+			onShareClick('copy_link')
 			setTimeout(() => {
 				copied.value = false
 			}, 2500)
@@ -120,6 +137,7 @@ async function handleCopyLink() {
 				class="group hover:shadow-2xs aspect-square flex flex-1 items-center justify-center border border-slate-200/70 rounded-lg bg-slate-50 text-slate-700 transition-all duration-200 dark:border-[#134e43]/90 dark:bg-[#002420]/80 hover:bg-white dark:text-slate-300 hover:-translate-y-0.5 dark:hover:bg-[#003833]"
 				:class="net.hoverClass"
 				:aria-label="`Share to ${net.label}`"
+				@click="onShareClick(net.name)"
 			>
 				<span
 					:class="net.icon"
@@ -177,6 +195,7 @@ async function handleCopyLink() {
 				class="group aspect-square flex flex-1 items-center justify-center border border-slate-200/70 rounded-xl bg-slate-50 text-slate-700 transition-all duration-200 dark:border-[#134e43]/90 dark:bg-[#002420]/80 hover:bg-white dark:text-slate-300 hover:shadow-sm hover:-translate-y-0.5 dark:hover:bg-[#003833]"
 				:class="net.hoverClass"
 				:aria-label="`Share to ${net.label}`"
+				@click="onShareClick(net.name)"
 			>
 				<span
 					:class="net.icon"

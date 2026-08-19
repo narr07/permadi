@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted, ref } from 'vue'
 import Conclusion from '~/components/content/Conclusion.vue'
 import Faq from '~/components/content/Faq.vue'
 import FaqItem from '~/components/content/FaqItem.vue'
@@ -22,13 +23,40 @@ import ProseTable from '~/components/content/ProseTable.vue'
 import ProseTabs from '~/components/content/ProseTabs.vue'
 import ProseTabsItem from '~/components/content/ProseTabsItem.vue'
 import ProseTip from '~/components/content/ProseTip.vue'
+
 import ProseWarning from '~/components/content/ProseWarning.vue'
+import AppReactionsBar from '~/components/reactions/AppReactionsBar.vue'
 
 const route = useRoute()
 const { locale, locales } = useI18n()
 const localePath = useLocalePath()
 const setI18nParams = useSetI18nParams()
 const { getCategoryLabel } = useCategoryLabel()
+
+const activeSection = ref('general')
+
+onMounted(() => {
+	if (!import.meta.client)
+		return
+
+	const observer = new IntersectionObserver((entries) => {
+		entries.forEach((entry) => {
+			if (entry.isIntersecting) {
+				activeSection.value = entry.target.id || entry.target.textContent || 'general'
+			}
+		})
+	}, {
+		rootMargin: '-60px 0px -60% 0px',
+		threshold: 0.1,
+	})
+
+	const headings = document.querySelectorAll('article h2, article h3')
+	headings.forEach(h => observer.observe(h))
+
+	onUnmounted(() => {
+		observer.disconnect()
+	})
+})
 
 const mdcComponents = {
 	'img': ProseImg,
@@ -130,6 +158,15 @@ const { data: post } = await useAsyncData(
 	},
 	{ watch: [locale, requestedSlug] },
 )
+
+const contentIdentifier = computed(() => {
+	if (!post.value?.doc)
+		return ''
+	const doc = post.value.doc as any
+	if (doc.idBlog)
+		return `blog-${doc.idBlog}`
+	return doc.slug || cleanSlug(doc.path)
+})
 
 if (post.value?.translations) {
 	setI18nParams(post.value.translations)
@@ -240,7 +277,7 @@ defineOgImage('Bento', {
 				<!-- Article Container -->
 				<article
 					v-if="post?.doc"
-					:class="tocLinks.length > 0 ? 'lg:col-span-9' : 'w-full'"
+					:class="tocLinks.length > 0 ? 'lg:col-span-9 min-w-0 max-w-full' : 'w-full min-w-0 max-w-full'"
 				>
 					<!-- Bento Card Header (Clean, No Spotlight) -->
 					<header
@@ -297,57 +334,65 @@ defineOgImage('Bento', {
 					</header>
 
 					<!-- Prose Content -->
-					<div class="max-w-none text-slate-700 leading-relaxed font-sans prose prose-slate dark:text-slate-200 dark:prose-invert">
+					<div class="max-w-full min-w-0 text-slate-700 leading-relaxed font-sans prose prose-slate dark:text-slate-200 dark:prose-invert">
 						<ContentRenderer
 							:value="post.doc"
 							:components="mdcComponents"
 						/>
-					</div>
 
-					<!-- Mobile/Tablet Social Share Card (under article) -->
-					<div :class="tocLinks.length > 0 ? 'lg:hidden' : ''">
-						<ArticleShare
-							:title="post.doc.title"
-							:description="post.doc.description"
+						<!-- Mobile/Tablet Social Share Card (under article) -->
+						<div :class="tocLinks.length > 0 ? 'lg:hidden' : ''">
+							<ArticleShare
+								:slug="contentIdentifier"
+								:title="post.doc.title"
+								:description="post.doc.description"
+							/>
+						</div>
+
+						<!-- Surround Articles Navigation (Bento Cards) -->
+						<nav
+							v-if="surround && (surround[0] || surround[1])"
+							class="grid grid-cols-1 mt-10 gap-4 border-t border-slate-200/80 pt-8 sm:grid-cols-2 dark:border-slate-800/80"
+							aria-label="Article Navigation"
+						>
+							<NuxtLink
+								v-if="surround[0]"
+								:to="`/${locale}/blog/${surround[0].slug || cleanSlug(surround[0].path)}`"
+								class="bento-card-clean group flex flex-col justify-between bento-lift rounded-bento p-4"
+							>
+								<span class="flex items-center gap-1 text-meta text-xs text-slate-600 font-semibold uppercase transition-colors dark:text-slate-400 group-hover:text-brand-800 dark:group-hover:text-brand-400">
+									<span class="i-hugeicons-arrow-left-01 text-xs" /> {{ locale === 'id' ? 'Artikel Sebelumnya' : 'Previous Article' }}
+								</span>
+								<strong class="mt-2 block text-g1 text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
+									{{ surround[0].title }}
+								</strong>
+							</NuxtLink>
+							<div
+								v-else
+								class="hidden sm:block"
+							/>
+
+							<NuxtLink
+								v-if="surround[1]"
+								:to="`/${locale}/blog/${surround[1].slug || cleanSlug(surround[1].path)}`"
+								class="bento-card-clean group flex flex-col justify-between bento-lift rounded-bento p-4 text-right"
+							>
+								<span class="flex items-center justify-end gap-1 text-meta text-xs text-slate-600 font-semibold uppercase transition-colors dark:text-slate-400 group-hover:text-brand-800 dark:group-hover:text-brand-400">
+									{{ locale === 'id' ? 'Artikel Selanjutnya' : 'Next Article' }} <span class="i-hugeicons-arrow-right-01 text-xs" />
+								</span>
+								<strong class="mt-2 block text-g1 text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
+									{{ surround[1].title }}
+								</strong>
+							</NuxtLink>
+						</nav>
+
+						<!-- Native CSS Sticky Reactions Bar -->
+						<AppReactionsBar
+							v-if="post?.doc"
+							:slug="contentIdentifier"
+							:active-section="activeSection"
 						/>
 					</div>
-
-					<!-- Surround Articles Navigation (Bento Cards) -->
-					<nav
-						v-if="surround && (surround[0] || surround[1])"
-						class="grid grid-cols-1 mt-10 gap-4 border-t border-slate-200/80 pt-8 sm:grid-cols-2 dark:border-slate-800/80"
-						aria-label="Article Navigation"
-					>
-						<NuxtLink
-							v-if="surround[0]"
-							:to="`/${locale}/blog/${surround[0].slug || cleanSlug(surround[0].path)}`"
-							class="bento-card-clean group flex flex-col justify-between bento-lift rounded-bento p-4"
-						>
-							<span class="flex items-center gap-1 text-meta text-xs text-slate-600 font-semibold uppercase transition-colors dark:text-slate-400 group-hover:text-brand-800 dark:group-hover:text-brand-400">
-								<span class="i-hugeicons-arrow-left-01 text-xs" /> {{ locale === 'id' ? 'Artikel Sebelumnya' : 'Previous Article' }}
-							</span>
-							<strong class="mt-2 block text-g1 text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
-								{{ surround[0].title }}
-							</strong>
-						</NuxtLink>
-						<div
-							v-else
-							class="hidden sm:block"
-						/>
-
-						<NuxtLink
-							v-if="surround[1]"
-							:to="`/${locale}/blog/${surround[1].slug || cleanSlug(surround[1].path)}`"
-							class="bento-card-clean group flex flex-col justify-between bento-lift rounded-bento p-4 text-right"
-						>
-							<span class="flex items-center justify-end gap-1 text-meta text-xs text-slate-600 font-semibold uppercase transition-colors dark:text-slate-400 group-hover:text-brand-800 dark:group-hover:text-brand-400">
-								{{ locale === 'id' ? 'Artikel Selanjutnya' : 'Next Article' }} <span class="i-hugeicons-arrow-right-01 text-xs" />
-							</span>
-							<strong class="mt-2 block text-g1 text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
-								{{ surround[1].title }}
-							</strong>
-						</NuxtLink>
-					</nav>
 				</article>
 
 				<!-- Desktop Sticky Sidebar (TOC & Compact Share Card, Span 3) -->
@@ -363,6 +408,7 @@ defineOgImage('Bento', {
 
 					<!-- Bento Share Card on Desktop under TOC -->
 					<ArticleShare
+						:slug="contentIdentifier"
 						:title="post.doc.title"
 						:description="post.doc.description"
 						variant="sidebar"

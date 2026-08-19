@@ -19,6 +19,7 @@ export default withNuxt(
 			'personal-sitenextjs/**',
 			'src-nuxt-ui/**',
 			'scripts/convert-webp.ts',
+			'server/db/migrations/**',
 		],
 		stylistic: {
 			indent: 'tab',

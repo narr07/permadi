@@ -247,7 +247,7 @@ function renderMarkdown(text: string): string {
 		<!-- Floating Launcher Trigger Button -->
 		<button
 			type="button"
-			class="ai-trigger-btn group relative flex cursor-pointer items-center gap-2.5 overflow-hidden border border-emerald-700/60 rounded-full bg-[#002b27] px-4 py-2.5 shadow-xl transition-all duration-300 hover:scale-105 dark:border-[#134e43] dark:bg-[#002420] sm:py-3 !text-white hover:shadow-2xl focus-ring"
+			class="ai-trigger-btn group relative flex cursor-pointer items-center gap-2 overflow-hidden border border-emerald-700/60 rounded-full bg-[#002b27] p-2.5 shadow-xl transition-all duration-300 hover:scale-105 sm:gap-2.5 dark:border-[#134e43] dark:bg-[#002420] sm:px-4 sm:py-3 !text-white hover:shadow-2xl focus-ring"
 			:aria-expanded="isOpen"
 			aria-label="Toggle Permadi AI Assistant"
 			@click="toggleChat"
@@ -273,7 +273,7 @@ function renderMarkdown(text: string): string {
 				</svg>
 			</div>
 
-			<span class="ai-trigger-label relative text-xs font-bold tracking-wide sm:text-sm !text-white">
+			<span class="ai-trigger-label relative hidden text-xs font-bold tracking-wide sm:inline sm:text-sm !text-white">
 				{{ isOpen ? (locale === 'id' ? 'Tutup AI' : 'Close AI') : (locale === 'id' ? 'Tanya AI Permadi' : 'Ask Permadi AI') }}
 			</span>
 

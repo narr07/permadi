@@ -184,7 +184,7 @@ export default defineConfig({
 		'bento-spotlight': 'relative overflow-hidden before:(content-empty absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none) before:bg-[radial-gradient(400px_circle_at_var(--x,_50%)_var(--y,_50%),rgba(43,212,181,0.15),transparent_70%)]',
 
 		'bento-grid': 'grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-12 gap-4 sm:gap-6 auto-rows-[minmax(160px,auto)]',
-		'container-bento': 'max-w-6xl mx-auto px-4 sm:px-6 lg:px-8',
+		'container-bento': 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8',
 
 		'nav-island': 'flex items-center gap-2 rounded-bento-island bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/70 dark:border-slate-800/70 shadow-sm',
 
