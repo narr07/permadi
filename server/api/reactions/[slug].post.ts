@@ -30,9 +30,12 @@ export default defineEventHandler(async (event) => {
 
 	const requestedCount = Math.min(Math.max(1, body.count || 1), MAX_REACTION_LIMIT)
 	const section = (body.section || 'general').trim().substring(0, 100)
-	const sessionId = await getSessionId(event)
-
+	let step = 'init'
 	try {
+		step = 'get_session'
+		const sessionId = await getSessionId(event)
+
+		step = 'query_user_reactions'
 		// 1. Hitung berapa reaksi yang sudah diberikan user ini untuk type tertentu
 		const userReactions = await db
 			.select()
@@ -68,6 +71,7 @@ export default defineEventHandler(async (event) => {
 			}
 		}
 
+		step = 'insert_reaction'
 		// 2. Insert row baru ke NuxtHub D1
 		const now = new Date().toISOString()
 		await db.insert(schema.reactions).values({
@@ -86,10 +90,10 @@ export default defineEventHandler(async (event) => {
 		}
 	}
 	catch (error: any) {
-		console.error('Error saving reaction to NuxtHub D1:', error)
+		console.error(`Error saving reaction at step [${step}]:`, error)
 		throw createError({
 			statusCode: 500,
-			statusMessage: error?.message || 'Failed to record reaction',
+			statusMessage: `[${step}] ${error?.message || error || 'Failed to record reaction'}`,
 		})
 	}
 })
