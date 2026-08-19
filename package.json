@@ -2,6 +2,7 @@
 	"name": "permadi",
 	"type": "module",
 	"private": true,
+	"packageManager": "bun@1.3.14",
 	"scripts": {
 		"build": "nuxt build",
 		"dev": "nuxt dev",
