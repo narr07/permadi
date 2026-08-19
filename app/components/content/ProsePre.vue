@@ -119,6 +119,9 @@ const fileIcon = computed(() => {
 	}
 })
 
+const isMermaid = computed(() => displayLanguage.value === 'mermaid')
+const isVisualMode = ref(true)
+
 function handleCopy() {
 	if (props.code) {
 		copy(props.code)
@@ -133,7 +136,7 @@ function handleCopy() {
 			<!-- Left: File Icon & Filename & Language Tag -->
 			<div class="min-w-0 flex items-center gap-2.5">
 				<span
-					:class="fileIcon"
+					:class="isMermaid ? 'i-lucide-network text-brand-400' : fileIcon"
 					class="shrink-0 text-sm"
 				/>
 				<span
@@ -146,29 +149,64 @@ function handleCopy() {
 					v-if="displayLanguage"
 					class="border border-brand-500/30 rounded-md bg-brand-500/15 px-1.5 py-0.5 text-[10px] text-brand-300 font-semibold tracking-wider uppercase"
 				>
-					{{ displayLanguage }}
+					{{ isMermaid ? 'Diagram Alur' : displayLanguage }}
 				</span>
 			</div>
 
-			<!-- Right: Copy Code Button -->
-			<button
-				type="button"
-				class="flex cursor-pointer items-center gap-1.5 border border-brand-500/30 rounded-lg bg-brand-900/70 px-2.5 py-1 text-xs text-brand-200 transition-all dark:border-white/10 dark:bg-white/10 hover:bg-brand-800 hover:text-white focus:outline-none focus:ring-1 focus:ring-brand-400/50 dark:hover:bg-white/15"
-				:aria-label="copied ? 'Copied to clipboard' : 'Copy code to clipboard'"
-				@click="handleCopy"
-			>
-				<span
-					:class="copied ? 'i-lucide-check text-brand-400' : 'i-lucide-copy'"
-					class="shrink-0 text-xs"
-				/>
-				<span class="text-[11px] font-medium font-sans">
-					{{ copied ? 'Tersalin!' : 'Salin' }}
-				</span>
-			</button>
+			<!-- Right: Controls (Mermaid Toggle + Copy Button) -->
+			<div class="flex items-center gap-2">
+				<!-- Mermaid View Mode Toggle -->
+				<div
+					v-if="isMermaid"
+					class="flex items-center border border-brand-500/30 rounded-lg bg-brand-950/60 p-0.5"
+				>
+					<button
+						type="button"
+						class="cursor-pointer rounded px-2 py-0.5 text-[11px] font-medium font-sans transition-all"
+						:class="isVisualMode ? 'bg-brand-500 text-brand-950 font-semibold shadow-sm' : 'text-brand-300 hover:text-white'"
+						@click="isVisualMode = true"
+					>
+						Visual
+					</button>
+					<button
+						type="button"
+						class="cursor-pointer rounded px-2 py-0.5 text-[11px] font-medium font-sans transition-all"
+						:class="!isVisualMode ? 'bg-brand-500 text-brand-950 font-semibold shadow-sm' : 'text-brand-300 hover:text-white'"
+						@click="isVisualMode = false"
+					>
+						Kode
+					</button>
+				</div>
+
+				<!-- Copy Code Button -->
+				<button
+					type="button"
+					class="flex cursor-pointer items-center gap-1.5 border border-brand-500/30 rounded-lg bg-brand-900/70 px-2.5 py-1 text-xs text-brand-200 transition-all dark:border-white/10 dark:bg-white/10 hover:bg-brand-800 hover:text-white focus:outline-none focus:ring-1 focus:ring-brand-400/50 dark:hover:bg-white/15"
+					:aria-label="copied ? 'Copied to clipboard' : 'Copy code to clipboard'"
+					@click="handleCopy"
+				>
+					<span
+						:class="copied ? 'i-lucide-check text-brand-400' : 'i-lucide-copy'"
+						class="shrink-0 text-xs"
+					/>
+					<span class="text-[11px] font-medium font-sans">
+						{{ copied ? 'Tersalin!' : 'Salin' }}
+					</span>
+				</button>
+			</div>
 		</div>
 
+		<!-- Mermaid Visual Render -->
+		<MermaidDiagram
+			v-if="isMermaid && isVisualMode"
+			:code="props.code"
+		/>
+
 		<!-- Pre / Code Slot Container with Shiki Syntax Highlighting -->
-		<div class="custom-scrollbar relative overflow-x-auto p-4 text-[13px] leading-relaxed font-mono sm:text-sm">
+		<div
+			v-else
+			class="custom-scrollbar relative overflow-x-auto p-4 text-[13px] leading-relaxed font-mono sm:text-sm"
+		>
 			<pre
 				:class="props.class"
 				:style="props.style"

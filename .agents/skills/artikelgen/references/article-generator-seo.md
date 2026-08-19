@@ -1,10 +1,41 @@
 # Panduan Penulisan Artikel & SEO Berbasis Google Trends (Article Generator)
 
-Panduan operasional lengkap untuk meriset tren pencarian pengguna, menyusun strategi kata kunci, dan menghasilkan artikel blog berkualitas tinggi yang ramah pembaca dan mendominasi SERP Google dengan format native Nuxt Content.
+Panduan operasional lengkap untuk meriset tren pencarian pengguna, menyusun strategi kata kunci, dan menghasilkan artikel blog berkualitas tinggi yang **100% terasa seperti tulisan praktisi manusia asli**, bebas dari pola klise AI, dan mendominasi SERP Google dengan format native Nuxt Content.
 
 ---
 
-## 1. Tahap 0: Riset Tren Google (Pre-Writing Intelligence di Gemini Spark & IDE)
+## 0. STANDAR PENULISAN MANUSIAWI (ANTI-AI WRITING PROTOCOL)
+
+Artikel yang diproduksi **HARUS LOLOS UJI RASA MANUSIA (HUMAN SME FEEL)**. Pembaca tidak boleh merasa sedang membaca teks yang digenerate oleh AI.
+
+### A. Daftar Hitam Frasa Klise AI (BANNED PHRASES)
+
+| Kategori | ❌ Frasa Terlarang (Bahasa Indonesia) | ❌ Frasa Terlarang (Bahasa Inggris) | Alternatif Penulisan Praktisi |
+| :--- | :--- | :--- | :--- |
+| **Pembuka Klise** | *"Dalam era digital...", "Di tengah pesatnya perkembangan...", "Perkembangan teknologi telah membawa..."* | *"In today's fast-paced digital world...", "In the ever-evolving landscape...", "In recent years..."* | Langsung tembak masalah inti, paradoks, atau fakta riil di lapangan. |
+| **Basa-Basi & Meta-Talk** | *"Mari kita selami...", "Perlu diingat bahwa...", "Tidak dapat dipungkiri bahwa...", "Patut dicatat..."* | *"Let's delve into...", "Dive deep into...", "It is important to note that...", "Needless to say..."* | Hapus seluruh basa-basi. Nyatakan poin atau data secara langsung. |
+| **Hiperbola Kosong** | *"Solusi revolusioner", "Game changer", "Tonggak penting", "Transformasi fundamental"* | *"Game-changer", "Revolutionize", "Tapestry", "Beacon", "Crucial role", "Harness the power"* | Sebutkan angka/efek spesifik (*"memangkas latensi 40ms"*). |
+| **Transisi Kaku** | *"Selain itu,", "Di samping itu,", "Lebih lanjut,", "Oleh karena itu,"* (di awal setiap paragraf) | *"Furthermore,", "Moreover,", "In addition,", "Additionally,"* | Gunakan transisi percakapan atau alur sebab-akibat alami. |
+| **Penutup Klise** | *"Secara keseluruhan...", "Dapat disimpulkan bahwa...", "Sebagai penutup...", "Kesimpulannya..."* | *"In conclusion,", "To sum up,", "All in all,", "In summary..."* | Sajikan **Panduan Keputusan (*Decision Matrix*)** praktis. |
+
+---
+
+### B. Dinamika Ritme & Variasi Kalimat (*Burstiness*)
+* **Kalimat Ultra-Pendek (1–5 kata)**: Sisipkan untuk memberi jeda dramatis, pukulan logika, atau ketegasan (*"Hasilnya? Nihil."*, *"Kenyataannya tidak demikian."*).
+* **Kalimat Sedang (10–18 kata)**: Untuk penjelasan lugas instruksional.
+* **Kalimat Panjang (20–35 kata)**: Untuk menjelaskan logika bersyarat, hubungan sebab-akibat, atau analogi detail.
+* **Struktur Paragraf Dinamis**: Jangan pernah membuat semua paragraf setinggi 3 kalimat. Selingi dengan paragraf 1 kalimat tunggal untuk penekanan.
+
+---
+
+### C. Sentuhan Praktisi & Kompromi Lapangan (*Real-World Friction & Trade-offs*)
+* **Bongkar Mitos & Kesalahan Umum**: Jelaskan kesalahan konyol yang sering dilakukan pemula atau praktisi di lapangan.
+* **Ungkapkan Sisi Negatif / Batasan (*Trade-offs*)**: Tidak ada solusi ajaib yang sempurna. Setiap pilihan teknologi/metode punya kelemahan. Sebutkan kelemahan itu dengan jujur.
+* **Gunakan Sudut Pandang Tegas (*Have a Stance*)**: Jangan abu-abu atau sekadar merangkum Wikipedia. Berikan rekomendasi berani kapan harus memakai solusi A dan kapan harus menghindari solusi B.
+
+---
+
+## 1. Tahap 0: Riset Tren Google (Pre-Writing Intelligence)
 
 Sebelum menulis draf, lakukan analisis tren pencarian real-time untuk memvalidasi sudut pandang artikel:
 
@@ -29,184 +60,141 @@ Sebelum menulis draf, lakukan analisis tren pencarian real-time untuk memvalidas
 Pastikan 5 parameter kunci berikut telah terdefinisi:
 1. **Topik & Kata Kunci Utama (Primary Keyword)**: Divalidasi dengan Google Trends.
 2. **Kata Kunci Turunan / LSI (Secondary Keywords)**: Dari hasil kueri penelusuran terkait.
-3. **Target Audiens** (mis. pemula/awam, desainer, praktisi profesional, pemilik bisnis).
+3. **Target Audiens** (mis. pemula/awam, desainer, guru/pendidik, pengembang, pemilik bisnis).
 4. **Search Intent**:
    - *Informational*: Fokus edukasi komprehensif, solusi langkah-demi-langkah.
    - *Commercial Investigation*: Perbandingan fitur, kelebihan/kekurangan, panduan memilih.
    - *Transactional*: Rekomendasi tindakan langsung, implementasi alat/solusi.
-5. **Gaya Bahasa / Brand Voice**: Profesional, komunikatif, mudah dicerna, tanpa jargon kosong.
+5. **Gaya Bahasa / Brand Voice**: Tajam, praktis, mengalir seperti obrolan profesional senior, bebas dari jargon kosong.
 
 > *Catatan & Aturan Mutlak Output*: 
 > Setiap kali pengguna meminta pembuatan artikel, Anda **WAJIB LANGSUNG MENGHASILKAN 2 BLOK KODE `.md` LENGKAP** (Versi Bahasa Indonesia `content/id/blog/...` dan Versi Bahasa Inggris `content/en/blog/...`) yang siap disalin langsung (*copy-paste ready*) beserta saran nama file dan prompt gambar brand. Tidak perlu menunggu pengguna meminta terjemahan secara terpisah.
 
 ---
 
-## 3. Standar Tata Bahasa & Keterbacaan
+## 3. Standar Tata Bahasa & Keterbacaan Humanis
 
 ### Pola Kalimat & Voice
-- **Kalimat Aktif ≥ 85%**: Subjek melakukan aksi nyata. Hindari pasif berlebihan.
-- **Gaya Waktu Kini (Present Tense)**: Untuk instruksi dan fakta ilmiah/teknis.
-- **Komposisi Pola Kalimat**:
-  - *Subjek di Depan (~60%)*: "Format OTF menyimpan ribuan karakter ekstra."
-  - *Instruksi Imperatif (~25%)*: "Gunakan format WebP untuk mempercepat waktu muat halaman."
-  - *Pembuka Kontekstual (~15%)*: "Ketika mendesain logo mewah, pilih format OTF untuk fleksibilitas kurva."
-
-### Metode BLUF (Bottom Line Up Front)
-- Letakkan inti informasi / kesimpulan utama di kalimat pembuka setiap section (`##` dan `###`).
-- Jangan menyembunyikan poin penting di akhir paragraf yang panjang.
-- Maksimal 2–4 kalimat per paragraf.
-
-### Eliminasi Kata Bertele-tele
-
-| Hindari | Gunakan |
-|---|---|
-| memanfaatkan | memakai, menggunakan |
-| mengimplementasikan | menerapkan, membuat |
-| melakukan pengaturan terhadap | mengatur |
-| dalam rangka untuk | untuk |
-| dikarenakan oleh fakta bahwa | karena |
-| merupakan sebuah | adalah |
-| di dalam hal ini | *(hapus)* |
-| Hal ini / Ini *(di awal kalimat tanpa anteseden)* | Sebutkan objeknya langsung |
-| Perlu diketahui bahwa / Perlu dicatat | Langsung nyatakan faktanya |
+- **Kalimat Aktif Dominan**: Subjek melakukan aksi nyata. Hindari struktur kalimat pasif yang lelah dibaca.
+- **Waktu Kini (Present Tense)**: Untuk instruksi teknis dan fakta ilmiah.
+- **Kombinasi Gaya Pembuka**:
+  - *Langsung Objek/Aksi (~50%)*: "Format OTF menyimpan ribuan karakter ekstra."
+  - *Kondisional / Skenario (~30%)*: "Saat Anda mengajar di kelas 35 anak, metode diskusi murni akan gagal."
+  - *Tanya/Retoris (~20%)*: "Mengapa modul ajar yang dirancang berjam-jam tetap gagal menarik antusiasme siswa?"
 
 ---
 
 ## 4. Master Checklist 9 Tahap Penulisan & SEO On-Page (Lengkap)
 
 ### Tahap 1: Perencanaan Strategis & Kalender Editorial
-- [ ] **Batching Riset Kata Kunci**: Lakukan riset kelompok kata kunci sekaligus untuk menemukan sweet spot volume vs kesulitan (KD).
-- [ ] **Penyelarasan Buyer Persona**: Jawab pertanyaan spesifik, tingkat keahlian, dan *pain points* persona target.
-- [ ] **Analisis Campuran Kompetisi & Trafik**: Pilih kata kunci dengan volume memadai dan tingkat kesulitan masuk akal bagi otoritas domain.
-- [ ] **Pembangunan Backlog Konten**: Jaga konsistensi jadwal publikasi dengan draf terencana.
-- [ ] **Evaluasi Otoritas Topikal (Topic Clusters)**: Bangun gugus topik yang saling berkaitan, bukan artikel mandiri tanpa konteks.
+- [ ] **Batching Riset Kata Kunci**: Riset kelompok kata kunci volume vs kesulitan (KD).
+- [ ] **Penyelarasan Buyer Persona**: Jawab pertanyaan spesifik dan *pain points* nyata.
+- [ ] **Evaluasi Otoritas Topikal (Topic Clusters)**: Bangun gugus topik yang saling berkaitan.
 
 ### Tahap 2: Arsitektur Metadata & Optimasi On-Page
-- [ ] **Optimasi Judul SEO (Title Tag)**: Maksimal 60 karakter, kata kunci utama di depan, mengandung proposisi nilai yang jelas.
-- [ ] **Penyelarasan H1 dan Title Tag**: Wajibkan tag H1 di halaman blog identik atau sangat mirip dengan Title Tag. Tidak ada backtick di H1.
-- [ ] **Penulisan Meta Deskripsi**: 140–160 karakter persuasif, mengandung kata kunci utama dan ajakan membaca untuk memaksimalkan CTR.
-- [ ] **Struktur URL Slug Bersih**: Huruf kecil, dipisah tanda hubung (`-`), hanya mengandung kata kunci inti tanpa kode/angka acak.
-- [ ] **Implementasi Schema Markup**: Siapkan struktur data terstruktur (Schema.org / JSON-LD) untuk featured snippet.
-- [ ] **Verifikasi Mobile-Friendly**: Pastikan tata letak, tabel, dan visual tampil responsif di layar perangkat seluler.
+- [ ] **Optimasi Judul SEO (Title Tag)**: Maksimal 60 karakter, kata kunci utama di depan, mengandung proposisi nilai riil.
+- [ ] **Penyelarasan H1 dan Title Tag**: Wajib identik atau sangat mirip. Tidak ada backtick di H1.
+- [ ] **Penulisan Meta Deskripsi**: 140–160 karakter persuasif, to-the-point, mengandung kata kunci utama.
+- [ ] **Struktur URL Slug Bersih**: Huruf kecil, dipisah tanda hubung (`-`), fokus pada kata kunci inti.
 
-### Tahap 3: Pendahuluan (The Hook & Benefit)
-- [ ] **Penempatan Kata Kunci Utama**: Masukkan kata kunci utama secara natural dalam 100 kata pertama.
-- [ ] **Benefit Statement (Outcome-Driven)**: Nyatakan secara eksplisit apa yang akan dipelajari atau diselesaikan pembaca.
-- [ ] **Teknik Hook yang Provokatif**: Mulai dengan fakta mengejutkan, paradoks, pertanyaan retoris, atau storytelling singkat.
-- [ ] **Transisi ke Inti Masalah**: Hubungkan hook langsung ke akar masalah yang dihadapi pembaca.
+### Tahap 3: Pendahuluan (The Problem Hook & Benefit)
+- [ ] **Tembak Akar Masalah Langsung**: Bongkar friksi/kesulitan nyata dalam 100 kata pertama bersama kata kunci utama.
+- [ ] **Tanpa Basa-Basi**: Dilarang memakai *"Di era modern..."* atau *"Pada artikel kali ini kita akan membahas..."*.
 
-### Tahap 4: Keterbacaan (Readability) & Struktur Konten
-- [ ] **Metode BLUF (Bottom Line Up Front)**: Letakkan poin utama atau kesimpulan di awal setiap section/paragraf.
-- [ ] **Paragraf dan Kalimat Pendek**: Batasi paragraf maksimal 2–4 kalimat. Variasikan panjang kalimat agar ritme tidak membosankan.
-- [ ] **Heading Hierarkis (`##` H2, `###` H3, `####` H4)**: Struktur logis yang memecah informasi kompleks.
-- [ ] **Elemen Pemformatan Visual**: Gunakan bullet points, teks tebal (**bold**), blockquotes, dan callout (`::note`, `::tip`, `::warning`).
-- [ ] **Target Readability Skor Flesch 60–70**: Bahasa lugas, mudah dipahami audiens luas, tanpa jargon kosong.
+### Tahap 4: Keterbacaan (Readability) & Struktur Humanis
+- [ ] **Variasi Panjang Paragraf & Kalimat**: Wajib padukan kalimat 3 kata dengan kalimat 25 kata.
+- [ ] **Heading Hierarkis (`##` H2, `###` H3, `####` H4)**: Struktur logis yang mengalir natural.
+- [ ] **Elemen MDC Komponen**: Gunakan `::steps`, `::tip`, `::note`, `::warning`, dan `::conclusion`.
 
-### Tahap 5: Kedalaman Substansi & Nilai Unik (Authority / E-E-A-T)
-- [ ] **Kedalaman Konten (1.500–2.000+ Kata)**: Cakupan topik komprehensif, bukan pengulangan basa-basi. Hindari *thin content* (< 500 kata).
-- [ ] **Wawasan Pakar / SME Insight**: Sertakan kutipan, perspektif ahli, atau wawasan teknis mendalam.
-- [ ] **Riset Asli & Data Riil**: Sertakan data internal, studi kasus nyata, atau perbandingan empiris.
-- [ ] **Analisis Content Gap**: Tutup celah informasi yang dilewatkan oleh hasil Top 10 Google.
+### Tahap 5: Kedalaman Substansi & Sentuhan Praktisi (E-E-A-T)
+- [ ] **Kedalaman Konten (1.500–2.000+ Kata)**: Komprehensif tanpa pengulangan kata berputar-putar.
+- [ ] **Studi Kasus & Trade-offs**: Wajib sertakan kompromi atau konsekuensi dari tiap pilihan.
+- [ ] **Content Gap**: Tutup celah informasi yang dilewatkan oleh hasil pencarian kompetitor.
 
 ### Tahap 6: Optimasi Visual & Multimedia
-- [ ] **Penggunaan Gambar Unik**: Sisipkan 1 ilustrasi/grafis setiap 300–500 kata. Hindari stok foto klise.
-- [ ] **Format Next-Gen (WebP/WebM)**: Gunakan format `.webp` untuk gambar dan `.webm` untuk video demi kecepatan loading.
-- [ ] **Alt Text Deskriptif & Strategis**: Maksimal 125 karakter, ramah aksesibilitas, mengandung kata kunci kontekstual.
-- [ ] **Visualisasi Data**: Ubah data rumit menjadi tabel markdown atau bagan visual yang mudah dibaca.
+- [ ] **Format Next-Gen (WebP)**: Path gambar `/article/nama-file.webp`.
+- [ ] **Alt Text Deskriptif**: Maksimal 125 karakter, kontekstual.
+- [ ] **Tabel Markdown**: Gunakan tabel untuk komparasi head-to-head.
 
 ### Tahap 7: Strategi Tautan (Internal & External Linking)
-- [ ] **Internal Linking Strategis**: Minimal 2–3 tautan ke artikel relevan lainnya di blog (`[teks](/blog/slug-terkait)`).
-- [ ] **External Linking ke Sumber Otoritas**: Minimal 2–3 tautan ke sumber riset, dokumentasi resmi, atau studi terpercaya.
-- [ ] **Penyuntingan Tautan di Konten Lama**: Tambahkan tautan internal dari artikel lama yang bertrafik tinggi menuju artikel baru ini.
-- [ ] **Audit Broken Links**: Pastikan tidak ada tautan rusak atau URL mati.
+- [ ] **Internal Linking**: Minimal 2–3 tautan ke artikel relevan (`[teks](/blog/slug-terkait)`).
+- [ ] **External Linking**: Minimal 2–3 tautan ke dokumentasi resmi atau riset otoritas.
 
-### Tahap 8: Penutup & Call to Action (CTA)
-- [ ] **Kesimpulan Berorientasi Hasil (`::conclusion`)**: Rangkum hasil akhir dengan fokus pada *outcome* dan arahan pilihan bagi pembaca.
-- [ ] **Satu Call to Action (CTA) yang Jelas**: Berikan 1 instruksi tindakan spesifik (mis. coba alat, unduh panduan, atau baca seri lanjutan).
-- [ ] **Dorongan Tindakan (Urgency / Logic)**: Berikan alasan rasional mengapa pembaca harus bertindak sekarang.
-- [ ] **Undangan Diskusi**: Ajukan pertanyaan terbuka di penutup untuk mendorong interaksi pembaca.
+### Tahap 8: Penutup & Action Framework
+- [ ] **Kesimpulan Keputusan (`::conclusion`)**: Berikan panduan kapan harus memilih Opsi A vs Opsi B.
+- [ ] **Satu Tindakan Spesifik**: Arahkan ke langkah nyata berikutnya.
 
-### Tahap 9: Penyuntingan, Proofreading & Finalisasi
-- [ ] **Membaca Nyaring (Read Aloud)**: Periksa ritme kalimat yang kaku, alur yang meloncat, atau repetisi kata.
-- [ ] **Uji Plagiarisme & Keaslian**: Keunikan konten 100%, batasi kutipan langsung agar tidak mendominasi isi.
-- [ ] **Humanisasi Konten AI**: Sunting dengan gaya personal, pengalaman autentik, dan verifikasi fakta secara manual.
-- [ ] **Audit Konten Tipis (410 Response Code)**: Jika menghapus artikel lama berkualitas rendah secara permanen, gunakan status 410 (Gone) bukan 404 agar lekas dihapus dari indeks SERP.
-- [ ] **Pembersihan Indeks (Noindex)**: Pastikan halaman bernilai rendah (lampiran/tag kosong) diatur ke `noindex`.
+### Tahap 9: Penyuntingan Anti-AI & Finalisasi
+- [ ] **Uji Baca Nyaring**: Pastikan ritme tidak kaku dan tidak terdengar seperti naskah terjemahan robot.
+- [ ] **Cek Blacklist Frasa**: Pastikan 0 kata dari daftar hitam AI muncul di draf.
 
 ---
 
 ## 5. Template Struktur Artikel Siap Terbit
 
-Setiap artikel yang dihasilkan wajib disajikan dalam SATU blok kode utuh `~~~~md ... ~~~~`:
-
 ````md
 ---
-title: "Judul Lengkap dengan Primary Keyword: Subjudul Menarik"
+title: "Judul Tajam dengan Primary Keyword: Subjudul Solutif Praktisi"
 category: kategori-blog
 date: YYYY-MM-DD
-description: Deskripsi 140-160 karakter mengandung primary keyword dan ajakan bertindak yang memikat di SERP.
+description: Deskripsi 140-160 karakter memuat primary keyword, to the point, dan memicu rasa ingin tahu tanpa basa-basi klise.
 tags:
   - tag-utama
-  - tag-tren-pendukung
+  - tag-pendukung
 ---
 
-## Kalimat Pembuka yang Memikat & Langsung ke Inti Solusi
+## Masalah Riil yang Kerap Terjadi di Lapangan
 
-Paragraf pembuka langsung menjawab pertanyaan utama dan menyisipkan **kata kunci utama** secara natural dalam 100 kata pertama. Hindari basa-basi pembuka yang klise.
+Paragraf pembuka langsung membongkar akar masalah atau paradoks yang dihadapi pembaca. Kata kunci utama disisipkan secara natural dalam 100 kata pertama tanpa kalimat pembuka klise.
 
-Jelaskan nilai konkret yang akan didapatkan pembaca setelah menyelesaikan artikel ini. Berikan transisi mulus menuju pembahasan mendalam berikutnya.
+Jelaskan mengapa pendekatan konvensional kerap kali gagal dan apa konsekuensi langsungnya jika salah mengambil keputusan.
 
-![Deskripsi visual gambar featured yang memuat kata kunci secara kontekstual](/article/nama-gambar.webp)
+![Deskripsi visual ilustrasi kontekstual](/article/nama-gambar.webp)
 
-## Poin Utama Pertama: Penjelasan Konsep Inti
+## Poin Utama Pertama: Realita vs Ekspektasi Teori
 
-Kalimat pertama langsung menyampaikan kesimpulan (BLUF). Lanjutkan dengan penjelasan mendalam, analogi yang mudah dipahami, atau data pendukung.
+Jelaskan konsep dengan analogi segar dan contoh nyata di lapangan.
 
-- **Poin Kunci 1**: Penjelasan spesifik dan aplikatif.
-- **Poin Kunci 2**: Langkah atau wawasan praktis.
+- **Faktor Kunci 1**: Penjelasan spesifik beserta kompromi teknisnya.
+- **Faktor Kunci 2**: Langkah praktis yang teruji.
 
 ::tip
-Gunakan callout tips ini untuk memberikan rekomendasi praktik terbaik yang menghemat waktu pembaca.
+Berikan catatan taktis dari pengalaman praktisi yang bisa langsung menyelamatkan waktu atau anggaran pembaca.
 ::
 
-## Poin Utama Kedua: Langkah Praktis atau Komparasi
-
-Jelaskan perbandingan atau prosedur langkah demi langkah dengan jelas dan terstruktur.
+## Poin Utama Kedua: Prosedur Eksekusi Bertahap
 
 ::steps
-### Siapkan Kebutuhan Dasar
-Langkah awal untuk mempersiapkan data atau lingkungan kerja.
+### Siapkan Parameter Kunci
+Langkah awal tanpa nomor di heading.
 
-### Eksekusi Konfigurasi Inti
-Terapkan pengaturan utama sesuai dengan rekomendasi teknis.
+### Terapkan Konfigurasi Inti
+Eksekusi tindakan utama dengan parameter yang sudah diuji.
 ::
 
-## Poin Utama Ketiga: Optimasi Lanjutan & Solusi Masalah
+## Poin Utama Ketiga: Komparasi dan Trade-offs Nyata
 
-Bahas tantangan yang sering muncul serta cara mengatasinya secara efektif.
+Bandingkan opsi-opsi yang ada secara jujur beserta kelemahan masing-masing dalam tabel:
 
-::note
-Informasi tambahan yang relevan untuk pembaca tingkat lanjut atau catatan khusus sistem.
-::
+| Opsi / Metode | Keunggulan Utama | Kelemahan / Risiko | Skenario Ideal |
+| :--- | :--- | :--- | :--- |
+| **Pilihan A** | Cepat, implementasi mudah | Boros resource di skala besar | Proyek awal / tim kecil |
+| **Pilihan B** | Sangat skalabel & stabil | Kurva belajar curam | Sistem produksi enterprise |
 
 ::conclusion
-Rangkum hasil akhir artikel di sini dengan fokus pada outcome bagi pembaca:
+Panduan keputusan akhir berdasarkan kebutuhan riil Anda:
 
-- **Pilihan A**: Kapan harus memilih pendekatan pertama.
-- **Pilihan B**: Kapan harus memilih pendekatan kedua.
+- **Pilih Pendekatan A**: Jika Anda membutuhkan kecepatan dan kemudahan penerapan segera.
+- **Pilih Pendekatan B**: Jika stabilitas jangka panjang dan skalabilitas adalah prioritas absolut.
 ::
 
 ::faq
-::faq-item{question="Pertanyaan pertama yang sering dicari di Google?"}
-Jawaban langsung 2–4 kalimat yang padat dan menjawab keraguan pembaca secara tuntas.
+::faq-item{question="Pertanyaan pertama yang paling sering dicari di Google?"}
+Jawaban lugas 2–4 kalimat yang langsung menjawab inti keraguan tanpa berputar-putar.
 ::
 
-::faq-item{question="Pertanyaan kedua seputar penerapan atau kompatibilitas?"}
-Jawaban lugas mengenai kompatibilitas dan langkah alternatif yang bisa diambil.
-::
-
-::faq-item{question="Pertanyaan ketiga tentang perbedaan dengan metode lain?"}
-Jawaban komparatif ringkas yang menegaskan kembali keunggulan solusi ini.
+::faq-item{question="Apa kesalahan paling fatal yang sering dilakukan pemula?"}
+Penjelasan ringkas mengenai pitfall umum dan cara menghindarinya sejak hari pertama.
 ::
 ::
 ````

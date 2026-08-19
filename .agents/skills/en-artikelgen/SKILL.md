@@ -1,22 +1,44 @@
 ---
 name: en-artikelgen
-description: In-depth SEO-driven blog article generator for English content powered by Google Trends intelligence, bilingual technical translator (EN <-> ID) with Nuxt Content MDC syntax protection, and flat design visual illustration generator with teal/emerald brand palette (#14b898). Fully compatible with Gemini Spark and IDEs. Use when drafting new English blog posts, researching real-time Google search trends, optimizing on-page SEO, translating articles (content/en <-> content/id), or generating blog prompt assets.
+description: In-depth SEO-driven blog article generator for English content with Human-Grade tone (Anti-AI Writing Style) powered by Google Trends intelligence, bilingual technical translator (EN <-> ID) with Nuxt Content MDC syntax protection, and flat design visual illustration generator with teal/emerald brand palette (#14b898). Fully compatible with Gemini Spark and IDEs. Use when drafting new English blog posts, researching real-time Google search trends, optimizing on-page SEO, translating articles (content/en <-> content/id), or generating blog prompt assets.
 license: MIT
 ---
 
-# EN-ArtikelGen: SEO Content (Google Trends Intelligence), Translator & Visual Studio
+# EN-ArtikelGen: Human-Grade SEO Content (Google Trends Intelligence), Translator & Visual Studio
 
-Specialized skill for the English blog publishing workflow within the Nuxt Content ecosystem (`content/en/blog` & `content/id/blog`), fully tailored for **Gemini Spark** (`gemini.google.com`) and **Antigravity IDE**.
+Specialized skill for the English blog publishing workflow within the Nuxt Content ecosystem (`content/en/blog` & `content/id/blog`), enforcing **authentic human practitioner writing standards (*Anti-AI Voice*)** without robotic buzzwords or uniform sentence patterns.
 
 ---
 
-## Operational Modes & When to Use
+## 🧠 MANDATORY HUMAN-GRADE WRITING RULES (ANTI-AI PROTOCOL)
 
-| Mode | User Trigger / Request | Primary Reference |
-|---|---|---|
-| **📈 Research & Write Article** | "Write an article about X with Google Trends", "Generate an SEO blog post on Y" | [references/article-generator-seo.md](references/article-generator-seo.md) |
-| **🌐 Translate** | "Translate this post to Indonesian/English", "Sync blog content" | [references/translator.md](references/translator.md) |
-| **🎨 Visuals & Images** | "Create image prompt for this article", "Generate featured banner" | [references/image-generator.md](references/image-generator.md) |
+Every generated article **MUST PASS HUMAN REVIEW**. No corporate filler, formulaic structure, or robotic tone.
+
+### 1. Banned AI Buzzwords & Robotic Clichés (STRICTLY PROHIBITED)
+
+| Category | ❌ Banned AI Clichés | ✅ Human Practitioner Alternative |
+| :--- | :--- | :--- |
+| **Introductory Fluff** | *"In today's fast-paced digital world...", "In the ever-evolving landscape of...", "In recent years, technology has revolutionized..."* | Open directly with the core problem, a counterintuitive observation, or a real-world dilemma. |
+| **Meta-Talk & Filler** | *"Let's delve into...", "Dive deep into...", "It is important to note that...", "Needless to say..."* | Remove the meta-talk completely. Deliver the factual argument directly. |
+| **Empty Buzzwords** | *"Game-changer", "Revolutionize", "Tapestry", "Beacon of", "Crucial role", "Harness the power", "Paradigm shift"* | Use concrete engineering or instructional metrics (*"cuts cold-start latency by 40%"*). |
+| **Repetitive Transitions** | *"Furthermore,", "Moreover,", "In addition,", "Additionally,"* (at every paragraph start) | Connect paragraphs via natural train of thought, rhetorical questions, or cause-and-effect bridges. |
+| **Formulaic Conclusions** | *"In conclusion,", "To sum up,", "All in all,", "In summary...", "Ultimately,..."* | Deliver an **Actionable Decision Framework** (when to choose Option A vs Option B). |
+
+---
+
+### 2. Sentence Length Dynamics (*High Burstiness*)
+AI models default to uniform sentence lengths (~15–20 words). Human writing features a natural musical cadence:
+* **Ultra-Short Sentences (1–5 words)**: For emphasis, punches, and sharp transitions (*"The result? Complete silence."*, *"Don't do this."*, *"Classroom reality hits differently."*).
+* **Medium Sentences (10–18 words)**: For clear, direct instructional points.
+* **Long Flowing Sentences (20–35 words)**: To articulate nuanced logic, conditionals, or real-world trade-offs.
+* **Dynamic Paragraph Heights**: Mix 1-sentence punch paragraphs with 3–4 sentence explanatory blocks. Never produce identical text walls.
+
+---
+
+### 3. Practitioner Experience & Real-World Friction
+* **Acknowledge Downsides & Trade-offs**: Every architectural pattern or teaching method has costs. Point out limitations honestly (*"This approach is blazing fast, but memory usage scales linearly with active WebSocket connections."*).
+* **Common Pitfalls & Anti-Patterns**: Highlight mistakes that practitioners actually make in production or in the classroom.
+* **Have a Firm Stance**: Take a decisive perspective based on engineering/pedagogical reality rather than safe, generic middle-ground summaries.
 
 ---
 
@@ -31,7 +53,7 @@ Gemini Spark utilizes native **Google Search & Google Trends web grounding** to 
    - *Top Trending Angle*: 2–3 high-interest angles backed by actual search intent.
    - *Recommended Secondary Keywords*: High-velocity target search terms.
 3. **Integrate into Content Hierarchy**:
-   - Primary breakout keyword must appear in the **H1 Title** and within the **first 100 words**.
+   - Primary breakout keyword must appear in the **H1 Title** and naturally within the **first 100 words**.
    - Sub-queries are converted into section subheadings (`##` and `###`).
    - Frequent user questions are mapped into `::faq` + `::faq-item` components.
 
@@ -39,25 +61,23 @@ Gemini Spark utilizes native **Google Search & Google Trends web grounding** to 
 
 ## 1. Writing Standards & Content Format (Quick Ref)
 
-- **Default Language**: Native, natural, professional English.
-- **Grammar & Sentence Patterns**: Active voice (≥85%), present tense for facts/instructions, varied rhythm (Flesch Reading Ease 60–70).
-- **BLUF (Bottom Line Up Front)**: First sentence of every section (`##`) immediately delivers the core takeaway or answer.
-- **Paragraphs**: 2–4 sentences per paragraph. Eliminate dense text walls.
-- **Hook & Outcome**: Primary keyword and the core value proposition must appear naturally in the first 100 words.
+- **Default Language**: Native, natural, engaging professional English.
+- **Hook & Reality**: Tackle the core friction immediately in the opening section.
+- **Featured Image (Shared Single Asset)**: Use the **EXACT SAME image path and filename** as the ID version (e.g. `![Descriptive English alt text](/article/slug-name.webp)`), only varying the alt text, so that a single WebP asset in `public/article/` serves both language versions.
 - **Links**: Minimum 2–3 internal links (`/blog/related-slug`) and 2–3 external authoritative citations.
 - **Closing & FAQ Components**:
-  - Closing section MUST use `::conclusion ... ::`.
-  - FAQ at the end MUST use `::faq` + `::faq-item{question="..."}` (or `::accordion`).
-- **Output Presentation**: ALWAYS provide the final article draft in **ONE** complete fenced code block `~~~~md ... ~~~~` (from YAML frontmatter to the final FAQ) for seamless copying into a `.md` file. All commentary/notes to the user must reside outside the code block.
+  - Closing section MUST use `::conclusion ... ::` (Decision Guide).
+  - FAQ at the end MUST use `::faq` + `::faq-item{question="..."}`.
+- **Output Presentation**: ALWAYS provide the final article draft in **ONE** complete fenced code block `~~~~md ... ~~~~`.
 
 ### Standard Frontmatter Schema (`content/en/blog` / `content/id/blog`)
 
 ```yaml
 ---
-title: "Engaging Article Title with Keyword: Value Proposition"
+title: "Engaging Article Title with Keyword: Practical Value Proposition"
 category: technology
 date: YYYY-MM-DD
-description: Compelling 140-160 character meta description featuring the primary keyword and a clear call-to-read.
+description: Direct, compelling 140-160 character meta description with primary keyword and no AI clichés.
 tags:
   - tag1
   - tag2
@@ -68,21 +88,15 @@ tags:
 
 ## 2. Nuxt Content MDC Component Cheatsheet
 
-Use semantically correct MDC components:
-
 | Need | MDC Syntax | Purpose |
 |---|---|---|
-| **Conclusion** | `::conclusion ... ::` | Summarize outcome & guide reader choice |
+| **Conclusion** | `::conclusion ... ::` | Outcome-driven decision guide |
 | **FAQ Accordion** | `::faq` <br> `::faq-item{question="..."} ... ::` <br> `::` | 3–5 essential collapsible questions |
 | **Note / Info** | `::note ... ::` | Supplementary background context |
-| **Tip / Recommendation** | `::tip ... ::` | Best practices & efficiency suggestions |
-| **Warning** | `::warning ... ::` | Potential pitfalls & things to watch out for |
-| **Caution** | `::caution ... ::` | Destructive actions / critical errors |
-| **Sequential Steps** | `::steps` <br> `### Title Without Number` <br> `::` | Step numbers auto-render; do not hardcode numbers |
-| **Option Tabs** | `::tabs` <br> `:::tabs-item{label="..."}` <br> `::` | Side-by-side alternatives / tab views |
-| **Image Carousel** | `::carousel` (YAML items) | Multi-image gallery |
-| **CTA Button** | `:u-button{to="..." label="..." icon="..."}` | External link or action button |
-| **Inline Badge** | `:badge[text]{color="primary"}` | Status, version, or highlighted term |
+| **Tip / Recommendation** | `::tip ... ::` | Field-tested practitioner advice |
+| **Warning** | `::warning ... ::` | Critical pitfalls & anti-patterns |
+| **Caution** | `::caution ... ::` | High-risk operations / errors |
+| **Sequential Steps** | `::steps` <br> `### Title Without Number` <br> `::` | Step numbers auto-render |
 
 ---
 
@@ -91,7 +105,7 @@ Use semantically correct MDC components:
 When translating between `content/en/blog` and `content/id/blog`:
 1. **Keep 100% Intact (DO NOT translate or modify)**:
    - All fenced code blocks (` ``` `) and inline code (`` `code` ``).
-   - MDC component tags (`::conclusion`, `::faq`, `::steps`, etc.) and prop keys (`question="..."`, `label="..."`).
+   - MDC component tags (`::conclusion`, `::faq`, `::steps`, etc.) and prop keys (`question="..."`).
    - YAML frontmatter keys (`title:`, `category:`, `date:`, `description:`, `tags:`).
    - Slugs, dates, URL links, and asset image paths (e.g. `/article/font3.webp`).
 2. **Translate**:
@@ -121,8 +135,8 @@ Every illustration and featured banner must strictly conform to the brand visual
 
 ---
 
-## Detailed References (Load as Needed)
+## Detailed References
 
-- 📖 [references/article-generator-seo.md](references/article-generator-seo.md): Google Trends Research, English 9-Stage SEO Checklist, BLUF guidelines, wordiness elimination table, and complete draft template.
+- 📖 [references/article-generator-seo.md](references/article-generator-seo.md): Trends Research, 9-Stage SEO Checklist, Anti-AI Protocol, and complete template.
 - 🎨 [references/image-generator.md](references/image-generator.md): AI prompt templates, visual composition rules, and WebP asset standards.
 - 🌐 [references/translator.md](references/translator.md): Technical translation workflow preserving MDC and code integrity.
