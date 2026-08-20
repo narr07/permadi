@@ -244,20 +244,23 @@ function renderMarkdown(text: string): string {
 
 <template>
 	<div class="fixed bottom-5 right-5 z-50 font-sans sm:bottom-7 sm:right-7">
-		<!-- Floating Launcher Trigger Button -->
+		<!-- Floating Launcher Trigger Button (Compact Icon Button) -->
 		<button
 			type="button"
-			class="ai-trigger-btn group relative flex cursor-pointer items-center gap-2 overflow-hidden border border-emerald-700/60 rounded-full bg-[#002b27] p-2.5 shadow-xl transition-all duration-300 hover:scale-105 sm:gap-2.5 dark:border-[#134e43] dark:bg-[#002420] sm:px-4 sm:py-3 !text-white hover:shadow-2xl focus-ring"
+			class="ai-trigger-btn group relative h-11 w-11 flex cursor-pointer items-center justify-center overflow-hidden border border-emerald-700/60 rounded-full bg-[#002b27] shadow-xl transition-all duration-300 hover:scale-110 sm:h-12 sm:w-12 dark:border-[#134e43] dark:bg-[#002420] !text-white hover:shadow-2xl focus-ring"
 			:aria-expanded="isOpen"
-			aria-label="Toggle Permadi AI Assistant"
+			:aria-label="isOpen ? (locale === 'id' ? 'Tutup AI Assistant' : 'Close AI Assistant') : (locale === 'id' ? 'Tanya AI Permadi' : 'Ask Permadi AI')"
+			:title="isOpen ? (locale === 'id' ? 'Tutup AI' : 'Close AI') : (locale === 'id' ? 'Tanya AI Permadi' : 'Ask Permadi AI')"
 			@click="toggleChat"
 		>
 			<span class="absolute inset-0 from-emerald-600/30 to-teal-500/30 bg-gradient-to-r opacity-0 transition-opacity group-hover:opacity-100" />
 
-			<div class="relative h-6 w-6 flex shrink-0 items-center justify-center rounded-full bg-emerald-500 text-xs text-slate-950 shadow-md">
+			<div class="relative h-6 w-6 flex shrink-0 items-center justify-center rounded-full bg-emerald-500 text-xs text-slate-950 shadow-md transition-transform duration-300 group-hover:rotate-12">
+				<!-- Sparkles Icon when closed -->
 				<svg
+					v-if="!isOpen"
 					xmlns="http://www.w3.org/2000/svg"
-					class="h-3.5 w-3.5 text-slate-950 transition-transform duration-300 group-hover:rotate-12"
+					class="h-3.5 w-3.5 text-slate-950"
 					viewBox="0 0 24 24"
 					fill="none"
 					stroke="currentColor"
@@ -271,13 +274,26 @@ function renderMarkdown(text: string): string {
 					<path d="M3 5h4" />
 					<path d="M17 19h4" />
 				</svg>
+
+				<!-- Close Icon when open -->
+				<svg
+					v-else
+					xmlns="http://www.w3.org/2000/svg"
+					class="h-3.5 w-3.5 text-slate-950"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2.5"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<path d="M18 6 6 18" />
+					<path d="m6 6 12 12" />
+				</svg>
 			</div>
 
-			<span class="ai-trigger-label relative hidden text-xs font-bold tracking-wide sm:inline sm:text-sm !text-white">
-				{{ isOpen ? (locale === 'id' ? 'Tutup AI' : 'Close AI') : (locale === 'id' ? 'Tanya AI Permadi' : 'Ask Permadi AI') }}
-			</span>
-
-			<span class="relative h-2 w-2 flex shrink-0">
+			<!-- Status Ping Badge -->
+			<span class="absolute right-1 top-1 h-2 w-2 flex">
 				<span class="absolute h-full w-full inline-flex animate-ping rounded-full bg-emerald-400 opacity-80" />
 				<span class="relative h-2 w-2 inline-flex rounded-full bg-emerald-400" />
 			</span>
