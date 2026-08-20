@@ -18,7 +18,13 @@ export default defineNuxtConfig({
 		'@stefanobartoletti/nuxt-social-share',
 	],
 	hub: {
-		db: 'sqlite',
+		db: {
+			dialect: 'sqlite',
+			driver: 'd1',
+			connection: {
+				databaseId: process.env.NUXT_HUB_DATABASE_ID || 'ec2dcc68-5b36-4991-a8aa-ca9e1076956b',
+			},
+		},
 		dir: '.data',
 		remote: false,
 	},
