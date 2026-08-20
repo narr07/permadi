@@ -52,11 +52,8 @@ defineOgImage('Bento', {
 		<footer class="mt-16 border-t border-slate-200/80 py-8 dark:border-slate-800/80">
 			<div class="container-bento flex flex-col items-center justify-between gap-4 text-center text-meta sm:flex-row sm:text-left">
 				<div>
-					<p class="text-slate-800 font-semibold font-heading dark:text-slate-300">
-						permadi.dev <span class="text-slate-600 font-normal dark:text-slate-400">© {{ new Date().getFullYear() }}</span>
-					</p>
-					<p class="mt-0.5 text-xs text-slate-600 dark:text-slate-400">
-						Crafted with Nuxt, UnoCSS & Cloudflare D1.
+					<p class="text-sm text-slate-600 dark:text-slate-400">
+						© 2021-<ClientOnly fallback="2026">{{ new Date().getFullYear() }}</ClientOnly> - narr07
 					</p>
 				</div>
 				<div class="flex items-center gap-3 text-lg text-slate-600 dark:text-slate-400">
