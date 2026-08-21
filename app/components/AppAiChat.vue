@@ -247,7 +247,7 @@ function renderMarkdown(text: string): string {
 		<!-- Floating Launcher Trigger Button (Compact Icon Button) -->
 		<button
 			type="button"
-			class="ai-trigger-btn group relative h-11 w-11 flex cursor-pointer items-center justify-center overflow-hidden border border-emerald-700/60 rounded-full bg-[#002b27] shadow-xl transition-all duration-300 hover:scale-110 sm:h-12 sm:w-12 dark:border-[#134e43] dark:bg-[#002420] !text-white hover:shadow-2xl focus-ring"
+			class="ai-trigger-btn group relative h-11 w-11 flex cursor-pointer items-center justify-center overflow-hidden border border-emerald-700/60 rounded-full bg-[#002b27] shadow-xl transition-all duration-300 sm:h-12 sm:w-12 hover:scale-110 dark:border-[#134e43] dark:bg-[#002420] !text-white hover:shadow-2xl focus-ring"
 			:aria-expanded="isOpen"
 			:aria-label="isOpen ? (locale === 'id' ? 'Tutup AI Assistant' : 'Close AI Assistant') : (locale === 'id' ? 'Tanya AI Permadi' : 'Ask Permadi AI')"
 			:title="isOpen ? (locale === 'id' ? 'Tutup AI' : 'Close AI') : (locale === 'id' ? 'Tanya AI Permadi' : 'Ask Permadi AI')"

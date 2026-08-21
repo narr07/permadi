@@ -29,4 +29,3 @@ export async function getSessionId(event: H3Event): Promise<string> {
 		return 'anonymous-session'
 	}
 }
-
