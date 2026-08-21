@@ -399,7 +399,7 @@ defineOgImage('Bento', {
 				<aside
 					v-if="tocLinks.length > 0"
 					:aria-label="locale === 'id' ? 'Daftar Isi dan Bagikan' : 'Table of Contents and Share'"
-					class="sticky top-20 hidden flex-col self-start gap-3.5 lg:col-span-3 lg:flex"
+					class="sticky top-20 hidden flex-col self-start gap-3 lg:col-span-3 lg:flex"
 				>
 					<ContentToc
 						:links="tocLinks"

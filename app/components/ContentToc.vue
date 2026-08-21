@@ -112,6 +112,48 @@ const progressPercentage = computed(() => {
 	return Math.round(((activeIndex.value + 1) / flatList.value.length) * 100)
 })
 
+const desktopListRef = ref<HTMLElement | null>(null)
+const mobileListRef = ref<HTMLElement | null>(null)
+
+function autoScrollToc(container: HTMLElement | null, id: string) {
+	if (!container || !id || !import.meta.client)
+		return
+	const selector = window.CSS?.escape ? `[data-toc-id="${CSS.escape(id)}"]` : `[data-toc-id="${id}"]`
+	const activeEl = container.querySelector<HTMLElement>(selector)
+	if (!activeEl)
+		return
+
+	const elTop = activeEl.offsetTop
+	const elHeight = activeEl.offsetHeight
+	const containerTop = container.scrollTop
+	const containerHeight = container.clientHeight
+
+	if (elTop + elHeight > containerTop + containerHeight) {
+		container.scrollTo({
+			top: elTop + elHeight - containerHeight + 8,
+			behavior: 'smooth',
+		})
+	}
+	else if (elTop < containerTop) {
+		container.scrollTo({
+			top: Math.max(0, elTop - 8),
+			behavior: 'smooth',
+		})
+	}
+}
+
+watch(activeId, (newId) => {
+	if (!newId || import.meta.server)
+		return
+
+	nextTick(() => {
+		autoScrollToc(desktopListRef.value, newId)
+		if (mobileOpen.value) {
+			autoScrollToc(mobileListRef.value, newId)
+		}
+	})
+})
+
 onMounted(() => {
 	nextTick(() => {
 		updateActiveHeading()
@@ -186,6 +228,7 @@ onUnmounted(() => {
 					<div
 						v-if="mobileOpen"
 						id="mobile-toc-list"
+						ref="mobileListRef"
 						class="mt-3 max-h-60 overflow-y-auto border-t border-slate-200/60 pt-3 space-y-1 dark:border-[#134e43]"
 					>
 						<div
@@ -206,6 +249,7 @@ onUnmounted(() => {
 							v-for="(item, idx) in flatList"
 							:key="item.link.id"
 							:href="`#${item.link.id}`"
+							:data-toc-id="item.link.id"
 							class="group flex items-center justify-between gap-2 border border-transparent rounded-xl text-xs font-medium transition-all"
 							:class="[
 								item.level > 0 ? 'pl-5 pr-3 py-1.5 text-[11.5px]' : 'px-3 py-2',
@@ -234,9 +278,9 @@ onUnmounted(() => {
 			class="w-full"
 			:class="mode === 'all' ? 'hidden lg:block' : ''"
 		>
-			<div class="bento-card-clean relative overflow-hidden border border-slate-200/80 bg-white/90 p-5 shadow-sm backdrop-blur-xl dark:border-[#134e43] dark:bg-[#002b27]/90">
+			<div class="bento-card-clean relative overflow-hidden border border-slate-200/80 bg-white/90 p-4 shadow-sm backdrop-blur-xl dark:border-[#134e43] dark:bg-[#002b27]/90 sm:p-4.5">
 				<!-- Header Bento Section (Single-row clean alignment) -->
-				<div class="mb-3 flex items-center justify-between gap-2 border-b border-slate-200/60 pb-3 dark:border-slate-800/60">
+				<div class="mb-2.5 flex items-center justify-between gap-2 border-b border-slate-200/60 pb-2.5 dark:border-slate-800/60">
 					<span class="whitespace-nowrap text-[11px] text-brand-700 font-bold tracking-wider font-sans uppercase dark:text-brand-400">
 						{{ displayTitle }}
 					</span>
@@ -252,7 +296,7 @@ onUnmounted(() => {
 					aria-valuemin="0"
 					aria-valuemax="100"
 					:aria-label="locale === 'id' ? 'Progres Membaca' : 'Reading Progress'"
-					class="mb-4 h-1 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800/80"
+					class="mb-3 h-1 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800/80"
 				>
 					<div
 						class="h-full bg-brand-700 transition-all duration-300 ease-out dark:bg-brand-400"
@@ -261,14 +305,18 @@ onUnmounted(() => {
 				</div>
 
 				<!-- Bento Items List (Active like Hover, Hover with Outline) -->
-				<div class="max-h-[38vh] min-h-[5rem] overflow-y-auto pr-1 space-y-1">
+				<div
+					ref="desktopListRef"
+					class="max-h-[22vh] min-h-[3.5rem] overflow-y-auto pr-1 space-y-1"
+				>
 					<a
 						v-for="(item, idx) in flatList"
 						:key="item.link.id"
 						:href="`#${item.link.id}`"
+						:data-toc-id="item.link.id"
 						class="group flex items-center justify-between gap-2.5 border border-transparent rounded-xl text-xs font-medium transition-all"
 						:class="[
-							item.level > 0 ? 'pl-5 pr-3 py-1.5 text-[11.5px]' : 'px-3 py-2',
+							item.level > 0 ? 'pl-5 pr-3 py-1.5 text-[11.5px]' : 'px-3 py-1.5',
 							item.link.id === activeId
 								? 'text-brand-900 dark:text-brand-400 bg-slate-100/80 dark:bg-white/5 font-bold'
 								: 'text-slate-700 dark:text-slate-300 hover:(text-brand-900 dark:text-brand-400 border-brand-500/30 dark:border-brand-400/20 bg-slate-50/60 dark:bg-white/5)',
@@ -286,7 +334,7 @@ onUnmounted(() => {
 				</div>
 
 				<!-- Bento Footer Action (Back to top) -->
-				<div class="mt-4 flex items-center justify-between border-t border-slate-200/60 pt-3 text-[11px] dark:border-slate-800/60">
+				<div class="mt-3 flex items-center justify-between border-t border-slate-200/60 pt-2.5 text-[11px] dark:border-slate-800/60">
 					<span class="text-slate-600 font-mono dark:text-slate-400">
 						{{ progressPercentage }}% {{ locale === 'id' ? 'dibaca' : 'read' }}
 					</span>

@@ -43,6 +43,9 @@ export default defineNuxtConfig({
 		defaultLocale: 'en',
 		indexable: true,
 	},
+	socialShare: {
+		baseUrl: 'https://permadi.dev',
+	},
 	mcp: {
 		name: 'Permadi Dev MCP Server',
 		route: '/mcp',
