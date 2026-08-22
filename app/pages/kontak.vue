@@ -28,6 +28,12 @@ defineOgImage('Bento', {
 	title: page.value?.title,
 	description: page.value?.description,
 })
+
+useSchemaOrg([
+	defineWebPage({
+		'@type': 'ContactPage',
+	}),
+])
 </script>
 
 <template>
@@ -46,7 +52,7 @@ defineOgImage('Bento', {
 				<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
 				<div class="max-w-2xl">
 					<div class="mb-3.5 flex items-center justify-between gap-3">
-						<div class="inline-flex items-center gap-2 border border-brand-200/60 rounded-full bg-brand-100/70 px-3 py-1 text-xs text-brand-700 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
+						<div class="inline-flex items-center gap-2 border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-700 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
 							<span class="status-dot animate-pulse" />
 							<span>{{ page?.section_label || (locale === 'id' ? 'Kontak & Kolaborasi' : 'Contact & Connect') }}</span>
 						</div>
@@ -83,7 +89,7 @@ defineOgImage('Bento', {
 				class="hero-card-clean flex flex-col justify-between p-6 md:col-span-7 sm:p-8"
 			>
 				<div>
-					<span class="mb-3 flex items-center gap-1.5 text-xs text-brand-300 font-semibold tracking-widest uppercase">
+					<span class="mb-3 flex items-center gap-1.5 text-xs text-brand-300 font-semibold tracking-wide">
 						<span class="i-hugeicons-mail-01 text-xs" /> {{ page.email_card.label || 'Direct Inquiries' }}
 					</span>
 					<h3 class="text-3xl text-white font-semibold tracking-tight font-heading sm:text-5xl">
@@ -99,10 +105,10 @@ defineOgImage('Bento', {
 				<div class="mt-8 flex items-center justify-between border-t border-brand-900/60 pt-4">
 					<a
 						:href="`mailto:${page.email_card.email || 'dinar@permadi.dev'}`"
-						class="inline-flex items-center gap-1.5 rounded-full bg-brand-400 px-5 py-2.5 text-xs text-slate-950 font-bold transition-all hover:bg-brand-300"
+						class="inline-flex items-center gap-1.5 rounded-xl bg-brand-400 px-5 py-2.5 text-xs text-slate-950 font-bold transition-all hover:bg-brand-300"
 					>
 						{{ page.email_card.button_text || (locale === 'id' ? 'Kirim Email Sekarang' : 'Send Email Now') }}
-						<span>↗</span>
+						<span class="i-hugeicons-arrow-up-right-01 text-xs" />
 					</a>
 					<span
 						v-if="page.email_card.meta"
@@ -119,7 +125,7 @@ defineOgImage('Bento', {
 				class="sand-card-clean flex flex-col justify-between p-6 md:col-span-5 sm:p-7"
 			>
 				<div>
-					<span class="mb-3 flex items-center gap-1.5 text-xs text-slate-800 font-semibold tracking-wider font-mono uppercase">
+					<span class="mb-3 flex items-center gap-1.5 text-xs text-slate-800 font-semibold tracking-wide">
 						<span class="inline-block h-2 w-2 rounded-full bg-emerald-600" />
 						{{ page.status_card.label || (locale === 'id' ? 'Status Ketersediaan' : 'Availability Status') }}
 					</span>

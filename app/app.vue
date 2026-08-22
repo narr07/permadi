@@ -11,26 +11,50 @@ if (config.public.cloudflareAnalyticsToken) {
 
 useHead({
 	htmlAttrs: {
-		lang: locale,
+		lang: () => locale.value,
 	},
 	link: [
+		{ rel: 'icon', type: 'image/png', href: '/favicon.png' },
 		{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-		{ rel: 'alternate', type: 'application/rss+xml', title: 'Permadi — RSS Feed (RSS 2.0)', href: '/feed.xml' },
-		{ rel: 'alternate', type: 'application/atom+xml', title: 'Permadi — Atom Feed (Atom 1.0)', href: '/feed.atom' },
-		{ rel: 'alternate', type: 'application/feed+json', title: 'Permadi — JSON Feed (JSON 1.0)', href: '/feed.json' },
+		{ rel: 'alternate', type: 'application/rss+xml', title: 'Permadi | RSS Feed (RSS 2.0)', href: '/feed.xml' },
+		{ rel: 'alternate', type: 'application/atom+xml', title: 'Permadi | Atom Feed (Atom 1.0)', href: '/feed.atom' },
+		{ rel: 'alternate', type: 'application/feed+json', title: 'Permadi | JSON Feed (JSON 1.0)', href: '/feed.json' },
 	],
 })
 
 useSeoMeta({
 	titleTemplate: (titleChunk) => {
-		return titleChunk ? `${titleChunk} — Permadi` : 'Permadi — Web Developer & Designer'
+		return titleChunk ? `${titleChunk} | Permadi` : 'Permadi | Web Developer & Designer'
 	},
 	ogSiteName: 'Permadi',
 	twitterCard: 'summary_large_image',
 })
 
+useSchemaOrg([
+	definePerson({
+		name: 'Dinar Permadi Yusup',
+		alternateName: 'Permadi',
+		jobTitle: 'Frontend Developer & Graphic Designer',
+		url: 'https://permadi.dev',
+		image: '/logo.png',
+		sameAs: [
+			'https://github.com/narr07',
+			'https://x.com/dinarpermadi07',
+			'https://www.behance.net/narr07',
+			'https://www.instagram.com/narr07/',
+		],
+	}),
+	defineWebSite({
+		name: 'Permadi',
+		url: 'https://permadi.dev',
+		description: 'Web Developer & Designer portfolio and technical blog of Permadi.',
+		inLanguage: ['id-ID', 'en-US'],
+	}),
+	defineWebPage(),
+])
+
 defineOgImage('Bento', {
-	title: 'Permadi — Web Developer & Designer',
+	title: 'Permadi | Web Developer & Designer',
 	description: 'Personal Portfolio, Showcase of Projects & Technical Blog of Permadi.',
 	category: 'Portfolio & Articles',
 })

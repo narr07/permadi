@@ -117,6 +117,12 @@ defineOgImage('Bento', {
 	title: page.value?.title,
 	description: page.value?.description,
 })
+
+useSchemaOrg([
+	defineWebPage({
+		'@type': 'CollectionPage',
+	}),
+])
 </script>
 
 <template>

@@ -18,16 +18,38 @@ function onHeaderMouseMove(e: MouseEvent) {
 }
 
 useSeoMeta({
-	title: computed(() => page.value?.title),
-	description: computed(() => page.value?.description),
-	ogTitle: computed(() => page.value?.title),
-	ogDescription: computed(() => page.value?.description),
+	title: () => page.value?.title || (locale.value === 'id' ? 'Tentang' : 'About'),
+	description: () => page.value?.description,
+	ogTitle: () => page.value?.title || (locale.value === 'id' ? 'Tentang' : 'About'),
+	ogDescription: () => page.value?.description,
+	twitterTitle: () => page.value?.title || (locale.value === 'id' ? 'Tentang' : 'About'),
+	twitterDescription: () => page.value?.description,
+	twitterCard: 'summary_large_image',
 })
 
 defineOgImage('Bento', {
 	title: page.value?.title,
 	description: page.value?.description,
 })
+
+useSchemaOrg([
+	defineWebPage({
+		'@type': 'ProfilePage',
+		'mainEntity': definePerson({
+			name: 'Dinar Permadi Yusup',
+			alternateName: 'Permadi',
+			jobTitle: 'Frontend Developer & Graphic Designer',
+			url: 'https://permadi.dev',
+			image: '/logo.png',
+			sameAs: [
+				'https://github.com/narr07',
+				'https://x.com/dinarpermadi07',
+				'https://www.behance.net/narr07',
+				'https://www.instagram.com/narr07/',
+			],
+		}),
+	}),
+])
 </script>
 
 <template>
@@ -46,7 +68,7 @@ defineOgImage('Bento', {
 				<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
 				<div class="max-w-2xl">
 					<div class="mb-3.5 flex items-center justify-between gap-3">
-						<div class="inline-flex items-center gap-2 border border-brand-200/60 rounded-full bg-brand-100/70 px-3 py-1 text-xs text-brand-700 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
+						<div class="inline-flex items-center gap-2 border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-700 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
 							<span class="status-dot animate-pulse" />
 							<span>{{ page?.section_label || (locale === 'id' ? 'Tentang Saya' : 'About Me') }}</span>
 						</div>
@@ -62,7 +84,7 @@ defineOgImage('Bento', {
 					</h1>
 
 					<p class="heading-page-sub">
-						{{ page?.lead || page?.description || (locale === 'id' ? 'Fokus pada irisan antara desain antarmuka dan rekayasa perangkat lunak — mengubah interaksi bermakna menjadi produk yang bermanfaat.' : 'I care about the space between design and engineering — where a thoughtful interaction becomes a useful product.') }}
+						{{ page?.lead || page?.description || (locale === 'id' ? 'Fokus pada irisan antara desain antarmuka dan rekayasa perangkat lunak, mengubah interaksi bermakna menjadi produk yang bermanfaat.' : 'I care about the space between design and engineering, where a thoughtful interaction becomes a useful product.') }}
 					</p>
 				</div>
 
@@ -109,10 +131,10 @@ defineOgImage('Bento', {
 				<div class="mt-8 flex items-center justify-between border-t border-slate-200/60 pt-4 text-xs text-brand-800 font-bold dark:border-slate-800/60 dark:text-brand-400">
 					<NuxtLink
 						:to="locale === 'id' ? '/id/projek' : '/en/projects'"
-						class="flex items-center gap-1 hover:text-brand-950 hover:underline"
+						class="group flex items-center gap-1.5 hover:text-brand-950 hover:underline"
 					>
 						{{ page.story_card.link_text || (locale === 'id' ? 'Eksplorasi Studi Kasus Projek' : 'Explore Project Case Studies') }}
-						<span>↗</span>
+						<span class="i-hugeicons-arrow-right-01 text-xs transition-transform group-hover:translate-x-0.5" />
 					</NuxtLink>
 				</div>
 			</div>

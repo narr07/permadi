@@ -234,10 +234,18 @@ const tocLinks = computed(() => {
 })
 
 useSeoMeta({
-	title: computed(() => post.value?.doc?.title),
-	description: computed(() => post.value?.doc?.description),
-	ogTitle: computed(() => post.value?.doc?.title),
-	ogDescription: computed(() => post.value?.doc?.description),
+	title: () => post.value?.doc?.title,
+	description: () => post.value?.doc?.description,
+	ogTitle: () => post.value?.doc?.title,
+	ogDescription: () => post.value?.doc?.description,
+	ogType: 'article',
+	articlePublishedTime: () => post.value?.doc?.date,
+	articleModifiedTime: () => post.value?.doc?.updated || post.value?.doc?.date,
+	ogImage: () => post.value?.doc?.image || post.value?.doc?.cover || `/__og-image__/image${route.path}/og.png`,
+	twitterImage: () => post.value?.doc?.image || post.value?.doc?.cover || `/__og-image__/image${route.path}/og.png`,
+	twitterTitle: () => post.value?.doc?.title,
+	twitterDescription: () => post.value?.doc?.description,
+	twitterCard: 'summary_large_image',
 })
 
 defineOgImage('Bento', {
@@ -245,6 +253,18 @@ defineOgImage('Bento', {
 	description: post.value?.doc?.description,
 	category: locale.value === 'id' ? 'Artikel Blog' : 'Blog Article',
 })
+
+useSchemaOrg([
+	defineArticle({
+		'@type': 'BlogPosting',
+		'headline': () => post.value?.doc?.title,
+		'description': () => post.value?.doc?.description,
+		'image': () => post.value?.doc?.image || post.value?.doc?.cover || `/__og-image__/image${route.path}/og.png`,
+		'datePublished': () => post.value?.doc?.date,
+		'dateModified': () => post.value?.doc?.updated || post.value?.doc?.date,
+		'inLanguage': () => (locale.value === 'id' ? 'id-ID' : 'en-US'),
+	}),
+])
 </script>
 
 <template>

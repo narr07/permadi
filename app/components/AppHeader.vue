@@ -157,8 +157,8 @@ onUnmounted(() => {
 					:data-active="isItemActive(item)"
 					class="relative z-10 rounded-bento-island px-3.5 py-1.5 text-g1 font-medium transition-colors duration-200"
 					:class="isItemActive(item)
-						? 'text-brand-900 dark:text-brand-200 font-bold'
-						: 'text-slate-700 dark:text-slate-300 hover:(text-brand-900 dark:text-brand-200)'"
+						? 'text-brand-950 dark:text-brand-100 font-bold'
+						: 'text-slate-900 dark:text-slate-100 hover:(text-brand-950 dark:text-brand-100)'"
 				>
 					{{ item.label }}
 				</NuxtLink>
@@ -184,7 +184,7 @@ onUnmounted(() => {
 				<div
 					role="group"
 					:aria-label="locale === 'id' ? 'Pilih Bahasa' : 'Choose Language'"
-					class="relative grid-cols-2 hidden w-20 select-none items-center border border-slate-200/50 rounded-full bg-slate-100 p-0.5 text-xs font-semibold md:grid dark:border-slate-700/50 dark:bg-slate-800/80"
+					class="relative grid-cols-2 hidden w-20 select-none items-center border border-slate-300/70 rounded-full bg-slate-200/80 p-0.5 text-xs font-semibold md:grid dark:border-slate-700/50 dark:bg-slate-800/80"
 				>
 					<!-- Animated Sliding Pill Indicator -->
 					<div
@@ -199,8 +199,8 @@ onUnmounted(() => {
 						:aria-label="loc.name || loc.code.toUpperCase()"
 						class="relative z-10 rounded-full py-1 text-center transition-colors duration-200"
 						:class="loc.code === locale
-							? 'text-brand-950 dark:text-brand-200 font-bold'
-							: 'text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white'"
+							? 'text-slate-950 dark:text-white font-bold'
+							: 'text-slate-900 dark:text-slate-100 hover:text-slate-950 dark:hover:text-white'"
 					>
 						{{ loc.code.toUpperCase() }}
 					</NuxtLink>
@@ -209,8 +209,8 @@ onUnmounted(() => {
 				<!-- Contact CTA (Desktop only) -->
 				<NuxtLink
 					:to="contactPath"
-					class="hidden btn-primary text-g0 md:inline-flex !px-3.5 !py-1"
-					:class="{ 'bg-brand-800': route.path.startsWith(contactPath) }"
+					class="hidden btn-primary text-xs font-semibold md:inline-flex !px-3.5 !py-1.5"
+					:class="{ 'bg-brand-900': route.path.startsWith(contactPath) }"
 				>
 					{{ t('nav.contact') }}
 				</NuxtLink>

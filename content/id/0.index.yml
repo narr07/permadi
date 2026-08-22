@@ -1,4 +1,4 @@
-title: Dinar Permadi Yusup — Frontend Developer & Desainer Grafis
+title: Dinar Permadi Yusup | Frontend Developer & Desainer Grafis
 archive:
   label: Arsip Visual
   title: Gambar, dokumentasi, dan observasi visual.
@@ -16,7 +16,7 @@ hero:
   headline: Membangun antarmuka
   headline_italic: yang terasa pas
   headline_suffix: di setiap detail.
-  description: Saya mengubah ide yang rumit menjadi pengalaman digital yang sederhana, rapi, dan nyaman digunakan — dengan ketelitian seorang guru dan kepekaan seorang desainer.
+  description: Saya mengubah ide yang rumit menjadi pengalaman digital yang sederhana, rapi, dan nyaman digunakan, dengan ketelitian seorang guru dan kepekaan seorang desainer.
   location: Majalengka, ID
   timezone: GMT+7 / Local time
   links:
@@ -35,7 +35,7 @@ philosophy:
 project_section:
   label: Projek Terbaru
   fallback_title: Empat proyek, banyak pelajaran berharga.
-  fallback_description: Koleksi studi kasus sistem web dan eksplorasi desain modular — dari kebutuhan pendidikan hingga produk digital.
+  fallback_description: Koleksi studi kasus sistem web dan eksplorasi desain modular, dari kebutuhan pendidikan hingga produk digital.
   all_link_text: Buka Semua Projek
 writing:
   label: Tulisan & Catatan

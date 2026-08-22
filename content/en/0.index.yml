@@ -1,4 +1,4 @@
-title: Dinar Permadi Yusup — Frontend Developer & Graphic Designer
+title: Dinar Permadi Yusup | Frontend Developer & Graphic Designer
 
 description: A living archive of work, interface experiments, photography, and notes by an elementary school teacher who's also a frontend developer and graphic designer.
 
@@ -12,7 +12,7 @@ hero:
   headline: Building useful
   headline_italic: things
   headline_suffix: with care.
-  description: I turn complex ideas into calm, considered digital experiences — with a teacher's clarity and a designer's eye for detail.
+  description: I turn complex ideas into calm, considered digital experiences, with a teacher's clarity and a designer's eye for detail.
   location: Majalengka, ID
   timezone: GMT+7 / Local time
   links:
@@ -27,7 +27,7 @@ hero:
 project_section:
   label: Selected Work
   fallback_title: Four projects, many lessons.
-  fallback_description: A collection of web systems case studies and modular design — from education tools to digital products.
+  fallback_description: A collection of web systems case studies and modular design, from education tools to digital products.
   all_link_text: Browse All Work
 
 philosophy:

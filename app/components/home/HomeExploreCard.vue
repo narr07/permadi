@@ -37,14 +37,14 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/en/g
 		</div>
 		<div class="flex items-center justify-between border-t border-slate-200/60 bg-white p-4 text-xs dark:border-slate-800/60 dark:bg-slate-900 sm:p-5">
 			<div>
-				<span class="block text-[11px] text-slate-700 font-semibold tracking-wider uppercase dark:text-slate-400">
+				<span class="block text-[11px] text-slate-900 font-semibold tracking-wide dark:text-slate-200">
 					{{ label || (locale === 'id' ? 'Eksplorasi Saat Ini' : 'Currently Exploring') }}
 				</span>
 				<strong class="text-xs text-slate-900 font-medium dark:text-white">
 					{{ text || (locale === 'id' ? 'Antarmuka yang terasa natural.' : 'Interfaces that feel inevitable.') }}
 				</strong>
 			</div>
-			<span class="i-hugeicons-arrow-right-01 text-slate-500 transition-transform group-hover:(translate-x-1 text-brand-700)" />
+			<span class="i-hugeicons-arrow-right-01 text-slate-600 transition-transform group-hover:(translate-x-1 text-brand-700) dark:text-slate-400" />
 		</div>
 	</NuxtLink>
 </template>

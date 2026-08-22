@@ -39,7 +39,7 @@ const { locale } = useI18n()
 				class="mb-6 flex items-center gap-2"
 			>
 				<span class="status-dot" />
-				<span class="text-xs text-brand-300 font-semibold tracking-widest uppercase">
+				<span class="text-xs text-brand-300 font-semibold tracking-wide">
 					{{ hero.status }}
 				</span>
 			</div>
@@ -81,7 +81,7 @@ const { locale } = useI18n()
 					v-for="link in hero.links"
 					:key="link.to"
 					:to="link.to"
-					class="inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-xs transition-all"
+					class="inline-flex items-center gap-1.5 rounded-xl px-5 py-2.5 text-xs transition-all"
 					:class="link.variant === 'primary'
 						? 'font-bold bg-brand-400 text-slate-950 hover:bg-brand-300 shadow-sm'
 						: 'font-semibold border border-brand-400/40 text-brand-200 hover:bg-brand-950/60'"
@@ -92,13 +92,12 @@ const { locale } = useI18n()
 						:class="link.icon"
 						class="text-sm"
 					/>
-					<span v-else-if="link.variant === 'primary'">↗</span>
 				</NuxtLink>
 			</div>
 		</div>
 
 		<!-- Hero Meta Location & Timezone -->
-		<div class="mt-8 flex items-center justify-between border-t border-brand-900/60 pt-4 text-xs text-brand-400/80">
+		<div class="mt-8 flex items-center justify-between border-t border-brand-900/60 pt-4 text-xs text-brand-300">
 			<span class="flex items-center gap-1">
 				<span class="i-hugeicons-location-01 text-sm text-brand-300" />
 				{{ hero.location || 'Majalengka, ID' }}

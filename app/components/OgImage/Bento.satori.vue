@@ -7,7 +7,7 @@ withDefaults(
 		category?: string
 	}>(),
 	{
-		title: 'Permadi — Web Developer & Designer',
+		title: 'Permadi | Web Developer & Designer',
 		description: 'Personal Portfolio, Showcase of Projects & Technical Blog of Permadi.',
 		badge: 'permadi.dev',
 		category: 'Portfolio & Articles',

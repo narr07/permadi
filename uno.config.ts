@@ -198,7 +198,7 @@ export default defineConfig({
 		'text-body': 'font-sans text-g1 text-slate-700 dark:text-slate-300',
 		'text-meta': 'font-sans text-g0 text-slate-600 dark:text-slate-400',
 
-		'btn-primary': 'focus-ring inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-bento font-medium text-white bg-brand-700 hover:bg-brand-800 dark:bg-brand-400 dark:text-slate-950 dark:hover:bg-brand-300 active:scale-95 transition-all shadow-sm shadow-brand-700/20',
+		'btn-primary': 'focus-ring inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-bento font-semibold text-white bg-brand-900 hover:bg-brand-950 dark:bg-brand-400 dark:text-slate-950 dark:hover:bg-brand-300 active:scale-95 transition-all shadow-sm shadow-brand-900/20',
 		'btn-ghost': 'focus-ring inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-bento font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all',
 		'icon-btn': 'focus-ring flex items-center justify-center w-9 h-9 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors',
 		'badge-neutral': 'inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-g0 font-medium bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60',

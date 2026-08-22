@@ -16,7 +16,22 @@ export default defineNuxtConfig({
 		'@nuxt/scripts',
 		'@nuxtjs/mcp-toolkit',
 		'@stefanobartoletti/nuxt-social-share',
+		'@nuxt/a11y',
 	],
+	a11y: {
+		defaultHighlight: false,
+		logIssues: true,
+		axe: {
+			runOptions: {
+				runOnly: ['wcag2a', 'wcag2aa'],
+			},
+		},
+		report: {
+			enabled: true,
+			output: 'a11y-report.md',
+			failOnViolation: false,
+		},
+	},
 	hub: {
 		db: {
 			dialect: 'sqlite',
@@ -43,6 +58,9 @@ export default defineNuxtConfig({
 		defaultLocale: 'en',
 		indexable: true,
 	},
+	sitemap: {
+		zeroRuntime: true,
+	},
 	socialShare: {
 		baseUrl: 'https://permadi.dev',
 	},
@@ -53,7 +71,7 @@ export default defineNuxtConfig({
 	},
 	llms: {
 		domain: 'https://permadi.dev',
-		title: 'Dinar Permadi Yusup — Permadi (Web Developer & Designer)',
+		title: 'Dinar Permadi Yusup | Permadi (Web Developer & Designer)',
 		description: 'Dokumentasi, artikel blog teknis, dan portofolio karya frontend developer & desainer grafis (Dinar Permadi Yusup) dalam Bahasa Indonesia dan English.',
 		notes: [
 			'Website ini tersedia penuh dalam dua bahasa: Bahasa Indonesia (/id) dan English (/en).',
@@ -356,11 +374,18 @@ export default defineNuxtConfig({
 				'/feed.atom',
 				'/feed.json',
 			],
-			crawlLinks: true,
+			crawlLinks: false,
 			failOnError: false,
 		},
 		cloudflare: {
 			nodeCompat: true,
+			pages: {
+				routes: {
+					ruleMatching: 'wildcard',
+					include: ['/*'],
+					exclude: ['/_nuxt/*', '/images/*', '/favicon.ico', '/favicon.png', '/logo.png'],
+				},
+			},
 		},
 	},
 	devtools: { enabled: true },

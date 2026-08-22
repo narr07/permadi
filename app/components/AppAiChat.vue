@@ -47,14 +47,14 @@ watch(locale, (newLoc) => {
 const starterSuggestions = computed(() => {
 	if (locale.value === 'id') {
 		return [
-			{ text: 'Apa keahlian & tech stack utama Permadi?', icon: '⚡' },
+			{ text: 'Apa keahlian & tech stack utama Permadi?', icon: '💻' },
 			{ text: 'Ceritakan tentang projek Portal SDN Teja II', icon: '🏫' },
 			{ text: 'Apa itu metode Accelerated Learning?', icon: '🧠' },
 			{ text: 'Bagaimana cara menghubungi Permadi?', icon: '📬' },
 		]
 	}
 	return [
-		{ text: 'What is Permadi\'s core tech stack?', icon: '⚡' },
+		{ text: 'What is Permadi\'s core tech stack?', icon: '💻' },
 		{ text: 'Tell me about the SDN Teja II project', icon: '🏫' },
 		{ text: 'What is Accelerated Learning?', icon: '🧠' },
 		{ text: 'How can I get in touch with Permadi?', icon: '📬' },
@@ -111,7 +111,7 @@ async function copyMessage(msg: Message) {
 }
 
 async function shareMessage(msg: Message) {
-	const shareText = `${msg.content}\n\n— Permadi AI (https://permadi.dev/${locale.value})`
+	const shareText = `${msg.content}\n\nvia Permadi AI (https://permadi.dev/${locale.value})`
 	try {
 		if (navigator.share) {
 			await navigator.share({
@@ -244,59 +244,23 @@ function renderMarkdown(text: string): string {
 
 <template>
 	<div class="fixed bottom-5 right-5 z-50 font-sans sm:bottom-7 sm:right-7">
-		<!-- Floating Launcher Trigger Button (Compact Icon Button) -->
+		<!-- Floating Launcher Trigger Button (Clean Bento Style) -->
 		<button
 			type="button"
-			class="ai-trigger-btn group relative h-11 w-11 flex cursor-pointer items-center justify-center overflow-hidden border border-emerald-700/60 rounded-full bg-[#002b27] shadow-xl transition-all duration-300 sm:h-12 sm:w-12 hover:scale-110 dark:border-[#134e43] dark:bg-[#002420] !text-white hover:shadow-2xl focus-ring"
+			class="group h-11 w-11 flex cursor-pointer items-center justify-center border border-slate-200/80 rounded-2xl bg-white/90 shadow-md backdrop-blur-md transition-all duration-200 sm:h-12 sm:w-12 dark:border-[#134e43] hover:border-brand-500 dark:bg-[#002420]/90 hover:bg-brand-50/80 hover:shadow-lg dark:hover:border-brand-400 dark:hover:bg-[#002f2a]"
 			:aria-expanded="isOpen"
 			:aria-label="isOpen ? (locale === 'id' ? 'Tutup AI Assistant' : 'Close AI Assistant') : (locale === 'id' ? 'Tanya AI Permadi' : 'Ask Permadi AI')"
 			:title="isOpen ? (locale === 'id' ? 'Tutup AI' : 'Close AI') : (locale === 'id' ? 'Tanya AI Permadi' : 'Ask Permadi AI')"
 			@click="toggleChat"
 		>
-			<span class="absolute inset-0 from-emerald-600/30 to-teal-500/30 bg-gradient-to-r opacity-0 transition-opacity group-hover:opacity-100" />
-
-			<div class="relative h-6 w-6 flex shrink-0 items-center justify-center rounded-full bg-emerald-500 text-xs text-slate-950 shadow-md transition-transform duration-300 group-hover:rotate-12">
-				<!-- Sparkles Icon when closed -->
-				<svg
-					v-if="!isOpen"
-					xmlns="http://www.w3.org/2000/svg"
-					class="h-3.5 w-3.5 text-slate-950"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2.5"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				>
-					<path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
-					<path d="M5 3v4" />
-					<path d="M19 17v4" />
-					<path d="M3 5h4" />
-					<path d="M17 19h4" />
-				</svg>
-
-				<!-- Close Icon when open -->
-				<svg
-					v-else
-					xmlns="http://www.w3.org/2000/svg"
-					class="h-3.5 w-3.5 text-slate-950"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2.5"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				>
-					<path d="M18 6 6 18" />
-					<path d="m6 6 12 12" />
-				</svg>
-			</div>
-
-			<!-- Status Ping Badge -->
-			<span class="absolute right-1 top-1 h-2 w-2 flex">
-				<span class="absolute h-full w-full inline-flex animate-ping rounded-full bg-emerald-400 opacity-80" />
-				<span class="relative h-2 w-2 inline-flex rounded-full bg-emerald-400" />
-			</span>
+			<span
+				v-if="!isOpen"
+				class="i-hugeicons-bubble-chat-spark text-2xl text-brand-600 transition-transform duration-200 group-hover:scale-110 dark:text-brand-400"
+			/>
+			<span
+				v-else
+				class="i-hugeicons-cancel-01 text-xl text-slate-700 transition-transform duration-200 group-hover:rotate-90 dark:text-slate-200"
+			/>
 		</button>
 
 		<!-- Bento Chat Drawer / Floating Modal -->
@@ -582,13 +546,5 @@ function renderMarkdown(text: string): string {
 }
 .dark :deep(.prose-chat code) {
 	background-color: rgba(255, 255, 255, 0.1);
-}
-
-.ai-trigger-btn,
-.ai-trigger-btn * {
-	color: #ffffff !important;
-}
-.ai-trigger-label {
-	color: #ffffff !important;
 }
 </style>

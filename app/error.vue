@@ -35,7 +35,16 @@ function handleClearError(redirectPath = '/') {
 }
 
 useHead({
-	title: `${statusCode.value} — ${errorTitle.value} | Permadi`,
+	htmlAttrs: {
+		lang: () => locale.value,
+	},
+	title: () => `${statusCode.value}: ${errorTitle.value} | Permadi`,
+})
+
+useSeoMeta({
+	title: () => `${statusCode.value}: ${errorTitle.value} | Permadi`,
+	description: () => errorDescription.value,
+	robots: 'noindex, nofollow',
 })
 </script>
 
