@@ -163,6 +163,12 @@
       "skillPath": "skills/sandbox-stable/SKILL.md",
       "computedHash": "df227e92646b68ed526196eff1c6eff4628623de0ce55152cd7958597613eb58"
     },
+    "seo-content-writer": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "skillPath": "skills/seo-content-writer/SKILL.md",
+      "computedHash": "c9fbaa74cd74dde70d96e6e57ae10fb5e894f6383c157031f5f6d75e199fad38"
+    },
     "turnstile-spin": {
       "source": "cloudflare/skills",
       "sourceType": "github",

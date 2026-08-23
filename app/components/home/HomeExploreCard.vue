@@ -15,7 +15,7 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/en/g
 		:aria-label="`${label || (locale === 'id' ? 'Eksplorasi Saat Ini' : 'Currently Exploring')}: ${text || (locale === 'id' ? 'Antarmuka yang terasa natural.' : 'Interfaces that feel inevitable.')}`"
 		class="bento-card-clean group block flex flex-col justify-between overflow-hidden md:col-span-5 !p-0"
 	>
-		<div class="relative aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
+		<div class="relative max-h-52 sm:max-h-56 md:max-h-48 aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
 			<NuxtImg
 				v-if="galleryItem?.image"
 				:src="galleryItem.image"
