@@ -157,7 +157,8 @@ export default defineNuxtConfig({
 		cloudinaryApiSecret: process.env.NUXT_CLOUDINARY_API_SECRET || '',
 		public: {
 			cloudflareAnalyticsToken: process.env.NUXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN || '',
-			googleAnalyticsId: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID || 'G-5LEXR84KHW',
+			googleAnalyticsId: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID || '',
+			fbAppId: process.env.NUXT_PUBLIC_FB_APP_ID || '',
 		},
 	},
 	scripts: {
@@ -166,7 +167,7 @@ export default defineNuxtConfig({
 				token: process.env.NUXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN || '',
 			},
 			googleAnalytics: {
-				id: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID || 'G-5LEXR84KHW',
+				id: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID || '',
 			},
 		},
 	},

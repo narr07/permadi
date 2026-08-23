@@ -34,6 +34,7 @@ useSeoMeta({
 		return titleChunk ? `${titleChunk} | Permadi` : 'Permadi | Web Developer & Designer'
 	},
 	ogSiteName: 'Permadi',
+	fbAppId: () => config.public.fbAppId ? String(config.public.fbAppId) : undefined,
 	twitterCard: 'summary_large_image',
 })
 
