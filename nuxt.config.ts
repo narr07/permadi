@@ -348,11 +348,16 @@ export default defineNuxtConfig({
 			},
 		},
 
-		// Seluruh halaman HTML: sajikan instan dari Edge CDN Cloudflare
+		// Seluruh halaman HTML: sajikan instan dari Edge CDN Cloudflare + Security Headers
 		'/**': {
 			headers: {
 				'Cache-Control': 'public, max-age=0, s-maxage=604800, must-revalidate',
 				'CDN-Cache-Control': 'max-age=604800, stale-while-revalidate=86400',
+				'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+				'X-Content-Type-Options': 'nosniff',
+				'X-Frame-Options': 'SAMEORIGIN',
+				'Referrer-Policy': 'strict-origin-when-cross-origin',
+				'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
 			},
 		},
 
@@ -443,6 +448,7 @@ export default defineNuxtConfig({
 				'/feed.xml',
 				'/feed.atom',
 				'/feed.json',
+				'/robots.txt',
 			],
 			crawlLinks: true,
 			failOnError: false,
