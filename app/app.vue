@@ -62,6 +62,14 @@ defineOgImage('Bento', {
 
 <template>
 	<div class="relative min-h-screen flex flex-col justify-between selection:(bg-brand-500 text-white)">
+		<!-- Skip to Main Content for A11y / Keyboard Focus Management -->
+		<a
+			href="#main"
+			class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-brand-500 focus:px-4 focus:py-2 focus:text-white focus:shadow-lg focus:outline-none"
+		>
+			{{ locale === 'id' ? 'Lewati ke konten utama' : 'Skip to main content' }}
+		</a>
+
 		<div
 			class="noise"
 			aria-hidden="true"
@@ -69,7 +77,11 @@ defineOgImage('Bento', {
 		<NuxtRouteAnnouncer />
 		<AppHeader />
 
-		<main class="flex-1">
+		<main
+			id="main"
+			tabindex="-1"
+			class="flex-1 outline-none"
+		>
 			<NuxtPage />
 		</main>
 
@@ -117,8 +129,9 @@ defineOgImage('Bento', {
 					>
 						<span class="i-hugeicons-behance-02" />
 					</a>
-					<a
-						href="/feed.xml"
+					<NuxtLink
+						to="/feed.xml"
+						external
 						target="_blank"
 						rel="noopener"
 						class="transition-colors hover:text-brand-800 dark:hover:text-brand-300"
@@ -126,11 +139,11 @@ defineOgImage('Bento', {
 						aria-label="RSS Feed"
 					>
 						<span class="i-hugeicons-rss" />
-					</a>
+					</NuxtLink>
 				</div>
 			</div>
 		</footer>
 
-		<AppAiChat />
+		<LazyAppAiChat />
 	</div>
 </template>

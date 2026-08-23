@@ -340,10 +340,17 @@ export default defineNuxtConfig({
 			},
 		},
 
-		// Cache gambar OG di Cloudflare edge
+		// Cache gambar OG di Cloudflare edge (12 jam = 43200 detik, tanpa cache browser lokal)
+		'/_og/**': {
+			headers: {
+				'Cache-Control': 'public, max-age=0, s-maxage=43200, must-revalidate',
+				'CDN-Cache-Control': 'max-age=43200',
+			},
+		},
 		'/__og-image__/**': {
 			headers: {
-				'Cache-Control': 'public, max-age=604800, s-maxage=86400, stale-while-revalidate=86400',
+				'Cache-Control': 'public, max-age=0, s-maxage=43200, must-revalidate',
+				'CDN-Cache-Control': 'max-age=43200',
 			},
 		},
 
@@ -381,9 +388,24 @@ export default defineNuxtConfig({
 			nodeCompat: true,
 			pages: {
 				routes: {
-					ruleMatching: 'wildcard',
 					include: ['/*'],
-					exclude: ['/_nuxt/*', '/images/*', '/favicon.ico', '/favicon.png', '/logo.png'],
+					exclude: [
+						'/_nuxt/*',
+						'/en/blog/*',
+						'/id/blog/*',
+						'/en/projects/*',
+						'/id/projek/*',
+						'/images/*',
+						'/fonts/*',
+						'/icons/*',
+						'/favicon.ico',
+						'/favicon.png',
+						'/logo.png',
+						'/feed.*',
+						'/sitemap*.xml',
+						'/robots.txt',
+						'/llms*.txt',
+					],
 				},
 			},
 		},
