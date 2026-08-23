@@ -399,11 +399,6 @@ export default defineNuxtConfig({
 				routes: {
 					include: ['/*'],
 					exclude: [
-						'/_nuxt/*',
-						'/_og/s/*',
-						'/_og-static-fonts/*',
-						'/_scripts/*',
-						'/_studio-app/*',
 						'/_payload.json',
 						'/*/_payload.json',
 						'/*/*/_payload.json',
