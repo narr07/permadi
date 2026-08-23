@@ -391,10 +391,6 @@ export default defineNuxtConfig({
 					include: ['/*'],
 					exclude: [
 						'/_nuxt/*',
-						'/en/blog/*',
-						'/id/blog/*',
-						'/en/projects/*',
-						'/id/projek/*',
 						'/images/*',
 						'/fonts/*',
 						'/icons/*',
