@@ -67,6 +67,15 @@ export default defineNuxtConfig({
 	sitemap: {
 		zeroRuntime: true,
 	},
+	robots: {
+		groups: [
+			{
+				userAgent: ['*'],
+				allow: ['/'],
+			},
+		],
+		sitemap: ['https://permadi.dev/sitemap_index.xml'],
+	},
 	socialShare: {
 		baseUrl: 'https://permadi.dev',
 	},

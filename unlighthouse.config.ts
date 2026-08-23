@@ -5,5 +5,6 @@ export default {
 	scanner: {
 		device: 'mobile',
 		throttle: true,
+		dynamicSampling: false,
 	},
 }
