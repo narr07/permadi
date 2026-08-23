@@ -361,9 +361,14 @@ export default defineNuxtConfig({
 			},
 		},
 	},
+	ogImage: {
+		zeroRuntime: true,
+	},
 	nitro: {
 		preset: 'cloudflare_pages',
 		prerender: {
+			concurrency: 1,
+			interval: 50,
 			routes: [
 				'/en',
 				'/id',
@@ -381,7 +386,7 @@ export default defineNuxtConfig({
 				'/feed.atom',
 				'/feed.json',
 			],
-			crawlLinks: false,
+			crawlLinks: true,
 			failOnError: false,
 		},
 		cloudflare: {
