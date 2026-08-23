@@ -125,8 +125,20 @@ export default defineNuxtConfig({
 					crossorigin: '',
 				},
 				{
+					rel: 'preload',
+					as: 'style',
+					href: 'https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap',
+				},
+				{
 					rel: 'stylesheet',
-					href: 'https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap',
+					href: 'https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap',
+					media: 'print',
+					onload: "this.media='all'",
+				},
+			],
+			noscript: [
+				{
+					children: '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">',
 				},
 			],
 		},
@@ -162,6 +174,9 @@ export default defineNuxtConfig({
 		},
 	},
 	scripts: {
+		defaultScriptOptions: {
+			trigger: 'onNuxtReady',
+		},
 		registry: {
 			cloudflareWebAnalytics: {
 				token: process.env.NUXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN || '',
@@ -323,10 +338,11 @@ export default defineNuxtConfig({
 		// Root redirect
 		'/': { redirect: '/en' },
 
-		// Seluruh halaman HTML: Selalu sajikan versi terbaru tanpa cache browser/edge basi setelah deploy baru
+		// Seluruh halaman HTML: sajikan instan dari Edge CDN Cloudflare
 		'/**': {
 			headers: {
-				'Cache-Control': 'public, max-age=0, must-revalidate',
+				'Cache-Control': 'public, max-age=0, s-maxage=604800, must-revalidate',
+				'CDN-Cache-Control': 'max-age=604800, stale-while-revalidate=86400',
 			},
 		},
 

@@ -30,6 +30,7 @@ const { data: featuredProject } = await useAsyncData(
 const { data: galleryItems } = await useAsyncData(
 	'home-galeri-preview',
 	() => $fetch<any[]>('/api/cloudinary-gallery').catch(() => []),
+	{ lazy: true },
 )
 
 useSeoMeta({
