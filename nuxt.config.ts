@@ -52,6 +52,11 @@ export default defineNuxtConfig({
 	experimental: {
 		viewTransition: true,
 	},
+	scripts: {
+		globals: {
+			proxy: false,
+		},
+	},
 	site: {
 		url: 'https://permadi.dev',
 		name: 'Permadi',
@@ -324,6 +329,15 @@ export default defineNuxtConfig({
 	routeRules: {
 		// Root redirect
 		'/': { redirect: '/en' },
+
+		// Plain text robots.txt (No HTML redirect)
+		'/robots.txt': {
+			headers: {
+				'Content-Type': 'text/plain; charset=utf-8',
+				'Cache-Control': 'public, max-age=0, s-maxage=3600, must-revalidate',
+				'CDN-Cache-Control': 'max-age=3600',
+			},
+		},
 
 		// Seluruh halaman HTML: sajikan instan dari Edge CDN Cloudflare
 		'/**': {

@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { marked } from 'marked'
-
-// Konfigurasi marked untuk line breaks dan GitHub Flavored Markdown
-marked.setOptions({
-	breaks: true,
-	gfm: true,
-})
+let markedParser: any = null
+async function getMarkedParser() {
+	if (!markedParser) {
+		const m = await import('marked')
+		m.marked.setOptions({ breaks: true, gfm: true })
+		markedParser = m.marked
+	}
+	return markedParser
+}
 
 interface Message {
 	id: string
@@ -232,13 +234,24 @@ function handleKeydown(e: KeyboardEvent) {
 	}
 }
 
+watch(isOpen, (open) => {
+	if (open) {
+		getMarkedParser()
+	}
+})
+
 function renderMarkdown(text: string): string {
-	try {
-		return marked.parse(text) as string
+	if (!text) return ''
+	if (markedParser) {
+		try {
+			return markedParser.parse(text) as string
+		}
+		catch {
+			return text
+		}
 	}
-	catch {
-		return text
-	}
+	getMarkedParser()
+	return text.replace(/\n/g, '<br>')
 }
 </script>
 

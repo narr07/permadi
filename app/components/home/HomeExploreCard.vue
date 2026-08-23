@@ -23,8 +23,11 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/en/g
 				aria-hidden="true"
 				:provider="galleryItem.image.startsWith('http') || galleryItem.image.startsWith('/projects') || galleryItem.image.startsWith('/galeri') ? undefined : 'cloudinary'"
 				format="webp"
-				quality="75"
+				quality="70"
 				width="450"
+				height="253"
+				sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 450px"
+				decoding="async"
 				class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 				loading="lazy"
 			/>

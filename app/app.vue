@@ -8,6 +8,7 @@ if (config.public.cloudflareAnalyticsToken) {
 		token: config.public.cloudflareAnalyticsToken,
 	}, {
 		trigger: 'idle',
+		proxy: false,
 	})
 }
 
@@ -17,6 +18,7 @@ if (config.public.googleAnalyticsId) {
 		id: config.public.googleAnalyticsId,
 	}, {
 		trigger: 'idle',
+		proxy: false,
 	})
 }
 
