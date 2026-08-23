@@ -42,6 +42,7 @@
         "@iconify-json/vscode-icons": "^1.2.73",
         "@nuxt/a11y": "^1.0.0-alpha.1",
         "@nuxt/eslint": "^1.17.0",
+        "@nuxt/fonts": "^0.14.0",
         "@nuxtjs/color-mode": "^4.0.1",
         "@resvg/resvg-wasm": "^2.6.2",
         "@types/better-sqlite3": "^9.6.0",

@@ -5,6 +5,7 @@ export default defineNuxtConfig({
 		'@pinia/nuxt',
 		'motion-v/nuxt',
 		'@nuxt/eslint',
+		'@nuxt/fonts',
 		'@unocss/nuxt',
 		'@nuxtjs/color-mode',
 		'@nuxt/content',
@@ -112,36 +113,22 @@ export default defineNuxtConfig({
 		],
 	},
 
-	app: {
-		head: {
-			link: [
-				{
-					rel: 'preconnect',
-					href: 'https://fonts.googleapis.com',
-				},
-				{
-					rel: 'preconnect',
-					href: 'https://fonts.gstatic.com',
-					crossorigin: '',
-				},
-				{
-					rel: 'preload',
-					as: 'style',
-					href: 'https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap',
-				},
-				{
-					rel: 'stylesheet',
-					href: 'https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap',
-					media: 'print',
-					onload: "this.media='all'",
-				},
-			],
-			noscript: [
-				{
-					children: '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">',
-				},
-			],
+	fonts: {
+		families: [
+			{ name: 'Plus Jakarta Sans', weights: [400, 500, 600, 700], subsets: ['latin'] },
+			{ name: 'Barlow', weights: [600, 700, 800], subsets: ['latin'] },
+			{ name: 'JetBrains Mono', weights: [400, 500], subsets: ['latin'] },
+		],
+		defaults: {
+			preload: true,
+			weights: [400, 500, 600, 700, 800],
+			styles: ['normal'],
+			subsets: ['latin'],
 		},
+	},
+
+	app: {
+		head: {},
 	},
 
 	components: {
@@ -353,6 +340,13 @@ export default defineNuxtConfig({
 			},
 		},
 
+		// Font lokal hasil unduhan @nuxt/fonts (WOFF2): Cache permanen 1 tahun
+		'/_fonts/**': {
+			headers: {
+				'Cache-Control': 'public, max-age=31536000, immutable',
+			},
+		},
+
 		// API routes tidak di-prerender
 		'/api/**': {
 			prerender: false,
@@ -424,6 +418,7 @@ export default defineNuxtConfig({
 						'/projects/*',
 						'/logo/*',
 						'/fonts/*',
+						'/_fonts/*',
 						'/icons/*',
 						'/favicon*',
 						'/apple-touch-icon.png',
