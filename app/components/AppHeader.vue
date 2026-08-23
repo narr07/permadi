@@ -200,7 +200,7 @@ onUnmounted(() => {
 						class="relative z-10 rounded-full py-1 text-center transition-colors duration-200"
 						:class="loc.code === locale
 							? 'text-slate-950 dark:text-white font-bold'
-							: 'text-slate-900 dark:text-slate-100 hover:text-slate-950 dark:hover:text-white'"
+							: 'text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white'"
 					>
 						{{ loc.code.toUpperCase() }}
 					</NuxtLink>
