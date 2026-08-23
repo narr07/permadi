@@ -12,7 +12,9 @@
 		"convert:webp": "bun scripts/convert-webp.ts",
 		"research": "bun scripts/research-trends.ts",
 		"lint": "eslint .",
-		"lint:fix": "eslint . --fix"
+		"lint:fix": "eslint . --fix",
+		"audit": "unlighthouse-ci --site https://permadi.dev",
+		"audit:local": "unlighthouse-ci --site http://localhost:3000 --output-path ./reports/unlighthouse-local"
 	},
 	"dependencies": {
 		"@google/genai": "^2.17.1",
@@ -55,6 +57,7 @@
 		"@nuxtjs/color-mode": "^4.0.1",
 		"@resvg/resvg-wasm": "^2.6.2",
 		"@types/better-sqlite3": "^9.6.0",
+		"@unlighthouse/cli": "^0.18.0",
 		"@unocss/eslint-plugin": "^66.7.5",
 		"@unocss/nuxt": "^66.7.5",
 		"@unocss/preset-icons": "^66.7.5",
