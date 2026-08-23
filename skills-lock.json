@@ -79,6 +79,12 @@
       "skillPath": "SKILL.md",
       "computedHash": "5ef8ef1703e95545c613ab8bf85c4f447fb600889b3f9fcee1ad3eac7c51f271"
     },
+    "keyword-research": {
+      "source": "kostja94/marketing-skills",
+      "sourceType": "github",
+      "skillPath": "skills/seo/content/keyword-research/SKILL.md",
+      "computedHash": "8d7bbcdb5c7b8715bbc3e421e9253fc21d47b116f196c7853bbf7775744c4250"
+    },
     "motion": {
       "source": "onmax/nuxt-skills",
       "sourceType": "github",
