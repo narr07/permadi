@@ -2,17 +2,21 @@
 const { locale } = useI18n()
 const config = useRuntimeConfig()
 
-// Cloudflare Web Analytics via @nuxt/scripts
+// Cloudflare Web Analytics via @nuxt/scripts (Deferred to idle)
 if (config.public.cloudflareAnalyticsToken) {
 	useScriptCloudflareWebAnalytics({
 		token: config.public.cloudflareAnalyticsToken,
+	}, {
+		trigger: 'idle',
 	})
 }
 
-// Google Analytics 4 via @nuxt/scripts
+// Google Analytics 4 via @nuxt/scripts (Deferred to idle)
 if (config.public.googleAnalyticsId) {
 	useScriptGoogleAnalytics({
 		id: config.public.googleAnalyticsId,
+	}, {
+		trigger: 'idle',
 	})
 }
 
