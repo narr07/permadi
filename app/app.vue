@@ -9,6 +9,13 @@ if (config.public.cloudflareAnalyticsToken) {
 	})
 }
 
+// Google Analytics 4 via @nuxt/scripts
+if (config.public.googleAnalyticsId) {
+	useScriptGoogleAnalytics({
+		id: config.public.googleAnalyticsId,
+	})
+}
+
 useHead({
 	htmlAttrs: {
 		lang: () => locale.value,
