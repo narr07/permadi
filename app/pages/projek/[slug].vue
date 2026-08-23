@@ -334,6 +334,10 @@ onMounted(() => {
 							:alt="project.doc.title"
 							format="webp"
 							quality="85"
+							loading="eager"
+							fetchpriority="high"
+							preload
+							decoding="async"
 							class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 						/>
 						<div class="absolute inset-0 flex items-end justify-between from-slate-950/80 via-transparent to-transparent bg-gradient-to-t p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -362,11 +366,12 @@ onMounted(() => {
 						>
 							<NuxtImg
 								:src="img"
-								:alt="`${project.doc.title} - Screenshot ${idx + 2}`"
+								:alt="`${project.doc.title} ${idx + 2}`"
 								format="webp"
-								quality="85"
-								class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+								quality="80"
 								loading="lazy"
+								decoding="async"
+								class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 							/>
 							<div class="absolute inset-0 flex items-center justify-center bg-slate-950/50 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
 								<span class="border border-white/20 rounded-full bg-white/20 p-2 text-white backdrop-blur-md">

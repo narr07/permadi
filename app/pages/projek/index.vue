@@ -309,8 +309,11 @@ useSchemaOrg([
 								:alt="item.title"
 								format="webp"
 								quality="85"
+								loading="eager"
+								fetchpriority="high"
+								preload
+								decoding="async"
 								class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-								loading="lazy"
 							/>
 						</div>
 
