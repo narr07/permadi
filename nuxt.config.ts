@@ -129,15 +129,18 @@ export default defineNuxtConfig({
 
 	fonts: {
 		families: [
-			{ name: 'Plus Jakarta Sans', weights: [400, 500, 600, 700], subsets: ['latin'] },
-			{ name: 'Barlow', weights: [600, 700, 800], subsets: ['latin'] },
-			{ name: 'JetBrains Mono', weights: [400, 500], subsets: ['latin'] },
+			{ name: 'Plus Jakarta Sans', weights: [400, 600, 700], subsets: ['latin'], preload: true },
+			{ name: 'Barlow', weights: [600, 700], subsets: ['latin'], preload: true },
+			{ name: 'JetBrains Mono', weights: [400], subsets: ['latin'], preload: false },
 		],
 		defaults: {
-			preload: true,
-			weights: [400, 500, 600, 700, 800],
+			preload: false,
+			weights: [400, 600, 700],
 			styles: ['normal'],
 			subsets: ['latin'],
+			fallbacks: {
+				'sans-serif': ['system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+			},
 		},
 	},
 
