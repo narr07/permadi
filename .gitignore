@@ -5,6 +5,7 @@
 .nitro
 .cache
 dist
+.wrangler
 
 # Legacy / Non-production directories
 personal-sitenextjs
