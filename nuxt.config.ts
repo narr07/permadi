@@ -347,6 +347,26 @@ export default defineNuxtConfig({
 			},
 		},
 
+		// Gambar artikel blog, projek, dan ilustrasi statis (WebP/SVG): Cache permanen di Browser & CDN
+		'/article/**': {
+			headers: {
+				'Cache-Control': 'public, max-age=31536000, immutable',
+				'CDN-Cache-Control': 'max-age=31536000',
+			},
+		},
+		'/images/**': {
+			headers: {
+				'Cache-Control': 'public, max-age=31536000, immutable',
+				'CDN-Cache-Control': 'max-age=31536000',
+			},
+		},
+		'/projects/**': {
+			headers: {
+				'Cache-Control': 'public, max-age=31536000, immutable',
+				'CDN-Cache-Control': 'max-age=31536000',
+			},
+		},
+
 		// API routes tidak di-prerender
 		'/api/**': {
 			prerender: false,

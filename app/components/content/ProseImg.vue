@@ -118,6 +118,7 @@ onUnmounted(() => {
 				props.class,
 			]"
 			loading="lazy"
+			decoding="async"
 			@click="openZoom"
 			@keydown.enter.prevent="openZoom"
 			@keydown.space.prevent="openZoom"
