@@ -308,7 +308,7 @@ useSchemaOrg([
 								<span class="flex items-center gap-1 text-meta text-xs text-slate-600 font-semibold uppercase transition-colors dark:text-slate-400 group-hover:text-brand-800 dark:group-hover:text-brand-400">
 									<span class="i-hugeicons-arrow-left-01 text-xs" /> {{ locale === 'id' ? 'Artikel Sebelumnya' : 'Previous Article' }}
 								</span>
-								<strong class="mt-2 block text-g1 text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
+								<strong class="mt-2 block text-sm text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
 									{{ surround[0].title }}
 								</strong>
 							</NuxtLink>
@@ -326,7 +326,7 @@ useSchemaOrg([
 								<span class="flex items-center justify-end gap-1 text-meta text-xs text-slate-600 font-semibold uppercase transition-colors dark:text-slate-400 group-hover:text-brand-800 dark:group-hover:text-brand-400">
 									{{ locale === 'id' ? 'Artikel Selanjutnya' : 'Next Article' }} <span class="i-hugeicons-arrow-right-01 text-xs" />
 								</span>
-								<strong class="mt-2 block text-g1 text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
+								<strong class="mt-2 block text-sm text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
 									{{ surround[1].title }}
 								</strong>
 							</NuxtLink>

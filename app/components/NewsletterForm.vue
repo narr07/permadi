@@ -51,7 +51,7 @@ const onSubmit = handleSubmit(async (_values) => {
 				spellcheck="false"
 				aria-label="Email"
 				placeholder="email@kamu.com…"
-				class="w-full border border-slate-200 rounded-bento bg-white px-3.5 py-2.5 text-g1 text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-white placeholder:text-slate-400 focus-ring"
+				class="w-full border border-slate-200 rounded-bento bg-white px-3.5 py-2.5 text-sm text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-white placeholder:text-slate-400 focus-ring"
 				:class="{ 'border-red-500! ring-1 ring-red-500/50': errors.email }"
 			>
 			<p

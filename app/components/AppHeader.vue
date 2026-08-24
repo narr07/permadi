@@ -132,7 +132,7 @@ onUnmounted(() => {
 				aria-label="permadi.dev"
 			>
 				<LogoNav size="28" />
-				<span class="hidden text-g1 text-slate-900 font-semibold tracking-tight font-heading sm:inline dark:text-white">permadi.dev</span>
+				<span class="hidden text-sm text-slate-900 font-semibold tracking-tight font-heading sm:inline dark:text-white">permadi.dev</span>
 			</NuxtLink>
 
 			<!-- Island 2: Navigasi Utama (Sliding Pill Nav Bento) -->
@@ -155,7 +155,7 @@ onUnmounted(() => {
 					:key="item.to"
 					:to="item.to"
 					:data-active="isItemActive(item)"
-					class="relative z-10 rounded-bento-island px-3.5 py-1.5 text-g1 font-medium transition-colors duration-200"
+					class="relative z-10 rounded-bento-island px-3.5 py-1.5 text-sm font-medium transition-colors duration-200"
 					:class="isItemActive(item)
 						? 'text-brand-950 dark:text-brand-100 font-bold'
 						: 'text-slate-900 dark:text-slate-100 hover:(text-brand-950 dark:text-brand-100)'"
@@ -252,7 +252,7 @@ onUnmounted(() => {
 						v-for="item in navItems"
 						:key="item.to"
 						:to="item.to"
-						class="block rounded-xl px-4 py-2.5 text-g1 font-medium transition-colors"
+						class="block rounded-xl px-4 py-2.5 text-sm font-medium transition-colors"
 						:class="isItemActive(item)
 							? 'bg-brand-200 dark:bg-brand-950/60 text-brand-900 dark:text-brand-200 font-semibold border border-brand-500/20'
 							: 'text-slate-800 dark:text-slate-200 hover:bg-slate-100/70 dark:hover:bg-slate-800/50'"
@@ -266,7 +266,7 @@ onUnmounted(() => {
 						<!-- Theme Switcher Button -->
 						<button
 							type="button"
-							class="flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-brand-200 px-3 py-2 text-g1 text-brand-900 font-medium transition-colors dark:bg-brand-800/80 hover:bg-brand-200/80 dark:text-brand-200 dark:hover:bg-brand-700/80"
+							class="flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-brand-200 px-3 py-2 text-sm text-brand-900 font-medium transition-colors dark:bg-brand-800/80 hover:bg-brand-200/80 dark:text-brand-200 dark:hover:bg-brand-700/80"
 							@click="toggleDark($event)"
 						>
 							<span class="i-hugeicons-sun-01 text-lg text-slate-900 dark:hidden" />
@@ -300,7 +300,7 @@ onUnmounted(() => {
 					<!-- Contact CTA Button -->
 					<NuxtLink
 						:to="contactPath"
-						class="mt-2 btn-primary rounded-xl text-center text-g1 font-semibold !py-2.5"
+						class="mt-2 btn-primary rounded-xl text-center text-sm font-semibold !py-2.5"
 						@click="mobileOpen = false"
 					>
 						{{ t('nav.contact') }}

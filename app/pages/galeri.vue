@@ -365,7 +365,7 @@ useSchemaOrg([
 				<!-- Overlay on Hover -->
 				<div class="absolute inset-0 flex flex-col justify-end from-slate-950/80 via-slate-950/20 to-transparent bg-gradient-to-t p-2.5 text-white opacity-0 transition-opacity duration-300 sm:p-4 group-hover:opacity-100">
 					<div class="flex items-center justify-between gap-1 sm:gap-2">
-						<h3 class="truncate text-xs text-white font-semibold font-heading transition-colors duration-100 sm:text-g1 group-hover:text-brand-300 dark:group-hover:text-yellow-600">
+						<h3 class="truncate text-xs text-white font-semibold font-heading transition-colors duration-100 sm:text-sm group-hover:text-brand-300 dark:group-hover:text-yellow-600">
 							{{ item.title }}
 						</h3>
 						<span class="shrink-0 rounded-full bg-white/20 p-1 backdrop-blur-md sm:p-1.5">
@@ -418,7 +418,7 @@ useSchemaOrg([
 			class="bento-card-subtle py-16 text-center"
 		>
 			<span class="i-hugeicons-image-02 mx-auto mb-2 block text-4xl text-slate-400 opacity-50" />
-			<p class="text-g2 text-slate-700 font-medium dark:text-slate-300">
+			<p class="text-base text-slate-700 font-medium dark:text-slate-300">
 				{{ locale === 'id' ? 'Belum ada foto galeri yang ditemukan' : 'No gallery photos found' }}
 			</p>
 			<p class="mt-1 text-meta text-xs">

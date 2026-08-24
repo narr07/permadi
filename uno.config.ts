@@ -152,15 +152,7 @@ export default defineConfig({
 			},
 		},
 
-		fontSize: {
-			g0: ['clamp(0.5rem, 0.618vw, 0.618rem)', { lineHeight: '1.2', letterSpacing: '-0.01em' }],
-			g1: ['clamp(0.8rem, 1vw, 1rem)', { lineHeight: '1.5', letterSpacing: '-0.01em' }],
-			g2: ['clamp(1.2rem, 1.618vw, 1.618rem)', { lineHeight: '1.4', letterSpacing: '-0.015em' }],
-			g3: ['clamp(1.8rem, 2.618vw, 2.618rem)', { lineHeight: '1.3', letterSpacing: '-0.02em' }],
-			g4: ['clamp(2.618rem, 4.236vw, 4.236rem)', { lineHeight: '1.2', letterSpacing: '-0.025em' }],
-			g5: ['clamp(4.236rem, 6.854vw, 6.854rem)', { lineHeight: '1.1', letterSpacing: '-0.03em' }],
-			g6: ['clamp(6.854rem, 11.09vw, 11.09rem)', { lineHeight: '1', letterSpacing: '-0.035em' }],
-		},
+
 
 		borderRadius: {
 			'bento': '0.75rem',
@@ -181,7 +173,7 @@ export default defineConfig({
 		'bento-highlight': 'border border-brand-500/30 dark:border-brand-400/20',
 		'focus-ring': 'outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0',
 
-		'bento-spotlight': 'relative overflow-hidden before:(content-empty absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none) before:bg-[radial-gradient(400px_circle_at_var(--x,_50%)_var(--y,_50%),rgba(43,212,181,0.15),transparent_70%)]',
+		'bento-spotlight': "relative overflow-hidden before:(content-[''] absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none) before:bg-[radial-gradient(400px_circle_at_var(--x,_50%)_var(--y,_50%),rgba(43,212,181,0.15),transparent_70%)]",
 
 		'bento-grid': 'grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-12 gap-4 sm:gap-6 auto-rows-[minmax(160px,auto)]',
 		'container-bento': 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8',
@@ -193,15 +185,15 @@ export default defineConfig({
 
 		'heading-hero': 'font-heading font-800 mb-4  text-4xl sm:text-6xl leading-[0.95] tracking-tight text-brand-950 dark:text-yellow-600',
 		'heading-sub': 'text-brand-800 dark:text-brand-200 text-base sm:text-lg leading-relaxed max-w-xl',
-		'heading-card-lg': 'font-heading font-700 text-g3 tracking-tight text-slate-900 dark:text-white',
-		'heading-card-md': 'font-heading font-600 text-g2 text-slate-900 dark:text-white',
-		'text-body': 'font-sans text-g1 text-slate-700 dark:text-slate-300',
-		'text-meta': 'font-sans text-g0 text-slate-600 dark:text-slate-400',
+		'heading-card-lg': 'font-heading font-700 text-xl tracking-tight text-slate-900 dark:text-white',
+		'heading-card-md': 'font-heading font-600 text-lg text-slate-900 dark:text-white',
+		'text-body': 'font-sans text-sm text-slate-700 dark:text-slate-300',
+		'text-meta': 'font-sans text-xs text-slate-600 dark:text-slate-400',
 
 		'btn-primary': 'focus-ring inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-bento font-semibold text-white bg-brand-900 hover:bg-brand-950 dark:bg-brand-400 dark:text-slate-950 dark:hover:bg-brand-300 active:scale-95 transition-all shadow-sm shadow-brand-900/20',
 		'btn-ghost': 'focus-ring inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-bento font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all',
 		'icon-btn': 'focus-ring flex items-center justify-center w-9 h-9 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors',
-		'badge-neutral': 'inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-g0 font-medium bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60',
+		'badge-neutral': 'inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60',
 	},
 
 	rules: [
