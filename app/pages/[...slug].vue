@@ -99,7 +99,7 @@ const { data: page } = await useAsyncData(
 				for (const loc of locales.value) {
 					const locCode = typeof loc === 'string' ? loc : loc.code
 					const locCol = (locCode === 'id' ? 'blog_id' : 'blog_en') as any
-					const locPosts = await queryCollection(locCol).all()
+					const locPosts = await queryCollection(locCol).select('path', 'slug', 'idBlog', 'idItem').all()
 					const trDoc = locPosts.find((p: any) => p.idBlog === matched.idBlog || p.idItem === matched.idItem)
 					if (trDoc) {
 						translations[locCode] = {
@@ -130,7 +130,7 @@ const { data: page } = await useAsyncData(
 				for (const loc of locales.value) {
 					const locCode = (typeof loc === 'string' ? loc : loc.code) as 'en' | 'id'
 					const locCol = (locCode === 'id' ? 'projek_id' : 'projek_en') as any
-					const locProjects = await queryCollection(locCol).all()
+					const locProjects = await queryCollection(locCol).select('path', 'slug', 'idProjek', 'idItem').all()
 					const trDoc = locProjects.find((p: any) => p.idProjek === matched.idProjek || p.idItem === matched.idItem)
 					if (trDoc) {
 						const targetSection = locCode === 'id' ? 'projek' : 'projects'

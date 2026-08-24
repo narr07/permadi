@@ -1,5 +1,5 @@
 import { defineCollection, defineContentConfig, property } from '@nuxt/content'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 function createLinkSchema() {
 	return z.object({
@@ -270,6 +270,11 @@ export default defineContentConfig({
 				date: property(z.date()).editor({ label: 'Publication Date', description: 'Choose the article publication date' }),
 				tags: property(z.array(z.string()).default([])).editor({ label: 'Tags & Topics', description: 'Add tags for classification' }),
 			}),
+			indexes: [
+				{ columns: ['date'] },
+				{ columns: ['idBlog'] },
+				{ columns: ['category'] },
+			],
 		}),
 		blog_id: defineCollection({
 			type: 'page',
@@ -292,6 +297,11 @@ export default defineContentConfig({
 				date: property(z.date()).editor({ label: 'Tanggal Publikasi', description: 'Pilih tanggal rilis artikel' }),
 				tags: property(z.array(z.string()).default([])).editor({ label: 'Tag & Topik', description: 'Daftar topik pembahasan artikel' }),
 			}),
+			indexes: [
+				{ columns: ['date'] },
+				{ columns: ['idBlog'] },
+				{ columns: ['category'] },
+			],
 		}),
 
 		// --- 6. PROJEK PORTOFOLIO ---
@@ -323,6 +333,11 @@ export default defineContentConfig({
 				link: property(z.string().optional()).editor({ label: 'Live Demo URL', tooltip: 'URL to live website or interactive demo' }),
 				repo: property(z.string().optional()).editor({ label: 'GitHub Repository URL', tooltip: 'Source code repository link on GitHub' }),
 			}),
+			indexes: [
+				{ columns: ['date'] },
+				{ columns: ['idProjek'] },
+				{ columns: ['category'] },
+			],
 		}),
 		projek_id: defineCollection({
 			type: 'page',
@@ -352,6 +367,11 @@ export default defineContentConfig({
 				link: property(z.string().optional()).editor({ label: 'Tautan Live Demo (URL)', tooltip: 'URL website atau demo langsung yang bisa dikunjungi' }),
 				repo: property(z.string().optional()).editor({ label: 'Repository GitHub (Source Code)', tooltip: 'URL repositori source code di GitHub' }),
 			}),
+			indexes: [
+				{ columns: ['date'] },
+				{ columns: ['idProjek'] },
+				{ columns: ['category'] },
+			],
 		}),
 	},
 })

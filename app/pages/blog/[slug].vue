@@ -54,7 +54,7 @@ const { data: post } = await useAsyncData(
 		// Fallback: Jika slug bahasa lain diakses di locale ini, temukan padanannya via idBlog
 		if (!matched) {
 			const otherCollection = (locale.value === 'id' ? 'blog_en' : 'blog_id') as any
-			const otherPosts = await queryCollection(otherCollection).all()
+			const otherPosts = await queryCollection(otherCollection).select('path', 'slug', 'idBlog', 'idItem').all()
 			const otherMatched = otherPosts.find((p: any) => {
 				return p.slug === requestedSlug.value || cleanSlug(p.path) === requestedSlug.value
 			})
@@ -71,7 +71,7 @@ const { data: post } = await useAsyncData(
 		for (const loc of locales.value) {
 			const locCode = typeof loc === 'string' ? loc : loc.code
 			const locCol = (locCode === 'id' ? 'blog_id' : 'blog_en') as any
-			const locPosts = await queryCollection(locCol).all()
+			const locPosts = await queryCollection(locCol).select('path', 'slug', 'idBlog', 'idItem').all()
 			const trDoc = locPosts.find((p: any) => p.idBlog === matched.idBlog || p.idItem === matched.idItem)
 			if (trDoc) {
 				translations[locCode] = {

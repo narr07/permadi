@@ -98,7 +98,7 @@ const { data: project } = await useAsyncData(
 		// Fallback: Jika slug bahasa lain diakses
 		if (!matched) {
 			const otherCol = (locale.value === 'id' ? 'projek_en' : 'projek_id') as any
-			const otherProjects = await queryCollection(otherCol).all()
+			const otherProjects = await queryCollection(otherCol).select('path', 'slug', 'idProjek', 'idItem').all()
 			const otherMatched = otherProjects.find((p: any) => {
 				return p.slug === requestedSlug.value || cleanSlug(p.path) === requestedSlug.value
 			})
@@ -115,7 +115,7 @@ const { data: project } = await useAsyncData(
 		for (const loc of locales.value) {
 			const locCode = typeof loc === 'string' ? loc : loc.code
 			const locCol = (locCode === 'id' ? 'projek_id' : 'projek_en') as any
-			const locProjects = await queryCollection(locCol).all()
+			const locProjects = await queryCollection(locCol).select('path', 'slug', 'idProjek', 'idItem').all()
 			const trDoc = locProjects.find((p: any) => p.idProjek === matched.idProjek || p.idItem === matched.idItem)
 			if (trDoc) {
 				translations[locCode] = {
