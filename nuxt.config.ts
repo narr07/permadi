@@ -23,6 +23,7 @@ export default defineNuxtConfig({
 		defaultHighlight: false,
 		logIssues: true,
 		axe: {
+			options: {},
 			runOptions: {
 				runOnly: ['wcag2a', 'wcag2aa'],
 			},
@@ -42,7 +43,6 @@ export default defineNuxtConfig({
 			},
 		},
 		dir: '.data',
-		remote: false,
 	},
 	eslint: {
 		config: {
