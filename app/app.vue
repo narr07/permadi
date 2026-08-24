@@ -181,6 +181,8 @@ defineOgImage('Bento', {
 			</div>
 		</footer>
 
-		<LazyAppAiChat />
+		<ClientOnly>
+			<LazyAppAiChat />
+		</ClientOnly>
 	</div>
 </template>
