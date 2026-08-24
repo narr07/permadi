@@ -28,6 +28,7 @@ const route = useRoute()
 const { locale, locales } = useI18n()
 const setI18nParams = useSetI18nParams()
 const { getCategoryLabel } = useCategoryLabel()
+const { formatDate } = useFormatDate()
 
 const mdcComponents = {
 	'img': ProseImg,
@@ -234,8 +235,9 @@ onMounted(() => {
 			v-if="project?.doc"
 			class="mx-auto max-w-4xl"
 		>
-			<!-- Bento Card Header (Clean, No Spotlight) -->
+			<!-- Bento Card Header with Spotlight -->
 			<header
+				v-spotlight
 				class="bento-card-clean relative mb-10 overflow-hidden border border-slate-200/80 rounded-bento bg-white/90 p-6 shadow-sm dark:border-[#134e43] dark:bg-[#002b27]/90 md:p-9 sm:p-8"
 			>
 				<!-- Category & Tags Badge Row -->
@@ -271,11 +273,11 @@ onMounted(() => {
 					<div class="flex flex-wrap items-center gap-2 sm:gap-3">
 						<div class="inline-flex items-center gap-1.5 border border-slate-200/60 rounded-xl bg-slate-100/80 px-3 py-1.5 text-slate-700 font-medium dark:border-[#134e43] dark:bg-[#042f27] dark:text-slate-200">
 							<span class="i-hugeicons-calendar-03 text-sm text-brand-700 dark:text-brand-400" />
-							<span>{{ project.doc.date || '2025' }}</span>
+							<span>{{ formatDate(project.doc.date) || '2025' }}</span>
 						</div>
 						<div class="inline-flex items-center gap-1.5 border border-slate-200/60 rounded-xl bg-slate-100/80 px-3 py-1.5 text-slate-700 font-medium dark:border-[#134e43] dark:bg-[#042f27] dark:text-slate-200">
 							<span class="i-hugeicons-clock-01 text-sm text-brand-700 dark:text-brand-400" />
-							<span>{{ project.doc.readingTime || 4 }} min read</span>
+							<span>{{ locale === 'id' ? `${project.doc.readingTime || 4} menit baca` : `${project.doc.readingTime || 4} min read` }}</span>
 						</div>
 					</div>
 

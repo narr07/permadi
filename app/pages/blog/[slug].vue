@@ -7,6 +7,7 @@ const { locale, locales } = useI18n()
 const localePath = useLocalePath()
 const setI18nParams = useSetI18nParams()
 const { getCategoryLabel } = useCategoryLabel()
+const { formatDate } = useFormatDate()
 
 const activeSection = ref('general')
 
@@ -224,8 +225,9 @@ useSchemaOrg([
 					v-if="post?.doc"
 					:class="tocLinks.length > 0 ? 'lg:col-span-9 min-w-0 max-w-full' : 'w-full min-w-0 max-w-full'"
 				>
-					<!-- Bento Card Header (Clean, No Spotlight) -->
+					<!-- Bento Card Header with Spotlight -->
 					<header
+						v-spotlight
 						class="bento-card-clean relative mb-10 overflow-hidden border border-slate-200/80 rounded-bento bg-white/90 p-6 shadow-sm dark:border-[#134e43] dark:bg-[#002b27]/90 md:p-9 sm:p-8"
 					>
 						<!-- Category & Tags Badge Row -->
@@ -261,11 +263,11 @@ useSchemaOrg([
 							<div class="flex flex-wrap items-center gap-2 sm:gap-3">
 								<div class="inline-flex items-center gap-1.5 border border-slate-200/60 rounded-xl bg-slate-100/80 px-3 py-1.5 text-slate-700 font-medium dark:border-[#134e43] dark:bg-[#042f27] dark:text-slate-200">
 									<span class="i-hugeicons-calendar-03 text-sm text-brand-700 dark:text-brand-400" />
-									<span>{{ post.doc.date }}</span>
+									<span>{{ formatDate(post.doc.date) }}</span>
 								</div>
 								<div class="inline-flex items-center gap-1.5 border border-slate-200/60 rounded-xl bg-slate-100/80 px-3 py-1.5 text-slate-700 font-medium dark:border-[#134e43] dark:bg-[#042f27] dark:text-slate-200">
 									<span class="i-hugeicons-clock-01 text-sm text-brand-700 dark:text-brand-400" />
-									<span>{{ post.doc.readingTime || 5 }} min read</span>
+									<span>{{ locale === 'id' ? `${post.doc.readingTime || 5} menit baca` : `${post.doc.readingTime || 5} min read` }}</span>
 								</div>
 							</div>
 
@@ -299,6 +301,7 @@ useSchemaOrg([
 						>
 							<NuxtLink
 								v-if="surround[0]"
+								v-spotlight
 								:to="`/${locale}/blog/${surround[0].slug || cleanSlug(surround[0].path)}`"
 								class="bento-card-clean group flex flex-col justify-between bento-lift rounded-bento p-4"
 							>
@@ -316,6 +319,7 @@ useSchemaOrg([
 
 							<NuxtLink
 								v-if="surround[1]"
+								v-spotlight
 								:to="`/${locale}/blog/${surround[1].slug || cleanSlug(surround[1].path)}`"
 								class="bento-card-clean group flex flex-col justify-between bento-lift rounded-bento p-4 text-right"
 							>

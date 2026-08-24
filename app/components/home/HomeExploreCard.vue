@@ -11,11 +11,12 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/en/g
 
 <template>
 	<NuxtLink
+		v-spotlight
 		:to="targetPath"
 		:aria-label="`${label || (locale === 'id' ? 'Eksplorasi Saat Ini' : 'Currently Exploring')}: ${text || (locale === 'id' ? 'Antarmuka yang terasa natural.' : 'Interfaces that feel inevitable.')}`"
 		class="bento-card-clean group block flex flex-col justify-between overflow-hidden md:col-span-5 !p-0"
 	>
-		<div class="relative max-h-52 sm:max-h-56 md:max-h-48 aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
+		<div class="relative aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
 			<NuxtImg
 				v-if="galleryItem?.image"
 				:src="galleryItem.image"
@@ -23,10 +24,8 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/en/g
 				aria-hidden="true"
 				:provider="galleryItem.image.startsWith('http') || galleryItem.image.startsWith('/projects') || galleryItem.image.startsWith('/galeri') ? undefined : 'cloudinary'"
 				format="webp"
-				quality="70"
-				width="450"
-				height="253"
-				sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 450px"
+				quality="75"
+				sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
 				decoding="async"
 				class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 				loading="lazy"

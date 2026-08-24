@@ -4,19 +4,19 @@ archive:
   title: Gambar, dokumentasi, dan observasi visual.
   description: Dokumentasi fotografi karya desain grafis dan setup ruang kerja, terorganisir di Cloudinary CDN.
   link_text: Buka Galeri Lengkap
-description: Arsip hidup berisi karya, eksperimen antarmuka, fotografi, dan catatan oleh seorang guru SD yang juga frontend developer dan desainer grafis.
+description: Arsip hidup karya web, eksperimen antarmuka, dan catatan oleh seorang guru SD lulusan UPI yang menggemari coding (Nuxt, Flutter, Python, PHP) serta desain grafis.
 explore:
   label: Eksplorasi Saat Ini
-  text: Antarmuka yang terasa natural dan tenang.
-eyebrow: Permadi / Guru, Developer & Desainer
+  text: Antarmuka yang terasa natural dan presisi.
+eyebrow: Permadi / Guru SD, Developer & Desainer
 headline: Sudut kecil di belantara internet.
 hero:
   status: Tersedia untuk proyek terpilih
-  kicker: Frontend Developer · Desainer Grafis · Guru SD
-  headline: Membangun antarmuka
-  headline_italic: yang terasa pas
-  headline_suffix: di setiap detail.
-  description: Saya mengubah ide yang rumit menjadi pengalaman digital yang sederhana, rapi, dan nyaman digunakan, dengan ketelitian seorang guru dan kepekaan seorang desainer.
+  kicker: Guru SD · Nuxt & Flutter Developer · Desainer Grafis
+  headline: Merajut logika, kode,
+  headline_italic: dan estetika visual
+  headline_suffix: secara presisi.
+  description: 'Guru SD lulusan <a href="https://www.upi.edu" target="_blank" rel="noopener noreferrer" class="font-semibold text-brand-300 underline underline-offset-4 decoration-brand-400/60 hover:text-white transition-colors">UPI</a> yang gemar berhitung, berkreasi lewat Nuxt & Flutter (JS, Python, PHP), serta merancang karya visual dengan ekosistem Adobe.'
   location: Majalengka, ID
   timezone: GMT+7 / Local time
   links:

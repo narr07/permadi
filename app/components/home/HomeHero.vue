@@ -68,9 +68,8 @@ const { locale } = useI18n()
 			<p
 				v-if="hero.description"
 				class="max-w-md text-sm text-slate-300 leading-relaxed sm:text-base"
-			>
-				{{ hero.description }}
-			</p>
+				v-html="hero.description"
+			/>
 
 			<!-- Action Links -->
 			<div

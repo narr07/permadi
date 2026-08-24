@@ -18,10 +18,14 @@ withDefaults(
 
 const { locale } = useI18n()
 const localePath = useLocalePath()
+const { formatDate } = useFormatDate()
 </script>
 
 <template>
-	<div class="bento-card-clean p-6 md:col-span-12 sm:p-8">
+	<div
+		v-spotlight
+		class="bento-card-clean p-6 md:col-span-12 sm:p-8"
+	>
 		<div class="mb-6 flex items-center justify-between border-b border-slate-200/60 pb-3.5 dark:border-slate-800/60">
 			<div>
 				<span class="section-label mb-1 block text-brand-900 dark:text-brand-300">
@@ -59,9 +63,9 @@ const localePath = useLocalePath()
 					</h4>
 				</div>
 				<div class="flex shrink-0 items-center gap-3 text-xs text-slate-700 sm:pl-4 dark:text-slate-300">
-					<span class="text-[11px] font-mono">{{ post.date }}</span>
+					<span class="text-[11px] font-mono">{{ formatDate(post.date) }}</span>
 					<span class="text-slate-400 dark:text-slate-700">•</span>
-					<span class="text-[11px] font-mono">{{ post.readingTime || 5 }} min read</span>
+					<span class="text-[11px] font-mono">{{ locale === 'id' ? `${post.readingTime || 5} menit baca` : `${post.readingTime || 5} min read` }}</span>
 					<span class="i-hugeicons-arrow-right-01 text-xs text-brand-900 opacity-0 transition-all group-hover:translate-x-0.5 dark:text-yellow-600 group-hover:opacity-100" />
 				</div>
 			</NuxtLink>

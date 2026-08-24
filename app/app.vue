@@ -52,7 +52,7 @@ useHead({
 
 useSeoMeta({
 	titleTemplate: (titleChunk) => {
-		return titleChunk ? `${titleChunk} | Permadi` : 'Permadi | Web Developer & Designer'
+		return titleChunk ? `${titleChunk} | Permadi` : (locale.value === 'id' ? 'Dinar Permadi Yusup | Guru SD, Developer & Desainer' : 'Dinar Permadi Yusup | Teacher, Developer & Designer')
 	},
 	ogSiteName: 'Permadi',
 	fbAppId: () => config.public.fbAppId ? String(config.public.fbAppId) : undefined,
@@ -63,7 +63,12 @@ useSchemaOrg([
 	definePerson({
 		name: 'Dinar Permadi Yusup',
 		alternateName: 'Permadi',
-		jobTitle: 'Frontend Developer & Graphic Designer',
+		jobTitle: () => (locale.value === 'id' ? 'Guru SD, Web Developer & Desainer Grafis' : 'Elementary School Teacher, Web Developer & Graphic Designer'),
+		alumniOf: {
+			'@type': 'EducationalOrganization',
+			'name': 'Universitas Pendidikan Indonesia (UPI)',
+			'url': 'https://www.upi.edu',
+		},
 		url: 'https://permadi.dev',
 		image: '/logo.png',
 		sameAs: [
@@ -76,15 +81,17 @@ useSchemaOrg([
 	defineWebSite({
 		name: 'Permadi',
 		url: 'https://permadi.dev',
-		description: 'Web Developer & Designer portfolio and technical blog of Permadi.',
+		description: () => (locale.value === 'id'
+			? 'Portofolio dan blog teknis Dinar Permadi Yusup — Guru SD lulusan UPI, Web & Mobile Developer (Nuxt, Flutter, Python, PHP), dan Desainer Grafis.'
+			: 'Personal portfolio and technical notes of Dinar Permadi Yusup — Elementary School Teacher, UPI Alumnus, Web & Mobile Developer (Nuxt, Flutter, Python, PHP), and Graphic Designer.'),
 		inLanguage: ['id-ID', 'en-US'],
 	}),
 	defineWebPage(),
 ])
 
 defineOgImage('Bento', {
-	title: 'Permadi | Web Developer & Designer',
-	description: 'Personal Portfolio, Showcase of Projects & Technical Blog of Permadi.',
+	title: () => (locale.value === 'id' ? 'Dinar Permadi Yusup | Guru SD, Developer & Desainer' : 'Dinar Permadi Yusup | Teacher, Developer & Designer'),
+	description: () => (locale.value === 'id' ? 'Portofolio projek, blog teknis, dan galeri visual karya Dinar Permadi Yusup.' : 'Project portfolio, technical blog, and visual gallery by Dinar Permadi Yusup.'),
 	category: 'Portfolio & Articles',
 })
 </script>
@@ -99,6 +106,10 @@ defineOgImage('Bento', {
 			{{ locale === 'id' ? 'Lewati ke konten utama' : 'Skip to main content' }}
 		</a>
 
+		<div
+			class="radial-gradient-ambient"
+			aria-hidden="true"
+		/>
 		<div
 			class="noise"
 			aria-hidden="true"
@@ -130,15 +141,17 @@ defineOgImage('Bento', {
 						aria-label="GitHub"
 					>
 						<span class="i-hugeicons-github" />
+						<span class="sr-only">GitHub</span>
 					</a>
 					<a
 						href="https://x.com/dinarpermadi07"
 						target="_blank"
 						rel="noopener"
 						class="transition-colors hover:text-brand-800 dark:hover:text-brand-300"
-						aria-label="X"
+						aria-label="X (Twitter)"
 					>
 						<span class="i-hugeicons-new-twitter" />
+						<span class="sr-only">X (Twitter)</span>
 					</a>
 					<a
 						href="https://www.instagram.com/narr07/"
@@ -148,6 +161,7 @@ defineOgImage('Bento', {
 						aria-label="Instagram"
 					>
 						<span class="i-hugeicons-instagram" />
+						<span class="sr-only">Instagram</span>
 					</a>
 					<a
 						href="https://www.behance.net/narr07"
@@ -157,6 +171,7 @@ defineOgImage('Bento', {
 						aria-label="Behance"
 					>
 						<span class="i-hugeicons-behance-02" />
+						<span class="sr-only">Behance</span>
 					</a>
 					<NuxtLink
 						to="/feed.xml"
@@ -168,6 +183,7 @@ defineOgImage('Bento', {
 						aria-label="RSS Feed"
 					>
 						<span class="i-hugeicons-rss" />
+						<span class="sr-only">RSS Feed</span>
 					</NuxtLink>
 				</div>
 			</div>

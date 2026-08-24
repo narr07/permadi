@@ -4,6 +4,7 @@ import { onClickOutside } from '@vueuse/core'
 const { locale } = useI18n()
 const localePath = useLocalePath()
 const { getCategoryLabel } = useCategoryLabel()
+const { formatDate } = useFormatDate()
 const pageCollection = computed(() => (locale.value === 'id' ? 'pages_id' : 'pages_en'))
 const blogCollection = computed(() => (locale.value === 'id' ? 'blog_id' : 'blog_en'))
 const currentPath = computed(() => `/${locale.value}/blog`)
@@ -290,66 +291,66 @@ useSchemaOrg([
 			<NuxtLink
 				v-for="(post, index) in filteredPosts"
 				:key="post.url"
+				v-spotlight
 				:to="post.url"
 				class="group bento-card-outline block flex flex-col justify-between bento-lift p-5 sm:p-6"
 				:class="index === 0 && selectedTag === 'ALL'
-					? 'lg:col-span-12 md:col-span-12 bg-brand-900 dark:bg-brand-200 border-brand-800 dark:border-brand-300 shadow-md'
+					? 'lg:col-span-12 md:col-span-12 bg-brand-900 dark:bg-[#002b27] border-brand-800 dark:border-[#134e43] shadow-md text-white'
 					: 'lg:col-span-6 md:col-span-6'"
 			>
 				<div>
-					<div class="mb-3.5 flex items-center justify-between gap-2">
-						<div class="min-w-0 flex items-center gap-1.5 overflow-hidden">
-							<!-- Latest Article Badge -->
-							<span
-								v-if="index === 0 && selectedTag === 'ALL'"
-								class="inline-flex shrink-0 items-center gap-1 border border-brand-700 rounded-full bg-brand-800/90 px-2.5 py-0.5 text-[11px] text-brand-200 font-semibold dark:border-brand-400/80 dark:bg-brand-300/90 dark:text-brand-950"
-							>
-								<span class="i-hugeicons-sparkles text-[11px]" />
-								{{ locale === 'id' ? 'Terbaru' : 'Latest' }}
-							</span>
-
-							<!-- Category Badge -->
-							<span
-								v-if="post.category"
-								class="inline-flex shrink-0 items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold tracking-wide uppercase"
-								:class="index === 0 && selectedTag === 'ALL'
-									? 'bg-brand-800 text-brand-200 dark:bg-brand-300 dark:text-brand-950 border border-brand-700'
-									: 'bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-300 border border-brand-200/60 dark:border-brand-800/60'"
-							>
-								{{ getCategoryLabel(post.category) }}
-							</span>
-
-							<!-- Primary Tag -->
-							<span
-								v-if="post.tags?.[0]"
-								class="max-w-[130px] inline-flex items-center truncate rounded-full px-2.5 py-0.5 text-[11px] font-medium sm:max-w-none"
-								:class="index === 0 && selectedTag === 'ALL'
-									? 'bg-brand-800/70 dark:bg-brand-300/70 text-brand-200 dark:text-brand-950 border border-brand-700/70 dark:border-brand-400/60'
-									: 'bg-brand-500/10 dark:bg-brand-400/10 text-brand-700 dark:text-brand-300 border border-brand-500/20 dark:border-brand-400/20'"
-							>
-								#{{ post.tags[0] }}
-							</span>
-
-							<!-- Secondary Tag (Desktop only) -->
-							<span
-								v-if="post.tags?.[1]"
-								class="hidden items-center truncate rounded-full px-2.5 py-0.5 text-[11px] font-medium sm:inline-flex"
-								:class="index === 0 && selectedTag === 'ALL'
-									? 'bg-brand-800/50 dark:bg-brand-300/50 text-brand-200 dark:text-brand-950 border border-brand-700/50 dark:border-brand-400/50'
-									: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50'"
-							>
-								#{{ post.tags[1] }}
-							</span>
-						</div>
-
-						<!-- Date -->
+					<!-- Badges Row (Category + Tags) -->
+					<div class="mb-2 flex flex-wrap items-center gap-1.5">
+						<!-- Category Badge -->
 						<span
-							class="shrink-0 text-[11px] font-mono"
+							v-if="post.category"
+							class="inline-flex shrink-0 items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold tracking-wide uppercase"
 							:class="index === 0 && selectedTag === 'ALL'
-								? 'text-brand-300 dark:text-brand-800 font-medium'
-								: 'text-slate-600 dark:text-slate-400'"
+								? 'bg-white/15 text-white border border-white/25'
+								: 'bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-300 border border-brand-200/60 dark:border-brand-800/60'"
 						>
-							{{ post.date }}
+							{{ getCategoryLabel(post.category) }}
+						</span>
+
+						<!-- Primary Tag (Full badge) -->
+						<span
+							v-if="post.tags?.[0]"
+							class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium"
+							:class="index === 0 && selectedTag === 'ALL'
+								? 'bg-brand-400/20 text-brand-200 border border-brand-400/30'
+								: 'bg-brand-500/10 dark:bg-brand-400/10 text-brand-700 dark:text-brand-300 border border-brand-500/20 dark:border-brand-400/20'"
+						>
+							#{{ post.tags[0] }}
+						</span>
+
+						<!-- Secondary Tag (Desktop only) -->
+						<span
+							v-if="post.tags?.[1]"
+							class="hidden items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium sm:inline-flex"
+							:class="index === 0 && selectedTag === 'ALL'
+								? 'bg-white/10 text-slate-200 border border-white/15'
+								: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50'"
+						>
+							#{{ post.tags[1] }}
+						</span>
+					</div>
+
+					<!-- Date Badge (Inverted High-Contrast Badge) -->
+					<div
+						v-if="post.date"
+						class="mb-3.5 flex items-center"
+					>
+						<span
+							class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-mono font-bold transition-colors"
+							:class="index === 0 && selectedTag === 'ALL'
+								? 'bg-white text-slate-950 border border-white shadow-xs'
+								: 'bg-slate-900 text-white border border-slate-900 dark:bg-white dark:text-slate-950 dark:border-white shadow-xs'"
+						>
+							<span
+								class="i-hugeicons-calendar-03 text-xs"
+								:class="index === 0 && selectedTag === 'ALL' ? 'text-brand-800' : 'text-brand-400 dark:text-brand-800'"
+							/>
+							<span>{{ formatDate(post.date) }}</span>
 						</span>
 					</div>
 
@@ -357,18 +358,18 @@ useSchemaOrg([
 					<h2
 						class="line-clamp-2 text-lg font-bold leading-snug tracking-normal font-heading transition-colors duration-200 sm:text-xl"
 						:class="index === 0 && selectedTag === 'ALL'
-							? 'text-white dark:text-brand-950 group-hover:text-yellow-400 dark:group-hover:text-brand-700 md:text-2xl lg:text-3xl'
-							: 'text-brand-950 dark:text-brand-100 group-hover:text-brand-900 dark:group-hover:text-yellow-600'"
+							? 'text-white group-hover:text-yellow-300 md:text-2xl lg:text-3xl'
+							: 'text-slate-900 dark:text-slate-100 group-hover:text-brand-700 dark:group-hover:text-brand-300'"
 					>
 						{{ post.title }}
 					</h2>
 
 					<!-- Description -->
 					<p
-						class="line-clamp-2 mt-2 text-xs leading-relaxed sm:text-sm"
+						class="line-clamp-2 mt-2 text-xs leading-relaxed sm:text-sm transition-colors duration-200"
 						:class="index === 0 && selectedTag === 'ALL'
-							? 'text-brand-200/90 dark:text-brand-900/90'
-							: 'text-brand-900 dark:text-brand-300'"
+							? 'text-slate-200 group-hover:text-white'
+							: 'text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'"
 					>
 						{{ post.description }}
 					</p>
@@ -378,21 +379,21 @@ useSchemaOrg([
 				<div
 					class="mt-5 flex items-center justify-between border-t pt-3.5 text-xs"
 					:class="index === 0 && selectedTag === 'ALL'
-						? 'border-brand-800/80 dark:border-brand-300/80 text-brand-300 dark:text-brand-900'
+						? 'border-white/15 text-slate-200'
 						: 'border-slate-200/60 dark:border-slate-800/60 text-slate-600 dark:text-slate-400'"
 				>
 					<span class="flex items-center gap-1.5 text-[11px] font-mono">
 						<span
 							class="i-hugeicons-clock-01 text-xs"
-							:class="index === 0 && selectedTag === 'ALL' ? 'text-brand-400 dark:text-brand-700' : 'text-brand-700 dark:text-brand-400'"
+							:class="index === 0 && selectedTag === 'ALL' ? 'text-brand-300' : 'text-brand-700 dark:text-brand-400'"
 						/>
-						{{ post.readingTime || 5 }} min read
+						{{ locale === 'id' ? `${post.readingTime || 5} menit baca` : `${post.readingTime || 5} min read` }}
 					</span>
 					<span
 						class="flex items-center gap-1 text-xs font-bold transition-all group-hover:translate-x-0.5"
 						:class="index === 0 && selectedTag === 'ALL'
-							? 'text-white dark:text-brand-950 group-hover:text-yellow-400 dark:group-hover:text-brand-700 font-bold'
-							: 'text-brand-800 dark:text-brand-400 group-hover:text-brand-950 dark:group-hover:text-yellow-600'"
+							? 'text-white group-hover:text-yellow-300 font-bold'
+							: 'text-brand-800 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-yellow-500 font-semibold'"
 					>
 						{{ locale === 'id' ? 'Baca Artikel' : 'Read Article' }} <span class="i-hugeicons-arrow-right-01 text-xs" />
 					</span>

@@ -1,6 +1,6 @@
 title: Dinar Permadi Yusup | Frontend Developer & Graphic Designer
 
-description: A living archive of work, interface experiments, photography, and notes by an elementary school teacher who's also a frontend developer and graphic designer.
+description: A living archive of web projects, interface experiments, and notes by an elementary school teacher and UPI alumnus passionate about programming (Nuxt, Flutter, Python, PHP) and graphic design.
 
 eyebrow: Permadi / Teacher, Developer & Designer
 
@@ -8,11 +8,11 @@ headline: A small corner of the internet.
 
 hero:
   status: Available for select projects
-  kicker: Frontend Developer · Graphic Designer · Elementary School Teacher
-  headline: Building useful
-  headline_italic: things
-  headline_suffix: with care.
-  description: I turn complex ideas into calm, considered digital experiences, with a teacher's clarity and a designer's eye for detail.
+  kicker: Elementary Teacher · Nuxt & Flutter Developer · Graphic Designer
+  headline: Blending logic, code,
+  headline_italic: and visual craft
+  headline_suffix: with precision.
+  description: 'An elementary school teacher and <a href="https://www.upi.edu" target="_blank" rel="noopener noreferrer" class="font-semibold text-brand-300 underline underline-offset-4 decoration-brand-400/60 hover:text-white transition-colors">UPI</a> alumnus who loves numbers, crafts web and mobile apps with Nuxt & Flutter (JS, Python, PHP), and designs with the Adobe ecosystem.'
   location: Majalengka, ID
   timezone: GMT+7 / Local time
   links:

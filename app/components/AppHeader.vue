@@ -131,7 +131,7 @@ onUnmounted(() => {
 				class="flex nav-island items-center gap-2 px-2.5 py-1.5 transition-all hover:(border-brand-500/40)"
 				aria-label="permadi.dev"
 			>
-				<Logo size="28" />
+				<LogoNav size="28" />
 				<span class="hidden text-g1 text-slate-900 font-semibold tracking-tight font-heading sm:inline dark:text-white">permadi.dev</span>
 			</NuxtLink>
 
@@ -176,8 +176,8 @@ onUnmounted(() => {
 					:aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
 					@click="toggleDark($event)"
 				>
-					<span class="i-hugeicons-sun-01 text-lg text-amber-500 dark:hidden" />
-					<span class="i-hugeicons-moon-02 hidden text-lg text-brand-300 dark:inline" />
+					<span class="i-hugeicons-sun-01 text-lg text-slate-900 transition-colors dark:hidden hover:text-brand-700" />
+					<span class="i-hugeicons-moon-02 hidden text-lg text-brand-300 transition-colors dark:inline hover:text-yellow-300" />
 				</button>
 
 				<!-- Language Switcher Links -->
@@ -269,8 +269,8 @@ onUnmounted(() => {
 							class="flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-brand-200 px-3 py-2 text-g1 text-brand-900 font-medium transition-colors dark:bg-brand-800/80 hover:bg-brand-200/80 dark:text-brand-200 dark:hover:bg-brand-700/80"
 							@click="toggleDark($event)"
 						>
-							<span class="i-hugeicons-sun-01 text-lg text-brand-900 dark:hidden" />
-							<span class="i-hugeicons-moon-02 hidden text-lg text-brand-100 dark:inline" />
+							<span class="i-hugeicons-sun-01 text-lg text-slate-900 dark:hidden" />
+							<span class="i-hugeicons-moon-02 hidden text-lg text-white dark:inline" />
 							<span class="text-xs font-semibold">{{ isDark ? 'Dark' : 'Light' }}</span>
 						</button>
 

@@ -75,8 +75,8 @@ const filteredGallery = computed(() => {
 	return allItems.value.filter((item: any) => item.tags?.includes(selectedTag.value))
 })
 
-// 3. INFINITE SCROLL & BATCH LOADING (12 foto per batch agar sangat ringan dan cepat)
-const itemsPerPage = 12
+// 3. INFINITE SCROLL & BATCH LOADING (8 foto per batch agar sangat ringan dan bebas lag)
+const itemsPerPage = 8
 const currentLimit = ref(itemsPerPage)
 
 // Reset limit saat filter tag berganti
@@ -352,17 +352,17 @@ useSchemaOrg([
 				@keydown.enter.prevent="openModal(item)"
 				@keydown.space.prevent="openModal(item)"
 			>
-				<!-- Gambar List Cepat & Ringan -->
+				<!-- Gambar List Cepat & Ringan (Proporsi Alami Bento Masonry) -->
 				<NuxtImg
 					:src="item.image"
 					:alt="item.title || (locale === 'id' ? 'Foto galeri' : 'Gallery photo')"
 					:provider="item.image.startsWith('http') || item.image.startsWith('/projects') || item.image.startsWith('/galeri') ? undefined : 'cloudinary'"
 					format="webp"
-					quality="65"
-					width="450"
+					quality="70"
 					sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
+					decoding="async"
 					class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-					loading="lazy"
+					:loading="i < 2 ? 'eager' : 'lazy'"
 				/>
 
 				<!-- Overlay on Hover -->
@@ -470,7 +470,7 @@ useSchemaOrg([
 								:alt="selectedPhoto.title"
 								:provider="selectedPhoto.image.startsWith('http') || selectedPhoto.image.startsWith('/projects') || selectedPhoto.image.startsWith('/galeri') ? undefined : 'cloudinary'"
 								format="webp"
-								quality="95"
+								quality="85"
 								width="1200"
 								densities="1x 2x"
 								class="max-h-[80vh] max-w-full w-auto rounded-bento object-contain"

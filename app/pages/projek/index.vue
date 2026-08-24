@@ -3,6 +3,7 @@ import { onClickOutside } from '@vueuse/core'
 
 const { locale } = useI18n()
 const { getCategoryLabel } = useCategoryLabel()
+const { formatDate } = useFormatDate()
 
 const collection = computed(() => (locale.value === 'id' ? 'projek_id' : 'projek_en'))
 const currentPath = computed(() => (locale.value === 'id' ? '/id/projek' : '/en/projects'))
@@ -290,6 +291,7 @@ useSchemaOrg([
 			<NuxtLink
 				v-for="(item, index) in filteredProjects"
 				:key="item.url"
+				v-spotlight
 				:to="item.url"
 				class="bento-card-clean group block flex flex-col justify-between overflow-hidden transition-all duration-300"
 				:class="index === 0 && selectedTag === 'ALL'
@@ -313,7 +315,7 @@ useSchemaOrg([
 								fetchpriority="high"
 								preload
 								decoding="async"
-								class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+								class="h-full w-full object-cover"
 							/>
 						</div>
 
@@ -321,48 +323,48 @@ useSchemaOrg([
 						<div class="flex flex-1 flex-col justify-between lg:col-span-5 md:col-span-6">
 							<div>
 								<!-- Header Badges & Date -->
-								<div class="mb-3.5 flex flex-wrap items-center justify-between gap-2">
-									<div class="flex flex-wrap items-center gap-1.5">
-										<span class="inline-flex shrink-0 items-center gap-1 border border-brand-300 rounded-full bg-brand-500 px-2.5 py-0.5 text-[11px] text-white font-bold dark:border-brand-600 dark:bg-brand-600">
-											<span class="i-hugeicons-sparkles text-[11px]" />
-											{{ locale === 'id' ? 'Terbaru' : 'Latest' }}
-										</span>
+								<div class="mb-2 flex flex-wrap items-center gap-1.5">
+									<span
+										v-if="item.category"
+										class="inline-flex shrink-0 items-center border border-brand-200/80 rounded-full bg-brand-50 px-2.5 py-0.5 text-[11px] text-brand-800 font-semibold tracking-wide uppercase dark:border-brand-700/60 dark:bg-brand-950/80 dark:text-brand-300"
+									>
+										{{ getCategoryLabel(item.category) }}
+									</span>
 
-										<span
-											v-if="item.category"
-											class="inline-flex shrink-0 items-center border border-brand-200/80 rounded-full bg-brand-50 px-2.5 py-0.5 text-[11px] text-brand-800 font-semibold tracking-wide uppercase dark:border-brand-700/60 dark:bg-brand-950/80 dark:text-brand-300"
-										>
-											{{ getCategoryLabel(item.category) }}
-										</span>
+									<span
+										v-for="tag in (item.tags || item.tech || []).slice(0, 3)"
+										:key="tag"
+										class="inline-flex items-center border border-slate-200/70 rounded-full bg-slate-100/80 px-2.5 py-0.5 text-[11px] text-slate-700 font-medium dark:border-slate-700/60 dark:bg-slate-800/80 dark:text-slate-300"
+									>
+										#{{ tag }}
+									</span>
+								</div>
 
-										<span
-											v-for="tag in (item.tags || item.tech || []).slice(0, 3)"
-											:key="tag"
-											class="inline-flex items-center border border-slate-200/70 rounded-full bg-slate-100/80 px-2 py-0.5 text-[11px] text-slate-700 font-medium dark:border-slate-700/60 dark:bg-slate-800/80 dark:text-slate-300"
-										>
-											#{{ tag }}
-										</span>
-									</div>
-
-									<span class="text-xs text-slate-500 font-mono dark:text-slate-400">
-										{{ item.date }}
+								<!-- Date Badge (Inverted High-Contrast Badge) -->
+								<div
+									v-if="item.date"
+									class="mb-3.5 flex items-center"
+								>
+									<span class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-mono font-bold transition-colors bg-slate-900 text-white border border-slate-900 dark:bg-white dark:text-slate-950 dark:border-white shadow-xs">
+										<span class="i-hugeicons-calendar-03 text-xs text-brand-400 dark:text-brand-800" />
+										<span>{{ formatDate(item.date) }}</span>
 									</span>
 								</div>
 
 								<!-- Title -->
-								<h2 class="text-xl text-slate-900 font-bold font-heading transition-colors duration-200 lg:text-3xl sm:text-2xl dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-300">
+								<h2 class="text-xl text-slate-900 font-bold font-heading transition-colors duration-200 lg:text-3xl sm:text-2xl dark:text-white group-hover:text-brand-700 dark:group-hover:text-brand-300">
 									{{ item.title }}
 								</h2>
 
 								<!-- Description -->
-								<p class="line-clamp-3 mt-3 text-sm text-slate-600 leading-relaxed sm:line-clamp-4 dark:text-slate-300">
+								<p class="line-clamp-3 mt-3 text-sm text-slate-600 leading-relaxed sm:line-clamp-4 dark:text-slate-300 transition-colors duration-200 group-hover:text-slate-900 dark:group-hover:text-white">
 									{{ item.description }}
 								</p>
 							</div>
 
 							<!-- Action Links Footer -->
 							<div class="mt-6 flex items-center justify-between border-t border-slate-200/70 pt-4 text-xs dark:border-slate-700/60">
-								<span class="flex items-center gap-1.5 text-brand-700 font-bold transition-all group-hover:translate-x-1 dark:text-brand-400">
+								<span class="flex items-center gap-1.5 text-brand-800 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-yellow-500 font-bold transition-all group-hover:translate-x-1">
 									{{ locale === 'id' ? 'Lihat Studi Kasus' : 'Explore Case Study' }} <span>↗</span>
 								</span>
 								<div
@@ -408,7 +410,7 @@ useSchemaOrg([
 							:alt="item.title"
 							format="webp"
 							quality="85"
-							class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+							class="h-full w-full object-cover"
 							loading="lazy"
 						/>
 					</div>
@@ -416,40 +418,47 @@ useSchemaOrg([
 					<!-- Content & Details -->
 					<div class="flex flex-1 flex-col justify-between">
 						<div>
-							<div class="mb-2.5 flex items-center justify-between gap-2">
-								<div class="min-w-0 flex items-center gap-1.5 overflow-hidden">
-									<span
-										v-if="item.category"
-										class="inline-flex shrink-0 items-center border border-brand-200/60 rounded-full bg-brand-100 px-2 py-0.5 text-[11px] text-brand-800 font-semibold tracking-wide uppercase dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300"
-									>
-										{{ getCategoryLabel(item.category) }}
-									</span>
+							<!-- Badges Row (Category + Tags) -->
+							<div class="mb-2 flex flex-wrap items-center gap-1.5">
+								<span
+									v-if="item.category"
+									class="inline-flex shrink-0 items-center border border-brand-200/60 rounded-full bg-brand-100 px-2 py-0.5 text-[11px] text-brand-800 font-semibold tracking-wide uppercase dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300"
+								>
+									{{ getCategoryLabel(item.category) }}
+								</span>
 
-									<span
-										v-for="(tag, tIdx) in (item.tags || item.tech || []).slice(0, 2)"
-										:key="tag"
-										class="truncate rounded-full bg-slate-100 px-2 py-0.5 text-[11px] text-slate-700 font-medium dark:bg-slate-800 dark:text-slate-300"
-										:class="tIdx > 0 ? 'hidden sm:inline-block' : ''"
-									>
-										#{{ tag }}
-									</span>
-								</div>
-								<span class="shrink-0 text-[11px] text-slate-500 font-mono dark:text-slate-400">
-									{{ item.date }}
+								<span
+									v-for="(tag, tIdx) in (item.tags || item.tech || []).slice(0, 2)"
+									:key="tag"
+									class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[11px] text-slate-700 font-medium dark:bg-slate-800 dark:text-slate-300"
+									:class="tIdx > 0 ? 'hidden sm:inline-flex' : ''"
+								>
+									#{{ tag }}
 								</span>
 							</div>
 
-							<h2 class="text-base text-brand-950 font-bold leading-snug tracking-normal font-heading transition-colors duration-200 sm:text-lg dark:text-brand-100 group-hover:text-brand-700 dark:group-hover:text-yellow-500">
+							<!-- Date Badge (Inverted High-Contrast Badge) -->
+							<div
+								v-if="item.date"
+								class="mb-3 flex items-center"
+							>
+								<span class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-mono font-bold transition-colors bg-slate-900 text-white border border-slate-900 dark:bg-white dark:text-slate-950 dark:border-white shadow-xs">
+									<span class="i-hugeicons-calendar-03 text-xs text-brand-400 dark:text-brand-800" />
+									<span>{{ formatDate(item.date) }}</span>
+								</span>
+							</div>
+
+							<h2 class="text-base text-slate-900 font-bold leading-snug tracking-normal font-heading transition-colors duration-200 sm:text-lg dark:text-slate-100 group-hover:text-brand-700 dark:group-hover:text-brand-300">
 								{{ item.title }}
 							</h2>
 
-							<p class="line-clamp-3 mt-2 text-xs text-slate-600 leading-relaxed sm:text-sm dark:text-slate-300">
+							<p class="line-clamp-3 mt-2 text-xs text-slate-600 leading-relaxed sm:text-sm dark:text-slate-300 transition-colors duration-200 group-hover:text-slate-900 dark:group-hover:text-white">
 								{{ item.description }}
 							</p>
 						</div>
 
 						<div class="mt-5 flex items-center justify-between border-t border-slate-200/60 pt-3.5 text-xs dark:border-slate-800/60">
-							<span class="flex items-center gap-1 text-brand-800 font-bold transition-all group-hover:translate-x-1 dark:text-brand-400 group-hover:text-brand-950 dark:group-hover:text-yellow-500">
+							<span class="flex items-center gap-1 text-brand-800 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-yellow-500 font-bold transition-all group-hover:translate-x-1">
 								{{ locale === 'id' ? 'Lihat Studi Kasus' : 'Explore Case Study' }} <span>↗</span>
 							</span>
 							<div

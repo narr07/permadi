@@ -1,35 +1,37 @@
-title: About Dinar Permadi Yusup
-description: I care about the space between design and engineering, where a thoughtful interaction becomes a useful product.
-headline: Curious by default. Intentional by choice.
+title: About Dinar Permadi Yusup | Teacher, Developer & Designer
+description: Get to know Dinar Permadi Yusup — an elementary school teacher and UPI alumnus blending mathematical logic, software engineering (Nuxt, Flutter, Python, PHP), and Adobe graphic design craft.
+headline: Calculating with care. Designing with purpose.
 journey:
   title: Journey & Background
-  description: My journey began with a deep fascination for how digital interfaces shape user emotion and information efficiency. Over time, I specialized in Vue.js and Nuxt for their reactivity model and robust fullstack architecture.
-lead: I care about the space between design and engineering, where a thoughtful interaction becomes a useful product.
+  description: As an elementary school teacher graduated from Universitas Pendidikan Indonesia (UPI), my love for mathematics and logic naturally led me to code and graphic design. I blend pedagogical clarity with web & mobile development (Nuxt & Flutter) and Adobe Creative Cloud visual craft.
+lead: Bridging primary education, mathematical logic, software engineering, and visual design craft.
 principles:
-  - title: Visual Consistency
-    description: Implementing structured design tokens with 11-shade color scales and mathematical Golden Ratio typography.
-  - title: Developer & User Experience (DX & UX)
-    description: Crafting intuitive, accessible interfaces with delightful and responsive micro-interactions.
-  - title: Edge Performance
-    description: Optimizing Core Web Vitals, SSR caching, and Cloudflare edge computing integration (Pages, D1).
+  - title: Mathematical Logic & Precision
+    description: Architecting efficient, clean, and modular code structures with consistent algorithmic logic.
+  - title: Graphic Design Craft
+    description: Composing visual layouts, harmonic color palettes, and expressive typography across the complete Adobe ecosystem.
+  - title: Real-World Performance
+    description: Ensuring every web app (Nuxt) and mobile app (Flutter) is lightning-fast, accessible, and delightful to use.
 section_label: A Little About Me
 story_card:
   label: Philosophy & Story
-  title: I'm Permadi, a frontend developer & educator based in Majalengka.
-  lead: I work across interface design, type systems, and performant code to make digital products feel clear, effortless, and human.
-  bio: Outside the code editor, you will find me reading books, brewing manual coffee, or designing interactive learning modules.
+  title: I'm Permadi, an elementary teacher & digital craftsman based in Majalengka.
+  lead: A Universitas Pendidikan Indonesia (UPI) graduate passionate about numbers, coding modern web & mobile apps (Nuxt, Flutter, Python, PHP), and crafting graphic design systems.
+  bio: Outside the classroom and code editor, you will find me exploring math puzzles, designing graphic assets, and creating interactive teaching media.
   link_text: Explore Project Case Studies
 toolkit_card:
   label: Toolkit & Frameworks
-  title: Core Technologies
+  title: Core Technologies & Software
   tools:
-    - name: Vue 3 & Nuxt 4
-      desc: Frontend Framework & SSR
-    - name: TypeScript
-      desc: Type-Safe Architecture
+    - name: Nuxt & Vue 3
+      desc: Modern Web Framework & SSR
+    - name: Flutter & Dart
+      desc: Cross-Platform Mobile Apps
+    - name: Python, JS & PHP
+      desc: Backend & Logic Scripting
+    - name: Adobe Creative Cloud
+      desc: Photoshop, Illustrator & Design Suite
+    - name: Cloudflare & Nitro
+      desc: Edge Database & Serverless Engine
     - name: UnoCSS & Tailwind
       desc: Design Tokens & Atomic Styling
-    - name: Cloudflare D1 & Nitro
-      desc: Edge Database & Serverless Engine
-    - name: Figma
-      desc: Design Systems & Interface Prototyping
