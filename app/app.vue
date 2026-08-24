@@ -14,14 +14,6 @@ onMounted(() => {
 		window.removeEventListener('touchstart', initAnalytics)
 		window.removeEventListener('keydown', initAnalytics)
 
-		if (config.public.cloudflareAnalyticsToken) {
-			useScriptCloudflareWebAnalytics({
-				token: config.public.cloudflareAnalyticsToken,
-			}, {
-				proxy: false,
-			})
-		}
-
 		if (config.public.googleAnalyticsId) {
 			useScriptGoogleAnalytics({
 				id: config.public.googleAnalyticsId,
