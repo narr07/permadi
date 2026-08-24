@@ -107,10 +107,6 @@ defineOgImage('Bento', {
 		</a>
 
 		<div
-			class="radial-gradient-ambient"
-			aria-hidden="true"
-		/>
-		<div
 			class="noise"
 			aria-hidden="true"
 		/>

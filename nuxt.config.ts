@@ -51,10 +51,13 @@ export default defineNuxtConfig({
 	},
 	experimental: {
 		viewTransition: true,
-	},
-	scripts: {
-		globals: {
-			proxy: false,
+		defaults: {
+			nuxtLink: {
+				prefetch: false,
+				prefetchOn: {
+					interaction: true,
+				},
+			},
 		},
 	},
 	site: {
@@ -178,16 +181,29 @@ export default defineNuxtConfig({
 		},
 	},
 	scripts: {
+		globals: {
+			proxy: false,
+		},
 		defaultScriptOptions: {
-			trigger: 'onNuxtReady',
+			trigger: 'idle',
 		},
 		registry: {
-			cloudflareWebAnalytics: {
-				token: process.env.NUXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN || '',
-			},
-			googleAnalytics: {
-				id: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID || '',
-			},
+			...(process.env.NUXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN
+				? {
+						cloudflareWebAnalytics: {
+							token: process.env.NUXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN,
+							trigger: 'idle',
+						},
+					}
+				: {}),
+			...(process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID
+				? {
+						googleAnalytics: {
+							id: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID,
+							trigger: 'idle',
+						},
+					}
+				: {}),
 		},
 	},
 	image: {

@@ -352,14 +352,10 @@ useSchemaOrg([
 				@keydown.enter.prevent="openModal(item)"
 				@keydown.space.prevent="openModal(item)"
 			>
-				<!-- Gambar List Cepat & Ringan (Proporsi Alami Bento Masonry) -->
-				<NuxtImg
+				<!-- Gambar List Cepat & Ringan (Direct Cloudinary CDN URL) -->
+				<img
 					:src="item.image"
 					:alt="item.title || (locale === 'id' ? 'Foto galeri' : 'Gallery photo')"
-					:provider="item.image.startsWith('http') || item.image.startsWith('/projects') || item.image.startsWith('/galeri') ? undefined : 'cloudinary'"
-					format="webp"
-					quality="70"
-					sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
 					decoding="async"
 					class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 					:loading="i < 2 ? 'eager' : 'lazy'"
@@ -463,16 +459,12 @@ useSchemaOrg([
 							<span class="i-hugeicons-cancel-01 text-lg" />
 						</button>
 
-						<!-- High Quality Single Image (quality=95, width=1200, format=webp) -->
+						<!-- High Quality Single Image -->
 						<div class="relative max-h-[85vh] w-full flex items-center justify-center overflow-hidden border border-white/10 rounded-bento bg-slate-900/90 shadow-2xl">
-							<NuxtImg
-								:src="selectedPhoto.image"
+							<img
+								:src="selectedPhoto.full_image || selectedPhoto.image"
 								:alt="selectedPhoto.title"
-								:provider="selectedPhoto.image.startsWith('http') || selectedPhoto.image.startsWith('/projects') || selectedPhoto.image.startsWith('/galeri') ? undefined : 'cloudinary'"
-								format="webp"
-								quality="85"
-								width="1200"
-								densities="1x 2x"
+								decoding="async"
 								class="max-h-[80vh] max-w-full w-auto rounded-bento object-contain"
 							/>
 						</div>

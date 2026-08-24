@@ -17,15 +17,11 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/en/g
 		class="bento-card-clean group block flex flex-col justify-between overflow-hidden md:col-span-5 !p-0"
 	>
 		<div class="relative aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
-			<NuxtImg
+			<img
 				v-if="galleryItem?.image"
 				:src="galleryItem.image"
 				alt=""
 				aria-hidden="true"
-				:provider="galleryItem.image.startsWith('http') || galleryItem.image.startsWith('/projects') || galleryItem.image.startsWith('/galeri') ? undefined : 'cloudinary'"
-				format="webp"
-				quality="75"
-				sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
 				decoding="async"
 				class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 				loading="lazy"

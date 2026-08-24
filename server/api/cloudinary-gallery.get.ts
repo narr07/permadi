@@ -86,8 +86,12 @@ export default defineCachedEventHandler(
 					const context = resource.context?.custom || {}
 
 					// Extract version from public_id URL pattern
-					const versionPrefix = `/v${resource.version}/`
-					const imagePath = `${versionPrefix}${resource.public_id}.${resource.format}`
+					const versionPrefix = resource.version ? `v${resource.version}/` : ''
+
+					// Direct CDN Delivery URLs with automatic WebP/AVIF format & smart eco compression
+					// Cloudinary transforms once and caches forever on CDN (0 extra API calls / transformation credits)
+					const thumbnailCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_800,f_auto,q_auto:eco/${versionPrefix}${resource.public_id}.${resource.format}`
+					const fullCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_1920,f_auto,q_auto:good/${versionPrefix}${resource.public_id}.${resource.format}`
 
 					// Fallback: use readable name from public_id (e.g. "gallery/isola_v1" -> "Isola V1")
 					const fallbackName = (resource.public_id.split('/').pop() || '')
@@ -100,7 +104,9 @@ export default defineCachedEventHandler(
 						public_id: resource.public_id,
 						title: context.caption || context.alt || resource.display_name || fallbackName || 'Permadi Gallery',
 						alt: context.alt || context.caption || resource.display_name || fallbackName || 'Permadi Gallery',
-						image: imagePath,
+						image: thumbnailCdnUrl,
+						full_image: fullCdnUrl,
+						secure_url: resource.secure_url,
 						tags: resource.tags?.length ? resource.tags : ['desainer'],
 						created_at: resource.created_at,
 						width: resource.width,
@@ -116,9 +122,9 @@ export default defineCachedEventHandler(
 		}
 	},
 	{
-		maxAge: 60 * 60, // Cache 1 hour
-		swr: true, // Stale-while-revalidate
+		maxAge: 60 * 60 * 24, // Cache 24 hours on server/edge (Drastically saves Cloudinary API calls)
+		swr: true, // Stale-while-revalidate for instantaneous responses
 		name: 'cloudinary-gallery',
-		getKey: () => 'gallery',
+		getKey: () => 'gallery-all',
 	},
 )
