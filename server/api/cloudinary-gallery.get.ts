@@ -85,9 +85,9 @@ export default defineCachedEventHandler(
 				.map((resource) => {
 					const context = resource.context?.custom || {}
 
-					// Use direct secure HTTPS URL from Cloudinary to prevent local 404s
-					const versionPrefix = resource.version ? `/v${resource.version}/` : ''
-					const imagePath = resource.secure_url || `https://res.cloudinary.com/${cloudName}/image/upload${versionPrefix}${resource.public_id}.${resource.format}`
+					// Extract version from public_id URL pattern
+					const versionPrefix = `/v${resource.version}/`
+					const imagePath = `${versionPrefix}${resource.public_id}.${resource.format}`
 
 					// Fallback: use readable name from public_id (e.g. "gallery/isola_v1" -> "Isola V1")
 					const fallbackName = (resource.public_id.split('/').pop() || '')
