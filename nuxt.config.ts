@@ -56,9 +56,6 @@ export default defineNuxtConfig({
 		clientNodePlaceholder: true,
 		navigationRepaint: true,
 		crossOriginPrefetch: true,
-		extractAsyncDataHandlers: true,
-		prefetchPreloadTags: true,
-		buildCache: true,
 		defaults: {
 			nuxtLink: {
 				prefetch: false,
@@ -505,9 +502,6 @@ export default defineNuxtConfig({
 				},
 			},
 		},
-	},
-	future: {
-		typescriptBundlerResolution: true,
 	},
 	devtools: { enabled: true },
 	compatibilityDate: '2024-04-03',
