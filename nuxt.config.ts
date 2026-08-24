@@ -28,11 +28,6 @@ export default defineNuxtConfig({
 				runOnly: ['wcag2a', 'wcag2aa'],
 			},
 		},
-		report: {
-			enabled: true,
-			output: 'a11y-report.md',
-			failOnViolation: false,
-		},
 	},
 	hub: {
 		db: {
