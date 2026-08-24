@@ -50,6 +50,9 @@ export default defineNuxtConfig({
 		clientNodePlaceholder: true,
 		navigationRepaint: true,
 		crossOriginPrefetch: true,
+		extractAsyncDataHandlers: true,
+		prefetchPreloadTags: true,
+		buildCache: true,
 		defaults: {
 			nuxtLink: {
 				prefetch: false,
