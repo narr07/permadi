@@ -343,6 +343,7 @@ useSchemaOrg([
 			<div
 				v-for="(item, i) in displayedItems"
 				:key="item.public_id || i"
+				v-memo="[item.public_id]"
 				tabindex="0"
 				role="button"
 				:aria-label="item.title || (locale === 'id' ? 'Buka foto galeri' : 'Open gallery photo')"
