@@ -102,6 +102,10 @@ defineOgImage('Bento', {
 			class="noise"
 			aria-hidden="true"
 		/>
+		<NuxtLoadingIndicator
+			color="#14b898"
+			:height="2"
+		/>
 		<NuxtRouteAnnouncer />
 		<AppHeader />
 

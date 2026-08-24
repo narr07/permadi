@@ -39,6 +39,12 @@ export default defineNuxtConfig({
 		},
 		dir: '.data',
 	},
+	colorMode: {
+		classSuffix: '',
+		preference: 'system',
+		fallback: 'dark',
+		storageKey: 'nuxt-color-mode',
+	},
 	eslint: {
 		config: {
 			standalone: false,
