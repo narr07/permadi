@@ -50,7 +50,6 @@ export default defineNuxtConfig({
 		clientNodePlaceholder: true,
 		navigationRepaint: true,
 		crossOriginPrefetch: true,
-		early404: true,
 		defaults: {
 			nuxtLink: {
 				prefetch: false,
