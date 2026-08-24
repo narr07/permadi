@@ -47,6 +47,11 @@ export default defineNuxtConfig({
 	experimental: {
 		viewTransition: true,
 		payloadExtraction: 'client',
+		clientNodePlaceholder: true,
+		stripNeverHydratedData: true,
+		navigationRepaint: true,
+		crossOriginPrefetch: true,
+		early404: true,
 		defaults: {
 			nuxtLink: {
 				prefetch: false,
