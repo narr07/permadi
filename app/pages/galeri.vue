@@ -433,63 +433,82 @@ useSchemaOrg([
 			<ContentRenderer :value="page" />
 		</article>
 
-		<!-- SINGLE PHOTO MODAL (Tanpa Carousel, Resolusi & Kualitas Tinggi) -->
-		<Teleport to="body">
-			<Transition
-				enter-active-class="transition duration-200 ease-out"
-				enter-from-class="opacity-0 scale-95"
-				enter-to-class="opacity-100 scale-100"
-				leave-active-class="transition duration-150 ease-in"
-				leave-from-class="opacity-100 scale-100"
-				leave-to-class="opacity-0 scale-95"
-			>
-				<div
-					v-if="selectedPhoto"
-					class="fixed inset-0 z-100 flex items-center justify-center bg-slate-950/90 p-3 backdrop-blur-md sm:p-6"
-					@click.self="closeModal"
+		<!-- SINGLE PHOTO MODAL (Wrapped in ClientOnly with Symmetrical Actions) -->
+		<ClientOnly>
+			<Teleport to="body">
+				<Transition
+					enter-active-class="transition duration-200 ease-out"
+					enter-from-class="opacity-0 scale-95"
+					enter-to-class="opacity-100 scale-100"
+					leave-active-class="transition duration-150 ease-in"
+					leave-from-class="opacity-100 scale-100"
+					leave-to-class="opacity-0 scale-95"
 				>
-					<div class="relative max-w-4xl w-full flex flex-col items-center">
-						<!-- Close Button -->
-						<button
-							type="button"
-							class="absolute right-0 cursor-pointer border border-white/10 rounded-full bg-slate-900/60 p-2 text-white/70 backdrop-blur-md transition-colors -top-12 hover:text-white"
-							:aria-label="locale === 'id' ? 'Tutup' : 'Close'"
-							@click="closeModal"
-						>
-							<span class="i-hugeicons-cancel-01 text-lg" />
-						</button>
-
-						<!-- High Quality Single Image -->
-						<div class="relative max-h-[85vh] w-full flex items-center justify-center overflow-hidden border border-white/10 rounded-bento bg-slate-900/90 shadow-2xl">
-							<img
-								:src="selectedPhoto.full_image || selectedPhoto.image"
-								:alt="selectedPhoto.title"
-								decoding="async"
-								class="max-h-[80vh] max-w-full w-auto rounded-bento object-contain"
-							/>
-						</div>
-
-						<!-- Caption Details -->
-						<div class="mt-3.5 w-full flex items-center justify-between px-2 text-xs text-white/80">
-							<span class="truncate text-sm text-white font-semibold">
-								{{ selectedPhoto.title }}
-							</span>
-							<div
-								v-if="selectedPhoto.tags && selectedPhoto.tags.length"
-								class="flex items-center gap-1.5"
-							>
-								<span
-									v-for="tag in selectedPhoto.tags"
-									:key="tag"
-									class="rounded-full bg-white/15 px-2 py-0.5 text-[11px] text-white"
-								>
-									#{{ tag }}
+					<div
+						v-if="selectedPhoto"
+						class="fixed inset-0 z-100 flex items-center justify-center bg-slate-950/90 p-3 backdrop-blur-md sm:p-6"
+						@click.self="closeModal"
+					>
+						<div class="relative max-w-4xl w-full flex flex-col items-center">
+							<!-- Symmetrical Modal Header Bar -->
+							<div class="mb-3 w-full flex items-center justify-between px-1">
+								<span class="max-w-[70%] truncate text-sm text-white/90 font-semibold font-heading">
+									{{ selectedPhoto.title }}
 								</span>
+								<div class="flex items-center gap-2">
+									<!-- Open High Res Direct Link Button -->
+									<a
+										v-if="selectedPhoto.full_image || selectedPhoto.image"
+										:href="selectedPhoto.full_image || selectedPhoto.image"
+										target="_blank"
+										rel="noopener"
+										class="inline-flex h-9 w-9 cursor-pointer items-center justify-center border border-white/15 rounded-full bg-slate-900/80 text-white/80 backdrop-blur-md transition hover:border-brand-400/50 hover:bg-slate-800 hover:text-white"
+										:aria-label="locale === 'id' ? 'Buka resolusi penuh' : 'Open full resolution'"
+										:title="locale === 'id' ? 'Buka resolusi penuh' : 'Open full resolution'"
+									>
+										<span class="i-hugeicons-maximize-02 text-base" />
+									</a>
+									<!-- Close Button -->
+									<button
+										type="button"
+										class="inline-flex h-9 w-9 cursor-pointer items-center justify-center border border-white/15 rounded-full bg-slate-900/80 text-white/80 backdrop-blur-md transition hover:border-red-400/50 hover:bg-slate-800 hover:text-white"
+										:aria-label="locale === 'id' ? 'Tutup' : 'Close'"
+										@click="closeModal"
+									>
+										<span class="i-hugeicons-cancel-01 text-base" />
+									</button>
+								</div>
+							</div>
+
+							<!-- High Quality Single Image -->
+							<div class="relative max-h-[80vh] w-full flex items-center justify-center overflow-hidden border border-white/10 rounded-bento bg-slate-900/90 shadow-2xl">
+								<img
+									:src="selectedPhoto.full_image || selectedPhoto.image"
+									:alt="selectedPhoto.title"
+									decoding="async"
+									class="max-h-[75vh] max-w-full w-auto rounded-bento object-contain"
+								/>
+							</div>
+
+							<!-- Caption Details & Tags -->
+							<div class="mt-3.5 w-full flex flex-wrap items-center justify-between gap-2 px-1 text-xs text-white/80">
+								<div
+									v-if="selectedPhoto.tags && selectedPhoto.tags.length"
+									class="flex flex-wrap items-center gap-1.5"
+								>
+									<span
+										v-for="tag in selectedPhoto.tags"
+										:key="tag"
+										class="rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] text-white"
+									>
+										#{{ tag }}
+									</span>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</Transition>
-		</Teleport>
+				</Transition>
+			</Teleport>
+		</ClientOnly>
 	</div>
 </template>
