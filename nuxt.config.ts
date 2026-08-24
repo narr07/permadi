@@ -46,6 +46,7 @@ export default defineNuxtConfig({
 	},
 	experimental: {
 		viewTransition: true,
+		payloadExtraction: 'client',
 		defaults: {
 			nuxtLink: {
 				prefetch: false,
@@ -492,9 +493,6 @@ export default defineNuxtConfig({
 				},
 			},
 		},
-	},
-	experimental: {
-		viewTransition: true,
 	},
 	devtools: { enabled: true },
 	compatibilityDate: '2024-04-03',
