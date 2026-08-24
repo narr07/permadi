@@ -180,18 +180,15 @@ export default defineNuxtConfig({
 		},
 	},
 	scripts: {
-		globals: {
-			proxy: false,
-		},
 		defaultScriptOptions: {
-			trigger: 'idle',
+			trigger: { idleTimeout: 2000 },
 		},
 		registry: {
 			...(process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID
 				? {
 						googleAnalytics: {
 							id: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID,
-							trigger: 'idle',
+							trigger: { idleTimeout: 2000 },
 						},
 					}
 				: {}),
