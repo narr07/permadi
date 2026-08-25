@@ -387,6 +387,17 @@ useSchemaOrg([
 									</span>
 								</div>
 
+								<!-- Date Badge (Inverted High-Contrast Badge) -->
+								<div
+									v-if="item.date"
+									class="mb-3.5 flex items-center"
+								>
+									<span class="shadow-xs inline-flex items-center gap-1.5 border border-slate-900 rounded-full bg-slate-900 px-2.5 py-0.5 text-[11px] text-white font-bold font-mono transition-colors dark:border-white dark:bg-white dark:text-slate-950">
+										<span class="i-hugeicons-calendar-03 text-xs text-brand-400 dark:text-brand-800" />
+										<span>{{ formatDate(item.date) }}</span>
+									</span>
+								</div>
+
 								<h2 class="text-xl text-brand-950 font-bold tracking-tight font-heading lg:text-3xl sm:text-2xl dark:text-white group-hover:text-brand-700 dark:group-hover:text-brand-300">
 									{{ item.title }}
 								</h2>
@@ -492,7 +503,7 @@ useSchemaOrg([
 							<!-- Date Badge (Inverted High-Contrast Badge) -->
 							<div
 								v-if="item.date"
-								class="mb-3 flex items-center"
+								class="mb-3.5 flex items-center"
 							>
 								<span class="shadow-xs inline-flex items-center gap-1.5 border border-slate-900 rounded-full bg-slate-900 px-2.5 py-0.5 text-[11px] text-white font-bold font-mono transition-colors dark:border-white dark:bg-white dark:text-slate-950">
 									<span class="i-hugeicons-calendar-03 text-xs text-brand-400 dark:text-brand-800" />

@@ -375,13 +375,13 @@ useSchemaOrg([
 							#{{ post.tags[0] }}
 						</span>
 
-						<!-- Secondary Tag -->
+						<!-- Secondary Tag (Desktop only) -->
 						<span
 							v-if="post.tags?.[1]"
-							class="hidden items-center rounded-full px-2 py-0.5 text-[10px] text-slate-700 font-medium sm:inline-flex dark:text-slate-300"
+							class="hidden items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium sm:inline-flex"
 							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-								? 'text-brand-200/80 bg-brand-950/40'
-								: 'bg-slate-100 dark:bg-slate-800'"
+								? 'bg-white/10 text-slate-200 border border-white/15'
+								: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50'"
 						>
 							#{{ post.tags[1] }}
 						</span>
@@ -396,15 +396,18 @@ useSchemaOrg([
 						>
 							+{{ post.tags.length - 2 }}
 						</span>
+					</div>
 
-						<!-- Spacer -->
-						<span class="flex-1" />
-
-						<!-- Date Meta Badge -->
+					<!-- Date Badge (Inverted High-Contrast Badge) -->
+					<div
+						v-if="post.date"
+						class="mb-3.5 flex items-center"
+					>
 						<span
-							v-if="post.date"
-							class="inline-flex items-center gap-1 text-[11px] font-mono"
-							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL' ? 'text-brand-200' : 'text-slate-600 dark:text-slate-400'"
+							class="shadow-xs inline-flex items-center gap-1.5 border rounded-full px-2.5 py-0.5 text-[11px] font-bold font-mono transition-colors"
+							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
+								? 'bg-white text-slate-950 border-white shadow-xs'
+								: 'bg-slate-900 text-white border-slate-900 dark:bg-white dark:text-slate-950 dark:border-white shadow-xs'"
 						>
 							<span
 								class="i-hugeicons-calendar-03 text-xs"
