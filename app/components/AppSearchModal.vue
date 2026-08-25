@@ -60,14 +60,6 @@ const pageResults = computed(() => {
 // List Links default dengan Hugeicons
 const defaultLinks = computed(() => [
 	{
-		id: 'ask-ai',
-		label: 'Ask AI',
-		description: locale.value === 'id' ? 'Tanya seputar pengalaman & profil' : 'Ask about experience & profile',
-		icon: 'i-hugeicons-sparkles',
-		kbds: ['CTRL', 'I'],
-		action: 'ai-chat',
-	},
-	{
 		label: t('nav.home', 'Home'),
 		description: locale.value === 'id' ? 'Halaman utama & ringkasan profil' : 'Overview & main landing',
 		icon: 'i-hugeicons-home-01',
@@ -148,8 +140,6 @@ function getTargetUrl(result: any): string {
 	return `/${locale.value}`
 }
 
-const { openAiChat, toggleAiChat } = useAiChat()
-
 async function openModal() {
 	isOpen.value = true
 	selectedIndex.value = -1
@@ -169,11 +159,6 @@ function closeModal() {
 }
 
 async function handleItemSelect(item: any) {
-	if (item.action === 'ai-chat' || item.id === 'ask-ai') {
-		closeModal()
-		openAiChat()
-		return
-	}
 	closeModal()
 	if (item.href) {
 		window.open(item.href, item.target || '_blank')
@@ -216,7 +201,7 @@ function handleModalKeydown(e: KeyboardEvent) {
 	}
 }
 
-// Shortcut global Ctrl+K / Cmd+K, Ctrl+I / Cmd+I & Esc
+// Shortcut global Ctrl+K / Cmd+K & Esc
 onMounted(() => {
 	function handleGlobalKeyDown(e: KeyboardEvent) {
 		if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
@@ -227,11 +212,6 @@ onMounted(() => {
 			else {
 				openModal()
 			}
-		}
-		if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'i') {
-			e.preventDefault()
-			closeModal()
-			toggleAiChat()
 		}
 		if (e.key === 'Escape' && isOpen.value) {
 			closeModal()

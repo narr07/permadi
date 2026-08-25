@@ -18,7 +18,15 @@ export default defineNuxtConfig({
 		'@nuxtjs/mcp-toolkit',
 		'@stefanobartoletti/nuxt-social-share',
 		'@nuxt/a11y',
+		'nuxt-vitalizer',
+		'@nuxtjs/partytown',
 	],
+	partytown: {
+		forward: ['dataLayer.push'],
+	},
+	vitalizer: {
+		disableStylesheets: true,
+	},
 	a11y: {
 		defaultHighlight: false,
 		logIssues: true,
@@ -44,6 +52,9 @@ export default defineNuxtConfig({
 		preference: 'system',
 		fallback: 'dark',
 		storageKey: 'nuxt-color-mode',
+	},
+	features: {
+		inlineStyles: true,
 	},
 	eslint: {
 		config: {
@@ -168,13 +179,7 @@ export default defineNuxtConfig({
 	css: [
 		'~/assets/css/main.css',
 	],
-	colorMode: {
-		classSuffix: '',
-		preference: 'system',
-		fallback: 'dark',
-	},
 	runtimeConfig: {
-		geminiApiKey: process.env.GEMINI_API_KEY || '',
 		sessionSalt: process.env.NUXT_SESSION_SALT || 'permadi-reactions-salt-key-2026',
 		cloudinaryCloudName: process.env.NUXT_CLOUDINARY_CLOUD_NAME || 'daton7ry4',
 		cloudinaryApiKey: process.env.NUXT_CLOUDINARY_API_KEY || '',
@@ -187,6 +192,7 @@ export default defineNuxtConfig({
 	scripts: {
 		defaultScriptOptions: {
 			trigger: { idleTimeout: 2000 },
+			proxy: false,
 		},
 		registry: {
 			...(process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID
@@ -194,6 +200,10 @@ export default defineNuxtConfig({
 						googleAnalytics: {
 							id: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID,
 							trigger: { idleTimeout: 2000 },
+							proxy: false,
+							scriptOptions: {
+								type: 'text/partytown',
+							},
 						},
 					}
 				: {}),

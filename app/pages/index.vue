@@ -61,7 +61,8 @@ defineOgImage('Bento', {
 			<HomeHero :hero="page?.hero" />
 
 			<!-- Kartu Projek Terpilih -->
-			<HomeFeaturedProject
+			<LazyHomeFeaturedProject
+				hydrate-on-visible
 				:project="featuredProject"
 				:label="page?.project_section?.label"
 				:fallback-title="page?.project_section?.fallback_title"
@@ -70,20 +71,28 @@ defineOgImage('Bento', {
 			/>
 
 			<!-- Kartu Filosofi Bento (#facd87) -->
-			<HomePhilosophy :philosophy="page?.philosophy" />
+			<LazyHomePhilosophy
+				hydrate-on-visible
+				:philosophy="page?.philosophy"
+			/>
 
 			<!-- Kartu Eksplorasi Visual -->
-			<HomeExploreCard
+			<LazyHomeExploreCard
+				hydrate-on-visible
 				:gallery-item="galleryItems?.[0]"
 				:label="page?.explore?.label"
 				:text="page?.explore?.text"
 			/>
 
 			<!-- Kartu Arsip Galeri -->
-			<HomeArchiveCard :archive="page?.archive" />
+			<LazyHomeArchiveCard
+				hydrate-on-visible
+				:archive="page?.archive"
+			/>
 
 			<!-- Kartu Tulisan Terbaru (12 Kolom) -->
-			<HomeLatestPosts
+			<LazyHomeLatestPosts
+				hydrate-on-visible
 				:posts="latestPosts || []"
 				:writing="page?.writing"
 			/>

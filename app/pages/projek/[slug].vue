@@ -340,6 +340,7 @@ onMounted(() => {
 							fetchpriority="high"
 							preload
 							decoding="async"
+							placeholder
 							class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 						/>
 						<div class="absolute inset-0 flex items-end justify-between from-slate-950/80 via-transparent to-transparent bg-gradient-to-t p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -373,6 +374,7 @@ onMounted(() => {
 								quality="80"
 								loading="lazy"
 								decoding="async"
+								placeholder
 								class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 							/>
 							<div class="absolute inset-0 flex items-center justify-center bg-slate-950/50 opacity-0 transition-opacity duration-200 group-hover:opacity-100">

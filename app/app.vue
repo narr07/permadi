@@ -6,7 +6,8 @@ const config = useRuntimeConfig()
 // This eliminates 182 KiB of third-party JS on initial load, drops TBT to 0ms,
 // and avoids net::ERR_BLOCKED_BY_CLIENT in Lighthouse audits.
 onMounted(() => {
-	if (!import.meta.client) return
+	if (!import.meta.client)
+		return
 
 	const initAnalytics = () => {
 		window.removeEventListener('scroll', initAnalytics)
@@ -181,8 +182,5 @@ defineOgImage('Bento', {
 			</div>
 		</footer>
 
-		<ClientOnly>
-			<LazyAppAiChat />
-		</ClientOnly>
 	</div>
 </template>

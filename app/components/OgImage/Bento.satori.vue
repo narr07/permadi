@@ -50,7 +50,7 @@ withDefaults(
 		<div class="w-full flex items-center justify-between border-t border-white/10 pt-4">
 			<!-- Author Profile -->
 			<div class="flex items-center gap-3">
-				<div class="h-10 w-10 flex shrink-0 items-center justify-center overflow-hidden rounded-full border border-[#134e43] bg-[#002420]">
+				<div class="h-10 w-10 flex shrink-0 items-center justify-center overflow-hidden border border-[#134e43] rounded-full bg-[#002420]">
 					<img
 						src="/logo.png"
 						width="40"

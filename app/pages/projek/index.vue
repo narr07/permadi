@@ -345,7 +345,7 @@ useSchemaOrg([
 									v-if="item.date"
 									class="mb-3.5 flex items-center"
 								>
-									<span class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-mono font-bold transition-colors bg-slate-900 text-white border border-slate-900 dark:bg-white dark:text-slate-950 dark:border-white shadow-xs">
+									<span class="shadow-xs inline-flex items-center gap-1.5 border border-slate-900 rounded-full bg-slate-900 px-2.5 py-0.5 text-[11px] text-white font-bold font-mono transition-colors dark:border-white dark:bg-white dark:text-slate-950">
 										<span class="i-hugeicons-calendar-03 text-xs text-brand-400 dark:text-brand-800" />
 										<span>{{ formatDate(item.date) }}</span>
 									</span>
@@ -357,14 +357,14 @@ useSchemaOrg([
 								</h2>
 
 								<!-- Description -->
-								<p class="line-clamp-3 mt-3 text-sm text-slate-600 leading-relaxed sm:line-clamp-4 dark:text-slate-300 transition-colors duration-200 group-hover:text-slate-900 dark:group-hover:text-white">
+								<p class="line-clamp-3 mt-3 text-sm text-slate-600 leading-relaxed transition-colors duration-200 sm:line-clamp-4 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white">
 									{{ item.description }}
 								</p>
 							</div>
 
 							<!-- Action Links Footer -->
 							<div class="mt-6 flex items-center justify-between border-t border-slate-200/70 pt-4 text-xs dark:border-slate-700/60">
-								<span class="flex items-center gap-1.5 text-brand-800 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-yellow-500 font-bold transition-all group-hover:translate-x-1">
+								<span class="flex items-center gap-1.5 text-brand-800 font-bold transition-all group-hover:translate-x-1 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-yellow-500">
 									{{ locale === 'id' ? 'Lihat Studi Kasus' : 'Explore Case Study' }} <span>↗</span>
 								</span>
 								<div
@@ -412,6 +412,8 @@ useSchemaOrg([
 							quality="85"
 							class="h-full w-full object-cover"
 							loading="lazy"
+							decoding="async"
+							placeholder
 						/>
 					</div>
 
@@ -442,7 +444,7 @@ useSchemaOrg([
 								v-if="item.date"
 								class="mb-3 flex items-center"
 							>
-								<span class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-mono font-bold transition-colors bg-slate-900 text-white border border-slate-900 dark:bg-white dark:text-slate-950 dark:border-white shadow-xs">
+								<span class="shadow-xs inline-flex items-center gap-1.5 border border-slate-900 rounded-full bg-slate-900 px-2.5 py-0.5 text-[11px] text-white font-bold font-mono transition-colors dark:border-white dark:bg-white dark:text-slate-950">
 									<span class="i-hugeicons-calendar-03 text-xs text-brand-400 dark:text-brand-800" />
 									<span>{{ formatDate(item.date) }}</span>
 								</span>
@@ -452,13 +454,13 @@ useSchemaOrg([
 								{{ item.title }}
 							</h2>
 
-							<p class="line-clamp-3 mt-2 text-xs text-slate-600 leading-relaxed sm:text-sm dark:text-slate-300 transition-colors duration-200 group-hover:text-slate-900 dark:group-hover:text-white">
+							<p class="line-clamp-3 mt-2 text-xs text-slate-600 leading-relaxed transition-colors duration-200 sm:text-sm dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white">
 								{{ item.description }}
 							</p>
 						</div>
 
 						<div class="mt-5 flex items-center justify-between border-t border-slate-200/60 pt-3.5 text-xs dark:border-slate-800/60">
-							<span class="flex items-center gap-1 text-brand-800 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-yellow-500 font-bold transition-all group-hover:translate-x-1">
+							<span class="flex items-center gap-1 text-brand-800 font-bold transition-all group-hover:translate-x-1 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-yellow-500">
 								{{ locale === 'id' ? 'Lihat Studi Kasus' : 'Explore Case Study' }} <span>↗</span>
 							</span>
 							<div

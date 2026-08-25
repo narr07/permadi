@@ -28,20 +28,12 @@ Live Website: [https://permadi.dev](https://permadi.dev)
 - **Automatic Slug Mapping**: Seamless language transitions across blog articles and projects using cross-language `idBlog` / `idItem` resolution.
 - **Smart Locale Switcher**: Responsive language toggling in the header and mobile navigation drawer.
 
-### 🤖 3. Intelligent Permadi AI Assistant (Google Gemini)
-- **Interactive Conversational AI**: Floating Bento trigger and slide-over modal dialog (`AppAiChat.vue`) inspired by modern assistant workflows.
-- **Dynamic Nuxt Content Knowledge Base**: Real-time server-side querying (`queryCollection`) feeding full raw articles, case studies, tech stacks, and topics into the AI system context.
-- **Bilingual Intelligence**: Automatically responds in the active page language (**Indonesian** or **English**) and serves localized markdown links (`/id/projek/...` or `/en/projects/...`).
-- **Markdown & Code Formatting**: High-fidelity typography rendering with `marked` and custom `.prose-chat` styles.
-- **Bento Actions**: One-click **Copy Answer** (with visual checkmark feedback) and **Share Answer** (Web Share API integration).
-- **Edge IP-Based Rate Limiting**: Built-in 15 requests/hour per client IP guardrail to optimize token usage and prevent abuse, complete with a live quota counter.
-
-### 📝 4. Nuxt Content v3 Engine
+### 📝 3. Nuxt Content v3 Engine
 - **Structured Collections**: Powered by SQLite / Cloudflare D1 local database storage for articles (`blog_id`, `blog_en`) and portfolio projects (`projek_id`, `projek_en`).
 - **MDC (Markdown Components)**: Advanced custom Markdown rendering components (`ProseImg`, `ProsePre` with Shiki syntax highlighting, `ProseCode`, and a clean single-row `ContentToc`).
 - **Nuxt Studio Integration**: Full compatibility with the Nuxt Studio visual editor for editing and publishing Markdown content.
 
-### 🔌 5. AI-Ready & Nuxt MCP Server Toolkit
+### 🔌 4. AI-Ready & Nuxt MCP Server Toolkit
 - **Model Context Protocol (MCP)**: Native MCP server endpoint at `/mcp` using `@nuxtjs/mcp-toolkit`, enabling direct integration with AI-powered IDEs (Cursor, VS Code, Claude Desktop, Windsurf):
   - **Tools**: `get_profile`, `get_site_info`, `get_tech_stack`, `search_articles`, `search_projects`, `get_article_content`.
   - **Resources**: `permadi://profile`.
@@ -91,9 +83,8 @@ Automated syndication across 3 standard feed formats built with 100% native Nitr
 ```text
 permadi/
 ├── app/
-│   ├── app.vue                  # Root App template, SEO, analytics, feeds & global AI Chat
+│   ├── app.vue                  # Root App template, SEO, analytics, and feeds
 │   ├── components/              # Vue Components (Bento Header, Share, TOC, etc.)
-│   │   ├── AppAiChat.vue        # Permadi AI Chat assistant widget & modal
 │   │   ├── ArticleShare.vue     # Bento Social Share component
 │   │   ├── ContentToc.vue       # Sticky & Mobile Table of Contents
 │   │   ├── AppHeader.vue        # Main Navigation Header & Locale Switcher
@@ -108,8 +99,7 @@ permadi/
 ├── content/                     # Markdown Collections (blog_id, blog_en, projek_id, etc.)
 ├── content.config.ts            # Nuxt Content v3 Collections Schema
 ├── server/
-│   ├── api/                     # Nitro API endpoints
-│   │   └── chat.post.ts         # Google Gemini chat endpoint with dynamic context & rate limiting
+│   ├── api/                     # Nitro API endpoints (e.g. cloudinary-gallery)
 │   ├── mcp/                     # MCP Server definitions
 │   │   ├── tools/               # MCP Tools (get_profile, search_articles, etc.)
 │   │   ├── resources/           # MCP Resources (permadi://profile)
@@ -132,11 +122,8 @@ Ensure you have [Bun](https://bun.sh) (recommended) or Node.js `>= 20.x` install
 ### 2. Environment Variables Setup
 Create a `.env` file in the root directory:
 ```ini
-# Google Gemini API Key for Permadi AI Assistant
-GEMINI_API_KEY=your-gemini-api-key-here
-
-# Optional: Cloudflare Web Analytics
-NUXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN=your-token-here
+# Optional: Cloudflare Web Analytics & Analytics ID
+NUXT_PUBLIC_GOOGLE_ANALYTICS_ID=G-XXXXXXXXXX
 ```
 
 ### 3. Install Dependencies

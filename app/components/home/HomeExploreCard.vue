@@ -18,14 +18,21 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/en/g
 	>
 		<div class="relative aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
 			<img
+				v-if="galleryItem?.placeholder_image"
+				:src="galleryItem.placeholder_image"
+				alt=""
+				aria-hidden="true"
+				class="pointer-events-none absolute inset-0 h-full w-full scale-105 object-cover blur-md filter"
+			>
+			<img
 				v-if="galleryItem?.image"
 				:src="galleryItem.image"
 				alt=""
 				aria-hidden="true"
 				decoding="async"
-				class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+				class="relative z-1 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 				loading="lazy"
-			/>
+			>
 			<div
 				v-else
 				class="h-full w-full flex items-center justify-center bg-slate-100 dark:bg-slate-800"

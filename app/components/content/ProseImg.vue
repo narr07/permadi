@@ -119,6 +119,7 @@ onUnmounted(() => {
 			]"
 			loading="lazy"
 			decoding="async"
+			placeholder
 			@click="openZoom"
 			@keydown.enter.prevent="openZoom"
 			@keydown.space.prevent="openZoom"

@@ -111,7 +111,7 @@ onMounted(() => {
 	if (typeof IntersectionObserver !== 'undefined') {
 		const observer = new IntersectionObserver(
 			(entries) => {
-				if (entries[0].isIntersecting && hasMore.value) {
+				if (entries[0]?.isIntersecting && hasMore.value) {
 					loadMore()
 				}
 			},
@@ -129,15 +129,18 @@ onMounted(() => {
 	}
 })
 
-// 4. Single Photo Modal (Tanpa Carousel - Hanya Foto Yang Diklik)
+// 4. Single Photo Modal (Progressive Instant Preview)
 const selectedPhoto = ref<any | null>(null)
+const isModalImageLoaded = ref(false)
 
 function openModal(item: any) {
 	selectedPhoto.value = item
+	isModalImageLoaded.value = false
 }
 
 function closeModal() {
 	selectedPhoto.value = null
+	isModalImageLoaded.value = false
 }
 
 onMounted(() => {
@@ -352,14 +355,24 @@ useSchemaOrg([
 				@keydown.enter.prevent="openModal(item)"
 				@keydown.space.prevent="openModal(item)"
 			>
+				<!-- Background Microscopic LQIP Placeholder (Instan ~300 bytes) -->
+				<img
+					v-if="item.placeholder_image"
+					:src="item.placeholder_image"
+					:alt="item.title || 'Placeholder'"
+					aria-hidden="true"
+					class="pointer-events-none absolute inset-0 h-full w-full scale-105 object-cover blur-md filter"
+				>
+
 				<!-- Gambar List Cepat & Ringan (Direct Cloudinary CDN URL) -->
 				<img
 					:src="item.image"
 					:alt="item.title || (locale === 'id' ? 'Foto galeri' : 'Gallery photo')"
 					decoding="async"
-					class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+					class="relative z-1 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 					:loading="i < 2 ? 'eager' : 'lazy'"
-				/>
+					:fetchpriority="i === 0 ? 'high' : 'auto'"
+				>
 
 				<!-- Overlay on Hover -->
 				<div class="absolute inset-0 flex flex-col justify-end from-slate-950/80 via-slate-950/20 to-transparent bg-gradient-to-t p-2.5 text-white opacity-0 transition-opacity duration-300 sm:p-4 group-hover:opacity-100">
@@ -462,7 +475,7 @@ useSchemaOrg([
 										:href="selectedPhoto.full_image || selectedPhoto.image"
 										target="_blank"
 										rel="noopener"
-										class="inline-flex h-9 w-9 cursor-pointer items-center justify-center border border-white/15 rounded-full bg-slate-900/80 text-white/80 backdrop-blur-md transition hover:border-brand-400/50 hover:bg-slate-800 hover:text-white"
+										class="h-9 w-9 inline-flex cursor-pointer items-center justify-center border border-white/15 rounded-full bg-slate-900/80 text-white/80 backdrop-blur-md transition hover:border-brand-400/50 hover:bg-slate-800 hover:text-white"
 										:aria-label="locale === 'id' ? 'Buka resolusi penuh' : 'Open full resolution'"
 										:title="locale === 'id' ? 'Buka resolusi penuh' : 'Open full resolution'"
 									>
@@ -471,7 +484,7 @@ useSchemaOrg([
 									<!-- Close Button -->
 									<button
 										type="button"
-										class="inline-flex h-9 w-9 cursor-pointer items-center justify-center border border-white/15 rounded-full bg-slate-900/80 text-white/80 backdrop-blur-md transition hover:border-red-400/50 hover:bg-slate-800 hover:text-white"
+										class="h-9 w-9 inline-flex cursor-pointer items-center justify-center border border-white/15 rounded-full bg-slate-900/80 text-white/80 backdrop-blur-md transition hover:border-red-400/50 hover:bg-slate-800 hover:text-white"
 										:aria-label="locale === 'id' ? 'Tutup' : 'Close'"
 										@click="closeModal"
 									>
@@ -480,14 +493,35 @@ useSchemaOrg([
 								</div>
 							</div>
 
-							<!-- High Quality Single Image -->
-							<div class="relative max-h-[80vh] w-full flex items-center justify-center overflow-hidden border border-white/10 rounded-bento bg-slate-900/90 shadow-2xl">
+							<!-- High Quality Single Image with Progressive Cached Placeholder -->
+							<div class="relative max-h-[80vh] min-h-[240px] w-full flex items-center justify-center overflow-hidden border border-white/10 rounded-bento bg-slate-900/90 shadow-2xl sm:min-h-[360px]">
+								<!-- 1. Blurred instant placeholder from already cached grid thumbnail (0ms rendering delay) -->
 								<img
-									:src="selectedPhoto.full_image || selectedPhoto.image"
+									:src="selectedPhoto.image"
+									:alt="selectedPhoto.title"
+									aria-hidden="true"
+									class="pointer-events-none absolute inset-0 h-full w-full scale-105 object-contain opacity-50 blur-lg filter transition-opacity duration-500"
+									:class="isModalImageLoaded ? 'opacity-0' : 'opacity-50'"
+								>
+
+								<!-- 2. Optimized crisp modal preview image (loads fast ~80-120KB) -->
+								<img
+									:src="selectedPhoto.preview_image || selectedPhoto.image"
 									:alt="selectedPhoto.title"
 									decoding="async"
-									class="max-h-[75vh] max-w-full w-auto rounded-bento object-contain"
-								/>
+									class="relative z-10 max-h-[75vh] max-w-full w-auto rounded-bento object-contain transition-opacity duration-300"
+									:class="isModalImageLoaded ? 'opacity-100' : 'opacity-0'"
+									@load="isModalImageLoaded = true"
+								>
+
+								<!-- 3. Micro loading indicator while HD visual is decoding -->
+								<div
+									v-if="!isModalImageLoaded"
+									class="absolute z-20 flex items-center gap-2 border border-white/10 rounded-full bg-slate-950/75 px-3 py-1.5 text-xs text-white/90 backdrop-blur-md"
+								>
+									<span class="i-hugeicons-loading-03 animate-spin text-sm text-brand-400" />
+									<span>{{ locale === 'id' ? 'Memuat visual HD...' : 'Loading HD visual...' }}</span>
+								</div>
 							</div>
 
 							<!-- Caption Details & Tags -->

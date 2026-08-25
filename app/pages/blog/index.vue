@@ -341,7 +341,7 @@ useSchemaOrg([
 						class="mb-3.5 flex items-center"
 					>
 						<span
-							class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-mono font-bold transition-colors"
+							class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-bold font-mono transition-colors"
 							:class="index === 0 && selectedTag === 'ALL'
 								? 'bg-white text-slate-950 border border-white shadow-xs'
 								: 'bg-slate-900 text-white border border-slate-900 dark:bg-white dark:text-slate-950 dark:border-white shadow-xs'"
@@ -366,7 +366,7 @@ useSchemaOrg([
 
 					<!-- Description -->
 					<p
-						class="line-clamp-2 mt-2 text-xs leading-relaxed sm:text-sm transition-colors duration-200"
+						class="line-clamp-2 mt-2 text-xs leading-relaxed transition-colors duration-200 sm:text-sm"
 						:class="index === 0 && selectedTag === 'ALL'
 							? 'text-slate-200 group-hover:text-white'
 							: 'text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'"

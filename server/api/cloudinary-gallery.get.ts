@@ -29,6 +29,10 @@ export interface GalleryItem {
 	title: string
 	alt: string
 	image: string
+	placeholder_image: string
+	preview_image: string
+	full_image: string
+	secure_url: string
 	tags: string[]
 	created_at: string
 	width: number
@@ -89,8 +93,13 @@ export default defineCachedEventHandler(
 					const versionPrefix = resource.version ? `v${resource.version}/` : ''
 
 					// Direct CDN Delivery URLs with automatic WebP/AVIF format & smart eco compression
-					// Cloudinary transforms once and caches forever on CDN (0 extra API calls / transformation credits)
-					const thumbnailCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_800,f_auto,q_auto:eco/${versionPrefix}${resource.public_id}.${resource.format}`
+					// 1. Grid thumbnail (super ringan ~15-30KB, ideal untuk 2-kolom mobile & lazy decoding)
+					const thumbnailCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_500,f_auto,q_auto:eco/${versionPrefix}${resource.public_id}.${resource.format}`
+					// 2. Microscopic LQIP blur placeholder (~300 bytes untuk transisi blur instan bebas lag)
+					const placeholderCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_30,e_blur:800,f_auto,q_1/${versionPrefix}${resource.public_id}.${resource.format}`
+					// 3. Modal preview (tajam & responsif ~80-120KB, muat instan di mobile/tablet saat zoom)
+					const modalPreviewCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_1080,f_auto,q_auto:eco/${versionPrefix}${resource.public_id}.${resource.format}`
+					// 4. Full original resolution HD (untuk tombol direct open / download)
 					const fullCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_1920,f_auto,q_auto:good/${versionPrefix}${resource.public_id}.${resource.format}`
 
 					// Fallback: use readable name from public_id (e.g. "gallery/isola_v1" -> "Isola V1")
@@ -105,6 +114,8 @@ export default defineCachedEventHandler(
 						title: context.caption || context.alt || resource.display_name || fallbackName || 'Permadi Gallery',
 						alt: context.alt || context.caption || resource.display_name || fallbackName || 'Permadi Gallery',
 						image: thumbnailCdnUrl,
+						placeholder_image: placeholderCdnUrl,
+						preview_image: modalPreviewCdnUrl,
 						full_image: fullCdnUrl,
 						secure_url: resource.secure_url,
 						tags: resource.tags?.length ? resource.tags : ['desainer'],
@@ -122,7 +133,7 @@ export default defineCachedEventHandler(
 		}
 	},
 	{
-		maxAge: 60 * 60 * 24, // Cache 24 hours on server/edge (Drastically saves Cloudinary API calls)
+		maxAge: 60 * 60, // Cache 1 hour on server/edge with SWR
 		swr: true, // Stale-while-revalidate for instantaneous responses
 		name: 'cloudinary-gallery',
 		getKey: () => 'gallery-all',

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
-import AppReactionsBar from '~/components/reactions/AppReactionsBar.vue'
 
 const route = useRoute()
 const { locale, locales } = useI18n()
@@ -333,8 +332,9 @@ useSchemaOrg([
 						</nav>
 
 						<!-- Native CSS Sticky Reactions Bar -->
-						<AppReactionsBar
+						<LazyAppReactionsBar
 							v-if="post?.doc"
+							hydrate-on-idle
 							:slug="contentIdentifier"
 							:active-section="activeSection"
 						/>
@@ -353,7 +353,8 @@ useSchemaOrg([
 					/>
 
 					<!-- Bento Share Card on Desktop under TOC -->
-					<ArticleShare
+					<LazyArticleShare
+						hydrate-on-visible
 						:slug="contentIdentifier"
 						:title="post.doc.title"
 						:description="post.doc.description"
