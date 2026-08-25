@@ -63,12 +63,19 @@ const filteredDropdownTags = computed(() => {
 const route = useRoute()
 const router = useRouter()
 
-// 4. Bento SEO-Friendly Pagination
-const postsPerPage = 8
+// 4. Bento SEO-Friendly Pagination (1 Hero Full Width + 6 Grid = 7 Artikel)
+const postsPerPage = 7
 
 const currentPage = computed(() => {
 	const p = Number(route.query.page)
 	return p > 0 && !isNaN(p) ? Math.floor(p) : 1
+})
+
+// Otomatis scroll ke paling atas saat halaman pagination berganti
+watch(currentPage, () => {
+	if (import.meta.client) {
+		window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+	}
 })
 
 function selectTag(tag: string) {
@@ -139,7 +146,7 @@ function getPaginationUrl(pageNumber: number) {
 
 function scrollToTop() {
 	if (import.meta.client) {
-		window.scrollTo({ top: 0, behavior: 'smooth' })
+		window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
 	}
 }
 
@@ -371,7 +378,7 @@ useSchemaOrg([
 						<!-- Secondary Tag -->
 						<span
 							v-if="post.tags?.[1]"
-							class="hidden items-center rounded-full px-2 py-0.5 text-[10px] font-medium text-slate-700 sm:inline-flex dark:text-slate-300"
+							class="hidden items-center rounded-full px-2 py-0.5 text-[10px] text-slate-700 font-medium sm:inline-flex dark:text-slate-300"
 							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 								? 'text-brand-200/80 bg-brand-950/40'
 								: 'bg-slate-100 dark:bg-slate-800'"
@@ -464,7 +471,7 @@ useSchemaOrg([
 			<NuxtLink
 				v-if="currentPage > 1"
 				:to="getPaginationUrl(currentPage - 1)"
-				class="inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold shadow-xs transition-all dark:border-slate-700/70 dark:bg-slate-800/80 hover:border-brand-500/60 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
+				class="shadow-xs inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold transition-all dark:border-slate-700/70 hover:border-brand-500/60 dark:bg-slate-800/80 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
 				@click="scrollToTop"
 			>
 				<span class="i-hugeicons-arrow-left-01 text-xs" />
@@ -500,7 +507,7 @@ useSchemaOrg([
 			<NuxtLink
 				v-if="currentPage < totalPages"
 				:to="getPaginationUrl(currentPage + 1)"
-				class="inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold shadow-xs transition-all dark:border-slate-700/70 dark:bg-slate-800/80 hover:border-brand-500/60 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
+				class="shadow-xs inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold transition-all dark:border-slate-700/70 hover:border-brand-500/60 dark:bg-slate-800/80 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
 				@click="scrollToTop"
 			>
 				<span class="hidden sm:inline">{{ locale === 'id' ? 'Berikutnya' : 'Next' }}</span>

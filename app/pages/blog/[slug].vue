@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import AppReactionsBar from '~/components/reactions/AppReactionsBar.vue'
 import { onMounted, onUnmounted, ref } from 'vue'
+import AppReactionsBar from '~/components/reactions/AppReactionsBar.vue'
 
 const route = useRoute()
 const { locale, locales } = useI18n()
