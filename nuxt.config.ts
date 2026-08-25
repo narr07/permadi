@@ -19,11 +19,7 @@ export default defineNuxtConfig({
 		'@stefanobartoletti/nuxt-social-share',
 		'@nuxt/a11y',
 		'nuxt-vitalizer',
-		'@nuxtjs/partytown',
 	],
-	partytown: {
-		forward: ['dataLayer.push'],
-	},
 	vitalizer: {
 		disableStylesheets: true,
 	},
@@ -201,9 +197,6 @@ export default defineNuxtConfig({
 							id: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID,
 							trigger: { idleTimeout: 4000 },
 							proxy: false,
-							scriptOptions: {
-								type: 'text/partytown',
-							},
 						},
 					}
 				: {}),
@@ -381,6 +374,7 @@ export default defineNuxtConfig({
 				'Cross-Origin-Opener-Policy': 'same-origin',
 				'Referrer-Policy': 'strict-origin-when-cross-origin',
 				'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+				'Content-Security-Policy': 'default-src \'self\'; script-src \'self\' \'unsafe-inline\' \'unsafe-eval\' https://www.googletagmanager.com https://static.cloudflareinsights.com; style-src \'self\' \'unsafe-inline\' https://fonts.googleapis.com; font-src \'self\' data: https://fonts.gstatic.com; img-src \'self\' data: blob: https://res.cloudinary.com https://images.unsplash.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; connect-src \'self\' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://res.cloudinary.com https://api.cloudinary.com https://cloudflareinsights.com; frame-ancestors \'self\'; upgrade-insecure-requests;',
 			},
 		},
 
