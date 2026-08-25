@@ -336,10 +336,8 @@ useSchemaOrg([
 		</header>
 
 		<!-- Bento Grid Articles -->
-		<div
-			v-if="filteredPosts.length > 0"
-			class="bento-grid"
-		>
+		<template v-if="filteredPosts.length > 0">
+			<div class="bento-grid">
 			<NuxtLink
 				v-for="(post, index) in paginatedPosts"
 				:key="post.url"
@@ -525,10 +523,11 @@ useSchemaOrg([
 				<span class="i-hugeicons-arrow-right-01 text-xs" />
 			</span>
 		</nav>
+	</template>
 
-		<!-- Empty State -->
-		<EmptyState
-			v-else
+	<!-- Empty State -->
+	<EmptyState
+		v-else
 			icon="i-hugeicons-search-01"
 			title="Tidak Ada Artikel Ditemukan"
 			description="Coba ubah kata kunci pencarian atau pilih filter kategori topik lain."

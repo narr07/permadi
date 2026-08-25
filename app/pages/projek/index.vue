@@ -336,54 +336,165 @@ useSchemaOrg([
 		</header>
 
 		<!-- Bento Grid Projects (1 col mobile, 2 col tablet, 3 col desktop) -->
-		<div
-			v-if="filteredProjects.length > 0"
-			class="grid grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2 sm:gap-6"
-		>
-			<NuxtLink
-				v-for="(item, index) in paginatedProjects"
-				:key="item.url"
-				v-spotlight
-				:to="item.url"
-				class="bento-card-clean group block flex flex-col justify-between overflow-hidden transition-all duration-300"
-				:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-					? 'lg:col-span-3 sm:col-span-2 col-span-1 p-6 sm:p-7 lg:p-8 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/30 dark:from-[#002b27] dark:via-[#002420] dark:to-[#001916] border-brand-300/70 dark:border-brand-700/60 shadow-lg shadow-brand-950/5'
-					: 'col-span-1 p-5 sm:p-6 bg-white dark:bg-[#002b27] border-slate-200/80 dark:border-slate-800/80 hover:border-brand-500/80 dark:hover:border-brand-400/80'"
-			>
-				<!-- Hero Featured Layout (Ketika Item Pertama & Filter ALL di Halaman 1) -->
-				<template v-if="currentPage === 1 && index === 0 && selectedTag === 'ALL'">
-					<div class="grid grid-cols-1 w-full items-center gap-6 lg:grid-cols-12 md:grid-cols-12 sm:gap-8">
-						<!-- Thumbnail Featured Showcase -->
+		<template v-if="filteredProjects.length > 0">
+			<div class="grid grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2 sm:gap-6">
+				<NuxtLink
+					v-for="(item, index) in paginatedProjects"
+					:key="item.url"
+					v-spotlight
+					:to="item.url"
+					class="bento-card-clean group block flex flex-col justify-between overflow-hidden transition-all duration-300"
+					:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
+						? 'lg:col-span-3 sm:col-span-2 col-span-1 p-6 sm:p-7 lg:p-8 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/30 dark:from-[#002b27] dark:via-[#002420] dark:to-[#001916] border-brand-300/70 dark:border-brand-700/60 shadow-lg shadow-brand-950/5'
+						: 'col-span-1 p-5 sm:p-6 bg-white dark:bg-[#002b27] border-slate-200/80 dark:border-slate-800/80 hover:border-brand-500/80 dark:hover:border-brand-400/80'"
+				>
+					<!-- Hero Featured Layout (Ketika Item Pertama & Filter ALL di Halaman 1) -->
+					<template v-if="currentPage === 1 && index === 0 && selectedTag === 'ALL'">
+						<div class="grid grid-cols-1 w-full items-center gap-6 lg:grid-cols-12 md:grid-cols-12 sm:gap-8">
+							<!-- Thumbnail Featured Showcase -->
+							<div
+								v-if="item.image || (item.images && item.images[0])"
+								class="aspect-video w-full overflow-hidden border border-brand-200/70 rounded-2xl bg-slate-100 shadow-sm lg:col-span-7 md:col-span-6 dark:border-brand-800/50 dark:bg-slate-900/60"
+							>
+								<NuxtImg
+									:src="item.image || item.images[0]"
+									:alt="item.title"
+									format="webp"
+									quality="85"
+									loading="eager"
+									fetchpriority="high"
+									placeholder
+									decoding="async"
+									class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+								/>
+							</div>
+
+							<!-- Content Showcase -->
+							<div class="flex flex-col justify-between lg:col-span-5 md:col-span-6">
+								<div>
+									<div class="mb-3 flex flex-wrap items-center gap-2">
+										<span class="inline-flex items-center gap-1.5 border border-brand-300 rounded-full bg-brand-100 px-3 py-1 text-xs text-brand-800 font-bold dark:border-brand-800 dark:bg-brand-950 dark:text-brand-300">
+											<span class="status-dot animate-ping" />
+											{{ locale === 'id' ? 'Projek Unggulan' : 'Featured Project' }}
+										</span>
+										<span
+											v-if="item.category"
+											class="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs text-slate-700 font-medium dark:bg-slate-800 dark:text-slate-300"
+										>
+											{{ getCategoryLabel(item.category) }}
+										</span>
+									</div>
+
+									<!-- Date Badge (Inverted High-Contrast Badge) -->
+									<div
+										v-if="item.date"
+										class="mb-3.5 flex items-center"
+									>
+										<span class="shadow-xs inline-flex items-center gap-1.5 border border-slate-900 rounded-full bg-slate-900 px-2.5 py-0.5 text-[11px] text-white font-bold font-mono transition-colors dark:border-white dark:bg-white dark:text-slate-950">
+											<span class="i-hugeicons-calendar-03 text-xs text-brand-400 dark:text-brand-800" />
+											<span>{{ formatDate(item.date) }}</span>
+										</span>
+									</div>
+
+									<h2 class="text-xl text-brand-950 font-bold tracking-tight font-heading lg:text-3xl sm:text-2xl dark:text-white group-hover:text-brand-700 dark:group-hover:text-brand-300">
+										{{ item.title }}
+									</h2>
+
+									<p class="mt-3 text-xs text-slate-700 leading-relaxed sm:text-sm dark:text-slate-300">
+										{{ item.description }}
+									</p>
+
+									<!-- Tags list -->
+									<div
+										v-if="item.tags || item.tech"
+										class="mt-4 flex flex-wrap gap-1.5"
+									>
+										<span
+											v-for="tech in (item.tags || item.tech).slice(0, 4)"
+											:key="tech"
+											class="border border-slate-200 rounded-md bg-white/70 px-2 py-0.5 text-[10px] text-slate-600 font-mono dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-300"
+										>
+											#{{ tech }}
+										</span>
+									</div>
+								</div>
+
+								<div class="mt-6 flex items-center justify-between border-t border-slate-200/80 pt-4 dark:border-slate-700/80">
+									<span class="flex items-center gap-1.5 text-xs text-brand-800 font-bold sm:text-sm dark:text-brand-300">
+										{{ locale === 'id' ? 'Lihat Studi Kasus' : 'Explore Case Study' }}
+										<span class="transition-transform group-hover:translate-x-1">→</span>
+									</span>
+
+									<!-- Live & Repo Links -->
+									<div
+										v-if="item.demoUrl || item.link || item.githubUrl || item.repo"
+										class="flex items-center gap-2"
+										@click.stop
+									>
+										<a
+											v-if="item.githubUrl || item.repo"
+											:href="item.githubUrl || item.repo"
+											target="_blank"
+											rel="noopener"
+											class="icon-btn !h-8 !w-8"
+											aria-label="GitHub Repository"
+										>
+											<span class="i-hugeicons-github text-sm" />
+										</a>
+										<a
+											v-if="item.demoUrl || item.link"
+											:href="item.demoUrl || item.link"
+											target="_blank"
+											rel="noopener"
+											class="icon-btn !h-8 !w-8"
+											aria-label="Live Demo"
+										>
+											<span class="i-hugeicons-link-square-02 text-sm" />
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</template>
+
+					<!-- Standard Card Layout (Untuk Projek Lainnya) -->
+					<template v-else>
+						<!-- Thumbnail -->
 						<div
 							v-if="item.image || (item.images && item.images[0])"
-							class="aspect-video w-full overflow-hidden border border-brand-200/70 rounded-2xl bg-slate-100 shadow-sm lg:col-span-7 md:col-span-6 dark:border-brand-800/50 dark:bg-slate-900/60"
+							class="mb-4 aspect-video w-full shrink-0 overflow-hidden border border-slate-200/50 rounded-xl bg-slate-100 dark:border-slate-800/50 dark:bg-slate-800"
 						>
 							<NuxtImg
 								:src="item.image || item.images[0]"
 								:alt="item.title"
 								format="webp"
 								quality="85"
-								loading="eager"
-								fetchpriority="high"
-								placeholder
+								class="h-full w-full object-cover"
+								loading="lazy"
 								decoding="async"
-								class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+								placeholder
 							/>
 						</div>
 
-						<!-- Content Showcase -->
-						<div class="flex flex-col justify-between lg:col-span-5 md:col-span-6">
+						<!-- Content & Details -->
+						<div class="flex flex-1 flex-col justify-between">
 							<div>
-								<div class="mb-3 flex flex-wrap items-center gap-2">
-									<span class="inline-flex items-center gap-1.5 border border-brand-300 rounded-full bg-brand-100 px-3 py-1 text-xs text-brand-800 font-bold dark:border-brand-800 dark:bg-brand-950 dark:text-brand-300">
-										<span class="status-dot animate-ping" />
-										{{ locale === 'id' ? 'Projek Unggulan' : 'Featured Project' }}
-									</span>
+								<!-- Badges Row (Category + Tags) -->
+								<div class="mb-2 flex flex-wrap items-center gap-1.5">
 									<span
 										v-if="item.category"
-										class="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs text-slate-700 font-medium dark:bg-slate-800 dark:text-slate-300"
+										class="inline-flex shrink-0 items-center border border-brand-200/60 rounded-full bg-brand-100 px-2 py-0.5 text-[11px] text-brand-800 font-semibold tracking-wide uppercase dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300"
 									>
 										{{ getCategoryLabel(item.category) }}
+									</span>
+
+									<span
+										v-for="(tag, tIdx) in (item.tags || item.tech || []).slice(0, 2)"
+										:key="tag"
+										class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[11px] text-slate-700 font-medium dark:bg-slate-800 dark:text-slate-300"
+										:class="tIdx > 0 ? 'hidden sm:inline-flex' : ''"
+									>
+										#{{ tag }}
 									</span>
 								</div>
 
@@ -398,36 +509,19 @@ useSchemaOrg([
 									</span>
 								</div>
 
-								<h2 class="text-xl text-brand-950 font-bold tracking-tight font-heading lg:text-3xl sm:text-2xl dark:text-white group-hover:text-brand-700 dark:group-hover:text-brand-300">
+								<h2 class="text-base text-slate-900 font-bold leading-snug tracking-normal font-heading transition-colors duration-200 sm:text-lg dark:text-slate-100 group-hover:text-brand-700 dark:group-hover:text-brand-300">
 									{{ item.title }}
 								</h2>
 
-								<p class="mt-3 text-xs text-slate-700 leading-relaxed sm:text-sm dark:text-slate-300">
+								<p class="line-clamp-3 mt-2 text-xs text-slate-600 leading-relaxed transition-colors duration-200 sm:text-sm dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white">
 									{{ item.description }}
 								</p>
-
-								<!-- Tags list -->
-								<div
-									v-if="item.tags || item.tech"
-									class="mt-4 flex flex-wrap gap-1.5"
-								>
-									<span
-										v-for="tech in (item.tags || item.tech).slice(0, 4)"
-										:key="tech"
-										class="border border-slate-200 rounded-md bg-white/70 px-2 py-0.5 text-[10px] text-slate-600 font-mono dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-300"
-									>
-										#{{ tech }}
-									</span>
-								</div>
 							</div>
 
-							<div class="mt-6 flex items-center justify-between border-t border-slate-200/80 pt-4 dark:border-slate-700/80">
-								<span class="flex items-center gap-1.5 text-xs text-brand-800 font-bold sm:text-sm dark:text-brand-300">
-									{{ locale === 'id' ? 'Lihat Studi Kasus' : 'Explore Case Study' }}
-									<span class="transition-transform group-hover:translate-x-1">→</span>
+							<div class="mt-5 flex items-center justify-between border-t border-slate-200/60 pt-3.5 text-xs dark:border-slate-800/60">
+								<span class="flex items-center gap-1 text-brand-800 font-bold transition-all group-hover:translate-x-1 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-yellow-500">
+									{{ locale === 'id' ? 'Lihat Studi Kasus' : 'Explore Case Study' }} <span>↗</span>
 								</span>
-
-								<!-- Live & Repo Links -->
 								<div
 									v-if="item.demoUrl || item.link || item.githubUrl || item.repo"
 									class="flex items-center gap-2"
@@ -438,185 +532,90 @@ useSchemaOrg([
 										:href="item.githubUrl || item.repo"
 										target="_blank"
 										rel="noopener"
-										class="icon-btn !h-8 !w-8"
+										class="icon-btn !h-7 !w-7"
 										aria-label="GitHub Repository"
 									>
-										<span class="i-hugeicons-github text-sm" />
+										<span class="i-hugeicons-github text-xs" />
 									</a>
 									<a
 										v-if="item.demoUrl || item.link"
 										:href="item.demoUrl || item.link"
 										target="_blank"
 										rel="noopener"
-										class="icon-btn !h-8 !w-8"
+										class="icon-btn !h-7 !w-7"
 										aria-label="Live Demo"
 									>
-										<span class="i-hugeicons-link-square-02 text-sm" />
+										<span class="i-hugeicons-link-square-02 text-xs" />
 									</a>
 								</div>
 							</div>
 						</div>
-					</div>
-				</template>
-
-				<!-- Standard Card Layout (Untuk Projek Lainnya) -->
-				<template v-else>
-					<!-- Thumbnail -->
-					<div
-						v-if="item.image || (item.images && item.images[0])"
-						class="mb-4 aspect-video w-full shrink-0 overflow-hidden border border-slate-200/50 rounded-xl bg-slate-100 dark:border-slate-800/50 dark:bg-slate-800"
-					>
-						<NuxtImg
-							:src="item.image || item.images[0]"
-							:alt="item.title"
-							format="webp"
-							quality="85"
-							class="h-full w-full object-cover"
-							loading="lazy"
-							decoding="async"
-							placeholder
-						/>
-					</div>
-
-					<!-- Content & Details -->
-					<div class="flex flex-1 flex-col justify-between">
-						<div>
-							<!-- Badges Row (Category + Tags) -->
-							<div class="mb-2 flex flex-wrap items-center gap-1.5">
-								<span
-									v-if="item.category"
-									class="inline-flex shrink-0 items-center border border-brand-200/60 rounded-full bg-brand-100 px-2 py-0.5 text-[11px] text-brand-800 font-semibold tracking-wide uppercase dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300"
-								>
-									{{ getCategoryLabel(item.category) }}
-								</span>
-
-								<span
-									v-for="(tag, tIdx) in (item.tags || item.tech || []).slice(0, 2)"
-									:key="tag"
-									class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[11px] text-slate-700 font-medium dark:bg-slate-800 dark:text-slate-300"
-									:class="tIdx > 0 ? 'hidden sm:inline-flex' : ''"
-								>
-									#{{ tag }}
-								</span>
-							</div>
-
-							<!-- Date Badge (Inverted High-Contrast Badge) -->
-							<div
-								v-if="item.date"
-								class="mb-3.5 flex items-center"
-							>
-								<span class="shadow-xs inline-flex items-center gap-1.5 border border-slate-900 rounded-full bg-slate-900 px-2.5 py-0.5 text-[11px] text-white font-bold font-mono transition-colors dark:border-white dark:bg-white dark:text-slate-950">
-									<span class="i-hugeicons-calendar-03 text-xs text-brand-400 dark:text-brand-800" />
-									<span>{{ formatDate(item.date) }}</span>
-								</span>
-							</div>
-
-							<h2 class="text-base text-slate-900 font-bold leading-snug tracking-normal font-heading transition-colors duration-200 sm:text-lg dark:text-slate-100 group-hover:text-brand-700 dark:group-hover:text-brand-300">
-								{{ item.title }}
-							</h2>
-
-							<p class="line-clamp-3 mt-2 text-xs text-slate-600 leading-relaxed transition-colors duration-200 sm:text-sm dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white">
-								{{ item.description }}
-							</p>
-						</div>
-
-						<div class="mt-5 flex items-center justify-between border-t border-slate-200/60 pt-3.5 text-xs dark:border-slate-800/60">
-							<span class="flex items-center gap-1 text-brand-800 font-bold transition-all group-hover:translate-x-1 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-yellow-500">
-								{{ locale === 'id' ? 'Lihat Studi Kasus' : 'Explore Case Study' }} <span>↗</span>
-							</span>
-							<div
-								v-if="item.demoUrl || item.link || item.githubUrl || item.repo"
-								class="flex items-center gap-2"
-								@click.stop
-							>
-								<a
-									v-if="item.githubUrl || item.repo"
-									:href="item.githubUrl || item.repo"
-									target="_blank"
-									rel="noopener"
-									class="icon-btn !h-7 !w-7"
-									aria-label="GitHub Repository"
-								>
-									<span class="i-hugeicons-github text-xs" />
-								</a>
-								<a
-									v-if="item.demoUrl || item.link"
-									:href="item.demoUrl || item.link"
-									target="_blank"
-									rel="noopener"
-									class="icon-btn !h-7 !w-7"
-									aria-label="Live Demo"
-								>
-									<span class="i-hugeicons-link-square-02 text-xs" />
-								</a>
-							</div>
-						</div>
-					</div>
-				</template>
-			</NuxtLink>
-		</div>
-
-		<!-- Bento SEO-Friendly Pagination -->
-		<nav
-			v-if="totalPages > 1"
-			:aria-label="locale === 'id' ? 'Navigasi Halaman Projek' : 'Project Page Navigation'"
-			class="mt-10 flex select-none items-center justify-center gap-2 sm:mt-14"
-		>
-			<!-- Tombol Previous -->
-			<NuxtLink
-				v-if="currentPage > 1"
-				:to="getPaginationUrl(currentPage - 1)"
-				class="shadow-xs inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold transition-all dark:border-slate-700/70 hover:border-brand-500/60 dark:bg-slate-800/80 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
-				@click="scrollToTop"
-			>
-				<span class="i-hugeicons-arrow-left-01 text-xs" />
-				<span class="hidden sm:inline">{{ locale === 'id' ? 'Sebelumnya' : 'Previous' }}</span>
-			</NuxtLink>
-			<span
-				v-else
-				class="inline-flex cursor-not-allowed items-center gap-1.5 border border-slate-200/40 rounded-xl bg-slate-100/50 px-3.5 py-2 text-xs text-slate-400 font-semibold dark:border-slate-800/40 dark:bg-slate-900/40 dark:text-slate-600"
-				aria-disabled="true"
-			>
-				<span class="i-hugeicons-arrow-left-01 text-xs" />
-				<span class="hidden sm:inline">{{ locale === 'id' ? 'Sebelumnya' : 'Previous' }}</span>
-			</span>
-
-			<!-- Nomor Halaman -->
-			<div class="flex items-center gap-1 sm:gap-1.5">
-				<NuxtLink
-					v-for="pageNum in totalPages"
-					:key="pageNum"
-					:to="getPaginationUrl(pageNum)"
-					class="h-9 w-9 flex items-center justify-center rounded-xl text-xs font-bold font-mono transition-all sm:h-10 sm:w-10 sm:text-sm"
-					:class="pageNum === currentPage
-						? 'bg-brand-700 text-white shadow-sm shadow-brand-700/30 dark:bg-brand-500 dark:text-slate-950'
-						: 'border border-slate-200/70 dark:border-slate-700/60 bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:border-brand-500/60 dark:hover:border-brand-400/60 hover:text-brand-700 dark:hover:text-brand-300'"
-					:aria-current="pageNum === currentPage ? 'page' : undefined"
-					@click="scrollToTop"
-				>
-					{{ pageNum }}
+					</template>
 				</NuxtLink>
 			</div>
 
-			<!-- Tombol Next -->
-			<NuxtLink
-				v-if="currentPage < totalPages"
-				:to="getPaginationUrl(currentPage + 1)"
-				class="shadow-xs inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold transition-all dark:border-slate-700/70 hover:border-brand-500/60 dark:bg-slate-800/80 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
-				@click="scrollToTop"
+			<!-- Bento SEO-Friendly Pagination -->
+			<nav
+				v-if="totalPages > 1"
+				:aria-label="locale === 'id' ? 'Navigasi Halaman Projek' : 'Project Page Navigation'"
+				class="mt-10 flex select-none items-center justify-center gap-2 sm:mt-14"
 			>
-				<span class="hidden sm:inline">{{ locale === 'id' ? 'Berikutnya' : 'Next' }}</span>
-				<span class="i-hugeicons-arrow-right-01 text-xs" />
-			</NuxtLink>
-			<span
-				v-else
-				class="inline-flex cursor-not-allowed items-center gap-1.5 border border-slate-200/40 rounded-xl bg-slate-100/50 px-3.5 py-2 text-xs text-slate-400 font-semibold dark:border-slate-800/40 dark:bg-slate-900/40 dark:text-slate-600"
-				aria-disabled="true"
-			>
-				<span class="hidden sm:inline">{{ locale === 'id' ? 'Berikutnya' : 'Next' }}</span>
-				<span class="i-hugeicons-arrow-right-01 text-xs" />
-			</span>
-		</nav>
+				<!-- Tombol Previous -->
+				<NuxtLink
+					v-if="currentPage > 1"
+					:to="getPaginationUrl(currentPage - 1)"
+					class="shadow-xs inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold transition-all dark:border-slate-700/70 hover:border-brand-500/60 dark:bg-slate-800/80 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
+					@click="scrollToTop"
+				>
+					<span class="i-hugeicons-arrow-left-01 text-xs" />
+					<span class="hidden sm:inline">{{ locale === 'id' ? 'Sebelumnya' : 'Previous' }}</span>
+				</NuxtLink>
+				<span
+					v-else
+					class="inline-flex cursor-not-allowed items-center gap-1.5 border border-slate-200/40 rounded-xl bg-slate-100/50 px-3.5 py-2 text-xs text-slate-400 font-semibold dark:border-slate-800/40 dark:bg-slate-900/40 dark:text-slate-600"
+					aria-disabled="true"
+				>
+					<span class="i-hugeicons-arrow-left-01 text-xs" />
+					<span class="hidden sm:inline">{{ locale === 'id' ? 'Sebelumnya' : 'Previous' }}</span>
+				</span>
+
+				<!-- Nomor Halaman -->
+				<div class="flex items-center gap-1 sm:gap-1.5">
+					<NuxtLink
+						v-for="pageNum in totalPages"
+						:key="pageNum"
+						:to="getPaginationUrl(pageNum)"
+						class="h-9 w-9 flex items-center justify-center rounded-xl text-xs font-bold font-mono transition-all sm:h-10 sm:w-10 sm:text-sm"
+						:class="pageNum === currentPage
+							? 'bg-brand-700 text-white shadow-sm shadow-brand-700/30 dark:bg-brand-500 dark:text-slate-950'
+							: 'border border-slate-200/70 dark:border-slate-700/60 bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:border-brand-500/60 dark:hover:border-brand-400/60 hover:text-brand-700 dark:hover:text-brand-300'"
+						:aria-current="pageNum === currentPage ? 'page' : undefined"
+						@click="scrollToTop"
+					>
+						{{ pageNum }}
+					</NuxtLink>
+				</div>
+
+				<!-- Tombol Next -->
+				<NuxtLink
+					v-if="currentPage < totalPages"
+					:to="getPaginationUrl(currentPage + 1)"
+					class="shadow-xs inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold transition-all dark:border-slate-700/70 hover:border-brand-500/60 dark:bg-slate-800/80 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
+					@click="scrollToTop"
+				>
+					<span class="hidden sm:inline">{{ locale === 'id' ? 'Berikutnya' : 'Next' }}</span>
+					<span class="i-hugeicons-arrow-right-01 text-xs" />
+				</NuxtLink>
+				<span
+					v-else
+					class="inline-flex cursor-not-allowed items-center gap-1.5 border border-slate-200/40 rounded-xl bg-slate-100/50 px-3.5 py-2 text-xs text-slate-400 font-semibold dark:border-slate-800/40 dark:bg-slate-900/40 dark:text-slate-600"
+					aria-disabled="true"
+				>
+					<span class="hidden sm:inline">{{ locale === 'id' ? 'Berikutnya' : 'Next' }}</span>
+					<span class="i-hugeicons-arrow-right-01 text-xs" />
+				</span>
+			</nav>
+		</template>
 
 		<!-- Empty State Jika Tidak Ada Hasil Pencarian -->
 		<div
