@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AppReactionsBar from '~/components/reactions/AppReactionsBar.vue'
 import { onMounted, onUnmounted, ref } from 'vue'
 
 const route = useRoute()
@@ -332,9 +333,8 @@ useSchemaOrg([
 						</nav>
 
 						<!-- Native CSS Sticky Reactions Bar -->
-						<LazyAppReactionsBar
+						<AppReactionsBar
 							v-if="post?.doc"
-							hydrate-on-idle
 							:slug="contentIdentifier"
 							:active-section="activeSection"
 						/>

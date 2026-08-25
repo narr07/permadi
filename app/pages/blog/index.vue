@@ -60,10 +60,26 @@ const filteredDropdownTags = computed(() => {
 	return allTags.value.filter((t: string) => t.toLowerCase().includes(q))
 })
 
+const route = useRoute()
+const router = useRouter()
+
+// 4. Bento SEO-Friendly Pagination
+const postsPerPage = 8
+
+const currentPage = computed(() => {
+	const p = Number(route.query.page)
+	return p > 0 && !isNaN(p) ? Math.floor(p) : 1
+})
+
 function selectTag(tag: string) {
 	selectedTag.value = tag
 	isTagDropdownOpen.value = false
 	tagSearchQuery.value = ''
+	if (route.query.page) {
+		const q = { ...route.query }
+		delete q.page
+		router.push({ path: currentPath.value, query: q })
+	}
 }
 
 const tagCounts = computed(() => {
@@ -97,6 +113,35 @@ const filteredPosts = computed(() => {
 			url: `/${locale.value}/blog/${post.slug || cleanSlug(post.path)}`,
 		}))
 })
+
+const totalPages = computed(() => {
+	return Math.ceil(filteredPosts.value.length / postsPerPage) || 1
+})
+
+const paginatedPosts = computed(() => {
+	const start = (currentPage.value - 1) * postsPerPage
+	return filteredPosts.value.slice(start, start + postsPerPage)
+})
+
+function getPaginationUrl(pageNumber: number) {
+	const query: Record<string, any> = { ...route.query }
+	if (pageNumber <= 1) {
+		delete query.page
+	}
+	else {
+		query.page = pageNumber
+	}
+	return {
+		path: currentPath.value,
+		query,
+	}
+}
+
+function scrollToTop() {
+	if (import.meta.client) {
+		window.scrollTo({ top: 0, behavior: 'smooth' })
+	}
+}
 
 function onHeaderMouseMove(e: MouseEvent) {
 	const target = e.currentTarget as HTMLElement
@@ -289,12 +334,12 @@ useSchemaOrg([
 			class="bento-grid"
 		>
 			<NuxtLink
-				v-for="(post, index) in filteredPosts"
+				v-for="(post, index) in paginatedPosts"
 				:key="post.url"
 				v-spotlight
 				:to="post.url"
 				class="group bento-card-outline block flex flex-col justify-between bento-lift p-5 sm:p-6"
-				:class="index === 0 && selectedTag === 'ALL'
+				:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 					? 'lg:col-span-12 md:col-span-12 bg-brand-900 dark:bg-[#002b27] border-brand-800 dark:border-[#134e43] shadow-md text-white'
 					: 'lg:col-span-6 md:col-span-6'"
 			>
@@ -305,7 +350,7 @@ useSchemaOrg([
 						<span
 							v-if="post.category"
 							class="inline-flex shrink-0 items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold tracking-wide uppercase"
-							:class="index === 0 && selectedTag === 'ALL'
+							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 								? 'bg-white/15 text-white border border-white/25'
 								: 'bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-300 border border-brand-200/60 dark:border-brand-800/60'"
 						>
@@ -316,39 +361,47 @@ useSchemaOrg([
 						<span
 							v-if="post.tags?.[0]"
 							class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium"
-							:class="index === 0 && selectedTag === 'ALL'
+							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 								? 'bg-brand-400/20 text-brand-200 border border-brand-400/30'
 								: 'bg-brand-500/10 dark:bg-brand-400/10 text-brand-700 dark:text-brand-300 border border-brand-500/20 dark:border-brand-400/20'"
 						>
 							#{{ post.tags[0] }}
 						</span>
 
-						<!-- Secondary Tag (Desktop only) -->
+						<!-- Secondary Tag -->
 						<span
 							v-if="post.tags?.[1]"
-							class="hidden items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium sm:inline-flex"
-							:class="index === 0 && selectedTag === 'ALL'
-								? 'bg-white/10 text-slate-200 border border-white/15'
-								: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50'"
+							class="hidden items-center rounded-full px-2 py-0.5 text-[10px] font-medium text-slate-700 sm:inline-flex dark:text-slate-300"
+							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
+								? 'text-brand-200/80 bg-brand-950/40'
+								: 'bg-slate-100 dark:bg-slate-800'"
 						>
 							#{{ post.tags[1] }}
 						</span>
-					</div>
 
-					<!-- Date Badge (Inverted High-Contrast Badge) -->
-					<div
-						v-if="post.date"
-						class="mb-3.5 flex items-center"
-					>
+						<!-- Extra Tags Count Pill -->
 						<span
-							class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-bold font-mono transition-colors"
-							:class="index === 0 && selectedTag === 'ALL'
-								? 'bg-white text-slate-950 border border-white shadow-xs'
-								: 'bg-slate-900 text-white border border-slate-900 dark:bg-white dark:text-slate-950 dark:border-white shadow-xs'"
+							v-if="post.tags && post.tags.length > 2"
+							class="inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-mono"
+							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
+								? 'bg-white/10 text-brand-200'
+								: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'"
+						>
+							+{{ post.tags.length - 2 }}
+						</span>
+
+						<!-- Spacer -->
+						<span class="flex-1" />
+
+						<!-- Date Meta Badge -->
+						<span
+							v-if="post.date"
+							class="inline-flex items-center gap-1 text-[11px] font-mono"
+							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL' ? 'text-brand-200' : 'text-slate-600 dark:text-slate-400'"
 						>
 							<span
 								class="i-hugeicons-calendar-03 text-xs"
-								:class="index === 0 && selectedTag === 'ALL' ? 'text-brand-800' : 'text-brand-400 dark:text-brand-800'"
+								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL' ? 'text-brand-800' : 'text-brand-400 dark:text-brand-800'"
 							/>
 							<span>{{ formatDate(post.date) }}</span>
 						</span>
@@ -357,7 +410,7 @@ useSchemaOrg([
 					<!-- Title -->
 					<h2
 						class="line-clamp-2 text-lg font-bold leading-snug tracking-normal font-heading transition-colors duration-200 sm:text-xl"
-						:class="index === 0 && selectedTag === 'ALL'
+						:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 							? 'text-white group-hover:text-yellow-300 md:text-2xl lg:text-3xl'
 							: 'text-slate-900 dark:text-slate-100 group-hover:text-brand-700 dark:group-hover:text-brand-300'"
 					>
@@ -367,7 +420,7 @@ useSchemaOrg([
 					<!-- Description -->
 					<p
 						class="line-clamp-2 mt-2 text-xs leading-relaxed transition-colors duration-200 sm:text-sm"
-						:class="index === 0 && selectedTag === 'ALL'
+						:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 							? 'text-slate-200 group-hover:text-white'
 							: 'text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'"
 					>
@@ -378,20 +431,20 @@ useSchemaOrg([
 				<!-- Footer Meta -->
 				<div
 					class="mt-5 flex items-center justify-between border-t pt-3.5 text-xs"
-					:class="index === 0 && selectedTag === 'ALL'
+					:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 						? 'border-white/15 text-slate-200'
 						: 'border-slate-200/60 dark:border-slate-800/60 text-slate-600 dark:text-slate-400'"
 				>
 					<span class="flex items-center gap-1.5 text-[11px] font-mono">
 						<span
 							class="i-hugeicons-clock-01 text-xs"
-							:class="index === 0 && selectedTag === 'ALL' ? 'text-brand-300' : 'text-brand-700 dark:text-brand-400'"
+							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL' ? 'text-brand-300' : 'text-brand-700 dark:text-brand-400'"
 						/>
 						{{ locale === 'id' ? `${post.readingTime || 5} menit baca` : `${post.readingTime || 5} min read` }}
 					</span>
 					<span
 						class="flex items-center gap-1 text-xs font-bold transition-all group-hover:translate-x-0.5"
-						:class="index === 0 && selectedTag === 'ALL'
+						:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 							? 'text-white group-hover:text-yellow-300 font-bold'
 							: 'text-brand-800 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-yellow-500 font-semibold'"
 					>
@@ -400,6 +453,68 @@ useSchemaOrg([
 				</div>
 			</NuxtLink>
 		</div>
+
+		<!-- Bento SEO-Friendly Pagination -->
+		<nav
+			v-if="totalPages > 1"
+			:aria-label="locale === 'id' ? 'Navigasi Halaman Artikel' : 'Article Page Navigation'"
+			class="mt-10 flex select-none items-center justify-center gap-2 sm:mt-14"
+		>
+			<!-- Tombol Previous -->
+			<NuxtLink
+				v-if="currentPage > 1"
+				:to="getPaginationUrl(currentPage - 1)"
+				class="inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold shadow-xs transition-all dark:border-slate-700/70 dark:bg-slate-800/80 hover:border-brand-500/60 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
+				@click="scrollToTop"
+			>
+				<span class="i-hugeicons-arrow-left-01 text-xs" />
+				<span class="hidden sm:inline">{{ locale === 'id' ? 'Sebelumnya' : 'Previous' }}</span>
+			</NuxtLink>
+			<span
+				v-else
+				class="inline-flex cursor-not-allowed items-center gap-1.5 border border-slate-200/40 rounded-xl bg-slate-100/50 px-3.5 py-2 text-xs text-slate-400 font-semibold dark:border-slate-800/40 dark:bg-slate-900/40 dark:text-slate-600"
+				aria-disabled="true"
+			>
+				<span class="i-hugeicons-arrow-left-01 text-xs" />
+				<span class="hidden sm:inline">{{ locale === 'id' ? 'Sebelumnya' : 'Previous' }}</span>
+			</span>
+
+			<!-- Nomor Halaman -->
+			<div class="flex items-center gap-1 sm:gap-1.5">
+				<NuxtLink
+					v-for="pageNum in totalPages"
+					:key="pageNum"
+					:to="getPaginationUrl(pageNum)"
+					class="h-9 w-9 flex items-center justify-center rounded-xl text-xs font-bold font-mono transition-all sm:h-10 sm:w-10 sm:text-sm"
+					:class="pageNum === currentPage
+						? 'bg-brand-700 text-white shadow-sm shadow-brand-700/30 dark:bg-brand-500 dark:text-slate-950'
+						: 'border border-slate-200/70 dark:border-slate-700/60 bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:border-brand-500/60 dark:hover:border-brand-400/60 hover:text-brand-700 dark:hover:text-brand-300'"
+					:aria-current="pageNum === currentPage ? 'page' : undefined"
+					@click="scrollToTop"
+				>
+					{{ pageNum }}
+				</NuxtLink>
+			</div>
+
+			<!-- Tombol Next -->
+			<NuxtLink
+				v-if="currentPage < totalPages"
+				:to="getPaginationUrl(currentPage + 1)"
+				class="inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold shadow-xs transition-all dark:border-slate-700/70 dark:bg-slate-800/80 hover:border-brand-500/60 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
+				@click="scrollToTop"
+			>
+				<span class="hidden sm:inline">{{ locale === 'id' ? 'Berikutnya' : 'Next' }}</span>
+				<span class="i-hugeicons-arrow-right-01 text-xs" />
+			</NuxtLink>
+			<span
+				v-else
+				class="inline-flex cursor-not-allowed items-center gap-1.5 border border-slate-200/40 rounded-xl bg-slate-100/50 px-3.5 py-2 text-xs text-slate-400 font-semibold dark:border-slate-800/40 dark:bg-slate-900/40 dark:text-slate-600"
+				aria-disabled="true"
+			>
+				<span class="hidden sm:inline">{{ locale === 'id' ? 'Berikutnya' : 'Next' }}</span>
+				<span class="i-hugeicons-arrow-right-01 text-xs" />
+			</span>
+		</nav>
 
 		<!-- Empty State -->
 		<EmptyState
