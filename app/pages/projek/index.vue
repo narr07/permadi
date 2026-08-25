@@ -15,11 +15,11 @@ const { data: page } = await useAsyncData(
 	{ watch: [locale] },
 )
 
-// Koleksi semua studi kasus projek (lazy - below fold)
+// Koleksi semua studi kasus projek (SSR fetched)
 const { data: projects } = await useAsyncData(
 	() => `projek-list-${locale.value}`,
 	() => queryCollection(collection.value).order('date', 'DESC').all(),
-	{ watch: [locale], lazy: true },
+	{ watch: [locale] },
 )
 
 // State filter tag

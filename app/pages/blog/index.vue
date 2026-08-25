@@ -29,7 +29,7 @@ const { data: page } = await useAsyncData(
 const { data: posts } = await useAsyncData(
 	() => `blog-posts-list-${locale.value}`,
 	() => queryCollection(blogCollection.value).order('date', 'DESC').all(),
-	{ watch: [locale], lazy: true },
+	{ watch: [locale] },
 )
 
 function cleanSlug(pathStr: string): string {

@@ -63,7 +63,7 @@ function isItemActive(item: { to: string, prefix: string, exact?: boolean }): bo
 // Sliding Nav Pill Indicator
 const navContainerRef = ref<HTMLElement | null>(null)
 const indicatorStyle = ref({
-	left: '0px',
+	transform: 'translateX(0px)',
 	width: '0px',
 	opacity: 0,
 })
@@ -77,7 +77,7 @@ function updateNavIndicator() {
 			const containerRect = navContainerRef.value.getBoundingClientRect()
 			const activeRect = activeEl.getBoundingClientRect()
 			indicatorStyle.value = {
-				left: `${activeRect.left - containerRect.left}px`,
+				transform: `translateX(${activeRect.left - containerRect.left}px)`,
 				width: `${activeRect.width}px`,
 				opacity: 1,
 			}
@@ -140,11 +140,11 @@ onUnmounted(() => {
 				ref="navContainerRef"
 				class="relative hidden nav-island items-center px-1.5 py-1 md:flex"
 			>
-				<!-- Animated Sliding Indicator Pill -->
+				<!-- Animated Sliding Indicator Pill (GPU Composited) -->
 				<div
-					class="shadow-2xs pointer-events-none absolute bottom-1 top-1 rounded-bento-island bg-brand-100/90 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] dark:bg-brand-800/70"
+					class="shadow-2xs pointer-events-none absolute bottom-1 left-0 top-1 rounded-bento-island bg-brand-100/90 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform dark:bg-brand-800/70"
 					:style="{
-						left: indicatorStyle.left,
+						transform: indicatorStyle.transform,
 						width: indicatorStyle.width,
 						opacity: indicatorStyle.opacity,
 					}"

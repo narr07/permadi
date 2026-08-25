@@ -191,7 +191,7 @@ export default defineNuxtConfig({
 	},
 	scripts: {
 		defaultScriptOptions: {
-			trigger: { idleTimeout: 2000 },
+			trigger: { idleTimeout: 4000 },
 			proxy: false,
 		},
 		registry: {
@@ -199,7 +199,7 @@ export default defineNuxtConfig({
 				? {
 						googleAnalytics: {
 							id: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID,
-							trigger: { idleTimeout: 2000 },
+							trigger: { idleTimeout: 4000 },
 							proxy: false,
 							scriptOptions: {
 								type: 'text/partytown',
@@ -378,6 +378,7 @@ export default defineNuxtConfig({
 				'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
 				'X-Content-Type-Options': 'nosniff',
 				'X-Frame-Options': 'SAMEORIGIN',
+				'Cross-Origin-Opener-Policy': 'same-origin',
 				'Referrer-Policy': 'strict-origin-when-cross-origin',
 				'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
 			},

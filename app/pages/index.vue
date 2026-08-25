@@ -12,18 +12,18 @@ const { data: page } = await useAsyncData(
 	{ watch: [locale] },
 )
 
-// 2. Tulisan terbaru (lazy - below fold)
+// 2. Tulisan terbaru (SSR fetched)
 const { data: latestPosts } = await useAsyncData(
 	() => `home-latest-posts-${locale.value}`,
 	() => queryCollection(blogCollection.value).order('date', 'DESC').limit(4).all(),
-	{ watch: [locale], lazy: true },
+	{ watch: [locale] },
 )
 
-// 3. Proyek unggulan terbaru (lazy - below fold)
+// 3. Proyek unggulan terbaru (SSR fetched)
 const { data: featuredProject } = await useAsyncData(
 	() => `home-featured-proj-${locale.value}`,
 	() => queryCollection(projectCollection.value).order('date', 'DESC').first(),
-	{ watch: [locale], lazy: true },
+	{ watch: [locale] },
 )
 
 // 4. Cuplikan galeri dari Cloudinary API
