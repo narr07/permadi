@@ -93,10 +93,10 @@ export default defineCachedEventHandler(
 					const versionPrefix = resource.version ? `v${resource.version}/` : ''
 
 					// Direct CDN Delivery URLs with automatic WebP/AVIF format & smart eco compression
-					// 1. Grid thumbnail (super ringan ~15-30KB, ideal untuk 2-kolom mobile & lazy decoding)
-					const thumbnailCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_500,f_auto,q_auto:eco/${versionPrefix}${resource.public_id}.${resource.format}`
-					// 2. Microscopic LQIP blur placeholder (~300 bytes untuk transisi blur instan bebas lag)
-					const placeholderCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_30,e_blur:800,f_auto,q_1/${versionPrefix}${resource.public_id}.${resource.format}`
+					// 1. Grid thumbnail (super ringan ~6-12KB, ideal untuk 2-kolom mobile & lazy decoding)
+					const thumbnailCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_360,f_auto,q_auto:eco/${versionPrefix}${resource.public_id}.${resource.format}`
+					// 2. Microscopic LQIP blur placeholder (~150 bytes untuk transisi blur instan bebas lag)
+					const placeholderCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_20,e_blur:800,f_auto,q_1/${versionPrefix}${resource.public_id}.${resource.format}`
 					// 3. Modal preview (tajam & responsif ~80-120KB, muat instan di mobile/tablet saat zoom)
 					const modalPreviewCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_1080,f_auto,q_auto:eco/${versionPrefix}${resource.public_id}.${resource.format}`
 					// 4. Full original resolution HD (untuk tombol direct open / download)

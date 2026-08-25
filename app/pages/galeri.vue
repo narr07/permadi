@@ -355,12 +355,14 @@ useSchemaOrg([
 				@keydown.enter.prevent="openModal(item)"
 				@keydown.space.prevent="openModal(item)"
 			>
-				<!-- Background Microscopic LQIP Placeholder (Instan ~300 bytes) -->
+				<!-- Background Microscopic LQIP Placeholder (Instan ~150 bytes) -->
 				<img
 					v-if="item.placeholder_image"
 					:src="item.placeholder_image"
 					:alt="item.title || 'Placeholder'"
 					aria-hidden="true"
+					width="20"
+					height="20"
 					class="pointer-events-none absolute inset-0 h-full w-full scale-105 object-cover blur-md filter"
 				>
 
@@ -369,6 +371,8 @@ useSchemaOrg([
 					:src="item.image"
 					:alt="item.title || (locale === 'id' ? 'Foto galeri' : 'Gallery photo')"
 					decoding="async"
+					:width="item.width || 360"
+					:height="item.height || 360"
 					class="relative z-1 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 					:loading="i < 2 ? 'eager' : 'lazy'"
 					:fetchpriority="i === 0 ? 'high' : 'auto'"
@@ -377,9 +381,9 @@ useSchemaOrg([
 				<!-- Overlay on Hover -->
 				<div class="absolute inset-0 flex flex-col justify-end from-slate-950/80 via-slate-950/20 to-transparent bg-gradient-to-t p-2.5 text-white opacity-0 transition-opacity duration-300 sm:p-4 group-hover:opacity-100">
 					<div class="flex items-center justify-between gap-1 sm:gap-2">
-						<h3 class="truncate text-xs text-white font-semibold font-heading transition-colors duration-100 sm:text-sm group-hover:text-brand-300 dark:group-hover:text-yellow-600">
+						<h2 class="truncate text-xs text-white font-semibold font-heading transition-colors duration-100 sm:text-sm group-hover:text-brand-300 dark:group-hover:text-yellow-600">
 							{{ item.title }}
-						</h3>
+						</h2>
 						<span class="shrink-0 rounded-full bg-white/20 p-1 backdrop-blur-md sm:p-1.5">
 							<span class="i-hugeicons-search-01 text-[10px] sm:text-xs" />
 						</span>
