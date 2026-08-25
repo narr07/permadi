@@ -144,17 +144,17 @@ export default defineNuxtConfig({
 
 	fonts: {
 		families: [
-			{ name: 'Plus Jakarta Sans', weights: [400, 600, 700], subsets: ['latin'], preload: true },
-			{ name: 'Barlow', weights: [600, 700], subsets: ['latin'], preload: true },
-			{ name: 'JetBrains Mono', weights: [400], subsets: ['latin'], preload: false },
+			{ name: 'Plus Jakarta Sans', weights: [400, 600, 700], subsets: ['latin'], preload: true, display: 'swap' },
+			{ name: 'Barlow', weights: [600, 700], subsets: ['latin'], preload: true, display: 'swap' },
+			{ name: 'JetBrains Mono', weights: [400], subsets: ['latin'], preload: false, display: 'swap' },
 		],
 		defaults: {
-			preload: false,
+			preload: true,
 			weights: [400, 600, 700],
 			styles: ['normal'],
 			subsets: ['latin'],
 			fallbacks: {
-				'sans-serif': ['system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+				'sans-serif': ['system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
 			},
 		},
 	},
@@ -172,9 +172,6 @@ export default defineNuxtConfig({
 			'~/components',
 		],
 	},
-	css: [
-		'~/assets/css/main.css',
-	],
 	runtimeConfig: {
 		sessionSalt: process.env.NUXT_SESSION_SALT || 'permadi-reactions-salt-key-2026',
 		cloudinaryCloudName: process.env.NUXT_CLOUDINARY_CLOUD_NAME || 'daton7ry4',
@@ -187,7 +184,7 @@ export default defineNuxtConfig({
 	},
 	scripts: {
 		defaultScriptOptions: {
-			trigger: { idleTimeout: 4000 },
+			trigger: 'onNuxtReady',
 			proxy: false,
 		},
 		registry: {
@@ -195,7 +192,7 @@ export default defineNuxtConfig({
 				? {
 						googleAnalytics: {
 							id: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID,
-							trigger: { idleTimeout: 4000 },
+							trigger: 'onNuxtReady',
 							proxy: false,
 						},
 					}
