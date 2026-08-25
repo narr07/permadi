@@ -320,6 +320,38 @@ small,
 	border-radius: 20px;
 }
 
+.hero-card-clean h1,
+.hero-card-clean h2,
+.hero-card-clean h3,
+.hero-card-clean h4,
+.hero-card-clean h5,
+.hero-card-clean h6,
+.hero-card-clean .font-heading {
+	color: #ffffff;
+}
+
+.hero-card-clean .kicker,
+.hero-card-clean .eyebrow,
+.hero-card-clean .section-label {
+	color: #2bd4b5;
+}
+
+.dark .hero-card-clean h1,
+.dark .hero-card-clean h2,
+.dark .hero-card-clean h3,
+.dark .hero-card-clean h4,
+.dark .hero-card-clean h5,
+.dark .hero-card-clean h6,
+.dark .hero-card-clean .font-heading {
+	color: #f9bc60;
+}
+
+.dark .hero-card-clean .kicker,
+.dark .hero-card-clean .eyebrow,
+.dark .hero-card-clean .section-label {
+	color: #2bd4b5;
+}
+
 .sand-card-clean {
 	background: #f9bc60;
 	color: #002b27;
@@ -327,11 +359,54 @@ small,
 	border-radius: 20px;
 }
 
+.sand-card-clean h1,
+.sand-card-clean h2,
+.sand-card-clean h3,
+.sand-card-clean h4,
+.sand-card-clean h5,
+.sand-card-clean h6,
+.sand-card-clean .font-heading,
+.dark .sand-card-clean h1,
+.dark .sand-card-clean h2,
+.dark .sand-card-clean h3,
+.dark .sand-card-clean h4,
+.dark .sand-card-clean h5,
+.dark .sand-card-clean h6,
+.dark .sand-card-clean .font-heading {
+	color: #002b27;
+}
+
+.sand-card-clean .kicker,
+.sand-card-clean .eyebrow,
+.sand-card-clean .section-label,
+.dark .sand-card-clean .kicker,
+.dark .sand-card-clean .eyebrow,
+.dark .sand-card-clean .section-label {
+	color: #002b27;
+}
+
 .sky-card-clean {
 	background: #7dd3fc;
 	color: #002b27;
 	border: 1px solid #7dd3fc;
 	border-radius: 20px;
+}
+
+.sky-card-clean h1,
+.sky-card-clean h2,
+.sky-card-clean h3,
+.sky-card-clean h4,
+.sky-card-clean h5,
+.sky-card-clean h6,
+.sky-card-clean .font-heading,
+.dark .sky-card-clean h1,
+.dark .sky-card-clean h2,
+.dark .sky-card-clean h3,
+.dark .sky-card-clean h4,
+.dark .sky-card-clean h5,
+.dark .sky-card-clean h6,
+.dark .sky-card-clean .font-heading {
+	color: #002b27;
 }
 
 .status-dot {
