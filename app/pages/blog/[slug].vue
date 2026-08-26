@@ -287,6 +287,12 @@ useSchemaOrg([
 		'datePublished': () => post.value?.doc?.date,
 		'dateModified': () => post.value?.doc?.updated || post.value?.doc?.date,
 		'inLanguage': () => (locale.value === 'id' ? 'id-ID' : 'en-US'),
+		'author': [
+			{
+				name: 'Dinar Permadi Yusup',
+				url: 'https://permadi.dev',
+			},
+		],
 	}),
 	defineBreadcrumb({
 		itemListElement: [
@@ -304,16 +310,13 @@ useSchemaOrg([
 			},
 		],
 	}),
-	...(extractedFaqs.value.length > 0
-		? [
-				defineFAQPage({
-					mainEntity: extractedFaqs.value.map(faq => ({
-						name: faq.question,
-						acceptedAnswer: faq.answer,
-					})),
-				}),
-			]
-		: []),
+	// Standar resmi Unhead Schema.org: Setiap pertanyaan didefinisikan dengan defineQuestion()
+	...extractedFaqs.value.map(faq =>
+		defineQuestion({
+			name: faq.question,
+			acceptedAnswer: faq.answer,
+		}),
+	),
 ])
 </script>
 
