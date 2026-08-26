@@ -162,11 +162,109 @@ const tocLinks = computed(() => {
 	return links
 })
 
+function extractTextFromAst(node: any): string {
+	if (!node)
+		return ''
+	if (typeof node === 'string')
+		return node
+	if (node.type === 'text' && typeof node.value === 'string')
+		return node.value
+	if (Array.isArray(node)) {
+		return node.map(extractTextFromAst).filter(Boolean).join(' ')
+	}
+	if (Array.isArray(node.children)) {
+		return node.children.map(extractTextFromAst).filter(Boolean).join(' ')
+	}
+	if (node.value && typeof node.value !== 'string') {
+		return extractTextFromAst(node.value)
+	}
+	return ''
+}
+
+function extractFaqsFromDoc(doc: any): Array<{ question: string, answer: string }> {
+	const faqs: Array<{ question: string, answer: string }> = []
+	if (!doc)
+		return faqs
+
+	// 1. Ekstrak dari frontmatter jika ada (faq / faqs)
+	if (Array.isArray(doc.faq)) {
+		for (const item of doc.faq) {
+			if (item?.question && item?.answer) {
+				faqs.push({
+					question: String(item.question).replace(/^\d+\.\s*/, '').trim(),
+					answer: String(item.answer).trim(),
+				})
+			}
+		}
+	}
+	if (Array.isArray(doc.faqs)) {
+		for (const item of doc.faqs) {
+			if (item?.question && item?.answer) {
+				faqs.push({
+					question: String(item.question).replace(/^\d+\.\s*/, '').trim(),
+					answer: String(item.answer).trim(),
+				})
+			}
+		}
+	}
+
+	// 2. Ekstrak otomatis dari AST body Nuxt Content (komponen ::faq & :::faq-item)
+	function walk(node: any) {
+		if (!node || typeof node !== 'object')
+			return
+
+		const tag = (node.tag || node.name || '').toLowerCase()
+		if (tag === 'faq-item' || tag === 'faqitem' || (node.props && node.props.question)) {
+			const question = node.props?.question || node.attributes?.question || ''
+			const answer = extractTextFromAst(node.children).replace(/\s+/g, ' ').trim()
+			if (question && answer) {
+				faqs.push({
+					question: String(question).replace(/^\d+\.\s*/, '').trim(),
+					answer: String(answer).trim(),
+				})
+			}
+		}
+
+		if (Array.isArray(node.children)) {
+			node.children.forEach(walk)
+		}
+		if (Array.isArray(node.value)) {
+			node.value.forEach(walk)
+		}
+	}
+
+	if (doc.body) {
+		walk(doc.body)
+	}
+
+	return faqs
+}
+
+const extractedFaqs = computed(() => {
+	return extractFaqsFromDoc(post.value?.doc)
+})
+
+const site = useSiteConfig()
+const canonicalUrl = computed(() => {
+	const currentSlug = post.value?.doc?.slug || cleanSlug(post.value?.doc?.path || requestedSlug.value)
+	return `${site.url}/${locale.value}/blog/${currentSlug}`
+})
+
+useHead({
+	link: [
+		{
+			rel: 'canonical',
+			href: () => canonicalUrl.value,
+		},
+	],
+})
+
 useSeoMeta({
 	title: () => post.value?.doc?.title,
 	description: () => post.value?.doc?.description,
 	ogTitle: () => post.value?.doc?.title,
 	ogDescription: () => post.value?.doc?.description,
+	ogUrl: () => canonicalUrl.value,
 	ogType: 'article',
 	articlePublishedTime: () => post.value?.doc?.date,
 	articleModifiedTime: () => post.value?.doc?.updated || post.value?.doc?.date,
@@ -190,6 +288,32 @@ useSchemaOrg([
 		'dateModified': () => post.value?.doc?.updated || post.value?.doc?.date,
 		'inLanguage': () => (locale.value === 'id' ? 'id-ID' : 'en-US'),
 	}),
+	defineBreadcrumb({
+		itemListElement: [
+			{
+				name: () => (locale.value === 'id' ? 'Beranda' : 'Home'),
+				item: () => `/${locale.value}`,
+			},
+			{
+				name: 'Blog',
+				item: () => `/${locale.value}/blog`,
+			},
+			{
+				name: () => post.value?.doc?.title || '',
+				item: () => canonicalUrl.value,
+			},
+		],
+	}),
+	...(extractedFaqs.value.length > 0
+		? [
+				defineFAQPage({
+					mainEntity: extractedFaqs.value.map(faq => ({
+						name: faq.question,
+						acceptedAnswer: faq.answer,
+					})),
+				}),
+			]
+		: []),
 ])
 </script>
 
