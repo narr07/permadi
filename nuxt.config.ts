@@ -78,6 +78,7 @@ export default defineNuxtConfig({
 		description: 'Web Developer & Designer portfolio and technical blog of Permadi.',
 		defaultLocale: 'en',
 		indexable: true,
+		trailingSlash: false,
 	},
 	sitemap: {
 		zeroRuntime: true,
@@ -87,9 +88,23 @@ export default defineNuxtConfig({
 			{
 				userAgent: ['*'],
 				allow: ['/'],
+				contentUsage: {
+					'train-ai': 'n',
+				},
+				contentSignal: {
+					'ai-train': 'no',
+					'search': 'yes',
+				},
 			},
 		],
 		sitemap: ['https://permadi.dev/sitemap_index.xml'],
+	},
+	schemaOrg: {
+		identity: {
+			type: 'Person',
+			name: 'Dinar Permadi Yusup',
+			url: 'https://permadi.dev',
+		},
 	},
 	socialShare: {
 		baseUrl: 'https://permadi.dev',

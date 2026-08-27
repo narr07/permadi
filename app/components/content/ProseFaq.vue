@@ -135,23 +135,6 @@ function toggleFaq(index: number) {
 		}
 	}
 }
-
-// Injeksi otomatis Schema.org FAQPage untuk SEO Google Rich Snippet
-useSchemaOrg([
-	defineWebPage({
-		'@type': 'FAQPage',
-		'mainEntity': computed(() => {
-			return resolvedFaqItems.value.map(item => ({
-				'@type': 'Question',
-				'name': item.q.replace(/^\d+\.\s*/, ''),
-				'acceptedAnswer': {
-					'@type': 'Answer',
-					'text': item.a,
-				},
-			}))
-		}),
-	}),
-])
 </script>
 
 <template>

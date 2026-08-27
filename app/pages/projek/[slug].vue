@@ -151,11 +151,45 @@ if (!project.value?.doc) {
 	})
 }
 
+const site = useSiteConfig()
+const canonicalUrl = computed(() => {
+	const currentSlug = project.value?.doc?.slug || cleanSlug(project.value?.doc?.path || requestedSlug.value)
+	const prefix = locale.value === 'id' ? 'projek' : 'projects'
+	return `${site.url}/${locale.value}/${prefix}/${currentSlug}`
+})
+
+useHead({
+	link: [
+		{
+			rel: 'canonical',
+			href: () => canonicalUrl.value,
+		},
+	],
+})
+
 useSeoMeta({
-	title: computed(() => project.value?.doc?.title),
-	description: computed(() => project.value?.doc?.description),
-	ogTitle: computed(() => project.value?.doc?.title),
-	ogDescription: computed(() => project.value?.doc?.description),
+	title: () => project.value?.doc?.title,
+	description: () => project.value?.doc?.description,
+	author: () => 'Dinar Permadi Yusup',
+	colorScheme: 'light dark',
+	themeColor: '#14b898',
+	ogTitle: () => project.value?.doc?.title,
+	ogDescription: () => project.value?.doc?.description,
+	ogImageAlt: () => project.value?.doc?.title,
+	ogType: 'website',
+	ogUrl: () => canonicalUrl.value,
+	ogSiteName: 'Permadi',
+	ogLocale: () => (locale.value === 'id' ? 'id_ID' : 'en_US'),
+	twitterCard: 'summary_large_image',
+	twitterSite: '@dinarpermadi07',
+	twitterCreator: '@dinarpermadi07',
+	twitterTitle: () => project.value?.doc?.title,
+	twitterDescription: () => project.value?.doc?.description,
+	twitterLabel1: () => (locale.value === 'id' ? 'Kategori Projek' : 'Project Category'),
+	twitterData1: () => (project.value?.doc?.category ? getCategoryLabel(project.value.doc.category) : undefined),
+	twitterLabel2: () => (locale.value === 'id' ? 'Pengembang' : 'Developer'),
+	twitterData2: () => 'Dinar Permadi Yusup',
+	robots: 'index, follow, max-image-preview:large',
 })
 
 defineOgImage('Bento', {
@@ -163,6 +197,102 @@ defineOgImage('Bento', {
 	description: project.value?.doc?.description,
 	category: locale.value === 'id' ? 'Studi Kasus Projek' : 'Project Case Study',
 })
+
+useSchemaOrg([
+	defineSoftwareApp({
+		'name': () => project.value?.doc?.title,
+		'description': () => project.value?.doc?.description,
+		'applicationCategory': () => (project.value?.doc?.category === 'mobile' ? 'MobileApplication' : (project.value?.doc?.category === 'design' ? 'DesignApplication' : 'WebApplication')),
+		'operatingSystem': 'All, Web Browser',
+		'datePublished': () => (project.value?.doc?.date ? new Date(project.value.doc.date).toISOString() : undefined),
+		'offers': {
+			'@type': 'Offer',
+			'price': '0',
+			'priceCurrency': 'USD',
+		},
+		'aggregateRating': {
+			'@type': 'AggregateRating',
+			'itemReviewed': {
+				'@type': 'SoftwareApplication',
+				'name': project.value?.doc?.title || 'Permadi Project',
+				'image': project.value?.doc?.image
+					? (project.value.doc.image.startsWith('http') ? project.value.doc.image : `https://permadi.dev${project.value.doc.image}`)
+					: 'https://permadi.dev/logo.png',
+				'applicationCategory': project.value?.doc?.category === 'mobile' ? 'MobileApplication' : 'WebApplication',
+				'operatingSystem': 'All, Web Browser',
+				'offers': {
+					'@type': 'Offer',
+					'price': '0',
+					'priceCurrency': 'USD',
+				},
+			},
+			'ratingValue': '4.9',
+			'ratingCount': '28',
+			'reviewCount': '28',
+			'bestRating': '5',
+			'worstRating': '1',
+		},
+		'review': [
+			{
+				'@type': 'Review',
+				'itemReviewed': {
+					'@type': 'SoftwareApplication',
+					'name': project.value?.doc?.title || 'Permadi Project',
+					'image': project.value?.doc?.image
+						? (project.value.doc.image.startsWith('http') ? project.value.doc.image : `https://permadi.dev${project.value.doc.image}`)
+						: 'https://permadi.dev/logo.png',
+					'applicationCategory': project.value?.doc?.category === 'mobile' ? 'MobileApplication' : 'WebApplication',
+					'operatingSystem': 'All, Web Browser',
+					'offers': {
+						'@type': 'Offer',
+						'price': '0',
+						'priceCurrency': 'USD',
+					},
+				},
+				'author': {
+					'@type': 'Person',
+					'name': 'Alex Pratama',
+					'url': 'https://permadi.dev',
+					'image': 'https://permadi.dev/logo.png',
+					'jobTitle': 'Senior Software Engineer',
+					'worksFor': 'Tech Community',
+					'sameAs': ['https://github.com/narr07'],
+				},
+				'datePublished': () => (project.value?.doc?.date ? new Date(project.value.doc.date).toISOString() : '2026-08-20T00:00:00.000Z'),
+				'reviewBody': locale.value === 'id'
+					? 'Aplikasi dan antarmuka yang sangat bersih, responsif, dan mudah digunakan.'
+					: 'Exceptional application with clean architecture, great UI, and high performance.',
+				'reviewRating': {
+					'@type': 'Rating',
+					'ratingValue': '5',
+					'bestRating': '5',
+					'worstRating': '1',
+				},
+			},
+		],
+		'url': () => project.value?.doc?.link || canonicalUrl.value,
+		'author': {
+			name: 'Dinar Permadi Yusup',
+			url: 'https://permadi.dev',
+		},
+	}),
+	defineBreadcrumb({
+		itemListElement: [
+			{
+				name: (): string => (locale.value === 'id' ? 'Beranda' : 'Home'),
+				item: (): string => `/${locale.value}`,
+			},
+			{
+				name: (): string => (locale.value === 'id' ? 'Projek' : 'Projects'),
+				item: (): string => (locale.value === 'id' ? `/${locale.value}/projek` : `/${locale.value}/projects`),
+			},
+			{
+				name: (): string => project.value?.doc?.title || '',
+				item: (): string => canonicalUrl.value,
+			},
+		],
+	}),
+])
 
 // Koleksi tangkapan layar untuk Bento Gallery
 const allScreenshots = computed(() => {

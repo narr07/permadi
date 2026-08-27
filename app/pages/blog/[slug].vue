@@ -167,9 +167,15 @@ function extractTextFromAst(node: any): string {
 		return ''
 	if (typeof node === 'string')
 		return node
+	if (typeof node === 'number')
+		return String(node)
 	if (node.type === 'text' && typeof node.value === 'string')
 		return node.value
 	if (Array.isArray(node)) {
+		// If compact AST tuple: [tag, props, ...children]
+		if (node.length >= 2 && typeof node[0] === 'string' && typeof node[1] === 'object' && !Array.isArray(node[1])) {
+			return node.slice(2).map(extractTextFromAst).filter(Boolean).join(' ')
+		}
 		return node.map(extractTextFromAst).filter(Boolean).join(' ')
 	}
 	if (Array.isArray(node.children)) {
@@ -187,18 +193,9 @@ function extractFaqsFromDoc(doc: any): Array<{ question: string, answer: string 
 		return faqs
 
 	// 1. Ekstrak dari frontmatter jika ada (faq / faqs)
-	if (Array.isArray(doc.faq)) {
-		for (const item of doc.faq) {
-			if (item?.question && item?.answer) {
-				faqs.push({
-					question: String(item.question).replace(/^\d+\.\s*/, '').trim(),
-					answer: String(item.answer).trim(),
-				})
-			}
-		}
-	}
-	if (Array.isArray(doc.faqs)) {
-		for (const item of doc.faqs) {
+	const rawFaqs = doc.faq || doc.faqs
+	if (Array.isArray(rawFaqs)) {
+		for (const item of rawFaqs) {
 			if (item?.question && item?.answer) {
 				faqs.push({
 					question: String(item.question).replace(/^\d+\.\s*/, '').trim(),
@@ -213,15 +210,37 @@ function extractFaqsFromDoc(doc: any): Array<{ question: string, answer: string 
 		if (!node || typeof node !== 'object')
 			return
 
+		// Case A: Nuxt Content v3 Array AST tuple: ['faq-item', props, ...children]
+		if (Array.isArray(node)) {
+			const tag = typeof node[0] === 'string' ? node[0].toLowerCase() : ''
+			if (tag === 'faq-item' || tag === 'faqitem') {
+				const props = (typeof node[1] === 'object' && !Array.isArray(node[1])) ? node[1] : {}
+				const question = props?.question || ''
+				const children = node.slice(2)
+				const answer = extractTextFromAst(children).replace(/\s+/g, ' ').trim()
+				if (question) {
+					faqs.push({
+						question: String(question).replace(/^\d+\.\s*/, '').trim(),
+						answer: String(answer).trim(),
+					})
+					return
+				}
+			}
+			node.forEach(walk)
+			return
+		}
+
+		// Case B: Object AST: { tag: 'faq-item', props: { question: '...' }, children: [...] }
 		const tag = (node.tag || node.name || '').toLowerCase()
-		if (tag === 'faq-item' || tag === 'faqitem' || (node.props && node.props.question)) {
+		if (tag === 'faq-item' || tag === 'faqitem') {
 			const question = node.props?.question || node.attributes?.question || ''
-			const answer = extractTextFromAst(node.children).replace(/\s+/g, ' ').trim()
-			if (question && answer) {
+			const answer = extractTextFromAst(node.children || node.value).replace(/\s+/g, ' ').trim()
+			if (question) {
 				faqs.push({
 					question: String(question).replace(/^\d+\.\s*/, '').trim(),
 					answer: String(answer).trim(),
 				})
+				return
 			}
 		}
 
@@ -262,15 +281,32 @@ useHead({
 useSeoMeta({
 	title: () => post.value?.doc?.title,
 	description: () => post.value?.doc?.description,
+	author: () => 'Dinar Permadi Yusup',
+	colorScheme: 'light dark',
+	themeColor: '#14b898',
 	ogTitle: () => post.value?.doc?.title,
 	ogDescription: () => post.value?.doc?.description,
-	ogUrl: () => canonicalUrl.value,
+	ogImageAlt: () => post.value?.doc?.title,
 	ogType: 'article',
-	articlePublishedTime: () => post.value?.doc?.date,
-	articleModifiedTime: () => post.value?.doc?.updated || post.value?.doc?.date,
+	ogUrl: () => canonicalUrl.value,
+	ogSiteName: 'Permadi',
+	ogLocale: () => (locale.value === 'id' ? 'id_ID' : 'en_US'),
+	articlePublishedTime: () => (post.value?.doc?.date ? new Date(post.value.doc.date).toISOString() : undefined),
+	articleModifiedTime: () => (post.value?.doc?.date ? new Date(post.value.doc.date).toISOString() : undefined),
+	articleAuthor: () => ['https://permadi.dev'],
+	articleSection: () => (post.value?.doc?.category ? getCategoryLabel(post.value.doc.category) : undefined),
+	articleTag: () => post.value?.doc?.tags,
+	keywords: () => (Array.isArray(post.value?.doc?.tags) ? post.value.doc.tags.join(', ') : post.value?.doc?.tags),
+	twitterCard: 'summary_large_image',
+	twitterSite: '@dinarpermadi07',
+	twitterCreator: '@dinarpermadi07',
 	twitterTitle: () => post.value?.doc?.title,
 	twitterDescription: () => post.value?.doc?.description,
-	twitterCard: 'summary_large_image',
+	twitterLabel1: () => (locale.value === 'id' ? 'Waktu Membaca' : 'Reading time'),
+	twitterData1: () => (post.value?.doc?.readingTime ? (locale.value === 'id' ? `${post.value.doc.readingTime} menit` : `${post.value.doc.readingTime} min read`) : undefined),
+	twitterLabel2: () => (locale.value === 'id' ? 'Ditulis oleh' : 'Written by'),
+	twitterData2: () => 'Dinar Permadi Yusup',
+	robots: 'index, follow, max-image-preview:large',
 })
 
 defineOgImage('Bento', {
@@ -284,29 +320,41 @@ useSchemaOrg([
 		'@type': 'BlogPosting',
 		'headline': () => post.value?.doc?.title,
 		'description': () => post.value?.doc?.description,
-		'datePublished': () => post.value?.doc?.date,
-		'dateModified': () => post.value?.doc?.updated || post.value?.doc?.date,
+		'datePublished': () => (post.value?.doc?.date ? new Date(post.value.doc.date).toISOString() : undefined),
+		'dateModified': () => (post.value?.doc?.date ? new Date(post.value.doc.date).toISOString() : undefined),
 		'inLanguage': () => (locale.value === 'id' ? 'id-ID' : 'en-US'),
+		'wordCount': () => (post.value?.doc?.readingTime ? post.value.doc.readingTime * 200 : 1500),
+		'articleSection': () => (post.value?.doc?.category ? getCategoryLabel(post.value.doc.category) : 'Technology'),
+		'keywords': () => (Array.isArray(post.value?.doc?.tags) ? post.value.doc.tags.join(', ') : undefined),
 		'author': [
 			{
 				name: 'Dinar Permadi Yusup',
 				url: 'https://permadi.dev',
+				image: 'https://permadi.dev/logo.png',
+				jobTitle: locale.value === 'id' ? 'Guru SD, Web Developer & Desainer Grafis' : 'Elementary School Teacher, Web Developer & Graphic Designer',
+				sameAs: [
+					'https://github.com/narr07',
+					'https://x.com/dinarpermadi07',
+					'https://www.behance.net/narr07',
+					'https://www.instagram.com/narr07/',
+				],
+				worksFor: 'SDN Teja II',
 			},
 		],
 	}),
 	defineBreadcrumb({
 		itemListElement: [
 			{
-				name: () => (locale.value === 'id' ? 'Beranda' : 'Home'),
-				item: () => `/${locale.value}`,
+				name: (): string => (locale.value === 'id' ? 'Beranda' : 'Home'),
+				item: (): string => `/${locale.value}`,
 			},
 			{
 				name: 'Blog',
-				item: () => `/${locale.value}/blog`,
+				item: (): string => `/${locale.value}/blog`,
 			},
 			{
-				name: () => post.value?.doc?.title || '',
-				item: () => canonicalUrl.value,
+				name: (): string => post.value?.doc?.title || '',
+				item: (): string => canonicalUrl.value,
 			},
 		],
 	}),
@@ -314,7 +362,10 @@ useSchemaOrg([
 	...extractedFaqs.value.map(faq =>
 		defineQuestion({
 			name: faq.question,
-			acceptedAnswer: faq.answer,
+			acceptedAnswer: {
+				'@type': 'Answer',
+				'text': faq.answer,
+			},
 		}),
 	),
 ])

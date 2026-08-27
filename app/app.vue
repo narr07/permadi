@@ -70,6 +70,7 @@ useSchemaOrg([
 			'https://www.behance.net/narr07',
 			'https://www.instagram.com/narr07/',
 		],
+		worksFor: 'SDN Teja II',
 	}),
 	defineWebSite({
 		name: 'Permadi',

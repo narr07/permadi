@@ -162,22 +162,85 @@ function onHeaderMouseMove(e: MouseEvent) {
 	target.style.setProperty('--y', `${e.clientY - rect.top}px`)
 }
 
+const site = useSiteConfig()
+const canonicalUrl = computed(() => `${site.url}/${locale.value}/${locale.value === 'id' ? 'galeri' : 'gallery'}`)
+
+useHead({
+	link: [
+		{
+			rel: 'canonical',
+			href: () => canonicalUrl.value,
+		},
+	],
+})
+
 useSeoMeta({
-	title: computed(() => page.value?.title),
-	description: computed(() => page.value?.description),
-	ogTitle: computed(() => page.value?.title),
-	ogDescription: computed(() => page.value?.description),
+	title: () => page.value?.title,
+	description: () => page.value?.description,
+	author: () => 'Dinar Permadi Yusup',
+	colorScheme: 'light dark',
+	themeColor: '#14b898',
+	ogTitle: () => page.value?.title,
+	ogDescription: () => page.value?.description,
+	ogImageAlt: () => page.value?.title,
+	ogType: 'website',
+	ogUrl: () => canonicalUrl.value,
+	ogSiteName: 'Permadi',
+	ogLocale: () => (locale.value === 'id' ? 'id_ID' : 'en_US'),
+	twitterCard: 'summary_large_image',
+	twitterSite: '@dinarpermadi07',
+	twitterCreator: '@dinarpermadi07',
+	twitterTitle: () => page.value?.title,
+	twitterDescription: () => page.value?.description,
+	robots: 'index, follow, max-image-preview:large',
 })
 
 defineOgImage('Bento', {
 	title: page.value?.title,
 	description: page.value?.description,
+	category: locale.value === 'id' ? 'Galeri Visual & Dokumentasi' : 'Visual Gallery & Documentation',
 })
 
 useSchemaOrg([
 	defineWebPage({
-		'@type': 'CollectionPage',
+		'@type': ['CollectionPage', 'ImageGallery'],
+		'name': () => page.value?.title || (locale.value === 'id' ? 'Galeri Visual & Dokumentasi' : 'Visual Gallery & Documentation'),
+		'description': () => page.value?.description || '',
+		'url': () => canonicalUrl.value,
 	}),
+	defineBreadcrumb({
+		itemListElement: [
+			{
+				name: (): string => (locale.value === 'id' ? 'Beranda' : 'Home'),
+				item: (): string => `/${locale.value}`,
+			},
+			{
+				name: (): string => (locale.value === 'id' ? 'Galeri' : 'Gallery'),
+				item: (): string => canonicalUrl.value,
+			},
+		],
+	}),
+	// Google Images Licensable & Metadata Schema
+	...computed(() => {
+		const licenseUrl = 'https://creativecommons.org/licenses/by-nc-nd/4.0/'
+		const acquirePage = `${site.url}/${locale.value}/${locale.value === 'id' ? 'kontak' : 'contact'}`
+		return allItems.value.map((item: any) => ({
+			'@type': 'ImageObject',
+			'contentUrl': item.full_image || item.secure_url || item.image,
+			'url': item.full_image || item.secure_url || item.image,
+			'name': item.title || item.alt || 'Permadi Visual Artwork',
+			'caption': item.alt || item.title || 'Dokumentasi visual dan karya desain Dinar Permadi Yusup',
+			'description': item.alt || item.title || (locale.value === 'id' ? 'Karya visual dan dokumentasi desain grafis Dinar Permadi Yusup.' : 'Visual artwork and design documentation by Dinar Permadi Yusup.'),
+			'license': licenseUrl,
+			'acquireLicensePage': acquirePage,
+			'creditText': 'Dinar Permadi Yusup | Permadi',
+			'copyrightNotice': '© Dinar Permadi Yusup',
+			'datePublished': item.created_at ? new Date(item.created_at).toISOString() : undefined,
+			'creator': {
+				'@id': 'https://permadi.dev/#identity',
+			},
+		}))
+	}).value,
 ])
 </script>
 
