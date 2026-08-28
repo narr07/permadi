@@ -71,16 +71,20 @@ Gemini Spark utilizes native **Google Search & Google Trends web grounding** to 
 - **Output Presentation**: ALWAYS provide the final article draft in **ONE** complete fenced code block `~~~~md ... ~~~~`.
 
 ### Standard Frontmatter Schema (`content/en/blog` / `content/id/blog`)
+* **`title`**: **Max 50–58 characters** (strictly **<= 70 characters with spaces** including the site suffix ` | Permadi`). **AVOID COLONS (`:`) IN TITLES** unless strictly necessary; write natural, fluid headlines instead of formulaic `Topic: Subtopic`.
+* **`description`**: **140–160 characters** compelling meta description with primary keyword.
+* **`tags`**: 3–5 target keywords, **all of which MUST appear 1–3 times in the body text** (TF-IDF completeness).
 
 ```yaml
 ---
-title: "Engaging Article Title with Keyword: Practical Value Proposition"
+title: "Practical Guide to Modern Graphic and UI Design" # Natural headline without colons, max 50-58 chars (total <= 70)
 category: technology
 date: YYYY-MM-DD
 description: Direct, compelling 140-160 character meta description with primary keyword and no AI clichés.
 tags:
-  - tag1
-  - tag2
+  - primary-keyword
+  - secondary-keyword
+  - lsi-keyword
 ---
 ```
 

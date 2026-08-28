@@ -92,41 +92,50 @@ Pastikan 5 parameter kunci berikut telah terdefinisi:
 - [ ] **Evaluasi Otoritas Topikal (Topic Clusters)**: Bangun gugus topik yang saling berkaitan.
 
 ### Tahap 2: Arsitektur Metadata & Optimasi On-Page
-- [ ] **Optimasi Judul SEO (Title Tag)**: Maksimal 60 karakter, kata kunci utama di depan, mengandung proposisi nilai riil.
-- [ ] **Penyelarasan H1 dan Title Tag**: Wajib identik atau sangat mirip. Tidak ada backtick di H1.
-- [ ] **Penulisan Meta Deskripsi**: 140–160 karakter persuasif, to-the-point, mengandung kata kunci utama.
+- [ ] **Optimasi Judul SEO (Title Tag)**: Maksimal 50–58 karakter (total dengan suffix ` | Permadi` **maksimal 70 karakter termasuk spasi**), kata kunci utama di depan/tengah, mengandung proposisi nilai riil. **Hindari tanda titik dua (`:`)** agar judul mengalir alami (*fluid sentence-style*) dan tidak berkesan robotik.
+- [ ] **Penyelarasan H1 dan Title Tag**: Wajib identik atau sangat mirip. Tidak ada backtick atau emoji di H1.
+- [ ] **Penulisan Meta Deskripsi**: 140–160 karakter persuasif, to-the-point, mengandung kata kunci utama + 1 kata kunci sekunder.
 - [ ] **Struktur URL Slug Bersih**: Huruf kecil, dipisah tanda hubung (`-`), fokus pada kata kunci inti.
+
+### Tahap 2.5: Distribusi Semantik & TF-IDF Matrix
+- [ ] **Cakupan Kata Kunci Body (100%)**: Seluruh target kata kunci di `tags` wajib muncul minimal 1–3 kali secara natural di dalam body artikel (Dilarang ada tag dengan frekuensi 0 di body).
+- [ ] **Penekanan Semantik**: Berikan format `**tebal**` atau `*miring*` pada 1–3 istilah kunci untuk memperkuat bobot TF-IDF.
+- [ ] **Optimasi Alt Text**: Sisipkan primary keyword pada teks alt gambar featured (maksimal 125 karakter).
 
 ### Tahap 3: Pendahuluan (The Problem Hook & Benefit)
 - [ ] **Tembak Akar Masalah Langsung**: Bongkar friksi/kesulitan nyata dalam 100 kata pertama bersama kata kunci utama.
 - [ ] **Tanpa Basa-Basi**: Dilarang memakai *"Di era modern..."* atau *"Pada artikel kali ini kita akan membahas..."*.
 
 ### Tahap 4: Keterbacaan (Readability) & Struktur Humanis
-- [ ] **Variasi Panjang Paragraf & Kalimat**: Wajib padukan kalimat 3 kata dengan kalimat 25 kata.
-- [ ] **Heading Hierarkis (`##` H2, `###` H3, `####` H4)**: Struktur logis yang mengalir natural.
+- [ ] **Variasi Panjang Paragraf & Kalimat (*Burstiness*)**: Padukan kalimat pendek 3 kata dengan kalimat mengalir 25 kata.
+- [ ] **Heading Hierarkis (`##` H2, `###` H3)**: Struktur logis tanpa level yang terlompati dan tanpa emoji di heading.
 - [ ] **Elemen MDC Komponen**: Gunakan `::steps`, `::tip`, `::note`, `::warning`, dan `::conclusion`.
+- [ ] **Diagram Mermaid Vertikal**: Wajib gunakan `graph TD` agar mudah dibaca di layar mobile.
 
 ### Tahap 5: Kedalaman Substansi & Sentuhan Praktisi (E-E-A-T)
-- [ ] **Kedalaman Konten (1.500–2.000+ Kata)**: Komprehensif tanpa pengulangan kata berputar-putar.
-- [ ] **Studi Kasus & Trade-offs**: Wajib sertakan kompromi atau konsekuensi dari tiap pilihan.
-- [ ] **Content Gap**: Tutup celah informasi yang dilewatkan oleh hasil pencarian kompetitor.
+- [ ] **Kedalaman Konten**: Komprehensif tanpa pengulangan kata berputar-putar.
+- [ ] **Studi Kasus & Trade-offs**: Wajib sertakan kompromi atau konsekuensi teknis dari tiap pilihan.
+- [ ] **Pitfalls Nyata**: Paparkan kesalahan umum yang sering dilakukan praktisi di lapangan.
 
 ### Tahap 6: Optimasi Visual & Multimedia
 - [ ] **Format Next-Gen (WebP)**: Path gambar `/article/nama-file.webp`.
-- [ ] **Alt Text Deskriptif**: Maksimal 125 karakter, kontekstual.
+- [ ] **Alt Text Deskriptif**: Maksimal 125 karakter, kontekstual dan memuat primary keyword.
 - [ ] **Tabel Markdown**: Gunakan tabel untuk komparasi head-to-head.
 
 ### Tahap 7: Strategi Tautan (Internal & External Linking)
-- [ ] **Internal Linking**: Minimal 2–3 tautan ke artikel relevan (`[teks](/blog/slug-terkait)`).
-- [ ] **External Linking**: Minimal 2–3 tautan ke dokumentasi resmi atau riset otoritas.
+- [ ] **Internal Linking**: Minimal 2–3 tautan ke artikel relevan (`[teks](/id/blog/slug-terkait)`).
+- [ ] **External Linking**: Minimal 1–2 tautan ke dokumentasi resmi atau riset otoritas terpercaya.
 
 ### Tahap 8: Penutup & Action Framework
 - [ ] **Kesimpulan Keputusan (`::conclusion`)**: Berikan panduan kapan harus memilih Opsi A vs Opsi B.
 - [ ] **Satu Tindakan Spesifik**: Arahkan ke langkah nyata berikutnya.
 
-### Tahap 9: Penyuntingan Anti-AI & Finalisasi
-- [ ] **Uji Baca Nyaring**: Pastikan ritme tidak kaku dan tidak terdengar seperti naskah terjemahan robot.
-- [ ] **Cek Blacklist Frasa**: Pastikan 0 kata dari daftar hitam AI muncul di draf.
+### Tahap 9: Penyuntingan Anti-AI, Anti-Slop & Finalisasi
+- [ ] **Bebas Em Dash (`—`)**: Pastikan 0 karakter em dash di output (ganti dengan koma, titik dua, atau kurung).
+- [ ] **Bebas Titik Dua Berulang (`:`)**: Hindari pola `Topik: Subtopik` pada judul.
+- [ ] **Cek Blacklist Frasa AI**: Pastikan 0 kata dari daftar hitam AI (*delve, revolutionize, tapestry, game-changer, seamless, landscape*) muncul di draf.
+- [ ] **Bebas Pasif Tanpa Pelaku**: Pastikan setiap kalimat memiliki subjek tindakan yang jelas.
+- [ ] **Uji Baca Nyaring**: Pastikan ritme terdengar seperti obrolan praktisi senior berpengalaman.
 
 ---
 
@@ -134,7 +143,7 @@ Pastikan 5 parameter kunci berikut telah terdefinisi:
 
 ````md
 ---
-title: "Judul Tajam dengan Primary Keyword: Subjudul Solutif Praktisi"
+title: "Panduan Praktis Memilih Metode Belajar Efektif"
 category: kategori-blog
 date: YYYY-MM-DD
 description: Deskripsi 140-160 karakter memuat primary keyword, to the point, dan memicu rasa ingin tahu tanpa basa-basi klise.
