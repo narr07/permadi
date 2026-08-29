@@ -13,7 +13,7 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/projek' : '/en/p
 
 <template>
 	<NuxtLink
-		v-spotlight
+		
 		:to="project?.path || targetPath"
 		class="bento-card-clean group block flex flex-col justify-between p-6 md:col-span-5 sm:p-7"
 	>

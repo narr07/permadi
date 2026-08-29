@@ -150,14 +150,7 @@ function scrollToTop() {
 	}
 }
 
-function onHeaderMouseMove(e: MouseEvent) {
-	const target = e.currentTarget as HTMLElement
-	if (!target)
-		return
-	const rect = target.getBoundingClientRect()
-	target.style.setProperty('--x', `${e.clientX - rect.left}px`)
-	target.style.setProperty('--y', `${e.clientY - rect.top}px`)
-}
+
 
 useSeoMeta({
 	title: computed(() => page.value?.title),
@@ -182,8 +175,8 @@ useSchemaOrg([
 	<div class="container-bento py-10 sm:py-14">
 		<!-- Page Header with Bento Spotlight Effect -->
 		<header
-			class="bento-card-clean bento-spotlight relative z-30 mb-8 bg-slate-50/50 p-6 sm:mb-10 !overflow-visible dark:bg-slate-900/40 sm:p-8"
-			@mousemove="onHeaderMouseMove"
+			class="bento-card-clean  relative z-30 mb-8 bg-slate-50/50 p-6 sm:mb-10 !overflow-visible dark:bg-slate-900/40 sm:p-8"
+			
 		>
 			<!-- Ambient Glow Subtle Background (Clipped inside rounded frame) -->
 			<div class="pointer-events-none absolute inset-0 overflow-hidden rounded-[20px]">
@@ -341,7 +334,7 @@ useSchemaOrg([
 				<NuxtLink
 					v-for="(item, index) in paginatedProjects"
 					:key="item.url"
-					v-spotlight
+					
 					:to="item.url"
 					class="bento-card-clean group block flex flex-col justify-between overflow-hidden transition-all duration-300"
 					:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'

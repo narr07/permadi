@@ -11,7 +11,7 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/en/g
 
 <template>
 	<NuxtLink
-		v-spotlight
+		
 		:to="targetPath"
 		:aria-label="`${label || (locale === 'id' ? 'Eksplorasi Saat Ini' : 'Currently Exploring')}: ${text || (locale === 'id' ? 'Antarmuka yang terasa natural.' : 'Interfaces that feel inevitable.')}`"
 		class="bento-card-clean group block flex flex-col justify-between overflow-hidden md:col-span-5 !p-0"

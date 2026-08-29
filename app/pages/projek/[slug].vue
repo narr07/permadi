@@ -367,7 +367,7 @@ onMounted(() => {
 		>
 			<!-- Bento Card Header with Spotlight -->
 			<header
-				v-spotlight
+				
 				class="bento-card-clean relative mb-10 overflow-hidden border border-slate-200/80 rounded-bento bg-white/90 p-6 shadow-sm dark:border-[#134e43] dark:bg-[#002b27]/90 md:p-9 sm:p-8"
 			>
 				<!-- Category & Tags Badge Row -->

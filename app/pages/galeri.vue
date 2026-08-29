@@ -153,15 +153,6 @@ onMounted(() => {
 	onUnmounted(() => window.removeEventListener('keydown', handleKeydown))
 })
 
-function onHeaderMouseMove(e: MouseEvent) {
-	const target = e.currentTarget as HTMLElement
-	if (!target)
-		return
-	const rect = target.getBoundingClientRect()
-	target.style.setProperty('--x', `${e.clientX - rect.left}px`)
-	target.style.setProperty('--y', `${e.clientY - rect.top}px`)
-}
-
 const site = useSiteConfig()
 const canonicalUrl = computed(() => `${site.url}/${locale.value}/${locale.value === 'id' ? 'galeri' : 'gallery'}`)
 
@@ -248,8 +239,7 @@ useSchemaOrg([
 	<div class="container-bento py-10 sm:py-14">
 		<!-- Header with Bento Spotlight Effect -->
 		<header
-			class="bento-card-clean bento-spotlight relative z-30 mb-8 bg-slate-50/50 p-6 sm:mb-10 !overflow-visible dark:bg-slate-900/40 sm:p-8"
-			@mousemove="onHeaderMouseMove"
+			class="bento-card-clean relative z-30 mb-8 bg-slate-50/50 p-6 sm:mb-10 !overflow-visible dark:bg-slate-900/40 sm:p-8"
 		>
 			<!-- Ambient Glow Subtle Background (Clipped inside rounded frame) -->
 			<div class="pointer-events-none absolute inset-0 overflow-hidden rounded-[20px]">

@@ -280,38 +280,6 @@ small,
 	box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.65), 0 0 1px 1px rgba(43, 212, 181, 0.15);
 }
 
-/* Bento Spotlight Cursor Effect */
-.bento-spotlight {
-	position: relative;
-}
-
-.bento-spotlight::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	border-radius: inherit;
-	pointer-events: none;
-	opacity: 0;
-	transition: opacity 0.3s ease;
-	background: radial-gradient(
-		500px circle at var(--x, 50%) var(--y, 50%),
-		rgba(20, 184, 152, 0.12),
-		transparent 70%
-	);
-	z-index: 1;
-}
-
-.bento-spotlight:hover::before {
-	opacity: 1;
-}
-
-.dark .bento-spotlight::before {
-	background: radial-gradient(
-		500px circle at var(--x, 50%) var(--y, 50%),
-		rgba(43, 212, 181, 0.1),
-		transparent 70%
-	);
-}
 
 .hero-card-clean {
 	background: #002b27;

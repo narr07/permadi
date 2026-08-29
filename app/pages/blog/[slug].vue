@@ -405,7 +405,7 @@ useSchemaOrg([
 				>
 					<!-- Bento Card Header with Spotlight -->
 					<header
-						v-spotlight
+						
 						class="bento-card-clean relative mb-10 overflow-hidden border border-slate-200/80 rounded-bento bg-white/90 p-6 shadow-sm dark:border-[#134e43] dark:bg-[#002b27]/90 md:p-9 sm:p-8"
 					>
 						<!-- Category & Tags Badge Row -->
@@ -479,7 +479,7 @@ useSchemaOrg([
 						>
 							<NuxtLink
 								v-if="surround[0]"
-								v-spotlight
+								
 								:to="`/${locale}/blog/${surround[0].slug || cleanSlug(surround[0].path)}`"
 								class="bento-card-clean group flex flex-col justify-between bento-lift rounded-bento p-4"
 							>
@@ -497,7 +497,7 @@ useSchemaOrg([
 
 							<NuxtLink
 								v-if="surround[1]"
-								v-spotlight
+								
 								:to="`/${locale}/blog/${surround[1].slug || cleanSlug(surround[1].path)}`"
 								class="bento-card-clean group flex flex-col justify-between bento-lift rounded-bento p-4 text-right"
 							>

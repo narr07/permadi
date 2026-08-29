@@ -23,7 +23,7 @@ const { formatDate } = useFormatDate()
 
 <template>
 	<div
-		v-spotlight
+
 		class="bento-card-clean p-6 md:col-span-12 sm:p-8"
 	>
 		<div class="mb-6 flex items-center justify-between border-b border-slate-200/60 pb-3.5 dark:border-slate-800/60">

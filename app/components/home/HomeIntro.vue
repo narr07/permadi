@@ -4,21 +4,11 @@ defineProps<{
 	headline?: string
 	description?: string
 }>()
-
-function onHeaderMouseMove(e: MouseEvent) {
-	const target = e.currentTarget as HTMLElement
-	if (!target)
-		return
-	const rect = target.getBoundingClientRect()
-	target.style.setProperty('--x', `${e.clientX - rect.left}px`)
-	target.style.setProperty('--y', `${e.clientY - rect.top}px`)
-}
 </script>
 
 <template>
 	<header
-		class="bento-card-clean bento-spotlight relative z-10 mb-8 bg-slate-50/50 p-6 sm:mb-10 dark:bg-slate-900/40 sm:p-8"
-		@mousemove="onHeaderMouseMove"
+		class="bento-card-clean relative z-10 mb-8 bg-slate-50/50 p-6 sm:mb-10 dark:bg-slate-900/40 sm:p-8"
 	>
 		<!-- Ambient Glow Subtle Background (Clipped inside rounded frame) -->
 		<div class="pointer-events-none absolute inset-0 overflow-hidden rounded-[20px]">
