@@ -200,17 +200,17 @@ defineOgImage('Bento', {
 
 useSchemaOrg([
 	defineSoftwareApp({
-		'name': () => project.value?.doc?.title,
-		'description': () => project.value?.doc?.description,
-		'applicationCategory': () => (project.value?.doc?.category === 'mobile' ? 'MobileApplication' : (project.value?.doc?.category === 'design' ? 'DesignApplication' : 'WebApplication')),
-		'operatingSystem': 'All, Web Browser',
-		'datePublished': () => (project.value?.doc?.date ? new Date(project.value.doc.date).toISOString() : undefined),
-		'offers': {
+		name: () => project.value?.doc?.title,
+		description: () => project.value?.doc?.description,
+		applicationCategory: () => (project.value?.doc?.category === 'mobile' ? 'MobileApplication' : (project.value?.doc?.category === 'design' ? 'DesignApplication' : 'WebApplication')),
+		operatingSystem: 'All, Web Browser',
+		datePublished: () => (project.value?.doc?.date ? new Date(project.value.doc.date).toISOString() : undefined),
+		offers: {
 			'@type': 'Offer',
 			'price': '0',
 			'priceCurrency': 'USD',
 		},
-		'aggregateRating': {
+		aggregateRating: {
 			'@type': 'AggregateRating',
 			'itemReviewed': {
 				'@type': 'SoftwareApplication',
@@ -232,7 +232,7 @@ useSchemaOrg([
 			'bestRating': '5',
 			'worstRating': '1',
 		},
-		'review': [
+		review: [
 			{
 				'@type': 'Review',
 				'itemReviewed': {
@@ -270,8 +270,8 @@ useSchemaOrg([
 				},
 			},
 		],
-		'url': () => project.value?.doc?.link || canonicalUrl.value,
-		'author': {
+		url: () => project.value?.doc?.link || canonicalUrl.value,
+		author: {
 			name: 'Dinar Permadi Yusup',
 			url: 'https://permadi.dev',
 		},
@@ -367,7 +367,7 @@ onMounted(() => {
 		>
 			<!-- Bento Card Header with Spotlight -->
 			<header
-				
+
 				class="bento-card-clean relative mb-10 overflow-hidden border border-slate-200/80 rounded-bento bg-white/90 p-6 shadow-sm dark:border-[#134e43] dark:bg-[#002b27]/90 md:p-9 sm:p-8"
 			>
 				<!-- Category & Tags Badge Row -->
@@ -389,7 +389,7 @@ onMounted(() => {
 				</div>
 
 				<!-- Title (Barlow, Bold, Responsive) -->
-				<h1 class="text-2xl text-slate-900 font-extrabold leading-[1.18] tracking-tight font-heading lg:text-[2.5rem] md:text-4xl sm:text-3xl dark:text-white">
+				<h1 class="text-2xl text-slate-900 font-bold leading-[1.18] tracking-tight font-heading lg:text-[2.5rem] md:text-4xl sm:text-3xl dark:text-white">
 					{{ project.doc.title }}
 				</h1>
 

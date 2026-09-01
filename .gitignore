@@ -60,3 +60,7 @@ Page Audit (Details)_files/
 
 # Research reports output
 reports/
+
+# Automation Scripts & Browser Extensions (Local Tools)
+scripts/autoinput/
+scripts/extension/

@@ -72,18 +72,36 @@ const homeSchema = z.object({
 		label: property(z.string().optional()).editor({ label: 'Label Kartu' }),
 	}).optional(),
 
-	// Eksplorasi Visual (Tengah)
-	explore: z.object({
-		label: property(z.string().optional()).editor({ label: 'Label Eksplorasi' }),
-		text: property(z.string().optional()).editor({ input: 'textarea', label: 'Teks Eksplorasi' }),
-	}).optional(),
-
-	// Arsip Visual / Galeri (Kanan Tengah)
-	archive: z.object({
-		label: property(z.string().optional()).editor({ label: 'Label Galeri' }),
-		title: property(z.string().optional()).editor({ label: 'Judul Galeri' }),
-		description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Galeri' }),
-		link_text: property(z.string().optional()).editor({ label: 'Teks Tautan Galeri' }),
+	// Bagian Keahlian & Tech Stack Bento
+	skills_section: z.object({
+		code_label: property(z.string().optional()).editor({ label: 'Label Skill Koding' }),
+		code_title: property(z.string().optional()).editor({ label: 'Judul Skill Koding' }),
+		code_desc: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Skill Koding' }),
+		code_items: z.array(z.object({
+			name: property(z.string()).editor({ label: 'Nama Teknologi', tooltip: 'Contoh: Nuxt & Vue 3, Flutter & Dart, Python' }),
+			icon: property(z.string().optional()).editor({
+				input: 'icon',
+				iconLibraries: ['simple-icons', 'hugeicons', 'vscode-icons', 'lucide'],
+				label: 'Pilih Ikon (Iconify / Path)',
+				description: 'Pilih ikon dari Iconify (Simple Icons, Hugeicons, dsb) atau ketik path file SVG lokal (misal: /icons/f-nuxt.svg)',
+			}),
+			role: property(z.string().optional()).editor({ label: 'Badge Singkat', tooltip: 'Contoh: Web & SSR, Mobile App, Logika Data' }),
+			desc: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Singkat' }),
+		})).optional(),
+		design_label: property(z.string().optional()).editor({ label: 'Label Skill Desain' }),
+		design_title: property(z.string().optional()).editor({ label: 'Judul Skill Desain' }),
+		design_desc: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Skill Desain' }),
+		design_items: z.array(z.object({
+			name: property(z.string()).editor({ label: 'Nama Software / Tool', tooltip: 'Contoh: Illustrator, Photoshop, Figma' }),
+			icon: property(z.string().optional()).editor({
+				input: 'icon',
+				iconLibraries: ['simple-icons', 'hugeicons', 'vscode-icons', 'lucide'],
+				label: 'Pilih Ikon (Iconify / Path)',
+				description: 'Pilih ikon dari Iconify (Simple Icons, Hugeicons, dsb) atau ketik path file SVG lokal (misal: /icons/d-illustrator.svg)',
+			}),
+			role: property(z.string().optional()).editor({ label: 'Badge Singkat', tooltip: 'Contoh: Vektor, Raster, UI System' }),
+			desc: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Singkat' }),
+		})).optional(),
 	}).optional(),
 
 	// Tulisan & Catatan Terbaru (Paling Bawah / 12 Kolom Penuh)

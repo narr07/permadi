@@ -26,13 +26,6 @@ const { data: featuredProject } = await useAsyncData(
 	{ watch: [locale] },
 )
 
-// 4. Cuplikan galeri dari Cloudinary API
-const { data: galleryItems } = await useAsyncData(
-	'home-galeri-preview',
-	() => $fetch<any[]>('/api/cloudinary-gallery').catch(() => []),
-	{ lazy: true },
-)
-
 useSeoMeta({
 	title: computed(() => page.value?.title),
 	description: computed(() => page.value?.description),
@@ -76,18 +69,16 @@ defineOgImage('Bento', {
 				:philosophy="page?.philosophy"
 			/>
 
-			<!-- Kartu Eksplorasi Visual -->
-			<LazyHomeExploreCard
+			<!-- Bento Skill Rekayasa Web & Mobile (Nuxt, Flutter, Python) -->
+			<LazyHomeProgrammingSkills
 				hydrate-on-visible
-				:gallery-item="galleryItems?.[0]"
-				:label="page?.explore?.label"
-				:text="page?.explore?.text"
+				:skills-data="page?.skills_section"
 			/>
 
-			<!-- Kartu Arsip Galeri -->
-			<LazyHomeArchiveCard
+			<!-- Bento Skill Desain Grafis & UI (Illustrator, Photoshop, Figma) -->
+			<LazyHomeDesignSkills
 				hydrate-on-visible
-				:archive="page?.archive"
+				:skills-data="page?.skills_section"
 			/>
 
 			<!-- Kartu Tulisan Terbaru (12 Kolom) -->

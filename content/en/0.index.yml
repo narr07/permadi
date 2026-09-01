@@ -36,17 +36,42 @@ philosophy:
   quote_bold: Great design stays with you.
   label: Permadi Philosophy
 
-explore:
-  label: Currently Exploring
-  text: Interfaces that feel inevitable and calm.
-
-archive:
-  label: The Archive
-  title: Images, objects, and quiet observations.
-  description: Curated captures of graphic design work and workspace documentation, organized in Cloudinary CDN.
-  link_text: Open Gallery
+skills_section:
+  code_label: Web & Mobile Engineering
+  code_title: Nuxt, Flutter & Python
+  code_desc: Crafting high-performance web apps, cross-platform mobile experiences, and data automation scripts.
+  code_items:
+    - name: Nuxt & Vue 3
+      icon: /icons/f-nuxt.svg
+      role: Web & SSR
+      desc: Modern web architecture, full-stack Nitro engine, and high performance.
+    - name: Flutter & Dart
+      icon: /icons/f-flutter.svg
+      role: Mobile App
+      desc: Android and iOS applications with responsive, reactive interfaces.
+    - name: Python
+      icon: /icons/b-python.svg
+      role: Logic & Data
+      desc: Numerical computation, script automation, and structured data handling.
+  design_label: Graphic & Interface Design
+  design_title: Adobe Suite & Figma
+  design_desc: Designing precise visual identity, raster/vector artwork, and modern interface design systems.
+  design_items:
+    - name: Illustrator
+      icon: /icons/d-illustrator.svg
+      role: Vector & Brand
+      desc: Precision logo design, typography, and digital vectors.
+    - name: Photoshop
+      icon: /icons/d-photoshop.svg
+      role: Raster Craft
+      desc: Raster visual manipulation and detailed photo retouching.
+    - name: Figma
+      icon: /icons/d-figma.svg
+      role: UI & Systems
+      desc: Interactive prototyping and component design systems.
 
 writing:
   label: Recent Writing
   title: Notes on code, design, and education.
   all_link_text: Read All Notes
+

@@ -118,7 +118,7 @@ useSeoMeta({
 						</div>
 
 						<!-- Heading Title -->
-						<h1 class="text-3xl text-slate-900 font-extrabold leading-tight tracking-tight font-heading lg:text-5xl sm:text-4xl dark:text-white">
+						<h1 class="text-3xl text-slate-900 font-bold leading-tight tracking-tight font-heading lg:text-5xl sm:text-4xl dark:text-white">
 							{{ errorTitle }}
 						</h1>
 

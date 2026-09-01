@@ -8,17 +8,12 @@ defineProps<{
 
 <template>
 	<header
-		class="bento-card-clean relative z-10 mb-8 bg-slate-50/50 p-6 sm:mb-10 dark:bg-slate-900/40 sm:p-8"
+		class="bento-card-clean relative z-10 mb-8 bg-slate-50/70 p-6 sm:mb-10 dark:bg-slate-900/60 sm:p-8"
 	>
-		<!-- Ambient Glow Subtle Background (Clipped inside rounded frame) -->
-		<div class="pointer-events-none absolute inset-0 overflow-hidden rounded-[20px]">
-			<div class="absolute h-64 w-64 rounded-full bg-brand-400/10 blur-3xl -right-16 -top-16 dark:bg-brand-400/5" />
-		</div>
-
-		<div class="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-center">
+		<div class="flex flex-col justify-between gap-6 md:flex-row md:items-center">
 			<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
 			<div class="max-w-2xl">
-				<!-- Top Bar: Eyebrow di kiri, Logo avatar di kanan (mobile) -->
+				<!-- Top Bar: Eyebrow di kiri, Logo di kanan pada tampilan mobile -->
 				<div class="mb-3.5 flex items-center justify-between gap-3">
 					<div
 						v-if="eyebrow"
@@ -28,9 +23,9 @@ defineProps<{
 						<span>{{ eyebrow }}</span>
 					</div>
 
-					<!-- Logo Compact Badge di Mobile (Sejajar dengan Eyebrow) -->
+					<!-- Logo Compact Badge di Mobile -->
 					<div class="shadow-xs flex shrink-0 items-center justify-center border border-slate-200/70 rounded-xl bg-white p-1.5 md:hidden dark:border-slate-700/60 dark:bg-slate-800/80">
-						<Logo :size="36" />
+						<Logo :size="48" />
 					</div>
 				</div>
 
@@ -51,8 +46,8 @@ defineProps<{
 
 			<!-- Sisi Kanan: Interactive Logo Bento Widget (Desktop) -->
 			<div class="hidden shrink-0 items-center justify-center md:flex">
-				<div class="shadow-xs flex items-center justify-center border border-slate-200/70 rounded-2xl bg-white p-4 transition-colors duration-100 dark:border-slate-700/60 hover:border-brand-500 dark:bg-slate-800/80 dark:hover:border-brand-400">
-					<Logo :size="84" />
+				<div class="shadow-xs flex items-center justify-center border border-slate-200/70 rounded-2xl bg-white p-5 transition-colors duration-100 dark:border-slate-700/60 hover:border-brand-500 dark:bg-slate-800/80 dark:hover:border-brand-400">
+					<Logo :size="200" />
 				</div>
 			</div>
 		</div>

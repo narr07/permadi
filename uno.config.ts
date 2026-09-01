@@ -171,17 +171,15 @@ export default defineConfig({
 		'bento-highlight': 'border border-brand-500/30 dark:border-brand-400/20',
 		'focus-ring': 'outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0',
 
-		'bento-spotlight': 'relative overflow-hidden before:(content-[\'\'] absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none) before:bg-[radial-gradient(400px_circle_at_var(--x,_50%)_var(--y,_50%),rgba(43,212,181,0.15),transparent_70%)]',
-
 		'bento-grid': 'grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-12 gap-4 sm:gap-6 auto-rows-[minmax(160px,auto)]',
 		'container-bento': 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8',
 
 		'nav-island': 'flex items-center gap-2 rounded-bento-island bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/70 dark:border-slate-800/70 shadow-sm',
 
-		'heading-page': 'font-heading font-800 text-3xl sm:text-5xl lg:text-6xl tracking-tight text-brand-900 dark:text-brand-200 leading-[1.05] mb-3',
+		'heading-page': 'font-heading font-700 text-3xl sm:text-5xl lg:text-6xl tracking-tight text-brand-900 dark:text-brand-200 leading-[1.05] mb-3',
 		'heading-page-sub': 'text-brand-800 dark:text-brand-400 text-base sm:text-lg leading-relaxed max-w-xl',
 
-		'heading-hero': 'font-heading font-800 mb-4  text-4xl sm:text-6xl leading-[0.95] tracking-tight text-brand-950 dark:text-yellow-600',
+		'heading-hero': 'font-heading font-700 mb-4  text-4xl sm:text-6xl leading-[0.95] tracking-tight text-brand-950 dark:text-yellow-600',
 		'heading-sub': 'text-brand-800 dark:text-brand-200 text-base sm:text-lg leading-relaxed max-w-xl',
 		'heading-card-lg': 'font-heading font-700 text-xl tracking-tight text-slate-900 dark:text-white',
 		'heading-card-md': 'font-heading font-600 text-lg text-slate-900 dark:text-white',

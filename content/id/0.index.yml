@@ -1,13 +1,5 @@
 title: Dinar Permadi Yusup | Frontend Developer & Desainer Grafis
-archive:
-  label: Arsip Visual
-  title: Gambar, dokumentasi, dan observasi visual.
-  description: Dokumentasi fotografi karya desain grafis dan setup ruang kerja, terorganisir di Cloudinary CDN.
-  link_text: Buka Galeri Lengkap
 description: Arsip hidup karya web, eksperimen antarmuka, dan catatan oleh seorang guru SD lulusan UPI yang menggemari coding (Nuxt, Flutter, Python, PHP) serta desain grafis.
-explore:
-  label: Eksplorasi Saat Ini
-  text: Antarmuka yang terasa natural dan presisi.
 eyebrow: Permadi / Guru SD, Developer & Desainer
 headline: Sudut kecil di belantara internet.
 hero:
@@ -16,7 +8,7 @@ hero:
   headline: Merajut logika, kode,
   headline_italic: dan estetika visual
   headline_suffix: secara presisi.
-  description: 'Guru SD lulusan <a href="https://www.upi.edu" target="_blank" rel="noopener noreferrer" class="font-semibold text-brand-300 underline underline-offset-4 decoration-brand-400/60 hover:text-white transition-colors">UPI</a> yang gemar berhitung, berkreasi lewat Nuxt & Flutter (JS, Python, PHP), serta merancang karya visual dengan ekosistem Adobe.'
+  description: Guru SD lulusan <a href="https://www.upi.edu" target="_blank" rel="noopener noreferrer" class="font-semibold text-brand-300 underline underline-offset-4 decoration-brand-400/60 hover:text-white transition-colors">UPI</a> yang gemar berhitung, berkreasi lewat Nuxt & Flutter (JS, Python, PHP), serta merancang karya visual dengan ekosistem Adobe.
   location: Majalengka, ID
   timezone: GMT+7 / Local time
   links:
@@ -24,11 +16,12 @@ hero:
       to: /id/projek
       icon: i-hugeicons-arrow-up-right-01
       variant: primary
+      trailing: false
     - label: Hubungi Saya
       to: /id/kontak
       variant: outline
 philosophy:
-  number: 01 / 04
+  number: 01 / 07
   quote: Desain yang baik itu tenang.
   quote_bold: Desain luar biasa akan selalu membekas.
   label: Permadi Philosophy
@@ -37,6 +30,39 @@ project_section:
   fallback_title: Empat proyek, banyak pelajaran berharga.
   fallback_description: Koleksi studi kasus sistem web dan eksplorasi desain modular, dari kebutuhan pendidikan hingga produk digital.
   all_link_text: Buka Semua Projek
+skills_section:
+  code_label: Rekayasa Web & Aplikasi
+  code_title: Nuxt, Flutter & Python
+  code_desc: Membangun aplikasi web performa tinggi, aplikasi mobile lintas platform, dan otomasi logika data.
+  code_items:
+    - name: Nuxt & Vue 3
+      icon: /icons/f-nuxt.svg
+      role: Web & SSR
+      desc: Arsitektur web modern, full-stack Nitro, dan optimasi performa tinggi.
+    - name: Flutter & Dart
+      icon: /icons/f-flutter.svg
+      role: Mobile App
+      desc: Aplikasi Android dan iOS dengan antarmuka responsif dan reaktif.
+    - name: Python
+      icon: /icons/b-python.svg
+      role: Logika & Data
+      desc: Komputasi numerik, otomasi skrip, dan pengolahan data terstruktur.
+  design_label: Desain Grafis & Antarmuka
+  design_title: Adobe Suite & Figma
+  design_desc: Merancang identitas visual presisi, manipulasi grafis tingkat lanjut, dan sistem desain modern.
+  design_items:
+    - name: Illustrator
+      icon: /icons/d-illustrator.svg
+      role: Vektor & Brand
+      desc: Desain logo presisi, tipografi, dan ilustrasi digital.
+    - name: Photoshop
+      icon: /icons/d-photoshop.svg
+      role: Raster Craft
+      desc: Manipulasi visual raster dan pengolahan foto detail.
+    - name: Figma
+      icon: /icons/d-figma.svg
+      role: UI & Sistem
+      desc: Prototipe interaktif dan arsitektur desain komponen.
 writing:
   label: Tulisan & Catatan
   title: Catatan seputar web, desain, dan dunia pendidikan.
