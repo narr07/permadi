@@ -307,7 +307,7 @@ onUnmounted(() => {
 				<!-- Bento Items List (Active like Hover, Hover with Outline) -->
 				<div
 					ref="desktopListRef"
-					class="max-h-[22vh] min-h-[3.5rem] overflow-y-auto pr-1 space-y-1"
+					class="max-h-[40vh] min-h-[3.5rem] overflow-y-auto pr-1 space-y-1"
 				>
 					<a
 						v-for="(item, idx) in flatList"

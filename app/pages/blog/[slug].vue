@@ -4,7 +4,7 @@ import AppReactionsBar from '~/components/reactions/AppReactionsBar.vue'
 
 // Load prose typography CSS hanya di halaman artikel (lazy, tidak blocking)
 useHead({
-	link: [{ rel: 'stylesheet', href: '/prose.css', media: 'print', onload: "this.media='all'" }],
+	link: [{ rel: 'stylesheet', href: '/prose.css', media: 'print', onload: 'this.media=\'all\'' }],
 })
 
 const route = useRoute()
@@ -455,9 +455,7 @@ useSchemaOrg([
 							</div>
 
 							<div class="inline-flex items-center gap-2 text-xs text-slate-600 font-medium dark:text-slate-300">
-								<span class="h-6 w-6 flex items-center justify-center rounded-full bg-brand-700 text-[10px] text-white font-bold font-heading dark:bg-brand-500">
-									DP
-								</span>
+								<LogoNav />
 								<span>Dinar Permadi</span>
 							</div>
 						</div>

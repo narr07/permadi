@@ -3,19 +3,47 @@
    Dimuat hanya di halaman yang menampilkan konten Markdown (artikel/blog/projek)
    ========================================================================== */
 
-/* Prose Headings (h1 - h6) */
+/* Prose Headings Base (h1 - h6) */
 .prose :where(h1, h2, h3, h4, h5, h6) {
 	font-family: 'Barlow', 'Plus Jakarta Sans', sans-serif !important;
-	font-weight: 700 !important;
+	font-weight: 800 !important;
 	letter-spacing: -0.03em !important;
 	color: #000b07 !important;
-	margin-top: 2em !important;
-	margin-bottom: 0.75em !important;
-	line-height: 1.25 !important;
 }
 
 .dark .prose :where(h1, h2, h3, h4, h5, h6) {
 	color: #f8fafa !important;
+}
+
+/* H2: Section Utama (Besar, Tegas, Garis Bawah Dashed Renggang) */
+.prose :where(h2) {
+	font-size: clamp(1.45rem, 2.8vw, 1.85rem) !important;
+	line-height: 1.2 !important;
+	margin-top: 2.75em !important;
+	margin-bottom: 0.6em !important;
+	padding-bottom: 0.6em !important;
+	border-bottom: 2px dashed #c5d9d7 !important;
+}
+
+.dark .prose :where(h2) {
+	border-bottom: 2px dashed rgba(20, 184, 152, 0.4) !important;
+}
+
+/* H3: Sub-bagian (Proporsional & Tanpa Border) */
+.prose :where(h3) {
+	font-size: clamp(1.2rem, 2vw, 1.375rem) !important;
+	line-height: 1.3 !important;
+	margin-top: 1.85em !important;
+	margin-bottom: 0.6em !important;
+	border-bottom: none !important;
+}
+
+/* H4: Sub-detail */
+.prose :where(h4) {
+	font-size: 1.1rem !important;
+	line-height: 1.35 !important;
+	margin-top: 1.5em !important;
+	margin-bottom: 0.5em !important;
 }
 
 /* Heading Anchor Links inside Nuxt Content */
@@ -38,7 +66,7 @@
 /* Body Links (Clean & Accessible) */
 .prose :where(p, li, blockquote) a {
 	color: #0f7662 !important;
-	font-weight: 600 !important;
+	font-weight: 700 !important;
 	text-decoration: underline !important;
 	text-decoration-thickness: 1.5px !important;
 	text-underline-offset: 3px !important;
@@ -58,15 +86,16 @@
 	color: #f8fafa !important;
 }
 
-/* Strong / Bold Text */
+/* Strong / Bold Text (Barlow 400) */
 .prose :where(strong, b) {
+	font-family: 'Barlow', sans-serif !important;
+	font-weight: 400 !important;
+	letter-spacing: -0.01em !important;
 	color: #000b07 !important;
-	font-weight: 700 !important;
 }
 
 .dark .prose :where(strong, b) {
 	color: #f8fafa !important;
-	font-weight: 700 !important;
 }
 
 /* Bento Style Blockquotes */
@@ -99,7 +128,7 @@
 
 .prose :where(ol > li)::marker {
 	font-family: 'Barlow', sans-serif !important;
-	font-weight: 700 !important;
+	font-weight: 800 !important;
 	color: #0f7662 !important;
 }
 
@@ -135,7 +164,7 @@ html.dark .shiki span,
 .prose :where(:not(pre) > code) {
 	font-family: 'JetBrains Mono', monospace !important;
 	font-size: 0.875em !important;
-	font-weight: 600 !important;
+	font-weight: 700 !important;
 	color: #115e4f !important;
 	background: #eff6f5 !important;
 	border: 1px solid #deeae9 !important;
@@ -168,7 +197,7 @@ html.dark .shiki span,
 	background: #eff6f5 !important;
 	color: #001e1c !important;
 	font-family: 'Barlow', sans-serif !important;
-	font-weight: 700 !important;
+	font-weight: 800 !important;
 	padding: 0.75rem 1rem !important;
 	border-bottom: 1px solid #deeae9 !important;
 }

@@ -372,13 +372,13 @@ useSchemaOrg([
 										</span>
 									</div>
 
-									<!-- Date Badge (Inverted High-Contrast Badge) -->
+									<!-- Date Badge -->
 									<div
 										v-if="item.date"
 										class="mb-3.5 flex items-center"
 									>
-										<span class="shadow-xs inline-flex items-center gap-1.5 border border-slate-900 rounded-full bg-slate-900 px-2.5 py-0.5 text-[11px] text-white font-bold font-mono transition-colors dark:border-white dark:bg-white dark:text-slate-950">
-											<span class="i-hugeicons-calendar-03 text-xs text-brand-400 dark:text-brand-800" />
+										<span class="shadow-xs inline-flex items-center gap-1.5 border border-white/20 rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] text-white font-bold font-mono transition-colors">
+											<span class="i-hugeicons-calendar-03 text-xs text-accent" />
 											<span>{{ formatDate(item.date) }}</span>
 										</span>
 									</div>
@@ -485,13 +485,13 @@ useSchemaOrg([
 									</span>
 								</div>
 
-								<!-- Date Badge (Inverted High-Contrast Badge) -->
+								<!-- Date Badge -->
 								<div
 									v-if="item.date"
 									class="mb-3.5 flex items-center"
 								>
-									<span class="shadow-xs inline-flex items-center gap-1.5 border border-slate-900 rounded-full bg-slate-900 px-2.5 py-0.5 text-[11px] text-white font-bold font-mono transition-colors dark:border-white dark:bg-white dark:text-slate-950">
-										<span class="i-hugeicons-calendar-03 text-xs text-brand-400 dark:text-brand-800" />
+									<span class="shadow-xs inline-flex items-center gap-1.5 border border-slate-200/90 rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] text-slate-800 font-bold font-mono transition-colors dark:border-slate-700/80 dark:bg-slate-800/90 dark:text-slate-200">
+										<span class="i-hugeicons-calendar-03 text-xs text-brand-600 dark:text-brand-400" />
 										<span>{{ formatDate(item.date) }}</span>
 									</span>
 								</div>

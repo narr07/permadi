@@ -13,17 +13,7 @@
   --color-brand-900: #134e43;
   --color-brand-950: #042f27;
 
-  --color-gray-50: #f8fafa;
-  --color-gray-100: #eff6f5;
-  --color-gray-200: #deeae9;
-  --color-gray-300: #c5d9d7;
-  --color-gray-400: #84a8a4;
-  --color-gray-500: #537c77;
-  --color-gray-600: #375c58;
-  --color-gray-700: #224844;
-  --color-gray-800: #0a2f2c;
-  --color-gray-900: #001e1c;
-  --color-gray-950: #000c0a;
+  --color-gray: #90b4ce;
 
 	 --color-slate-50: #f8fafa;
   --color-slate-100: #eff6f5;
@@ -111,7 +101,7 @@ h5,
 h6,
 .font-heading {
 	font-family: 'Barlow', 'Plus Jakarta Sans', sans-serif;
-	font-weight: 700;
+	font-weight: 800;
 	line-height: 1.15;
 	letter-spacing: -0.035em;
 	color: var(--heading);
@@ -120,7 +110,7 @@ h6,
 h1,
 .text-size-h1 {
 	font-family: 'Barlow', sans-serif;
-	font-weight: 700;
+	font-weight: 800;
 	margin-top: 0;
 	font-size: clamp(2.25rem, 4.5vw, 3.25rem);
 	line-height: 1.1;
@@ -173,7 +163,7 @@ small,
 /* Specific Page Heading Classes */
 .heading-page {
 	font-family: 'Barlow', sans-serif;
-	font-weight: 700;
+	font-weight: 800;
 	letter-spacing: -0.035em;
 	line-height: 1.05;
 	color: #000b07;
@@ -199,7 +189,7 @@ small,
 
 .heading-hero {
 	font-family: 'Barlow', sans-serif;
-	font-weight: 700;
+	font-weight: 800;
 	letter-spacing: -0.035em;
 	line-height: 0.95;
 	color: #000b07;
@@ -211,15 +201,7 @@ small,
 }
 
 /* Body text defaults — light: near-black, dark: near-white */
-.dark p,
-.dark span,
-.dark li,
-.dark label,
-.dark td,
-.dark th,
-.dark blockquote,
-.dark time,
-.dark small {
+.dark {
 	color: #f8fafa;
 }
 

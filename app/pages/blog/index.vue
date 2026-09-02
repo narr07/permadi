@@ -380,7 +380,7 @@ useSchemaOrg([
 							</span>
 						</div>
 
-						<!-- Date Badge (Inverted High-Contrast Badge) -->
+						<!-- Date Badge -->
 						<div
 							v-if="post.date"
 							class="mb-3.5 flex items-center"
@@ -388,12 +388,12 @@ useSchemaOrg([
 							<span
 								class="shadow-xs inline-flex items-center gap-1.5 border rounded-full px-2.5 py-0.5 text-[11px] font-bold font-mono transition-colors"
 								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-									? '!bg-white !text-slate-950 !border-white shadow-xs'
-									: 'bg-slate-900 text-white border-slate-900 dark:bg-white dark:text-slate-950 dark:border-white shadow-xs'"
+									? 'bg-white/15 text-white border-white/20'
+									: 'border-slate-200/90 bg-slate-100 text-slate-800 dark:border-slate-700/80 dark:bg-slate-800/90 dark:text-slate-200'"
 							>
 								<span
 									class="i-hugeicons-calendar-03 text-xs"
-									:class="currentPage === 1 && index === 0 && selectedTag === 'ALL' ? 'text-brand-800' : 'text-brand-400 dark:text-brand-800'"
+									:class="currentPage === 1 && index === 0 && selectedTag === 'ALL' ? 'text-accent' : 'text-brand-600 dark:text-brand-400'"
 								/>
 								<span>{{ formatDate(post.date) }}</span>
 							</span>
@@ -401,10 +401,10 @@ useSchemaOrg([
 
 						<!-- Title -->
 						<h2
-							class="line-clamp-2 text-lg font-bold leading-snug tracking-normal font-heading transition-colors duration-200 sm:text-xl"
+							class="sm:text-2xls line-clamp-2 text-xl font-bold leading-snug font-heading transition-colors duration-200 lg:text-2xl"
 							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-								? '!text-white group-hover:!text-yellow-300 md:text-2xl lg:text-3xl'
-								: 'text-slate-900 dark:text-slate-100 group-hover:text-brand-700 dark:group-hover:text-brand-300'"
+								? '!text-white group-hover:!text-accent md:text-3xl lg:text-4xl'
+								: 'text-slate-900 dark:text-slate-100 group-hover:text-brand-900 dark:group-hover:text-accent'"
 						>
 							{{ post.title }}
 						</h2>

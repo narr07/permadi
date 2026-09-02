@@ -142,7 +142,7 @@ async function handleCopyLink() {
 				:url="shareUrl"
 				rel="nofollow noopener noreferrer"
 				user="dinarpermadi07"
-				class="group hover:shadow-2xs aspect-square flex items-center justify-center border border-slate-200/70 rounded-lg bg-slate-50 text-slate-700 transition-all duration-200 dark:border-[#134e43]/90 dark:bg-[#002420]/80 hover:bg-white dark:text-slate-300 hover:-translate-y-0.5 dark:hover:bg-[#003833]"
+				class="group hover:shadow-2xs aspect-square flex items-center justify-center border border-slate-200/70 rounded-lg bg-slate-50 p-1 text-slate-700 transition-all duration-200 dark:border-[#134e43]/90 dark:bg-[#002420]/80 hover:bg-white dark:text-slate-300 hover:-translate-y-0.5 dark:hover:bg-[#003833]"
 				:class="net.hoverClass"
 				:aria-label="`Share to ${net.label}`"
 				@click="onShareClick(net.name)"
