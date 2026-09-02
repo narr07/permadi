@@ -1,18 +1,14 @@
 title: Dinar Permadi Yusup | Frontend Developer & Graphic Designer
-
 description: A living archive of web projects, interface experiments, and notes by an elementary school teacher and UPI alumnus passionate about programming (Nuxt, Flutter, Python, PHP) and graphic design.
-
 eyebrow: Permadi / Teacher, Developer & Designer
-
 headline: A small corner of the internet.
-
 hero:
   status: Available for select projects
   kicker: Elementary Teacher · Nuxt & Flutter Developer · Graphic Designer
   headline: Blending logic, code,
   headline_italic: and visual craft
   headline_suffix: with precision.
-  description: 'An elementary school teacher and <a href="https://www.upi.edu" target="_blank" rel="noopener noreferrer" class="font-semibold text-brand-300 underline underline-offset-4 decoration-brand-400/60 hover:text-white transition-colors">UPI</a> alumnus who loves numbers, crafts web and mobile apps with Nuxt & Flutter (JS, Python, PHP), and designs with the Adobe ecosystem.'
+  description: An elementary school teacher and <a href="https://www.upi.edu" target="_blank" rel="noopener noreferrer" class="font-semibold text-brand-300 underline underline-offset-4 decoration-brand-400/60 hover:text-white transition-colors">UPI</a> alumnus who loves numbers, crafts web and mobile apps with Nuxt & Flutter (JS, Python, PHP), and designs with the Adobe ecosystem.
   location: Majalengka, ID
   timezone: GMT+7 / Local time
   links:
@@ -23,19 +19,16 @@ hero:
     - label: Get in Touch
       to: /en/contact
       variant: outline
-
-project_section:
-  label: Selected Work
-  fallback_title: Four projects, many lessons.
-  fallback_description: A collection of web systems case studies and modular design, from education tools to digital products.
-  all_link_text: Browse All Work
-
 philosophy:
   number: 01 / 04
   quote: Good design is quiet.
   quote_bold: Great design stays with you.
   label: Permadi Philosophy
-
+project_section:
+  label: Selected Work
+  fallback_title: Four projects, many lessons.
+  fallback_description: A collection of web systems case studies and modular design, from education tools to digital products.
+  all_link_text: Browse All Work
 skills_section:
   code_label: Web & Mobile Engineering
   code_title: Nuxt, Flutter & Python
@@ -69,9 +62,7 @@ skills_section:
       icon: /icons/d-figma.svg
       role: UI & Systems
       desc: Interactive prototyping and component design systems.
-
 writing:
   label: Recent Writing
   title: Notes on code, design, and education.
   all_link_text: Read All Notes
-

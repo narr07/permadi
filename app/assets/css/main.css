@@ -267,6 +267,20 @@ small,
 	box-shadow: 0 8px 24px -4px rgba(15, 118, 98, 0.09), 0 3px 8px -2px rgba(0, 0, 0, 0.04);
 }
 
+.featured-post-card,
+.featured-post-card h2,
+.featured-post-card .font-heading {
+	color: #ffffff !important;
+}
+
+.featured-post-card p {
+	color: #f1f5f9 !important;
+}
+
+.featured-post-card:hover h2 {
+	color: #fdeed6 !important;
+}
+
 .dark .bento-card-clean:hover {
 	border-color: #2bd4b5;
 	box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.65), 0 0 1px 1px rgba(43, 212, 181, 0.15);
@@ -636,22 +650,32 @@ html.dark .shiki span,
 	margin: 2.5rem 0 !important;
 }
 
-.dark .prose :where(hr) {
-	border-top-color: #134e43 !important;
+/* Thin elegant custom scrollbar for dropdowns and panels */
+.custom-scrollbar {
+	scrollbar-width: thin;
+	scrollbar-color: rgba(148, 163, 184, 0.4) transparent;
 }
-
-/* Native Browser View Transitions API
-::view-transition-old(root),
-::view-transition-new(root) {
-	animation-duration: 0.25s;
-	animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+.custom-scrollbar::-webkit-scrollbar {
+	width: 5px;
+	height: 5px;
 }
-
-@media (prefers-reduced-motion: reduce) {
-	::view-transition-group(*),
-	::view-transition-old(*),
-	::view-transition-new(*) {
-		animation: none !important;
-	}
-} */
+.custom-scrollbar::-webkit-scrollbar-track {
+	background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+	background-color: rgba(148, 163, 184, 0.35);
+	border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+	background-color: rgba(148, 163, 184, 0.6);
+}
+.dark .custom-scrollbar {
+	scrollbar-color: rgba(94, 234, 207, 0.25) transparent;
+}
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+	background-color: rgba(94, 234, 207, 0.2);
+}
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+	background-color: rgba(94, 234, 207, 0.4);
+}
 

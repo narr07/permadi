@@ -88,13 +88,6 @@ export default defineNuxtConfig({
 			{
 				userAgent: ['*'],
 				allow: ['/'],
-				contentUsage: {
-					'train-ai': 'n',
-				},
-				contentSignal: {
-					'ai-train': 'no',
-					'search': 'yes',
-				},
 			},
 		],
 		sitemap: ['https://permadi.dev/sitemap_index.xml'],

@@ -173,20 +173,14 @@ useSchemaOrg([
 
 <template>
 	<div class="container-bento py-10 sm:py-14">
-		<!-- Page Header with Bento Spotlight Effect -->
+		<!-- Page Header (Clean Bento Style without gradient) -->
 		<header
-			class="bento-card-clean  relative z-30 mb-8 bg-slate-50/50 p-6 sm:mb-10 !overflow-visible dark:bg-slate-900/40 sm:p-8"
-			
+			class="bento-card-clean relative z-30 mb-8 bg-slate-50/70 p-6 sm:mb-10 !overflow-visible dark:bg-slate-900/60 sm:p-8"
 		>
-			<!-- Ambient Glow Subtle Background (Clipped inside rounded frame) -->
-			<div class="pointer-events-none absolute inset-0 overflow-hidden rounded-[20px]">
-				<div class="absolute h-64 w-64 rounded-full bg-brand-400/10 blur-3xl -right-16 -top-16 dark:bg-brand-400/5" />
-			</div>
-
 			<div class="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
 				<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
 				<div class="max-w-2xl">
-					<div class="mb-3.5 inline-flex items-center gap-2 border border-brand-200/60 rounded-full bg-brand-100/70 px-3 py-1 text-xs text-brand-700 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
+					<div class="mb-3.5 inline-flex items-center gap-2 border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
 						<span class="status-dot animate-pulse" />
 						<span>{{ page?.eyebrow || (locale === 'id' ? 'Karya & Eksplorasi' : 'Work & Case Studies') }}</span>
 					</div>
@@ -252,12 +246,12 @@ useSchemaOrg([
 						>
 							<div
 								v-if="isTagDropdownOpen"
-								class="absolute right-0 top-full z-50 mt-2 max-h-80 max-w-[90vw] w-64 overflow-y-auto border border-slate-200 rounded-2xl bg-white p-2 shadow-2xl sm:w-72 dark:border-[#134e43] dark:bg-[#001714]"
+								class="absolute right-0 top-full z-50 mt-2 max-w-[90vw] w-64 flex flex-col overflow-hidden border border-slate-200 rounded-2xl bg-white p-2 shadow-2xl sm:w-72 dark:border-[#134e43] dark:bg-[#001714]"
 							>
 								<!-- Tag Search Input inside Dropdown -->
 								<div
 									v-if="allTags.length > 5"
-									class="mb-1.5 border-b border-slate-100 px-1 pb-2 dark:border-white/10"
+									class="mb-1.5 shrink-0 border-b border-slate-100 px-1 pb-2 dark:border-white/10"
 								>
 									<div class="relative">
 										<span class="i-hugeicons-search-01 absolute left-2.5 top-1/2 text-xs text-slate-500 -translate-y-1/2" />
@@ -271,7 +265,7 @@ useSchemaOrg([
 								</div>
 
 								<!-- List of Options -->
-								<div class="space-y-0.5">
+								<div class="max-h-60 space-y-0.5 overflow-y-auto overscroll-contain pr-1 custom-scrollbar">
 									<!-- "All Topics" Option -->
 									<button
 										type="button"

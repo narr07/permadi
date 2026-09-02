@@ -116,12 +116,12 @@ function resetFilter() {
 				>
 					<div
 						v-if="isOpen"
-						class="absolute left-0 top-full z-50 mt-2 max-h-80 max-w-[90vw] w-72 overflow-y-auto border border-slate-200 rounded-2xl bg-white p-2 shadow-2xl dark:border-[#134e43] dark:bg-[#001714]"
+						class="absolute left-0 top-full z-50 mt-2 max-w-[90vw] w-72 flex flex-col overflow-hidden border border-slate-200 rounded-2xl bg-white p-2 shadow-2xl dark:border-[#134e43] dark:bg-[#001714]"
 					>
 						<!-- Tag Search Input inside Dropdown if more than 5 tags -->
 						<div
 							v-if="tags.length > 5"
-							class="mb-1.5 border-b border-slate-100 px-1 pb-2 dark:border-white/10"
+							class="mb-1.5 shrink-0 border-b border-slate-100 px-1 pb-2 dark:border-white/10"
 						>
 							<div class="relative">
 								<span class="i-hugeicons-search-01 absolute left-2.5 top-1/2 text-xs text-slate-500 -translate-y-1/2" />
@@ -135,7 +135,7 @@ function resetFilter() {
 						</div>
 
 						<!-- List of Options -->
-						<div class="space-y-0.5">
+						<div class="max-h-60 space-y-0.5 overflow-y-auto overscroll-contain pr-1 custom-scrollbar">
 							<!-- "All Topics" Option -->
 							<button
 								type="button"

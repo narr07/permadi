@@ -122,69 +122,7 @@ defineOgImage('Bento', {
 			<NuxtPage />
 		</main>
 
-		<footer class="mt-16 border-t border-slate-200/80 py-8 dark:border-slate-800/80">
-			<div class="container-bento flex flex-col items-center justify-between gap-4 text-center text-meta sm:flex-row sm:text-left">
-				<div>
-					<p class="text-sm text-slate-700 dark:text-slate-300">
-						© 2021-<ClientOnly fallback="2026">{{ new Date().getFullYear() }}</ClientOnly> - narr07
-					</p>
-				</div>
-				<div class="flex items-center gap-3 text-lg text-slate-700 dark:text-slate-300">
-					<a
-						href="https://github.com/narr07"
-						target="_blank"
-						rel="noopener"
-						class="transition-colors hover:text-brand-800 dark:hover:text-brand-300"
-						aria-label="GitHub"
-					>
-						<span class="i-hugeicons-github" />
-						<span class="sr-only">GitHub</span>
-					</a>
-					<a
-						href="https://x.com/dinarpermadi07"
-						target="_blank"
-						rel="noopener"
-						class="transition-colors hover:text-brand-800 dark:hover:text-brand-300"
-						aria-label="X (Twitter)"
-					>
-						<span class="i-hugeicons-new-twitter" />
-						<span class="sr-only">X (Twitter)</span>
-					</a>
-					<a
-						href="https://www.instagram.com/narr07/"
-						target="_blank"
-						rel="noopener"
-						class="transition-colors hover:text-brand-800 dark:hover:text-brand-300"
-						aria-label="Instagram"
-					>
-						<span class="i-hugeicons-instagram" />
-						<span class="sr-only">Instagram</span>
-					</a>
-					<a
-						href="https://www.behance.net/narr07"
-						target="_blank"
-						rel="noopener"
-						class="transition-colors hover:text-brand-800 dark:hover:text-brand-300"
-						aria-label="Behance"
-					>
-						<span class="i-hugeicons-behance-02" />
-						<span class="sr-only">Behance</span>
-					</a>
-					<NuxtLink
-						to="/feed.xml"
-						external
-						target="_blank"
-						rel="noopener"
-						class="transition-colors hover:text-brand-800 dark:hover:text-brand-300"
-						:title="locale === 'id' ? 'Berlangganan RSS Feed' : 'Subscribe via RSS'"
-						aria-label="RSS Feed"
-					>
-						<span class="i-hugeicons-rss" />
-						<span class="sr-only">RSS Feed</span>
-					</NuxtLink>
-				</div>
-			</div>
-		</footer>
+		<AppFooter />
 
 	</div>
 </template>

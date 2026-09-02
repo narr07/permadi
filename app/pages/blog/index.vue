@@ -173,30 +173,24 @@ useSchemaOrg([
 
 <template>
 	<div class="container-bento py-10 sm:py-14">
-		<!-- Page Header with Bento Spotlight Effect -->
+		<!-- Page Header (Clean Bento Style without gradient) -->
 		<header
-			class="bento-card-clean  relative z-30 mb-8 bg-slate-50/50 p-6 sm:mb-10 !overflow-visible dark:bg-slate-900/40 sm:p-8"
-			
+			class="bento-card-clean relative z-30 mb-8 bg-slate-50/70 p-6 sm:mb-10 !overflow-visible dark:bg-slate-900/60 sm:p-8"
 		>
-			<!-- Ambient Glow Subtle Background (Clipped inside rounded frame) -->
-			<div class="pointer-events-none absolute inset-0 overflow-hidden rounded-[20px]">
-				<div class="absolute h-64 w-64 rounded-full bg-brand-400/10 blur-3xl -right-16 -top-16 dark:bg-brand-400/5" />
-			</div>
-
 			<div class="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
 				<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
 				<div class="max-w-2xl">
-					<div class="mb-3.5 inline-flex items-center gap-2 border border-brand-200/60 rounded-full bg-brand-100/70 px-3 py-1 text-xs text-brand-700 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
+					<div class="mb-3.5 inline-flex items-center gap-2 border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
 						<span class="status-dot animate-pulse" />
-						<span>{{ page?.eyebrow || (locale === 'id' ? 'Artikel & Opini' : 'Articles & Thoughts') }}</span>
+						<span>{{ page?.eyebrow || (locale === 'id' ? 'Artikel & Catatan' : 'Articles & Insights') }}</span>
 					</div>
 
 					<h1 class="heading-page">
-						{{ page?.title || (locale === 'id' ? 'Blog & Tulisan' : 'Blog & Articles') }}
+						{{ page?.title || (locale === 'id' ? 'Blog & Catatan Teknis' : 'Blog & Technical Notes') }}
 					</h1>
 
 					<p class="heading-page-sub">
-						{{ page?.description || (locale === 'id' ? 'Eksplorasi mendalam seputar Nuxt, TypeScript, sistem desain Bento, dan web performance.' : 'In-depth exploration of Nuxt, TypeScript, Bento design systems, and web performance.') }}
+						{{ page?.description || (locale === 'id' ? 'Kumpulan artikel seputar pemrograman, rekayasa web, eksplorasi desain grafis, dan teknologi pendidikan oleh Permadi.' : 'Articles and practical notes on software development, web engineering, graphic design, and educational technology by Permadi.') }}
 					</p>
 				</div>
 
@@ -252,12 +246,12 @@ useSchemaOrg([
 						>
 							<div
 								v-if="isTagDropdownOpen"
-								class="absolute right-0 top-full z-50 mt-2 max-h-80 max-w-[90vw] w-64 overflow-y-auto border border-slate-200 rounded-2xl bg-white p-2 shadow-2xl sm:w-72 dark:border-[#134e43] dark:bg-[#001714]"
+								class="absolute right-0 top-full z-50 mt-2 max-w-[90vw] w-64 flex flex-col overflow-hidden border border-slate-200 rounded-2xl bg-white p-2 shadow-2xl sm:w-72 dark:border-[#134e43] dark:bg-[#001714]"
 							>
 								<!-- Tag Search Input inside Dropdown -->
 								<div
 									v-if="allTags.length > 5"
-									class="mb-1.5 border-b border-slate-100 px-1 pb-2 dark:border-white/10"
+									class="mb-1.5 shrink-0 border-b border-slate-100 px-1 pb-2 dark:border-white/10"
 								>
 									<div class="relative">
 										<span class="i-hugeicons-search-01 absolute left-2.5 top-1/2 text-xs text-slate-500 -translate-y-1/2" />
@@ -271,7 +265,7 @@ useSchemaOrg([
 								</div>
 
 								<!-- List of Options -->
-								<div class="space-y-0.5">
+								<div class="max-h-60 space-y-0.5 overflow-y-auto overscroll-contain pr-1 custom-scrollbar">
 									<!-- "All Topics" Option -->
 									<button
 										type="button"
@@ -334,11 +328,10 @@ useSchemaOrg([
 				<NuxtLink
 					v-for="(post, index) in paginatedPosts"
 					:key="post.url"
-					
 					:to="post.url"
 					class="group bento-card-outline block flex flex-col justify-between bento-lift p-5 sm:p-6"
 					:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-						? 'lg:col-span-12 md:col-span-12 bg-brand-900 dark:bg-[#002b27] border-brand-800 dark:border-[#134e43] shadow-md text-white'
+						? 'featured-post-card lg:col-span-12 md:col-span-12 bg-brand-900 dark:bg-[#002b27] border-brand-800 dark:border-[#134e43] shadow-md !text-white'
 						: 'lg:col-span-6 md:col-span-6'"
 				>
 					<div>
@@ -349,7 +342,7 @@ useSchemaOrg([
 								v-if="post.category"
 								class="inline-flex shrink-0 items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold tracking-wide uppercase"
 								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-									? 'bg-white/15 text-white border border-white/25'
+									? '!bg-white/20 !text-white !border !border-white/30'
 									: 'bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-300 border border-brand-200/60 dark:border-brand-800/60'"
 							>
 								{{ getCategoryLabel(post.category) }}
@@ -360,7 +353,7 @@ useSchemaOrg([
 								v-if="post.tags?.[0]"
 								class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium"
 								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-									? 'bg-brand-400/20 text-brand-200 border border-brand-400/30'
+									? '!bg-brand-400/25 !text-brand-200 !border !border-brand-400/30'
 									: 'bg-brand-500/10 dark:bg-brand-400/10 text-brand-700 dark:text-brand-300 border border-brand-500/20 dark:border-brand-400/20'"
 							>
 								#{{ post.tags[0] }}
@@ -371,7 +364,7 @@ useSchemaOrg([
 								v-if="post.tags?.[1]"
 								class="hidden items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium sm:inline-flex"
 								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-									? 'bg-white/10 text-slate-200 border border-white/15'
+									? '!bg-white/15 !text-slate-100 !border !border-white/20'
 									: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50'"
 							>
 								#{{ post.tags[1] }}
@@ -382,7 +375,7 @@ useSchemaOrg([
 								v-if="post.tags && post.tags.length > 2"
 								class="inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-mono"
 								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-									? 'bg-white/10 text-brand-200'
+									? '!bg-white/15 !text-brand-200'
 									: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'"
 							>
 								+{{ post.tags.length - 2 }}
@@ -397,7 +390,7 @@ useSchemaOrg([
 							<span
 								class="shadow-xs inline-flex items-center gap-1.5 border rounded-full px-2.5 py-0.5 text-[11px] font-bold font-mono transition-colors"
 								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-									? 'bg-white text-slate-950 border-white shadow-xs'
+									? '!bg-white !text-slate-950 !border-white shadow-xs'
 									: 'bg-slate-900 text-white border-slate-900 dark:bg-white dark:text-slate-950 dark:border-white shadow-xs'"
 							>
 								<span
@@ -412,7 +405,7 @@ useSchemaOrg([
 						<h2
 							class="line-clamp-2 text-lg font-bold leading-snug tracking-normal font-heading transition-colors duration-200 sm:text-xl"
 							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-								? 'text-white group-hover:text-yellow-300 md:text-2xl lg:text-3xl'
+								? '!text-white group-hover:!text-yellow-300 md:text-2xl lg:text-3xl'
 								: 'text-slate-900 dark:text-slate-100 group-hover:text-brand-700 dark:group-hover:text-brand-300'"
 						>
 							{{ post.title }}
@@ -422,7 +415,7 @@ useSchemaOrg([
 						<p
 							class="line-clamp-2 mt-2 text-xs leading-relaxed transition-colors duration-200 sm:text-sm"
 							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-								? 'text-slate-200 group-hover:text-white'
+								? '!text-slate-100 group-hover:!text-white'
 								: 'text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'"
 						>
 							{{ post.description }}
@@ -433,20 +426,20 @@ useSchemaOrg([
 					<div
 						class="mt-5 flex items-center justify-between border-t pt-3.5 text-xs"
 						:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-							? 'border-white/15 text-slate-200'
+							? '!border-white/20 !text-slate-200'
 							: 'border-slate-200/60 dark:border-slate-800/60 text-slate-600 dark:text-slate-400'"
 					>
 						<span class="flex items-center gap-1.5 text-[11px] font-mono">
 							<span
 								class="i-hugeicons-clock-01 text-xs"
-								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL' ? 'text-brand-300' : 'text-brand-700 dark:text-brand-400'"
+								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL' ? '!text-brand-300' : 'text-brand-700 dark:text-brand-400'"
 							/>
 							{{ locale === 'id' ? `${post.readingTime || 5} menit baca` : `${post.readingTime || 5} min read` }}
 						</span>
 						<span
 							class="flex items-center gap-1 text-xs font-bold transition-all group-hover:translate-x-0.5"
 							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-								? 'text-white group-hover:text-yellow-300 font-bold'
+								? '!text-white group-hover:!text-yellow-300 font-bold'
 								: 'text-brand-800 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-yellow-500 font-semibold'"
 						>
 							{{ locale === 'id' ? 'Baca Artikel' : 'Read Article' }} <span class="i-hugeicons-arrow-right-01 text-xs" />
