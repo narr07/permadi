@@ -506,7 +506,7 @@ useSchemaOrg([
 							</div>
 
 							<div class="mt-5 flex items-center justify-between border-t border-slate-200/60 pt-3.5 text-xs dark:border-slate-800/60">
-								<span class="flex items-center gap-1 text-brand-800 font-bold transition-all group-hover:translate-x-1 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-yellow-500">
+								<span class="flex items-center gap-1 text-brand-800 font-bold transition-all group-hover:translate-x-1 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-accent">
 									{{ locale === 'id' ? 'Lihat Studi Kasus' : 'Explore Case Study' }} <span>↗</span>
 								</span>
 								<div

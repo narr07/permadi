@@ -233,7 +233,7 @@ onMounted(() => {
 			:aria-label="t('search.shortcut', 'Cari (Ctrl+K)')"
 			@click="openModal"
 		>
-			<span class="i-hugeicons-search-01 text-base text-slate-600 dark:text-slate-300" />
+			<span class="i-hugeicons-search-01 text-base text-gray-800 dark:text-gray-100" />
 		</button>
 
 		<!-- Modal Backdrop & Blur -->
@@ -248,7 +248,7 @@ onMounted(() => {
 			>
 				<div
 					v-if="isOpen"
-					class="fixed inset-0 z-100 flex items-start justify-center overflow-y-auto bg-slate-950/70 p-3 pt-16 backdrop-blur-md transition-all dark:bg-slate-950/80 md:p-6 sm:p-4 sm:pt-24"
+					class="fixed inset-0 z-100 flex items-start justify-center overflow-y-auto bg-gray-950/70 p-3 pt-16 backdrop-blur-md transition-all dark:bg-gray-950/80 md:p-6 sm:p-4 sm:pt-24"
 					role="dialog"
 					aria-modal="true"
 					:aria-label="t('search.placeholder', 'Pencarian')"
@@ -256,10 +256,10 @@ onMounted(() => {
 					@keydown="handleModalKeydown"
 				>
 					<!-- Bento Command Palette Card -->
-					<div class="animate-scale-in max-h-[80vh] max-w-2xl w-full flex flex-col overflow-hidden border border-slate-200/80 rounded-bento bg-white/95 shadow-2xl backdrop-blur-xl transition-all dark:border-slate-800/80 dark:bg-slate-900/95">
+					<div class="animate-scale-in max-h-[80vh] max-w-2xl w-full flex flex-col overflow-hidden border border-gray-200 rounded-bento bg-white shadow-2xl backdrop-blur-xl transition-all dark:border-gray-800 dark:bg-gray-900">
 						<!-- Top Search Bar -->
-						<div class="flex items-center gap-3 border-b border-slate-100 px-4 py-3.5 dark:border-slate-800/80">
-							<span class="i-hugeicons-search-01 shrink-0 text-lg text-slate-400 dark:text-slate-500" />
+						<div class="flex items-center gap-3 border-b border-gray-200 px-4 py-3.5 dark:border-gray-800">
+							<span class="i-hugeicons-search-01 shrink-0 text-lg text-gray-700 dark:text-gray-300" />
 
 							<input
 								ref="inputRef"
@@ -269,7 +269,7 @@ onMounted(() => {
 								aria-autocomplete="list"
 								:aria-expanded="Boolean(searchQuery.trim())"
 								:aria-label="t('search.placeholder', 'Ketik kata kunci pencarian...')"
-								class="flex-1 border-none bg-transparent text-sm text-slate-900 font-sans outline-none sm:text-base dark:text-white placeholder:text-slate-400"
+								class="flex-1 border-none bg-transparent text-sm text-gray-950 font-medium font-sans outline-none sm:text-base dark:text-gray-50 placeholder:text-gray-500 dark:placeholder:text-gray-400"
 								:placeholder="t('search.placeholder', 'Type a command or search...')"
 								autocomplete="off"
 								spellcheck="false"
@@ -277,13 +277,13 @@ onMounted(() => {
 
 							<span
 								v-if="status === 'loading'"
-								class="i-hugeicons-loading-03 shrink-0 animate-spin text-base text-brand-500"
+								class="i-hugeicons-loading-03 shrink-0 animate-spin text-base text-brand-600 dark:text-brand-400"
 								aria-live="polite"
 							/>
 
 							<button
 								type="button"
-								class="shrink-0 rounded-md p-1 text-slate-400 transition-colors hover:text-slate-600 dark:hover:text-slate-200"
+								class="shrink-0 rounded-md p-1 text-gray-500 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
 								aria-label="Tutup"
 								@click="closeModal"
 							>
@@ -298,7 +298,7 @@ onMounted(() => {
 								v-if="!searchQuery.trim()"
 								class="space-y-1"
 							>
-								<div class="px-3 py-1.5 text-xs text-slate-400 font-semibold tracking-wide uppercase dark:text-slate-500">
+								<div class="px-3 py-1.5 text-[11px] text-gray-700 font-bold tracking-wider uppercase dark:text-gray-300">
 									Links
 								</div>
 
@@ -313,18 +313,18 @@ onMounted(() => {
 											type="button"
 											class="group w-full flex cursor-pointer items-center justify-between border border-transparent rounded-bento px-3 py-2.5 text-left text-sm transition-all duration-150"
 											:class="idx === selectedIndex
-												? 'bg-brand-50/90 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400 border-brand-200/60 dark:border-brand-800/50'
-												: 'text-slate-700 dark:text-slate-200 hover:bg-slate-100/80 dark:hover:bg-slate-800/60 hover:border-slate-200/50 dark:hover:border-slate-700/50'"
+												? 'bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-300 border-brand-200 dark:border-brand-800'
+												: 'text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-gray-200 dark:hover:border-gray-700'"
 											@click="handleItemSelect(item)"
 										>
 											<div class="min-w-0 flex flex-1 items-center gap-3">
 												<span
 													:class="item.icon"
-													class="shrink-0 text-base text-emerald-600 transition-colors dark:text-emerald-400 group-hover:text-brand-500"
+													class="shrink-0 text-base text-emerald-700 transition-colors dark:text-emerald-400 group-hover:text-brand-600"
 												/>
 												<div class="flex items-center gap-2 truncate">
-													<span class="shrink-0 text-slate-900 font-medium dark:text-white">{{ item.label }}</span>
-													<span class="truncate text-xs text-slate-400 dark:text-slate-500">{{ item.description }}</span>
+													<span class="shrink-0 text-gray-950 font-bold dark:text-gray-50">{{ item.label }}</span>
+													<span class="truncate text-xs text-gray-600 dark:text-gray-400 font-normal">{{ item.description }}</span>
 												</div>
 											</div>
 
@@ -335,7 +335,7 @@ onMounted(() => {
 												<kbd
 													v-for="k in item.kbds"
 													:key="k"
-													class="border border-slate-200/60 rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-500 font-medium font-mono dark:border-slate-700/60 dark:bg-slate-800 dark:text-slate-400"
+													class="border border-gray-300 rounded bg-gray-100 px-1.5 py-0.5 text-[10px] text-gray-700 font-semibold font-mono dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300"
 												>
 													{{ k }}
 												</kbd>
@@ -348,18 +348,18 @@ onMounted(() => {
 											:to="item.to"
 											class="group flex cursor-pointer items-center justify-between border border-transparent rounded-bento px-3 py-2.5 text-sm transition-all duration-150"
 											:class="idx === selectedIndex
-												? 'bg-brand-50/90 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400 border-brand-200/60 dark:border-brand-800/50'
-												: 'text-slate-700 dark:text-slate-200 hover:bg-slate-100/80 dark:hover:bg-slate-800/60 hover:border-slate-200/50 dark:hover:border-slate-700/50'"
+												? 'bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-300 border-brand-200 dark:border-brand-800'
+												: 'text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-gray-200 dark:hover:border-gray-700'"
 											@click="closeModal"
 										>
 											<div class="min-w-0 flex flex-1 items-center gap-3">
 												<span
 													:class="item.icon"
-													class="shrink-0 text-base text-slate-400 transition-colors group-hover:text-brand-500"
+													class="shrink-0 text-base text-gray-600 transition-colors group-hover:text-brand-600 dark:text-gray-400 dark:group-hover:text-brand-300"
 												/>
 												<div class="flex items-center gap-2 truncate">
-													<span class="shrink-0 text-slate-900 font-medium dark:text-white">{{ item.label }}</span>
-													<span class="truncate text-xs text-slate-400 dark:text-slate-500">{{ item.description }}</span>
+													<span class="shrink-0 text-gray-950 font-bold dark:text-gray-50">{{ item.label }}</span>
+													<span class="truncate text-xs text-gray-600 dark:text-gray-400 font-normal">{{ item.description }}</span>
 												</div>
 											</div>
 
@@ -370,7 +370,7 @@ onMounted(() => {
 												<kbd
 													v-for="k in item.kbds"
 													:key="k"
-													class="border border-slate-200/60 rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-500 font-medium font-mono dark:border-slate-700/60 dark:bg-slate-800 dark:text-slate-400"
+													class="border border-gray-300 rounded bg-gray-100 px-1.5 py-0.5 text-[10px] text-gray-700 font-semibold font-mono dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300"
 												>
 													{{ k }}
 												</kbd>
@@ -385,18 +385,18 @@ onMounted(() => {
 											rel="noopener"
 											class="group flex cursor-pointer items-center justify-between border border-transparent rounded-bento px-3 py-2.5 text-sm transition-all duration-150"
 											:class="idx === selectedIndex
-												? 'bg-brand-50/90 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400 border-brand-200/60 dark:border-brand-800/50'
-												: 'text-slate-700 dark:text-slate-200 hover:bg-slate-100/80 dark:hover:bg-slate-800/60 hover:border-slate-200/50 dark:hover:border-slate-700/50'"
+												? 'bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-300 border-brand-200 dark:border-brand-800'
+												: 'text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-gray-200 dark:hover:border-gray-700'"
 											@click="closeModal"
 										>
 											<div class="min-w-0 flex flex-1 items-center gap-3">
 												<span
 													:class="item.icon"
-													class="shrink-0 text-base text-slate-400 transition-colors group-hover:text-brand-500"
+													class="shrink-0 text-base text-gray-600 transition-colors group-hover:text-brand-600 dark:text-gray-400 dark:group-hover:text-brand-300"
 												/>
 												<div class="flex items-center gap-2 truncate">
-													<span class="shrink-0 text-slate-900 font-medium dark:text-white">{{ item.label }}</span>
-													<span class="truncate text-xs text-slate-400 dark:text-slate-500">{{ item.description }}</span>
+													<span class="shrink-0 text-gray-950 font-bold dark:text-gray-50">{{ item.label }}</span>
+													<span class="truncate text-xs text-gray-600 dark:text-gray-400 font-normal">{{ item.description }}</span>
 												</div>
 											</div>
 										</a>
@@ -409,8 +409,8 @@ onMounted(() => {
 								v-else-if="results.length === 0 && status !== 'loading'"
 								class="py-10 text-center"
 							>
-								<span class="i-hugeicons-search-01 mx-auto mb-2 block text-2xl text-slate-400 opacity-40" />
-								<p class="text-sm text-slate-700 font-medium dark:text-slate-300">
+								<span class="i-hugeicons-search-01 mx-auto mb-2 block text-2xl text-gray-400 opacity-60" />
+								<p class="text-sm text-gray-800 font-medium dark:text-gray-200">
 									{{ t('search.no_results', 'Tidak ada hasil untuk') }} "<strong>{{ searchQuery }}</strong>"
 								</p>
 							</div>
@@ -425,7 +425,7 @@ onMounted(() => {
 									v-if="articleResults.length > 0"
 									class="space-y-1"
 								>
-									<div class="flex items-center justify-between px-3 py-1 text-xs text-slate-400 font-semibold tracking-wide uppercase dark:text-slate-500">
+									<div class="flex items-center justify-between px-3 py-1 text-[11px] text-gray-700 font-bold tracking-wider uppercase dark:text-gray-300">
 										<span>{{ t('search.articles', 'Artikel') }}</span>
 										<span>{{ articleResults.length }}</span>
 									</div>
@@ -438,20 +438,20 @@ onMounted(() => {
 												:to="getTargetUrl(item)"
 												class="group block cursor-pointer border border-transparent rounded-bento px-3 py-2 text-sm transition-all duration-150"
 												:class="activeItems.indexOf(item) === selectedIndex
-													? 'bg-brand-50/90 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400 border-brand-200/60 dark:border-brand-800/50'
-													: 'hover:bg-slate-100/80 dark:hover:bg-slate-800/60 hover:border-slate-200/50 dark:hover:border-slate-700/50'"
+													? 'bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-300 border-brand-200 dark:border-brand-800'
+													: 'text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-gray-200 dark:hover:border-gray-700'"
 												@click="closeModal"
 											>
 												<div class="flex items-center justify-between gap-2">
 													<div
-														class="text-slate-900 font-medium transition-colors dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400"
+														class="text-gray-950 font-bold transition-colors dark:text-gray-50 group-hover:text-brand-600 dark:group-hover:text-brand-400"
 														v-html="item.snippets?.title || item.title"
 													/>
-													<span class="i-hugeicons-arrow-right-01 shrink-0 text-xs text-slate-400 group-hover:text-brand-500" />
+													<span class="i-hugeicons-arrow-right-01 shrink-0 text-xs text-gray-500 group-hover:text-brand-600" />
 												</div>
 												<div
 													v-if="item.snippets?.content"
-													class="line-clamp-1 mt-0.5 text-xs text-slate-500 dark:text-slate-400"
+													class="line-clamp-1 mt-0.5 text-xs text-gray-700 dark:text-gray-300"
 													v-html="item.snippets.content"
 												/>
 											</NuxtLink>
@@ -464,7 +464,7 @@ onMounted(() => {
 									v-if="projectResults.length > 0"
 									class="space-y-1"
 								>
-									<div class="flex items-center justify-between px-3 py-1 text-xs text-slate-400 font-semibold tracking-wide uppercase dark:text-slate-500">
+									<div class="flex items-center justify-between px-3 py-1 text-[11px] text-gray-700 font-bold tracking-wider uppercase dark:text-gray-300">
 										<span>{{ t('search.projects', 'Projek') }}</span>
 										<span>{{ projectResults.length }}</span>
 									</div>
@@ -477,20 +477,20 @@ onMounted(() => {
 												:to="getTargetUrl(item)"
 												class="group block cursor-pointer border border-transparent rounded-bento px-3 py-2 text-sm transition-all duration-150"
 												:class="activeItems.indexOf(item) === selectedIndex
-													? 'bg-blue-50/90 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 border-blue-200/60 dark:border-blue-800/50'
-													: 'hover:bg-slate-100/80 dark:hover:bg-slate-800/60 hover:border-slate-200/50 dark:hover:border-slate-700/50'"
+													? 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border-blue-200 dark:border-blue-800'
+													: 'text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-gray-200 dark:hover:border-gray-700'"
 												@click="closeModal"
 											>
 												<div class="flex items-center justify-between gap-2">
 													<div
-														class="text-slate-900 font-medium transition-colors dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400"
+														class="text-gray-950 font-bold transition-colors dark:text-gray-50 group-hover:text-blue-600 dark:group-hover:text-blue-400"
 														v-html="item.snippets?.title || item.title"
 													/>
-													<span class="i-hugeicons-arrow-right-01 shrink-0 text-xs text-slate-400 group-hover:text-blue-500" />
+													<span class="i-hugeicons-arrow-right-01 shrink-0 text-xs text-gray-500 group-hover:text-blue-600" />
 												</div>
 												<div
 													v-if="item.snippets?.content"
-													class="line-clamp-1 mt-0.5 text-xs text-slate-500 dark:text-slate-400"
+													class="line-clamp-1 mt-0.5 text-xs text-gray-700 dark:text-gray-300"
 													v-html="item.snippets.content"
 												/>
 											</NuxtLink>
@@ -503,7 +503,7 @@ onMounted(() => {
 									v-if="pageResults.length > 0"
 									class="space-y-1"
 								>
-									<div class="flex items-center justify-between px-3 py-1 text-xs text-slate-400 font-semibold tracking-wide uppercase dark:text-slate-500">
+									<div class="flex items-center justify-between px-3 py-1 text-[11px] text-gray-700 font-bold tracking-wider uppercase dark:text-gray-300">
 										<span>Halaman</span>
 										<span>{{ pageResults.length }}</span>
 									</div>
@@ -516,20 +516,20 @@ onMounted(() => {
 												:to="getTargetUrl(item)"
 												class="group block cursor-pointer border border-transparent rounded-bento px-3 py-2 text-sm transition-all duration-150"
 												:class="activeItems.indexOf(item) === selectedIndex
-													? 'bg-amber-50/90 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 border-amber-200/60 dark:border-amber-800/50'
-													: 'hover:bg-slate-100/80 dark:hover:bg-slate-800/60 hover:border-slate-200/50 dark:hover:border-slate-700/50'"
+													? 'bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300 border-amber-200 dark:border-amber-800'
+													: 'text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-gray-200 dark:hover:border-gray-700'"
 												@click="closeModal"
 											>
 												<div class="flex items-center justify-between gap-2">
 													<div
-														class="text-slate-900 font-medium transition-colors dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400"
+														class="text-gray-950 font-bold transition-colors dark:text-gray-50 group-hover:text-amber-600 dark:group-hover:text-amber-400"
 														v-html="item.snippets?.title || item.title"
 													/>
-													<span class="i-hugeicons-arrow-right-01 shrink-0 text-xs text-slate-400 group-hover:text-amber-500" />
+													<span class="i-hugeicons-arrow-right-01 shrink-0 text-xs text-gray-500 group-hover:text-amber-600" />
 												</div>
 												<div
 													v-if="item.snippets?.content"
-													class="line-clamp-1 mt-0.5 text-xs text-slate-500 dark:text-slate-400"
+													class="line-clamp-1 mt-0.5 text-xs text-gray-700 dark:text-gray-300"
 													v-html="item.snippets.content"
 												/>
 											</NuxtLink>
@@ -540,23 +540,23 @@ onMounted(() => {
 						</div>
 
 						<!-- Footer Bar -->
-						<div class="flex items-center justify-between border-t border-slate-100 bg-slate-50/80 px-4 py-2.5 text-[11px] text-slate-400 dark:border-slate-800 dark:bg-slate-950/80">
+						<div class="flex items-center justify-between border-t border-gray-200 bg-gray-50 px-4 py-2.5 text-[11px] text-gray-700 dark:border-gray-800 dark:bg-gray-950 dark:text-gray-300">
 							<div class="flex items-center gap-3">
 								<span class="flex items-center gap-1">
-									<kbd class="rounded bg-slate-200/70 px-1 py-0.2 text-[10px] font-mono dark:bg-slate-800">↑↓</kbd>
+									<kbd class="border border-gray-300/80 rounded bg-gray-200/80 px-1 py-0.2 text-[10px] text-gray-800 font-semibold font-mono dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">↑↓</kbd>
 									<span>Pilih</span>
 								</span>
 								<span class="flex items-center gap-1">
-									<kbd class="rounded bg-slate-200/70 px-1 py-0.2 text-[10px] font-mono dark:bg-slate-800">↵</kbd>
+									<kbd class="border border-gray-300/80 rounded bg-gray-200/80 px-1 py-0.2 text-[10px] text-gray-800 font-semibold font-mono dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">↵</kbd>
 									<span>Buka</span>
 								</span>
 								<span class="flex items-center gap-1">
-									<kbd class="rounded bg-slate-200/70 px-1 py-0.2 text-[10px] font-mono dark:bg-slate-800">ESC</kbd>
+									<kbd class="border border-gray-300/80 rounded bg-gray-200/80 px-1 py-0.2 text-[10px] text-gray-800 font-semibold font-mono dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">ESC</kbd>
 									<span>Tutup</span>
 								</span>
 							</div>
 
-							<div class="flex items-center gap-1 text-brand-600 font-medium dark:text-brand-400">
+							<div class="flex items-center gap-1 text-brand-700 font-semibold dark:text-brand-400">
 								<span class="i-hugeicons-sparkles text-xs text-amber-500" />
 								<span>SQLite FTS5</span>
 							</div>

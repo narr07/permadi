@@ -2,6 +2,11 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import AppReactionsBar from '~/components/reactions/AppReactionsBar.vue'
 
+// Load prose typography CSS hanya di halaman artikel (lazy, tidak blocking)
+useHead({
+	link: [{ rel: 'stylesheet', href: '/prose.css', media: 'print', onload: "this.media='all'" }],
+})
+
 const route = useRoute()
 const { locale, locales } = useI18n()
 const localePath = useLocalePath()
@@ -427,7 +432,7 @@ useSchemaOrg([
 						</div>
 
 						<!-- Title (Barlow, Bold, Responsive) -->
-						<h1 class="text-2xl text-slate-900 font-bold leading-[1.18] tracking-tight font-heading lg:text-[2.5rem] md:text-4xl sm:text-3xl dark:text-white">
+						<h1 class="text-2xl text-[#000b07] font-bold leading-[1.18] tracking-tight font-heading lg:text-[2.5rem] md:text-4xl sm:text-3xl dark:text-[#f8fafa]">
 							{{ post.doc.title }}
 						</h1>
 

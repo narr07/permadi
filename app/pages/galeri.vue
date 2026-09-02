@@ -429,7 +429,7 @@ useSchemaOrg([
 				<!-- Overlay on Hover -->
 				<div class="absolute inset-0 flex flex-col justify-end from-slate-950/80 via-slate-950/20 to-transparent bg-gradient-to-t p-2.5 text-white opacity-0 transition-opacity duration-300 sm:p-4 group-hover:opacity-100">
 					<div class="flex items-center justify-between gap-1 sm:gap-2">
-						<h2 class="truncate text-xs text-white font-semibold font-heading transition-colors duration-100 sm:text-sm group-hover:text-brand-300 dark:group-hover:text-yellow-600">
+						<h2 class="truncate text-xs text-white font-semibold font-heading transition-colors duration-100 sm:text-sm group-hover:text-brand-300 dark:group-hover:text-accent">
 							{{ item.title }}
 						</h2>
 						<span class="shrink-0 rounded-full bg-white/20 p-1 backdrop-blur-md sm:p-1.5">
@@ -536,7 +536,7 @@ useSchemaOrg([
 									<!-- Close Button -->
 									<button
 										type="button"
-										class="h-9 w-9 inline-flex cursor-pointer items-center justify-center border border-white/15 rounded-full bg-slate-900/80 text-white/80 backdrop-blur-md transition hover:border-red-400/50 hover:bg-slate-800 hover:text-white"
+										class="h-9 w-9 inline-flex cursor-pointer items-center justify-center border border-white/15 rounded-full bg-slate-900/80 text-white/80 backdrop-blur-md transition hover:border-red/50 hover:bg-slate-800 hover:text-white"
 										:aria-label="locale === 'id' ? 'Tutup' : 'Close'"
 										@click="closeModal"
 									>

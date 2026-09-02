@@ -1,86 +1,86 @@
 <script setup lang="ts">
-	export interface SkillItem {
-		name: string
-		icon?: string
-		role?: string
-		desc?: string
-	}
+export interface SkillItem {
+	name: string
+	icon?: string
+	role?: string
+	desc?: string
+}
 
-	export interface SkillsSectionData {
-		code_label?: string
-		code_title?: string
-		code_desc?: string
-		code_items?: SkillItem[]
-		design_label?: string
-		design_title?: string
-		design_desc?: string
-		design_items?: SkillItem[]
-	}
+export interface SkillsSectionData {
+	code_label?: string
+	code_title?: string
+	code_desc?: string
+	code_items?: SkillItem[]
+	design_label?: string
+	design_title?: string
+	design_desc?: string
+	design_items?: SkillItem[]
+}
 
-	const props = withDefaults(
-		defineProps<{
-			skillsData?: SkillsSectionData
-		}>(),
-		{
-			skillsData: () => ({}),
-		},
-	)
+const props = withDefaults(
+	defineProps<{
+		skillsData?: SkillsSectionData
+	}>(),
+	{
+		skillsData: () => ({}),
+	},
+)
 
-	const { locale } = useI18n()
-	const localePath = useLocalePath()
+const { locale } = useI18n()
+const localePath = useLocalePath()
 
-	const defaultSkills = computed<SkillItem[]>(() => [
-		{
-			name: 'Nuxt & Vue 3',
-			icon: '/icons/f-nuxt.svg',
-			role: 'Web & SSR',
-			desc:
+const defaultSkills = computed<SkillItem[]>(() => [
+	{
+		name: 'Nuxt & Vue 3',
+		icon: '/icons/f-nuxt.svg',
+		role: 'Web & SSR',
+		desc:
 				locale.value === 'id'
 					? 'Arsitektur web modern, full-stack Nitro, dan optimasi performa tinggi.'
 					: 'Modern web architecture, full-stack Nitro engine, and high performance.',
-		},
-		{
-			name: 'Flutter & Dart',
-			icon: '/icons/f-flutter.svg',
-			role: 'Mobile App',
-			desc:
+	},
+	{
+		name: 'Flutter & Dart',
+		icon: '/icons/f-flutter.svg',
+		role: 'Mobile App',
+		desc:
 				locale.value === 'id'
 					? 'Aplikasi Android dan iOS dengan antarmuka responsif dan reaktif.'
 					: 'Android and iOS applications with responsive, reactive interfaces.',
-		},
-		{
-			name: 'Python',
-			icon: '/icons/b-python.svg',
-			role: locale.value === 'id' ? 'Logika & Data' : 'Logic & Data',
-			desc:
+	},
+	{
+		name: 'Python',
+		icon: '/icons/b-python.svg',
+		role: locale.value === 'id' ? 'Logika & Data' : 'Logic & Data',
+		desc:
 				locale.value === 'id'
 					? 'Komputasi numerik, otomasi skrip, dan pengolahan data terstruktur.'
 					: 'Numerical computation, script automation, and structured data handling.',
-		},
-	])
+	},
+])
 
-	const displaySkills = computed(() => {
-		if (props.skillsData?.code_items && props.skillsData.code_items.length > 0) {
-			return props.skillsData.code_items
-		}
-		return defaultSkills.value
-	})
-
-	function isImagePath(icon?: string) {
-		if (!icon)
-			return false
-		return icon.startsWith('/') || icon.endsWith('.svg') || icon.endsWith('.png') || icon.includes('.svg')
+const displaySkills = computed(() => {
+	if (props.skillsData?.code_items && props.skillsData.code_items.length > 0) {
+		return props.skillsData.code_items
 	}
+	return defaultSkills.value
+})
 
-	function getIconClass(icon?: string) {
-		if (!icon)
-			return 'i-hugeicons-code-folder'
-		if (icon.startsWith('i-'))
-			return icon
-		if (icon.includes(':'))
-			return `i-${icon.replace(':', '-')}`
-		return `i-${icon}`
-	}
+function isImagePath(icon?: string) {
+	if (!icon)
+		return false
+	return icon.startsWith('/') || icon.endsWith('.svg') || icon.endsWith('.png') || icon.includes('.svg')
+}
+
+function getIconClass(icon?: string) {
+	if (!icon)
+		return 'i-hugeicons-code-folder'
+	if (icon.startsWith('i-'))
+		return icon
+	if (icon.includes(':'))
+		return `i-${icon.replace(':', '-')}`
+	return `i-${icon}`
+}
 </script>
 
 <template>
@@ -106,11 +106,11 @@
 			</p>
 
 			<!-- Skill Items List -->
-			<div class="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
+			<div class="grid grid-cols-1 mt-5 gap-3 sm:grid-cols-3">
 				<div
 					v-for="skill in displaySkills"
 					:key="skill.name"
-					class="flex flex-col justify-between border border-slate-200/60 rounded-xl bg-slate-50/70 p-3.5 transition-all duration-150 sm:p-4 dark:border-slate-800/60 dark:bg-slate-800/40 hover:border-brand-500/40 dark:hover:border-brand-400/40 hover:bg-brand-50/40 dark:hover:bg-slate-800/80"
+					class="flex flex-col justify-between border border-slate-200/60 rounded-xl bg-slate-50/70 p-3.5 transition-all duration-150 dark:border-slate-800/60 hover:border-brand-500/40 dark:bg-slate-800/40 hover:bg-brand-50/40 sm:p-4 dark:hover:border-brand-400/40 dark:hover:bg-slate-800/80"
 				>
 					<div>
 						<div class="mb-2.5 flex items-center justify-between gap-2">
@@ -127,12 +127,12 @@
 							<span
 								v-else
 								:class="getIconClass(skill.icon)"
-								class="h-8 w-8 shrink-0 flex items-center justify-center text-2xl text-brand-700 dark:text-brand-400"
+								class="h-8 w-8 flex shrink-0 items-center justify-center text-2xl text-brand-700 dark:text-brand-400"
 							/>
 
 							<span
 								v-if="skill.role"
-								class="shrink-0 whitespace-nowrap rounded-full bg-brand-100 px-2 py-0.5 text-[10px] text-brand-900 font-mono font-medium dark:bg-brand-950/80 dark:text-brand-300"
+								class="shrink-0 whitespace-nowrap rounded-full bg-brand-100 px-2 py-0.5 text-[10px] text-brand-900 font-medium font-mono dark:bg-brand-950/80 dark:text-brand-300"
 							>
 								{{ skill.role }}
 							</span>
@@ -150,8 +150,8 @@
 
 		<!-- Footer Link -->
 		<NuxtLink
-			:to="locale === 'id' ? '/id/projek' : '/en/projects'"
-			class="group mt-6 flex items-center justify-between border-t border-slate-200/60 pt-3 text-xs text-brand-900 font-bold dark:border-slate-800/60 dark:text-brand-300 hover:text-brand-950 dark:hover:text-yellow-600"
+			:to="localePath('/blog')"
+			class="group mt-6 flex items-center justify-between border-t border-slate-200/60 pt-3 text-xs text-brand-900 font-bold dark:border-slate-800/60 dark:text-brand-300 hover:text-brand-950 dark:hover:text-accent"
 		>
 			<span>{{ locale === 'id' ? 'Eksplorasi Studi Kasus Projek' : 'Explore Project Case Studies' }}</span>
 			<span class="i-hugeicons-arrow-right-01 text-xs transition-transform group-hover:translate-x-0.5" />

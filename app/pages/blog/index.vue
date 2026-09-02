@@ -150,8 +150,6 @@ function scrollToTop() {
 	}
 }
 
-
-
 useSeoMeta({
 	title: computed(() => page.value?.title),
 	description: computed(() => page.value?.description),
@@ -265,7 +263,7 @@ useSchemaOrg([
 								</div>
 
 								<!-- List of Options -->
-								<div class="max-h-60 space-y-0.5 overflow-y-auto overscroll-contain pr-1 custom-scrollbar">
+								<div class="custom-scrollbar max-h-60 overflow-y-auto overscroll-contain pr-1 space-y-0.5">
 									<!-- "All Topics" Option -->
 									<button
 										type="button"
@@ -439,8 +437,8 @@ useSchemaOrg([
 						<span
 							class="flex items-center gap-1 text-xs font-bold transition-all group-hover:translate-x-0.5"
 							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-								? '!text-white group-hover:!text-yellow-300 font-bold'
-								: 'text-brand-800 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-yellow-500 font-semibold'"
+								? '!text-white group-hover:!text-accent font-bold'
+								: 'text-brand-800 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-accent font-semibold'"
 						>
 							{{ locale === 'id' ? 'Baca Artikel' : 'Read Article' }} <span class="i-hugeicons-arrow-right-01 text-xs" />
 						</span>

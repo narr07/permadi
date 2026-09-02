@@ -37,7 +37,7 @@ const { formatDate } = useFormatDate()
 			</div>
 			<NuxtLink
 				:to="localePath('/blog')"
-				class="group hidden items-center gap-1.5 text-xs text-brand-900 font-bold transition-colors sm:inline-flex dark:text-brand-300 hover:text-brand-950 dark:hover:text-yellow-600"
+				class="group hidden items-center gap-1.5 text-xs text-brand-900 font-bold transition-colors sm:inline-flex dark:text-brand-300 hover:text-brand-950 dark:hover:text-accent"
 			>
 				{{ writing.all_link_text || (locale === 'id' ? 'Lihat Semua Tulisan' : 'Read All Notes') }}
 				<span class="i-hugeicons-arrow-right-01 text-xs transition-transform group-hover:translate-x-0.5" />
@@ -55,10 +55,10 @@ const { formatDate } = useFormatDate()
 				class="group my-0.5 flex flex-col justify-between gap-2 rounded-xl px-3 py-3 transition-all duration-150 -mx-3 sm:flex-row sm:items-center hover:bg-brand-100 dark:hover:bg-brand-900/50"
 			>
 				<div class="min-w-0 flex items-center gap-3">
-					<span class="w-6 shrink-0 text-xs text-brand-950 font-bold font-mono transition-colors dark:text-brand-200 group-hover:text-brand-950 dark:group-hover:text-yellow-600">
+					<span class="w-6 shrink-0 text-xs text-brand-950 font-bold font-mono transition-colors dark:text-brand-200 group-hover:text-brand-950 dark:group-hover:text-accent">
 						0{{ pIdx + 1 }}
 					</span>
-					<h4 class="truncate text-base text-brand-950 font-semibold font-heading transition-colors duration-150 sm:text-lg dark:text-brand-100 group-hover:text-brand-800 dark:group-hover:text-yellow-600">
+					<h4 class="truncate text-base text-brand-950 font-semibold font-heading transition-colors duration-150 sm:text-lg dark:text-brand-100 group-hover:text-brand-800 dark:group-hover:text-accent">
 						{{ post.title }}
 					</h4>
 				</div>
@@ -66,7 +66,7 @@ const { formatDate } = useFormatDate()
 					<span class="text-[11px] font-mono">{{ formatDate(post.date) }}</span>
 					<span class="text-slate-400 dark:text-slate-700">•</span>
 					<span class="text-[11px] font-mono">{{ locale === 'id' ? `${post.readingTime || 5} menit baca` : `${post.readingTime || 5} min read` }}</span>
-					<span class="i-hugeicons-arrow-right-01 text-xs text-brand-900 opacity-0 transition-all group-hover:translate-x-0.5 dark:text-yellow-600 group-hover:opacity-100" />
+					<span class="i-hugeicons-arrow-right-01 text-xs text-brand-900 opacity-0 transition-all group-hover:translate-x-0.5 dark:text-accent group-hover:opacity-100" />
 				</div>
 			</NuxtLink>
 		</div>

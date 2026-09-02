@@ -177,7 +177,7 @@ onUnmounted(() => {
 					@click="toggleDark($event)"
 				>
 					<span class="i-hugeicons-sun-01 text-lg text-slate-900 transition-colors dark:hidden hover:text-brand-700" />
-					<span class="i-hugeicons-moon-02 hidden text-lg text-brand-300 transition-colors dark:inline hover:text-yellow-300" />
+					<span class="i-hugeicons-moon-02 hover:text-accent hidden text-lg text-brand-300 transition-colors dark:inline" />
 				</button>
 
 				<!-- Language Switcher Links -->
