@@ -3,14 +3,31 @@ import { computed } from 'vue'
 
 const props = withDefaults(
 	defineProps<{
-		type?: 'note' | 'tip' | 'important' | 'warning' | 'caution' | 'danger' | string
+		/**
+		 * Callout theme color
+		 * @default 'primary'
+		 */
+		color?: 'primary' | 'neutral' | 'accent' | 'success' | 'warning' | 'error' | 'info'
+		/**
+		 * Optional leading icon (e.g. i-hugeicons-information-circle, i-hugeicons-bulb, i-hugeicons-alert-02)
+		 */
 		icon?: string
+		/**
+		 * Optional navigation link URL
+		 */
 		to?: string
-		target?: string
+		/**
+		 * Target window for navigation
+		 * @default undefined
+		 */
+		target?: '_blank' | '_self' | '_parent' | '_top'
+		/**
+		 * Additional CSS classes
+		 */
 		class?: any
 	}>(),
 	{
-		type: 'note',
+		color: 'primary',
 		icon: undefined,
 		to: undefined,
 		target: undefined,
@@ -18,54 +35,102 @@ const props = withDefaults(
 	},
 )
 
-const resolvedType = computed(() => (props.type || 'note').toLowerCase())
+const resolvedColor = computed(() => (props.color || 'primary').toLowerCase())
 
-const themeConfig = computed(() => {
-	switch (resolvedType.value) {
-		case 'tip':
+const resolvedTarget = computed(() => {
+	if (props.target)
+		return props.target
+	if (props.to && (props.to.startsWith('http://') || props.to.startsWith('https://')))
+		return '_blank'
+	return undefined
+})
+
+const defaultIcon = computed(() => {
+	if (props.icon)
+		return props.icon
+	switch (resolvedColor.value) {
 		case 'success':
-			return {
-				icon: props.icon || 'i-hugeicons-checkmark-circle-02',
-				border: 'border-emerald-500/30 dark:border-emerald-500/20',
-				bg: 'bg-emerald-50/60 dark:bg-emerald-950/25',
-				iconColor: 'text-emerald-600 dark:text-emerald-400',
-				textColor: 'text-emerald-950 dark:text-emerald-100',
-			}
+			return 'i-hugeicons-checkmark-circle-02'
 		case 'warning':
-			return {
-				icon: props.icon || 'i-hugeicons-alert-02',
-				border: 'border-amber-500/35 dark:border-amber-500/25',
-				bg: 'bg-amber-50/60 dark:bg-amber-950/25',
-				iconColor: 'text-amber-600 dark:text-amber-400',
-				textColor: 'text-amber-950 dark:text-amber-100',
-			}
-		case 'caution':
-		case 'danger':
+			return 'i-hugeicons-alert-02'
 		case 'error':
-			return {
-				icon: props.icon || 'i-hugeicons-alert-circle',
-				border: 'border-rose-500/35 dark:border-rose-500/25',
-				bg: 'bg-rose-50/60 dark:bg-rose-950/25',
-				iconColor: 'text-rose-600 dark:text-rose-400',
-				textColor: 'text-rose-950 dark:text-rose-100',
-			}
-		case 'important':
+			return 'i-hugeicons-alert-circle'
 		case 'info':
+			return 'i-hugeicons-information-circle'
+		case 'accent':
+			return 'i-hugeicons-sparkles'
+		case 'neutral':
+			return 'i-hugeicons-note-01'
+		case 'primary':
+		default:
+			return 'i-hugeicons-bulb'
+	}
+})
+
+const colorConfig = computed(() => {
+	switch (resolvedColor.value) {
+		case 'warning':
+		case 'yellow':
 			return {
-				icon: props.icon || 'i-hugeicons-information-circle',
-				border: 'border-sky-500/35 dark:border-sky-500/25',
-				bg: 'bg-sky-50/60 dark:bg-sky-950/25',
-				iconColor: 'text-sky-600 dark:text-sky-400',
-				textColor: 'text-sky-950 dark:text-sky-100',
+				border: 'border-[#ffd803]',
+				bg: 'bg-[#ffd803]/90 shadow-md',
+				icon: 'text-slate-950',
+				text: 'text-slate-950',
+				hover: props.to ? 'hover:bg-[#ffd803] hover:shadow-lg' : '',
 			}
-		case 'note':
+		case 'accent':
+			return {
+				border: 'border-[#f9bc60]',
+				bg: 'bg-[#f9bc60]/90 shadow-md',
+				icon: 'text-slate-950',
+				text: 'text-slate-950',
+				hover: props.to ? 'hover:bg-[#f9bc60] hover:shadow-lg' : '',
+			}
+		case 'error':
+		case 'danger':
+		case 'red':
+			return {
+				border: 'border-[#ef4565]',
+				bg: 'bg-[#ef4565]/90 shadow-md',
+				icon: 'text-white',
+				text: 'text-white',
+				hover: props.to ? 'hover:bg-[#ef4565] hover:shadow-lg' : '',
+			}
+		case 'info':
+		case 'blue':
+			return {
+				border: 'border-[#3da9fc]',
+				bg: 'bg-[#3da9fc]/90 shadow-md',
+				icon: 'text-white',
+				text: 'text-white',
+				hover: props.to ? 'hover:bg-[#3da9fc] hover:shadow-lg' : '',
+			}
+		case 'success':
+		case 'green':
+			return {
+				border: 'border-[#2cb67d]',
+				bg: 'bg-[#2cb67d]/90 shadow-md',
+				icon: 'text-white',
+				text: 'text-white',
+				hover: props.to ? 'hover:bg-[#2cb67d] hover:shadow-lg' : '',
+			}
+		case 'neutral':
+		case 'gray':
+			return {
+				border: 'border-[#90b4ce]',
+				bg: 'bg-[#90b4ce]/90 shadow-md',
+				icon: 'text-slate-950',
+				text: 'text-slate-950',
+				hover: props.to ? 'hover:bg-[#90b4ce] hover:shadow-lg' : '',
+			}
+		case 'primary':
 		default:
 			return {
-				icon: props.icon || 'i-hugeicons-bubble-chat-notification',
-				border: 'border-brand-500/30 dark:border-brand-500/20',
-				bg: 'bg-brand-50/60 dark:bg-brand-950/30',
-				iconColor: 'text-brand-600 dark:text-brand-400',
-				textColor: 'text-brand-950 dark:text-brand-100',
+				border: 'border-brand-500/40 dark:border-brand-400/35',
+				bg: 'bg-white dark:bg-slate-950 shadow-xs',
+				icon: 'text-[#0f7662] dark:text-[#5eeacf]',
+				text: 'text-slate-950 dark:text-slate-100',
+				hover: props.to ? 'hover:border-brand-500 hover:shadow-md dark:hover:border-brand-400' : '',
 			}
 	}
 })
@@ -73,38 +138,83 @@ const themeConfig = computed(() => {
 
 <template>
 	<div
-		class="shadow-xs relative my-6 overflow-hidden border rounded-2xl p-4.5 backdrop-blur-md transition-all sm:p-5"
-		:class="[themeConfig.border, themeConfig.bg, props.class]"
+		class="bento-callout group relative my-6 overflow-hidden border rounded-2xl p-4 transition-all duration-300 sm:p-5"
+		:class="[
+			colorConfig.border,
+			colorConfig.bg,
+			colorConfig.hover,
+			props.to ? 'cursor-pointer' : '',
+			props.class,
+		]"
 	>
+		<!-- NuxtLink overlay for clickable callout -->
 		<NuxtLink
 			v-if="props.to"
 			:to="props.to"
-			:target="props.target || (props.to.startsWith('http') ? '_blank' : undefined)"
+			:target="resolvedTarget"
 			class="absolute inset-0 z-10"
-			aria-label="Callout link"
+			:aria-label="typeof props.to === 'string' ? props.to : 'Callout link'"
 		/>
 
+		<!-- External Link Icon (Top Right) -->
+		<div
+			v-if="props.to && resolvedTarget === '_blank'"
+			class="pointer-events-none absolute right-3.5 top-3.5 text-slate-400 transition-colors group-hover:text-current"
+			:class="colorConfig.icon"
+		>
+			<span class="i-lucide-external-link text-xs" />
+		</div>
+
+		<!-- Content Layout (Leading Icon + Body) -->
 		<div class="flex items-start gap-3.5">
-			<span
-				:class="[themeConfig.icon, themeConfig.iconColor]"
-				class="mt-0.5 shrink-0 text-xl"
-			/>
 			<div
-				class="prose-callout-content min-w-0 flex-1 text-sm leading-relaxed font-sans"
-				:class="themeConfig.textColor"
+				v-if="defaultIcon"
+				class="mt-0.5 shrink-0 text-xl transition-transform duration-300 group-hover:scale-110"
+				:class="[defaultIcon, colorConfig.icon]"
+				aria-hidden="true"
+			/>
+
+			<div
+				class="callout-body min-w-0 flex-1 text-sm leading-relaxed"
+				:class="colorConfig.text"
 			>
-				<slot mdc-unwrap="p" />
+				<slot />
 			</div>
 		</div>
 	</div>
 </template>
 
 <style scoped>
-:deep(p) {
-	margin: 0 !important;
+/* Ensure inner prose elements blend seamlessly */
+.callout-body :deep(p:first-child) {
+	margin-top: 0 !important;
 }
-:deep(a) {
-	font-weight: 600;
-	text-decoration: underline;
+.callout-body :deep(p:last-child) {
+	margin-bottom: 0 !important;
+}
+.callout-body :deep(p),
+.callout-body :deep(li),
+.callout-body :deep(span) {
+	color: inherit !important;
+	margin-top: 0.35rem;
+	margin-bottom: 0.35rem;
+}
+.callout-body :deep(a) {
+	color: inherit !important;
+	text-decoration: underline !important;
+	text-underline-offset: 2.5px !important;
+	font-weight: 700 !important;
+	position: relative;
+	z-index: 20;
+}
+.callout-body :deep(strong),
+.callout-body :deep(b) {
+	color: inherit !important;
+	font-weight: 700 !important;
+}
+.callout-body :deep(code) {
+	color: inherit !important;
+	background-color: rgba(125, 125, 125, 0.14) !important;
+	border: 1px dashed currentColor !important;
 }
 </style>

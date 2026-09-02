@@ -1,122 +1,91 @@
 <script setup lang="ts">
-import type { Ref } from 'vue'
-import { computed, getCurrentInstance, inject, onMounted, ref, useSlots } from 'vue'
+import type { ComputedRef, Ref } from 'vue'
+import { computed, inject, ref } from 'vue'
 
 const props = withDefaults(
 	defineProps<{
 		question?: string
 		icon?: string
 		defaultOpen?: boolean
+		class?: any
 	}>(),
 	{
 		question: 'Pertanyaan FAQ',
 		icon: undefined,
 		defaultOpen: false,
+		class: undefined,
 	},
 )
 
-const slots = useSlots()
-const instance = getCurrentInstance()
-const autoId = `faq-${instance?.uid || Math.random().toString(36).slice(2)}`
+const id = `faq-${Math.random().toString(36).substring(2, 9)}`
 
-const faqActiveId = inject<Ref<string | null> | null>('faqActiveId', null)
-const faqSetSingleActive = inject<((id: string | null) => void) | null>('faqSetSingleActive', null)
-const registerFaqItem = inject<((id: string, q: string, a: string) => number) | null>('faqRegisterItem', null)
+const activeId = inject<Ref<string | null> | null>('faqActiveId', null)
+const toggle = inject<((id: string) => void) | null>('faqToggle', null)
+const isSingle = inject<ComputedRef<boolean> | null>('faqSingle', null)
 
-const itemNumber = ref(1)
-const isLocalOpen = ref(Boolean(props.defaultOpen))
+const internalOpen = ref(props.defaultOpen)
 
 const isOpen = computed(() => {
-	if (faqActiveId && faqActiveId.value !== undefined && faqSetSingleActive) {
-		return faqActiveId.value === autoId
+	if (isSingle?.value && activeId) {
+		return activeId.value === id
 	}
-	return isLocalOpen.value
+	return internalOpen.value
 })
 
 function handleToggle() {
-	if (faqSetSingleActive) {
-		faqSetSingleActive(isOpen.value ? null : autoId)
+	if (isSingle?.value && toggle) {
+		toggle(id)
 	}
 	else {
-		isLocalOpen.value = !isLocalOpen.value
+		internalOpen.value = !internalOpen.value
 	}
 }
-
-function extractSlotText(): string {
-	const defaultSlot = slots.default?.()
-	if (!defaultSlot)
-		return ''
-
-	function getText(nodes: any): string {
-		if (!nodes)
-			return ''
-		if (typeof nodes === 'string')
-			return nodes
-		if (Array.isArray(nodes))
-			return nodes.map(getText).join(' ')
-		if (typeof nodes.children === 'string')
-			return nodes.children
-		if (Array.isArray(nodes.children))
-			return nodes.children.map(getText).join(' ')
-		return ''
-	}
-
-	return getText(defaultSlot).trim()
-}
-
-onMounted(() => {
-	if (registerFaqItem) {
-		itemNumber.value = registerFaqItem(
-			autoId,
-			props.question || 'Pertanyaan FAQ',
-			extractSlotText(),
-		)
-	}
-})
 </script>
 
 <template>
 	<div
-		class="shadow-2xs overflow-hidden border border-[#115e4f]/20 rounded-2xl bg-white/90 transition-all duration-300 dark:border-[#134e43]/50 dark:bg-[#001412]/80"
+		class="bento-faq-item overflow-hidden border border-slate-200/90 rounded-2xl bg-white shadow-xs transition-all duration-200 dark:border-slate-800/90 dark:bg-slate-950"
 		:class="[
-			isOpen ? 'ring-1 ring-brand-500/40 dark:ring-brand-400/30 shadow-xs' : 'hover:border-brand-500/35 dark:hover:border-brand-400/30',
+			isOpen
+				? 'border-brand-500/50 ring-1 ring-brand-500/25 dark:border-brand-400/40 dark:ring-brand-400/20 shadow-sm'
+				: 'hover:border-slate-300 dark:hover:border-slate-700',
+			props.class,
 		]"
 	>
 		<!-- Accordion Question Button -->
 		<button
 			type="button"
-			class="w-full flex cursor-pointer items-center justify-between gap-4 px-4.5 py-3.5 text-left transition-colors hover:bg-brand-50/40 sm:px-5 sm:py-4 dark:hover:bg-white/5"
+			class="w-full flex cursor-pointer items-center justify-between gap-4 px-5 py-4.5 text-left transition-colors hover:bg-slate-50/80 sm:px-6 sm:py-5 dark:hover:bg-slate-900/60"
 			:aria-expanded="isOpen"
 			@click="handleToggle"
 		>
-			<div class="flex items-center gap-3">
-				<!-- Custom Icon or Auto Number Badge -->
+			<div class="flex items-center gap-3.5 sm:gap-4">
+				<!-- Custom Icon or Sequential Native CSS Counter Badge -->
 				<span
 					v-if="props.icon"
 					:class="props.icon"
-					class="shrink-0 text-base text-brand-600 dark:text-brand-400"
+					class="shrink-0 text-lg text-brand-600 dark:text-brand-400"
 				/>
-				<span
+				<div
 					v-else
-					class="h-6 w-6 flex shrink-0 items-center justify-center border border-brand-500/30 rounded-full bg-brand-500/10 text-xs text-brand-700 font-bold font-mono dark:border-brand-500/25 dark:bg-brand-500/15 dark:text-brand-300"
-				>
-					{{ itemNumber }}
-				</span>
-				<span class="text-sm text-slate-800 font-semibold font-sans sm:text-base dark:text-slate-100">
+					class="size-7 flex shrink-0 items-center justify-center border border-brand-500/30 rounded-full bg-brand-500/10 text-xs text-brand-700 font-bold font-mono dark:border-brand-500/20 dark:bg-brand-500/15 dark:text-brand-300 [counter-increment:faq-counter] before:content-[counter(faq-counter)]"
+				/>
+
+				<span class="text-sm text-slate-900 font-bold font-sans sm:text-base dark:text-slate-100">
 					{{ props.question }}
 				</span>
 			</div>
 
 			<span
-				class="i-hugeicons-arrow-down-01 shrink-0 text-base text-slate-400 transition-transform duration-300 dark:text-slate-500"
-				:class="{ 'rotate-180 text-brand-500 dark:text-brand-400': isOpen }"
+				class="i-hugeicons-arrow-down-01 shrink-0 text-base text-slate-400 transition-transform duration-200 dark:text-slate-500"
+				:class="{ 'rotate-180 text-brand-600 dark:text-brand-400': isOpen }"
 			/>
 		</button>
 
 		<!-- Accordion Answer Body -->
 		<div
 			v-show="isOpen"
-			class="border-t border-[#115e4f]/15 px-4.5 pb-4.5 pt-3 text-sm text-slate-600 leading-relaxed font-sans dark:border-[#134e43]/40 sm:px-5 dark:text-slate-300"
+			class="border-t border-slate-100 px-5 pb-5 pt-4 text-sm text-slate-700 leading-relaxed font-sans sm:px-6 sm:pb-6 sm:text-base dark:border-slate-800/80 dark:text-slate-300"
 		>
 			<slot />
 		</div>

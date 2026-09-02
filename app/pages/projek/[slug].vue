@@ -30,10 +30,7 @@ const setI18nParams = useSetI18nParams()
 const { getCategoryLabel } = useCategoryLabel()
 const { formatDate } = useFormatDate()
 
-// Load prose typography CSS hanya di halaman detail projek (lazy, tidak blocking)
-useHead({
-	link: [{ rel: 'stylesheet', href: '/prose.css', media: 'print', onload: "this.media='all'" }],
-})
+
 
 const mdcComponents = {
 	'img': ProseImg,

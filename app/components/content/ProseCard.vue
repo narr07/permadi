@@ -25,11 +25,21 @@ const props = withDefaults(
 const isExternal = computed(() => {
 	return props.to && (props.to.startsWith('http://') || props.to.startsWith('https://'))
 })
+
+const resolvedIcon = computed(() => {
+	if (!props.icon)
+		return undefined
+	if (props.icon === 'i-hugeicons-database')
+		return 'i-hugeicons-database-01'
+	if (props.icon === 'i-hugeicons-global')
+		return 'i-hugeicons-globe-02'
+	return props.icon
+})
 </script>
 
 <template>
 	<div
-		class="bento-card-clean group shadow-xs relative flex flex-col justify-between overflow-hidden rounded-2xl p-5 transition-all duration-300 sm:p-6"
+		class="bento-card-clean prose-card group shadow-xs relative flex flex-col justify-between overflow-hidden rounded-2xl p-5 transition-all duration-300 sm:p-6"
 		:class="[
 			props.to ? 'cursor-pointer hover:border-brand-500/50 hover:shadow-md dark:hover:border-brand-400/50' : '',
 			props.class,
@@ -46,11 +56,11 @@ const isExternal = computed(() => {
 		<div>
 			<div class="mb-4 flex items-center justify-between">
 				<div
-					v-if="props.icon"
+					v-if="resolvedIcon"
 					class="h-10 w-10 flex items-center justify-center border border-brand-500/30 rounded-xl bg-brand-500/10 text-brand-600 dark:border-brand-500/20 dark:bg-brand-500/15 dark:text-brand-400"
 				>
 					<span
-						:class="props.icon"
+						:class="resolvedIcon"
 						class="text-xl"
 					/>
 				</div>
@@ -62,14 +72,14 @@ const isExternal = computed(() => {
 				/>
 			</div>
 
-			<h3
+			<p
 				v-if="props.title"
-				class="mb-2 text-base text-slate-900 font-bold tracking-tight font-sans transition-colors dark:text-slate-100 group-hover:text-brand-600 dark:group-hover:text-brand-400"
+				class="card-title mb-2 text-base text-slate-900 font-bold tracking-tight font-sans transition-colors dark:text-slate-100 group-hover:text-brand-600 dark:group-hover:text-brand-400"
 			>
 				{{ props.title }}
-			</h3>
+			</p>
 
-			<div class="text-sm text-slate-600 leading-relaxed font-sans dark:text-slate-300">
+			<div class="card-description text-sm text-slate-600 leading-relaxed font-sans dark:text-slate-300">
 				<slot>
 					{{ props.description }}
 				</slot>

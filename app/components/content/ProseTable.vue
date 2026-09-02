@@ -11,11 +11,11 @@ const props = withDefaults(
 
 <template>
 	<div
-		class="custom-scrollbar my-8 block max-w-full w-full overflow-x-auto border border-slate-200/80 rounded-2xl bg-white/70 shadow-sm backdrop-blur-md dark:border-[#134e43]/60 dark:bg-[#001c19]/80"
+		class="prose-table-container custom-scrollbar my-6 block max-w-full w-full overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-xs dark:border-slate-800 dark:bg-slate-950"
 		:class="props.class"
 		style="-webkit-overflow-scrolling: touch;"
 	>
-		<table class="min-w-[560px] w-full border-collapse text-left text-sm font-sans">
+		<table class="min-w-full w-full border-collapse text-left text-sm font-sans">
 			<slot />
 		</table>
 	</div>

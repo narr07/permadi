@@ -7,10 +7,7 @@ const route = useRoute()
 const { locale, locales } = useI18n()
 const setI18nParams = useSetI18nParams()
 
-// Load prose typography CSS hanya di halaman konten (lazy, tidak blocking)
-useHead({
-	link: [{ rel: 'stylesheet', href: '/prose.css', media: 'print', onload: "this.media='all'" }],
-})
+
 
 const mdcComponents = {
 	'img': ProseImg,

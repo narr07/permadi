@@ -46,77 +46,97 @@ const displayLanguage = computed(() => {
 	return ''
 })
 
+const iconMap: Record<string, string> = {
+	'.editorconfig': 'i-vscode-icons-file-type-editorconfig',
+	'.env': 'i-vscode-icons-file-type-dotenv',
+	'.env.example': 'i-vscode-icons-file-type-dotenv',
+	'.eslintignore': 'i-vscode-icons-file-type-eslint',
+	'.eslintrc': 'i-vscode-icons-file-type-eslint',
+	'.gitignore': 'i-vscode-icons-file-type-git',
+	'.npmrc': 'i-vscode-icons-file-type-npm',
+	'.nuxtignore': 'i-vscode-icons-file-type-nuxt',
+	'.nuxtrc': 'i-vscode-icons-file-type-nuxt',
+	'.vscode/settings.json': 'i-vscode-icons-file-type-vscode',
+	'bun': 'i-vscode-icons-file-type-bun',
+	'pnpm': 'i-vscode-icons-file-type-pnpm',
+	'npm': 'i-vscode-icons-file-type-npm',
+	'npx': 'i-vscode-icons-file-type-npm',
+	'yarn': 'i-vscode-icons-file-type-yarn',
+	'yarn.lock': 'i-vscode-icons-file-type-yarn',
+	'deno': 'i-vscode-icons-file-type-deno',
+	'node': 'i-vscode-icons-file-type-node',
+	'package.json': 'i-vscode-icons-file-type-node',
+	'nuxt': 'i-vscode-icons-file-type-nuxt',
+	'nuxt.config.ts': 'i-vscode-icons-file-type-nuxt',
+	'nuxt.config.js': 'i-vscode-icons-file-type-nuxt',
+	'nuxt.schema.ts': 'i-vscode-icons-file-type-nuxt',
+	'tailwind.config.ts': 'i-vscode-icons-file-type-tailwind',
+	'tailwind.config.js': 'i-vscode-icons-file-type-tailwind',
+	'uno.config.ts': 'i-vscode-icons-file-type-unocss',
+	'tsconfig.json': 'i-vscode-icons-file-type-tsconfig',
+	'eslint.config.js': 'i-vscode-icons-file-type-eslint',
+	'eslint.config.mjs': 'i-vscode-icons-file-type-eslint',
+	'eslint.config.cjs': 'i-vscode-icons-file-type-eslint',
+	'dockerfile': 'i-vscode-icons-file-type-docker',
+	'docker': 'i-vscode-icons-file-type-docker',
+	'ts': 'i-vscode-icons-file-type-typescript',
+	'typescript': 'i-vscode-icons-file-type-typescript',
+	'tsx': 'i-vscode-icons-file-type-reactts',
+	'jsx': 'i-vscode-icons-file-type-reactjs',
+	'js': 'i-vscode-icons-file-type-js',
+	'javascript': 'i-vscode-icons-file-type-js',
+	'mjs': 'i-vscode-icons-file-type-js',
+	'cjs': 'i-vscode-icons-file-type-js',
+	'vue': 'i-vscode-icons-file-type-vue',
+	'dart': 'i-vscode-icons-file-type-dartlang',
+	'flutter': 'i-vscode-icons-file-type-dartlang',
+	'go': 'i-vscode-icons-file-type-go',
+	'golang': 'i-vscode-icons-file-type-go',
+	'kt': 'i-vscode-icons-file-type-kotlin',
+	'kotlin': 'i-vscode-icons-file-type-kotlin',
+	'rs': 'i-vscode-icons-file-type-rust',
+	'rust': 'i-vscode-icons-file-type-rust',
+	'py': 'i-vscode-icons-file-type-python',
+	'python': 'i-vscode-icons-file-type-python',
+	'sql': 'i-vscode-icons-file-type-sql',
+	'sqlite': 'i-vscode-icons-file-type-sql',
+	'pgsql': 'i-vscode-icons-file-type-sql',
+	'mysql': 'i-vscode-icons-file-type-sql',
+	'html': 'i-vscode-icons-file-type-html',
+	'css': 'i-vscode-icons-file-type-css',
+	'scss': 'i-vscode-icons-file-type-css',
+	'less': 'i-vscode-icons-file-type-css',
+	'json': 'i-vscode-icons-file-type-json',
+	'yaml': 'i-vscode-icons-file-type-yaml',
+	'yml': 'i-vscode-icons-file-type-yaml',
+	'md': 'i-vscode-icons-file-type-markdown',
+	'mdc': 'i-vscode-icons-file-type-markdown',
+	'markdown': 'i-vscode-icons-file-type-markdown',
+	'sh': 'i-vscode-icons-file-type-shell',
+	'bash': 'i-vscode-icons-file-type-shell',
+	'zsh': 'i-vscode-icons-file-type-shell',
+	'shell': 'i-vscode-icons-file-type-shell',
+	'powershell': 'i-vscode-icons-file-type-powershell',
+	'ps1': 'i-vscode-icons-file-type-powershell',
+	'terminal': 'i-lucide-terminal',
+}
+
 const fileIcon = computed(() => {
-	const ext = (resolvedFilename.value ? resolvedFilename.value.split('.').pop()?.toLowerCase() : '') || displayLanguage.value
-	switch (ext) {
-		case 'ts':
-		case 'typescript':
-			return 'i-vscode-icons-file-type-typescript'
-		case 'tsx':
-			return 'i-vscode-icons-file-type-reactts'
-		case 'jsx':
-		case 'react':
-			return 'i-vscode-icons-file-type-reactjs'
-		case 'js':
-		case 'javascript':
-		case 'mjs':
-		case 'cjs':
-			return 'i-vscode-icons-file-type-js'
-		case 'vue':
-			return 'i-vscode-icons-file-type-vue'
-		case 'dart':
-		case 'flutter':
-			return 'i-vscode-icons-file-type-dartlang'
-		case 'go':
-		case 'golang':
-			return 'i-vscode-icons-file-type-go'
-		case 'kt':
-		case 'kotlin':
-			return 'i-vscode-icons-file-type-kotlin'
-		case 'sql':
-		case 'mysql':
-		case 'pgsql':
-		case 'postgres':
-		case 'sqlite':
-			return 'i-vscode-icons-file-type-sql'
-		case 'html':
-			return 'i-vscode-icons-file-type-html'
-		case 'css':
-		case 'scss':
-		case 'less':
-			return 'i-vscode-icons-file-type-css'
-		case 'json':
-			return 'i-vscode-icons-file-type-json'
-		case 'yaml':
-		case 'yml':
-			return 'i-vscode-icons-file-type-yaml'
-		case 'md':
-		case 'mdc':
-		case 'markdown':
-			return 'i-vscode-icons-file-type-markdown'
-		case 'sh':
-		case 'bash':
-		case 'zsh':
-		case 'shell':
-		case 'terminal':
-			return 'i-vscode-icons-file-type-shell'
-		case 'py':
-		case 'python':
-			return 'i-vscode-icons-file-type-python'
-		case 'rs':
-		case 'rust':
-			return 'i-vscode-icons-file-type-rust'
-		case 'graphql':
-		case 'gql':
-			return 'i-vscode-icons-file-type-graphql'
-		case 'docker':
-		case 'dockerfile':
-			return 'i-vscode-icons-file-type-docker'
-		case 'diff':
-			return 'i-vscode-icons-file-type-git'
-		default:
-			return 'i-vscode-icons-default-file'
-	}
+	const clean = (resolvedFilename.value || '').replace(/\s*\(.*\)\s*$/, '').trim().toLowerCase()
+	const name = clean.split('/').pop() || ''
+	const ext = clean.includes('.') ? clean.split('.').pop() || '' : clean
+	const lang = displayLanguage.value.toLowerCase()
+
+	if (iconMap[clean])
+		return iconMap[clean]
+	if (iconMap[name])
+		return iconMap[name]
+	if (iconMap[ext])
+		return iconMap[ext]
+	if (iconMap[lang])
+		return iconMap[lang]
+
+	return 'i-vscode-icons-default-file'
 })
 
 const isMermaid = computed(() => displayLanguage.value === 'mermaid')

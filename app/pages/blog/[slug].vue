@@ -2,11 +2,6 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import AppReactionsBar from '~/components/reactions/AppReactionsBar.vue'
 
-// Load prose typography CSS hanya di halaman artikel (lazy, tidak blocking)
-useHead({
-	link: [{ rel: 'stylesheet', href: '/prose.css', media: 'print', onload: 'this.media=\'all\'' }],
-})
-
 const route = useRoute()
 const { locale, locales } = useI18n()
 const localePath = useLocalePath()
@@ -474,42 +469,58 @@ useSchemaOrg([
 							/>
 						</div>
 
-						<!-- Surround Articles Navigation (Bento Cards) -->
+						<!-- Surround Articles Navigation (Pure Bento Cards, No Underline) -->
 						<nav
 							v-if="surround && (surround[0] || surround[1])"
-							class="grid grid-cols-1 mt-10 gap-4 border-t border-slate-200/80 pt-8 sm:grid-cols-2 dark:border-slate-800/80"
+							class="not-prose grid grid-cols-1 mt-12 gap-4 border-t border-slate-200/80 pt-8 sm:grid-cols-2 dark:border-slate-800/80"
 							aria-label="Article Navigation"
 						>
+							<!-- Previous Article Bento Card -->
 							<NuxtLink
 								v-if="surround[0]"
-
 								:to="`/${locale}/blog/${surround[0].slug || cleanSlug(surround[0].path)}`"
-								class="bento-card-clean group flex flex-col justify-between bento-lift rounded-bento p-4"
+								class="group bento-card-clean flex flex-col justify-between border border-slate-200/90 rounded-2xl bg-white p-5 shadow-xs transition-all duration-200 bento-lift sm:p-5.5 dark:border-slate-800/90 dark:bg-slate-950 hover:border-brand-500/40 dark:hover:border-brand-400/35 hover:shadow-md !no-underline"
 							>
-								<span class="flex items-center gap-1 text-meta text-xs text-slate-600 font-semibold uppercase transition-colors dark:text-slate-400 group-hover:text-brand-800 dark:group-hover:text-brand-400">
-									<span class="i-hugeicons-arrow-left-01 text-xs" /> {{ locale === 'id' ? 'Artikel Sebelumnya' : 'Previous Article' }}
-								</span>
-								<strong class="mt-2 block text-sm text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
-									{{ surround[0].title }}
-								</strong>
+								<div class="flex items-center gap-2.5">
+									<div class="size-8 flex shrink-0 items-center justify-center border border-brand-500/25 rounded-xl bg-brand-500/10 text-brand-600 transition-all duration-200 dark:border-brand-500/20 dark:bg-brand-500/15 dark:text-brand-400 group-hover:border-brand-500 group-hover:bg-brand-500 group-hover:text-white">
+										<span class="i-hugeicons-arrow-left-01 text-base transition-transform duration-200 group-hover:-translate-x-0.5" />
+									</div>
+									<span class="text-[11px] text-slate-500 font-bold tracking-wider uppercase font-mono dark:text-slate-400 group-hover:text-brand-700 dark:group-hover:text-brand-300">
+										{{ locale === 'id' ? 'Artikel Sebelumnya' : 'Previous Article' }}
+									</span>
+								</div>
+
+								<div class="mt-3.5">
+									<p class="text-sm text-slate-900 font-bold leading-snug font-heading transition-colors sm:text-base dark:text-slate-100 group-hover:text-brand-700 dark:group-hover:text-brand-300 !no-underline">
+										{{ surround[0].title }}
+									</p>
+								</div>
 							</NuxtLink>
 							<div
 								v-else
 								class="hidden sm:block"
 							/>
 
+							<!-- Next Article Bento Card -->
 							<NuxtLink
 								v-if="surround[1]"
-
 								:to="`/${locale}/blog/${surround[1].slug || cleanSlug(surround[1].path)}`"
-								class="bento-card-clean group flex flex-col justify-between bento-lift rounded-bento p-4 text-right"
+								class="group bento-card-clean flex flex-col justify-between border border-slate-200/90 rounded-2xl bg-white p-5 shadow-xs transition-all duration-200 bento-lift sm:p-5.5 dark:border-slate-800/90 dark:bg-slate-950 hover:border-brand-500/40 dark:hover:border-brand-400/35 hover:shadow-md !no-underline"
 							>
-								<span class="flex items-center justify-end gap-1 text-meta text-xs text-slate-600 font-semibold uppercase transition-colors dark:text-slate-400 group-hover:text-brand-800 dark:group-hover:text-brand-400">
-									{{ locale === 'id' ? 'Artikel Selanjutnya' : 'Next Article' }} <span class="i-hugeicons-arrow-right-01 text-xs" />
-								</span>
-								<strong class="mt-2 block text-sm text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
-									{{ surround[1].title }}
-								</strong>
+								<div class="flex items-center justify-end gap-2.5">
+									<span class="text-[11px] text-slate-500 font-bold tracking-wider uppercase font-mono dark:text-slate-400 group-hover:text-brand-700 dark:group-hover:text-brand-300">
+										{{ locale === 'id' ? 'Artikel Selanjutnya' : 'Next Article' }}
+									</span>
+									<div class="size-8 flex shrink-0 items-center justify-center border border-brand-500/25 rounded-xl bg-brand-500/10 text-brand-600 transition-all duration-200 dark:border-brand-500/20 dark:bg-brand-500/15 dark:text-brand-400 group-hover:border-brand-500 group-hover:bg-brand-500 group-hover:text-white">
+										<span class="i-hugeicons-arrow-right-01 text-base transition-transform duration-200 group-hover:translate-x-0.5" />
+									</div>
+								</div>
+
+								<div class="mt-3.5 text-right">
+									<p class="text-sm text-slate-900 font-bold leading-snug font-heading transition-colors sm:text-base dark:text-slate-100 group-hover:text-brand-700 dark:group-hover:text-brand-300 !no-underline">
+										{{ surround[1].title }}
+									</p>
+								</div>
 							</NuxtLink>
 						</nav>
 

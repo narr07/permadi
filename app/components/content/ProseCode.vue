@@ -1,11 +1,12 @@
 <script setup lang="ts">
-withDefaults(
+const props = withDefaults(
 	defineProps<{
 		code?: string
 		language?: string
 		filename?: string
 		highlights?: number[]
 		meta?: string
+		class?: any
 	}>(),
 	{
 		code: '',
@@ -13,10 +14,14 @@ withDefaults(
 		filename: '',
 		highlights: () => [],
 		meta: '',
+		class: undefined,
 	},
 )
 </script>
 
 <template>
-	<slot />
+	<code
+		class="inline-code rounded-md border border-dashed border-[#a4c7c2] bg-[#eff6f5] px-1.5 py-0.5 text-[0.85em] text-[#0f7662] font-medium font-mono transition-colors dark:border-[rgba(94,234,207,0.35)] dark:bg-[rgba(20,184,152,0.08)] dark:text-[#5eeacf]"
+		:class="props.class"
+	><slot /></code>
 </template>
