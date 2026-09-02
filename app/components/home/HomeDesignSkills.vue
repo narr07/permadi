@@ -150,7 +150,7 @@
 
 		<!-- Footer Link -->
 		<NuxtLink
-			:to="localePath('/tentang')"
+			:to="locale === 'id' ? '/id/tentang' : '/en/about'"
 			class="group mt-6 flex items-center justify-between border-t border-slate-200/60 pt-3 text-xs text-brand-900 font-bold dark:border-slate-800/60 dark:text-brand-300 hover:text-brand-950 dark:hover:text-yellow-600"
 		>
 			<span>{{ locale === 'id' ? 'Detail Toolkit & Filosofi' : 'Detailed Toolkit & Philosophy' }}</span>

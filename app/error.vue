@@ -175,7 +175,7 @@ useSeoMeta({
 					<button
 						type="button"
 						class="bento-card-clean group flex cursor-pointer items-center gap-3.5 bento-lift rounded-bento p-4 text-left"
-						@click="handleClearError('/projek')"
+						@click="handleClearError(locale === 'id' ? '/id/projek' : '/en/projects')"
 					>
 						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-teal-500/25 rounded-xl bg-teal-500/10 text-teal-600 dark:border-teal-400/20 dark:bg-teal-500/15 dark:text-teal-400">
 							<span class="i-hugeicons-folder-02 text-xl" />
@@ -194,7 +194,7 @@ useSeoMeta({
 					<button
 						type="button"
 						class="bento-card-clean group flex cursor-pointer items-center gap-3.5 bento-lift rounded-bento p-4 text-left"
-						@click="handleClearError('/tentang')"
+						@click="handleClearError(locale === 'id' ? '/id/tentang' : '/en/about')"
 					>
 						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-emerald-500/25 rounded-xl bg-emerald-500/10 text-emerald-600 dark:border-emerald-400/20 dark:bg-emerald-500/15 dark:text-emerald-400">
 							<span class="i-hugeicons-user-circle text-xl" />
@@ -213,7 +213,7 @@ useSeoMeta({
 					<button
 						type="button"
 						class="bento-card-clean group flex cursor-pointer items-center gap-3.5 bento-lift rounded-bento p-4 text-left"
-						@click="handleClearError('/kontak')"
+						@click="handleClearError(locale === 'id' ? '/id/kontak' : '/en/contact')"
 					>
 						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-cyan-500/25 rounded-xl bg-cyan-500/10 text-cyan-600 dark:border-cyan-400/20 dark:bg-cyan-500/15 dark:text-cyan-400">
 							<span class="i-hugeicons-mail-01 text-xl" />
