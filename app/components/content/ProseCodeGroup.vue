@@ -184,7 +184,7 @@ function handleCopy() {
 		<!-- Bento Tab Bar & Action Header -->
 		<div class="flex items-center justify-between border-b border-[#115e4f]/40 bg-[#02211c]/95 px-2 py-1.5 dark:border-[#134e43]/50 dark:bg-[#001c19]/90">
 			<!-- Tab Buttons List -->
-			<div class="custom-scrollbar flex min-w-0 items-center gap-1.5 overflow-x-auto pr-2">
+			<div class="custom-scrollbar min-w-0 flex items-center gap-1.5 overflow-x-auto pr-2">
 				<button
 					v-for="(tab, idx) in tabs"
 					:key="idx"

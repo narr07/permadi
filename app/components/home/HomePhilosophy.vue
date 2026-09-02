@@ -20,7 +20,7 @@ const { locale } = useI18n()
 
 <template>
 	<div
-		
+
 		class="sand-card-clean flex flex-col justify-between p-6 md:col-span-5 sm:p-7"
 	>
 		<div class="flex items-center justify-between">

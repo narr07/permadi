@@ -1,83 +1,9 @@
 <script setup lang="ts">
-import Conclusion from '~/components/content/Conclusion.vue'
-import Faq from '~/components/content/Faq.vue'
-import FaqItem from '~/components/content/FaqItem.vue'
-import ProseAccordion from '~/components/content/ProseAccordion.vue'
-import ProseAccordionItem from '~/components/content/ProseAccordionItem.vue'
-import ProseBadge from '~/components/content/ProseBadge.vue'
-import ProseCallout from '~/components/content/ProseCallout.vue'
-import ProseCard from '~/components/content/ProseCard.vue'
-import ProseCardGroup from '~/components/content/ProseCardGroup.vue'
-import ProseCaution from '~/components/content/ProseCaution.vue'
-import ProseCodeGroup from '~/components/content/ProseCodeGroup.vue'
-import ProseCodeInline from '~/components/content/ProseCodeInline.vue'
-import ProseCollapsible from '~/components/content/ProseCollapsible.vue'
-import ProseFaq from '~/components/content/ProseFaq.vue'
-import ProseImg from '~/components/content/ProseImg.vue'
-import ProseNote from '~/components/content/ProseNote.vue'
-import ProsePre from '~/components/content/ProsePre.vue'
-import ProsePrompt from '~/components/content/ProsePrompt.vue'
-import ProseSteps from '~/components/content/ProseSteps.vue'
-import ProseTable from '~/components/content/ProseTable.vue'
-import ProseTabs from '~/components/content/ProseTabs.vue'
-import ProseTabsItem from '~/components/content/ProseTabsItem.vue'
-import ProseTip from '~/components/content/ProseTip.vue'
-import ProseWarning from '~/components/content/ProseWarning.vue'
-
 const route = useRoute()
 const { locale, locales } = useI18n()
 const setI18nParams = useSetI18nParams()
 const { getCategoryLabel } = useCategoryLabel()
 const { formatDate } = useFormatDate()
-
-
-
-const mdcComponents = {
-	'img': ProseImg,
-	'pre': ProsePre,
-	'code-inline': ProseCodeInline,
-	'prose-code-inline': ProseCodeInline,
-	'accordion': ProseAccordion,
-	'accordion-item': ProseAccordionItem,
-	'code-group': ProseCodeGroup,
-	'tabs': ProseTabs,
-	'tabs-item': ProseTabsItem,
-	'callout': ProseCallout,
-	'steps': ProseSteps,
-	'collapsible': ProseCollapsible,
-	'card': ProseCard,
-	'card-group': ProseCardGroup,
-	'faq': Faq,
-	'faq-item': FaqItem,
-	'conclusion': Conclusion,
-	'prompt': ProsePrompt,
-	'note': ProseNote,
-	'tip': ProseTip,
-	'warning': ProseWarning,
-	'caution': ProseCaution,
-	'badge': ProseBadge,
-	'table': ProseTable,
-	Conclusion,
-	Faq,
-	FaqItem,
-	ProseFaq,
-	ProsePrompt,
-	ProseNote,
-	ProseTip,
-	ProseWarning,
-	ProseCaution,
-	ProseBadge,
-	ProseAccordion,
-	ProseAccordionItem,
-	ProseCodeGroup,
-	ProseTabs,
-	ProseTabsItem,
-	ProseCallout,
-	ProseSteps,
-	ProseCollapsible,
-	ProseCard,
-	ProseCardGroup,
-}
 
 const requestedSlug = computed(() => route.params.slug as string)
 const collection = computed(() => (locale.value === 'id' ? 'projek_id' : 'projek_en'))
@@ -521,10 +447,7 @@ onMounted(() => {
 
 			<!-- 2. Prose Case Study Content -->
 			<div class="max-w-none text-slate-700 leading-relaxed font-sans prose prose-slate dark:text-slate-200 dark:prose-invert">
-				<ContentRenderer
-					:value="project.doc"
-					:components="mdcComponents"
-				/>
+				<ContentRenderer :value="project.doc" />
 			</div>
 		</article>
 

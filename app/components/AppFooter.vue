@@ -77,7 +77,7 @@ const socialLinks = [
 </script>
 
 <template>
-	<footer class="mt-20 border-t border-slate-200/80 pt-10 pb-12 dark:border-slate-800/80 sm:mt-24 sm:pt-14 sm:pb-16">
+	<footer class="mt-20 border-t border-slate-200/80 pb-12 pt-10 sm:mt-24 dark:border-slate-800/80 sm:pb-16 sm:pt-14">
 		<div class="container-bento">
 			<!-- Bento Grid Layout -->
 			<div class="grid grid-cols-1 gap-4 lg:grid-cols-12 md:grid-cols-12 sm:gap-5">
@@ -95,7 +95,7 @@ const socialLinks = [
 									<Logo :size="40" />
 								</div>
 								<div>
-									<h2 class="text-base text-slate-950 font-bold leading-tight dark:text-slate-50 sm:text-lg">
+									<h2 class="text-base text-slate-950 font-bold leading-tight sm:text-lg dark:text-slate-50">
 										Dinar Permadi Yusup
 									</h2>
 									<span class="text-xs text-slate-600 font-mono dark:text-slate-400">
@@ -112,7 +112,7 @@ const socialLinks = [
 						</div>
 
 						<!-- Bio Description -->
-						<p class="max-w-xl text-sm text-slate-800 leading-relaxed dark:text-slate-100 sm:text-base">
+						<p class="max-w-xl text-sm text-slate-800 leading-relaxed sm:text-base dark:text-slate-100">
 							{{ locale === 'id'
 								? 'Guru SD & Web Developer yang berfokus pada eksplorasi antarmuka digital berbasis Nuxt, Flutter, dan desain grafis dengan ketelitian visual tinggi.'
 								: 'Elementary teacher & web developer focused on building refined digital interfaces, Nuxt & Flutter web apps, and aesthetic graphic design.' }}
@@ -122,11 +122,11 @@ const socialLinks = [
 					<!-- Location & Local Time Pills -->
 					<div class="mt-6 flex flex-wrap items-center gap-2.5 pt-4 sm:mt-8">
 						<div class="shadow-xs inline-flex items-center gap-1.5 border border-slate-200/90 rounded-xl bg-slate-100/70 px-3 py-1.5 text-xs text-slate-800 font-mono dark:border-slate-800 dark:bg-slate-900/80 dark:text-slate-200">
-							<span class="i-hugeicons-location-01 text-brand-700 text-sm dark:text-brand-400" />
+							<span class="i-hugeicons-location-01 text-sm text-brand-700 dark:text-brand-400" />
 							<span>{{ locale === 'id' ? 'Majalengka, Jawa Barat (ID)' : 'Majalengka, West Java (ID)' }}</span>
 						</div>
 						<div class="shadow-xs inline-flex items-center gap-1.5 border border-slate-200/90 rounded-xl bg-slate-100/70 px-3 py-1.5 text-xs text-slate-800 font-mono dark:border-slate-800 dark:bg-slate-900/80 dark:text-slate-200">
-							<span class="i-hugeicons-clock-01 text-brand-700 text-sm dark:text-brand-400" />
+							<span class="i-hugeicons-clock-01 text-sm text-brand-700 dark:text-brand-400" />
 							<span>{{ currentTime ? (locale === 'id' ? `${currentTime} WIB (GMT+7)` : `${currentTime} (GMT+7)`) : 'GMT+7' }}</span>
 						</div>
 					</div>
@@ -150,10 +150,10 @@ const socialLinks = [
 								v-for="item in navLinks"
 								:key="item.to"
 								:to="item.to"
-								class="group flex items-center justify-between border border-transparent rounded-xl bg-slate-100/70 px-3.5 py-2.5 text-xs text-slate-800 font-semibold transition-all dark:bg-slate-800/60 hover:border-brand-500/30 dark:text-slate-100 hover:bg-brand-50/80 hover:text-brand-900 dark:hover:border-brand-400/30 dark:hover:bg-brand-950/40 dark:hover:text-brand-300"
+								class="group flex items-center justify-between border border-transparent rounded-xl bg-slate-100/70 px-3.5 py-2.5 text-xs text-slate-800 font-semibold transition-all hover:border-brand-500/30 dark:bg-slate-800/60 hover:bg-brand-50/80 dark:text-slate-100 hover:text-brand-900 dark:hover:border-brand-400/30 dark:hover:bg-brand-950/40 dark:hover:text-brand-300"
 							>
 								<span>{{ item.label }}</span>
-								<span class="i-hugeicons-arrow-right-01 text-xs text-slate-500 transition-transform group-hover:translate-x-0.5 group-hover:text-brand-700 dark:text-slate-400 dark:group-hover:text-brand-300" />
+								<span class="i-hugeicons-arrow-right-01 text-xs text-slate-500 transition-transform group-hover:translate-x-0.5 dark:text-slate-400 group-hover:text-brand-700 dark:group-hover:text-brand-300" />
 							</NuxtLink>
 						</div>
 					</div>
@@ -193,7 +193,7 @@ const socialLinks = [
 								:href="social.url"
 								:target="social.url.startsWith('http') ? '_blank' : undefined"
 								:rel="social.url.startsWith('http') ? 'noopener' : undefined"
-								class="shadow-2xs group flex h-10 w-10 shrink-0 items-center justify-center border border-slate-200/80 rounded-xl bg-white text-slate-800 transition-all dark:border-slate-800 dark:bg-slate-800/80 hover:border-brand-500/40 dark:text-slate-200 hover:bg-brand-50/70 hover:text-brand-900 dark:hover:border-brand-400/40 dark:hover:bg-brand-950/60 dark:hover:text-brand-200"
+								class="shadow-2xs group h-10 w-10 flex shrink-0 items-center justify-center border border-slate-200/80 rounded-xl bg-white text-slate-800 transition-all dark:border-slate-800 hover:border-brand-500/40 dark:bg-slate-800/80 hover:bg-brand-50/70 dark:text-slate-200 hover:text-brand-900 dark:hover:border-brand-400/40 dark:hover:bg-brand-950/60 dark:hover:text-brand-200"
 								:title="social.name"
 								:aria-label="social.ariaLabel"
 							>
@@ -208,7 +208,7 @@ const socialLinks = [
 				</div>
 
 				<!-- Bento Card 4: Meta Bar & Back to Top (12 Cols) -->
-				<div class="flex flex-col items-center justify-between gap-4 rounded-2xl border border-slate-200/70 bg-slate-50/70 px-6 py-4 text-xs text-slate-700 dark:border-slate-800/70 dark:bg-slate-900/60 dark:text-slate-300 lg:col-span-12 md:col-span-12 sm:flex-row">
+				<div class="flex flex-col items-center justify-between gap-4 border border-slate-200/70 rounded-2xl bg-slate-50/70 px-6 py-4 text-xs text-slate-700 lg:col-span-12 md:col-span-12 sm:flex-row dark:border-slate-800/70 dark:bg-slate-900/60 dark:text-slate-300">
 					<!-- Copyright -->
 					<div class="flex items-center gap-2 text-center sm:text-left">
 						<span>© 2021–<ClientOnly fallback="2026">{{ currentYear }}</ClientOnly></span>
@@ -220,7 +220,7 @@ const socialLinks = [
 					<!-- Back to Top Button -->
 					<button
 						type="button"
-						class="group inline-flex items-center gap-2 border border-slate-200/90 rounded-xl bg-white px-3.5 py-1.5 text-xs text-slate-800 font-semibold transition-all dark:border-slate-700/80 dark:bg-slate-800/80 hover:border-brand-500/50 dark:text-slate-100 hover:text-brand-900 dark:hover:border-brand-400/50 dark:hover:text-brand-200"
+						class="group inline-flex items-center gap-2 border border-slate-200/90 rounded-xl bg-white px-3.5 py-1.5 text-xs text-slate-800 font-semibold transition-all dark:border-slate-700/80 hover:border-brand-500/50 dark:bg-slate-800/80 dark:text-slate-100 hover:text-brand-900 dark:hover:border-brand-400/50 dark:hover:text-brand-200"
 						@click="scrollToTop"
 					>
 						<span>{{ locale === 'id' ? 'Kembali ke Atas' : 'Back to Top' }}</span>

@@ -62,7 +62,7 @@ const reactionsList = computed(() => [
 	<div class="reactions-bar-sticky pointer-events-none sticky bottom-4 z-40 my-6 flex select-none justify-center sm:bottom-6">
 		<!-- Main Reactions Bar Pill Container (Bento Island) -->
 		<div
-			class="pointer-events-auto relative flex items-center justify-center gap-1 border border-slate-200/90 rounded-full bg-white/90 p-1 shadow-lg shadow-slate-900/8 backdrop-blur-xl transition-all dark:border-slate-800/90 dark:bg-slate-900/90 dark:shadow-black/40 sm:gap-1.5 sm:p-1.5"
+			class="pointer-events-auto relative flex items-center justify-center gap-1 border border-slate-200/90 rounded-full bg-white/90 p-1 shadow-lg shadow-slate-900/8 backdrop-blur-xl transition-all sm:gap-1.5 dark:border-slate-800/90 dark:bg-slate-900/90 sm:p-1.5 dark:shadow-black/40"
 		>
 			<!-- Teleport Modal to Body -->
 			<ClientOnly>
@@ -83,7 +83,7 @@ const reactionsList = computed(() => [
 							:animate="{ opacity: 1, y: 0, scale: 1 }"
 							:exit="{ opacity: 0, y: 8, scale: 0.96 }"
 							:transition="{ duration: 0.16, ease: 'easeOut' }"
-							class="pointer-events-auto relative z-10 max-w-[320px] w-full border border-slate-200/90 rounded-2xl bg-white/95 p-4 text-slate-900 shadow-2xl backdrop-blur-2xl dark:border-slate-800/90 dark:bg-slate-900/95 dark:text-slate-100 sm:max-w-[350px]"
+							class="pointer-events-auto relative z-10 max-w-[320px] w-full border border-slate-200/90 rounded-2xl bg-white/95 p-4 text-slate-900 shadow-2xl backdrop-blur-2xl sm:max-w-[350px] dark:border-slate-800/90 dark:bg-slate-900/95 dark:text-slate-100"
 						>
 							<!-- Header with Locale Support -->
 							<div class="mb-3 flex items-center justify-between border-b border-slate-200/70 pb-2.5 dark:border-slate-800/70">
@@ -93,7 +93,7 @@ const reactionsList = computed(() => [
 								</div>
 								<button
 									type="button"
-									class="rounded-lg p-1 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
+									class="rounded-lg p-1 text-slate-500 transition-colors hover:bg-slate-100 dark:text-slate-400 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-white"
 									:aria-label="locale === 'id' ? 'Tutup' : 'Close'"
 									@click="isInsightOpen = false"
 								>
@@ -103,21 +103,21 @@ const reactionsList = computed(() => [
 
 							<!-- 3 Main Metrics Grid (Bento Style) -->
 							<div class="grid grid-cols-3 gap-2 py-1 text-center sm:gap-2.5">
-								<div class="flex flex-col items-center border border-slate-200/70 rounded-xl bg-slate-50/80 p-2 shadow-xs dark:border-slate-800/70 dark:bg-slate-800/50 sm:p-2.5">
+								<div class="shadow-xs flex flex-col items-center border border-slate-200/70 rounded-xl bg-slate-50/80 p-2 dark:border-slate-800/70 dark:bg-slate-800/50 sm:p-2.5">
 									<span class="text-[11px] text-meta text-slate-600 font-medium dark:text-slate-400">Views</span>
-									<span class="mt-0.5 text-base text-slate-950 font-bold font-mono dark:text-slate-50 sm:text-lg">
+									<span class="mt-0.5 text-base text-slate-950 font-bold font-mono sm:text-lg dark:text-slate-50">
 										{{ formatNumber(views) }}
 									</span>
 								</div>
 
-								<div class="flex flex-col items-center border border-slate-200/70 rounded-xl bg-slate-50/80 p-2 shadow-xs dark:border-slate-800/70 dark:bg-slate-800/50 sm:p-2.5">
+								<div class="shadow-xs flex flex-col items-center border border-slate-200/70 rounded-xl bg-slate-50/80 p-2 dark:border-slate-800/70 dark:bg-slate-800/50 sm:p-2.5">
 									<span class="text-[11px] text-meta text-slate-600 font-medium dark:text-slate-400">Shares</span>
-									<span class="mt-0.5 text-base text-brand-700 font-bold font-mono dark:text-brand-400 sm:text-lg">
+									<span class="mt-0.5 text-base text-brand-700 font-bold font-mono sm:text-lg dark:text-brand-400">
 										{{ formatNumber(shares) }}
 									</span>
 								</div>
 
-								<div class="flex flex-col items-center border border-slate-200/70 rounded-xl bg-slate-50/80 p-2 shadow-xs dark:border-slate-800/70 dark:bg-slate-800/50 sm:p-2.5">
+								<div class="shadow-xs flex flex-col items-center border border-slate-200/70 rounded-xl bg-slate-50/80 p-2 dark:border-slate-800/70 dark:bg-slate-800/50 sm:p-2.5">
 									<span class="text-[11px] text-meta text-slate-600 font-medium dark:text-slate-400">Reactions</span>
 									<span class="mt-0.5 text-base text-accent font-bold font-mono sm:text-lg">
 										{{ formatNumber(reactionsTotal) }}
@@ -148,7 +148,7 @@ const reactionsList = computed(() => [
 			/>
 
 			<!-- Subtle Bento Divider -->
-			<div class="h-4 w-[1px] bg-slate-200 dark:bg-slate-800 mx-0.5" />
+			<div class="mx-0.5 h-4 w-[1px] bg-slate-200 dark:bg-slate-800" />
 
 			<!-- Insight Trigger Button -->
 			<Motion

@@ -150,8 +150,6 @@ function scrollToTop() {
 	}
 }
 
-
-
 useSeoMeta({
 	title: computed(() => page.value?.title),
 	description: computed(() => page.value?.description),
@@ -265,7 +263,7 @@ useSchemaOrg([
 								</div>
 
 								<!-- List of Options -->
-								<div class="max-h-60 space-y-0.5 overflow-y-auto overscroll-contain pr-1 custom-scrollbar">
+								<div class="custom-scrollbar max-h-60 overflow-y-auto overscroll-contain pr-1 space-y-0.5">
 									<!-- "All Topics" Option -->
 									<button
 										type="button"
@@ -328,7 +326,7 @@ useSchemaOrg([
 				<NuxtLink
 					v-for="(item, index) in paginatedProjects"
 					:key="item.url"
-					
+
 					:to="item.url"
 					class="bento-card-clean group block flex flex-col justify-between overflow-hidden transition-all duration-300"
 					:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'

@@ -21,7 +21,7 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/en/g
 
 <template>
 	<NuxtLink
-		
+
 		:to="targetPath"
 		class="bento-card-clean group block flex flex-col justify-between p-6 md:col-span-7 sm:p-7"
 	>

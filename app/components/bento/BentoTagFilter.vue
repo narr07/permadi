@@ -135,7 +135,7 @@ function resetFilter() {
 						</div>
 
 						<!-- List of Options -->
-						<div class="max-h-60 space-y-0.5 overflow-y-auto overscroll-contain pr-1 custom-scrollbar">
+						<div class="custom-scrollbar max-h-60 overflow-y-auto overscroll-contain pr-1 space-y-0.5">
 							<!-- "All Topics" Option -->
 							<button
 								type="button"

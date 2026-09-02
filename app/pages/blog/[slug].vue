@@ -479,19 +479,19 @@ useSchemaOrg([
 							<NuxtLink
 								v-if="surround[0]"
 								:to="`/${locale}/blog/${surround[0].slug || cleanSlug(surround[0].path)}`"
-								class="group bento-card-clean flex flex-col justify-between border border-slate-200/90 rounded-2xl bg-white p-5 shadow-xs transition-all duration-200 bento-lift sm:p-5.5 dark:border-slate-800/90 dark:bg-slate-950 hover:border-brand-500/40 dark:hover:border-brand-400/35 hover:shadow-md !no-underline"
+								class="group bento-card-clean shadow-xs flex flex-col justify-between border bento-lift border-slate-200/90 rounded-2xl bg-white p-5 transition-all duration-200 dark:border-slate-800/90 hover:border-brand-500/40 dark:bg-slate-950 sm:p-5.5 !no-underline hover:shadow-md dark:hover:border-brand-400/35"
 							>
 								<div class="flex items-center gap-2.5">
-									<div class="size-8 flex shrink-0 items-center justify-center border border-brand-500/25 rounded-xl bg-brand-500/10 text-brand-600 transition-all duration-200 dark:border-brand-500/20 dark:bg-brand-500/15 dark:text-brand-400 group-hover:border-brand-500 group-hover:bg-brand-500 group-hover:text-white">
+									<div class="size-8 flex shrink-0 items-center justify-center border border-brand-500/25 rounded-xl bg-brand-500/10 text-brand-600 transition-all duration-200 dark:border-brand-500/20 group-hover:border-brand-500 dark:bg-brand-500/15 group-hover:bg-brand-500 dark:text-brand-400 group-hover:text-white">
 										<span class="i-hugeicons-arrow-left-01 text-base transition-transform duration-200 group-hover:-translate-x-0.5" />
 									</div>
-									<span class="text-[11px] text-slate-500 font-bold tracking-wider uppercase font-mono dark:text-slate-400 group-hover:text-brand-700 dark:group-hover:text-brand-300">
+									<span class="text-[11px] text-slate-500 font-bold tracking-wider font-mono uppercase dark:text-slate-400 group-hover:text-brand-700 dark:group-hover:text-brand-300">
 										{{ locale === 'id' ? 'Artikel Sebelumnya' : 'Previous Article' }}
 									</span>
 								</div>
 
 								<div class="mt-3.5">
-									<p class="text-sm text-slate-900 font-bold leading-snug font-heading transition-colors sm:text-base dark:text-slate-100 group-hover:text-brand-700 dark:group-hover:text-brand-300 !no-underline">
+									<p class="text-sm text-slate-900 font-bold leading-snug font-heading transition-colors sm:text-base dark:text-slate-100 group-hover:text-brand-700 !no-underline dark:group-hover:text-brand-300">
 										{{ surround[0].title }}
 									</p>
 								</div>
@@ -505,19 +505,19 @@ useSchemaOrg([
 							<NuxtLink
 								v-if="surround[1]"
 								:to="`/${locale}/blog/${surround[1].slug || cleanSlug(surround[1].path)}`"
-								class="group bento-card-clean flex flex-col justify-between border border-slate-200/90 rounded-2xl bg-white p-5 shadow-xs transition-all duration-200 bento-lift sm:p-5.5 dark:border-slate-800/90 dark:bg-slate-950 hover:border-brand-500/40 dark:hover:border-brand-400/35 hover:shadow-md !no-underline"
+								class="group bento-card-clean shadow-xs flex flex-col justify-between border bento-lift border-slate-200/90 rounded-2xl bg-white p-5 transition-all duration-200 dark:border-slate-800/90 hover:border-brand-500/40 dark:bg-slate-950 sm:p-5.5 !no-underline hover:shadow-md dark:hover:border-brand-400/35"
 							>
 								<div class="flex items-center justify-end gap-2.5">
-									<span class="text-[11px] text-slate-500 font-bold tracking-wider uppercase font-mono dark:text-slate-400 group-hover:text-brand-700 dark:group-hover:text-brand-300">
+									<span class="text-[11px] text-slate-500 font-bold tracking-wider font-mono uppercase dark:text-slate-400 group-hover:text-brand-700 dark:group-hover:text-brand-300">
 										{{ locale === 'id' ? 'Artikel Selanjutnya' : 'Next Article' }}
 									</span>
-									<div class="size-8 flex shrink-0 items-center justify-center border border-brand-500/25 rounded-xl bg-brand-500/10 text-brand-600 transition-all duration-200 dark:border-brand-500/20 dark:bg-brand-500/15 dark:text-brand-400 group-hover:border-brand-500 group-hover:bg-brand-500 group-hover:text-white">
+									<div class="size-8 flex shrink-0 items-center justify-center border border-brand-500/25 rounded-xl bg-brand-500/10 text-brand-600 transition-all duration-200 dark:border-brand-500/20 group-hover:border-brand-500 dark:bg-brand-500/15 group-hover:bg-brand-500 dark:text-brand-400 group-hover:text-white">
 										<span class="i-hugeicons-arrow-right-01 text-base transition-transform duration-200 group-hover:translate-x-0.5" />
 									</div>
 								</div>
 
 								<div class="mt-3.5 text-right">
-									<p class="text-sm text-slate-900 font-bold leading-snug font-heading transition-colors sm:text-base dark:text-slate-100 group-hover:text-brand-700 dark:group-hover:text-brand-300 !no-underline">
+									<p class="text-sm text-slate-900 font-bold leading-snug font-heading transition-colors sm:text-base dark:text-slate-100 group-hover:text-brand-700 !no-underline dark:group-hover:text-brand-300">
 										{{ surround[1].title }}
 									</p>
 								</div>

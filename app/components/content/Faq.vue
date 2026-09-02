@@ -29,7 +29,7 @@ provide('faqSingle', computed(() => props.single))
 
 <template>
 	<div
-		class="faq-container my-8 flex flex-col gap-4.5 [counter-reset:faq-counter]"
+		class="faq-container [counter-reset:faq-counter] my-8 flex flex-col gap-4.5"
 		:class="props.class"
 	>
 		<!-- Optional Embedded Header -->

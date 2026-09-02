@@ -33,11 +33,11 @@ const headingId = computed(() => {
 <template>
 	<aside
 		:id="headingId"
-		class="bento-card-clean conclusion-card relative my-8 overflow-hidden border border-slate-200 rounded-2xl bg-white p-6 shadow-xs transition-all duration-300 sm:p-7 dark:border-slate-800 dark:bg-slate-950"
+		class="bento-card-clean conclusion-card shadow-xs relative my-8 overflow-hidden border border-slate-200 rounded-2xl bg-white p-6 transition-all duration-300 dark:border-slate-800 dark:bg-slate-950 sm:p-7"
 		:class="props.class"
 	>
 		<!-- Header with Symmetrical Icon + Title -->
-		<div class="mb-4.5 flex items-center gap-3.5 border-b border-slate-100 pb-4 dark:border-slate-850">
+		<div class="dark:border-slate-850 mb-4.5 flex items-center gap-3.5 border-b border-slate-100 pb-4">
 			<div
 				class="size-10 flex shrink-0 items-center justify-center border border-brand-500/30 rounded-xl bg-brand-500/10 text-brand-600 dark:border-brand-500/20 dark:bg-brand-500/15 dark:text-brand-400"
 			>

@@ -1,86 +1,86 @@
 <script setup lang="ts">
-	export interface SkillItem {
-		name: string
-		icon?: string
-		role?: string
-		desc?: string
-	}
+export interface SkillItem {
+	name: string
+	icon?: string
+	role?: string
+	desc?: string
+}
 
-	export interface SkillsSectionData {
-		code_label?: string
-		code_title?: string
-		code_desc?: string
-		code_items?: SkillItem[]
-		design_label?: string
-		design_title?: string
-		design_desc?: string
-		design_items?: SkillItem[]
-	}
+export interface SkillsSectionData {
+	code_label?: string
+	code_title?: string
+	code_desc?: string
+	code_items?: SkillItem[]
+	design_label?: string
+	design_title?: string
+	design_desc?: string
+	design_items?: SkillItem[]
+}
 
-	const props = withDefaults(
-		defineProps<{
-			skillsData?: SkillsSectionData
-		}>(),
-		{
-			skillsData: () => ({}),
-		},
-	)
+const props = withDefaults(
+	defineProps<{
+		skillsData?: SkillsSectionData
+	}>(),
+	{
+		skillsData: () => ({}),
+	},
+)
 
-	const { locale } = useI18n()
-	const localePath = useLocalePath()
+const { locale } = useI18n()
+const localePath = useLocalePath()
 
-	const defaultSkills = computed<SkillItem[]>(() => [
-		{
-			name: 'Illustrator',
-			icon: '/icons/d-illustrator.svg',
-			role: locale.value === 'id' ? 'Vektor & Brand' : 'Vector & Brand',
-			desc:
+const defaultSkills = computed<SkillItem[]>(() => [
+	{
+		name: 'Illustrator',
+		icon: '/icons/d-illustrator.svg',
+		role: locale.value === 'id' ? 'Vektor & Brand' : 'Vector & Brand',
+		desc:
 				locale.value === 'id'
 					? 'Desain logo presisi, tipografi, dan ilustrasi digital.'
 					: 'Precision logo design, typography, and digital vectors.',
-		},
-		{
-			name: 'Photoshop',
-			icon: '/icons/d-photoshop.svg',
-			role: 'Raster Craft',
-			desc:
+	},
+	{
+		name: 'Photoshop',
+		icon: '/icons/d-photoshop.svg',
+		role: 'Raster Craft',
+		desc:
 				locale.value === 'id'
 					? 'Manipulasi visual raster dan pengolahan foto detail.'
 					: 'Raster visual manipulation and detailed photo retouching.',
-		},
-		{
-			name: 'Figma',
-			icon: '/icons/d-figma.svg',
-			role: locale.value === 'id' ? 'UI & Sistem' : 'UI & Systems',
-			desc:
+	},
+	{
+		name: 'Figma',
+		icon: '/icons/d-figma.svg',
+		role: locale.value === 'id' ? 'UI & Sistem' : 'UI & Systems',
+		desc:
 				locale.value === 'id'
 					? 'Prototipe interaktif dan arsitektur desain komponen.'
 					: 'Interactive prototyping and component design systems.',
-		},
-	])
+	},
+])
 
-	const displaySkills = computed(() => {
-		if (props.skillsData?.design_items && props.skillsData.design_items.length > 0) {
-			return props.skillsData.design_items
-		}
-		return defaultSkills.value
-	})
-
-	function isImagePath(icon?: string) {
-		if (!icon)
-			return false
-		return icon.startsWith('/') || icon.endsWith('.svg') || icon.endsWith('.png') || icon.includes('.')
+const displaySkills = computed(() => {
+	if (props.skillsData?.design_items && props.skillsData.design_items.length > 0) {
+		return props.skillsData.design_items
 	}
+	return defaultSkills.value
+})
 
-	function getIconClass(icon?: string) {
-		if (!icon)
-			return 'i-hugeicons-quill-write-02'
-		if (icon.startsWith('i-'))
-			return icon
-		if (icon.includes(':'))
-			return `i-${icon.replace(':', '-')}`
-		return `i-${icon}`
-	}
+function isImagePath(icon?: string) {
+	if (!icon)
+		return false
+	return icon.startsWith('/') || icon.endsWith('.svg') || icon.endsWith('.png') || icon.includes('.')
+}
+
+function getIconClass(icon?: string) {
+	if (!icon)
+		return 'i-hugeicons-quill-write-02'
+	if (icon.startsWith('i-'))
+		return icon
+	if (icon.includes(':'))
+		return `i-${icon.replace(':', '-')}`
+	return `i-${icon}`
+}
 </script>
 
 <template>
@@ -110,7 +110,7 @@
 				<div
 					v-for="skill in displaySkills"
 					:key="skill.name"
-					class="flex items-center justify-between border border-slate-200/60 rounded-xl bg-slate-50/70 p-3 transition-all duration-150 sm:px-3.5 dark:border-slate-800/60 dark:bg-slate-800/40 hover:border-brand-500/40 dark:hover:border-brand-400/40 hover:bg-brand-50/40 dark:hover:bg-slate-800/80"
+					class="flex items-center justify-between border border-slate-200/60 rounded-xl bg-slate-50/70 p-3 transition-all duration-150 dark:border-slate-800/60 hover:border-brand-500/40 dark:bg-slate-800/40 hover:bg-brand-50/40 sm:px-3.5 dark:hover:border-brand-400/40 dark:hover:bg-slate-800/80"
 				>
 					<div class="min-w-0 flex items-center gap-3">
 						<img
@@ -126,7 +126,7 @@
 						<span
 							v-else
 							:class="getIconClass(skill.icon)"
-							class="h-8 w-8 shrink-0 flex items-center justify-center text-2xl text-brand-700 dark:text-brand-400"
+							class="h-8 w-8 flex shrink-0 items-center justify-center text-2xl text-brand-700 dark:text-brand-400"
 						/>
 
 						<div class="min-w-0">
@@ -140,7 +140,7 @@
 					</div>
 					<span
 						v-if="skill.role"
-						class="ml-2 shrink-0 whitespace-nowrap rounded-full bg-brand-100 px-2 py-0.5 text-[10px] text-brand-900 font-mono font-medium dark:bg-brand-950/80 dark:text-brand-300"
+						class="ml-2 shrink-0 whitespace-nowrap rounded-full bg-brand-100 px-2 py-0.5 text-[10px] text-brand-900 font-medium font-mono dark:bg-brand-950/80 dark:text-brand-300"
 					>
 						{{ skill.role }}
 					</span>

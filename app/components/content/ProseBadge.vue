@@ -149,7 +149,7 @@ const colorVariantClasses = computed(() => {
 
 <template>
 	<span
-		class="prose-badge inline-flex select-none items-center align-middle font-medium font-sans leading-none transition-colors"
+		class="prose-badge inline-flex select-none items-center align-middle font-medium leading-none font-sans transition-colors"
 		:class="[
 			sizeClasses,
 			colorVariantClasses,
@@ -164,4 +164,3 @@ const colorVariantClasses = computed(() => {
 		<span><slot>{{ props.label }}</slot></span>
 	</span>
 </template>
-

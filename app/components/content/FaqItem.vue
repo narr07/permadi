@@ -44,7 +44,7 @@ function handleToggle() {
 
 <template>
 	<div
-		class="bento-faq-item overflow-hidden border border-slate-200/90 rounded-2xl bg-white shadow-xs transition-all duration-200 dark:border-slate-800/90 dark:bg-slate-950"
+		class="bento-faq-item shadow-xs overflow-hidden border border-slate-200/90 rounded-2xl bg-white transition-all duration-200 dark:border-slate-800/90 dark:bg-slate-950"
 		:class="[
 			isOpen
 				? 'border-brand-500/50 ring-1 ring-brand-500/25 dark:border-brand-400/40 dark:ring-brand-400/20 shadow-sm'
@@ -68,7 +68,7 @@ function handleToggle() {
 				/>
 				<div
 					v-else
-					class="size-7 flex shrink-0 items-center justify-center border border-brand-500/30 rounded-full bg-brand-500/10 text-xs text-brand-700 font-bold font-mono dark:border-brand-500/20 dark:bg-brand-500/15 dark:text-brand-300 [counter-increment:faq-counter] before:content-[counter(faq-counter)]"
+					class="[counter-increment:faq-counter] size-7 flex shrink-0 items-center justify-center border border-brand-500/30 rounded-full bg-brand-500/10 text-xs text-brand-700 font-bold font-mono dark:border-brand-500/20 dark:bg-brand-500/15 dark:text-brand-300 before:content-[counter(faq-counter)]"
 				/>
 
 				<span class="text-sm text-slate-900 font-bold font-sans sm:text-base dark:text-slate-100">
@@ -85,7 +85,7 @@ function handleToggle() {
 		<!-- Accordion Answer Body -->
 		<div
 			v-show="isOpen"
-			class="border-t border-slate-100 px-5 pb-5 pt-4 text-sm text-slate-700 leading-relaxed font-sans sm:px-6 sm:pb-6 sm:text-base dark:border-slate-800/80 dark:text-slate-300"
+			class="border-t border-slate-100 px-5 pb-5 pt-4 text-sm text-slate-700 leading-relaxed font-sans dark:border-slate-800/80 sm:px-6 sm:pb-6 sm:text-base dark:text-slate-300"
 		>
 			<slot />
 		</div>

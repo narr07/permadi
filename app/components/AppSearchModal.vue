@@ -283,7 +283,7 @@ onMounted(() => {
 
 							<button
 								type="button"
-								class="shrink-0 rounded-md p-1 text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+								class="shrink-0 rounded-md p-1 text-slate-500 transition-colors dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100"
 								aria-label="Tutup"
 								@click="closeModal"
 							>
@@ -324,7 +324,7 @@ onMounted(() => {
 												/>
 												<div class="flex items-center gap-2 truncate">
 													<span class="shrink-0 text-slate-900 font-bold dark:text-slate-50">{{ item.label }}</span>
-													<span class="truncate text-xs text-slate-600 dark:text-slate-400 font-normal">{{ item.description }}</span>
+													<span class="truncate text-xs text-slate-600 font-normal dark:text-slate-400">{{ item.description }}</span>
 												</div>
 											</div>
 
@@ -355,11 +355,11 @@ onMounted(() => {
 											<div class="min-w-0 flex flex-1 items-center gap-3">
 												<span
 													:class="item.icon"
-													class="shrink-0 text-base text-slate-600 transition-colors group-hover:text-brand-600 dark:text-slate-400 dark:group-hover:text-brand-300"
+													class="shrink-0 text-base text-slate-600 transition-colors dark:text-slate-400 group-hover:text-brand-600 dark:group-hover:text-brand-300"
 												/>
 												<div class="flex items-center gap-2 truncate">
 													<span class="shrink-0 text-slate-900 font-bold dark:text-slate-50">{{ item.label }}</span>
-													<span class="truncate text-xs text-slate-600 dark:text-slate-400 font-normal">{{ item.description }}</span>
+													<span class="truncate text-xs text-slate-600 font-normal dark:text-slate-400">{{ item.description }}</span>
 												</div>
 											</div>
 
@@ -392,11 +392,11 @@ onMounted(() => {
 											<div class="min-w-0 flex flex-1 items-center gap-3">
 												<span
 													:class="item.icon"
-													class="shrink-0 text-base text-slate-600 transition-colors group-hover:text-brand-600 dark:text-slate-400 dark:group-hover:text-brand-300"
+													class="shrink-0 text-base text-slate-600 transition-colors dark:text-slate-400 group-hover:text-brand-600 dark:group-hover:text-brand-300"
 												/>
 												<div class="flex items-center gap-2 truncate">
 													<span class="shrink-0 text-slate-900 font-bold dark:text-slate-50">{{ item.label }}</span>
-													<span class="truncate text-xs text-slate-600 dark:text-slate-400 font-normal">{{ item.description }}</span>
+													<span class="truncate text-xs text-slate-600 font-normal dark:text-slate-400">{{ item.description }}</span>
 												</div>
 											</div>
 										</a>

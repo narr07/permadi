@@ -11,7 +11,7 @@ const props = withDefaults(
 
 <template>
 	<div
-		class="prose-table-container custom-scrollbar my-6 block max-w-full w-full overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-xs dark:border-slate-800 dark:bg-slate-950"
+		class="custom-scrollbar shadow-xs my-6 block max-w-full w-full overflow-x-auto border border-slate-200 rounded-xl bg-white prose-table-container dark:border-slate-800 dark:bg-slate-950"
 		:class="props.class"
 		style="-webkit-overflow-scrolling: touch;"
 	>

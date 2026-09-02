@@ -1,25 +1,7 @@
 <script setup lang="ts">
-import ProseCode from '~/components/content/ProseCode.vue'
-import ProseImg from '~/components/content/ProseImg.vue'
-import ProsePre from '~/components/content/ProsePre.vue'
-
 const route = useRoute()
 const { locale, locales } = useI18n()
 const setI18nParams = useSetI18nParams()
-
-
-
-const mdcComponents = {
-	'img': ProseImg,
-	ProseImg,
-	'prose-img': ProseImg,
-	'pre': ProsePre,
-	ProsePre,
-	'prose-pre': ProsePre,
-	'code': ProseCode,
-	ProseCode,
-	'prose-code': ProseCode,
-}
 
 const cleanPath = computed(() => {
 	const path = route.path.replace(/\/+$/, '')
@@ -212,10 +194,7 @@ defineOgImage('Bento', {
 			</header>
 
 			<div class="max-w-none text-slate-700 leading-relaxed font-sans prose prose-slate dark:text-slate-200 dark:prose-invert">
-				<ContentRenderer
-					:value="page.doc"
-					:components="mdcComponents"
-				/>
+				<ContentRenderer :value="page.doc" />
 			</div>
 		</article>
 	</div>

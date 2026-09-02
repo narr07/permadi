@@ -8,8 +8,6 @@ const { data: page } = await useAsyncData(
 	{ watch: [locale] },
 )
 
-
-
 useSeoMeta({
 	title: computed(() => page.value?.title),
 	description: computed(() => page.value?.description),
