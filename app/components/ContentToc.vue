@@ -59,7 +59,10 @@ const updateActiveHeading = useThrottleFn(() => {
 	const offset = 120
 
 	for (let i = flat.length - 1; i >= 0; i--) {
-		const item = flat[i].link
+		const entry = flat[i]
+		if (!entry)
+			continue
+		const item = entry.link
 		const el = document.getElementById(item.id)
 		if (el) {
 			const rect = el.getBoundingClientRect()
@@ -118,7 +121,8 @@ const mobileListRef = ref<HTMLElement | null>(null)
 function autoScrollToc(container: HTMLElement | null, id: string) {
 	if (!container || !id || !import.meta.client)
 		return
-	const selector = window.CSS?.escape ? `[data-toc-id="${CSS.escape(id)}"]` : `[data-toc-id="${id}"]`
+	const escapedId = typeof CSS !== 'undefined' && typeof CSS.escape === 'function' ? CSS.escape(id) : id
+	const selector = `[data-toc-id="${escapedId}"]`
 	const activeEl = container.querySelector<HTMLElement>(selector)
 	if (!activeEl)
 		return
