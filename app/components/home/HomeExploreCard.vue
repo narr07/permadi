@@ -14,7 +14,7 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/en/g
 
 		:to="targetPath"
 		:aria-label="`${label || (locale === 'id' ? 'Eksplorasi Saat Ini' : 'Currently Exploring')}: ${text || (locale === 'id' ? 'Antarmuka yang terasa natural.' : 'Interfaces that feel inevitable.')}`"
-		class="bento-card-clean group block flex flex-col justify-between overflow-hidden md:col-span-5 !p-0"
+		class="group bento-card-clean block flex flex-col justify-between overflow-hidden md:col-span-5 !p-0"
 	>
 		<div class="relative aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
 			<img

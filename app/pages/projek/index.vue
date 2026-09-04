@@ -327,7 +327,7 @@ useSchemaOrg([
 					:key="item.url"
 
 					:to="item.url"
-					class="bento-card-clean group block flex flex-col justify-between overflow-hidden transition-all duration-300"
+					class="group bento-card-clean block flex flex-col justify-between overflow-hidden transition-all duration-300"
 					:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 						? 'lg:col-span-3 sm:col-span-2 col-span-1 p-6 sm:p-7 lg:p-8 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/30 dark:from-[#002b27] dark:via-[#002420] dark:to-[#001916] border-brand-300/70 dark:border-brand-700/60 shadow-lg shadow-brand-950/5'
 						: 'col-span-1 p-5 sm:p-6 bg-white dark:bg-[#002b27] border-slate-200/80 dark:border-slate-800/80 hover:border-brand-500/80 dark:hover:border-brand-400/80'"

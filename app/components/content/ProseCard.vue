@@ -39,7 +39,7 @@ const resolvedIcon = computed(() => {
 
 <template>
 	<div
-		class="bento-card-clean prose-card group shadow-xs relative flex flex-col justify-between overflow-hidden rounded-2xl p-5 transition-all duration-300 sm:p-6"
+		class="prose-card group shadow-xs bento-card-clean relative flex flex-col justify-between overflow-hidden rounded-2xl p-5 transition-all duration-300 sm:p-6"
 		:class="[
 			props.to ? 'cursor-pointer hover:border-brand-500/50 hover:shadow-md dark:hover:border-brand-400/50' : '',
 			props.class,

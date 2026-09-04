@@ -1,39 +1,6 @@
 @import '@unocss/reset/tailwind.css';
 
 :root {
-	 --color-brand-50: #f0fdfa;
-  --color-brand-100: #ccfbf2;
-  --color-brand-200: #99f6e4;
-  --color-brand-300: #5eeacf;
-  --color-brand-400: #2bd4b5;
-  --color-brand-500: #14b898;
-  --color-brand-600: #0d947a;
-  --color-brand-700: #0f7662;
-  --color-brand-800: #115e4f;
-  --color-brand-900: #134e43;
-  --color-brand-950: #042f27;
-
-  --color-gray: #90b4ce;
-
-	 --color-slate-50: #f8fafa;
-  --color-slate-100: #eff6f5;
-  --color-slate-200: #deeae9;
-  --color-slate-300: #c5d9d7;
-  --color-slate-400: #84a8a4;
-  --color-slate-500: #537c77;
-  --color-slate-600: #375c58;
-  --color-slate-700: #224844;
-  --color-slate-800: #0a2f2c;
-  --color-slate-900: #001e1c;
-  --color-slate-950: #000c0a;
-
-  --color-accent: #f9bc60;
-  --color-yellow: #ffd803;
-  --color-blue: #3da9fc;
-  --color-red: #ef4565;
-  --color-purple: #994ff3;
-  --color-green: #2cb67d;
-
 	--canvas: #eff6f5;
 	--ink: #000b07;
 	--heading: #000b07;
@@ -88,353 +55,19 @@ body {
 		color 0.25s ease;
 }
 
-p {
-	font-size: 1rem;
-	line-height: 1.65;
+/* Accessible Keyboard Focus Indicators (WCAG AA) */
+:focus-visible {
+	outline: 2px solid #14b898;
+	outline-offset: 2px;
+	border-radius: 4px;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.font-heading {
-	font-family: 'Barlow', 'Plus Jakarta Sans', sans-serif;
-	font-weight: 800;
-	line-height: 1.15;
-	letter-spacing: -0.035em;
-	color: var(--heading);
+.dark :focus-visible {
+	outline: 2px solid #2bd4b5;
+	outline-offset: 2px;
 }
 
-h1,
-.text-size-h1 {
-	font-family: 'Barlow', sans-serif;
-	font-weight: 800;
-	margin-top: 0;
-	font-size: clamp(2.25rem, 4.5vw, 3.25rem);
-	line-height: 1.1;
-}
-
-h2,
-.text-size-h2 {
-	font-size: clamp(1.75rem, 3.2vw, 2.25rem);
-	line-height: 1.15;
-}
-
-h3,
-.text-size-h3 {
-	font-size: clamp(1.35rem, 2.2vw, 1.65rem);
-	line-height: 1.2;
-}
-
-h4,
-.text-size-h4 {
-	font-size: clamp(1.15rem, 1.5vw, 1.35rem);
-	line-height: 1.25;
-}
-
-h5,
-.text-size-h5 {
-	font-size: 1.05rem;
-	line-height: 1.3;
-}
-
-.text-caption {
-	font-size: 0.875rem;
-	line-height: 1.5;
-}
-
-small,
-.text-small {
-	font-size: 0.8125rem;
-	line-height: 1.5;
-}
-
-.dark h1,
-.dark h2,
-.dark h3,
-.dark h4,
-.dark h5,
-.dark h6 {
-	color: #f8fafa;
-}
-
-/* Specific Page Heading Classes */
-.heading-page {
-	font-family: 'Barlow', sans-serif;
-	font-weight: 800;
-	letter-spacing: -0.035em;
-	line-height: 1.05;
-	color: #000b07;
-	margin-bottom: 0.75rem;
-}
-
-.dark .heading-page {
-	color: #f8fafa;
-}
-
-.heading-page-sub {
-	color: #000b07;
-	opacity: 0.85;
-	font-size: 1.125rem;
-	line-height: 1.65;
-	max-width: 36rem;
-}
-
-.dark .heading-page-sub {
-	color: #f8fafa;
-	opacity: 0.85;
-}
-
-.heading-hero {
-	font-family: 'Barlow', sans-serif;
-	font-weight: 800;
-	letter-spacing: -0.035em;
-	line-height: 0.95;
-	color: #000b07;
-	margin-bottom: 1rem;
-}
-
-.dark .heading-hero {
-	color: #f8fafa;
-}
-
-/* Body text defaults — light: near-black, dark: near-white */
-.dark {
-	color: #f8fafa;
-}
-
-
-/* Bento Card Style Classes & Subtle Ambient Shadows */
-.bento-card-clean,
-.bento-card-outline,
-.bento-card-soft,
-.bento-card-subtle,
-.sand-card-clean,
-.sky-card-clean,
-.hero-card-clean {
-	box-shadow: 0 3px 12px -2px rgba(15, 118, 98, 0.05), 0 1px 4px -1px rgba(0, 0, 0, 0.03);
-	transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.dark .bento-card-clean,
-.dark .bento-card-outline,
-.dark .bento-card-soft,
-.dark .bento-card-subtle,
-.dark .sand-card-clean,
-.dark .sky-card-clean,
-.dark .hero-card-clean {
-	box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.45), 0 0 1px 1px rgba(255, 255, 255, 0.04);
-}
-
-.bento-card-clean {
-	background: var(--card);
-	border: 1px solid var(--border-clean);
-	border-radius: 20px;
-	overflow: hidden;
-}
-
-.bento-card-clean:hover {
-	border-color: #14b898;
-	box-shadow: 0 8px 24px -4px rgba(15, 118, 98, 0.09), 0 3px 8px -2px rgba(0, 0, 0, 0.04);
-}
-
-/* Featured post card — bg gelap → font terang */
-.featured-post-card,
-.featured-post-card h2,
-.featured-post-card .font-heading {
-	color: #f8fafa !important;
-}
-
-.featured-post-card p,
-.featured-post-card span,
-.featured-post-card time {
-	color: #f8fafa !important;
-	opacity: 0.85;
-}
-
-.featured-post-card:hover h2 {
-	color: #fdeed6 !important;
-}
-
-.dark .bento-card-clean:hover {
-	border-color: #2bd4b5;
-	box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.65), 0 0 1px 1px rgba(43, 212, 181, 0.15);
-}
-
-.bento-card-outline:hover {
-	box-shadow: 0 8px 24px -4px rgba(15, 118, 98, 0.09), 0 3px 8px -2px rgba(0, 0, 0, 0.04);
-}
-
-.dark .bento-card-outline:hover {
-	box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.65), 0 0 1px 1px rgba(43, 212, 181, 0.15);
-}
-
-
-/* hero-card-clean — bg selalu gelap → font selalu terang (#f8fafa) */
-.hero-card-clean {
-	background: #002b27;
-	color: #f8fafa;
-	border: 1px solid #134e43;
-	border-radius: 20px;
-}
-
-.hero-card-clean h1,
-.hero-card-clean h2,
-.hero-card-clean h3,
-.hero-card-clean h4,
-.hero-card-clean h5,
-.hero-card-clean h6,
-.hero-card-clean .font-heading {
-	color: #f8fafa;
-}
-
-.hero-card-clean p,
-.hero-card-clean span,
-.hero-card-clean li,
-.hero-card-clean time,
-.hero-card-clean small {
-	color: #f8fafa;
-}
-
-.hero-card-clean .kicker,
-.hero-card-clean .eyebrow,
-.hero-card-clean .section-label {
-	color: #2bd4b5;
-}
-
-/* dark mode — hero-card-clean heading pakai gold, tetap terang */
-.dark .hero-card-clean h1,
-.dark .hero-card-clean h2,
-.dark .hero-card-clean h3,
-.dark .hero-card-clean h4,
-.dark .hero-card-clean h5,
-.dark .hero-card-clean h6,
-.dark .hero-card-clean .font-heading {
-	color: #f9bc60;
-}
-
-.dark .hero-card-clean p,
-.dark .hero-card-clean span,
-.dark .hero-card-clean li,
-.dark .hero-card-clean time {
-	color: #f8fafa;
-}
-
-.dark .hero-card-clean .kicker,
-.dark .hero-card-clean .eyebrow,
-.dark .hero-card-clean .section-label {
-	color: #2bd4b5;
-}
-
-/* sand-card-clean — bg kuning/gold → font gelap (#000b07) */
-.sand-card-clean {
-	background: #f9bc60;
-	color: #000b07;
-	border: 1px solid #f9bc60;
-	border-radius: 20px;
-}
-
-.sand-card-clean h1,
-.sand-card-clean h2,
-.sand-card-clean h3,
-.sand-card-clean h4,
-.sand-card-clean h5,
-.sand-card-clean h6,
-.sand-card-clean .font-heading,
-.dark .sand-card-clean h1,
-.dark .sand-card-clean h2,
-.dark .sand-card-clean h3,
-.dark .sand-card-clean h4,
-.dark .sand-card-clean h5,
-.dark .sand-card-clean h6,
-.dark .sand-card-clean .font-heading {
-	color: #000b07;
-}
-
-.sand-card-clean p,
-.sand-card-clean span,
-.sand-card-clean li,
-.dark .sand-card-clean p,
-.dark .sand-card-clean span,
-.dark .sand-card-clean li {
-	color: #000b07;
-}
-
-.sand-card-clean .kicker,
-.sand-card-clean .eyebrow,
-.sand-card-clean .section-label,
-.dark .sand-card-clean .kicker,
-.dark .sand-card-clean .eyebrow,
-.dark .sand-card-clean .section-label {
-	color: #000b07;
-}
-
-/* sky-card-clean — bg biru muda → font gelap (#000b07) */
-.sky-card-clean {
-	background: #7dd3fc;
-	color: #000b07;
-	border: 1px solid #7dd3fc;
-	border-radius: 20px;
-}
-
-.sky-card-clean h1,
-.sky-card-clean h2,
-.sky-card-clean h3,
-.sky-card-clean h4,
-.sky-card-clean h5,
-.sky-card-clean h6,
-.sky-card-clean .font-heading,
-.dark .sky-card-clean h1,
-.dark .sky-card-clean h2,
-.dark .sky-card-clean h3,
-.dark .sky-card-clean h4,
-.dark .sky-card-clean h5,
-.dark .sky-card-clean h6,
-.dark .sky-card-clean .font-heading {
-	color: #000b07;
-}
-
-.sky-card-clean p,
-.sky-card-clean span,
-.sky-card-clean li,
-.dark .sky-card-clean p,
-.dark .sky-card-clean span,
-.dark .sky-card-clean li {
-	color: #000b07;
-}
-
-.status-dot {
-	width: 8px;
-	height: 8px;
-	background: #14b898;
-	border-radius: 50%;
-	display: inline-block;
-	box-shadow: 0 0 0 4px #ccfbf2;
-}
-
-.dark .status-dot {
-	box-shadow: 0 0 0 4px rgba(20, 184, 152, 0.2);
-}
-
-.section-label,
-.eyebrow,
-.kicker {
-	text-transform: uppercase;
-	letter-spacing: 0.15em;
-	font-size: 11px;
-	font-weight: 700;
-	color: #0f7662;
-}
-
-.dark .section-label,
-.dark .eyebrow,
-.dark .kicker {
-	color: #f9bc60;
-}
-
-/* Custom scrollbar */
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
 	width: 8px;
 	height: 8px;
@@ -457,243 +90,39 @@ small,
 	background: rgba(100, 116, 139, 0.4);
 }
 
-/* Accessible Keyboard Focus Indicators (WCAG AA) */
-:focus-visible {
-	outline: 2px solid var(--color-brand-500);
-	outline-offset: 2px;
-	border-radius: 4px;
-}
-
-.dark :focus-visible {
-	outline: 2px solid var(--color-brand-400);
-	outline-offset: 2px;
-}
-
-/* Thin elegant custom scrollbar for dropdowns and panels */
 .custom-scrollbar {
 	scrollbar-width: thin;
 	scrollbar-color: rgba(148, 163, 184, 0.4) transparent;
 }
+
 .custom-scrollbar::-webkit-scrollbar {
 	width: 5px;
 	height: 5px;
 }
+
 .custom-scrollbar::-webkit-scrollbar-track {
 	background: transparent;
 }
+
 .custom-scrollbar::-webkit-scrollbar-thumb {
 	background-color: rgba(148, 163, 184, 0.35);
 	border-radius: 9999px;
 }
+
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
 	background-color: rgba(148, 163, 184, 0.6);
 }
+
 .dark .custom-scrollbar {
 	scrollbar-color: rgba(94, 234, 207, 0.25) transparent;
 }
+
 .dark .custom-scrollbar::-webkit-scrollbar-thumb {
 	background-color: rgba(94, 234, 207, 0.2);
 }
+
 .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
 	background-color: rgba(94, 234, 207, 0.4);
-}
-
-/* ==========================================================================
-   PROSE & MARKDOWN TYPOGRAPHY (Nuxt Content)
-   ========================================================================== */
-
-/* Prose Headings Base (h1 - h6) */
-.prose :where(h1, h2, h3, h4, h5, h6) {
-	font-family: 'Barlow', 'Plus Jakarta Sans', sans-serif !important;
-	font-weight: 800 !important;
-	letter-spacing: -0.03em !important;
-	color: #000b07 !important;
-}
-
-.dark .prose :where(h1, h2, h3, h4, h5, h6) {
-	color: #f8fafa !important;
-}
-
-/* H2: Section Utama (Besar, Tegas, Bersih tanpa Border) */
-.prose :where(h2) {
-	font-size: clamp(1.45rem, 2.8vw, 1.85rem) !important;
-	line-height: 1.25 !important;
-	margin-top: 2.5em !important;
-	margin-bottom: 0.6em !important;
-	padding-bottom: 0 !important;
-	border-bottom: none !important;
-}
-
-/* H3: Sub-bagian (Proporsional dengan Hash Prefix Transparan) */
-.prose :where(h3) {
-	font-size: clamp(1.2rem, 2vw, 1.375rem) !important;
-	line-height: 1.3 !important;
-	margin-top: 1.85em !important;
-	margin-bottom: 0.6em !important;
-	border-bottom: none !important;
-	position: relative;
-	transition: color 0.2s ease;
-}
-
-.prose :where(h3):not(.prose-steps *):not([class*="step"]):not(.bento-card-clean *):not(.prose-card *):not(.bento-callout *)::before {
-	content: '#' !important;
-	display: inline-block !important;
-	margin-right: 0.45rem !important;
-	font-family: 'JetBrains Mono', monospace !important;
-	font-weight: 700 !important;
-	font-size: 0.9em !important;
-	color: #0f7662 !important;
-	opacity: 0.35 !important;
-	transition: opacity 0.2s ease, color 0.2s ease !important;
-}
-
-.dark .prose :where(h3):not(.prose-steps *):not([class*="step"]):not(.bento-card-clean *):not(.prose-card *):not(.bento-callout *)::before {
-	color: #5eeacf !important;
-	opacity: 0.35 !important;
-}
-
-.prose :where(h3):not(.prose-steps *):not([class*="step"]):not(.bento-card-clean *):not(.prose-card *):not(.bento-callout *):hover::before {
-	opacity: 1 !important;
-	color: #0f7662 !important;
-}
-
-.dark .prose :where(h3):not(.prose-steps *):not([class*="step"]):not(.bento-card-clean *):not(.prose-card *):not(.bento-callout *):hover::before {
-	opacity: 1 !important;
-	color: #5eeacf !important;
-}
-
-/* Explicit Exclusion for Bento Cards, Callouts, Conclusion, and FAQ */
-.bento-card-clean :is(h1, h2, h3, h4, h5, h6)::before,
-.prose-card :is(h1, h2, h3, h4, h5, h6)::before,
-.bento-callout :is(h1, h2, h3, h4, h5, h6)::before,
-.conclusion-card :is(h1, h2, h3, h4, h5, h6)::before,
-.faq-container :is(h1, h2, h3, h4, h5, h6)::before {
-	content: none !important;
-	display: none !important;
-}
-
-.bento-card-clean :is(h1, h2, h3, h4, h5, h6),
-.prose-card :is(h1, h2, h3, h4, h5, h6),
-.conclusion-card :is(h1, h2, h3, h4, h5, h6),
-.faq-container :is(h1, h2, h3, h4, h5, h6) {
-	border-bottom: none !important;
-	margin-top: 0 !important;
-	margin-bottom: 0 !important;
-	margin-block: 0 !important;
-	padding-bottom: 0 !important;
-	line-height: 1.15 !important;
-}
-
-/* H4: Sub-detail */
-.prose :where(h4) {
-	font-size: 1.1rem !important;
-	line-height: 1.35 !important;
-	margin-top: 1.5em !important;
-	margin-bottom: 0.5em !important;
-}
-
-/* Heading Anchor Links inside Nuxt Content */
-.prose :where(h1, h2, h3, h4, h5, h6) a {
-	color: inherit !important;
-	text-decoration: none !important;
-	border-bottom: none !important;
-	font-weight: inherit !important;
-}
-
-.prose :where(h1, h2, h3, h4, h5, h6) a:hover {
-	border-bottom: none !important;
-	color: #0f7662 !important;
-}
-
-.dark .prose :where(h1, h2, h3, h4, h5, h6) a:hover {
-	color: #facd87 !important;
-}
-
-/* Body Links (Distinct, Vibrant & Clean) */
-.prose :where(p, li, blockquote) a {
-	color: #0f7662 !important;
-	font-weight: 600 !important;
-	text-decoration: underline !important;
-	text-decoration-color: rgba(15, 118, 98, 0.4) !important;
-	text-decoration-thickness: 1.5px !important;
-	text-underline-offset: 3px !important;
-	border-bottom: none !important;
-	transition: all 0.15s ease !important;
-}
-
-.prose :where(p, li, blockquote) a:hover {
-	color: #000b07 !important;
-	text-decoration-color: currentColor !important;
-}
-
-.dark .prose :where(p, li, blockquote) a {
-	color: #2cb67d !important;
-	text-decoration-color: rgba(44, 182, 125, 0.4) !important;
-}
-
-.dark .prose :where(p, li, blockquote) a:hover {
-	color: #5eeacf !important;
-	text-decoration-color: #5eeacf !important;
-}
-
-/* Strong / Bold Text (Barlow 400) */
-.prose :where(strong, b) {
-	font-family: 'Barlow', sans-serif !important;
-	font-weight: 400 !important;
-	letter-spacing: -0.01em !important;
-	color: #000b07 !important;
-}
-
-.dark .prose :where(strong, b) {
-	color: #f8fafa !important;
-}
-
-/* Bento Style Blockquotes */
-.prose :where(blockquote) {
-	font-style: normal !important;
-	font-weight: 400 !important;
-	color: #224844 !important;
-	background: #eff6f5 !important;
-	border-left: 4px solid #0f7662 !important;
-	border-radius: 0 16px 16px 0 !important;
-	padding: 1rem 1.25rem !important;
-	margin: 1.75rem 0 !important;
-	box-shadow: 0 2px 8px rgba(0, 43, 39, 0.03) !important;
-}
-
-.dark .prose :where(blockquote) {
-	color: #deeae9 !important;
-	background: rgba(0, 30, 28, 0.6) !important;
-	border-left: 4px solid #f9bc60 !important;
-}
-
-/* Lists & Bullets */
-.prose :where(ul > li)::marker {
-	color: #0f7662 !important;
-}
-
-.dark .prose :where(ul > li)::marker {
-	color: #f9bc60 !important;
-}
-
-.prose :where(ol > li)::marker {
-	font-family: 'Barlow', sans-serif !important;
-	font-weight: 800 !important;
-	color: #0f7662 !important;
-}
-
-.dark .prose :where(ol > li)::marker {
-	color: #f9bc60 !important;
-}
-
-/* Remove default backtick quotes added by typography prose */
-.prose code::before,
-.prose code::after,
-.prose pre code::before,
-.prose pre code::after,
-:where(code):not(:where([class~="not-prose"],[class~="not-prose"] *))::before,
-:where(code):not(:where([class~="not-prose"],[class~="not-prose"] *))::after {
-	content: "" !important;
 }
 
 /* Shiki Syntax Highlighting */
@@ -710,111 +139,41 @@ html.dark .shiki span,
 	text-decoration: var(--shiki-dark-text-decoration) !important;
 }
 
-/* Inline Code (Bento Dashed Pill Badge - Brand Teal Palette) */
-.prose :where(:not(pre) > code) {
-	font-family: 'JetBrains Mono', monospace !important;
-	font-size: 0.85em !important;
-	font-weight: 500 !important;
-	color: #0f7662 !important;
-	background-color: var(--color-brand-100) !important;
-	border: 1px dashed var(--color-brand-500) !important;
-	border-radius: 6px !important;
-	padding: 0.01em 0.4em !important;
-	box-shadow: none !important;
-	letter-spacing: -0.01em !important;
+/* H3 Decorative Hash Mark in Prose */
+.prose :where(h3):not(.prose-steps *):not([class*="step"]):not(.bento-card-clean *):not(.prose-card *):not(.bento-callout *)::before {
+	content: '#';
+	display: inline-block;
+	margin-right: 0.45rem;
+	font-family: 'JetBrains Mono', monospace;
+	font-weight: 700;
+	font-size: 0.9em;
+	color: #0f7662;
+	opacity: 0.35;
+	transition: opacity 0.2s ease, color 0.2s ease;
 }
 
-.dark .prose :where(:not(pre) > code) {
-	color: #5eeacf !important;
-	background-color: rgba(20, 184, 152, 0.08) !important;
-	border-color: rgba(94, 234, 207, 0.35) !important;
-	box-shadow: none !important;
+.dark .prose :where(h3):not(.prose-steps *):not([class*="step"]):not(.bento-card-clean *):not(.prose-card *):not(.bento-callout *)::before {
+	color: #5eeacf;
+	opacity: 0.35;
 }
 
-/* Inline Code inside Links */
-.prose a :where(code) {
-	color: inherit !important;
-	border-color: rgba(15, 118, 98, 0.5) !important;
-}
-.dark .prose a :where(code) {
-	color: #2cb67d !important;
-	border-color: rgba(44, 182, 125, 0.5) !important;
+.prose :where(h3):not(.prose-steps *):not([class*="step"]):not(.bento-card-clean *):not(.prose-card *):not(.bento-callout *):hover::before {
+	opacity: 1;
+	color: #0f7662;
 }
 
-/* Tables (Bento Single Clean Container) */
-.prose :where(table) {
-	border-collapse: collapse !important;
-	border-spacing: 0 !important;
-	width: 100% !important;
-	border: none !important;
-	margin: 0 !important;
+.dark .prose :where(h3):not(.prose-steps *):not([class*="step"]):not(.bento-card-clean *):not(.prose-card *):not(.bento-callout *):hover::before {
+	opacity: 1;
+	color: #5eeacf;
 }
 
-.prose :where(th) {
-	background: #f8fafa !important;
-	color: #000b07 !important;
-	font-family: 'Barlow', sans-serif !important;
-	font-weight: 800 !important;
-	padding: 0.85rem 1.25rem !important;
-	border-bottom: 1px solid #deeae9 !important;
-	white-space: nowrap !important;
-}
-
-.dark .prose :where(th) {
-	background: #001411 !important;
-	color: #f9bc60 !important;
-	border-bottom-color: #134e43 !important;
-}
-
-.prose :where(td) {
-	padding: 0.85rem 1.25rem !important;
-	border-bottom: 1px solid #eff6f5 !important;
-	color: #000b07 !important;
-}
-
-.dark .prose :where(td) {
-	color: #deeae9 !important;
-	border-bottom-color: rgba(19, 78, 67, 0.4) !important;
-}
-
-.prose :where(tr:last-child td) {
-	border-bottom: none !important;
-}
-
-/* Horizontal Rule */
-.prose :where(hr) {
-	border-top: 1px solid #deeae9 !important;
-	margin: 2.5rem 0 !important;
-}
-
-.dark .prose :where(hr) {
-	border-top-color: #134e43 !important;
-}
-
-/* Prose Badges Layout & Alignment */
-.prose :where(p:has(> .prose-badge)) {
-	display: flex !important;
-	flex-wrap: wrap !important;
-	align-items: center !important;
-	gap: 0.5rem 0.625rem !important;
-	margin-top: 1rem !important;
-	margin-bottom: 1.25rem !important;
-}
-
-.prose .prose-badge {
-	vertical-align: middle;
-}
-
-/* Bento FAQ Spacing & Native Numbering */
+/* Bento FAQ Counter & Spacing */
 .faq-container,
 .prose-faq {
 	counter-reset: faq-counter;
 }
 
 .bento-faq-item {
-	margin-top: 0.25rem !important;
-	margin-bottom: 0.25rem !important;
+	margin-top: 0.25rem;
+	margin-bottom: 0.25rem;
 }
-
-
-

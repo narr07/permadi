@@ -31,7 +31,7 @@ const { locale } = useI18n()
 </script>
 
 <template>
-	<div class="hero-card-clean group flex flex-col justify-between p-6 md:col-span-7 md:row-span-2 sm:p-8">
+	<div class="group hero-card-clean flex flex-col justify-between p-6 md:col-span-7 md:row-span-2 sm:p-8">
 		<div>
 			<div
 				v-if="hero.status"
@@ -45,7 +45,7 @@ const { locale } = useI18n()
 
 			<span
 				v-if="hero.kicker"
-				class="kicker mb-2 block text-brand-400 font-medium"
+				class="mb-2 block kicker text-brand-400 font-medium"
 			>
 				{{ hero.kicker }}
 			</span>

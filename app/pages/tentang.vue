@@ -92,7 +92,7 @@ useSchemaOrg([
 				<div>
 					<span
 						v-if="page.story_card.label"
-						class="section-label mb-3 block text-brand-700 dark:text-brand-400"
+						class="mb-3 block section-label text-brand-700 dark:text-brand-400"
 					>
 						{{ page.story_card.label }}
 					</span>
@@ -132,7 +132,7 @@ useSchemaOrg([
 				<div>
 					<span
 						v-if="page.toolkit_card.label"
-						class="section-label mb-3 block text-brand-700 dark:text-brand-400"
+						class="mb-3 block section-label text-brand-700 dark:text-brand-400"
 					>
 						{{ page.toolkit_card.label }}
 					</span>

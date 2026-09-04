@@ -236,20 +236,6 @@ function handleCopy() {
 </template>
 
 <style scoped>
-.custom-scrollbar::-webkit-scrollbar {
-	height: 6px;
-}
-.custom-scrollbar::-webkit-scrollbar-track {
-	background: transparent;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-	background: rgba(255, 255, 255, 0.15);
-	border-radius: 9999px;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-	background: rgba(255, 255, 255, 0.25);
-}
-
 :deep(pre) {
 	background-color: transparent !important;
 	padding: 0 !important;

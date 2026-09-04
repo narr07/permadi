@@ -23,7 +23,7 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/en/g
 	<NuxtLink
 
 		:to="targetPath"
-		class="bento-card-clean group block flex flex-col justify-between p-6 md:col-span-7 sm:p-7"
+		class="group bento-card-clean block flex flex-col justify-between p-6 md:col-span-7 sm:p-7"
 	>
 		<div>
 			<div class="mb-3 flex items-center justify-between">

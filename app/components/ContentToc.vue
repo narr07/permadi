@@ -233,7 +233,7 @@ onUnmounted(() => {
 						v-if="mobileOpen"
 						id="mobile-toc-list"
 						ref="mobileListRef"
-						class="mt-3 max-h-60 overflow-y-auto border-t border-slate-200/60 pt-3 space-y-1 dark:border-[#134e43]"
+						class="custom-scrollbar mt-3 max-h-60 overflow-y-auto border-t border-slate-200/60 pt-3 space-y-1 dark:border-[#134e43]"
 					>
 						<div
 							role="progressbar"
@@ -311,7 +311,7 @@ onUnmounted(() => {
 				<!-- Bento Items List (Active like Hover, Hover with Outline) -->
 				<div
 					ref="desktopListRef"
-					class="max-h-[40vh] min-h-[3.5rem] overflow-y-auto pr-1 space-y-1"
+					class="custom-scrollbar max-h-[40vh] min-h-[3.5rem] overflow-y-auto pr-1 space-y-1"
 				>
 					<a
 						v-for="(item, idx) in flatList"
@@ -338,34 +338,17 @@ onUnmounted(() => {
 				</div>
 
 				<!-- Bento Footer Action (Back to top) -->
-				<div class="mt-3 flex items-center justify-between border-t border-slate-200/60 pt-2.5 text-[11px] dark:border-slate-800/60">
-					<span class="text-slate-600 font-mono dark:text-slate-400">
-						{{ progressPercentage }}% {{ locale === 'id' ? 'dibaca' : 'read' }}
-					</span>
+				<div class="mt-3 border-t border-slate-200/60 pt-2 dark:border-slate-800/60">
 					<button
 						type="button"
-						class="inline-flex cursor-pointer items-center gap-1 text-slate-700 font-semibold transition-colors dark:text-slate-300 hover:text-brand-800 dark:hover:text-brand-400"
-						:aria-label="locale === 'id' ? 'Kembali ke atas artikel' : 'Scroll to top of article'"
+						class="w-full flex cursor-pointer select-none items-center justify-center gap-1.5 rounded-xl py-1.5 text-xs text-slate-700 font-medium transition-colors dark:text-slate-300 hover:text-brand-700 dark:hover:text-brand-400"
 						@click="scrollToTop"
 					>
-						<span>{{ locale === 'id' ? 'Ke Atas' : 'Top' }}</span>
 						<span class="i-hugeicons-arrow-up-01 text-xs" />
+						<span>{{ locale === 'id' ? 'Kembali ke atas' : 'Back to top' }}</span>
 					</button>
 				</div>
 			</div>
 		</div>
 	</nav>
 </template>
-
-<style scoped>
-.content-toc ::-webkit-scrollbar {
-	width: 4px;
-}
-.content-toc ::-webkit-scrollbar-thumb {
-	background: rgba(100, 116, 139, 0.2);
-	border-radius: 4px;
-}
-.dark .content-toc ::-webkit-scrollbar-thumb {
-	background: rgba(148, 163, 184, 0.2);
-}
-</style>

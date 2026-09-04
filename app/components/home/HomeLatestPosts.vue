@@ -28,7 +28,7 @@ const { formatDate } = useFormatDate()
 	>
 		<div class="mb-6 flex items-center justify-between border-b border-slate-200/60 pb-3.5 dark:border-slate-800/60">
 			<div>
-				<span class="section-label mb-1 block text-brand-900 dark:text-brand-300">
+				<span class="mb-1 block section-label text-brand-900 dark:text-brand-300">
 					{{ writing.label || (locale === 'id' ? 'Tulisan & Catatan' : 'Recent Writing') }}
 				</span>
 				<h3 class="text-2xl text-brand-950 font-semibold font-heading sm:text-3xl dark:text-brand-100">

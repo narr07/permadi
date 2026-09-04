@@ -175,7 +175,7 @@ const colorConfig = computed(() => {
 			/>
 
 			<div
-				class="callout-body min-w-0 flex-1 text-sm leading-relaxed"
+				class="callout-body min-w-0 flex-1 text-sm leading-relaxed [&_a]:(relative z-20 color-inherit font-bold underline underline-offset-[2.5px]) [&_li]:(my-1.5 color-inherit) [&_p]:(my-1.5 color-inherit first:mt-0 last:mb-0) [&_code]:(border border-current border-dashed bg-black/10 color-inherit dark:bg-white/15) [&_span]:color-inherit [&_b]:font-bold [&_strong]:font-bold"
 				:class="colorConfig.text"
 			>
 				<slot />
@@ -183,38 +183,3 @@ const colorConfig = computed(() => {
 		</div>
 	</div>
 </template>
-
-<style scoped>
-/* Ensure inner prose elements blend seamlessly */
-.callout-body :deep(p:first-child) {
-	margin-top: 0 !important;
-}
-.callout-body :deep(p:last-child) {
-	margin-bottom: 0 !important;
-}
-.callout-body :deep(p),
-.callout-body :deep(li),
-.callout-body :deep(span) {
-	color: inherit !important;
-	margin-top: 0.35rem;
-	margin-bottom: 0.35rem;
-}
-.callout-body :deep(a) {
-	color: inherit !important;
-	text-decoration: underline !important;
-	text-underline-offset: 2.5px !important;
-	font-weight: 700 !important;
-	position: relative;
-	z-index: 20;
-}
-.callout-body :deep(strong),
-.callout-body :deep(b) {
-	color: inherit !important;
-	font-weight: 700 !important;
-}
-.callout-body :deep(code) {
-	color: inherit !important;
-	background-color: rgba(125, 125, 125, 0.14) !important;
-	border: 1px dashed currentColor !important;
-}
-</style>

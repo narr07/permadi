@@ -37,8 +37,7 @@ useSchemaOrg([
 				<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
 				<div class="max-w-2xl">
 					<div class="mb-3.5 flex items-center justify-between gap-3">
-						<div class="inline-flex items-center gap-2 border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
-							<span class="status-dot animate-pulse" />
+						<div class="inline-flex items-center border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
 							<span>{{ page?.section_label || (locale === 'id' ? 'Kontak & Kolaborasi' : 'Contact & Connect') }}</span>
 						</div>
 
@@ -111,7 +110,7 @@ useSchemaOrg([
 			>
 				<div>
 					<span class="mb-3 flex items-center gap-1.5 text-xs text-slate-800 font-semibold tracking-wide">
-						<span class="inline-block h-2 w-2 rounded-full bg-emerald-600" />
+						<span class="inline-block h-2 w-2 animate-pulse rounded-full bg-emerald-600" />
 						{{ page.status_card.label || (locale === 'id' ? 'Status Ketersediaan' : 'Availability Status') }}
 					</span>
 					<h3 class="text-2xl text-slate-900 font-semibold leading-tight font-heading">
@@ -146,7 +145,7 @@ useSchemaOrg([
 				<div>
 					<span
 						v-if="page.social_card.label"
-						class="section-label mb-2 block text-brand-700 dark:text-brand-400"
+						class="mb-2 block section-label text-brand-700 dark:text-brand-400"
 					>
 						{{ page.social_card.label }}
 					</span>
@@ -189,7 +188,7 @@ useSchemaOrg([
 				<div>
 					<span
 						v-if="page.newsletter_card.label"
-						class="section-label mb-2 block text-brand-700 dark:text-brand-400"
+						class="mb-2 block section-label text-brand-700 dark:text-brand-400"
 					>
 						{{ page.newsletter_card.label }}
 					</span>
