@@ -416,6 +416,24 @@ export default defineNuxtConfig({
 				'CDN-Cache-Control': 'max-age=31536000',
 			},
 		},
+		'/icons/**': {
+			headers: {
+				'Cache-Control': 'public, max-age=31536000, immutable',
+				'CDN-Cache-Control': 'max-age=31536000',
+			},
+		},
+		'/logo/**': {
+			headers: {
+				'Cache-Control': 'public, max-age=31536000, immutable',
+				'CDN-Cache-Control': 'max-age=31536000',
+			},
+		},
+		'/*.svg': {
+			headers: {
+				'Cache-Control': 'public, max-age=31536000, immutable',
+				'CDN-Cache-Control': 'max-age=31536000',
+			},
+		},
 
 		// API routes tidak di-prerender
 		'/api/**': {
