@@ -33,7 +33,6 @@ const { locale } = useI18n()
 <template>
 	<div class="hero-card-clean group flex flex-col justify-between p-6 md:col-span-7 md:row-span-2 sm:p-8">
 		<div>
-			<!-- Status Dot Eyebrow -->
 			<div
 				v-if="hero.status"
 				class="mb-6 flex items-center gap-2"
@@ -44,7 +43,6 @@ const { locale } = useI18n()
 				</span>
 			</div>
 
-			<!-- Kicker -->
 			<span
 				v-if="hero.kicker"
 				class="kicker mb-2 block text-brand-400 font-medium"
@@ -52,7 +50,6 @@ const { locale } = useI18n()
 				{{ hero.kicker }}
 			</span>
 
-			<!-- Main Headline with Italic Accent -->
 			<h2 class="mb-4 text-3xl text-white font-semibold leading-[1.02] tracking-tight font-heading sm:text-5xl">
 				{{ hero.headline || (locale === 'id' ? 'Membangun antarmuka ' : 'Building useful ') }}
 				<em
@@ -64,14 +61,12 @@ const { locale } = useI18n()
 				{{ hero.headline_suffix || (locale === 'id' ? ' dengan ketelitian.' : ' with care.') }}
 			</h2>
 
-			<!-- Description -->
 			<p
 				v-if="hero.description"
 				class="max-w-md text-sm text-slate-300 leading-relaxed sm:text-base"
 				v-html="hero.description"
 			/>
 
-			<!-- Action Links -->
 			<div
 				v-if="hero.links?.length"
 				class="mt-6 flex flex-wrap items-center gap-3 pt-2"
@@ -95,7 +90,6 @@ const { locale } = useI18n()
 			</div>
 		</div>
 
-		<!-- Hero Meta Location & Timezone -->
 		<div class="mt-8 flex items-center justify-between border-t border-brand-900/60 pt-4 text-xs text-brand-300">
 			<span class="flex items-center gap-1">
 				<span class="i-hugeicons-location-01 text-sm text-brand-300" />

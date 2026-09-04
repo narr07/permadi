@@ -144,16 +144,14 @@ const socialLinks = [
 							</span>
 						</div>
 
-						<!-- Nav Links Grid -->
 						<div class="grid grid-cols-2 gap-2 sm:gap-2.5">
 							<NuxtLink
 								v-for="item in navLinks"
 								:key="item.to"
 								:to="item.to"
-								class="group flex items-center justify-between border border-transparent rounded-xl bg-slate-100/70 px-3.5 py-2.5 text-xs text-slate-800 font-semibold transition-all hover:border-brand-500/30 dark:bg-slate-800/60 hover:bg-brand-50/80 dark:text-slate-100 hover:text-brand-900 dark:hover:border-brand-400/30 dark:hover:bg-brand-950/40 dark:hover:text-brand-300"
+								class="group flex items-center border border-transparent rounded-xl bg-slate-100/70 px-3.5 py-2.5 text-xs text-slate-800 font-semibold transition-all hover:border-brand-500/30 dark:bg-slate-800/60 hover:bg-brand-50/80 dark:text-slate-100 hover:text-brand-900 dark:hover:border-brand-400/30 dark:hover:bg-brand-950/40 dark:hover:text-brand-300"
 							>
 								<span>{{ item.label }}</span>
-								<span class="i-hugeicons-arrow-right-01 text-xs text-slate-500 transition-transform group-hover:translate-x-0.5 dark:text-slate-400 group-hover:text-brand-700 dark:group-hover:text-brand-300" />
 							</NuxtLink>
 						</div>
 					</div>
@@ -173,7 +171,6 @@ const socialLinks = [
 					</div>
 				</div>
 
-				<!-- Bento Card 3: Social Network & Channels (12 Cols) -->
 				<div class="bento-card-subtle p-5 lg:col-span-12 md:col-span-12 sm:p-6">
 					<div class="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
 						<div class="flex items-center gap-3">
@@ -181,7 +178,7 @@ const socialLinks = [
 								{{ locale === 'id' ? 'Jejaring Sosial' : 'Social Channels' }}
 							</span>
 							<span class="hidden text-xs text-slate-600 font-mono sm:inline dark:text-slate-400">
-								{{ locale === 'id' ? '— Temukan saya di platform berikut:' : '— Connect with me on these platforms:' }}
+								{{ locale === 'id' ? 'Temukan saya di platform berikut:' : 'Connect with me on these platforms:' }}
 							</span>
 						</div>
 

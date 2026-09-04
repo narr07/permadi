@@ -5,21 +5,18 @@ const blogCollection = computed(() => (locale.value === 'id' ? 'blog_id' : 'blog
 const projectCollection = computed(() => (locale.value === 'id' ? 'projek_id' : 'projek_en'))
 const pageCollection = computed(() => (locale.value === 'id' ? 'home_id' : 'home_en'))
 
-// 1. Data halaman beranda dari Nuxt Content (home_id / home_en)
 const { data: page } = await useAsyncData(
 	() => `home-${locale.value}`,
 	() => queryCollection(pageCollection.value).first(),
 	{ watch: [locale] },
 )
 
-// 2. Tulisan terbaru (SSR fetched)
 const { data: latestPosts } = await useAsyncData(
 	() => `home-latest-posts-${locale.value}`,
 	() => queryCollection(blogCollection.value).order('date', 'DESC').limit(4).all(),
 	{ watch: [locale] },
 )
 
-// 3. Proyek unggulan terbaru (SSR fetched)
 const { data: featuredProject } = await useAsyncData(
 	() => `home-featured-proj-${locale.value}`,
 	() => queryCollection(projectCollection.value).order('date', 'DESC').first(),
@@ -41,19 +38,15 @@ defineOgImage('Bento', {
 
 <template>
 	<div class="container-bento py-10 sm:py-14">
-		<!-- 1. Header Pengenalan Halaman (HomeIntro) -->
 		<HomeIntro
 			:eyebrow="page?.eyebrow"
 			:headline="page?.headline"
 			:description="page?.description"
 		/>
 
-		<!-- 2. Bento Grid Utama (12 Kolom Komponen Modular) -->
 		<div class="grid grid-cols-1 gap-4 md:grid-cols-12 sm:gap-5">
-			<!-- Hero Card Utama -->
 			<HomeHero :hero="page?.hero" />
 
-			<!-- Kartu Projek Terpilih -->
 			<LazyHomeFeaturedProject
 				hydrate-on-visible
 				:project="featuredProject"
@@ -63,25 +56,21 @@ defineOgImage('Bento', {
 				:all-link-text="page?.project_section?.all_link_text"
 			/>
 
-			<!-- Kartu Filosofi Bento (#facd87) -->
 			<LazyHomePhilosophy
 				hydrate-on-visible
 				:philosophy="page?.philosophy"
 			/>
 
-			<!-- Bento Skill Rekayasa Web & Mobile (Nuxt, Flutter, Python) -->
 			<LazyHomeProgrammingSkills
 				hydrate-on-visible
 				:skills-data="page?.skills_section"
 			/>
 
-			<!-- Bento Skill Desain Grafis & UI (Illustrator, Photoshop, Figma) -->
 			<LazyHomeDesignSkills
 				hydrate-on-visible
 				:skills-data="page?.skills_section"
 			/>
 
-			<!-- Kartu Tulisan Terbaru (12 Kolom) -->
 			<LazyHomeLatestPosts
 				hydrate-on-visible
 				:posts="latestPosts || []"

@@ -178,8 +178,7 @@ useSchemaOrg([
 			<div class="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
 				<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
 				<div class="max-w-2xl">
-					<div class="mb-3.5 inline-flex items-center gap-2 border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
-						<span class="status-dot animate-pulse" />
+					<div class="mb-3.5 inline-flex items-center border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
 						<span>{{ page?.eyebrow || (locale === 'id' ? 'Karya & Eksplorasi' : 'Work & Case Studies') }}</span>
 					</div>
 

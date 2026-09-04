@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 export default defineMcpTool({
 	name: 'get_profile',
-	description: 'Mendapatkan profil lengkap Dinar Permadi Yusup (Permadi) — biografi, latar belakang profesional, statistik, peran, filosofi desain, dan kanal kontak/sosial.',
+	description: 'Mendapatkan profil lengkap Dinar Permadi Yusup (Permadi), mencakup biografi, latar belakang profesional, statistik, peran, filosofi desain, dan kanal kontak/sosial.',
 	inputSchema: {
 		locale: z.enum(['id', 'en']).optional().default('id').describe('Bahasa data profil (id atau en)'),
 	},

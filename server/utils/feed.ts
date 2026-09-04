@@ -75,7 +75,7 @@ export async function generateRssFeed(event: H3Event): Promise<string> {
 	return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Permadi — Blog &amp; Articles</title>
+    <title>Permadi | Blog &amp; Articles</title>
     <link>${domain}</link>
     <description>Catatan teknis, arsitektur web modern, tipografi Golden Ratio, dan artikel portofolio oleh Permadi.</description>
     <language>id</language>
@@ -109,7 +109,7 @@ export async function generateAtomFeed(event: H3Event): Promise<string> {
 
 	return `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Permadi — Blog &amp; Articles</title>
+  <title>Permadi | Blog &amp; Articles</title>
   <subtitle>Catatan teknis, arsitektur web modern, tipografi Golden Ratio, dan artikel portofolio oleh Permadi.</subtitle>
   <link href="${domain}/feed.atom" rel="self"/>
   <link href="${domain}"/>
@@ -132,7 +132,7 @@ export async function generateJsonFeed(event: H3Event) {
 
 	return {
 		version: 'https://jsonfeed.org/version/1.1',
-		title: 'Permadi — Blog & Articles',
+		title: 'Permadi | Blog & Articles',
 		home_page_url: domain,
 		feed_url: `${domain}/feed.json`,
 		description: 'Catatan teknis, arsitektur web modern, tipografi Golden Ratio, dan artikel portofolio oleh Permadi.',

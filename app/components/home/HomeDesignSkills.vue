@@ -86,7 +86,6 @@ function getIconClass(icon?: string) {
 <template>
 	<div class="bento-card-clean flex flex-col justify-between p-6 md:col-span-5 sm:p-7">
 		<div>
-			<!-- Header Card -->
 			<div class="mb-3 flex items-center justify-between">
 				<span class="section-label text-brand-900 dark:text-brand-300">
 					{{ skillsData.design_label || (locale === 'id' ? 'Desain Grafis & Antarmuka' : 'Graphic & Interface Design') }}
@@ -105,7 +104,6 @@ function getIconClass(icon?: string) {
 				{{ skillsData.design_desc || (locale === 'id' ? 'Merancang identitas visual presisi, karya grafis, dan sistem desain modern.' : 'Designing precise visual identity, raster/vector artwork, and modern design systems.') }}
 			</p>
 
-			<!-- Skill Items List -->
 			<div class="mt-5 space-y-2.5">
 				<div
 					v-for="skill in displaySkills"
@@ -148,9 +146,8 @@ function getIconClass(icon?: string) {
 			</div>
 		</div>
 
-		<!-- Footer Info -->
 		<NuxtLink
-			:to="locale === 'id' ? '/id/galeri' : '/en/gallery'"
+			:to="localePath('/galeri')"
 			class="group mt-6 flex items-center justify-between border-t border-slate-200/60 pt-3 text-xs text-brand-900 font-bold dark:border-slate-800/60 dark:text-brand-300 hover:text-brand-950 dark:hover:text-accent"
 		>
 			<span>{{ locale === 'id' ? 'Detail Toolkit & Filosofi' : 'Detailed Toolkit & Philosophy' }}</span>

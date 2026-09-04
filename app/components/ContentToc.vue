@@ -193,7 +193,7 @@ onUnmounted(() => {
 			class="pointer-events-auto w-full"
 			:class="mode === 'all' ? 'lg:hidden' : ''"
 		>
-			<div class="border border-slate-200/80 rounded-2xl bg-white/95 px-3.5 py-2 shadow-md backdrop-blur-xl dark:border-[#134e43] dark:bg-[#002b27]/95 sm:p-3">
+			<div class="border border-slate-200/80 rounded-2xl bg-white px-3.5 py-2 shadow-md dark:border-[#134e43] dark:bg-[#002b27] sm:p-3">
 				<!-- Trigger Bar Button -->
 				<button
 					type="button"
@@ -282,7 +282,7 @@ onUnmounted(() => {
 			class="w-full"
 			:class="mode === 'all' ? 'hidden lg:block' : ''"
 		>
-			<div class="bento-card-clean relative overflow-hidden border border-slate-200/80 bg-white/90 p-4 shadow-sm backdrop-blur-xl dark:border-[#134e43] dark:bg-[#002b27]/90 sm:p-4.5">
+			<div class="bento-card-clean relative overflow-hidden border border-slate-200/80 bg-white p-4 shadow-sm dark:border-[#134e43] dark:bg-[#002b27] sm:p-4.5">
 				<!-- Header Bento Section (Single-row clean alignment) -->
 				<div class="mb-2.5 flex items-center justify-between gap-2 border-b border-slate-200/60 pb-2.5 dark:border-slate-800/60">
 					<span class="whitespace-nowrap text-[11px] text-brand-700 font-bold tracking-wider font-sans uppercase dark:text-brand-400">

@@ -111,9 +111,7 @@ useSeoMeta({
 							<Logo size="72" />
 						</div>
 
-						<!-- Status Code Pill -->
-						<div class="mb-4 inline-flex items-center gap-2 border border-brand-300/80 rounded-full bg-brand-100/90 px-3.5 py-1 text-xs text-brand-900 font-bold tracking-wider font-mono uppercase dark:border-brand-700/60 dark:bg-brand-950/90 dark:text-brand-300">
-							<span class="status-dot animate-pulse" />
+						<div class="mb-4 inline-flex items-center border border-brand-300/80 rounded-full bg-brand-100/90 px-3.5 py-1 text-xs text-brand-900 font-bold tracking-wider font-mono uppercase dark:border-brand-700/60 dark:bg-brand-950/90 dark:text-brand-300">
 							<span>ERROR {{ statusCode }}</span>
 						</div>
 

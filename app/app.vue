@@ -79,8 +79,8 @@ useSchemaOrg([
 		name: 'Permadi',
 		url: 'https://permadi.dev',
 		description: () => (locale.value === 'id'
-			? 'Portofolio dan blog teknis Dinar Permadi Yusup — Guru SD lulusan UPI, Web & Mobile Developer (Nuxt, Flutter, Python, PHP), dan Desainer Grafis.'
-			: 'Personal portfolio and technical notes of Dinar Permadi Yusup — Elementary School Teacher, UPI Alumnus, Web & Mobile Developer (Nuxt, Flutter, Python, PHP), and Graphic Designer.'),
+			? 'Portofolio dan blog teknis Dinar Permadi Yusup: Guru SD lulusan UPI, Web & Mobile Developer (Nuxt, Flutter, Python, PHP), dan Desainer Grafis.'
+			: 'Personal portfolio and technical notes of Dinar Permadi Yusup: Elementary School Teacher, UPI Alumnus, Web & Mobile Developer (Nuxt, Flutter, Python, PHP), and Graphic Designer.'),
 		inLanguage: ['id-ID', 'en-US'],
 	}),
 	defineWebPage(),
@@ -103,10 +103,6 @@ defineOgImage('Bento', {
 			{{ locale === 'id' ? 'Lewati ke konten utama' : 'Skip to main content' }}
 		</a>
 
-		<div
-			class="noise"
-			aria-hidden="true"
-		/>
 		<NuxtLoadingIndicator
 			color="#14b898"
 			:height="2"

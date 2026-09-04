@@ -54,8 +54,7 @@ useSchemaOrg([
 				<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
 				<div class="max-w-2xl">
 					<div class="mb-3.5 flex items-center justify-between gap-3">
-						<div class="inline-flex items-center gap-2 border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
-							<span class="status-dot animate-pulse" />
+						<div class="inline-flex items-center border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
 							<span>{{ page?.section_label || (locale === 'id' ? 'Tentang Saya' : 'About Me') }}</span>
 						</div>
 

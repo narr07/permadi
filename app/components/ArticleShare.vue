@@ -106,7 +106,7 @@ async function handleCopyLink() {
 	<!-- 1. Sidebar Compact Bento Variant -->
 	<div
 		v-if="variant === 'sidebar'"
-		class="bento-card-clean relative overflow-hidden border border-slate-200/80 rounded-bento bg-white/90 p-3.5 shadow-sm backdrop-blur-xl dark:border-[#134e43] dark:bg-[#002b27]/90 sm:p-4"
+		class="bento-card-clean relative overflow-hidden border border-slate-200/80 rounded-bento bg-white p-3.5 shadow-sm dark:border-[#134e43] dark:bg-[#002b27] sm:p-4"
 	>
 		<div class="mb-2.5 flex items-center justify-between gap-2 border-b border-slate-200/60 pb-2 dark:border-slate-800/60">
 			<div class="flex items-center gap-1.5 text-[11px] text-brand-700 font-bold tracking-wider font-sans uppercase dark:text-brand-400">

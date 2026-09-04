@@ -25,6 +25,10 @@ const isSingle = inject<ComputedRef<boolean> | null>('faqSingle', null)
 
 const internalOpen = ref(props.defaultOpen)
 
+if (props.defaultOpen && isSingle?.value && activeId && activeId.value === null) {
+	activeId.value = id
+}
+
 const isOpen = computed(() => {
 	if (isSingle?.value && activeId) {
 		return activeId.value === id

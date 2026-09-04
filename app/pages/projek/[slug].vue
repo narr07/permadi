@@ -302,9 +302,8 @@ onMounted(() => {
 				<div class="mb-3.5 flex flex-wrap items-center gap-2">
 					<span
 						v-if="project.doc.category"
-						class="inline-flex items-center gap-1.5 border border-brand-200/60 rounded-full bg-brand-100/80 px-3 py-1 text-xs text-brand-800 font-semibold tracking-wider uppercase dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300"
+						class="inline-flex items-center border border-brand-200/60 rounded-full bg-brand-100/80 px-3 py-1 text-xs text-brand-800 font-semibold tracking-wider uppercase dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300"
 					>
-						<span class="status-dot animate-pulse" />
 						{{ getCategoryLabel(project.doc.category) }}
 					</span>
 					<span
