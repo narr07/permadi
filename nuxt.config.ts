@@ -231,7 +231,15 @@ export default defineNuxtConfig({
 			branch: 'main',
 		},
 	},
+	mdc: {
+		headings: {
+			anchorLinks: false,
+		},
+	},
 	content: {
+		renderer: {
+			anchorLinks: false,
+		},
 		database: {
 			type: 'd1',
 			bindingName: 'DB',

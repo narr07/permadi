@@ -28,9 +28,16 @@ export default defineConfig({
 					'font-family': '\'Barlow\', \'Plus Jakarta Sans\', sans-serif',
 					'font-weight': '800',
 					'letter-spacing': '-0.03em',
-					'color': '#0F7662',
+					'color': '#001e1c',
+				},
+				'h1 a, h2 a, h3 a, h4 a, h5 a, h6 a': {
+					'color': '#001e1c',
+					'text-decoration': 'none',
 				},
 				'.dark :is(h1,h2,h3,h4,h5,h6)': {
+					color: '#f8fafa',
+				},
+				'.dark :is(h1 a, h2 a, h3 a, h4 a, h5 a, h6 a)': {
 					color: '#f8fafa',
 				},
 				'h2': {

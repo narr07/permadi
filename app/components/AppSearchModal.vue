@@ -258,9 +258,7 @@ onMounted(() => {
 					<!-- Bento Command Palette Card -->
 					<div class="animate-scale-in max-h-[80vh] max-w-2xl w-full flex flex-col overflow-hidden border border-slate-200 rounded-bento bg-white shadow-2xl backdrop-blur-xl transition-all dark:border-slate-800 dark:bg-slate-900">
 						<!-- Top Search Bar -->
-						<div class="flex items-center gap-3 border-b border-slate-200 px-4 py-3.5 dark:border-slate-800">
-							<span class="i-hugeicons-search-01 shrink-0 text-lg text-slate-700 dark:text-slate-300" />
-
+						<div class="flex items-center gap-3 border-b border-slate-200 px-4 py-3 dark:border-slate-800">
 							<input
 								ref="inputRef"
 								v-model="searchQuery"
@@ -269,7 +267,7 @@ onMounted(() => {
 								aria-autocomplete="list"
 								:aria-expanded="Boolean(searchQuery.trim())"
 								:aria-label="t('search.placeholder', 'Ketik kata kunci pencarian...')"
-								class="flex-1 border-none bg-transparent text-sm text-slate-950 font-medium font-sans outline-none sm:text-base dark:text-slate-50 placeholder:text-slate-500 dark:placeholder:text-slate-400"
+								class="flex-1 rounded-xl border-none bg-transparent px-3.5 py-2 text-sm text-slate-950 font-medium font-sans outline-none sm:text-base dark:text-slate-50 placeholder:text-slate-500 dark:placeholder:text-slate-400"
 								:placeholder="t('search.placeholder', 'Type a command or search...')"
 								autocomplete="off"
 								spellcheck="false"
@@ -557,7 +555,6 @@ onMounted(() => {
 							</div>
 
 							<div class="flex items-center gap-1 text-brand-700 font-semibold dark:text-brand-400">
-								<span class="i-hugeicons-sparkles text-xs text-accent" />
 								<span>SQLite FTS5</span>
 							</div>
 						</div>
