@@ -27,7 +27,6 @@ const props = withDefaults(
 )
 
 const { locale } = useI18n()
-const localePath = useLocalePath()
 
 const defaultSkills = computed<SkillItem[]>(() => [
 	{

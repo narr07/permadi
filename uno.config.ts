@@ -28,7 +28,7 @@ export default defineConfig({
 					'font-family': '\'Barlow\', \'Plus Jakarta Sans\', sans-serif',
 					'font-weight': '800',
 					'letter-spacing': '-0.03em',
-					'color': '#000b07',
+					'color': '#0F7662',
 				},
 				'.dark :is(h1,h2,h3,h4,h5,h6)': {
 					color: '#f8fafa',

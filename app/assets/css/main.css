@@ -177,3 +177,12 @@ html.dark .shiki span,
 	margin-top: 0.25rem;
 	margin-bottom: 0.25rem;
 }
+
+/* Prose Typography Heading Color Overrides (WCAG AAA Compliant) */
+.prose :where(h1, h2, h3, h4, h5, h6):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	color: #0F7662;
+}
+
+.dark .prose :where(h1, h2, h3, h4, h5, h6):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	color: #f8fafa;
+}
