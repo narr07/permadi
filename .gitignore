@@ -64,3 +64,6 @@ reports/
 # Automation Scripts & Browser Extensions (Local Tools)
 scripts/autoinput/
 scripts/extension/
+
+# Drafts / Unpublished content staging
+drafts/
