@@ -202,7 +202,7 @@ Tidak ada satu metode belajar yang sempurna untuk semua kondisi kelas:
 - **Pilih Metode Inkuiri**: Jika target Anda adalah melatih daya nalar kritis dan pemecahan masalah kolaboratif.
 ::
 
-## Pertanyaan yang Sering Diajukan (FAQ)
+
 
 ::faq
 ::faq-item{question="Mengapa metode belajar interaktif sering gagal di kelas besar?"}
@@ -274,7 +274,6 @@ No single instructional framework fits every classroom constraint:
 - **Choose Inquiry-Based**: When developing collaborative problem-solving matters more than raw speed.
 ::
 
-## Frequently Asked Questions (FAQ)
 
 ::faq
 ::faq-item{question="Why do active learning methods struggle in large classes?"}
