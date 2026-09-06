@@ -376,6 +376,14 @@ export default defineNuxtConfig({
 			},
 		},
 
+		// Halaman Galeri: Hybrid SWR (Stale-While-Revalidate 10 menit di Edge/Server)
+		'/id/galeri': {
+			swr: 600,
+		},
+		'/en/gallery': {
+			swr: 600,
+		},
+
 		// Seluruh halaman HTML: sajikan instan dari Edge CDN Cloudflare + Security Headers
 		'/**': {
 			headers: {
@@ -489,8 +497,6 @@ export default defineNuxtConfig({
 				'/id/tentang',
 				'/en/contact',
 				'/id/kontak',
-				'/en/gallery',
-				'/id/galeri',
 				'/en/blog',
 				'/id/blog',
 				'/feed.xml',
@@ -498,6 +504,7 @@ export default defineNuxtConfig({
 				'/feed.json',
 				'/robots.txt',
 			],
+			ignore: ['/en/gallery', '/id/galeri'],
 			crawlLinks: true,
 			failOnError: false,
 		},

@@ -133,8 +133,8 @@ export default defineCachedEventHandler(
 		}
 	},
 	{
-		maxAge: 60 * 60, // Cache 1 hour on server/edge with SWR
-		swr: true, // Stale-while-revalidate for instantaneous responses
+		maxAge: 60 * 10, // Cache 10 menit di server/edge dengan SWR
+		swr: true, // Stale-while-revalidate untuk respon instan
 		name: 'cloudinary-gallery',
 		getKey: () => 'gallery-all',
 	},

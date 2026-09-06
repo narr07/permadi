@@ -14,10 +14,26 @@ const { data: page } = await useAsyncData(
 	{ watch: [locale] },
 )
 
-// 2. Fetch gallery items dari Cloudinary API
-const { data: cloudinaryItems } = await useAsyncData<GalleryItem[]>(
+// 2. Fetch gallery items dari Cloudinary API dengan Stale-While-Revalidate (SWR)
+const nuxtApp = useNuxtApp()
+const { data: cloudinaryItems, refresh: refreshGallery } = await useAsyncData<GalleryItem[]>(
 	'cloudinary-gallery-list',
-	() => $fetch('/api/cloudinary-gallery').catch(() => []),
+	async () => {
+		try {
+			const res = await $fetch<GalleryItem[]>('/api/cloudinary-gallery')
+			if (Array.isArray(res) && res.length > 0) {
+				return res
+			}
+			return (nuxtApp.payload.data['cloudinary-gallery-list'] as GalleryItem[]) || []
+		}
+		catch (err) {
+			console.warn('[Gallery] Failed to fetch latest gallery items:', err)
+			return (nuxtApp.payload.data['cloudinary-gallery-list'] as GalleryItem[]) || []
+		}
+	},
+	{
+		default: () => [],
+	},
 )
 
 const allItems = computed(() => cloudinaryItems.value || [])
@@ -108,6 +124,9 @@ function loadMore() {
 const sentinelEl = ref<HTMLElement | null>(null)
 
 onMounted(() => {
+	// Revalidasi di latar belakang agar foto baru Cloudinary langsung muncul tanpa harus deploy ulang
+	refreshGallery()
+
 	if (typeof IntersectionObserver !== 'undefined') {
 		const observer = new IntersectionObserver(
 			(entries) => {
