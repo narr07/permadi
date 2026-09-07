@@ -3,15 +3,21 @@ const props = defineProps<{ size?: number | string }>()
 const sizeValue = computed(() => {
 	if (props.size === undefined || props.size === null)
 		return '32px'
-	return typeof props.size === 'number' ? `${props.size}px` : props.size
+	const s = String(props.size).trim()
+	return /^\d+$/.test(s) ? `${s}px` : s
 })
 </script>
 
 <template>
-	<div :style="{ lineHeight: 0 }">
+	<div
+		class="inline-flex shrink-0 items-center"
+		:style="{ lineHeight: 0 }"
+	>
 		<svg
+			:width="sizeValue"
+			:height="sizeValue"
 			:style="{ width: sizeValue, height: sizeValue }"
-			class="block"
+			class="block shrink-0"
 			viewBox="0 0 800 800"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"

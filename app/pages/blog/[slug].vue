@@ -459,6 +459,13 @@ useSchemaOrg([
 					<div class="max-w-full min-w-0 text-slate-700 leading-relaxed font-sans prose prose-slate dark:text-slate-200 dark:prose-invert">
 						<ContentRenderer :value="post.doc" />
 
+						<!-- Inline Bento Reactions Box at End of Article -->
+						<AppReactionsBar
+							v-if="post?.doc"
+							:slug="contentIdentifier"
+							:active-section="activeSection"
+						/>
+
 						<!-- Mobile/Tablet Social Share Card (under article) -->
 						<div :class="tocLinks.length > 0 ? 'lg:hidden' : ''">
 							<ArticleShare
@@ -522,13 +529,6 @@ useSchemaOrg([
 								</div>
 							</NuxtLink>
 						</nav>
-
-						<!-- Native CSS Sticky Reactions Bar -->
-						<AppReactionsBar
-							v-if="post?.doc"
-							:slug="contentIdentifier"
-							:active-section="activeSection"
-						/>
 					</div>
 				</article>
 

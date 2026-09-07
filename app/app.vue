@@ -113,7 +113,7 @@ defineOgImage('Bento', {
 		<main
 			id="main"
 			tabindex="-1"
-			class="flex-1 outline-none"
+			class="flex-1 pb-16 outline-none md:pb-0"
 		>
 			<NuxtPage />
 		</main>

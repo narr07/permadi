@@ -20,6 +20,7 @@ export default defineConfig({
 				'display': 'inline-block',
 				'vertical-align': 'middle',
 			},
+
 		}),
 
 		presetTypography({
@@ -274,5 +275,15 @@ export default defineConfig({
 		['aspect-profile', { 'aspect-ratio': '1 / 1' }],
 		['aspect-article', { 'aspect-ratio': '5 / 3' }],
 		['aspect-thumbnail', { 'aspect-ratio': '4 / 3' }],
+	],
+
+	safelist: [
+		'i-hugeicons-home-01',
+		'i-hugeicons-book-02',
+		'i-hugeicons-folder-02',
+		'i-hugeicons-image-02',
+		'i-hugeicons-sun-01',
+		'i-hugeicons-moon-02',
+		'i-hugeicons-search-01',
 	],
 })
