@@ -12,14 +12,17 @@ const currentPath = computed(() => (locale.value === 'id' ? '/id/projek' : '/pro
 // Data halaman projek (deskripsi dan header)
 const { data: page } = await useAsyncData(
 	() => `projek-page-${locale.value}`,
-	() => queryCollection(locale.value === 'id' ? 'pages_id' : 'pages_en').path(currentPath.value).first(),
+	() => queryCollection(locale.value === 'id' ? 'pages_id' : 'pages_en').path(currentPath.value).select('title', 'description', 'eyebrow').first(),
 	{ watch: [locale] },
 )
 
 // Koleksi semua studi kasus projek (SSR fetched)
 const { data: projects } = await useAsyncData(
 	() => `projek-list-${locale.value}`,
-	() => queryCollection(collection.value).order('date', 'DESC').all(),
+	() => queryCollection(collection.value)
+		.order('date', 'DESC')
+		.select('title', 'description', 'date', 'category', 'tags', 'image', 'images', 'link', 'repo', 'slug', 'path')
+		.all(),
 	{ watch: [locale] },
 )
 
@@ -196,7 +199,7 @@ useSchemaOrg([
 				<!-- Mobile: grid 2 kolom simetris; Desktop: flex-col teratur -->
 				<div class="z-20 grid grid-cols-2 w-full shrink-0 gap-2.5 md:w-auto md:flex md:flex-col">
 					<!-- Mini Bento Stat Pill: Total Karya -->
-					<div class="shadow-xs h-11 flex items-center gap-2 border border-slate-200/70 rounded-xl bg-white px-3.5 md:w-48 dark:border-slate-700/60 dark:bg-slate-800/80 sm:px-4">
+					<div class="h-11 flex items-center gap-2 border border-slate-200/70 rounded-xl bg-white px-3.5 shadow-xs md:w-48 dark:border-slate-700/60 dark:bg-slate-800/80 sm:px-4">
 						<span class="i-hugeicons-folder-02 shrink-0 text-sm text-brand-700 dark:text-brand-400" />
 						<span class="truncate text-xs text-slate-800 font-bold font-mono dark:text-slate-100">
 							{{ projects?.length || 0 }} {{ locale === 'id' ? 'Projek' : 'Projects' }}
@@ -210,7 +213,7 @@ useSchemaOrg([
 					>
 						<button
 							type="button"
-							class="shadow-xs h-11 w-full flex cursor-pointer items-center justify-between gap-2 border rounded-xl px-3.5 text-xs font-semibold transition-all sm:px-4"
+							class="h-11 w-full flex cursor-pointer items-center justify-between gap-2 border rounded-xl px-3.5 text-xs font-semibold shadow-xs transition-all sm:px-4"
 							:class="selectedTag !== 'ALL'
 								? 'bg-brand-700 text-white border-brand-600 shadow-brand-700/20'
 								: 'bg-white dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 border-slate-200/70 dark:border-slate-700/60 hover:bg-slate-50 dark:hover:bg-slate-800'"
@@ -327,17 +330,17 @@ useSchemaOrg([
 					v-for="(item, index) in paginatedProjects"
 					:key="item.url"
 					as-child
-					:initial="{ opacity: 0, transform: 'translateY(20px)' }"
+					:initial="index === 0 ? false : { opacity: 0, transform: 'translateY(16px)' }"
 					:while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
-					:transition="{ type: 'spring', stiffness: 80, damping: 20, delay: index * 0.05 }"
-					:in-view-options="{ margin: '-40px' }"
+					:transition="{ type: 'spring', stiffness: 85, damping: 20, delay: Math.min(index * 0.04, 0.2) }"
+					:in-view-options="{ margin: '-20px' }"
 					:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 						? 'lg:col-span-2 sm:col-span-2 col-span-1'
 						: 'col-span-1'"
 				>
 					<NuxtLink
 						:to="item.url"
-						class="group bento-card-clean block h-full flex flex-col justify-between overflow-hidden opacity-0 transition-all duration-300"
+						class="group bento-card-clean block h-full flex flex-col justify-between overflow-hidden transition-all duration-300"
 						:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 							? 'p-4 sm:p-7 lg:p-8 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/30 dark:from-[#002b27] dark:via-[#002420] dark:to-[#001916] border-brand-300/70 dark:border-brand-700/60 shadow-lg shadow-brand-950/5'
 							: 'p-5 sm:p-4 bg-white dark:bg-[#002b27] border-slate-200/80 dark:border-slate-800/80 hover:border-brand-500/80 dark:hover:border-brand-400/80'"
@@ -354,10 +357,11 @@ useSchemaOrg([
 										:src="item.image || item.images[0]"
 										:alt="item.title"
 										format="webp"
-										quality="85"
+										quality="80"
+										sizes="xs:100vw sm:100vw md:50vw lg:640px"
 										loading="eager"
 										fetchpriority="high"
-										placeholder
+										:preload="true"
 										decoding="async"
 										class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 									/>
@@ -384,7 +388,7 @@ useSchemaOrg([
 											v-if="item.date"
 											class="mb-3.5 flex items-center"
 										>
-											<span class="shadow-xs inline-flex items-center gap-1.5 border border-white/20 rounded-full bg-brand-100 px-2.5 py-0.5 text-[11px] text-brand-950 font-bold font-mono transition-colors dark:bg-brand-800/50 dark:text-brand-300">
+											<span class="inline-flex items-center gap-1.5 border border-white/20 rounded-full bg-brand-100 px-2.5 py-0.5 text-[11px] text-brand-950 font-bold font-mono shadow-xs transition-colors dark:bg-brand-800/50 dark:text-brand-300">
 												<span class="i-hugeicons-calendar-03 text-xs text-accent" />
 												<span>{{ formatDate(item.date) }}</span>
 											</span>
@@ -462,11 +466,11 @@ useSchemaOrg([
 									:src="item.image || item.images[0]"
 									:alt="item.title"
 									format="webp"
-									quality="85"
+									quality="80"
+									sizes="xs:100vw sm:50vw md:33vw lg:400px"
 									class="h-full w-full object-cover"
 									loading="lazy"
 									decoding="async"
-									placeholder
 								/>
 							</div>
 
@@ -497,7 +501,7 @@ useSchemaOrg([
 										v-if="item.date"
 										class="mb-3.5 flex items-center"
 									>
-										<span class="shadow-xs inline-flex items-center gap-1.5 border border-slate-200/90 rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] text-slate-800 font-bold font-mono transition-colors dark:border-slate-700/80 dark:bg-slate-800/90 dark:text-slate-200">
+										<span class="inline-flex items-center gap-1.5 border border-slate-200/90 rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] text-slate-800 font-bold font-mono shadow-xs transition-colors dark:border-slate-700/80 dark:bg-slate-800/90 dark:text-slate-200">
 											<span class="i-hugeicons-calendar-03 text-xs text-brand-600 dark:text-brand-400" />
 											<span>{{ formatDate(item.date) }}</span>
 										</span>
@@ -559,19 +563,26 @@ useSchemaOrg([
 				<NuxtLink
 					v-if="currentPage > 1"
 					:to="getPaginationUrl(currentPage - 1)"
-					class="shadow-xs inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold transition-all dark:border-slate-700/70 hover:border-brand-500/60 dark:bg-slate-800/80 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
+					:aria-label="locale === 'id' ? 'Halaman sebelumnya' : 'Previous page'"
+					class="inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold shadow-xs transition-all dark:border-slate-700/70 hover:border-brand-500/60 dark:bg-slate-800/80 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
 					@click="scrollToTop"
 				>
-					<span class="i-hugeicons-arrow-left-01 text-xs" />
-					<span class="hidden sm:inline">{{ locale === 'id' ? 'Sebelumnya' : 'Previous' }}</span>
+					<span
+						class="i-hugeicons-arrow-left-01 text-xs"
+						aria-hidden="true"
+					/>
+					<span class="sr-only sm:not-sr-only sm:inline">{{ locale === 'id' ? 'Sebelumnya' : 'Previous' }}</span>
 				</NuxtLink>
 				<span
 					v-else
 					class="inline-flex cursor-not-allowed items-center gap-1.5 border border-slate-200/40 rounded-xl bg-slate-100/50 px-3.5 py-2 text-xs text-slate-400 font-semibold dark:border-slate-800/40 dark:bg-slate-900/40 dark:text-slate-600"
 					aria-disabled="true"
 				>
-					<span class="i-hugeicons-arrow-left-01 text-xs" />
-					<span class="hidden sm:inline">{{ locale === 'id' ? 'Sebelumnya' : 'Previous' }}</span>
+					<span
+						class="i-hugeicons-arrow-left-01 text-xs"
+						aria-hidden="true"
+					/>
+					<span class="sr-only sm:not-sr-only sm:inline">{{ locale === 'id' ? 'Sebelumnya' : 'Previous' }}</span>
 				</span>
 
 				<!-- Nomor Halaman -->
@@ -580,6 +591,7 @@ useSchemaOrg([
 						v-for="pageNum in totalPages"
 						:key="pageNum"
 						:to="getPaginationUrl(pageNum)"
+						:aria-label="locale === 'id' ? `Halaman ${pageNum}` : `Page ${pageNum}`"
 						class="h-9 w-9 flex items-center justify-center rounded-xl text-xs font-bold font-mono transition-all sm:h-10 sm:w-10 sm:text-sm"
 						:class="pageNum === currentPage
 							? 'bg-brand-700 text-white shadow-sm shadow-brand-700/30 dark:bg-brand-500 dark:text-slate-950'
@@ -595,19 +607,26 @@ useSchemaOrg([
 				<NuxtLink
 					v-if="currentPage < totalPages"
 					:to="getPaginationUrl(currentPage + 1)"
-					class="shadow-xs inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold transition-all dark:border-slate-700/70 hover:border-brand-500/60 dark:bg-slate-800/80 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
+					:aria-label="locale === 'id' ? 'Halaman berikutnya' : 'Next page'"
+					class="inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold shadow-xs transition-all dark:border-slate-700/70 hover:border-brand-500/60 dark:bg-slate-800/80 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
 					@click="scrollToTop"
 				>
-					<span class="hidden sm:inline">{{ locale === 'id' ? 'Berikutnya' : 'Next' }}</span>
-					<span class="i-hugeicons-arrow-right-01 text-xs" />
+					<span class="sr-only sm:not-sr-only sm:inline">{{ locale === 'id' ? 'Berikutnya' : 'Next' }}</span>
+					<span
+						class="i-hugeicons-arrow-right-01 text-xs"
+						aria-hidden="true"
+					/>
 				</NuxtLink>
 				<span
 					v-else
 					class="inline-flex cursor-not-allowed items-center gap-1.5 border border-slate-200/40 rounded-xl bg-slate-100/50 px-3.5 py-2 text-xs text-slate-400 font-semibold dark:border-slate-800/40 dark:bg-slate-900/40 dark:text-slate-600"
 					aria-disabled="true"
 				>
-					<span class="hidden sm:inline">{{ locale === 'id' ? 'Berikutnya' : 'Next' }}</span>
-					<span class="i-hugeicons-arrow-right-01 text-xs" />
+					<span class="sr-only sm:not-sr-only sm:inline">{{ locale === 'id' ? 'Berikutnya' : 'Next' }}</span>
+					<span
+						class="i-hugeicons-arrow-right-01 text-xs"
+						aria-hidden="true"
+					/>
 				</span>
 			</nav>
 		</template>

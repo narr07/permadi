@@ -201,7 +201,7 @@ useSchemaOrg([
 				<!-- Mobile: grid 2 kolom simetris; Desktop: flex-col teratur -->
 				<div class="z-20 grid grid-cols-2 w-full shrink-0 gap-2.5 md:w-auto md:flex md:flex-col">
 					<!-- Mini Bento Stat Pill: Total Artikel -->
-					<div class="shadow-xs h-11 flex items-center gap-2 border border-slate-200/70 rounded-xl bg-white px-3.5 md:w-48 dark:border-slate-700/60 dark:bg-slate-800/80 sm:px-4">
+					<div class="h-11 flex items-center gap-2 border border-slate-200/70 rounded-xl bg-white px-3.5 shadow-xs md:w-48 dark:border-slate-700/60 dark:bg-slate-800/80 sm:px-4">
 						<span class="i-hugeicons-book-open-01 shrink-0 text-sm text-brand-700 dark:text-brand-400" />
 						<span class="truncate text-xs text-slate-800 font-bold font-mono dark:text-slate-100">
 							{{ posts?.length || 0 }} {{ locale === 'id' ? 'Artikel' : 'Articles' }}
@@ -215,7 +215,7 @@ useSchemaOrg([
 					>
 						<button
 							type="button"
-							class="shadow-xs h-11 w-full flex cursor-pointer items-center justify-between gap-2 border rounded-xl px-3.5 text-xs font-semibold transition-all sm:px-4"
+							class="h-11 w-full flex cursor-pointer items-center justify-between gap-2 border rounded-xl px-3.5 text-xs font-semibold shadow-xs transition-all sm:px-4"
 							:class="selectedTag !== 'ALL'
 								? 'bg-brand-700 text-white border-brand-600 shadow-brand-700/20'
 								: 'bg-white dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 border-slate-200/70 dark:border-slate-700/60 hover:bg-slate-50 dark:hover:bg-slate-800'"
@@ -401,7 +401,7 @@ useSchemaOrg([
 								class="mb-3.5 flex items-center"
 							>
 								<span
-									class="shadow-xs inline-flex items-center gap-1.5 border rounded-full px-2.5 py-0.5 text-[11px] font-bold font-mono transition-colors"
+									class="inline-flex items-center gap-1.5 border rounded-full px-2.5 py-0.5 text-[11px] font-bold font-mono shadow-xs transition-colors"
 									:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 										? 'bg-white/15 text-white border-white/20'
 										: 'border-slate-200/90 bg-slate-100 text-slate-800 dark:border-slate-700/80 dark:bg-slate-800/90 dark:text-slate-200'"
@@ -472,19 +472,26 @@ useSchemaOrg([
 				<NuxtLink
 					v-if="currentPage > 1"
 					:to="getPaginationUrl(currentPage - 1)"
-					class="shadow-xs inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold transition-all dark:border-slate-700/70 hover:border-brand-500/60 dark:bg-slate-800/80 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
+					:aria-label="locale === 'id' ? 'Halaman sebelumnya' : 'Previous page'"
+					class="inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold shadow-xs transition-all dark:border-slate-700/70 hover:border-brand-500/60 dark:bg-slate-800/80 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
 					@click="scrollToTop"
 				>
-					<span class="i-hugeicons-arrow-left-01 text-xs" />
-					<span class="hidden sm:inline">{{ locale === 'id' ? 'Sebelumnya' : 'Previous' }}</span>
+					<span
+						class="i-hugeicons-arrow-left-01 text-xs"
+						aria-hidden="true"
+					/>
+					<span class="sr-only sm:not-sr-only sm:inline">{{ locale === 'id' ? 'Sebelumnya' : 'Previous' }}</span>
 				</NuxtLink>
 				<span
 					v-else
 					class="inline-flex cursor-not-allowed items-center gap-1.5 border border-slate-200/40 rounded-xl bg-slate-100/50 px-3.5 py-2 text-xs text-slate-400 font-semibold dark:border-slate-800/40 dark:bg-slate-900/40 dark:text-slate-600"
 					aria-disabled="true"
 				>
-					<span class="i-hugeicons-arrow-left-01 text-xs" />
-					<span class="hidden sm:inline">{{ locale === 'id' ? 'Sebelumnya' : 'Previous' }}</span>
+					<span
+						class="i-hugeicons-arrow-left-01 text-xs"
+						aria-hidden="true"
+					/>
+					<span class="sr-only sm:not-sr-only sm:inline">{{ locale === 'id' ? 'Sebelumnya' : 'Previous' }}</span>
 				</span>
 
 				<!-- Nomor Halaman -->
@@ -493,6 +500,7 @@ useSchemaOrg([
 						v-for="pageNum in totalPages"
 						:key="pageNum"
 						:to="getPaginationUrl(pageNum)"
+						:aria-label="locale === 'id' ? `Halaman ${pageNum}` : `Page ${pageNum}`"
 						class="h-9 w-9 flex items-center justify-center rounded-xl text-xs font-bold font-mono transition-all sm:h-10 sm:w-10 sm:text-sm"
 						:class="pageNum === currentPage
 							? 'bg-brand-700 text-white shadow-sm shadow-brand-700/30 dark:bg-brand-500 dark:text-slate-950'
@@ -508,19 +516,26 @@ useSchemaOrg([
 				<NuxtLink
 					v-if="currentPage < totalPages"
 					:to="getPaginationUrl(currentPage + 1)"
-					class="shadow-xs inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold transition-all dark:border-slate-700/70 hover:border-brand-500/60 dark:bg-slate-800/80 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
+					:aria-label="locale === 'id' ? 'Halaman berikutnya' : 'Next page'"
+					class="inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold shadow-xs transition-all dark:border-slate-700/70 hover:border-brand-500/60 dark:bg-slate-800/80 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
 					@click="scrollToTop"
 				>
-					<span class="hidden sm:inline">{{ locale === 'id' ? 'Berikutnya' : 'Next' }}</span>
-					<span class="i-hugeicons-arrow-right-01 text-xs" />
+					<span class="sr-only sm:not-sr-only sm:inline">{{ locale === 'id' ? 'Berikutnya' : 'Next' }}</span>
+					<span
+						class="i-hugeicons-arrow-right-01 text-xs"
+						aria-hidden="true"
+					/>
 				</NuxtLink>
 				<span
 					v-else
 					class="inline-flex cursor-not-allowed items-center gap-1.5 border border-slate-200/40 rounded-xl bg-slate-100/50 px-3.5 py-2 text-xs text-slate-400 font-semibold dark:border-slate-800/40 dark:bg-slate-900/40 dark:text-slate-600"
 					aria-disabled="true"
 				>
-					<span class="hidden sm:inline">{{ locale === 'id' ? 'Berikutnya' : 'Next' }}</span>
-					<span class="i-hugeicons-arrow-right-01 text-xs" />
+					<span class="sr-only sm:not-sr-only sm:inline">{{ locale === 'id' ? 'Berikutnya' : 'Next' }}</span>
+					<span
+						class="i-hugeicons-arrow-right-01 text-xs"
+						aria-hidden="true"
+					/>
 				</span>
 			</nav>
 		</template>

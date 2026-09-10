@@ -10,7 +10,7 @@ const currentPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/gal
 
 const { data: page } = await useAsyncData(
 	() => `galeri-page-${locale.value}`,
-	() => queryCollection(pageCollection.value).path(currentPath.value).first(),
+	() => queryCollection(pageCollection.value).path(currentPath.value).select('title', 'description', 'eyebrow').first(),
 	{ watch: [locale] },
 )
 
@@ -196,13 +196,30 @@ onMounted(() => {
 const site = useSiteConfig()
 const canonicalUrl = computed(() => `${site.url}/${locale.value === 'id' ? 'id/galeri' : 'gallery'}`)
 
-useHead({
-	link: [
-		{
-			rel: 'canonical',
-			href: () => canonicalUrl.value,
-		},
-	],
+useHead(() => {
+	const firstImage = displayedItems.value[0]?.image || allItems.value[0]?.image
+	return {
+		link: [
+			{
+				rel: 'canonical',
+				href: canonicalUrl.value,
+			},
+			{
+				rel: 'preconnect',
+				href: 'https://res.cloudinary.com',
+			},
+			...(firstImage
+				? [
+						{
+							rel: 'preload',
+							as: 'image',
+							href: firstImage,
+							fetchpriority: 'high',
+						},
+					]
+				: []),
+		],
+	}
 })
 
 useSeoMeta({
@@ -301,7 +318,7 @@ useSchemaOrg([
 				<!-- Mobile: grid 2 kolom simetris; Desktop: flex-col teratur -->
 				<div class="z-20 grid grid-cols-2 w-full shrink-0 gap-2.5 md:w-auto md:flex md:flex-col">
 					<!-- Mini Bento Stat Pill: Total Foto -->
-					<div class="shadow-xs h-11 flex items-center gap-2 border border-slate-200/70 rounded-xl bg-white px-3.5 md:w-48 dark:border-slate-700/60 dark:bg-slate-800/80 sm:px-4">
+					<div class="h-11 flex items-center gap-2 border border-slate-200/70 rounded-xl bg-white px-3.5 shadow-xs md:w-48 dark:border-slate-700/60 dark:bg-slate-800/80 sm:px-4">
 						<span class="i-hugeicons-image-02 shrink-0 text-sm text-brand-700 dark:text-brand-400" />
 						<span class="truncate text-xs text-slate-800 font-bold font-mono dark:text-slate-100">
 							{{ allItems?.length || 0 }} {{ locale === 'id' ? 'Foto' : 'Photos' }}
@@ -315,7 +332,7 @@ useSchemaOrg([
 					>
 						<button
 							type="button"
-							class="shadow-xs h-11 w-full flex cursor-pointer items-center justify-between gap-2 border rounded-xl px-3.5 text-xs font-semibold transition-all sm:px-4"
+							class="h-11 w-full flex cursor-pointer items-center justify-between gap-2 border rounded-xl px-3.5 text-xs font-semibold shadow-xs transition-all sm:px-4"
 							:class="selectedTag !== 'ALL'
 								? 'bg-brand-700 text-white border-brand-600 shadow-brand-700/20'
 								: 'bg-white dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 border-slate-200/70 dark:border-slate-700/60 hover:bg-slate-50 dark:hover:bg-slate-800'"
@@ -456,7 +473,7 @@ useSchemaOrg([
 					:width="item.width || 360"
 					:height="item.height || 360"
 					class="relative z-1 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-					:loading="i < 4 ? 'eager' : 'lazy'"
+					:loading="i < 2 ? 'eager' : 'lazy'"
 					:fetchpriority="i === 0 ? 'high' : 'auto'"
 				>
 

@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-	<header class="bento-card-clean relative z-10 bg-slate-50/70 p-6 sm:mb-10 dark:bg-slate-900/60 sm:p-8">
+	<header class="bento-card-clean relative z-10 mb-4 bg-slate-50/70 p-6 sm:mb-10 dark:bg-slate-900/60 sm:p-8">
 		<div class="flex flex-col justify-between gap-6 md:flex-row md:items-center">
 			<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
 			<div class="max-w-2xl">
