@@ -24,28 +24,28 @@ useEventListener('keydown', (e: KeyboardEvent) => {
 
 const navItems = computed(() => [
 	{
-		label: t('nav.home'),
+		label: t('nav.home', locale.value === 'id' ? 'Beranda' : 'Home'),
 		to: localePath('/'),
 		prefix: locale.value === 'id' ? '/id' : '/',
 		exact: true,
 	},
 	{
-		label: t('nav.blog'),
+		label: t('nav.blog', 'Blog'),
 		to: localePath('/blog'),
 		prefix: locale.value === 'id' ? '/id/blog' : '/blog',
 	},
 	{
-		label: t('nav.projects'),
+		label: t('nav.projects', locale.value === 'id' ? 'Projek' : 'Projects'),
 		to: locale.value === 'id' ? '/id/projek' : '/projects',
 		prefix: locale.value === 'id' ? '/id/projek' : '/projects',
 	},
 	{
-		label: t('nav.gallery'),
+		label: t('nav.gallery', locale.value === 'id' ? 'Galeri' : 'Gallery'),
 		to: locale.value === 'id' ? '/id/galeri' : '/gallery',
 		prefix: locale.value === 'id' ? '/id/galeri' : '/gallery',
 	},
 	{
-		label: t('nav.about'),
+		label: t('nav.about', locale.value === 'id' ? 'Tentang' : 'About'),
 		to: locale.value === 'id' ? '/id/tentang' : '/about',
 		prefix: locale.value === 'id' ? '/id/tentang' : '/about',
 	},
@@ -53,26 +53,26 @@ const navItems = computed(() => [
 
 const mobileNavItems = computed(() => [
 	{
-		label: t('nav.home'),
+		label: t('nav.home', locale.value === 'id' ? 'Beranda' : 'Home'),
 		to: localePath('/'),
 		prefix: locale.value === 'id' ? '/id' : '/',
 		exact: true,
 		icon: 'i-hugeicons-home-01',
 	},
 	{
-		label: t('nav.blog'),
+		label: t('nav.blog', 'Blog'),
 		to: localePath('/blog'),
 		prefix: locale.value === 'id' ? '/id/blog' : '/blog',
 		icon: 'i-hugeicons-book-02',
 	},
 	{
-		label: t('nav.projects'),
+		label: t('nav.projects', locale.value === 'id' ? 'Projek' : 'Projects'),
 		to: locale.value === 'id' ? '/id/projek' : '/projects',
 		prefix: locale.value === 'id' ? '/id/projek' : '/projects',
 		icon: 'i-hugeicons-folder-02',
 	},
 	{
-		label: t('nav.gallery'),
+		label: t('nav.gallery', locale.value === 'id' ? 'Galeri' : 'Gallery'),
 		to: locale.value === 'id' ? '/id/galeri' : '/gallery',
 		prefix: locale.value === 'id' ? '/id/galeri' : '/gallery',
 		icon: 'i-hugeicons-image-02',

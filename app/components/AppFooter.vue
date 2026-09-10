@@ -28,12 +28,12 @@ function scrollToTop() {
 }
 
 const navLinks = computed(() => [
-	{ label: t('nav.home'), to: localePath('/') },
-	{ label: t('nav.blog'), to: localePath('/blog') },
-	{ label: t('nav.projects'), to: locale.value === 'id' ? '/id/projek' : '/projects' },
-	{ label: t('nav.gallery'), to: locale.value === 'id' ? '/id/galeri' : '/gallery' },
-	{ label: t('nav.about'), to: locale.value === 'id' ? '/id/tentang' : '/about' },
-	{ label: t('nav.contact'), to: locale.value === 'id' ? '/id/kontak' : '/contact' },
+	{ label: t('nav.home', locale.value === 'id' ? 'Beranda' : 'Home'), to: localePath('/') },
+	{ label: t('nav.blog', 'Blog'), to: localePath('/blog') },
+	{ label: t('nav.projects', locale.value === 'id' ? 'Projek' : 'Projects'), to: locale.value === 'id' ? '/id/projek' : '/projects' },
+	{ label: t('nav.gallery', locale.value === 'id' ? 'Galeri' : 'Gallery'), to: locale.value === 'id' ? '/id/galeri' : '/gallery' },
+	{ label: t('nav.about', locale.value === 'id' ? 'Tentang' : 'About'), to: locale.value === 'id' ? '/id/tentang' : '/about' },
+	{ label: t('nav.contact', locale.value === 'id' ? 'Kontak' : 'Contact'), to: locale.value === 'id' ? '/id/kontak' : '/contact' },
 ])
 
 const socialLinks = [
