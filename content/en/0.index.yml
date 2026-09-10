@@ -13,11 +13,11 @@ hero:
   timezone: GMT+7 / Local time
   links:
     - label: Browse Work
-      to: /en/projects
+      to: /projects
       icon: i-hugeicons-arrow-up-right-01
       variant: primary
     - label: Get in Touch
-      to: /en/contact
+      to: /contact
       variant: outline
 philosophy:
   number: 01 / 04

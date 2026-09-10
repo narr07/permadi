@@ -82,8 +82,8 @@ if (!project.value?.doc) {
 const site = useSiteConfig()
 const canonicalUrl = computed(() => {
 	const currentSlug = project.value?.doc?.slug || cleanSlug(project.value?.doc?.path || requestedSlug.value)
-	const prefix = locale.value === 'id' ? 'projek' : 'projects'
-	return `${site.url}/${locale.value}/${prefix}/${currentSlug}`
+	const prefix = locale.value === 'id' ? '/id/projek' : '/projects'
+	return `${site.url}${prefix}/${currentSlug}`
 })
 
 useHead({
@@ -208,11 +208,11 @@ useSchemaOrg([
 		itemListElement: [
 			{
 				name: (): string => (locale.value === 'id' ? 'Beranda' : 'Home'),
-				item: (): string => `/${locale.value}`,
+				item: (): string => (locale.value === 'id' ? '/id' : '/'),
 			},
 			{
 				name: (): string => (locale.value === 'id' ? 'Projek' : 'Projects'),
-				item: (): string => (locale.value === 'id' ? `/${locale.value}/projek` : `/${locale.value}/projects`),
+				item: (): string => (locale.value === 'id' ? '/id/projek' : '/projects'),
 			},
 			{
 				name: (): string => project.value?.doc?.title || '',

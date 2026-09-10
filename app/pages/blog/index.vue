@@ -7,7 +7,7 @@ const { getCategoryLabel } = useCategoryLabel()
 const { formatDate } = useFormatDate()
 const pageCollection = computed(() => (locale.value === 'id' ? 'pages_id' : 'pages_en'))
 const blogCollection = computed(() => (locale.value === 'id' ? 'blog_id' : 'blog_en'))
-const currentPath = computed(() => `/${locale.value}/blog`)
+const currentPath = computed(() => (locale.value === 'id' ? '/id/blog' : '/blog'))
 
 const selectedTag = ref<string>('ALL')
 const isTagDropdownOpen = ref(false)
@@ -117,7 +117,9 @@ const filteredPosts = computed(() => {
 		})
 		.map((post: any) => ({
 			...post,
-			url: `/${locale.value}/blog/${post.slug || cleanSlug(post.path)}`,
+			url: locale.value === 'id'
+				? `/id/blog/${post.slug || cleanSlug(post.path)}`
+				: `/blog/${post.slug || cleanSlug(post.path)}`,
 		}))
 })
 

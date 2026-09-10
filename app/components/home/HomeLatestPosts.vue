@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { motion } from 'motion-v'
+
 export interface WritingData {
 	label?: string
 	title?: string
@@ -19,11 +21,18 @@ withDefaults(
 const { locale } = useI18n()
 const localePath = useLocalePath()
 const { formatDate } = useFormatDate()
+
+function getPostUrl(post: any) {
+	const slug = post.slug || (post.path ? post.path.split('/').pop().replace(/^\d+\./, '') : '')
+	return locale.value === 'id' ? `/id/blog/${slug}` : `/blog/${slug}`
+}
 </script>
 
 <template>
-	<div
-
+	<motion.div
+		:initial="{ opacity: 0, y: 16 }"
+		:animate="{ opacity: 1, y: 0 }"
+		:transition="{ duration: 0.45, delay: 0.35, ease: [0.16, 1, 0.3, 1] }"
 		class="bento-card-clean p-6 md:col-span-12 sm:p-8"
 	>
 		<div class="mb-6 flex items-center justify-between border-b border-slate-200/60 pb-3.5 dark:border-slate-800/60">
@@ -51,7 +60,7 @@ const { formatDate } = useFormatDate()
 			<NuxtLink
 				v-for="(post, pIdx) in posts"
 				:key="post.path"
-				:to="post.path"
+				:to="getPostUrl(post)"
 				class="group my-0.5 flex flex-col justify-between gap-2 rounded-xl px-3 py-3 transition-all duration-150 -mx-3 sm:flex-row sm:items-center hover:bg-brand-100 dark:hover:bg-brand-900/50"
 			>
 				<div class="min-w-0 flex items-center gap-3">
@@ -76,5 +85,5 @@ const { formatDate } = useFormatDate()
 		>
 			{{ locale === 'id' ? 'Belum ada artikel.' : 'No articles published yet.' }}
 		</p>
-	</div>
+	</motion.div>
 </template>

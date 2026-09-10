@@ -233,7 +233,7 @@ useSchemaOrg([
 	// Google Images Licensable & Metadata Schema
 	...computed(() => {
 		const licenseUrl = 'https://creativecommons.org/licenses/by-nc-nd/4.0/'
-		const acquirePage = `${site.url}/${locale.value}/${locale.value === 'id' ? 'kontak' : 'contact'}`
+		const acquirePage = `${site.url}${locale.value === 'id' ? '/id/kontak' : '/contact'}`
 		return allItems.value.map((item: any) => ({
 			'@type': 'ImageObject',
 			'contentUrl': item.full_image || item.secure_url || item.image,
@@ -421,16 +421,11 @@ useSchemaOrg([
 				@keydown.enter.prevent="openModal(item)"
 				@keydown.space.prevent="openModal(item)"
 			>
-				<!-- Background Microscopic LQIP Placeholder (Instan ~150 bytes) -->
-				<img
-					v-if="item.placeholder_image"
-					:src="item.placeholder_image"
-					:alt="item.title || 'Placeholder'"
+				<!-- Background Neutral Skeleton Ringan (Bebas GPU Blur Lag) -->
+				<div
+					class="pointer-events-none absolute inset-0 h-full w-full bg-slate-200/60 dark:bg-slate-800/60"
 					aria-hidden="true"
-					width="20"
-					height="20"
-					class="pointer-events-none absolute inset-0 h-full w-full scale-105 object-cover blur-md filter"
-				>
+				/>
 
 				<!-- Gambar List Cepat & Ringan (Direct Cloudinary CDN URL) -->
 				<img
@@ -439,8 +434,8 @@ useSchemaOrg([
 					decoding="async"
 					:width="item.width || 360"
 					:height="item.height || 360"
-					class="relative z-1 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-					:loading="i < 2 ? 'eager' : 'lazy'"
+					class="relative z-1 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+					:loading="i < 4 ? 'eager' : 'lazy'"
 					:fetchpriority="i === 0 ? 'high' : 'auto'"
 				>
 

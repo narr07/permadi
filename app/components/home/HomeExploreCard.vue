@@ -22,7 +22,7 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/gall
 				:src="galleryItem.placeholder_image"
 				alt=""
 				aria-hidden="true"
-				class="pointer-events-none absolute inset-0 h-full w-full scale-105 object-cover blur-md filter"
+				class="pointer-events-none absolute inset-0 h-full w-full scale-105 object-cover opacity-60"
 			>
 			<img
 				v-if="galleryItem?.image"

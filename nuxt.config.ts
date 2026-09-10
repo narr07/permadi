@@ -378,12 +378,20 @@ export default defineNuxtConfig({
 			},
 		},
 
-		// Halaman Galeri: Hybrid SWR (Stale-While-Revalidate 10 menit di Edge/Server)
+		// Halaman Galeri: Hybrid SWR & Cloudflare CDN Edge Cache 1 jam
 		'/id/galeri': {
-			swr: 600,
+			headers: {
+				'Cache-Control': 'public, max-age=0, s-maxage=3600, must-revalidate',
+				'CDN-Cache-Control': 'max-age=3600, stale-while-revalidate=86400',
+			},
+			swr: 3600,
 		},
 		'/gallery': {
-			swr: 600,
+			headers: {
+				'Cache-Control': 'public, max-age=0, s-maxage=3600, must-revalidate',
+				'CDN-Cache-Control': 'max-age=3600, stale-while-revalidate=86400',
+			},
+			swr: 3600,
 		},
 
 		// Seluruh halaman HTML: sajikan instan dari Edge CDN Cloudflare + Security Headers

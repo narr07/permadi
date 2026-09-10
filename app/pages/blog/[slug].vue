@@ -266,7 +266,8 @@ const extractedFaqs = computed(() => {
 const site = useSiteConfig()
 const canonicalUrl = computed(() => {
 	const currentSlug = post.value?.doc?.slug || cleanSlug(post.value?.doc?.path || requestedSlug.value)
-	return `${site.url}/${locale.value}/blog/${currentSlug}`
+	const prefix = locale.value === 'id' ? '/id/blog' : '/blog'
+	return `${site.url}${prefix}/${currentSlug}`
 })
 
 useHead({
@@ -346,11 +347,11 @@ useSchemaOrg([
 		itemListElement: [
 			{
 				name: (): string => (locale.value === 'id' ? 'Beranda' : 'Home'),
-				item: (): string => `/${locale.value}`,
+				item: (): string => (locale.value === 'id' ? '/id' : '/'),
 			},
 			{
 				name: 'Blog',
-				item: (): string => `/${locale.value}/blog`,
+				item: (): string => (locale.value === 'id' ? '/id/blog' : '/blog'),
 			},
 			{
 				name: (): string => post.value?.doc?.title || '',
@@ -484,7 +485,7 @@ useSchemaOrg([
 							<!-- Previous Article Bento Card -->
 							<NuxtLink
 								v-if="surround[0]"
-								:to="`/${locale}/blog/${surround[0].slug || cleanSlug(surround[0].path)}`"
+								:to="locale === 'id' ? `/id/blog/${surround[0].slug || cleanSlug(surround[0].path)}` : `/blog/${surround[0].slug || cleanSlug(surround[0].path)}`"
 								class="group shadow-xs bento-card-clean flex flex-col justify-between border bento-lift border-slate-200/90 rounded-2xl bg-white p-5 transition-all duration-200 dark:border-slate-800/90 hover:border-brand-500/40 dark:bg-slate-950 sm:p-5.5 !no-underline hover:shadow-md dark:hover:border-brand-400/35"
 							>
 								<div class="flex items-center gap-2.5">
@@ -510,7 +511,7 @@ useSchemaOrg([
 							<!-- Next Article Bento Card -->
 							<NuxtLink
 								v-if="surround[1]"
-								:to="`/${locale}/blog/${surround[1].slug || cleanSlug(surround[1].path)}`"
+								:to="locale === 'id' ? `/id/blog/${surround[1].slug || cleanSlug(surround[1].path)}` : `/blog/${surround[1].slug || cleanSlug(surround[1].path)}`"
 								class="group shadow-xs bento-card-clean flex flex-col justify-between border bento-lift border-slate-200/90 rounded-2xl bg-white p-5 transition-all duration-200 dark:border-slate-800/90 hover:border-brand-500/40 dark:bg-slate-950 sm:p-5.5 !no-underline hover:shadow-md dark:hover:border-brand-400/35"
 							>
 								<div class="flex items-center justify-end gap-2.5">

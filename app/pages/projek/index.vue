@@ -112,7 +112,7 @@ const filteredProjects = computed(() => {
 				|| (item.tech && item.tech.includes(selectedTag.value))
 		})
 		.map((item: any) => {
-			const projectSlug = item.slug || (item.path ? item.path.split('/').pop() : item.stem)
+			const projectSlug = item.slug || (item.path ? item.path.split('/').pop().replace(/^\d+\./, '') : (item.stem ? item.stem.replace(/^\d+\./, '') : ''))
 			const basePath = locale.value === 'id' ? `/id/projek/${projectSlug}` : `/projects/${projectSlug}`
 			return {
 				...item,

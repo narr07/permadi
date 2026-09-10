@@ -1,5 +1,7 @@
 <script setup lang="ts">
-defineProps<{
+import { motion } from 'motion-v'
+
+const props = defineProps<{
 	project?: any
 	label?: string
 	fallbackTitle?: string
@@ -8,15 +10,28 @@ defineProps<{
 }>()
 
 const { locale } = useI18n()
-const targetPath = computed(() => (locale.value === 'id' ? '/id/projek' : '/projects'))
+const targetPath = computed(() => {
+	if (props.project) {
+		const slug = props.project.slug || (props.project.path ? props.project.path.split('/').pop().replace(/^\d+\./, '') : '')
+		if (slug) {
+			return locale.value === 'id' ? `/id/projek/${slug}` : `/projects/${slug}`
+		}
+	}
+	return locale.value === 'id' ? '/id/projek' : '/projects'
+})
 </script>
 
 <template>
-	<NuxtLink
-
-		:to="project?.path || targetPath"
-		class="group bento-card-clean block flex flex-col justify-between p-6 md:col-span-5 sm:p-7"
+	<motion.div
+		:initial="{ opacity: 0, y: 16 }"
+		:animate="{ opacity: 1, y: 0 }"
+		:transition="{ duration: 0.45, delay: 0.15, ease: [0.16, 1, 0.3, 1] }"
+		class="md:col-span-5 flex flex-col"
 	>
+		<NuxtLink
+			:to="targetPath"
+			class="group bento-card-clean block flex flex-col justify-between p-6 sm:p-7 flex-1"
+		>
 		<div>
 			<div class="mb-3 flex items-center justify-between">
 				<span class="section-label text-brand-900 dark:text-brand-300">
@@ -36,4 +51,5 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/projek' : '/proj
 			<span class="i-hugeicons-arrow-right-01 text-xs transition-transform group-hover:translate-x-0.5" />
 		</div>
 	</NuxtLink>
+</motion.div>
 </template>

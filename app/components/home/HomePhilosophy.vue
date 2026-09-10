@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { motion } from 'motion-v'
+
 export interface PhilosophyData {
 	number?: string
 	quote?: string
@@ -19,8 +21,10 @@ const { locale } = useI18n()
 </script>
 
 <template>
-	<div
-
+	<motion.div
+		:initial="{ opacity: 0, y: 16 }"
+		:animate="{ opacity: 1, y: 0 }"
+		:transition="{ duration: 0.45, delay: 0.2, ease: [0.16, 1, 0.3, 1] }"
 		class="sand-card-clean flex flex-col justify-between p-6 md:col-span-5 sm:p-7"
 	>
 		<div class="flex items-center justify-between">
@@ -36,5 +40,5 @@ const { locale } = useI18n()
 		<span class="text-xs text-brand-950 font-bold tracking-wide">
 			{{ philosophy.label || 'Permadi Philosophy' }}
 		</span>
-	</div>
+	</motion.div>
 </template>

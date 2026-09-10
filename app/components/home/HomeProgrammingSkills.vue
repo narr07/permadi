@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { motion } from 'motion-v'
+
 export interface SkillItem {
 	name: string
 	icon?: string
@@ -84,7 +86,12 @@ function getIconClass(icon?: string) {
 </script>
 
 <template>
-	<div class="bento-card-clean flex flex-col justify-between p-6 md:col-span-7 sm:p-7">
+	<motion.div
+		:initial="{ opacity: 0, y: 16 }"
+		:animate="{ opacity: 1, y: 0 }"
+		:transition="{ duration: 0.45, delay: 0.25, ease: [0.16, 1, 0.3, 1] }"
+		class="bento-card-clean flex flex-col justify-between p-6 md:col-span-7 sm:p-7"
+	>
 		<div>
 			<!-- Header Card -->
 			<div class="mb-3 flex items-center justify-between">
@@ -156,5 +163,5 @@ function getIconClass(icon?: string) {
 			<span>{{ locale === 'id' ? 'Eksplorasi Studi Kasus Projek' : 'Explore Project Case Studies' }}</span>
 			<span class="i-hugeicons-arrow-right-01 text-xs transition-transform group-hover:translate-x-0.5" />
 		</NuxtLink>
-	</div>
+	</motion.div>
 </template>

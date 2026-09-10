@@ -137,7 +137,7 @@ function getTargetUrl(result: any): string {
 	if (result.id) {
 		return result.id
 	}
-	return `/${locale.value}`
+	return locale.value === 'id' ? '/id' : '/'
 }
 
 async function openModal() {
