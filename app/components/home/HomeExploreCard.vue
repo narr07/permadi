@@ -16,7 +16,7 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/gall
 		:initial="{ opacity: 0, transform: 'translateY(16px)' }"
 		:while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
 		:transition="{ type: 'spring', stiffness: 80, damping: 20, delay: 0.15 }"
-		:in-view-options="{ once: true, margin: '-50px' }"
+		:in-view-options="{ margin: '-50px' }"
 		class="md:col-span-5"
 	>
 		<NuxtLink

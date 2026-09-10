@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { motion } from 'motion-v'
+import { Motion } from 'motion-v'
 
 export interface WritingData {
 	label?: string
@@ -29,10 +29,12 @@ function getPostUrl(post: any) {
 </script>
 
 <template>
-	<motion.div
-		:initial="{ opacity: 0, y: 16 }"
-		:animate="{ opacity: 1, y: 0 }"
-		:transition="{ duration: 0.45, delay: 0.35, ease: [0.16, 1, 0.3, 1] }"
+	<Motion
+		as="div"
+		:initial="{ opacity: 0, transform: 'translateY(16px)' }"
+		:while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
+		:transition="{ type: 'spring', stiffness: 80, damping: 20 }"
+		:in-view-options="{ margin: '-60px' }"
 		class="bento-card-clean p-6 md:col-span-12 sm:p-8"
 	>
 		<div class="mb-6 flex items-center justify-between border-b border-slate-200/60 pb-3.5 dark:border-slate-800/60">
@@ -85,5 +87,5 @@ function getPostUrl(post: any) {
 		>
 			{{ locale === 'id' ? 'Belum ada artikel.' : 'No articles published yet.' }}
 		</p>
-	</motion.div>
+	</Motion>
 </template>

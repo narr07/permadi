@@ -332,7 +332,7 @@ useSchemaOrg([
 					:initial="{ opacity: 0, transform: 'translateY(20px)' }"
 					:while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
 					:transition="{ type: 'spring', stiffness: 80, damping: 20, delay: index * 0.05 }"
-					:in-view-options="{ once: true, margin: '-40px' }"
+					:in-view-options="{ margin: '-40px' }"
 					:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 						? 'lg:col-span-12 md:col-span-12'
 						: 'lg:col-span-6 md:col-span-6'"

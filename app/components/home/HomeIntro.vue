@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { motion } from 'motion-v'
-
 defineProps<{
 	eyebrow?: string
 	headline?: string
@@ -9,12 +7,7 @@ defineProps<{
 </script>
 
 <template>
-	<motion.header
-		:initial="{ opacity: 0, y: -12 }"
-		:animate="{ opacity: 1, y: 0 }"
-		:transition="{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }"
-		class="bento-card-clean relative z-10 mb-8 bg-slate-50/70 p-6 sm:mb-10 dark:bg-slate-900/60 sm:p-8"
-	>
+	<header class="bento-card-clean relative z-10 mb-8 bg-slate-50/70 p-6 sm:mb-10 dark:bg-slate-900/60 sm:p-8">
 		<div class="flex flex-col justify-between gap-6 md:flex-row md:items-center">
 			<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
 			<div class="max-w-2xl">
@@ -55,5 +48,5 @@ defineProps<{
 				</div>
 			</div>
 		</div>
-	</motion.header>
+	</header>
 </template>

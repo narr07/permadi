@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { motion } from 'motion-v'
+import { Motion } from 'motion-v'
 
 export interface SkillItem {
 	name: string
@@ -86,10 +86,12 @@ function getIconClass(icon?: string) {
 </script>
 
 <template>
-	<motion.div
-		:initial="{ opacity: 0, y: 16 }"
-		:animate="{ opacity: 1, y: 0 }"
-		:transition="{ duration: 0.45, delay: 0.25, ease: [0.16, 1, 0.3, 1] }"
+	<Motion
+		as="div"
+		:initial="{ opacity: 0, transform: 'translateY(16px)' }"
+		:while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
+		:transition="{ type: 'spring', stiffness: 80, damping: 20 }"
+		:in-view-options="{ margin: '-60px' }"
 		class="bento-card-clean flex flex-col justify-between p-6 md:col-span-7 sm:p-7"
 	>
 		<div>
@@ -163,5 +165,5 @@ function getIconClass(icon?: string) {
 			<span>{{ locale === 'id' ? 'Eksplorasi Studi Kasus Projek' : 'Explore Project Case Studies' }}</span>
 			<span class="i-hugeicons-arrow-right-01 text-xs transition-transform group-hover:translate-x-0.5" />
 		</NuxtLink>
-	</motion.div>
+	</Motion>
 </template>
