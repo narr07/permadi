@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-	<header class="bento-card-clean relative z-10 mb-8 bg-slate-50/70 p-6 sm:mb-10 dark:bg-slate-900/60 sm:p-8">
+	<header class="bento-card-clean relative z-10 bg-slate-50/70 p-6 sm:mb-10 dark:bg-slate-900/60 sm:p-8">
 		<div class="flex flex-col justify-between gap-6 md:flex-row md:items-center">
 			<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
 			<div class="max-w-2xl">
@@ -15,7 +15,7 @@ defineProps<{
 				<div class="mb-3.5 flex items-center justify-between gap-3">
 					<div
 						v-if="eyebrow"
-						class="inline-flex items-center border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300"
+						class="inline-flex items-center border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 tracking-tighter font-mono dark:border-brand-800/60 dark:bg-brand-950 dark:text-accent"
 					>
 						<span>{{ eyebrow }}</span>
 					</div>
@@ -35,7 +35,7 @@ defineProps<{
 
 				<p
 					v-if="description"
-					class="heading-page-sub"
+					class="heading-page-sub text-sm"
 				>
 					{{ description }}
 				</p>

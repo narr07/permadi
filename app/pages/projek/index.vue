@@ -174,12 +174,12 @@ useSchemaOrg([
 	<div class="container-bento py-10 sm:py-14">
 		<!-- Page Header (Clean Bento Style without gradient) -->
 		<header
-			class="bento-card-clean relative z-30 mb-8 bg-slate-50/70 p-6 sm:mb-10 !overflow-visible dark:bg-slate-900/60 sm:p-8"
+			class="bento-card-clean relative z-30 mb-8 bg-slate-50/70 p-4 sm:mb-10 !overflow-visible dark:bg-slate-900/60 sm:p-8"
 		>
-			<div class="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+			<div class="relative z-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
 				<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
 				<div class="max-w-2xl">
-					<div class="mb-3.5 inline-flex items-center border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
+					<div class="mb-3.5 inline-flex items-center border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 tracking-tighter font-mono dark:border-brand-800/60 dark:bg-brand-950 dark:text-accent">
 						<span>{{ page?.eyebrow || (locale === 'id' ? 'Karya & Eksplorasi' : 'Work & Case Studies') }}</span>
 					</div>
 
@@ -187,7 +187,7 @@ useSchemaOrg([
 						{{ page?.title || (locale === 'id' ? 'Projek & Studi Kasus' : 'Projects & Case Studies') }}
 					</h1>
 
-					<p class="heading-page-sub">
+					<p class="heading-page-sub text-sm">
 						{{ page?.description || (locale === 'id' ? 'Koleksi aplikasi web terkurasi, modul UI, dan sistem performa tinggi.' : 'A curated collection of web applications, UI modules, and high-performance systems.') }}
 					</p>
 				</div>
@@ -322,7 +322,7 @@ useSchemaOrg([
 
 		<!-- Bento Grid Projects (1 col mobile, 2 col tablet, 3 col desktop) -->
 		<template v-if="filteredProjects.length > 0">
-			<div class="grid grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2 sm:gap-6">
+			<div class="grid grid-cols-1 gap-4 lg:grid-cols-2 sm:grid-cols-2 sm:gap-4">
 				<Motion
 					v-for="(item, index) in paginatedProjects"
 					:key="item.url"
@@ -332,19 +332,19 @@ useSchemaOrg([
 					:transition="{ type: 'spring', stiffness: 80, damping: 20, delay: index * 0.05 }"
 					:in-view-options="{ margin: '-40px' }"
 					:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-						? 'lg:col-span-3 sm:col-span-2 col-span-1'
+						? 'lg:col-span-2 sm:col-span-2 col-span-1'
 						: 'col-span-1'"
 				>
 					<NuxtLink
 						:to="item.url"
 						class="group bento-card-clean block h-full flex flex-col justify-between overflow-hidden opacity-0 transition-all duration-300"
 						:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-							? 'p-6 sm:p-7 lg:p-8 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/30 dark:from-[#002b27] dark:via-[#002420] dark:to-[#001916] border-brand-300/70 dark:border-brand-700/60 shadow-lg shadow-brand-950/5'
-							: 'p-5 sm:p-6 bg-white dark:bg-[#002b27] border-slate-200/80 dark:border-slate-800/80 hover:border-brand-500/80 dark:hover:border-brand-400/80'"
+							? 'p-4 sm:p-7 lg:p-8 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/30 dark:from-[#002b27] dark:via-[#002420] dark:to-[#001916] border-brand-300/70 dark:border-brand-700/60 shadow-lg shadow-brand-950/5'
+							: 'p-5 sm:p-4 bg-white dark:bg-[#002b27] border-slate-200/80 dark:border-slate-800/80 hover:border-brand-500/80 dark:hover:border-brand-400/80'"
 					>
 						<!-- Hero Featured Layout (Ketika Item Pertama & Filter ALL di Halaman 1) -->
 						<template v-if="currentPage === 1 && index === 0 && selectedTag === 'ALL'">
-							<div class="grid grid-cols-1 w-full items-center gap-6 lg:grid-cols-12 md:grid-cols-12 sm:gap-8">
+							<div class="grid grid-cols-1 w-full items-center gap-4 lg:grid-cols-12 md:grid-cols-12 sm:gap-8">
 								<!-- Thumbnail Featured Showcase -->
 								<div
 									v-if="item.image || (item.images && item.images[0])"
@@ -384,7 +384,7 @@ useSchemaOrg([
 											v-if="item.date"
 											class="mb-3.5 flex items-center"
 										>
-											<span class="shadow-xs inline-flex items-center gap-1.5 border border-white/20 rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] text-white font-bold font-mono transition-colors">
+											<span class="shadow-xs inline-flex items-center gap-1.5 border border-white/20 rounded-full bg-brand-100 px-2.5 py-0.5 text-[11px] text-brand-950 font-bold font-mono transition-colors dark:bg-brand-800/50 dark:text-brand-300">
 												<span class="i-hugeicons-calendar-03 text-xs text-accent" />
 												<span>{{ formatDate(item.date) }}</span>
 											</span>

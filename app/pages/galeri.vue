@@ -91,8 +91,8 @@ const filteredGallery = computed(() => {
 	return allItems.value.filter((item: any) => item.tags?.includes(selectedTag.value))
 })
 
-// 3. INFINITE SCROLL & BATCH LOADING (8 foto per batch agar sangat ringan dan bebas lag)
-const itemsPerPage = 8
+// 3. INFINITE SCROLL & BATCH LOADING (14 foto per batch = 2 siklus penuh pola bento)
+const itemsPerPage = 14
 const currentLimit = ref(itemsPerPage)
 
 // Reset limit saat filter tag berganti
@@ -118,6 +118,27 @@ function loadMore() {
 		currentLimit.value += itemsPerPage
 		isLoadingMore.value = false
 	}, 300)
+}
+
+// Layout Bento Grid Gallery (3 Pola berulang per siklus 7 foto):
+// Pola 1: 2 foto besar sebelah (8 kol & 4 kol)
+// Pola 2: 3 foto sama besar (4 kol, 4 kol, 4 kol)
+// Pola 3: 2 foto sama besar (6 kol & 6 kol)
+function getGalleryItemClass(i: number) {
+	const mod = i % 7
+	// Pola 1: 2 bagian besar sebelah (8 kol & 4 kol)
+	if (mod === 0) {
+		return 'col-span-2 lg:col-span-8 aspect-video'
+	}
+	if (mod === 1) {
+		return 'col-span-1 lg:col-span-4 aspect-square sm:aspect-auto'
+	}
+	// Pola 2: 3 sama besar (4 kol, 4 kol, 4 kol)
+	if (mod >= 2 && mod <= 4) {
+		return 'col-span-1 lg:col-span-4 aspect-square sm:aspect-video'
+	}
+	// Pola 3: 2 sama besar (6 kol & 6 kol)
+	return 'col-span-1 lg:col-span-6 aspect-square sm:aspect-video'
 }
 
 // Intersection Observer Sentinel for Auto Infinite Scroll
@@ -263,7 +284,7 @@ useSchemaOrg([
 			<div class="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
 				<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
 				<div class="max-w-2xl">
-					<div class="mb-3.5 inline-flex items-center border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
+					<div class="mb-3.5 inline-flex items-center border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 tracking-tighter font-mono dark:border-brand-800/60 dark:bg-brand-950 dark:text-accent">
 						<span>{{ page?.eyebrow || (locale === 'id' ? 'Dokumentasi & Visual' : 'Snapshots & Visuals') }}</span>
 					</div>
 
@@ -271,7 +292,7 @@ useSchemaOrg([
 						{{ page?.title || (locale === 'id' ? 'Galeri Visual' : 'Visual Gallery') }}
 					</h1>
 
-					<p class="heading-page-sub">
+					<p class="heading-page-sub text-sm">
 						{{ page?.description || (locale === 'id' ? 'Koleksi dokumentasi workspace, seni visual, dan tangkapan karya yang dioptimasi via Cloudinary CDN.' : 'A curated collection of visual experiments, photography, and workspace snapshots served via Cloudinary CDN.') }}
 					</p>
 				</div>
@@ -416,7 +437,7 @@ useSchemaOrg([
 				role="button"
 				:aria-label="item.title || (locale === 'id' ? 'Buka foto galeri' : 'Open gallery photo')"
 				class="group bento-card-outline relative cursor-pointer overflow-hidden bento-lift rounded-xl bg-slate-100 sm:rounded-bento dark:bg-slate-800 !p-0"
-				:class="i % 5 === 0 ? 'col-span-2 lg:col-span-8 aspect-video' : (i % 5 === 1 ? 'col-span-1 lg:col-span-4 aspect-square sm:aspect-auto' : 'col-span-1 lg:col-span-4 aspect-square sm:aspect-video')"
+				:class="getGalleryItemClass(i)"
 				@click="openModal(item)"
 				@keydown.enter.prevent="openModal(item)"
 				@keydown.space.prevent="openModal(item)"

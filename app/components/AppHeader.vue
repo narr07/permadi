@@ -203,7 +203,7 @@ onUnmounted(() => {
 				class="flex nav-island items-center gap-2 px-2.5 py-1.5 transition-all hover:(border-brand-500/40)"
 			>
 				<LogoNav size="28" />
-				<span class="hidden text-sm text-slate-900 font-semibold tracking-tight font-heading sm:inline dark:text-white">permadi.dev</span>
+				<span class="hidden text-sm text-slate-900 tracking-tight font-heading sm:inline dark:text-white">permadi.dev</span>
 			</NuxtLink>
 
 			<!-- Island 2: Navigasi Utama Desktop (Sliding Pill Nav Bento) -->

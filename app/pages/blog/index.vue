@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Motion } from 'motion-v'
 import { onClickOutside } from '@vueuse/core'
+import { Motion } from 'motion-v'
 
 const { locale } = useI18n()
 const localePath = useLocalePath()
@@ -181,7 +181,7 @@ useSchemaOrg([
 			<div class="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
 				<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
 				<div class="max-w-2xl">
-					<div class="mb-3.5 inline-flex items-center border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
+					<div class="mb-3.5 inline-flex items-center border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 tracking-tighter font-mono dark:border-brand-800/60 dark:bg-brand-950 dark:text-accent">
 						<span>{{ page?.eyebrow || (locale === 'id' ? 'Artikel & Catatan' : 'Articles & Insights') }}</span>
 					</div>
 
@@ -189,7 +189,7 @@ useSchemaOrg([
 						{{ page?.title || (locale === 'id' ? 'Blog & Catatan Teknis' : 'Blog & Technical Notes') }}
 					</h1>
 
-					<p class="heading-page-sub">
+					<p class="heading-page-sub text-sm">
 						{{ page?.description || (locale === 'id' ? 'Kumpulan artikel seputar pemrograman, rekayasa web, eksplorasi desain grafis, dan teknologi pendidikan oleh Permadi.' : 'Articles and practical notes on software development, web engineering, graphic design, and educational technology by Permadi.') }}
 					</p>
 				</div>
@@ -339,122 +339,122 @@ useSchemaOrg([
 				>
 					<NuxtLink
 						:to="post.url"
-						class="group bento-card-outline block flex flex-col h-full justify-between bento-lift p-5 opacity-0 sm:p-6"
+						class="group bento-card-outline block h-full flex flex-col justify-between bento-lift p-5 opacity-0 sm:p-6"
 						:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 							? 'featured-post-card bg-brand-900 dark:bg-[#002b27] border-brand-800 dark:border-[#134e43] shadow-md !text-white'
 							: ''"
-				>
-					<div>
-						<!-- Badges Row (Category + Tags) -->
-						<div class="mb-2 flex flex-wrap items-center gap-1.5">
-							<!-- Category Badge -->
-							<span
-								v-if="post.category"
-								class="inline-flex shrink-0 items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold tracking-wide uppercase"
-								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-									? '!bg-white/20 !text-white !border !border-white/30'
-									: 'bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-300 border border-brand-200/60 dark:border-brand-800/60'"
-							>
-								{{ getCategoryLabel(post.category) }}
-							</span>
+					>
+						<div>
+							<!-- Badges Row (Category + Tags) -->
+							<div class="mb-2 flex flex-wrap items-center gap-1.5">
+								<!-- Category Badge -->
+								<span
+									v-if="post.category"
+									class="inline-flex shrink-0 items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold tracking-wide uppercase"
+									:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
+										? '!bg-white/20 !text-white !border !border-white/30'
+										: 'bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-300 border border-brand-200/60 dark:border-brand-800/60'"
+								>
+									{{ getCategoryLabel(post.category) }}
+								</span>
 
-							<!-- Primary Tag (Full badge) -->
-							<span
-								v-if="post.tags?.[0]"
-								class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium"
-								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-									? '!bg-brand-400/25 !text-brand-200 !border !border-brand-400/30'
-									: 'bg-brand-500/10 dark:bg-brand-400/10 text-brand-700 dark:text-brand-300 border border-brand-500/20 dark:border-brand-400/20'"
-							>
-								#{{ post.tags[0] }}
-							</span>
+								<!-- Primary Tag (Full badge) -->
+								<span
+									v-if="post.tags?.[0]"
+									class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium"
+									:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
+										? '!bg-brand-400/25 !text-brand-200 !border !border-brand-400/30'
+										: 'bg-brand-500/10 dark:bg-brand-400/10 text-brand-700 dark:text-brand-300 border border-brand-500/20 dark:border-brand-400/20'"
+								>
+									#{{ post.tags[0] }}
+								</span>
 
-							<!-- Secondary Tag (Desktop only) -->
-							<span
-								v-if="post.tags?.[1]"
-								class="hidden items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium sm:inline-flex"
-								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-									? '!bg-white/15 !text-slate-100 !border !border-white/20'
-									: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50'"
-							>
-								#{{ post.tags[1] }}
-							</span>
+								<!-- Secondary Tag (Desktop only) -->
+								<span
+									v-if="post.tags?.[1]"
+									class="hidden items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium sm:inline-flex"
+									:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
+										? '!bg-white/15 !text-slate-100 !border !border-white/20'
+										: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50'"
+								>
+									#{{ post.tags[1] }}
+								</span>
 
-							<!-- Extra Tags Count Pill -->
-							<span
-								v-if="post.tags && post.tags.length > 2"
-								class="inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-mono"
-								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-									? '!bg-white/15 !text-brand-200'
-									: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'"
-							>
-								+{{ post.tags.length - 2 }}
-							</span>
-						</div>
+								<!-- Extra Tags Count Pill -->
+								<span
+									v-if="post.tags && post.tags.length > 2"
+									class="inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-mono"
+									:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
+										? '!bg-white/15 !text-brand-200'
+										: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'"
+								>
+									+{{ post.tags.length - 2 }}
+								</span>
+							</div>
 
-						<!-- Date Badge -->
-						<div
-							v-if="post.date"
-							class="mb-3.5 flex items-center"
-						>
-							<span
-								class="shadow-xs inline-flex items-center gap-1.5 border rounded-full px-2.5 py-0.5 text-[11px] font-bold font-mono transition-colors"
-								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-									? 'bg-white/15 text-white border-white/20'
-									: 'border-slate-200/90 bg-slate-100 text-slate-800 dark:border-slate-700/80 dark:bg-slate-800/90 dark:text-slate-200'"
+							<!-- Date Badge -->
+							<div
+								v-if="post.date"
+								class="mb-3.5 flex items-center"
 							>
 								<span
-									class="i-hugeicons-calendar-03 text-xs"
-									:class="currentPage === 1 && index === 0 && selectedTag === 'ALL' ? 'text-accent' : 'text-brand-600 dark:text-brand-400'"
-								/>
-								<span>{{ formatDate(post.date) }}</span>
-							</span>
+									class="shadow-xs inline-flex items-center gap-1.5 border rounded-full px-2.5 py-0.5 text-[11px] font-bold font-mono transition-colors"
+									:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
+										? 'bg-white/15 text-white border-white/20'
+										: 'border-slate-200/90 bg-slate-100 text-slate-800 dark:border-slate-700/80 dark:bg-slate-800/90 dark:text-slate-200'"
+								>
+									<span
+										class="i-hugeicons-calendar-03 text-xs"
+										:class="currentPage === 1 && index === 0 && selectedTag === 'ALL' ? 'text-accent' : 'text-brand-600 dark:text-brand-400'"
+									/>
+									<span>{{ formatDate(post.date) }}</span>
+								</span>
+							</div>
+
+							<!-- Title -->
+							<h2
+								class="sm:text-2xls line-clamp-2 text-xl font-bold leading-snug font-heading transition-colors duration-200 lg:text-2xl"
+								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
+									? '!text-white group-hover:!text-accent md:text-3xl lg:text-4xl'
+									: 'text-slate-900 dark:text-slate-100 group-hover:text-brand-900 dark:group-hover:text-accent'"
+							>
+								{{ post.title }}
+							</h2>
+
+							<!-- Description -->
+							<p
+								class="line-clamp-2 mt-2 text-xs leading-relaxed transition-colors duration-200 sm:text-sm"
+								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
+									? '!text-slate-100 group-hover:!text-white'
+									: 'text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'"
+							>
+								{{ post.description }}
+							</p>
 						</div>
 
-						<!-- Title -->
-						<h2
-							class="sm:text-2xls line-clamp-2 text-xl font-bold leading-snug font-heading transition-colors duration-200 lg:text-2xl"
+						<!-- Footer Meta -->
+						<div
+							class="mt-5 flex items-center justify-between border-t pt-3.5 text-xs"
 							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-								? '!text-white group-hover:!text-accent md:text-3xl lg:text-4xl'
-								: 'text-slate-900 dark:text-slate-100 group-hover:text-brand-900 dark:group-hover:text-accent'"
+								? '!border-white/20 !text-slate-200'
+								: 'border-slate-200/60 dark:border-slate-800/60 text-slate-600 dark:text-slate-400'"
 						>
-							{{ post.title }}
-						</h2>
-
-						<!-- Description -->
-						<p
-							class="line-clamp-2 mt-2 text-xs leading-relaxed transition-colors duration-200 sm:text-sm"
-							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-								? '!text-slate-100 group-hover:!text-white'
-								: 'text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'"
-						>
-							{{ post.description }}
-						</p>
-					</div>
-
-					<!-- Footer Meta -->
-					<div
-						class="mt-5 flex items-center justify-between border-t pt-3.5 text-xs"
-						:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-							? '!border-white/20 !text-slate-200'
-							: 'border-slate-200/60 dark:border-slate-800/60 text-slate-600 dark:text-slate-400'"
-					>
-						<span class="flex items-center gap-1.5 text-[11px] font-mono">
+							<span class="flex items-center gap-1.5 text-[11px] font-mono">
+								<span
+									class="i-hugeicons-clock-01 text-xs"
+									:class="currentPage === 1 && index === 0 && selectedTag === 'ALL' ? '!text-brand-300' : 'text-brand-700 dark:text-brand-400'"
+								/>
+								{{ locale === 'id' ? `${post.readingTime || 5} menit baca` : `${post.readingTime || 5} min read` }}
+							</span>
 							<span
-								class="i-hugeicons-clock-01 text-xs"
-								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL' ? '!text-brand-300' : 'text-brand-700 dark:text-brand-400'"
-							/>
-							{{ locale === 'id' ? `${post.readingTime || 5} menit baca` : `${post.readingTime || 5} min read` }}
-						</span>
-						<span
-							class="flex items-center gap-1 text-xs font-bold transition-all group-hover:translate-x-0.5"
-							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-								? '!text-white group-hover:!text-accent font-bold'
-								: 'text-brand-800 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-accent font-semibold'"
-						>
-							{{ locale === 'id' ? 'Baca Artikel' : 'Read Article' }} <span class="i-hugeicons-arrow-right-01 text-xs" />
-						</span>
-					</div>
+								class="flex items-center gap-1 text-xs font-bold transition-all group-hover:translate-x-0.5"
+								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
+									? '!text-white group-hover:!text-accent font-bold'
+									: 'text-brand-800 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-accent font-semibold'"
+							>
+								{{ locale === 'id' ? 'Baca Artikel' : 'Read Article' }} <span class="i-hugeicons-arrow-right-01 text-xs" />
+							</span>
+						</div>
 					</NuxtLink>
 				</Motion>
 			</div>

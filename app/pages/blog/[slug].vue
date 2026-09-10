@@ -377,7 +377,7 @@ useSchemaOrg([
 		<!-- Mobile Collapsible TOC: Sticky tepat di bawah Floating Header Navbar -->
 		<div
 			v-if="tocLinks.length > 0"
-			class="sticky top-[4.75rem] z-40 container-bento mb-6 lg:hidden"
+			class="sticky top-[2.75rem] z-40 container-bento mb-6 lg:hidden"
 		>
 			<ContentToc
 				:links="tocLinks"
@@ -457,7 +457,7 @@ useSchemaOrg([
 					</header>
 
 					<!-- Prose Content -->
-					<div class="max-w-full min-w-0 text-slate-700 leading-relaxed font-sans prose prose-slate dark:text-slate-200 dark:prose-invert">
+					<div class="max-w-full min-w-0 text-slate-700 leading-relaxed font-sans prose prose-slate prose-sm dark:text-brand-400 dark:prose-invert !prose-h1:dark:text-accent !prose-h2:dark:text-accent !prose-h3:dark:text-brand-200 !prose-h4:dark:text-accent">
 						<ContentRenderer :value="post.doc" />
 
 						<!-- Inline Bento Reactions Box at End of Article -->

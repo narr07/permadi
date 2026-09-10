@@ -94,7 +94,7 @@ defineOgImage('Bento', {
 </script>
 
 <template>
-	<div class="relative min-h-screen flex flex-col justify-between selection:(bg-brand-500 text-white)">
+	<div class="relative mx-auto max-w-6xl min-h-screen w-full flex flex-col justify-between selection:(bg-brand-500 text-white)">
 		<!-- Skip to Main Content for A11y / Keyboard Focus Management -->
 		<a
 			href="#main"
@@ -113,7 +113,7 @@ defineOgImage('Bento', {
 		<main
 			id="main"
 			tabindex="-1"
-			class="flex-1 pb-16 outline-none md:pb-0"
+			class="flex-1 pb-10 outline-none md:pb-0"
 		>
 			<NuxtPage />
 		</main>

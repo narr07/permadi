@@ -77,99 +77,10 @@ const socialLinks = [
 </script>
 
 <template>
-	<footer class="mt-20 border-t border-slate-200/80 pb-12 pt-10 sm:mt-24 dark:border-slate-800/80 sm:pb-16 sm:pt-14">
+	<footer class="mt-10 border-t border-slate-200/80 pb-12 pt-10 sm:mt-24 dark:border-slate-800/80 sm:pb-16 sm:pt-14">
 		<div class="container-bento">
 			<!-- Bento Grid Layout -->
 			<div class="grid grid-cols-1 gap-4 lg:grid-cols-12 md:grid-cols-12 sm:gap-5">
-				<!-- Bento Card 1: Brand & Profile (7 Cols) -->
-				<div class="bento-card-clean flex flex-col justify-between p-6 lg:col-span-7 md:col-span-7 sm:p-8">
-					<div>
-						<!-- Header Row: Logo + Status Badge -->
-						<div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-							<NuxtLink
-								:to="localePath('/')"
-								class="inline-flex items-center gap-3 transition-opacity hover:opacity-85"
-								aria-label="Permadi Home"
-							>
-								<div class="shadow-xs flex shrink-0 items-center justify-center border border-slate-200/70 rounded-2xl bg-white p-2 dark:border-slate-700/60 dark:bg-slate-800/80">
-									<Logo :size="40" />
-								</div>
-								<div>
-									<h2 class="text-base text-slate-950 font-bold leading-tight sm:text-lg dark:text-slate-50">
-										Dinar Permadi Yusup
-									</h2>
-									<span class="text-xs text-slate-600 font-mono dark:text-slate-400">
-										@narr07 · permadi.dev
-									</span>
-								</div>
-							</NuxtLink>
-
-							<!-- Live Availability Badge -->
-							<div class="inline-flex items-center gap-2 border border-brand-200/60 rounded-full bg-brand-100/70 px-3 py-1 text-[11px] text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
-								<span class="status-dot animate-pulse" />
-								<span>{{ locale === 'id' ? 'Tersedia untuk proyek terpilih' : 'Available for select projects' }}</span>
-							</div>
-						</div>
-
-						<!-- Bio Description -->
-						<p class="max-w-xl text-sm text-slate-800 leading-relaxed sm:text-base dark:text-slate-100">
-							{{ locale === 'id'
-								? 'Guru SD & Web Developer yang berfokus pada eksplorasi antarmuka digital berbasis Nuxt, Flutter, dan desain grafis dengan ketelitian visual tinggi.'
-								: 'Elementary teacher & web developer focused on building refined digital interfaces, Nuxt & Flutter web apps, and aesthetic graphic design.' }}
-						</p>
-					</div>
-
-					<!-- Location & Local Time Pills -->
-					<div class="mt-6 flex flex-wrap items-center gap-2.5 pt-4 sm:mt-8">
-						<div class="shadow-xs inline-flex items-center gap-1.5 border border-slate-200/90 rounded-xl bg-slate-100/70 px-3 py-1.5 text-xs text-slate-800 font-mono dark:border-slate-800 dark:bg-slate-900/80 dark:text-slate-200">
-							<span class="i-hugeicons-location-01 text-sm text-brand-700 dark:text-brand-400" />
-							<span>{{ locale === 'id' ? 'Majalengka, Jawa Barat (ID)' : 'Majalengka, West Java (ID)' }}</span>
-						</div>
-						<div class="shadow-xs inline-flex items-center gap-1.5 border border-slate-200/90 rounded-xl bg-slate-100/70 px-3 py-1.5 text-xs text-slate-800 font-mono dark:border-slate-800 dark:bg-slate-900/80 dark:text-slate-200">
-							<span class="i-hugeicons-clock-01 text-sm text-brand-700 dark:text-brand-400" />
-							<span>{{ currentTime ? (locale === 'id' ? `${currentTime} WIB (GMT+7)` : `${currentTime} (GMT+7)`) : 'GMT+7' }}</span>
-						</div>
-					</div>
-				</div>
-
-				<!-- Bento Card 2: Quick Navigation (5 Cols) -->
-				<div class="bento-card-outline flex flex-col justify-between p-6 lg:col-span-5 md:col-span-5 sm:p-8">
-					<div>
-						<div class="mb-4 flex items-center justify-between">
-							<span class="kicker">
-								{{ locale === 'id' ? 'Navigasi Cepat' : 'Quick Navigation' }}
-							</span>
-							<span class="text-xs text-slate-500 font-mono dark:text-slate-400">
-								01 // EXPLORE
-							</span>
-						</div>
-
-						<div class="grid grid-cols-2 gap-2 sm:gap-2.5">
-							<NuxtLink
-								v-for="item in navLinks"
-								:key="item.to"
-								:to="item.to"
-								class="group flex items-center border border-transparent rounded-xl bg-slate-100/70 px-3.5 py-2.5 text-xs text-slate-800 font-semibold transition-all hover:border-brand-500/30 dark:bg-slate-800/60 hover:bg-brand-50/80 dark:text-slate-100 hover:text-brand-900 dark:hover:border-brand-400/30 dark:hover:bg-brand-950/40 dark:hover:text-brand-300"
-							>
-								<span>{{ item.label }}</span>
-							</NuxtLink>
-						</div>
-					</div>
-
-					<!-- Direct Contact Action -->
-					<div class="mt-6 pt-4 sm:mt-8">
-						<NuxtLink
-							:to="locale === 'id' ? '/id/kontak' : '/contact'"
-							class="group shadow-xs flex items-center justify-between border border-brand-300/70 rounded-xl bg-brand-500/10 px-4 py-3 text-xs text-brand-900 font-bold transition-all dark:border-brand-700/60 hover:bg-brand-500/20 dark:text-brand-200 dark:hover:bg-brand-500/15"
-						>
-							<div class="flex items-center gap-2">
-								<span class="i-hugeicons-mail-at-sign-01 text-base text-brand-700 dark:text-brand-400" />
-								<span>{{ locale === 'id' ? 'Mari Kolaborasi & Diskusi' : 'Let\'s Connect & Collaborate' }}</span>
-							</div>
-							<span class="i-hugeicons-arrow-right-01 text-xs transition-transform group-hover:translate-x-1" />
-						</NuxtLink>
-					</div>
-				</div>
 
 				<div class="bento-card-subtle p-5 lg:col-span-12 md:col-span-12 sm:p-6">
 					<div class="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
