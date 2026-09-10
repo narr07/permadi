@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { motion } from 'motion-v'
 import { onClickOutside } from '@vueuse/core'
 
 const { locale } = useI18n()
@@ -322,15 +323,23 @@ useSchemaOrg([
 		<!-- Bento Grid Projects (1 col mobile, 2 col tablet, 3 col desktop) -->
 		<template v-if="filteredProjects.length > 0">
 			<div class="grid grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2 sm:gap-6">
-				<NuxtLink
+				<motion.div
 					v-for="(item, index) in paginatedProjects"
 					:key="item.url"
-
-					:to="item.url"
-					class="group bento-card-clean block flex flex-col justify-between overflow-hidden transition-all duration-300"
+					:initial="{ opacity: 0, y: 28 }"
+					:whileInView="{ opacity: 1, y: 0 }"
+					:viewport="{ once: true, margin: '-40px' }"
+					:transition="{ duration: 0.48, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }"
 					:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-						? 'lg:col-span-3 sm:col-span-2 col-span-1 p-6 sm:p-7 lg:p-8 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/30 dark:from-[#002b27] dark:via-[#002420] dark:to-[#001916] border-brand-300/70 dark:border-brand-700/60 shadow-lg shadow-brand-950/5'
-						: 'col-span-1 p-5 sm:p-6 bg-white dark:bg-[#002b27] border-slate-200/80 dark:border-slate-800/80 hover:border-brand-500/80 dark:hover:border-brand-400/80'"
+						? 'lg:col-span-3 sm:col-span-2 col-span-1'
+						: 'col-span-1'"
+				>
+					<NuxtLink
+						:to="item.url"
+						class="group bento-card-clean h-full block flex flex-col justify-between overflow-hidden transition-all duration-300"
+						:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
+							? 'p-6 sm:p-7 lg:p-8 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/30 dark:from-[#002b27] dark:via-[#002420] dark:to-[#001916] border-brand-300/70 dark:border-brand-700/60 shadow-lg shadow-brand-950/5'
+							: 'p-5 sm:p-6 bg-white dark:bg-[#002b27] border-slate-200/80 dark:border-slate-800/80 hover:border-brand-500/80 dark:hover:border-brand-400/80'"
 				>
 					<!-- Hero Featured Layout (Ketika Item Pertama & Filter ALL di Halaman 1) -->
 					<template v-if="currentPage === 1 && index === 0 && selectedTag === 'ALL'">
@@ -535,7 +544,8 @@ useSchemaOrg([
 							</div>
 						</div>
 					</template>
-				</NuxtLink>
+					</NuxtLink>
+				</motion.div>
 			</div>
 
 			<!-- Bento SEO-Friendly Pagination -->

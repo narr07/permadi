@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { motion } from 'motion-v'
 export interface ArchiveData {
 	label?: string
 	title?: string
@@ -20,28 +21,35 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/gall
 </script>
 
 <template>
-	<NuxtLink
-
-		:to="targetPath"
-		class="group bento-card-clean block flex flex-col justify-between p-6 md:col-span-7 sm:p-7"
+	<motion.div
+		:initial="{ opacity: 0, y: 18 }"
+		:whileInView="{ opacity: 1, y: 0 }"
+		:viewport="{ once: true, margin: '-50px' }"
+		:transition="{ duration: 0.45, delay: 0.2, ease: [0.16, 1, 0.3, 1] }"
+		class="md:col-span-7"
 	>
-		<div>
-			<div class="mb-3 flex items-center justify-between">
-				<span class="section-label text-brand-900 dark:text-brand-300">
-					{{ archive.label || (locale === 'id' ? 'Arsip Visual' : 'The Archive') }}
-				</span>
-				<span class="i-hugeicons-arrow-right-01 text-slate-600 transition-transform group-hover:(translate-x-1 text-brand-700) dark:text-slate-400" />
+		<NuxtLink
+			:to="targetPath"
+			class="group bento-card-clean block flex flex-col h-full justify-between p-6 sm:p-7"
+		>
+			<div>
+				<div class="mb-3 flex items-center justify-between">
+					<span class="section-label text-brand-900 dark:text-brand-300">
+						{{ archive.label || (locale === 'id' ? 'Arsip Visual' : 'The Archive') }}
+					</span>
+					<span class="i-hugeicons-arrow-right-01 text-slate-600 transition-transform group-hover:(translate-x-1 text-brand-700) dark:text-slate-400" />
+				</div>
+				<h3 class="text-2xl text-slate-900 font-semibold leading-tight font-heading transition-colors duration-100 sm:text-4xl dark:text-white group-hover:text-brand-800 dark:group-hover:text-accent">
+					{{ archive.title || (locale === 'id' ? 'Gambar, dokumentasi, dan observasi visual.' : 'Images, objects, and quiet observations.') }}
+				</h3>
+				<p class="mt-2 max-w-lg text-xs text-slate-800 sm:text-sm dark:text-slate-200">
+					{{ archive.description || (locale === 'id' ? 'Dokumentasi fotografi karya dan setup ruang kerja yang terorganisir di Cloudinary.' : 'Curated visual captures and workspace documentation organized in Cloudinary CDN.') }}
+				</p>
 			</div>
-			<h3 class="text-2xl text-slate-900 font-semibold leading-tight font-heading transition-colors duration-100 sm:text-4xl dark:text-white group-hover:text-brand-800 dark:group-hover:text-accent">
-				{{ archive.title || (locale === 'id' ? 'Gambar, dokumentasi, dan observasi visual.' : 'Images, objects, and quiet observations.') }}
-			</h3>
-			<p class="mt-2 max-w-lg text-xs text-slate-800 sm:text-sm dark:text-slate-200">
-				{{ archive.description || (locale === 'id' ? 'Dokumentasi fotografi karya dan setup ruang kerja yang terorganisir di Cloudinary.' : 'Curated visual captures and workspace documentation organized in Cloudinary CDN.') }}
-			</p>
-		</div>
-		<div class="mt-6 flex items-center justify-between border-t border-slate-200/60 pt-3 text-xs text-brand-900 font-bold dark:border-slate-800/60 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-accent">
-			<span>{{ archive.link_text || (locale === 'id' ? 'Buka Galeri Lengkap' : 'Open Gallery') }}</span>
-			<span class="i-hugeicons-arrow-right-01 text-xs transition-transform group-hover:translate-x-0.5" />
-		</div>
-	</NuxtLink>
+			<div class="mt-6 flex items-center justify-between border-t border-slate-200/60 pt-3 text-xs text-brand-900 font-bold dark:border-slate-800/60 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-accent">
+				<span>{{ archive.link_text || (locale === 'id' ? 'Buka Galeri Lengkap' : 'Open Gallery') }}</span>
+				<span class="i-hugeicons-arrow-right-01 text-xs transition-transform group-hover:translate-x-0.5" />
+			</div>
+		</NuxtLink>
+	</motion.div>
 </template>

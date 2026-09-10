@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { motion } from 'motion-v'
 defineProps<{
 	galleryItem?: any
 	label?: string
@@ -10,46 +11,53 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/gall
 </script>
 
 <template>
-	<NuxtLink
-
-		:to="targetPath"
-		:aria-label="`${label || (locale === 'id' ? 'Eksplorasi Saat Ini' : 'Currently Exploring')}: ${text || (locale === 'id' ? 'Antarmuka yang terasa natural.' : 'Interfaces that feel inevitable.')}`"
-		class="group bento-card-clean block flex flex-col justify-between overflow-hidden md:col-span-5 !p-0"
+	<motion.div
+		:initial="{ opacity: 0, y: 18 }"
+		:whileInView="{ opacity: 1, y: 0 }"
+		:viewport="{ once: true, margin: '-50px' }"
+		:transition="{ duration: 0.45, delay: 0.15, ease: [0.16, 1, 0.3, 1] }"
+		class="md:col-span-5"
 	>
-		<div class="relative aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
-			<img
-				v-if="galleryItem?.placeholder_image"
-				:src="galleryItem.placeholder_image"
-				alt=""
-				aria-hidden="true"
-				class="pointer-events-none absolute inset-0 h-full w-full scale-105 object-cover opacity-60"
-			>
-			<img
-				v-if="galleryItem?.image"
-				:src="galleryItem.image"
-				alt=""
-				aria-hidden="true"
-				decoding="async"
-				class="relative z-1 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-				loading="lazy"
-			>
-			<div
-				v-else
-				class="h-full w-full flex items-center justify-center bg-slate-100 dark:bg-slate-800"
-			>
-				<span class="i-hugeicons-image-02 text-3xl text-slate-400" />
+		<NuxtLink
+			:to="targetPath"
+			:aria-label="`${label || (locale === 'id' ? 'Eksplorasi Saat Ini' : 'Currently Exploring')}: ${text || (locale === 'id' ? 'Antarmuka yang terasa natural.' : 'Interfaces that feel inevitable.')}`"
+			class="group bento-card-clean block flex h-full flex-col justify-between overflow-hidden !p-0"
+		>
+			<div class="relative aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
+				<img
+					v-if="galleryItem?.placeholder_image"
+					:src="galleryItem.placeholder_image"
+					alt=""
+					aria-hidden="true"
+					class="pointer-events-none absolute inset-0 h-full w-full scale-105 object-cover opacity-60"
+				>
+				<img
+					v-if="galleryItem?.image"
+					:src="galleryItem.image"
+					alt=""
+					aria-hidden="true"
+					decoding="async"
+					class="relative z-1 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+					loading="lazy"
+				>
+				<div
+					v-else
+					class="h-full w-full flex items-center justify-center bg-slate-100 dark:bg-slate-800"
+				>
+					<span class="i-hugeicons-image-02 text-3xl text-slate-400" />
+				</div>
 			</div>
-		</div>
-		<div class="flex items-center justify-between border-t border-slate-200/60 bg-white p-4 text-xs dark:border-slate-800/60 dark:bg-slate-900 sm:p-5">
-			<div>
-				<span class="block text-[11px] text-slate-900 font-semibold tracking-wide dark:text-slate-200">
-					{{ label || (locale === 'id' ? 'Eksplorasi Saat Ini' : 'Currently Exploring') }}
-				</span>
-				<strong class="text-xs text-slate-900 font-medium dark:text-white">
-					{{ text || (locale === 'id' ? 'Antarmuka yang terasa natural.' : 'Interfaces that feel inevitable.') }}
-				</strong>
+			<div class="flex items-center justify-between border-t border-slate-200/60 bg-white p-4 text-xs dark:border-slate-800/60 dark:bg-slate-900 sm:p-5">
+				<div>
+					<span class="block text-[11px] text-slate-900 font-semibold tracking-wide dark:text-slate-200">
+						{{ label || (locale === 'id' ? 'Eksplorasi Saat Ini' : 'Currently Exploring') }}
+					</span>
+					<strong class="text-xs text-slate-900 font-medium dark:text-white">
+						{{ text || (locale === 'id' ? 'Antarmuka yang terasa natural.' : 'Interfaces that feel inevitable.') }}
+					</strong>
+				</div>
+				<span class="i-hugeicons-arrow-right-01 text-slate-600 transition-transform group-hover:(translate-x-1 text-brand-700) dark:text-slate-400" />
 			</div>
-			<span class="i-hugeicons-arrow-right-01 text-slate-600 transition-transform group-hover:(translate-x-1 text-brand-700) dark:text-slate-400" />
-		</div>
-	</NuxtLink>
+		</NuxtLink>
+	</motion.div>
 </template>

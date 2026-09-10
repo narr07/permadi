@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { motion } from 'motion-v'
 import { onClickOutside } from '@vueuse/core'
 
 const { locale } = useI18n()
@@ -324,14 +325,23 @@ useSchemaOrg([
 		<!-- Bento Grid Articles -->
 		<template v-if="filteredPosts.length > 0">
 			<div class="bento-grid">
-				<NuxtLink
+				<motion.div
 					v-for="(post, index) in paginatedPosts"
 					:key="post.url"
-					:to="post.url"
-					class="group bento-card-outline block flex flex-col justify-between bento-lift p-5 sm:p-6"
+					:initial="{ opacity: 0, y: 24 }"
+					:whileInView="{ opacity: 1, y: 0 }"
+					:viewport="{ once: true, margin: '-40px' }"
+					:transition="{ duration: 0.45, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }"
 					:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-						? 'featured-post-card lg:col-span-12 md:col-span-12 bg-brand-900 dark:bg-[#002b27] border-brand-800 dark:border-[#134e43] shadow-md !text-white'
+						? 'lg:col-span-12 md:col-span-12'
 						: 'lg:col-span-6 md:col-span-6'"
+				>
+					<NuxtLink
+						:to="post.url"
+						class="group bento-card-outline block flex flex-col h-full justify-between bento-lift p-5 sm:p-6"
+						:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
+							? 'featured-post-card bg-brand-900 dark:bg-[#002b27] border-brand-800 dark:border-[#134e43] shadow-md !text-white'
+							: ''"
 				>
 					<div>
 						<!-- Badges Row (Category + Tags) -->
@@ -444,7 +454,8 @@ useSchemaOrg([
 							{{ locale === 'id' ? 'Baca Artikel' : 'Read Article' }} <span class="i-hugeicons-arrow-right-01 text-xs" />
 						</span>
 					</div>
-				</NuxtLink>
+					</NuxtLink>
+				</motion.div>
 			</div>
 
 			<!-- Bento SEO-Friendly Pagination -->
