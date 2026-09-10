@@ -1,4 +1,4 @@
-CREATE TABLE `content_activity` (
+CREATE TABLE IF NOT EXISTS `content_activity` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`content_slug` text NOT NULL,
 	`activity_type` text NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE `content_activity` (
 	`created_at` text NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE `content_meta` (
+CREATE TABLE IF NOT EXISTS `content_meta` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`slug` text NOT NULL,
 	`views` integer DEFAULT 0 NOT NULL,
@@ -16,8 +16,8 @@ CREATE TABLE `content_meta` (
 	`updated_at` text NOT NULL
 );
 --> statement-breakpoint
-CREATE UNIQUE INDEX `content_meta_slug_unique` ON `content_meta` (`slug`);--> statement-breakpoint
-CREATE TABLE `reactions` (
+CREATE UNIQUE INDEX IF NOT EXISTS `content_meta_slug_unique` ON `content_meta` (`slug`);--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS `reactions` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`content_slug` text NOT NULL,
 	`type` text NOT NULL,

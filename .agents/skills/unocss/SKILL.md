@@ -16,7 +16,7 @@ UnoCSS is an instant atomic CSS engine designed to be flexible and extensible. T
 ## Core
 
 | Topic | Description | Reference |
-|---|---|---|
+|-------|-------------|-----------|
 | Configuration | Config file setup and all configuration options | [core-config](references/core-config.md) |
 | Rules | Static and dynamic rules for generating CSS utilities | [core-rules](references/core-rules.md) |
 | Shortcuts | Combine multiple rules into single shorthands | [core-shortcuts](references/core-shortcuts.md) |
@@ -31,7 +31,7 @@ UnoCSS is an instant atomic CSS engine designed to be flexible and extensible. T
 ### Main Presets
 
 | Topic | Description | Reference |
-|---|---|---|
+|-------|-------------|-----------|
 | Preset Wind3 | Tailwind CSS v3 / Windi CSS compatible preset (most common) | [preset-wind3](references/preset-wind3.md) |
 | Preset Wind4 | Tailwind CSS v4 compatible preset with modern CSS features | [preset-wind4](references/preset-wind4.md) |
 | Preset Mini | Minimal preset with essential utilities for custom builds | [preset-mini](references/preset-mini.md) |
@@ -39,7 +39,7 @@ UnoCSS is an instant atomic CSS engine designed to be flexible and extensible. T
 ### Feature Presets
 
 | Topic | Description | Reference |
-|---|---|---|
+|-------|-------------|-----------|
 | Preset Icons | Pure CSS icons using Iconify with any icon set | [preset-icons](references/preset-icons.md) |
 | Preset Attributify | Group utilities in HTML attributes instead of class | [preset-attributify](references/preset-attributify.md) |
 | Preset Typography | Prose classes for typographic defaults | [preset-typography](references/preset-typography.md) |
@@ -50,7 +50,7 @@ UnoCSS is an instant atomic CSS engine designed to be flexible and extensible. T
 ## Transformers
 
 | Topic | Description | Reference |
-|---|---|---|
+|-------|-------------|-----------|
 | Variant Group | Shorthand for grouping utilities with common prefixes | [transformer-variant-group](references/transformer-variant-group.md) |
 | Directives | CSS directives: @apply, @screen, theme(), icon() | [transformer-directives](references/transformer-directives.md) |
 | Compile Class | Compile multiple classes into one hashed class | [transformer-compile-class](references/transformer-compile-class.md) |
@@ -59,6 +59,6 @@ UnoCSS is an instant atomic CSS engine designed to be flexible and extensible. T
 ## Integrations
 
 | Topic | Description | Reference |
-|---|---|---|
+|-------|-------------|-----------|
 | Vite Integration | Setting up UnoCSS with Vite and framework-specific tips | [integrations-vite](references/integrations-vite.md) |
 | Nuxt Integration | UnoCSS module for Nuxt applications | [integrations-nuxt](references/integrations-nuxt.md) |

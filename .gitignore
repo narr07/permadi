@@ -65,5 +65,11 @@ reports/
 scripts/autoinput/
 scripts/extension/
 
+# Obsidian vault config (vault = repo root)
+.obsidian/
+
+# Obsidian plugin (developed locally, not pushed)
+scripts/obsidian-plugin/
+
 # Drafts / Unpublished content staging
 drafts/
