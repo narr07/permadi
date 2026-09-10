@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { motion } from 'motion-v'
+import { Motion } from 'motion-v'
 defineProps<{
 	galleryItem?: any
 	label?: string
@@ -11,17 +11,18 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/gall
 </script>
 
 <template>
-	<motion.div
-		:initial="{ opacity: 0, y: 18 }"
-		:whileInView="{ opacity: 1, y: 0 }"
-		:viewport="{ once: true, margin: '-50px' }"
-		:transition="{ duration: 0.45, delay: 0.15, ease: [0.16, 1, 0.3, 1] }"
+	<Motion
+		as-child
+		:initial="{ opacity: 0, transform: 'translateY(16px)' }"
+		:while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
+		:transition="{ type: 'spring', stiffness: 80, damping: 20, delay: 0.15 }"
+		:in-view-options="{ once: true, margin: '-50px' }"
 		class="md:col-span-5"
 	>
 		<NuxtLink
 			:to="targetPath"
 			:aria-label="`${label || (locale === 'id' ? 'Eksplorasi Saat Ini' : 'Currently Exploring')}: ${text || (locale === 'id' ? 'Antarmuka yang terasa natural.' : 'Interfaces that feel inevitable.')}`"
-			class="group bento-card-clean block flex h-full flex-col justify-between overflow-hidden !p-0"
+			class="group bento-card-clean block flex h-full flex-col justify-between overflow-hidden opacity-0 !p-0"
 		>
 			<div class="relative aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
 				<img
@@ -59,5 +60,5 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/gall
 				<span class="i-hugeicons-arrow-right-01 text-slate-600 transition-transform group-hover:(translate-x-1 text-brand-700) dark:text-slate-400" />
 			</div>
 		</NuxtLink>
-	</motion.div>
+	</Motion>
 </template>

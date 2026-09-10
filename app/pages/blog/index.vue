@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { motion } from 'motion-v'
+import { Motion } from 'motion-v'
 import { onClickOutside } from '@vueuse/core'
 
 const { locale } = useI18n()
@@ -325,20 +325,21 @@ useSchemaOrg([
 		<!-- Bento Grid Articles -->
 		<template v-if="filteredPosts.length > 0">
 			<div class="bento-grid">
-				<motion.div
+				<Motion
 					v-for="(post, index) in paginatedPosts"
 					:key="post.url"
-					:initial="{ opacity: 0, y: 24 }"
-					:whileInView="{ opacity: 1, y: 0 }"
-					:viewport="{ once: true, margin: '-40px' }"
-					:transition="{ duration: 0.45, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }"
+					as-child
+					:initial="{ opacity: 0, transform: 'translateY(20px)' }"
+					:while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
+					:transition="{ type: 'spring', stiffness: 80, damping: 20, delay: index * 0.05 }"
+					:in-view-options="{ once: true, margin: '-40px' }"
 					:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 						? 'lg:col-span-12 md:col-span-12'
 						: 'lg:col-span-6 md:col-span-6'"
 				>
 					<NuxtLink
 						:to="post.url"
-						class="group bento-card-outline block flex flex-col h-full justify-between bento-lift p-5 sm:p-6"
+						class="group bento-card-outline block flex flex-col h-full justify-between bento-lift p-5 opacity-0 sm:p-6"
 						:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 							? 'featured-post-card bg-brand-900 dark:bg-[#002b27] border-brand-800 dark:border-[#134e43] shadow-md !text-white'
 							: ''"
@@ -455,7 +456,7 @@ useSchemaOrg([
 						</span>
 					</div>
 					</NuxtLink>
-				</motion.div>
+				</Motion>
 			</div>
 
 			<!-- Bento SEO-Friendly Pagination -->
