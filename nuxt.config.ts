@@ -15,11 +15,16 @@ export default defineNuxtConfig({
 		'@nuxtjs/seo',
 		'nuxt-llms',
 		'@nuxt/scripts',
-		'@nuxtjs/mcp-toolkit',
 		'@stefanobartoletti/nuxt-social-share',
 		'@nuxt/a11y',
 		'nuxt-vitalizer',
 	],
+	$development: {
+		modules: ['@nuxtjs/mcp-toolkit'],
+	},
+	$production: {
+		studio: false,
+	},
 	vitalizer: {
 		disableStylesheets: true,
 	},
@@ -81,6 +86,9 @@ export default defineNuxtConfig({
 	},
 	sitemap: {
 		zeroRuntime: true,
+	},
+	linkChecker: {
+		enabled: false,
 	},
 	robots: {
 		groups: [
