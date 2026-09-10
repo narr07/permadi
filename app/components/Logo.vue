@@ -3,7 +3,16 @@
 import { useElementBounding, useMouse } from '@vueuse/core'
 import { motion, useMotionValue, useSpring } from 'motion-v'
 
-const props = defineProps<{ size?: number | string }>()
+const props = withDefaults(
+	defineProps<{
+		size?: number | string
+		interactive?: boolean
+	}>(),
+	{
+		interactive: false,
+	},
+)
+
 const sizeValue = computed(() => {
 	if (!props.size)
 		return '32px'
@@ -14,55 +23,54 @@ const sizeValue = computed(() => {
 	return props.size
 })
 
-// Mouse and element tracking for the interactive eyes
+// Mouse and element tracking for the interactive eyes (only when interactive prop is true)
 const logoRef = ref<HTMLElement | null>(null)
-const { x: mouseX, y: mouseY } = useMouse({ type: 'client' })
-const { x: logoX, y: logoY, width, height } = useElementBounding(logoRef)
-
 const radius = 500
 
-// Initialize motion values for asymmetric cavity tracking
-const targetLeftX = useMotionValue(0)
-const targetRightX = useMotionValue(0)
-const targetY = useMotionValue(0)
+const targetLeftX = props.interactive ? useMotionValue(0) : null
+const targetRightX = props.interactive ? useMotionValue(0) : null
+const targetY = props.interactive ? useMotionValue(0) : null
 
-// Smooth physics springs
-const springLeftX = useSpring(targetLeftX, { stiffness: 200, damping: 20, mass: 0.4 })
-const springRightX = useSpring(targetRightX, { stiffness: 200, damping: 20, mass: 0.4 })
-const springY = useSpring(targetY, { stiffness: 200, damping: 20, mass: 0.4 })
+const springLeftX = targetLeftX ? useSpring(targetLeftX, { stiffness: 200, damping: 20, mass: 0.4 }) : null
+const springRightX = targetRightX ? useSpring(targetRightX, { stiffness: 200, damping: 20, mass: 0.4 }) : null
+const springY = targetY ? useSpring(targetY, { stiffness: 200, damping: 20, mass: 0.4 }) : null
 
-// Watch mouse and update calibrated cavity offsets
-watchEffect(() => {
-	if (!logoRef.value || width.value === 0)
-		return
+if (props.interactive) {
+	const { x: mouseX, y: mouseY } = useMouse({ type: 'client' })
+	const { x: logoX, y: logoY, width, height } = useElementBounding(logoRef)
 
-	const centerX = logoX.value + width.value / 2
-	const centerY = logoY.value + height.value / 2
+	watchEffect(() => {
+		if (!logoRef.value || width.value === 0 || !targetLeftX || !targetRightX || !targetY)
+			return
 
-	const dx = mouseX.value - centerX
-	const dy = mouseY.value - centerY
-	const distance = Math.hypot(dx, dy)
+		const centerX = logoX.value + width.value / 2
+		const centerY = logoY.value + height.value / 2
 
-	if (distance > 0) {
-		const intensity = Math.min(distance / radius, 1) // 0 to 1
-		const nx = dx / distance
-		const ny = dy / distance
+		const dx = mouseX.value - centerX
+		const dy = mouseY.value - centerY
+		const distance = Math.hypot(dx, dy)
 
-		// Asymmetric travel: 82px to outer wall, 13px to center stem, 50px vertical
-		const leftX = (nx >= 0 ? nx * 13 : nx * 82) * intensity
-		const rightX = (nx >= 0 ? nx * 82 : nx * 13) * intensity
-		const eyeY = ny * 50 * intensity
+		if (distance > 0) {
+			const intensity = Math.min(distance / radius, 1) // 0 to 1
+			const nx = dx / distance
+			const ny = dy / distance
 
-		targetLeftX.set(leftX)
-		targetRightX.set(rightX)
-		targetY.set(eyeY)
-	}
-	else {
-		targetLeftX.set(0)
-		targetRightX.set(0)
-		targetY.set(0)
-	}
-})
+			// Asymmetric travel: 82px to outer wall, 13px to center stem, 50px vertical
+			const leftX = (nx >= 0 ? nx * 13 : nx * 82) * intensity
+			const rightX = (nx >= 0 ? nx * 82 : nx * 13) * intensity
+			const eyeY = ny * 50 * intensity
+
+			targetLeftX.set(leftX)
+			targetRightX.set(rightX)
+			targetY.set(eyeY)
+		}
+		else {
+			targetLeftX.set(0)
+			targetRightX.set(0)
+			targetY.set(0)
+		}
+	})
+}
 </script>
 
 <template>
@@ -87,14 +95,26 @@ watchEffect(() => {
 
 				<!-- Right Eye Dot (the dot inside 'd' cavity, X:530.53) -->
 				<motion.path
+					v-if="props.interactive"
 					:style="{ x: springRightX, y: springY }"
+					d="M530.53 445.35C555.53 445.35 575.88 425.01 575.88 400C575.88 374.99 555.54 354.66 530.53 354.66C505.52 354.66 485.18 375 485.18 400C485.18 425 505.52 445.35 530.53 445.35Z"
+					fill="#134E4A"
+				/>
+				<path
+					v-else
 					d="M530.53 445.35C555.53 445.35 575.88 425.01 575.88 400C575.88 374.99 555.54 354.66 530.53 354.66C505.52 354.66 485.18 375 485.18 400C485.18 425 505.52 445.35 530.53 445.35Z"
 					fill="#134E4A"
 				/>
 
 				<!-- Left Eye Dot (the dot inside 'p' cavity, X:269.66) -->
 				<motion.path
+					v-if="props.interactive"
 					:style="{ x: springLeftX, y: springY }"
+					d="M224.31 400C224.31 425 244.65 445.35 269.66 445.35C294.67 445.35 315.01 425.01 315.01 400C315.01 374.99 294.67 354.66 269.66 354.66C244.65 354.66 224.31 375 224.31 400Z"
+					fill="#134E4A"
+				/>
+				<path
+					v-else
 					d="M224.31 400C224.31 425 244.65 445.35 269.66 445.35C294.67 445.35 315.01 425.01 315.01 400C315.01 374.99 294.67 354.66 269.66 354.66C244.65 354.66 224.31 375 224.31 400Z"
 					fill="#134E4A"
 				/>

@@ -196,7 +196,7 @@ export default defineNuxtConfig({
 	},
 	scripts: {
 		defaultScriptOptions: {
-			trigger: 'onNuxtReady',
+			trigger: 'idle',
 			proxy: false,
 		},
 		registry: {
@@ -204,7 +204,7 @@ export default defineNuxtConfig({
 				? {
 						googleAnalytics: {
 							id: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID,
-							trigger: 'onNuxtReady',
+							trigger: 'idle',
 							proxy: false,
 						},
 					}

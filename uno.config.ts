@@ -240,10 +240,10 @@ export default defineConfig({
 		'bento-card-ghost': 'bento-card-base bg-transparent hover:bg-slate-100/70 dark:hover:bg-slate-800/50 border border-transparent hover:border-slate-200/60 dark:hover:border-slate-800/60',
 
 		// Clean Bento Cards (Maximized with UnoCSS)
-		'bento-card-clean': 'relative rounded-2xl overflow-hidden border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] shadow-xs transition-all duration-200 hover:(border-brand-500/50 dark:border-brand-400/40 shadow-md)',
-		'hero-card-clean': 'relative rounded-2xl overflow-hidden border border-[#134e43] bg-[#002b27] text-[#f8fafa] shadow-xs transition-all duration-200',
-		'sand-card-clean': 'relative rounded-2xl overflow-hidden border border-[#facd87] bg-[#facd87] text-[#000b07] shadow-xs transition-all duration-200',
-		'sky-card-clean': 'relative rounded-2xl overflow-hidden border border-[#7dd3fc] bg-[#7dd3fc] text-[#000b07] shadow-xs transition-all duration-200',
+		'bento-card-clean': 'relative rounded-2xl overflow-hidden border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] shadow-sm transition-all duration-200 hover:(border-brand-500/50 dark:border-brand-400/40 shadow-md)',
+		'hero-card-clean': 'relative rounded-2xl overflow-hidden border border-[#134e43] bg-[#002b27] text-[#f8fafa] shadow-sm transition-all duration-200',
+		'sand-card-clean': 'relative rounded-2xl overflow-hidden border border-[#facd87] bg-[#facd87] text-[#000b07] shadow-sm transition-all duration-200',
+		'sky-card-clean': 'relative rounded-2xl overflow-hidden border border-[#7dd3fc] bg-[#7dd3fc] text-[#000b07] shadow-sm transition-all duration-200',
 
 		'bento-lift': 'hover:border-brand-500 dark:hover:border-brand-400',
 		'bento-highlight': 'border border-brand-500/30 dark:border-brand-400/20',

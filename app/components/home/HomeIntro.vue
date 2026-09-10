@@ -44,7 +44,10 @@ defineProps<{
 			<!-- Sisi Kanan: Interactive Logo Bento Widget (Desktop) -->
 			<div class="hidden shrink-0 items-center justify-center md:flex">
 				<div class="shadow-xs flex items-center justify-center border border-slate-200/70 rounded-2xl bg-white p-5 transition-colors duration-100 dark:border-slate-700/60 hover:border-brand-500 dark:bg-slate-800/80 dark:hover:border-brand-400">
-					<Logo :size="200" />
+					<Logo
+						:size="200"
+						:interactive="true"
+					/>
 				</div>
 			</div>
 		</div>
