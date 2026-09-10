@@ -254,6 +254,7 @@ export default defineContentConfig({
 			source: {
 				include: 'en/*.yml',
 				exclude: ['en/0.index.yml', 'en/4.about.yml', 'en/5.contact.yml'],
+				prefix: '',
 			},
 			schema: catalogSchema,
 		}),
@@ -262,6 +263,7 @@ export default defineContentConfig({
 			source: {
 				include: 'id/*.yml',
 				exclude: ['id/0.index.yml', 'id/4.tentang.yml', 'id/5.kontak.yml'],
+				prefix: '/id',
 			},
 			schema: catalogSchema,
 		}),
@@ -271,7 +273,7 @@ export default defineContentConfig({
 			type: 'page',
 			source: {
 				include: 'en/blog/**',
-				prefix: '/en/blog',
+				prefix: '/blog',
 			},
 			schema: z.object({
 				seo: property(z.any().optional()).editor({ hidden: true }),
@@ -317,7 +319,7 @@ export default defineContentConfig({
 			type: 'page',
 			source: {
 				include: 'en/projects/**',
-				prefix: '/en/projects',
+				prefix: '/projects',
 			},
 			schema: z.object({
 				seo: property(z.any().optional()).editor({ hidden: true }),

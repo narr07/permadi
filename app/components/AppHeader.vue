@@ -26,28 +26,28 @@ const navItems = computed(() => [
 	{
 		label: t('nav.home'),
 		to: localePath('/'),
-		prefix: `/${locale.value}`,
+		prefix: locale.value === 'id' ? '/id' : '/',
 		exact: true,
 	},
 	{
 		label: t('nav.blog'),
 		to: localePath('/blog'),
-		prefix: `/${locale.value}/blog`,
+		prefix: locale.value === 'id' ? '/id/blog' : '/blog',
 	},
 	{
 		label: t('nav.projects'),
-		to: locale.value === 'id' ? '/id/projek' : '/en/projects',
-		prefix: locale.value === 'id' ? '/id/projek' : '/en/projects',
+		to: locale.value === 'id' ? '/id/projek' : '/projects',
+		prefix: locale.value === 'id' ? '/id/projek' : '/projects',
 	},
 	{
 		label: t('nav.gallery'),
-		to: locale.value === 'id' ? '/id/galeri' : '/en/gallery',
-		prefix: locale.value === 'id' ? '/id/galeri' : '/en/gallery',
+		to: locale.value === 'id' ? '/id/galeri' : '/gallery',
+		prefix: locale.value === 'id' ? '/id/galeri' : '/gallery',
 	},
 	{
 		label: t('nav.about'),
-		to: locale.value === 'id' ? '/id/tentang' : '/en/about',
-		prefix: locale.value === 'id' ? '/id/tentang' : '/en/about',
+		to: locale.value === 'id' ? '/id/tentang' : '/about',
+		prefix: locale.value === 'id' ? '/id/tentang' : '/about',
 	},
 ])
 
@@ -55,38 +55,40 @@ const mobileNavItems = computed(() => [
 	{
 		label: t('nav.home'),
 		to: localePath('/'),
-		prefix: `/${locale.value}`,
+		prefix: locale.value === 'id' ? '/id' : '/',
 		exact: true,
 		icon: 'i-hugeicons-home-01',
 	},
 	{
 		label: t('nav.blog'),
 		to: localePath('/blog'),
-		prefix: `/${locale.value}/blog`,
+		prefix: locale.value === 'id' ? '/id/blog' : '/blog',
 		icon: 'i-hugeicons-book-02',
 	},
 	{
 		label: t('nav.projects'),
-		to: locale.value === 'id' ? '/id/projek' : '/en/projects',
-		prefix: locale.value === 'id' ? '/id/projek' : '/en/projects',
+		to: locale.value === 'id' ? '/id/projek' : '/projects',
+		prefix: locale.value === 'id' ? '/id/projek' : '/projects',
 		icon: 'i-hugeicons-folder-02',
 	},
 	{
 		label: t('nav.gallery'),
-		to: locale.value === 'id' ? '/id/galeri' : '/en/gallery',
-		prefix: locale.value === 'id' ? '/id/galeri' : '/en/gallery',
+		to: locale.value === 'id' ? '/id/galeri' : '/gallery',
+		prefix: locale.value === 'id' ? '/id/galeri' : '/gallery',
 		icon: 'i-hugeicons-image-02',
 	},
 ])
 
-const aboutPath = computed(() => (locale.value === 'id' ? '/id/tentang' : '/en/about'))
-const contactPath = computed(() => (locale.value === 'id' ? '/id/kontak' : '/en/contact'))
+const aboutPath = computed(() => (locale.value === 'id' ? '/id/tentang' : '/about'))
+const contactPath = computed(() => (locale.value === 'id' ? '/id/kontak' : '/contact'))
 
 function isItemActive(item: { to: string, prefix: string, exact?: boolean }): boolean {
 	if (item.exact) {
-		return route.path === `/${locale.value}` || route.path === `/${locale.value}/`
+		return locale.value === 'id'
+			? (route.path === '/id' || route.path === '/id/')
+			: (route.path === '/' || route.path === '')
 	}
-	return route.path.startsWith(item.prefix)
+	return route.path === item.to || route.path.startsWith(item.prefix)
 }
 
 // Sliding Nav Pill Indicator (Desktop)

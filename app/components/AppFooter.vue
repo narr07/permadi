@@ -30,10 +30,10 @@ function scrollToTop() {
 const navLinks = computed(() => [
 	{ label: t('nav.home'), to: localePath('/') },
 	{ label: t('nav.blog'), to: localePath('/blog') },
-	{ label: t('nav.projects'), to: locale.value === 'id' ? '/id/projek' : '/en/projects' },
-	{ label: t('nav.gallery'), to: locale.value === 'id' ? '/id/galeri' : '/en/gallery' },
-	{ label: t('nav.about'), to: locale.value === 'id' ? '/id/tentang' : '/en/about' },
-	{ label: t('nav.contact'), to: locale.value === 'id' ? '/id/kontak' : '/en/contact' },
+	{ label: t('nav.projects'), to: locale.value === 'id' ? '/id/projek' : '/projects' },
+	{ label: t('nav.gallery'), to: locale.value === 'id' ? '/id/galeri' : '/gallery' },
+	{ label: t('nav.about'), to: locale.value === 'id' ? '/id/tentang' : '/about' },
+	{ label: t('nav.contact'), to: locale.value === 'id' ? '/id/kontak' : '/contact' },
 ])
 
 const socialLinks = [
@@ -159,7 +159,7 @@ const socialLinks = [
 					<!-- Direct Contact Action -->
 					<div class="mt-6 pt-4 sm:mt-8">
 						<NuxtLink
-							:to="locale === 'id' ? '/id/kontak' : '/en/contact'"
+							:to="locale === 'id' ? '/id/kontak' : '/contact'"
 							class="group shadow-xs flex items-center justify-between border border-brand-300/70 rounded-xl bg-brand-500/10 px-4 py-3 text-xs text-brand-900 font-bold transition-all dark:border-brand-700/60 hover:bg-brand-500/20 dark:text-brand-200 dark:hover:bg-brand-500/15"
 						>
 							<div class="flex items-center gap-2">

@@ -146,7 +146,7 @@ function getIconClass(icon?: string) {
 		</div>
 
 		<NuxtLink
-			:to="locale === 'id' ? '/id/galeri' : '/en/gallery'"
+			:to="locale === 'id' ? '/id/galeri' : '/gallery'"
 			class="group mt-6 flex items-center justify-between border-t border-slate-200/60 pt-3 text-xs text-brand-900 font-bold dark:border-slate-800/60 dark:text-brand-300 hover:text-brand-950 dark:hover:text-accent"
 		>
 			<span>{{ locale === 'id' ? 'Detail Toolkit & Filosofi' : 'Detailed Toolkit & Philosophy' }}</span>

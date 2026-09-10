@@ -6,7 +6,7 @@ const { getCategoryLabel } = useCategoryLabel()
 const { formatDate } = useFormatDate()
 
 const collection = computed(() => (locale.value === 'id' ? 'projek_id' : 'projek_en'))
-const currentPath = computed(() => (locale.value === 'id' ? '/id/projek' : '/en/projects'))
+const currentPath = computed(() => (locale.value === 'id' ? '/id/projek' : '/projects'))
 
 // Data halaman projek (deskripsi dan header)
 const { data: page } = await useAsyncData(
@@ -113,7 +113,7 @@ const filteredProjects = computed(() => {
 		})
 		.map((item: any) => {
 			const projectSlug = item.slug || (item.path ? item.path.split('/').pop() : item.stem)
-			const basePath = locale.value === 'id' ? `/id/projek/${projectSlug}` : `/en/projects/${projectSlug}`
+			const basePath = locale.value === 'id' ? `/id/projek/${projectSlug}` : `/projects/${projectSlug}`
 			return {
 				...item,
 				url: basePath,

@@ -22,9 +22,6 @@ export default defineNuxtConfig({
 	$development: {
 		modules: ['@nuxtjs/mcp-toolkit'],
 	},
-	$production: {
-		studio: false,
-	},
 	vitalizer: {
 		disableStylesheets: true,
 	},
@@ -231,6 +228,7 @@ export default defineNuxtConfig({
 		},
 	},
 	studio: {
+		enabled: true,
 		repository: {
 			provider: 'github',
 			owner: 'narr07',
@@ -291,7 +289,7 @@ export default defineNuxtConfig({
 	i18n: {
 		baseUrl: 'https://permadi.dev',
 		defaultLocale: 'en',
-		strategy: 'prefix',
+		strategy: 'prefix_except_default',
 		customRoutes: 'config',
 		locales: [
 			{
@@ -371,9 +369,6 @@ export default defineNuxtConfig({
 		},
 	},
 	routeRules: {
-		// Root redirect
-		'/': { redirect: '/en' },
-
 		// Plain text robots.txt (No HTML redirect)
 		'/robots.txt': {
 			headers: {
@@ -387,7 +382,7 @@ export default defineNuxtConfig({
 		'/id/galeri': {
 			swr: 600,
 		},
-		'/en/gallery': {
+		'/gallery': {
 			swr: 600,
 		},
 
@@ -496,22 +491,22 @@ export default defineNuxtConfig({
 			concurrency: 1,
 			interval: 50,
 			routes: [
-				'/en',
+				'/',
 				'/id',
-				'/en/projects',
+				'/projects',
 				'/id/projek',
-				'/en/about',
+				'/about',
 				'/id/tentang',
-				'/en/contact',
+				'/contact',
 				'/id/kontak',
-				'/en/blog',
+				'/blog',
 				'/id/blog',
 				'/feed.xml',
 				'/feed.atom',
 				'/feed.json',
 				'/robots.txt',
 			],
-			ignore: ['/en/gallery', '/id/galeri'],
+			ignore: ['/gallery', '/id/galeri'],
 			crawlLinks: true,
 			failOnError: false,
 		},

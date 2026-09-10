@@ -115,7 +115,7 @@ useSchemaOrg([
 
 				<div class="mt-8 flex items-center justify-between border-t border-slate-200/60 pt-4 text-xs text-brand-800 font-bold dark:border-slate-800/60 dark:text-brand-400">
 					<NuxtLink
-						:to="locale === 'id' ? '/id/projek' : '/en/projects'"
+						:to="locale === 'id' ? '/id/projek' : '/projects'"
 						class="group flex items-center gap-1.5 hover:text-brand-950 hover:underline"
 					>
 						{{ page.story_card.link_text || (locale === 'id' ? 'Eksplorasi Studi Kasus Projek' : 'Explore Project Case Studies') }}

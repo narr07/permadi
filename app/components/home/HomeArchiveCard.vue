@@ -16,7 +16,7 @@ withDefaults(
 )
 
 const { locale } = useI18n()
-const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/en/gallery'))
+const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/gallery'))
 </script>
 
 <template>

@@ -8,7 +8,7 @@ defineProps<{
 }>()
 
 const { locale } = useI18n()
-const targetPath = computed(() => (locale.value === 'id' ? '/id/projek' : '/en/projects'))
+const targetPath = computed(() => (locale.value === 'id' ? '/id/projek' : '/projects'))
 </script>
 
 <template>

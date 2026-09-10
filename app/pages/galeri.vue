@@ -6,7 +6,7 @@ const { locale } = useI18n()
 
 // 1. Fetch page data (pages_id atau pages_en)
 const pageCollection = computed(() => (locale.value === 'id' ? 'pages_id' : 'pages_en'))
-const currentPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/en/gallery'))
+const currentPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/gallery'))
 
 const { data: page } = await useAsyncData(
 	() => `galeri-page-${locale.value}`,
@@ -173,7 +173,7 @@ onMounted(() => {
 })
 
 const site = useSiteConfig()
-const canonicalUrl = computed(() => `${site.url}/${locale.value}/${locale.value === 'id' ? 'galeri' : 'gallery'}`)
+const canonicalUrl = computed(() => `${site.url}/${locale.value === 'id' ? 'id/galeri' : 'gallery'}`)
 
 useHead({
 	link: [

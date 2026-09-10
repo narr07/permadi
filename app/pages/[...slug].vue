@@ -5,7 +5,7 @@ const setI18nParams = useSetI18nParams()
 
 const cleanPath = computed(() => {
 	const path = route.path.replace(/\/+$/, '')
-	return path === '' ? `/${locale.value}` : path
+	return path === '' ? (locale.value === 'id' ? '/id' : '/') : path
 })
 
 const pagesCollection = computed(() => (locale.value === 'id' ? 'pages_id' : 'pages_en'))
@@ -37,11 +37,11 @@ const { data: page } = await useAsyncData(
 	async () => {
 		const path = cleanPath.value
 
-		// 1. Cek di collection pages utama (/en, /en/blog, /en/projects, /en/gallery, /en/about, /en/contact, /id/*)
+		// 1. Cek di collection pages utama (/, /blog, /projects, /gallery, /about, /contact, /id/*)
 		const mainPage = await queryCollection(pagesCollection.value).path(path).first()
 		if (mainPage) {
 			const parts = path.split('/').filter(Boolean)
-			const pageSegment = parts[1] // misal: 'about', 'tentang', 'projects', 'projek', dsb.
+			const pageSegment = locale.value === 'id' ? parts[1] : parts[0] // misal: 'about', 'tentang', 'projects', 'projek', dsb.
 
 			const translations: Record<string, { slug: string[] }> = {}
 			for (const loc of locales.value) {
@@ -66,8 +66,8 @@ const { data: page } = await useAsyncData(
 		}
 
 		const parts = path.split('/').filter(Boolean)
-		const section = parts[1]
-		const requestedSlug = parts[2]
+		const section = locale.value === 'id' ? parts[1] : parts[0]
+		const requestedSlug = locale.value === 'id' ? parts[2] : parts[1]
 
 		// 2. Cek di collection blog
 		if (section === 'blog') {

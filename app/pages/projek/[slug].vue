@@ -282,7 +282,7 @@ onMounted(() => {
 	<div class="container-bento py-10 sm:py-14">
 		<!-- Back Button -->
 		<NuxtLink
-			:to="locale === 'id' ? '/id/projek' : '/en/projects'"
+			:to="locale === 'id' ? '/id/projek' : '/projects'"
 			class="mb-6 inline-flex items-center gap-1.5 text-xs text-slate-700 font-semibold transition-colors dark:text-slate-200 hover:text-brand-900 focus-ring dark:hover:text-brand-300"
 		>
 			<span class="i-hugeicons-arrow-left-01 text-sm" /> {{ locale === 'id' ? 'Kembali ke Semua Projek' : 'Back to All Projects' }}
