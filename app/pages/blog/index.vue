@@ -23,13 +23,16 @@ onClickOutside(tagDropdownRef, () => {
 
 const { data: page } = await useAsyncData(
 	() => `blog-index-${locale.value}`,
-	() => queryCollection(pageCollection.value).path(currentPath.value).first(),
+	() => queryCollection(pageCollection.value).path(currentPath.value).select('title', 'description', 'eyebrow').first(),
 	{ watch: [locale] },
 )
 
 const { data: posts } = await useAsyncData(
 	() => `blog-posts-list-${locale.value}`,
-	() => queryCollection(blogCollection.value).order('date', 'DESC').all(),
+	() => queryCollection(blogCollection.value)
+		.order('date', 'DESC')
+		.select('title', 'description', 'date', 'category', 'tags', 'slug', 'path', 'readingTime')
+		.all(),
 	{ watch: [locale] },
 )
 
@@ -329,17 +332,17 @@ useSchemaOrg([
 					v-for="(post, index) in paginatedPosts"
 					:key="post.url"
 					as-child
-					:initial="{ opacity: 0, transform: 'translateY(20px)' }"
+					:initial="index === 0 ? false : { opacity: 0, transform: 'translateY(16px)' }"
 					:while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
-					:transition="{ type: 'spring', stiffness: 80, damping: 20, delay: index * 0.05 }"
-					:in-view-options="{ margin: '-40px' }"
+					:transition="{ type: 'spring', stiffness: 85, damping: 20, delay: Math.min(index * 0.04, 0.2) }"
+					:in-view-options="{ margin: '-20px' }"
 					:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 						? 'lg:col-span-12 md:col-span-12'
 						: 'lg:col-span-6 md:col-span-6'"
 				>
 					<NuxtLink
 						:to="post.url"
-						class="group bento-card-outline block h-full flex flex-col justify-between bento-lift p-5 opacity-0 sm:p-6"
+						class="group bento-card-outline block h-full flex flex-col justify-between bento-lift p-5 sm:p-6"
 						:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 							? 'featured-post-card bg-brand-900 dark:bg-[#002b27] border-brand-800 dark:border-[#134e43] shadow-md !text-white'
 							: ''"

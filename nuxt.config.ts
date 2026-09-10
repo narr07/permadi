@@ -156,12 +156,13 @@ export default defineNuxtConfig({
 
 	fonts: {
 		families: [
-			{ name: 'Plus Jakarta Sans', weights: [400, 700], subsets: ['latin'], preload: true, display: 'swap' },
-			{ name: 'Barlow', weights: [400, 800], subsets: ['latin'], preload: true, display: 'swap' },
+			{ name: 'Barlow', weights: [800], subsets: ['latin'], preload: true, display: 'swap' },
+			{ name: 'Plus Jakarta Sans', weights: [400], subsets: ['latin'], preload: true, display: 'swap' },
+			{ name: 'Plus Jakarta Sans', weights: [700], subsets: ['latin'], preload: false, display: 'swap' },
 			{ name: 'JetBrains Mono', weights: [400], subsets: ['latin'], preload: false, display: 'swap' },
 		],
 		defaults: {
-			preload: true,
+			preload: false,
 			weights: [400, 700, 800],
 			styles: ['normal'],
 			subsets: ['latin'],

@@ -230,6 +230,7 @@ export default defineConfig({
 		'section-label': 'uppercase tracking-[0.15em] text-[11px] font-bold text-brand-700 dark:text-accent font-sans',
 		'eyebrow': 'section-label',
 		'kicker': 'section-label',
+		'shadow-xs': 'shadow-sm',
 
 		// Bento Card variants
 		'bento-card-base': 'relative rounded-bento p-6 transition-all duration-100 ease-out',

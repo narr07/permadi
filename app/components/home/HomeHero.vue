@@ -53,7 +53,7 @@ const { locale } = useI18n()
 			</span>
 
 			<h2
-				class="mb-4 text-3xl text-white font-bold leading-[1.02] tracking-tight font-heading sm:text-5xl"
+				class="mb-4 text-3xl text-white font-extrabold leading-[1.02] tracking-tight font-heading sm:text-5xl"
 			>
 				{{ hero.headline || (locale === 'id' ? 'Membangun antarmuka ' : 'Building useful ') }}
 				<em
