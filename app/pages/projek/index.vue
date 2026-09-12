@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onClickOutside } from '@vueuse/core'
-import { Motion } from 'motion-v'
 
 const { locale } = useI18n()
 const { getCategoryLabel } = useCategoryLabel()
@@ -326,14 +325,9 @@ useSchemaOrg([
 		<!-- Bento Grid Projects (1 col mobile, 2 col tablet, 3 col desktop) -->
 		<template v-if="filteredProjects.length > 0">
 			<div class="grid grid-cols-1 gap-4 lg:grid-cols-2 sm:grid-cols-2 sm:gap-4">
-				<Motion
+				<div
 					v-for="(item, index) in paginatedProjects"
 					:key="item.url"
-					as-child
-					:initial="index === 0 ? false : { opacity: 0, transform: 'translateY(16px)' }"
-					:while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
-					:transition="{ type: 'spring', stiffness: 85, damping: 20, delay: Math.min(index * 0.04, 0.2) }"
-					:in-view-options="{ margin: '-20px' }"
 					:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 						? 'lg:col-span-2 sm:col-span-2 col-span-1'
 						: 'col-span-1'"
@@ -550,7 +544,7 @@ useSchemaOrg([
 							</div>
 						</template>
 					</NuxtLink>
-				</Motion>
+				</div>
 			</div>
 
 			<!-- Bento SEO-Friendly Pagination -->

@@ -74,7 +74,10 @@ const homeSchema = z.object({
 
 	// Bagian Keahlian & Tech Stack Bento
 	skills_section: z.object({
+		code_kicker: property(z.string().optional()).editor({ label: 'Kicker Programming', tooltip: 'Contoh: Arsitektur Kode' }),
 		code_title: property(z.string().optional()).editor({ label: 'Judul Programming', description: 'Default: Programming' }),
+		code_desc: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Programming' }),
+		code_tag: property(z.string().optional()).editor({ label: 'Tag Status Programming', tooltip: 'Contoh: Ekosistem Modern' }),
 		code_items: z.array(z.object({
 			name: property(z.string()).editor({ label: 'Nama Teknologi', tooltip: 'Contoh: Nuxt & Vue 3, Flutter & Dart, Python' }),
 			icon: property(z.string().optional()).editor({
@@ -86,7 +89,10 @@ const homeSchema = z.object({
 			role: property(z.string().optional()).editor({ hidden: true }),
 			desc: property(z.string().optional()).editor({ hidden: true }),
 		})).optional(),
+		design_kicker: property(z.string().optional()).editor({ label: 'Kicker Design', tooltip: 'Contoh: Eksplorasi Visual' }),
 		design_title: property(z.string().optional()).editor({ label: 'Judul Design', description: 'Default: Design' }),
+		design_desc: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Design' }),
+		design_tag: property(z.string().optional()).editor({ label: 'Tag Status Design', tooltip: 'Contoh: Presisi & Harmoni' }),
 		design_items: z.array(z.object({
 			name: property(z.string()).editor({ label: 'Nama Software / Tool', tooltip: 'Contoh: Illustrator, Photoshop, Figma' }),
 			icon: property(z.string().optional()).editor({

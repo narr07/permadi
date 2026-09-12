@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Motion } from 'motion-v'
-
 export interface SkillItem {
 	name: string
 	icon?: string
@@ -85,14 +83,7 @@ function getIconClass(icon?: string) {
 </script>
 
 <template>
-	<Motion
-		as="div"
-		:initial="{ opacity: 0, transform: 'translateY(16px)' }"
-		:while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
-		:transition="{ type: 'spring', stiffness: 80, damping: 20 }"
-		:in-view-options="{ margin: '-60px' }"
-		class="bento-card-clean flex flex-col justify-between p-6 md:col-span-5 sm:p-7"
-	>
+	<div class="bento-card-clean flex flex-col justify-between p-6 md:col-span-5 sm:p-7">
 		<div>
 			<div class="mb-3 flex items-center justify-between">
 				<span class="section-label text-brand-900 dark:text-brand-300">
@@ -161,5 +152,5 @@ function getIconClass(icon?: string) {
 			<span>{{ locale === 'id' ? 'Detail Toolkit & Filosofi' : 'Detailed Toolkit & Philosophy' }}</span>
 			<span class="i-hugeicons-arrow-right-01 text-xs transition-transform group-hover:translate-x-0.5" />
 		</NuxtLink>
-	</Motion>
+	</div>
 </template>

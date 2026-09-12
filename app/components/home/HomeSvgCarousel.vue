@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Motion } from 'motion-v'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import SvgDesigner from '~/components/SvgDesigner.vue'
 import SvgDev from '~/components/SvgDev.vue'
@@ -78,13 +77,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-	<Motion
-		as="div"
-		:initial="{ opacity: 0, transform: 'translateY(16px)' }"
-		:while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
-		:transition="{ type: 'spring', stiffness: 80, damping: 20 }"
-		:in-view-options="{ margin: '-60px' }"
-		class="bento-card-clean relative flex flex-col justify-between overflow-hidden p-6 md:col-span-5 sm:p-7"
+	<div
+		class="bento-card-clean relative flex flex-col justify-between overflow-hidden p-6 md:col-span-7 sm:p-7 h-full"
 		@mouseenter="isHovered = true"
 		@mouseleave="isHovered = false"
 	>
@@ -135,7 +129,7 @@ onUnmounted(() => {
 				>
 					<component
 						:is="currentSlide.component"
-						class="pointer-events-none h-auto max-h-52 max-w-[280px] w-full drop-shadow-md sm:max-h-60 sm:max-w-[320px]"
+						class="pointer-events-none h-auto max-h-56 max-w-[320px] w-full drop-shadow-md sm:max-h-68 sm:max-w-[400px]"
 						aria-hidden="true"
 					/>
 				</div>
@@ -168,5 +162,5 @@ onUnmounted(() => {
 				</div>
 			</div>
 		</div>
-	</Motion>
+	</div>
 </template>

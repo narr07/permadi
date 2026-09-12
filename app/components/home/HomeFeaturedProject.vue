@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Motion } from 'motion-v'
-
 const props = defineProps<{
 	project?: any
 	label?: string
@@ -22,14 +20,7 @@ const targetPath = computed(() => {
 </script>
 
 <template>
-	<Motion
-		as-child
-		:initial="{ opacity: 0, transform: 'translateY(16px)' }"
-		:while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
-		:transition="{ type: 'spring', stiffness: 80, damping: 20 }"
-		:in-view-options="{ margin: '-60px' }"
-		class="flex flex-col md:col-span-5"
-	>
+	<div class="flex flex-col md:col-span-5">
 		<NuxtLink
 			:to="targetPath"
 			class="group bento-card-clean block flex flex-1 flex-col justify-between p-6 sm:p-7"
@@ -53,5 +44,5 @@ const targetPath = computed(() => {
 				<span class="i-hugeicons-arrow-right-01 text-xs transition-transform group-hover:translate-x-0.5" />
 			</div>
 		</NuxtLink>
-	</Motion>
+	</div>
 </template>

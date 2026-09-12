@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Motion } from 'motion-v'
-
 export interface ArchiveData {
 	label?: string
 	title?: string
@@ -22,17 +20,10 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/gall
 </script>
 
 <template>
-	<Motion
-		as-child
-		:initial="{ opacity: 0, transform: 'translateY(16px)' }"
-		:while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
-		:transition="{ type: 'spring', stiffness: 80, damping: 20, delay: 0.2 }"
-		:in-view-options="{ margin: '-50px' }"
-		class="md:col-span-7"
-	>
+	<div class="md:col-span-7">
 		<NuxtLink
 			:to="targetPath"
-			class="group bento-card-clean block h-full flex flex-col justify-between p-6 opacity-0 sm:p-7"
+			class="group bento-card-clean block h-full flex flex-col justify-between p-6 sm:p-7"
 		>
 			<div>
 				<div class="mb-3 flex items-center justify-between">
@@ -53,5 +44,5 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/gall
 				<span class="i-hugeicons-arrow-right-01 text-xs transition-transform group-hover:translate-x-0.5" />
 			</div>
 		</NuxtLink>
-	</Motion>
+	</div>
 </template>

@@ -30,7 +30,10 @@ project_section:
   fallback_description: A collection of web systems case studies and modular design, from education tools to digital products.
   all_link_text: Browse All Work
 skills_section:
+  code_kicker: Code Architecture
   code_title: Programming
+  code_desc: Crafting high-performance web systems, cross-platform mobile apps, and data automation.
+  code_tag: Modern Ecosystem
   code_items:
     - name: Nuxt & Vue 3
       icon: /icons/f-nuxt.svg
@@ -38,7 +41,10 @@ skills_section:
       icon: /icons/f-flutter.svg
     - name: Python
       icon: /icons/b-python.svg
+  design_kicker: Visual Craft
   design_title: Design
+  design_desc: Designing precision visual identity, raster/vector artwork, and modern interface systems.
+  design_tag: Precision & Harmony
   design_items:
     - name: Illustrator
       icon: /icons/d-illustrator.svg
@@ -47,7 +53,7 @@ skills_section:
     - name: Figma
       icon: /icons/d-figma.svg
   all_link_text: Explore All Works & Case Studies
-  all_link_to: /projek
+  all_link_to: /projects
 writing:
   label: Recent Writing
   title: Notes on code, design, and education.

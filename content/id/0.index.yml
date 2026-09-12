@@ -31,7 +31,10 @@ project_section:
   fallback_description: Koleksi studi kasus sistem web dan eksplorasi desain modular, dari kebutuhan pendidikan hingga produk digital.
   all_link_text: Buka Semua Projek
 skills_section:
+  code_kicker: Arsitektur Kode
   code_title: Programming
+  code_desc: Membangun aplikasi web full-stack performa tinggi, aplikasi mobile lintas platform, dan otomasi logika data.
+  code_tag: Ekosistem Modern
   code_items:
     - name: Nuxt & Vue 3
       icon: /icons/f-nuxt.svg
@@ -39,7 +42,10 @@ skills_section:
       icon: /icons/f-flutter.svg
     - name: Python
       icon: /icons/b-python.svg
+  design_kicker: Eksplorasi Visual
   design_title: Design
+  design_desc: Merancang identitas visual presisi, karya grafis raster/vektor, dan desain antarmuka modern.
+  design_tag: Presisi & Harmoni
   design_items:
     - name: Illustrator
       icon: /icons/d-illustrator.svg
@@ -53,8 +59,4 @@ writing:
   label: Tulisan & Catatan
   title: Catatan seputar web, desain, dan dunia pendidikan.
   all_link_text: Lihat Semua Tulisan
-channels: {}
-toolkit_card:
-  tools: []
-social_card:
-  items: []
+

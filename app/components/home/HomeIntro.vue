@@ -7,23 +7,17 @@ defineProps<{
 </script>
 
 <template>
-	<header class="bento-card-clean relative z-10 mb-4 bg-slate-50/70 p-6 sm:mb-10 dark:bg-slate-900/60 sm:p-8">
-		<div class="flex flex-col justify-between gap-6 md:flex-row md:items-center">
-			<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
-			<div class="max-w-2xl">
-				<!-- Top Bar: Eyebrow di kiri, Logo di kanan pada tampilan mobile -->
-				<div class="mb-3.5 flex items-center justify-between gap-3">
-					<div
-						v-if="eyebrow"
-						class="inline-flex items-center border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 tracking-tighter font-mono dark:border-brand-800/60 dark:bg-brand-950 dark:text-accent"
-					>
-						<span>{{ eyebrow }}</span>
-					</div>
-
-					<!-- Logo Compact Badge di Mobile -->
-					<div class="flex shrink-0 items-center justify-center border border-slate-200/70 rounded-xl bg-white p-1.5 shadow-xs md:hidden dark:border-slate-700/60 dark:bg-slate-800/80">
-						<Logo :size="48" />
-					</div>
+	<div class="grid grid-cols-1 mb-4 items-stretch gap-4 md:grid-cols-12 sm:mb-8 sm:gap-5">
+		<!-- Card 1: Text Intro dengan Eyebrow di Dalamnya (Kiri, col-span-8) -->
+		<header class="bento-card-clean relative z-10 flex flex-col justify-between bg-slate-50/70 p-6 md:col-span-8 dark:bg-slate-900/60 sm:p-8">
+			<div>
+				<!-- Eyebrow Badge menyatu di dalam card utama -->
+				<div
+					v-if="eyebrow"
+					class="mb-4 inline-flex items-center gap-2 border border-brand-200/60 rounded-full bg-brand-100/70 px-3.5 py-1 text-xs text-brand-950 tracking-tight font-mono dark:border-brand-800/60 dark:bg-brand-950 dark:text-accent"
+				>
+					<span class="status-dot" />
+					<span>{{ eyebrow }}</span>
 				</div>
 
 				<h1
@@ -35,21 +29,21 @@ defineProps<{
 
 				<p
 					v-if="description"
-					class="heading-page-sub text-sm"
+					class="mt-3 heading-page-sub max-w-2xl text-sm"
 				>
 					{{ description }}
 				</p>
 			</div>
+		</header>
 
-			<!-- Sisi Kanan: Interactive Logo Bento Widget (Desktop) -->
-			<div class="hidden shrink-0 items-center justify-center md:flex">
-				<div class="flex items-center justify-center border border-slate-200/70 rounded-2xl bg-white p-5 shadow-xs transition-colors duration-100 dark:border-slate-700/60 hover:border-brand-500 dark:bg-slate-800/80 dark:hover:border-brand-400">
-					<Logo
-						:size="200"
-						:interactive="true"
-					/>
-				</div>
-			</div>
+		<!-- Card 2: Logo Card Terpisah (Kanan, col-span-4) -->
+		<div class="bento-card-clean relative z-10 h-full flex items-center justify-center bg-slate-50/70 p-6 md:col-span-4 dark:bg-slate-900/60 sm:p-8">
+			<Logo
+				:size="180"
+				:interactive="true"
+			/>
 		</div>
-	</header>
+	</div>
 </template>
+
+<style scoped></style>

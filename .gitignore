@@ -35,6 +35,7 @@ Thumbs.db
 *.ntvs*
 *.njsproj
 *.sln
+*.zip
 
 # Local env files
 .env

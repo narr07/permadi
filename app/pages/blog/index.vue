@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onClickOutside } from '@vueuse/core'
-import { Motion } from 'motion-v'
 
 const { locale } = useI18n()
 const localePath = useLocalePath()
@@ -328,14 +327,9 @@ useSchemaOrg([
 		<!-- Bento Grid Articles -->
 		<template v-if="filteredPosts.length > 0">
 			<div class="bento-grid">
-				<Motion
+				<div
 					v-for="(post, index) in paginatedPosts"
 					:key="post.url"
-					as-child
-					:initial="index === 0 ? false : { opacity: 0, transform: 'translateY(16px)' }"
-					:while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
-					:transition="{ type: 'spring', stiffness: 85, damping: 20, delay: Math.min(index * 0.04, 0.2) }"
-					:in-view-options="{ margin: '-20px' }"
 					:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
 						? 'lg:col-span-12 md:col-span-12'
 						: 'lg:col-span-6 md:col-span-6'"
@@ -459,7 +453,7 @@ useSchemaOrg([
 							</span>
 						</div>
 					</NuxtLink>
-				</Motion>
+				</div>
 			</div>
 
 			<!-- Bento SEO-Friendly Pagination -->

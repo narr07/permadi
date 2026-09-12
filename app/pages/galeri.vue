@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { GalleryItem } from '~~/server/api/cloudinary-gallery.get'
 import { onClickOutside } from '@vueuse/core'
-import { Motion } from 'motion-v'
 
 const { locale } = useI18n()
 
@@ -448,17 +447,12 @@ useSchemaOrg([
 			v-if="displayedItems.length > 0"
 			class="grid grid-cols-2 gap-3 lg:grid-cols-12 sm:gap-4"
 		>
-			<Motion
+			<div
 				v-for="(item, i) in displayedItems"
 				:key="item.public_id || i"
-				as="div"
 				tabindex="0"
 				role="button"
 				:aria-label="item.title || (locale === 'id' ? 'Buka foto galeri' : 'Open gallery photo')"
-				:initial="i === 0 ? false : { opacity: 0, transform: 'translateY(16px)' }"
-				:while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
-				:transition="{ type: 'spring', stiffness: 85, damping: 20, delay: Math.min((i % 14) * 0.03, 0.2) }"
-				:in-view-options="{ margin: '-20px' }"
 				class="group bento-card-outline relative cursor-pointer overflow-hidden bento-lift rounded-xl bg-slate-100 sm:rounded-bento dark:bg-slate-800 !p-0"
 				:class="getGalleryItemClass(i)"
 				@click="openModal(item)"
@@ -506,7 +500,7 @@ useSchemaOrg([
 						</span>
 					</div>
 				</div>
-			</Motion>
+			</div>
 		</div>
 
 		<!-- Infinite Scroll Trigger Sentinel & Loading Indicator -->
