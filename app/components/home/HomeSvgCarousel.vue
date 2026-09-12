@@ -78,7 +78,7 @@ onUnmounted(() => {
 
 <template>
 	<div
-		class="bento-card-clean relative flex flex-col justify-between overflow-hidden p-6 md:col-span-7 sm:p-7 h-full"
+		class="bento-card-clean relative h-full flex flex-col justify-between overflow-hidden p-6 md:col-span-7 sm:p-7"
 		@mouseenter="isHovered = true"
 		@mouseleave="isHovered = false"
 	>
