@@ -1,17 +1,7 @@
 title: Tentang Dinar Permadi Yusup | Guru SD, Developer & Desainer
 description: Mengenal Dinar Permadi Yusup, guru SD lulusan UPI yang memadukan logika numerik, rekayasa software (Nuxt, Flutter, Python, PHP), dan kepekaan desain grafis Adobe.
 headline: Menghitung dengan cermat. Merancang dengan penuh niat.
-journey:
-  title: Perjalanan & Latar Belakang
-  description: Sebagai seorang guru SD lulusan Universitas Pendidikan Indonesia (UPI), kecintaan saya pada angka dan logika membawa saya mendalami dunia programming dan desain grafis. Saya memadukan ketelitian pengajaran dengan rekayasa aplikasi web & mobile (Nuxt & Flutter) serta estetika visual Adobe Creative Cloud.
 lead: Menjembatani dunia pendidikan dasar, logika matematika, rekayasa perangkat lunak, dan keindahan desain grafis.
-principles:
-  - title: Logika Numerik & Presisi
-    description: Menghadirkan algoritma dan struktur kode yang efisien, rapi, dan konsisten di setiap arsitektur sistem.
-  - title: Kepekaan Desain Grafis
-    description: Mengolah tata letak visual, harmoni warna, dan tipografi dengan standar tinggi menggunakan seluruh ekosistem Adobe.
-  - title: Performa & Kegunaan Nyata
-    description: Memastikan setiap aplikasi web (Nuxt) dan mobile (Flutter) berjalan secepat kilat dan mudah digunakan oleh siapa saja.
 section_label: Tentang Saya
 story_card:
   label: Filosofi & Profil
@@ -19,6 +9,7 @@ story_card:
   lead: Lulusan Universitas Pendidikan Indonesia (UPI) yang gemar menghitung dan memecahkan masalah melalui baris kode (Nuxt, Flutter, Python, PHP) dan komposisi visual yang presisi.
   bio: Di luar ruang kelas dan editor kode, saya menikmati eksplorasi matematika, mendesain aset visual, dan merancang media ajar interaktif.
   link_text: Eksplorasi Studi Kasus Projek
+  link_to: /projek
 toolkit_card:
   label: Toolkit & Framework
   title: Teknologi & Software Pilihan
@@ -35,3 +26,21 @@ toolkit_card:
       desc: Edge Database & Serverless Engine
     - name: UnoCSS & Tailwind
       desc: Design Tokens & Atomic Styling
+  footer: Nuxt 4 / UnoCSS / Cloudflare
+location_card:
+  label: Lokasi & Zona Waktu
+  title: Majalengka, Indonesia
+  description: Bekerja secara remote dan berkolaborasi dengan tim di berbagai belahan dunia.
+  timezone: GMT+7
+  badge: Available Globally
+principles:
+  - title: Logika Numerik & Presisi
+    description: Menghadirkan algoritma dan struktur kode yang efisien, rapi, dan konsisten di setiap arsitektur sistem.
+  - title: Kepekaan Desain Grafis
+    description: Mengolah tata letak visual, harmoni warna, dan tipografi dengan standar tinggi menggunakan seluruh ekosistem Adobe.
+  - title: Performa & Kegunaan Nyata
+    description: Memastikan setiap aplikasi web (Nuxt) dan mobile (Flutter) berjalan secepat kilat dan mudah digunakan oleh siapa saja.
+journey:
+  label: Latar Belakang & Perjalanan
+  title: Perjalanan & Dedikasi
+  description: Sebagai seorang guru SD lulusan Universitas Pendidikan Indonesia (UPI), kecintaan saya pada angka dan logika membawa saya mendalami dunia programming dan desain grafis. Saya memadukan ketelitian pengajaran dengan rekayasa aplikasi web & mobile (Nuxt & Flutter) serta estetika visual Adobe Creative Cloud.

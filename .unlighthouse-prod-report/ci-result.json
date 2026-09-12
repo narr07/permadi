@@ -1,738 +1,738 @@
 [
-  {
-    "path": "/",
-    "score": 0.93,
-    "performance": 0.92,
-    "accessibility": 1,
-    "best-practices": 0.81,
-    "seo": 1
-  },
-  {
-    "path": "/about",
-    "score": 0.92,
-    "performance": 0.85,
-    "accessibility": 1,
-    "best-practices": 0.81,
-    "seo": 1
-  },
-  {
-    "path": "/blog",
-    "score": 0.87,
-    "performance": 0.68,
-    "accessibility": 1,
-    "best-practices": 0.81,
-    "seo": 1
-  },
-  {
-    "path": "/blog/accelerated-learning-cara-belajar-cepat",
-    "score": 0.95,
-    "performance": 0.84,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/accelerated-learning-fast-learning-methods",
-    "score": 0.83,
-    "performance": 0.56,
-    "accessibility": 1,
-    "best-practices": 0.77,
-    "seo": 1
-  },
-  {
-    "path": "/blog/accelerated-learning-kurikulum-merdeka",
-    "score": 0.89,
-    "performance": 0.59,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/accelerated-learning-merdeka-curriculum",
-    "score": 0.88,
-    "performance": 0.57,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/apa-itu-swiss-style-design",
-    "score": 0.88,
-    "performance": 0.56,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/arsitektur-backend-modern-edge-serverless",
-    "score": 0.88,
-    "performance": 0.55,
-    "accessibility": 0.97,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/blog/differences-approach-model-strategy-method-technique-learning",
-    "score": 0.88,
-    "performance": 0.55,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/discovery-learning-and-inquiry-stages-for-class",
-    "score": 0.94,
-    "performance": 0.8,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/guide-to-graphic-and-ui-design-styles",
-    "score": 0.87,
-    "performance": 0.56,
-    "accessibility": 0.97,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/history-evolution-indonesia-curriculum",
-    "score": 0.87,
-    "performance": 0.55,
-    "accessibility": 0.97,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/history-of-accelerated-learning",
-    "score": 0.94,
-    "performance": 0.82,
-    "accessibility": 0.96,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/history-of-ttf-otf-fonts",
-    "score": 0.97,
-    "performance": 0.91,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/introduction-to-nuxt-js-vue-framework-ssr-ssg",
-    "score": 0.88,
-    "performance": 0.56,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/kedudukan-accelerated-learning-pendidikan",
-    "score": 0.88,
-    "performance": 0.56,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/macam-macam-model-pembelajaran-inovatif",
-    "score": 0.88,
-    "performance": 0.57,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/mengenal-jenis-gaya-desain-grafis-dan-ui",
-    "score": 0.89,
-    "performance": 0.63,
-    "accessibility": 0.97,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/mengenal-nuxt-js-framework-vue-ssr-ssg",
-    "score": 0.88,
-    "performance": 0.56,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/modern-backend-architecture-edge-serverless",
-    "score": 0.92,
-    "performance": 0.73,
-    "accessibility": 0.97,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/penerapan-problem-based-learning-dan-sintaks-pbl",
-    "score": 0.88,
-    "performance": 0.57,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/perbedaan-pendekatan-model-strategi-metode-teknik-pembelajaran",
-    "score": 0.88,
-    "performance": 0.56,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/position-of-accelerated-learning-education",
-    "score": 0.88,
-    "performance": 0.56,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/problem-based-learning-stages-and-syntax",
-    "score": 0.95,
-    "performance": 0.85,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/project-based-learning-dan-sintaks-pjbl",
-    "score": 0.95,
-    "performance": 0.84,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/project-based-learning-guide-and-syntax",
-    "score": 0.88,
-    "performance": 0.56,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/rpp-accelerated-learning-master-sd-1-pertemuan",
-    "score": 0.9,
-    "performance": 0.61,
-    "accessibility": 1,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/blog/sejarah-accelerated-learning",
-    "score": 0.96,
-    "performance": 0.91,
-    "accessibility": 0.96,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/sejarah-font-ttf-otf",
-    "score": 0.88,
-    "performance": 0.56,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/sejarah-perkembangan-kurikulum-di-indonesia",
-    "score": 0.88,
-    "performance": 0.58,
-    "accessibility": 0.97,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/sintaks-discovery-learning-dan-inquiry-di-kelas",
-    "score": 0.89,
-    "performance": 0.59,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/types-of-innovative-learning-models",
-    "score": 0.95,
-    "performance": 0.82,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/blog/what-is-swiss-style-design",
-    "score": 0.95,
-    "performance": 0.85,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/contact",
-    "score": 0.9,
-    "performance": 0.6,
-    "accessibility": 0.98,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/gallery",
-    "score": 0.91,
-    "performance": 0.63,
-    "accessibility": 1,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/id",
-    "score": 0.92,
-    "performance": 0.66,
-    "accessibility": 1,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog",
-    "score": 0.91,
-    "performance": 0.62,
-    "accessibility": 1,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/accelerated-learning-cara-belajar-cepat",
-    "score": 0.95,
-    "performance": 0.84,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/accelerated-learning-fast-learning-methods",
-    "score": 0.88,
-    "performance": 0.57,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/accelerated-learning-kurikulum-merdeka",
-    "score": 0.88,
-    "performance": 0.56,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/accelerated-learning-merdeka-curriculum",
-    "score": 0.9,
-    "performance": 0.62,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/apa-itu-swiss-style-design",
-    "score": 0.95,
-    "performance": 0.84,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/arsitektur-backend-modern-edge-serverless",
-    "score": 0.95,
-    "performance": 0.87,
-    "accessibility": 0.97,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/differences-approach-model-strategy-method-technique-learning",
-    "score": 0.88,
-    "performance": 0.55,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/discovery-learning-and-inquiry-stages-for-class",
-    "score": 0.88,
-    "performance": 0.56,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/guide-to-graphic-and-ui-design-styles",
-    "score": 0.88,
-    "performance": 0.58,
-    "accessibility": 0.97,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/history-evolution-indonesia-curriculum",
-    "score": 0.87,
-    "performance": 0.56,
-    "accessibility": 0.97,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/history-of-accelerated-learning",
-    "score": 0.94,
-    "performance": 0.85,
-    "accessibility": 0.96,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/history-of-ttf-otf-fonts",
-    "score": 0.88,
-    "performance": 0.57,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/introduction-to-nuxt-js-vue-framework-ssr-ssg",
-    "score": 0.88,
-    "performance": 0.56,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/kedudukan-accelerated-learning-pendidikan",
-    "score": 0.96,
-    "performance": 0.88,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/macam-macam-model-pembelajaran-inovatif",
-    "score": 0.89,
-    "performance": 0.6,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/mengenal-jenis-gaya-desain-grafis-dan-ui",
-    "score": 0.87,
-    "performance": 0.56,
-    "accessibility": 0.97,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/mengenal-nuxt-js-framework-vue-ssr-ssg",
-    "score": 0.88,
-    "performance": 0.55,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/modern-backend-architecture-edge-serverless",
-    "score": 0.97,
-    "performance": 0.93,
-    "accessibility": 0.97,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/penerapan-problem-based-learning-dan-sintaks-pbl",
-    "score": 0.88,
-    "performance": 0.55,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/perbedaan-pendekatan-model-strategi-metode-teknik-pembelajaran",
-    "score": 0.88,
-    "performance": 0.55,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/position-of-accelerated-learning-education",
-    "score": 0.89,
-    "performance": 0.58,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/problem-based-learning-stages-and-syntax",
-    "score": 0.98,
-    "performance": 0.96,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/project-based-learning-dan-sintaks-pjbl",
-    "score": 0.88,
-    "performance": 0.57,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/project-based-learning-guide-and-syntax",
-    "score": 0.89,
-    "performance": 0.58,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/rpp-accelerated-learning-master-sd-1-pertemuan",
-    "score": 0.99,
-    "performance": 0.96,
-    "accessibility": 1,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/sejarah-accelerated-learning",
-    "score": 0.96,
-    "performance": 0.9,
-    "accessibility": 0.96,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/sejarah-font-ttf-otf",
-    "score": 0.88,
-    "performance": 0.56,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/sejarah-perkembangan-kurikulum-di-indonesia",
-    "score": 0.93,
-    "performance": 0.8,
-    "accessibility": 0.97,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/sintaks-discovery-learning-dan-inquiry-di-kelas",
-    "score": 0.89,
-    "performance": 0.59,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/types-of-innovative-learning-models",
-    "score": 0.88,
-    "performance": 0.57,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/blog/what-is-swiss-style-design",
-    "score": 0.9,
-    "performance": 0.63,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/galeri",
-    "score": 0.91,
-    "performance": 0.63,
-    "accessibility": 1,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/id/kontak",
-    "score": 0.91,
-    "performance": 0.66,
-    "accessibility": 0.98,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/id/projek",
-    "score": 0.95,
-    "performance": 0.82,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/projek/budgetkuedu",
-    "score": 0.9,
-    "performance": 0.59,
-    "accessibility": 1,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/id/projek/buildernuxtui",
-    "score": 0.91,
-    "performance": 0.63,
-    "accessibility": 1,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/id/projek/ceklisguru",
-    "score": 0.9,
-    "performance": 0.58,
-    "accessibility": 1,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/id/projek/hadis",
-    "score": 0.93,
-    "performance": 0.79,
-    "accessibility": 0.97,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/projek/huewarna",
-    "score": 0.9,
-    "performance": 0.61,
-    "accessibility": 1,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/id/projek/kkgdrspetomo",
-    "score": 0.86,
-    "performance": 0.42,
-    "accessibility": 1,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/id/projek/nuxt-gsheet",
-    "score": 0.88,
-    "performance": 0.57,
-    "accessibility": 0.97,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/id/projek/nuxt-pdf-kit",
-    "score": 0.89,
-    "performance": 0.55,
-    "accessibility": 1,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/id/projek/sdnteja2",
-    "score": 0.9,
-    "performance": 0.61,
-    "accessibility": 1,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/id/tentang",
-    "score": 0.94,
-    "performance": 0.82,
-    "accessibility": 1,
-    "best-practices": 1,
-    "seo": 0.92
-  },
-  {
-    "path": "/projects",
-    "score": 0.91,
-    "performance": 0.66,
-    "accessibility": 1,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/projects/budgetkuedu",
-    "score": 0.91,
-    "performance": 0.62,
-    "accessibility": 1,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/projects/buildernuxtui",
-    "score": 0.89,
-    "performance": 0.56,
-    "accessibility": 1,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/projects/ceklisguru",
-    "score": 0.81,
-    "performance": 0.44,
-    "accessibility": 1,
-    "best-practices": 0.81,
-    "seo": 1
-  },
-  {
-    "path": "/projects/hadis",
-    "score": 0.88,
-    "performance": 0.57,
-    "accessibility": 0.97,
-    "best-practices": 0.96,
-    "seo": 1
-  },
-  {
-    "path": "/projects/huewarna",
-    "score": 0.92,
-    "performance": 0.87,
-    "accessibility": 1,
-    "best-practices": 0.81,
-    "seo": 1
-  },
-  {
-    "path": "/projects/kkgdrspetomo",
-    "score": 0.86,
-    "performance": 0.64,
-    "accessibility": 1,
-    "best-practices": 0.81,
-    "seo": 1
-  },
-  {
-    "path": "/projects/nuxt-gsheet",
-    "score": 0.85,
-    "performance": 0.65,
-    "accessibility": 0.97,
-    "best-practices": 0.77,
-    "seo": 1
-  },
-  {
-    "path": "/projects/nuxt-pdf-kit",
-    "score": 0.93,
-    "performance": 0.7,
-    "accessibility": 1,
-    "best-practices": 1,
-    "seo": 1
-  },
-  {
-    "path": "/projects/sdnteja2",
-    "score": 0.95,
-    "performance": 0.81,
-    "accessibility": 1,
-    "best-practices": 1,
-    "seo": 1
-  }
+	{
+		"path": "/",
+		"score": 0.93,
+		"performance": 0.92,
+		"accessibility": 1,
+		"best-practices": 0.81,
+		"seo": 1
+	},
+	{
+		"path": "/about",
+		"score": 0.92,
+		"performance": 0.85,
+		"accessibility": 1,
+		"best-practices": 0.81,
+		"seo": 1
+	},
+	{
+		"path": "/blog",
+		"score": 0.87,
+		"performance": 0.68,
+		"accessibility": 1,
+		"best-practices": 0.81,
+		"seo": 1
+	},
+	{
+		"path": "/blog/accelerated-learning-cara-belajar-cepat",
+		"score": 0.95,
+		"performance": 0.84,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/accelerated-learning-fast-learning-methods",
+		"score": 0.83,
+		"performance": 0.56,
+		"accessibility": 1,
+		"best-practices": 0.77,
+		"seo": 1
+	},
+	{
+		"path": "/blog/accelerated-learning-kurikulum-merdeka",
+		"score": 0.89,
+		"performance": 0.59,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/accelerated-learning-merdeka-curriculum",
+		"score": 0.88,
+		"performance": 0.57,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/apa-itu-swiss-style-design",
+		"score": 0.88,
+		"performance": 0.56,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/arsitektur-backend-modern-edge-serverless",
+		"score": 0.88,
+		"performance": 0.55,
+		"accessibility": 0.97,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/blog/differences-approach-model-strategy-method-technique-learning",
+		"score": 0.88,
+		"performance": 0.55,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/discovery-learning-and-inquiry-stages-for-class",
+		"score": 0.94,
+		"performance": 0.8,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/guide-to-graphic-and-ui-design-styles",
+		"score": 0.87,
+		"performance": 0.56,
+		"accessibility": 0.97,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/history-evolution-indonesia-curriculum",
+		"score": 0.87,
+		"performance": 0.55,
+		"accessibility": 0.97,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/history-of-accelerated-learning",
+		"score": 0.94,
+		"performance": 0.82,
+		"accessibility": 0.96,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/history-of-ttf-otf-fonts",
+		"score": 0.97,
+		"performance": 0.91,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/introduction-to-nuxt-js-vue-framework-ssr-ssg",
+		"score": 0.88,
+		"performance": 0.56,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/kedudukan-accelerated-learning-pendidikan",
+		"score": 0.88,
+		"performance": 0.56,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/macam-macam-model-pembelajaran-inovatif",
+		"score": 0.88,
+		"performance": 0.57,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/mengenal-jenis-gaya-desain-grafis-dan-ui",
+		"score": 0.89,
+		"performance": 0.63,
+		"accessibility": 0.97,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/mengenal-nuxt-js-framework-vue-ssr-ssg",
+		"score": 0.88,
+		"performance": 0.56,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/modern-backend-architecture-edge-serverless",
+		"score": 0.92,
+		"performance": 0.73,
+		"accessibility": 0.97,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/penerapan-problem-based-learning-dan-sintaks-pbl",
+		"score": 0.88,
+		"performance": 0.57,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/perbedaan-pendekatan-model-strategi-metode-teknik-pembelajaran",
+		"score": 0.88,
+		"performance": 0.56,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/position-of-accelerated-learning-education",
+		"score": 0.88,
+		"performance": 0.56,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/problem-based-learning-stages-and-syntax",
+		"score": 0.95,
+		"performance": 0.85,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/project-based-learning-dan-sintaks-pjbl",
+		"score": 0.95,
+		"performance": 0.84,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/project-based-learning-guide-and-syntax",
+		"score": 0.88,
+		"performance": 0.56,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/rpp-accelerated-learning-master-sd-1-pertemuan",
+		"score": 0.9,
+		"performance": 0.61,
+		"accessibility": 1,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/blog/sejarah-accelerated-learning",
+		"score": 0.96,
+		"performance": 0.91,
+		"accessibility": 0.96,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/sejarah-font-ttf-otf",
+		"score": 0.88,
+		"performance": 0.56,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/sejarah-perkembangan-kurikulum-di-indonesia",
+		"score": 0.88,
+		"performance": 0.58,
+		"accessibility": 0.97,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/sintaks-discovery-learning-dan-inquiry-di-kelas",
+		"score": 0.89,
+		"performance": 0.59,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/types-of-innovative-learning-models",
+		"score": 0.95,
+		"performance": 0.82,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/blog/what-is-swiss-style-design",
+		"score": 0.95,
+		"performance": 0.85,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/contact",
+		"score": 0.9,
+		"performance": 0.6,
+		"accessibility": 0.98,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/gallery",
+		"score": 0.91,
+		"performance": 0.63,
+		"accessibility": 1,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/id",
+		"score": 0.92,
+		"performance": 0.66,
+		"accessibility": 1,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog",
+		"score": 0.91,
+		"performance": 0.62,
+		"accessibility": 1,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/accelerated-learning-cara-belajar-cepat",
+		"score": 0.95,
+		"performance": 0.84,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/accelerated-learning-fast-learning-methods",
+		"score": 0.88,
+		"performance": 0.57,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/accelerated-learning-kurikulum-merdeka",
+		"score": 0.88,
+		"performance": 0.56,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/accelerated-learning-merdeka-curriculum",
+		"score": 0.9,
+		"performance": 0.62,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/apa-itu-swiss-style-design",
+		"score": 0.95,
+		"performance": 0.84,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/arsitektur-backend-modern-edge-serverless",
+		"score": 0.95,
+		"performance": 0.87,
+		"accessibility": 0.97,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/differences-approach-model-strategy-method-technique-learning",
+		"score": 0.88,
+		"performance": 0.55,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/discovery-learning-and-inquiry-stages-for-class",
+		"score": 0.88,
+		"performance": 0.56,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/guide-to-graphic-and-ui-design-styles",
+		"score": 0.88,
+		"performance": 0.58,
+		"accessibility": 0.97,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/history-evolution-indonesia-curriculum",
+		"score": 0.87,
+		"performance": 0.56,
+		"accessibility": 0.97,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/history-of-accelerated-learning",
+		"score": 0.94,
+		"performance": 0.85,
+		"accessibility": 0.96,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/history-of-ttf-otf-fonts",
+		"score": 0.88,
+		"performance": 0.57,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/introduction-to-nuxt-js-vue-framework-ssr-ssg",
+		"score": 0.88,
+		"performance": 0.56,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/kedudukan-accelerated-learning-pendidikan",
+		"score": 0.96,
+		"performance": 0.88,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/macam-macam-model-pembelajaran-inovatif",
+		"score": 0.89,
+		"performance": 0.6,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/mengenal-jenis-gaya-desain-grafis-dan-ui",
+		"score": 0.87,
+		"performance": 0.56,
+		"accessibility": 0.97,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/mengenal-nuxt-js-framework-vue-ssr-ssg",
+		"score": 0.88,
+		"performance": 0.55,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/modern-backend-architecture-edge-serverless",
+		"score": 0.97,
+		"performance": 0.93,
+		"accessibility": 0.97,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/penerapan-problem-based-learning-dan-sintaks-pbl",
+		"score": 0.88,
+		"performance": 0.55,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/perbedaan-pendekatan-model-strategi-metode-teknik-pembelajaran",
+		"score": 0.88,
+		"performance": 0.55,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/position-of-accelerated-learning-education",
+		"score": 0.89,
+		"performance": 0.58,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/problem-based-learning-stages-and-syntax",
+		"score": 0.98,
+		"performance": 0.96,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/project-based-learning-dan-sintaks-pjbl",
+		"score": 0.88,
+		"performance": 0.57,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/project-based-learning-guide-and-syntax",
+		"score": 0.89,
+		"performance": 0.58,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/rpp-accelerated-learning-master-sd-1-pertemuan",
+		"score": 0.99,
+		"performance": 0.96,
+		"accessibility": 1,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/sejarah-accelerated-learning",
+		"score": 0.96,
+		"performance": 0.9,
+		"accessibility": 0.96,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/sejarah-font-ttf-otf",
+		"score": 0.88,
+		"performance": 0.56,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/sejarah-perkembangan-kurikulum-di-indonesia",
+		"score": 0.93,
+		"performance": 0.8,
+		"accessibility": 0.97,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/sintaks-discovery-learning-dan-inquiry-di-kelas",
+		"score": 0.89,
+		"performance": 0.59,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/types-of-innovative-learning-models",
+		"score": 0.88,
+		"performance": 0.57,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/blog/what-is-swiss-style-design",
+		"score": 0.9,
+		"performance": 0.63,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/galeri",
+		"score": 0.91,
+		"performance": 0.63,
+		"accessibility": 1,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/id/kontak",
+		"score": 0.91,
+		"performance": 0.66,
+		"accessibility": 0.98,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/id/projek",
+		"score": 0.95,
+		"performance": 0.82,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/projek/budgetkuedu",
+		"score": 0.9,
+		"performance": 0.59,
+		"accessibility": 1,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/id/projek/buildernuxtui",
+		"score": 0.91,
+		"performance": 0.63,
+		"accessibility": 1,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/id/projek/ceklisguru",
+		"score": 0.9,
+		"performance": 0.58,
+		"accessibility": 1,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/id/projek/hadis",
+		"score": 0.93,
+		"performance": 0.79,
+		"accessibility": 0.97,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/projek/huewarna",
+		"score": 0.9,
+		"performance": 0.61,
+		"accessibility": 1,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/id/projek/kkgdrspetomo",
+		"score": 0.86,
+		"performance": 0.42,
+		"accessibility": 1,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/id/projek/nuxt-gsheet",
+		"score": 0.88,
+		"performance": 0.57,
+		"accessibility": 0.97,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/id/projek/nuxt-pdf-kit",
+		"score": 0.89,
+		"performance": 0.55,
+		"accessibility": 1,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/id/projek/sdnteja2",
+		"score": 0.9,
+		"performance": 0.61,
+		"accessibility": 1,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/id/tentang",
+		"score": 0.94,
+		"performance": 0.82,
+		"accessibility": 1,
+		"best-practices": 1,
+		"seo": 0.92
+	},
+	{
+		"path": "/projects",
+		"score": 0.91,
+		"performance": 0.66,
+		"accessibility": 1,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/projects/budgetkuedu",
+		"score": 0.91,
+		"performance": 0.62,
+		"accessibility": 1,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/projects/buildernuxtui",
+		"score": 0.89,
+		"performance": 0.56,
+		"accessibility": 1,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/projects/ceklisguru",
+		"score": 0.81,
+		"performance": 0.44,
+		"accessibility": 1,
+		"best-practices": 0.81,
+		"seo": 1
+	},
+	{
+		"path": "/projects/hadis",
+		"score": 0.88,
+		"performance": 0.57,
+		"accessibility": 0.97,
+		"best-practices": 0.96,
+		"seo": 1
+	},
+	{
+		"path": "/projects/huewarna",
+		"score": 0.92,
+		"performance": 0.87,
+		"accessibility": 1,
+		"best-practices": 0.81,
+		"seo": 1
+	},
+	{
+		"path": "/projects/kkgdrspetomo",
+		"score": 0.86,
+		"performance": 0.64,
+		"accessibility": 1,
+		"best-practices": 0.81,
+		"seo": 1
+	},
+	{
+		"path": "/projects/nuxt-gsheet",
+		"score": 0.85,
+		"performance": 0.65,
+		"accessibility": 0.97,
+		"best-practices": 0.77,
+		"seo": 1
+	},
+	{
+		"path": "/projects/nuxt-pdf-kit",
+		"score": 0.93,
+		"performance": 0.7,
+		"accessibility": 1,
+		"best-practices": 1,
+		"seo": 1
+	},
+	{
+		"path": "/projects/sdnteja2",
+		"score": 0.95,
+		"performance": 0.81,
+		"accessibility": 1,
+		"best-practices": 1,
+		"seo": 1
+	}
 ]

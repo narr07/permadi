@@ -74,9 +74,7 @@ const homeSchema = z.object({
 
 	// Bagian Keahlian & Tech Stack Bento
 	skills_section: z.object({
-		code_label: property(z.string().optional()).editor({ label: 'Label Skill Koding' }),
-		code_title: property(z.string().optional()).editor({ label: 'Judul Skill Koding' }),
-		code_desc: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Skill Koding' }),
+		code_title: property(z.string().optional()).editor({ label: 'Judul Programming', description: 'Default: Programming' }),
 		code_items: z.array(z.object({
 			name: property(z.string()).editor({ label: 'Nama Teknologi', tooltip: 'Contoh: Nuxt & Vue 3, Flutter & Dart, Python' }),
 			icon: property(z.string().optional()).editor({
@@ -85,12 +83,10 @@ const homeSchema = z.object({
 				label: 'Pilih Ikon (Iconify / Path)',
 				description: 'Pilih ikon dari Iconify (Simple Icons, Hugeicons, dsb) atau ketik path file SVG lokal (misal: /icons/f-nuxt.svg)',
 			}),
-			role: property(z.string().optional()).editor({ label: 'Badge Singkat', tooltip: 'Contoh: Web & SSR, Mobile App, Logika Data' }),
-			desc: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Singkat' }),
+			role: property(z.string().optional()).editor({ hidden: true }),
+			desc: property(z.string().optional()).editor({ hidden: true }),
 		})).optional(),
-		design_label: property(z.string().optional()).editor({ label: 'Label Skill Desain' }),
-		design_title: property(z.string().optional()).editor({ label: 'Judul Skill Desain' }),
-		design_desc: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Skill Desain' }),
+		design_title: property(z.string().optional()).editor({ label: 'Judul Design', description: 'Default: Design' }),
 		design_items: z.array(z.object({
 			name: property(z.string()).editor({ label: 'Nama Software / Tool', tooltip: 'Contoh: Illustrator, Photoshop, Figma' }),
 			icon: property(z.string().optional()).editor({
@@ -99,9 +95,11 @@ const homeSchema = z.object({
 				label: 'Pilih Ikon (Iconify / Path)',
 				description: 'Pilih ikon dari Iconify (Simple Icons, Hugeicons, dsb) atau ketik path file SVG lokal (misal: /icons/d-illustrator.svg)',
 			}),
-			role: property(z.string().optional()).editor({ label: 'Badge Singkat', tooltip: 'Contoh: Vektor, Raster, UI System' }),
-			desc: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Singkat' }),
+			role: property(z.string().optional()).editor({ hidden: true }),
+			desc: property(z.string().optional()).editor({ hidden: true }),
 		})).optional(),
+		all_link_text: property(z.string().optional()).editor({ label: 'Teks Link Bawah', tooltip: 'Contoh: Eksplorasi Semua Karya & Studi Kasus' }),
+		all_link_to: property(z.string().optional()).editor({ label: 'Tautan Tujuan Link Bawah', tooltip: 'Default: /projek' }),
 	}).optional(),
 
 	// Tulisan & Catatan Terbaru (Paling Bawah / 12 Kolom Penuh)
@@ -119,6 +117,7 @@ const aboutSchema = z.object({
 	seo: hiddenSeo,
 	navigation: hiddenNavigation,
 
+	title: property(z.string().optional()).editor({ label: 'Judul Halaman (Meta Title)' }),
 	section_label: property(z.string().optional()).editor({ label: 'Label Halaman' }),
 	headline: property(z.string().optional()).editor({ label: 'Headline Halaman' }),
 	lead: property(z.string().optional()).editor({ input: 'textarea', label: 'Teks Pembuka (Lead)' }),
@@ -130,6 +129,7 @@ const aboutSchema = z.object({
 		lead: property(z.string().optional()).editor({ input: 'textarea', label: 'Lead Cerita' }),
 		bio: property(z.string().optional()).editor({ input: 'textarea', label: 'Biografi Singkat' }),
 		link_text: property(z.string().optional()).editor({ label: 'Teks Link' }),
+		link_to: property(z.string().optional()).editor({ label: 'Tautan Tujuan Link' }),
 	}).optional(),
 
 	toolkit_card: z.object({
@@ -139,6 +139,15 @@ const aboutSchema = z.object({
 			name: property(z.string()).editor({ label: 'Nama Tool/Teknologi' }),
 			desc: property(z.string()).editor({ label: 'Keterangan Singkat' }),
 		})).optional(),
+		footer: property(z.string().optional()).editor({ label: 'Teks Footer Toolkit' }),
+	}).optional(),
+
+	location_card: z.object({
+		label: property(z.string().optional()).editor({ label: 'Label Lokasi' }),
+		title: property(z.string().optional()).editor({ label: 'Lokasi Utama' }),
+		description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Lokasi' }),
+		timezone: property(z.string().optional()).editor({ label: 'Zona Waktu' }),
+		badge: property(z.string().optional()).editor({ label: 'Badge Ketersediaan' }),
 	}).optional(),
 
 	principles: z.array(z.object({
@@ -147,6 +156,7 @@ const aboutSchema = z.object({
 	})).optional(),
 
 	journey: z.object({
+		label: property(z.string().optional()).editor({ label: 'Label Perjalanan' }),
 		title: property(z.string().optional()).editor({ label: 'Judul Perjalanan' }),
 		description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Perjalanan' }),
 	}).optional(),
@@ -159,6 +169,7 @@ const contactSchema = z.object({
 	seo: hiddenSeo,
 	navigation: hiddenNavigation,
 
+	title: property(z.string().optional()).editor({ label: 'Judul Halaman (Meta Title)' }),
 	section_label: property(z.string().optional()).editor({ label: 'Label Halaman' }),
 	headline: property(z.string().optional()).editor({ label: 'Headline Kontak' }),
 	lead: property(z.string().optional()).editor({ input: 'textarea', label: 'Teks Pembuka (Lead)' }),
@@ -276,8 +287,8 @@ export default defineContentConfig({
 				prefix: '/blog',
 			},
 			schema: z.object({
-				seo: property(z.any().optional()).editor({ hidden: true }),
-				navigation: property(z.any().optional()).editor({ hidden: true }),
+				seo: hiddenSeo,
+				navigation: hiddenNavigation,
 				idItem: property(z.number().optional()).editor({ hidden: true }),
 				idBlog: property(z.number().optional()).editor({ hidden: true }),
 				readingTime: property(z.number().optional()).editor({ hidden: true }),
@@ -298,8 +309,8 @@ export default defineContentConfig({
 				prefix: '/id/blog',
 			},
 			schema: z.object({
-				seo: property(z.any().optional()).editor({ hidden: true }),
-				navigation: property(z.any().optional()).editor({ hidden: true }),
+				seo: hiddenSeo,
+				navigation: hiddenNavigation,
 				idItem: property(z.number().optional()).editor({ hidden: true }),
 				idBlog: property(z.number().optional()).editor({ hidden: true }),
 				readingTime: property(z.number().optional()).editor({ hidden: true }),
@@ -322,8 +333,8 @@ export default defineContentConfig({
 				prefix: '/projects',
 			},
 			schema: z.object({
-				seo: property(z.any().optional()).editor({ hidden: true }),
-				navigation: property(z.any().optional()).editor({ hidden: true }),
+				seo: hiddenSeo,
+				navigation: hiddenNavigation,
 				idItem: property(z.number().optional()).editor({ hidden: true }),
 				idProjek: property(z.number().optional()).editor({ hidden: true }),
 				readingTime: property(z.number().optional()).editor({ hidden: true }),
@@ -351,8 +362,8 @@ export default defineContentConfig({
 				prefix: '/id/projek',
 			},
 			schema: z.object({
-				seo: property(z.any().optional()).editor({ hidden: true }),
-				navigation: property(z.any().optional()).editor({ hidden: true }),
+				seo: hiddenSeo,
+				navigation: hiddenNavigation,
 				idItem: property(z.number().optional()).editor({ hidden: true }),
 				idProjek: property(z.number().optional()).editor({ hidden: true }),
 				readingTime: property(z.number().optional()).editor({ hidden: true }),

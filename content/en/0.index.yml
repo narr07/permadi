@@ -30,38 +30,24 @@ project_section:
   fallback_description: A collection of web systems case studies and modular design, from education tools to digital products.
   all_link_text: Browse All Work
 skills_section:
-  code_label: Web & Mobile Engineering
-  code_title: Nuxt, Flutter & Python
-  code_desc: Crafting high-performance web apps, cross-platform mobile experiences, and data automation scripts.
+  code_title: Programming
   code_items:
     - name: Nuxt & Vue 3
       icon: /icons/f-nuxt.svg
-      role: Web & SSR
-      desc: Modern web architecture, full-stack Nitro engine, and high performance.
     - name: Flutter & Dart
       icon: /icons/f-flutter.svg
-      role: Mobile App
-      desc: Android and iOS applications with responsive, reactive interfaces.
     - name: Python
       icon: /icons/b-python.svg
-      role: Logic & Data
-      desc: Numerical computation, script automation, and structured data handling.
-  design_label: Graphic & Interface Design
-  design_title: Adobe Suite & Figma
-  design_desc: Designing precise visual identity, raster/vector artwork, and modern interface design systems.
+  design_title: Design
   design_items:
     - name: Illustrator
       icon: /icons/d-illustrator.svg
-      role: Vector & Brand
-      desc: Precision logo design, typography, and digital vectors.
     - name: Photoshop
       icon: /icons/d-photoshop.svg
-      role: Raster Craft
-      desc: Raster visual manipulation and detailed photo retouching.
     - name: Figma
       icon: /icons/d-figma.svg
-      role: UI & Systems
-      desc: Interactive prototyping and component design systems.
+  all_link_text: Explore All Works & Case Studies
+  all_link_to: /projek
 writing:
   label: Recent Writing
   title: Notes on code, design, and education.

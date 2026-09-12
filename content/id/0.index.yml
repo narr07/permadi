@@ -31,38 +31,24 @@ project_section:
   fallback_description: Koleksi studi kasus sistem web dan eksplorasi desain modular, dari kebutuhan pendidikan hingga produk digital.
   all_link_text: Buka Semua Projek
 skills_section:
-  code_label: Rekayasa Web & Aplikasi
-  code_title: Nuxt, Flutter & Python
-  code_desc: Membangun aplikasi web performa tinggi, aplikasi mobile lintas platform, dan otomasi logika data.
+  code_title: Programming
   code_items:
     - name: Nuxt & Vue 3
       icon: /icons/f-nuxt.svg
-      role: Web & SSR
-      desc: Arsitektur web modern, full-stack Nitro, dan optimasi performa tinggi.
     - name: Flutter & Dart
       icon: /icons/f-flutter.svg
-      role: Mobile App
-      desc: Aplikasi Android dan iOS dengan antarmuka responsif dan reaktif.
     - name: Python
       icon: /icons/b-python.svg
-      role: Logika & Data
-      desc: Komputasi numerik, otomasi skrip, dan pengolahan data terstruktur.
-  design_label: Desain Grafis & Antarmuka
-  design_title: Adobe Suite & Figma
-  design_desc: Merancang identitas visual presisi, manipulasi grafis tingkat lanjut, dan sistem desain modern.
+  design_title: Design
   design_items:
     - name: Illustrator
       icon: /icons/d-illustrator.svg
-      role: Vektor & Brand
-      desc: Desain logo presisi, tipografi, dan ilustrasi digital.
     - name: Photoshop
       icon: /icons/d-photoshop.svg
-      role: Raster Craft
-      desc: Manipulasi visual raster dan pengolahan foto detail.
     - name: Figma
       icon: /icons/d-figma.svg
-      role: UI & Sistem
-      desc: Prototipe interaktif dan arsitektur desain komponen.
+  all_link_text: Eksplorasi Semua Karya & Studi Kasus
+  all_link_to: /projek
 writing:
   label: Tulisan & Catatan
   title: Catatan seputar web, desain, dan dunia pendidikan.

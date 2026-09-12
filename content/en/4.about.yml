@@ -1,17 +1,7 @@
 title: About Dinar Permadi Yusup | Teacher, Developer & Designer
 description: Get to know Dinar Permadi Yusup, an elementary school teacher and UPI alumnus blending mathematical logic, software engineering (Nuxt, Flutter, Python, PHP), and Adobe graphic design craft.
 headline: Calculating with care. Designing with purpose.
-journey:
-  title: Journey & Background
-  description: As an elementary school teacher graduated from Universitas Pendidikan Indonesia (UPI), my love for mathematics and logic naturally led me to code and graphic design. I blend pedagogical clarity with web & mobile development (Nuxt & Flutter) and Adobe Creative Cloud visual craft.
 lead: Bridging primary education, mathematical logic, software engineering, and visual design craft.
-principles:
-  - title: Mathematical Logic & Precision
-    description: Architecting efficient, clean, and modular code structures with consistent algorithmic logic.
-  - title: Graphic Design Craft
-    description: Composing visual layouts, harmonic color palettes, and expressive typography across the complete Adobe ecosystem.
-  - title: Real-World Performance
-    description: Ensuring every web app (Nuxt) and mobile app (Flutter) is lightning-fast, accessible, and delightful to use.
 section_label: A Little About Me
 story_card:
   label: Philosophy & Story
@@ -19,6 +9,7 @@ story_card:
   lead: A Universitas Pendidikan Indonesia (UPI) graduate passionate about numbers, coding modern web & mobile apps (Nuxt, Flutter, Python, PHP), and crafting graphic design systems.
   bio: Outside the classroom and code editor, you will find me exploring math puzzles, designing graphic assets, and creating interactive teaching media.
   link_text: Explore Project Case Studies
+  link_to: /projek
 toolkit_card:
   label: Toolkit & Frameworks
   title: Core Technologies & Software
@@ -35,3 +26,21 @@ toolkit_card:
       desc: Edge Database & Serverless Engine
     - name: UnoCSS & Tailwind
       desc: Design Tokens & Atomic Styling
+  footer: Nuxt 4 / UnoCSS / Cloudflare
+location_card:
+  label: Location & Timezone
+  title: Majalengka, Indonesia
+  description: Working remotely and collaborating with teams across the globe.
+  timezone: GMT+7
+  badge: Available Globally
+principles:
+  - title: Mathematical Logic & Precision
+    description: Architecting efficient, clean, and modular code structures with consistent algorithmic logic.
+  - title: Graphic Design Craft
+    description: Composing visual layouts, harmonic color palettes, and expressive typography across the complete Adobe ecosystem.
+  - title: Real-World Performance
+    description: Ensuring every web app (Nuxt) and mobile app (Flutter) is lightning-fast, accessible, and delightful to use.
+journey:
+  label: Background & Journey
+  title: Journey & Dedication
+  description: As an elementary school teacher graduated from Universitas Pendidikan Indonesia (UPI), my love for mathematics and logic naturally led me to code and graphic design. I blend pedagogical clarity with web & mobile development (Nuxt & Flutter) and Adobe Creative Cloud visual craft.

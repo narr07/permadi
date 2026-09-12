@@ -56,19 +56,20 @@ defineOgImage('Bento', {
 				:all-link-text="page?.project_section?.all_link_text"
 			/>
 
+			<!-- Row 2: Filosofi Bento (col-span-5) & Card Skills (col-span-7) -->
 			<LazyHomePhilosophy
 				hydrate-on-visible
 				:philosophy="page?.philosophy"
 			/>
 
-			<LazyHomeProgrammingSkills
+			<LazyHomeSkillsCard
 				hydrate-on-visible
 				:skills-data="page?.skills_section"
 			/>
 
-			<LazyHomeDesignSkills
+			<!-- Row 3: Svg Carousel (col-span-5) & Tulisan Terbaru (col-span-7) -->
+			<LazyHomeSvgCarousel
 				hydrate-on-visible
-				:skills-data="page?.skills_section"
 			/>
 
 			<LazyHomeLatestPosts

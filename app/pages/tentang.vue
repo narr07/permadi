@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { locale } = useI18n()
+const localePath = useLocalePath()
 const collection = computed(() => (locale.value === 'id' ? 'tentang_id' : 'tentang_en'))
 
 const { data: page } = await useAsyncData(
@@ -115,7 +116,7 @@ useSchemaOrg([
 
 				<div class="mt-8 flex items-center justify-between border-t border-slate-200/60 pt-4 text-xs text-brand-800 font-bold dark:border-slate-800/60 dark:text-brand-400">
 					<NuxtLink
-						:to="locale === 'id' ? '/id/projek' : '/projects'"
+						:to="localePath(page.story_card.link_to || '/projek')"
 						class="group flex items-center gap-1.5 hover:text-brand-950 hover:underline"
 					>
 						{{ page.story_card.link_text || (locale === 'id' ? 'Eksplorasi Studi Kasus Projek' : 'Explore Project Case Studies') }}
@@ -154,7 +155,7 @@ useSchemaOrg([
 					</ul>
 				</div>
 				<div class="mt-6 border-t border-slate-200/60 pt-3 text-xs text-slate-600 font-mono dark:border-slate-800/60 dark:text-slate-400">
-					Nuxt 4 / UnoCSS / Cloudflare
+					{{ page.toolkit_card.footer || 'Nuxt 4 / UnoCSS / Cloudflare' }}
 				</div>
 			</div>
 
@@ -162,39 +163,91 @@ useSchemaOrg([
 			<div class="sand-card-clean flex flex-col justify-between p-6 md:col-span-5 sm:p-7">
 				<div>
 					<span class="mb-2 block text-xs text-slate-800 font-semibold tracking-wider font-mono uppercase">
-						{{ locale === 'id' ? 'Lokasi & Zona Waktu' : 'Location & Timezone' }}
+						{{ page?.location_card?.label || (locale === 'id' ? 'Lokasi & Zona Waktu' : 'Location & Timezone') }}
 					</span>
 					<h3 class="mb-2 text-2xl text-brand-950 font-semibold font-heading dark:text-brand-950">
-						Majalengka, Indonesia
+						{{ page?.location_card?.title || 'Majalengka, Indonesia' }}
 					</h3>
 					<p class="text-xs text-slate-800 leading-relaxed sm:text-sm">
-						{{ locale === 'id' ? 'Bekerja secara remote dan berkolaborasi dengan tim di berbagai belahan dunia.' : 'Working remotely and collaborating with teams across the globe.' }}
+						{{ page?.location_card?.description || (locale === 'id' ? 'Bekerja secara remote dan berkolaborasi dengan tim di berbagai belahan dunia.' : 'Working remotely and collaborating with teams across the globe.') }}
 					</p>
 				</div>
 				<div class="mt-6 flex items-center justify-between border-t border-slate-900/10 pt-3 text-xs text-slate-800 font-mono">
 					<span class="flex items-center gap-1">
-						<span class="i-hugeicons-location-01 text-sm text-slate-900" /> GMT+7
+						<span class="i-hugeicons-location-01 text-sm text-slate-900" />
+						{{ page?.location_card?.timezone || 'GMT+7' }}
 					</span>
-					<span>Available Globally</span>
+					<span>{{ page?.location_card?.badge || 'Available Globally' }}</span>
 				</div>
 			</div>
 
-			<!-- Digital Philosophy Card (Span 7) -->
+			<!-- Digital Philosophy & Core Principles Card (Span 7) -->
 			<div class="hero-card-clean flex flex-col justify-between p-6 md:col-span-7 sm:p-8">
 				<div>
 					<span class="mb-3 block text-xs text-brand-300 font-semibold tracking-widest uppercase">
-						Core Principles
+						{{ locale === 'id' ? 'Prinsip Utama' : 'Core Principles' }}
 					</span>
-					<h3 class="mb-3 text-2xl text-white font-semibold leading-tight font-heading sm:text-3xl">
-						{{ locale === 'id' ? 'Kecepatan, Tipografi Presisi, dan Kode yang Bersih.' : 'Speed, Typographic Precision, and Maintainable Code.' }}
-					</h3>
-					<p class="max-w-lg text-xs text-slate-300 leading-relaxed sm:text-sm">
-						{{ locale === 'id' ? 'Setiap baris kode dan elemen antarmuka dirancang dengan tujuan yang jelas: memberikan interaksi yang cepat, aksesibel, dan tahan lama.' : 'Every line of code and interface element is built with intention: delivering fast, accessible, and durable digital products.' }}
-					</p>
+					<div
+						v-if="page?.principles && page.principles.length > 0"
+						class="space-y-3"
+					>
+						<div
+							v-for="p in page.principles"
+							:key="p.title"
+							class="border-b border-brand-900/60 pb-3 last:border-b-0 last:pb-0"
+						>
+							<h4 class="text-sm text-white font-semibold font-heading sm:text-base">
+								{{ p.title }}
+							</h4>
+							<p class="mt-1 text-xs text-slate-300 leading-relaxed">
+								{{ p.description }}
+							</p>
+						</div>
+					</div>
+					<div v-else>
+						<h3 class="mb-3 text-2xl text-white font-semibold leading-tight font-heading sm:text-3xl">
+							{{ locale === 'id' ? 'Kecepatan, Tipografi Presisi, dan Kode yang Bersih.' : 'Speed, Typographic Precision, and Maintainable Code.' }}
+						</h3>
+						<p class="max-w-lg text-xs text-slate-300 leading-relaxed sm:text-sm">
+							{{ locale === 'id' ? 'Setiap baris kode dan elemen antarmuka dirancang dengan tujuan yang jelas: memberikan interaksi yang cepat, aksesibel, dan tahan lama.' : 'Every line of code and interface element is built with intention: delivering fast, accessible, and durable digital products.' }}
+						</p>
+					</div>
 				</div>
 				<div class="mt-6 flex items-center justify-between border-t border-brand-900/60 pt-3 text-xs text-brand-300">
 					<span>Crafted with Intention</span>
 					<span>© {{ new Date().getFullYear() }}</span>
+				</div>
+			</div>
+
+			<!-- Journey & Dedication Section (Span 12) -->
+			<div
+				v-if="page?.journey"
+				class="bento-card-clean flex flex-col items-start justify-between gap-6 p-6 md:col-span-12 md:flex-row sm:p-8"
+			>
+				<div class="max-w-2xl">
+					<span class="mb-2 block section-label text-brand-700 dark:text-brand-400">
+						{{ page.journey.label || (locale === 'id' ? 'Latar Belakang & Perjalanan' : 'Background & Journey') }}
+					</span>
+					<h3 class="mb-3 text-2xl text-slate-900 font-semibold leading-tight font-heading sm:text-3xl dark:text-white">
+						{{ page.journey.title }}
+					</h3>
+					<p class="text-sm text-slate-700 leading-relaxed sm:text-base dark:text-slate-300">
+						{{ page.journey.description }}
+					</p>
+				</div>
+				<div class="flex shrink-0 items-center gap-3">
+					<NuxtLink
+						:to="localePath('/projek')"
+						class="btn-brand text-xs font-semibold"
+					>
+						{{ locale === 'id' ? 'Lihat Portofolio' : 'View Portfolio' }}
+					</NuxtLink>
+					<NuxtLink
+						:to="localePath('/kontak')"
+						class="btn-ghost text-xs font-semibold"
+					>
+						{{ locale === 'id' ? 'Hubungi Saya' : 'Get in Touch' }}
+					</NuxtLink>
 				</div>
 			</div>
 		</div>
