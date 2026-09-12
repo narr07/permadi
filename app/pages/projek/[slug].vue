@@ -17,34 +17,66 @@ function cleanSlug(pathStr: string): string {
 const { data: project } = await useAsyncData(
 	() => `projek-item-${locale.value}-${requestedSlug.value}`,
 	async () => {
-		const colName = collection.value
-		const allProjects = await queryCollection(colName).all()
-		let matched = allProjects.find((p: any) => {
-			return p.slug === requestedSlug.value || cleanSlug(p.path) === requestedSlug.value
-		})
+		const colName = collection.value as any
 
-		// Fallback: Jika slug bahasa lain diakses
+		// 1. Cari langsung berdasarkan slug atau path di koleksi saat ini
+		let matched = await queryCollection(colName)
+			.where('slug', '=', requestedSlug.value)
+			.first()
+
+		if (!matched) {
+			const currentPrefix = locale.value === 'id' ? '/id/projek' : '/projects'
+			matched = await queryCollection(colName)
+				.where('path', 'LIKE', `${currentPrefix}/%${requestedSlug.value}`)
+				.first()
+		}
+
+		// 2. Fallback: Jika slug bahasa lain diakses, cari di koleksi alternatif via idProjek
 		if (!matched) {
 			const otherCol = (locale.value === 'id' ? 'projek_en' : 'projek_id') as any
-			const otherProjects = await queryCollection(otherCol).select('path', 'slug', 'idProjek', 'idItem').all()
-			const otherMatched = otherProjects.find((p: any) => {
-				return p.slug === requestedSlug.value || cleanSlug(p.path) === requestedSlug.value
-			})
+			const otherPrefix = locale.value === 'id' ? '/projects' : '/id/projek'
+			let otherMatched = await queryCollection(otherCol)
+				.where('slug', '=', requestedSlug.value)
+				.select('idProjek', 'idItem')
+				.first()
+
+			if (!otherMatched) {
+				otherMatched = await queryCollection(otherCol)
+					.where('path', 'LIKE', `${otherPrefix}/%${requestedSlug.value}`)
+					.select('idProjek', 'idItem')
+					.first()
+			}
+
 			if (otherMatched) {
-				matched = allProjects.find((p: any) => p.idProjek === otherMatched.idProjek || p.idItem === otherMatched.idItem)
+				const matchId = otherMatched.idProjek || otherMatched.idItem
+				matched = await queryCollection(colName)
+					.where('idProjek', '=', matchId)
+					.first()
 			}
 		}
 
 		if (!matched)
 			return null
 
-		// Cari padanan projek di bahasa lain berdasarkan idProjek / idItem
+		// 3. Cari padanan projek di bahasa lain berdasarkan idProjek / idItem secara presisi
 		const translations: Record<string, { slug: string }> = {}
+		const matchId = matched.idProjek || matched.idItem
+
 		for (const loc of locales.value) {
 			const locCode = typeof loc === 'string' ? loc : loc.code
+			if (locCode === locale.value) {
+				translations[locCode] = {
+					slug: matched.slug || cleanSlug(matched.path),
+				}
+				continue
+			}
+
 			const locCol = (locCode === 'id' ? 'projek_id' : 'projek_en') as any
-			const locProjects = await queryCollection(locCol).select('path', 'slug', 'idProjek', 'idItem').all()
-			const trDoc = locProjects.find((p: any) => p.idProjek === matched.idProjek || p.idItem === matched.idItem)
+			const trDoc = await queryCollection(locCol)
+				.where('idProjek', '=', matchId)
+				.select('path', 'slug')
+				.first()
+
 			if (trDoc) {
 				translations[locCode] = {
 					slug: trDoc.slug || cleanSlug(trDoc.path),

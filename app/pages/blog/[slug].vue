@@ -46,33 +46,64 @@ function cleanSlug(pathStr: string): string {
 const { data: post } = await useAsyncData(
 	() => `blog-post-${locale.value}-${requestedSlug.value}`,
 	async () => {
-		const allPosts = await queryCollection(collection.value).all()
-		let matched = allPosts.find((p: any) => {
-			return p.slug === requestedSlug.value || cleanSlug(p.path) === requestedSlug.value
-		})
+		// 1. Cari langsung berdasarkan slug atau path di koleksi saat ini
+		let matched = await queryCollection(collection.value)
+			.where('slug', '=', requestedSlug.value)
+			.first()
 
-		// Fallback: Jika slug bahasa lain diakses di locale ini, temukan padanannya via idBlog
+		if (!matched) {
+			const currentPrefix = locale.value === 'id' ? '/id/blog' : '/blog'
+			matched = await queryCollection(collection.value)
+				.where('path', 'LIKE', `${currentPrefix}/%${requestedSlug.value}`)
+				.first()
+		}
+
+		// 2. Fallback: Jika slug bahasa lain diakses di locale ini, temukan padanannya via idBlog
 		if (!matched) {
 			const otherCollection = (locale.value === 'id' ? 'blog_en' : 'blog_id') as any
-			const otherPosts = await queryCollection(otherCollection).select('path', 'slug', 'idBlog', 'idItem').all()
-			const otherMatched = otherPosts.find((p: any) => {
-				return p.slug === requestedSlug.value || cleanSlug(p.path) === requestedSlug.value
-			})
+			const otherPrefix = locale.value === 'id' ? '/blog' : '/id/blog'
+			let otherMatched = await queryCollection(otherCollection)
+				.where('slug', '=', requestedSlug.value)
+				.select('idBlog', 'idItem')
+				.first()
+
+			if (!otherMatched) {
+				otherMatched = await queryCollection(otherCollection)
+					.where('path', 'LIKE', `${otherPrefix}/%${requestedSlug.value}`)
+					.select('idBlog', 'idItem')
+					.first()
+			}
+
 			if (otherMatched) {
-				matched = allPosts.find((p: any) => p.idBlog === otherMatched.idBlog || p.idItem === otherMatched.idItem)
+				const matchId = otherMatched.idBlog || otherMatched.idItem
+				matched = await queryCollection(collection.value)
+					.where('idBlog', '=', matchId)
+					.first()
 			}
 		}
 
 		if (!matched)
 			return null
 
-		// Cari padanan artikel di semua bahasa terdaftar berdasarkan idBlog / idItem
+		// 3. Cari padanan artikel di bahasa lain berdasarkan idBlog / idItem secara presisi
 		const translations: Record<string, { slug: string }> = {}
+		const matchId = matched.idBlog || matched.idItem
+
 		for (const loc of locales.value) {
 			const locCode = typeof loc === 'string' ? loc : loc.code
+			if (locCode === locale.value) {
+				translations[locCode] = {
+					slug: matched.slug || cleanSlug(matched.path),
+				}
+				continue
+			}
+
 			const locCol = (locCode === 'id' ? 'blog_id' : 'blog_en') as any
-			const locPosts = await queryCollection(locCol).select('path', 'slug', 'idBlog', 'idItem').all()
-			const trDoc = locPosts.find((p: any) => p.idBlog === matched.idBlog || p.idItem === matched.idItem)
+			const trDoc = await queryCollection(locCol)
+				.where('idBlog', '=', matchId)
+				.select('path', 'slug')
+				.first()
+
 			if (trDoc) {
 				translations[locCode] = {
 					slug: trDoc.slug || cleanSlug(trDoc.path),

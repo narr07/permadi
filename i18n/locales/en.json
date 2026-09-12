@@ -38,7 +38,7 @@
 		"title": "Stay Updated",
 		"description": "Get technical articles, design insights, and new project deep dives straight to your inbox. No spam.",
 		"placeholder": "your{'@'}email.com…",
-		"button": "Get New Articles",
+		"button": "Subscribe",
 		"subscribing": "Subscribing…",
 		"success": "Thank you! You have subscribed to new article updates.",
 		"already_subscribed": "Your email is already subscribed.",
