@@ -457,7 +457,7 @@ useSchemaOrg([
 					</header>
 
 					<!-- Prose Content -->
-					<div class="max-w-full min-w-0 text-slate-700 leading-relaxed font-sans prose prose-slate prose-sm dark:text-brand-200 dark:prose-invert !prose-h1:dark:text-accent !prose-h2:dark:text-accent !prose-h3:dark:text-brand-200 !prose-h4:dark:text-accent">
+					<div class="max-w-full min-w-0 text-slate-700 leading-relaxed font-sans prose prose-slate prose-sm dark:text-brand-200 dark:prose-invert !prose-h2:text-brand-900 !prose-h3:text-brand-800 !prose-h2:dark:text-accent !prose-h3:dark:text-brand-200 !prose-h4:dark:text-accent">
 						<ContentRenderer :value="post.doc" />
 
 						<!-- Inline Bento Reactions Box at End of Article -->
@@ -486,7 +486,7 @@ useSchemaOrg([
 							<NuxtLink
 								v-if="surround[0]"
 								:to="locale === 'id' ? `/id/blog/${surround[0].slug || cleanSlug(surround[0].path)}` : `/blog/${surround[0].slug || cleanSlug(surround[0].path)}`"
-								class="group shadow-xs bento-card-clean flex flex-col justify-between border bento-lift border-slate-200/90 rounded-2xl bg-white p-5 transition-all duration-200 dark:border-slate-800/90 hover:border-brand-500/40 dark:bg-slate-950 sm:p-5.5 !no-underline hover:shadow-md dark:hover:border-brand-400/35"
+								class="group bento-card-clean flex flex-col justify-between border bento-lift border-slate-200/90 rounded-2xl bg-white p-5 shadow-xs transition-all duration-200 dark:border-slate-800/90 hover:border-brand-500/40 dark:bg-slate-950 sm:p-5.5 !no-underline hover:shadow-md dark:hover:border-brand-400/35"
 							>
 								<div class="flex items-center gap-2.5">
 									<div class="size-8 flex shrink-0 items-center justify-center border border-brand-500/25 rounded-xl bg-brand-500/10 text-brand-600 transition-all duration-200 dark:border-brand-500/20 group-hover:border-brand-500 dark:bg-brand-500/15 group-hover:bg-brand-500 dark:text-brand-400 group-hover:text-white">
@@ -512,7 +512,7 @@ useSchemaOrg([
 							<NuxtLink
 								v-if="surround[1]"
 								:to="locale === 'id' ? `/id/blog/${surround[1].slug || cleanSlug(surround[1].path)}` : `/blog/${surround[1].slug || cleanSlug(surround[1].path)}`"
-								class="group shadow-xs bento-card-clean flex flex-col justify-between border bento-lift border-slate-200/90 rounded-2xl bg-white p-5 transition-all duration-200 dark:border-slate-800/90 hover:border-brand-500/40 dark:bg-slate-950 sm:p-5.5 !no-underline hover:shadow-md dark:hover:border-brand-400/35"
+								class="group bento-card-clean flex flex-col justify-between border bento-lift border-slate-200/90 rounded-2xl bg-white p-5 shadow-xs transition-all duration-200 dark:border-slate-800/90 hover:border-brand-500/40 dark:bg-slate-950 sm:p-5.5 !no-underline hover:shadow-md dark:hover:border-brand-400/35"
 							>
 								<div class="flex items-center justify-end gap-2.5">
 									<span class="text-[11px] text-slate-500 font-bold tracking-wider font-mono uppercase dark:text-slate-400 group-hover:text-brand-700 dark:group-hover:text-brand-300">

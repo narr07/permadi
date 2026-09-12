@@ -404,7 +404,7 @@ onMounted(() => {
 							<span class="flex items-center gap-1.5 border border-white/10 rounded-full bg-slate-900/80 px-2.5 py-1 text-xs text-white font-semibold backdrop-blur-md">
 								<span class="i-hugeicons-image-02 text-xs text-brand-400" /> {{ locale === 'id' ? 'Tampilan Utama' : 'Featured Preview' }}
 							</span>
-							<span class="shadow-xs rounded-full bg-brand-500/90 px-2.5 py-1 text-xs text-white font-medium backdrop-blur-md">
+							<span class="rounded-full bg-brand-500/90 px-2.5 py-1 text-xs text-white font-medium shadow-xs backdrop-blur-md">
 								{{ locale === 'id' ? 'Buka Pratinjau' : 'Open Preview' }}
 							</span>
 						</div>

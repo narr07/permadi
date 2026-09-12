@@ -33,7 +33,7 @@ const headingId = computed(() => {
 <template>
 	<aside
 		:id="headingId"
-		class="conclusion-card shadow-xs bento-card-clean relative my-8 overflow-hidden border border-slate-200 rounded-2xl bg-white p-6 transition-all duration-300 dark:border-slate-800 dark:bg-slate-950 sm:p-7"
+		class="conclusion-card bento-card-clean relative my-8 overflow-hidden border border-slate-200 rounded-2xl bg-white p-6 shadow-xs transition-all duration-300 dark:border-slate-800 dark:bg-slate-950 sm:p-7"
 		:class="props.class"
 	>
 		<div class="dark:border-slate-850 mb-4.5 flex items-center gap-3.5 border-b border-slate-100 pb-4">

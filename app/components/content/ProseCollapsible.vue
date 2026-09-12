@@ -25,7 +25,7 @@ const isOpen = ref(props.defaultOpen)
 
 <template>
 	<div
-		class="shadow-xs my-6 overflow-hidden border border-[#115e4f]/25 rounded-2xl bg-white/70 backdrop-blur-md dark:border-[#134e43]/60 dark:bg-[#001c19]/80"
+		class="my-6 overflow-hidden border border-[#115e4f]/25 rounded-2xl bg-white/70 shadow-xs backdrop-blur-md dark:border-[#134e43]/60 dark:bg-[#001c19]/80"
 		:class="props.class"
 	>
 		<button

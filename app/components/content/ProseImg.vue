@@ -112,7 +112,7 @@ onUnmounted(() => {
 			:tabindex="isZoomEnabled ? 0 : undefined"
 			:role="isZoomEnabled ? 'button' : undefined"
 			:aria-label="isZoomEnabled ? `Perbesar gambar: ${resolvedAlt}` : undefined"
-			class="shadow-xs mx-auto block h-auto max-w-full border border-slate-200/80 rounded-2xl transition-all duration-300 dark:border-[#134e43]/70 hover:shadow-md focus-ring"
+			class="mx-auto block h-auto max-w-full border border-slate-200/80 rounded-2xl shadow-xs transition-all duration-300 dark:border-[#134e43]/70 hover:shadow-md focus-ring"
 			:class="[
 				isZoomEnabled ? 'cursor-zoom-in hover:brightness-[1.02]' : '',
 				props.class,

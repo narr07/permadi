@@ -33,5 +33,17 @@
 		"tech_stack_title": "Tech Stack",
 		"connect_title": "Connect",
 		"newsletter_title": "Newsletter"
+	},
+	"newsletter": {
+		"title": "Stay Updated",
+		"description": "Get technical articles, design insights, and new project deep dives straight to your inbox. No spam.",
+		"placeholder": "your{'@'}email.com…",
+		"button": "Get New Articles",
+		"subscribing": "Subscribing…",
+		"success": "Thank you! You have subscribed to new article updates.",
+		"already_subscribed": "Your email is already subscribed.",
+		"error_required": "Email is required",
+		"error_invalid": "Invalid email format",
+		"error_failed": "Failed to subscribe. Please try again later."
 	}
 }

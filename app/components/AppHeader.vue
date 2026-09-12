@@ -260,7 +260,7 @@ onUnmounted(() => {
 				>
 					<!-- Animated Sliding Pill Indicator -->
 					<div
-						class="shadow-xs pointer-events-none absolute bottom-0.5 left-0.5 top-0.5 w-[calc(50%-2px)] rounded-full bg-white transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] dark:bg-slate-700"
+						class="pointer-events-none absolute bottom-0.5 left-0.5 top-0.5 w-[calc(50%-2px)] rounded-full bg-white shadow-xs transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] dark:bg-slate-700"
 						:style="{ transform: locale === 'id' ? 'translateX(100%)' : 'translateX(0%)' }"
 					/>
 
@@ -349,7 +349,7 @@ onUnmounted(() => {
 						<div class="relative grid grid-cols-2 select-none items-center border border-brand-200/50 rounded-xl bg-brand-100 p-1 text-xs font-semibold dark:border-brand-700/50 dark:bg-slate-800/80">
 							<!-- Animated Sliding Pill Indicator -->
 							<div
-								class="shadow-xs pointer-events-none absolute bottom-1 left-1 top-1 w-[calc(50%-4px)] rounded-lg bg-brand-300 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] dark:bg-brand-700"
+								class="pointer-events-none absolute bottom-1 left-1 top-1 w-[calc(50%-4px)] rounded-lg bg-brand-300 shadow-xs transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] dark:bg-brand-700"
 								:style="{ transform: locale === 'id' ? 'translateX(100%)' : 'translateX(0%)' }"
 							/>
 
@@ -394,7 +394,7 @@ onUnmounted(() => {
 				>
 					<!-- Sliding Bento Indicator Pill -->
 					<div
-						class="shadow-xs pointer-events-none absolute bottom-1 left-0 top-1 border border-brand-500/30 rounded-xl bg-brand-500/15 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform dark:border-brand-400/30 dark:bg-brand-400/20"
+						class="pointer-events-none absolute bottom-1 left-0 top-1 border border-brand-500/30 rounded-xl bg-brand-500/15 shadow-xs transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform dark:border-brand-400/30 dark:bg-brand-400/20"
 						:style="{
 							transform: mobileIndicatorStyle.transform,
 							width: mobileIndicatorStyle.width,

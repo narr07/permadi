@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Motion } from 'motion-v'
+
 export interface ArchiveData {
 	label?: string
 	title?: string
@@ -31,7 +32,7 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/gall
 	>
 		<NuxtLink
 			:to="targetPath"
-			class="group bento-card-clean block flex flex-col h-full justify-between p-6 opacity-0 sm:p-7"
+			class="group bento-card-clean block h-full flex flex-col justify-between p-6 opacity-0 sm:p-7"
 		>
 			<div>
 				<div class="mb-3 flex items-center justify-between">

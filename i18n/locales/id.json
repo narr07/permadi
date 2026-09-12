@@ -33,5 +33,17 @@
 		"tech_stack_title": "Tech Stack",
 		"connect_title": "Terhubung",
 		"newsletter_title": "Newsletter"
+	},
+	"newsletter": {
+		"title": "Info Artikel Terbaru",
+		"description": "Dapatkan tulisan teknis, insight desain, dan artikel terbaru langsung di inbox email kamu. Bebas spam.",
+		"placeholder": "email{'@'}kamu.com…",
+		"button": "Subscribe",
+		"subscribing": "Mengirim…",
+		"success": "Terima kasih telah berlangganan!",
+		"already_subscribed": "Email kamu sudah terdaftar sebelumnya.",
+		"error_required": "Email wajib diisi",
+		"error_invalid": "Format email tidak valid",
+		"error_failed": "Gagal berlangganan. Silakan coba lagi nanti."
 	}
 }

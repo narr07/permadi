@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Motion } from 'motion-v'
+
 defineProps<{
 	galleryItem?: any
 	label?: string
@@ -22,7 +23,7 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/gall
 		<NuxtLink
 			:to="targetPath"
 			:aria-label="`${label || (locale === 'id' ? 'Eksplorasi Saat Ini' : 'Currently Exploring')}: ${text || (locale === 'id' ? 'Antarmuka yang terasa natural.' : 'Interfaces that feel inevitable.')}`"
-			class="group bento-card-clean block flex h-full flex-col justify-between overflow-hidden opacity-0 !p-0"
+			class="group bento-card-clean block h-full flex flex-col justify-between overflow-hidden opacity-0 !p-0"
 		>
 			<div class="relative aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
 				<img

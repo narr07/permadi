@@ -67,21 +67,21 @@ function formatNumber(num: number): string {
 
 			<!-- 3 Main Metrics Grid (Bento Style) -->
 			<div class="grid grid-cols-3 gap-2 py-1 text-center sm:gap-2.5">
-				<div class="shadow-xs flex flex-col items-center border border-slate-200/70 rounded-xl bg-slate-50/80 p-2 dark:border-slate-800/70 dark:bg-slate-800/50 sm:p-2.5">
+				<div class="flex flex-col items-center border border-slate-200/70 rounded-xl bg-slate-50/80 p-2 shadow-xs dark:border-slate-800/70 dark:bg-slate-800/50 sm:p-2.5">
 					<span class="text-[11px] text-meta text-slate-600 font-medium dark:text-slate-400">Views</span>
 					<span class="mt-0.5 text-base text-slate-950 font-bold font-mono sm:text-lg dark:text-slate-50">
 						{{ formatNumber(views) }}
 					</span>
 				</div>
 
-				<div class="shadow-xs flex flex-col items-center border border-slate-200/70 rounded-xl bg-slate-50/80 p-2 dark:border-slate-800/70 dark:bg-slate-800/50 sm:p-2.5">
+				<div class="flex flex-col items-center border border-slate-200/70 rounded-xl bg-slate-50/80 p-2 shadow-xs dark:border-slate-800/70 dark:bg-slate-800/50 sm:p-2.5">
 					<span class="text-[11px] text-meta text-slate-600 font-medium dark:text-slate-400">Shares</span>
 					<span class="mt-0.5 text-base text-brand-700 font-bold font-mono sm:text-lg dark:text-brand-400">
 						{{ formatNumber(shares) }}
 					</span>
 				</div>
 
-				<div class="shadow-xs flex flex-col items-center border border-slate-200/70 rounded-xl bg-slate-50/80 p-2 dark:border-slate-800/70 dark:bg-slate-800/50 sm:p-2.5">
+				<div class="flex flex-col items-center border border-slate-200/70 rounded-xl bg-slate-50/80 p-2 shadow-xs dark:border-slate-800/70 dark:bg-slate-800/50 sm:p-2.5">
 					<span class="text-[11px] text-meta text-slate-600 font-medium dark:text-slate-400">Reactions</span>
 					<span class="mt-0.5 text-base text-accent font-bold font-mono sm:text-lg">
 						{{ formatNumber(reactionsTotal) }}

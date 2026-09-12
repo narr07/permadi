@@ -190,6 +190,8 @@ export default defineNuxtConfig({
 		cloudinaryCloudName: process.env.NUXT_CLOUDINARY_CLOUD_NAME || 'daton7ry4',
 		cloudinaryApiKey: process.env.NUXT_CLOUDINARY_API_KEY || '',
 		cloudinaryApiSecret: process.env.NUXT_CLOUDINARY_API_SECRET || '',
+		resendApiKey: process.env.RESEND_API_KEY || '',
+		resendAudienceId: process.env.RESEND_AUDIENCE_ID || '',
 		public: {
 			googleAnalyticsId: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID || '',
 			fbAppId: process.env.NUXT_PUBLIC_FB_APP_ID || '',

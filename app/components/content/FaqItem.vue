@@ -48,7 +48,7 @@ function handleToggle() {
 
 <template>
 	<div
-		class="bento-faq-item shadow-xs overflow-hidden border border-slate-200/90 rounded-2xl bg-white transition-all duration-200 dark:border-slate-800/90 dark:bg-slate-950"
+		class="bento-faq-item overflow-hidden border border-slate-200/90 rounded-2xl bg-white shadow-xs transition-all duration-200 dark:border-slate-800/90 dark:bg-slate-950"
 		:class="[
 			isOpen
 				? 'border-brand-500/50 ring-1 ring-brand-500/25 dark:border-brand-400/40 dark:ring-brand-400/20 shadow-sm'

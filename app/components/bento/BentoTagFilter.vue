@@ -81,7 +81,7 @@ function resetFilter() {
 
 <template>
 	<div class="relative z-30 mb-8 w-full">
-		<div class="shadow-xs flex items-center justify-between gap-4 border border-slate-200/80 rounded-2xl bg-white/80 p-2 backdrop-blur-md dark:border-[#134e43]/60 dark:bg-[#001412]/80 sm:p-2.5">
+		<div class="flex items-center justify-between gap-4 border border-slate-200/80 rounded-2xl bg-white/80 p-2 shadow-xs backdrop-blur-md dark:border-[#134e43]/60 dark:bg-[#001412]/80 sm:p-2.5">
 			<!-- Dropdown Selector Button Only -->
 			<div
 				ref="dropdownRef"

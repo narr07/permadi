@@ -59,7 +59,7 @@ useSchemaOrg([
 						</div>
 
 						<!-- Logo Compact Badge di Mobile -->
-						<div class="shadow-xs flex shrink-0 items-center justify-center border border-slate-200/70 rounded-xl bg-white p-1.5 md:hidden dark:border-slate-700/60 dark:bg-slate-800/80">
+						<div class="flex shrink-0 items-center justify-center border border-slate-200/70 rounded-xl bg-white p-1.5 shadow-xs md:hidden dark:border-slate-700/60 dark:bg-slate-800/80">
 							<Logo :size="36" />
 						</div>
 					</div>
@@ -75,7 +75,7 @@ useSchemaOrg([
 
 				<!-- Sisi Kanan: Interactive Logo Bento Widget (Desktop) -->
 				<div class="hidden shrink-0 items-center justify-center md:flex">
-					<div class="shadow-xs flex items-center justify-center border border-slate-200/70 rounded-2xl bg-white p-4 transition-colors duration-100 dark:border-slate-700/60 hover:border-brand-500 dark:bg-slate-800/80 dark:hover:border-brand-400">
+					<div class="flex items-center justify-center border border-slate-200/70 rounded-2xl bg-white p-4 shadow-xs transition-colors duration-100 dark:border-slate-700/60 hover:border-brand-500 dark:bg-slate-800/80 dark:hover:border-brand-400">
 						<Logo :size="84" />
 					</div>
 				</div>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const { locale, t } = useI18n()
-const localePath = useLocalePath()
 
 const currentYear = new Date().getFullYear()
 
@@ -26,15 +25,6 @@ function scrollToTop() {
 		window.scrollTo({ top: 0, behavior: 'smooth' })
 	}
 }
-
-const navLinks = computed(() => [
-	{ label: t('nav.home', locale.value === 'id' ? 'Beranda' : 'Home'), to: localePath('/') },
-	{ label: t('nav.blog', 'Blog'), to: localePath('/blog') },
-	{ label: t('nav.projects', locale.value === 'id' ? 'Projek' : 'Projects'), to: locale.value === 'id' ? '/id/projek' : '/projects' },
-	{ label: t('nav.gallery', locale.value === 'id' ? 'Galeri' : 'Gallery'), to: locale.value === 'id' ? '/id/galeri' : '/gallery' },
-	{ label: t('nav.about', locale.value === 'id' ? 'Tentang' : 'About'), to: locale.value === 'id' ? '/id/tentang' : '/about' },
-	{ label: t('nav.contact', locale.value === 'id' ? 'Kontak' : 'Contact'), to: locale.value === 'id' ? '/id/kontak' : '/contact' },
-])
 
 const socialLinks = [
 	{
@@ -81,6 +71,31 @@ const socialLinks = [
 		<div class="container-bento">
 			<!-- Bento Grid Layout -->
 			<div class="grid grid-cols-1 gap-4 lg:grid-cols-12 md:grid-cols-12 sm:gap-5">
+				<!-- Bento Card: Newsletter Subscription (12 Cols) -->
+				<div class="bento-card-subtle p-6 lg:col-span-12 md:col-span-12 sm:p-7">
+					<div class="flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
+						<div class="max-w-xl">
+							<div class="mb-1.5 flex items-center gap-2">
+								<span class="h-6 w-6 inline-flex items-center justify-center rounded-lg bg-brand-100 text-brand-900 dark:bg-brand-950 dark:text-brand-300">
+									<span class="i-hugeicons-mail-01 text-xs" />
+								</span>
+								<span class="kicker text-[11px]">
+									{{ t('sections.newsletter_title', 'Newsletter') }}
+								</span>
+							</div>
+							<h3 class="text-base text-slate-900 font-bold tracking-tight sm:text-lg dark:text-white">
+								{{ t('newsletter.title', 'Info Artikel Terbaru') }}
+							</h3>
+							<p class="mt-1 text-xs text-slate-600 sm:text-sm dark:text-slate-400">
+								{{ t('newsletter.description', 'Dapatkan tulisan teknis, insight desain, dan artikel terbaru langsung di inbox email kamu. Bebas spam.') }}
+							</p>
+						</div>
+
+						<div class="w-full lg:max-w-md">
+							<NewsletterForm />
+						</div>
+					</div>
+				</div>
 
 				<div class="bento-card-subtle p-5 lg:col-span-12 md:col-span-12 sm:p-6">
 					<div class="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
