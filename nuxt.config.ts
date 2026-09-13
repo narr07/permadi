@@ -25,7 +25,7 @@ export default defineNuxtConfig({
 	vitalizer: {
 		disableStylesheets: true,
 		disablePrefetchLinks: true,
-		disablePreloadLinks: true,
+		disablePreloadLinks: false,
 	},
 	a11y: {
 		defaultHighlight: false,
@@ -371,6 +371,14 @@ export default defineNuxtConfig({
 			const wordsPerMinute = 180
 			const wordCount = text.split(/\s+/).filter(Boolean).length
 			ctx.content.readingTime = Math.max(1, Math.ceil(wordCount / wordsPerMinute))
+		},
+		'build:manifest': function (manifest: Record<string, any>) {
+			for (const entry of Object.values(manifest)) {
+				// Suppress script preloads to eliminate head burst, while keeping font preloads
+				if (entry.resourceType === 'script') {
+					entry.preload = false
+				}
+			}
 		},
 	},
 	routeRules: {

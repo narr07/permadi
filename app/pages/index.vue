@@ -68,9 +68,14 @@ defineOgImage('Bento', {
 			/>
 
 			<!-- Row 3: Svg Carousel (col-span-5) & Tulisan Terbaru (col-span-7) -->
-			<LazyHomeSvgCarousel
-				hydrate-on-visible
-			/>
+			<ClientOnly>
+				<LazyHomeSvgCarousel
+					hydrate-on-visible
+				/>
+				<template #fallback>
+					<div class="bento-card-clean relative min-h-[280px] flex items-center justify-center p-6 md:col-span-7 sm:min-h-[340px] sm:p-7" />
+				</template>
+			</ClientOnly>
 
 			<LazyHomeLatestPosts
 				hydrate-on-visible
