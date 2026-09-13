@@ -374,8 +374,8 @@ export default defineNuxtConfig({
 		},
 		'build:manifest': function (manifest: Record<string, any>) {
 			for (const entry of Object.values(manifest)) {
-				// Suppress script preloads to eliminate head burst, while keeping font preloads
-				if (entry.resourceType === 'script') {
+				// Keep preload for root entry script and fonts; suppress the 34 non-essential chunks
+				if (entry.resourceType === 'script' && !entry.isEntry) {
 					entry.preload = false
 				}
 			}
