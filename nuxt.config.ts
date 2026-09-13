@@ -391,11 +391,12 @@ export default defineNuxtConfig({
 			},
 		},
 
-		// Halaman Galeri: Hybrid SWR & Cloudflare CDN Edge Cache 1 jam
+		// Halaman Galeri: Hybrid SWR & Cloudflare CDN Edge Cache 1 jam + Early Preconnect Header
 		'/id/galeri': {
 			headers: {
 				'Cache-Control': 'public, max-age=0, s-maxage=3600, must-revalidate',
 				'CDN-Cache-Control': 'max-age=3600, stale-while-revalidate=86400',
+				'Link': '<https://res.cloudinary.com>; rel=preconnect; crossorigin',
 			},
 			swr: 3600,
 		},
@@ -403,6 +404,7 @@ export default defineNuxtConfig({
 			headers: {
 				'Cache-Control': 'public, max-age=0, s-maxage=3600, must-revalidate',
 				'CDN-Cache-Control': 'max-age=3600, stale-while-revalidate=86400',
+				'Link': '<https://res.cloudinary.com>; rel=preconnect; crossorigin',
 			},
 			swr: 3600,
 		},

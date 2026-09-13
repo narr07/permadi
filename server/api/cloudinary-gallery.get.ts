@@ -32,6 +32,7 @@ export interface GalleryItem {
 	placeholder_image: string
 	preview_image: string
 	full_image: string
+	download_url: string
 	secure_url: string
 	tags: string[]
 	created_at: string
@@ -93,14 +94,17 @@ export default defineCachedEventHandler(
 					const versionPrefix = resource.version ? `v${resource.version}/` : ''
 
 					// Direct CDN Delivery URLs with automatic WebP/AVIF format & smart eco compression
-					// 1. Grid thumbnail (super ringan ~6-12KB, ideal untuk 2-kolom mobile & lazy decoding)
-					const thumbnailCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_360,f_auto,q_auto:eco/${versionPrefix}${resource.public_id}.${resource.format}`
-					// 2. Microscopic LQIP blur placeholder (~150 bytes untuk transisi blur instan bebas lag)
-					const placeholderCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_20,e_blur:800,f_auto,q_1/${versionPrefix}${resource.public_id}.${resource.format}`
+					// 1. Grid thumbnail (tajam & dioptimasi ~20-40KB, ideal untuk bento grid & lazy decoding)
+					const thumbnailCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_720,f_auto,q_auto:eco/${versionPrefix}${resource.public_id}.${resource.format}`
+					// 2. Official Cloudinary LQIP Pixelate (~8 KB, blok piksel tegas & presisi persis contoh dokumentasi)
+					const placeholderCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_300,e_pixelate:20,f_auto,q_auto:eco/${versionPrefix}${resource.public_id}.${resource.format}`
 					// 3. Modal preview (tajam & responsif ~80-120KB, muat instan di mobile/tablet saat zoom)
 					const modalPreviewCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_1080,f_auto,q_auto:eco/${versionPrefix}${resource.public_id}.${resource.format}`
-					// 4. Full original resolution HD (untuk tombol direct open / download)
+					// 4. Full original resolution HD (untuk tombol direct open / preview penuh)
 					const fullCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_1920,f_auto,q_auto:good/${versionPrefix}${resource.public_id}.${resource.format}`
+					// 5. Direct HD download URL (Cloudinary fl_attachment otomatis memicu download file langsung)
+					const cleanFilename = (resource.public_id.split('/').pop() || 'permadi_artwork').replace(/[^a-zA-Z0-9_-]/g, '_')
+					const downloadCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/fl_attachment:${cleanFilename}/${versionPrefix}${resource.public_id}.${resource.format}`
 
 					// Fallback: use readable name from public_id (e.g. "gallery/isola_v1" -> "Isola V1")
 					const fallbackName = (resource.public_id.split('/').pop() || '')
@@ -117,6 +121,7 @@ export default defineCachedEventHandler(
 						placeholder_image: placeholderCdnUrl,
 						preview_image: modalPreviewCdnUrl,
 						full_image: fullCdnUrl,
+						download_url: downloadCdnUrl,
 						secure_url: resource.secure_url,
 						tags: resource.tags?.length ? resource.tags : ['desainer'],
 						created_at: resource.created_at,

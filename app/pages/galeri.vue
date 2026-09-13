@@ -120,26 +120,14 @@ function loadMore() {
 	}, 300)
 }
 
-// Layout Bento Grid Gallery (3 Pola berulang per siklus 7 foto):
-// Pola 1: 2 foto besar sebelah (8 kol & 4 kol)
-// Pola 2: 3 foto sama besar (4 kol, 4 kol, 4 kol)
-// Pola 3: 2 foto sama besar (6 kol & 6 kol)
-function getGalleryItemClass(i: number) {
-	const mod = i % 7
-	// Pola 1: 2 bagian besar sebelah (8 kol & 4 kol)
-	if (mod === 0) {
-		return 'col-span-2 lg:col-span-8 aspect-video'
-	}
-	if (mod === 1) {
-		return 'col-span-1 lg:col-span-4 aspect-square sm:aspect-auto'
-	}
-	// Pola 2: 3 sama besar (4 kol, 4 kol, 4 kol)
-	if (mod >= 2 && mod <= 4) {
-		return 'col-span-1 lg:col-span-4 aspect-square sm:aspect-video'
-	}
-	// Pola 3: 2 sama besar (6 kol & 6 kol)
-	return 'col-span-1 lg:col-span-6 aspect-square sm:aspect-video'
+// Track image load status untuk transisi pixelated LQIP -> High-res gambar
+const loadedImages = ref<Record<string, boolean>>({})
+
+function onImageLoad(id: string) {
+	loadedImages.value[id] = true
 }
+
+
 
 // Intersection Observer Sentinel for Auto Infinite Scroll
 const sentinelEl = ref<HTMLElement | null>(null)
@@ -169,24 +157,58 @@ onMounted(() => {
 	}
 })
 
-// 4. Single Photo Modal (Progressive Instant Preview)
+// 4. Single Photo Modal (Progressive Instant Preview with Next/Prev navigation)
 const selectedPhoto = ref<any | null>(null)
+const currentModalIndex = ref<number>(-1)
 const isModalImageLoaded = ref(false)
 
+const hasPrevPhoto = computed(() => currentModalIndex.value > 0)
+const hasNextPhoto = computed(() => currentModalIndex.value < filteredGallery.value.length - 1)
+
 function openModal(item: any) {
-	selectedPhoto.value = item
+	const idx = filteredGallery.value.findIndex((p: any) => p.public_id === item.public_id)
+	currentModalIndex.value = idx !== -1 ? idx : 0
+	selectedPhoto.value = filteredGallery.value[currentModalIndex.value] || item
 	isModalImageLoaded.value = false
 }
 
 function closeModal() {
 	selectedPhoto.value = null
+	currentModalIndex.value = -1
 	isModalImageLoaded.value = false
+}
+
+function prevPhoto() {
+	if (hasPrevPhoto.value) {
+		currentModalIndex.value--
+		selectedPhoto.value = filteredGallery.value[currentModalIndex.value]
+		isModalImageLoaded.value = false
+	}
+}
+
+function nextPhoto() {
+	if (hasNextPhoto.value) {
+		currentModalIndex.value++
+		if (currentModalIndex.value >= currentLimit.value) {
+			currentLimit.value = Math.min(filteredGallery.value.length, currentLimit.value + itemsPerPage)
+		}
+		selectedPhoto.value = filteredGallery.value[currentModalIndex.value]
+		isModalImageLoaded.value = false
+	}
 }
 
 onMounted(() => {
 	function handleKeydown(e: KeyboardEvent) {
-		if (e.key === 'Escape' && selectedPhoto.value) {
-			closeModal()
+		if (selectedPhoto.value) {
+			if (e.key === 'Escape') {
+				closeModal()
+			}
+			else if (e.key === 'ArrowLeft') {
+				prevPhoto()
+			}
+			else if (e.key === 'ArrowRight') {
+				nextPhoto()
+			}
 		}
 	}
 	window.addEventListener('keydown', handleKeydown)
@@ -321,7 +343,7 @@ useSchemaOrg([
 					<div class="h-11 flex items-center gap-2 border border-slate-200/70 rounded-xl bg-white px-3.5 shadow-xs md:w-48 dark:border-slate-700/60 dark:bg-slate-800/80 sm:px-4">
 						<span class="i-hugeicons-image-02 shrink-0 text-sm text-brand-700 dark:text-brand-400" />
 						<span class="truncate text-xs text-slate-800 font-bold font-mono dark:text-slate-100">
-							{{ allItems?.length || 0 }} {{ locale === 'id' ? 'Foto' : 'Photos' }}
+							{{ filteredGallery?.length || 0 }} {{ locale === 'id' ? 'Foto' : 'Photos' }}
 						</span>
 					</div>
 
@@ -442,10 +464,10 @@ useSchemaOrg([
 			</div>
 		</header>
 
-		<!-- Bento Grid Gallery (2 Kolom di Mobile, 12 Kolom di Desktop) -->
+		<!-- Masonry Gallery (1 Kolom di Mobile, 2 Kolom di Tablet, 3 Kolom di Desktop) -->
 		<div
 			v-if="displayedItems.length > 0"
-			class="grid grid-cols-2 gap-3 lg:grid-cols-12 sm:gap-4"
+			class="columns-1 gap-4 sm:columns-2 sm:gap-6 lg:columns-3"
 		>
 			<div
 				v-for="(item, i) in displayedItems"
@@ -453,8 +475,8 @@ useSchemaOrg([
 				tabindex="0"
 				role="button"
 				:aria-label="item.title || (locale === 'id' ? 'Buka foto galeri' : 'Open gallery photo')"
-				class="group bento-card-outline relative cursor-pointer overflow-hidden bento-lift rounded-xl bg-slate-100 sm:rounded-bento dark:bg-slate-800 !p-0"
-				:class="getGalleryItemClass(i)"
+				class="group bento-card-outline relative mb-4 block w-full cursor-pointer overflow-hidden bento-lift rounded-2xl bg-slate-100 dark:bg-slate-800 break-inside-avoid !p-0 sm:mb-6"
+				:style="{ aspectRatio: item.width && item.height ? `${item.width} / ${item.height}` : 'auto' }"
 				@click="openModal(item)"
 				@keydown.enter.prevent="openModal(item)"
 				@keydown.space.prevent="openModal(item)"
@@ -465,36 +487,50 @@ useSchemaOrg([
 					aria-hidden="true"
 				/>
 
-				<!-- Gambar List Cepat & Ringan (Direct Cloudinary CDN URL) -->
+				<!-- 1. Official Cloudinary Pixelated LQIP Placeholder (blok piksel tegas & artistik) -->
+				<img
+					v-if="item.placeholder_image"
+					:src="item.placeholder_image"
+					alt=""
+					aria-hidden="true"
+					decoding="async"
+					class="pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out"
+					:class="loadedImages[item.public_id] ? 'opacity-0' : 'opacity-100'"
+					style="image-rendering: pixelated;"
+				>
+
+				<!-- 2. Gambar Utama Resolusi Penuh (Fade in halus saat selesai diunduh) -->
 				<img
 					:src="item.image"
 					:alt="item.title || (locale === 'id' ? 'Foto galeri' : 'Gallery photo')"
 					decoding="async"
-					:width="item.width || 360"
-					:height="item.height || 360"
-					class="relative z-1 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-					:loading="i < 2 ? 'eager' : 'lazy'"
+					:width="item.width || 720"
+					:height="item.height || 540"
+					class="relative z-1 block h-full w-full object-cover transition-all duration-700 ease-out group-hover:scale-105"
+					:class="i === 0 || loadedImages[item.public_id] ? 'opacity-100' : 'opacity-0'"
+					:loading="i < 3 ? 'eager' : 'lazy'"
 					:fetchpriority="i === 0 ? 'high' : 'auto'"
+					@load="onImageLoad(item.public_id)"
 				>
 
 				<!-- Overlay on Hover -->
-				<div class="absolute inset-0 flex flex-col justify-end from-slate-950/80 via-slate-950/20 to-transparent bg-gradient-to-t p-2.5 text-white opacity-0 transition-opacity duration-300 sm:p-4 group-hover:opacity-100">
-					<div class="flex items-center justify-between gap-1 sm:gap-2">
-						<h2 class="truncate text-xs text-white font-semibold font-heading transition-colors duration-100 sm:text-sm group-hover:text-brand-300 dark:group-hover:text-accent">
+				<div class="absolute inset-0 z-10 flex flex-col justify-end from-slate-950/85 via-slate-950/30 to-transparent bg-gradient-to-t p-4 text-white opacity-0 transition-opacity duration-300 sm:p-5 group-hover:opacity-100">
+					<div class="flex items-center justify-between gap-2">
+						<h2 class="truncate text-sm text-white font-semibold font-heading transition-colors duration-100 sm:text-base group-hover:text-brand-300 dark:group-hover:text-accent">
 							{{ item.title }}
 						</h2>
-						<span class="shrink-0 rounded-full bg-white/20 p-1 backdrop-blur-md sm:p-1.5">
-							<span class="i-hugeicons-search-01 text-[10px] sm:text-xs" />
+						<span class="shrink-0 rounded-full bg-white/20 p-1.5 backdrop-blur-md">
+							<span class="i-hugeicons-search-01 text-xs" />
 						</span>
 					</div>
 					<div
 						v-if="item.tags && item.tags.length"
-						class="mt-1 flex flex-wrap gap-1 sm:mt-1.5"
+						class="mt-2 flex flex-wrap gap-1.5"
 					>
 						<span
-							v-for="tag in item.tags.slice(0, 2)"
+							v-for="tag in item.tags.slice(0, 3)"
 							:key="tag"
-							class="max-w-[80px] truncate rounded-full bg-white/10 px-1.5 py-0.5 text-[9px] text-slate-200 backdrop-blur-md sm:px-2 sm:text-[10px]"
+							class="max-w-[120px] truncate rounded-full bg-white/15 px-2 py-0.5 text-[10px] text-slate-100 backdrop-blur-md sm:text-xs"
 						>
 							#{{ tag }}
 						</span>
@@ -568,10 +604,30 @@ useSchemaOrg([
 						<div class="relative max-w-4xl w-full flex flex-col items-center">
 							<!-- Symmetrical Modal Header Bar -->
 							<div class="mb-3 w-full flex items-center justify-between px-1">
-								<span class="max-w-[70%] truncate text-sm text-white/90 font-semibold font-heading">
-									{{ selectedPhoto.title }}
-								</span>
+								<div class="max-w-[60%] flex items-center gap-2 sm:max-w-[70%]">
+									<span class="truncate text-sm text-white/90 font-semibold font-heading">
+										{{ selectedPhoto.title }}
+									</span>
+									<span class="shrink-0 rounded-full bg-white/10 px-2 py-0.5 text-[10px] text-white/70 font-mono sm:text-xs">
+										{{ currentModalIndex + 1 }} / {{ filteredGallery.length }}
+									</span>
+								</div>
 								<div class="flex items-center gap-2">
+									<!-- Download High Res File Button -->
+									<a
+										v-if="selectedPhoto.download_url || selectedPhoto.full_image"
+										:href="selectedPhoto.download_url || selectedPhoto.full_image"
+										target="_blank"
+										rel="noopener"
+										download
+										class="h-9 inline-flex cursor-pointer items-center justify-center gap-1.5 border border-white/15 rounded-full bg-slate-900/80 px-3 text-xs text-white/90 backdrop-blur-md transition hover:border-brand-400/50 hover:bg-slate-800 hover:text-white"
+										:aria-label="locale === 'id' ? 'Unduh HD' : 'Download HD'"
+										:title="locale === 'id' ? 'Unduh file resolusi penuh' : 'Download full resolution file'"
+									>
+										<span class="i-hugeicons-download-02 text-sm text-brand-400" />
+										<span class="font-medium font-sans">{{ locale === 'id' ? 'Unduh HD' : 'Download HD' }}</span>
+									</a>
+
 									<!-- Open High Res Direct Link Button -->
 									<a
 										v-if="selectedPhoto.full_image || selectedPhoto.image"
@@ -596,15 +652,40 @@ useSchemaOrg([
 								</div>
 							</div>
 
-							<!-- High Quality Single Image with Progressive Cached Placeholder -->
+							<!-- High Quality Single Image with Progressive Pixelated Placeholder & Next/Prev Controls -->
 							<div class="relative max-h-[80vh] min-h-[240px] w-full flex items-center justify-center overflow-hidden border border-white/10 rounded-bento bg-slate-900/90 shadow-2xl sm:min-h-[360px]">
-								<!-- 1. Blurred instant placeholder from already cached grid thumbnail (0ms rendering delay) -->
+								<!-- Prev Navigation Button -->
+								<button
+									v-if="hasPrevPhoto"
+									type="button"
+									class="absolute left-2 top-1/2 z-30 h-10 w-10 flex -translate-y-1/2 cursor-pointer items-center justify-center border border-white/20 rounded-full bg-slate-900/80 text-white shadow-xl backdrop-blur-md transition sm:left-4 sm:h-12 sm:w-12 hover:border-brand-400 hover:bg-slate-800 hover:scale-105 active:scale-95"
+									:aria-label="locale === 'id' ? 'Foto sebelumnya' : 'Previous photo'"
+									:title="locale === 'id' ? 'Foto sebelumnya (Panah Kiri)' : 'Previous photo (Left Arrow)'"
+									@click.stop="prevPhoto"
+								>
+									<span class="i-hugeicons-arrow-left-01 text-xl sm:text-2xl" />
+								</button>
+
+								<!-- Next Navigation Button -->
+								<button
+									v-if="hasNextPhoto"
+									type="button"
+									class="absolute right-2 top-1/2 z-30 h-10 w-10 flex -translate-y-1/2 cursor-pointer items-center justify-center border border-white/20 rounded-full bg-slate-900/80 text-white shadow-xl backdrop-blur-md transition sm:right-4 sm:h-12 sm:w-12 hover:border-brand-400 hover:bg-slate-800 hover:scale-110 active:scale-95"
+									:aria-label="locale === 'id' ? 'Foto selanjutnya' : 'Next photo'"
+									:title="locale === 'id' ? 'Foto selanjutnya (Panah Kanan)' : 'Next photo (Right Arrow)'"
+									@click.stop="nextPhoto"
+								>
+									<span class="i-hugeicons-arrow-right-01 text-xl sm:text-2xl" />
+								</button>
+								<!-- 1. Official Cloudinary Pixelated LQIP Placeholder (muncul instan tanpa animasi berputar) -->
 								<img
-									:src="selectedPhoto.image"
-									:alt="selectedPhoto.title"
+									v-if="selectedPhoto.placeholder_image"
+									:src="selectedPhoto.placeholder_image"
+									alt=""
 									aria-hidden="true"
-									class="pointer-events-none absolute inset-0 h-full w-full scale-105 object-contain opacity-50 blur-lg filter transition-opacity duration-500"
-									:class="isModalImageLoaded ? 'opacity-0' : 'opacity-50'"
+									class="pointer-events-none absolute inset-0 h-full w-full object-contain transition-opacity duration-500"
+									:class="isModalImageLoaded ? 'opacity-0' : 'opacity-100'"
+									style="image-rendering: pixelated;"
 								>
 
 								<!-- 2. Optimized crisp modal preview image (loads fast ~80-120KB) -->
@@ -616,15 +697,6 @@ useSchemaOrg([
 									:class="isModalImageLoaded ? 'opacity-100' : 'opacity-0'"
 									@load="isModalImageLoaded = true"
 								>
-
-								<!-- 3. Micro loading indicator while HD visual is decoding -->
-								<div
-									v-if="!isModalImageLoaded"
-									class="absolute z-20 flex items-center gap-2 border border-white/10 rounded-full bg-slate-950/75 px-3 py-1.5 text-xs text-white/90 backdrop-blur-md"
-								>
-									<span class="i-hugeicons-loading-03 animate-spin text-sm text-brand-400" />
-									<span>{{ locale === 'id' ? 'Memuat visual HD...' : 'Loading HD visual...' }}</span>
-								</div>
 							</div>
 
 							<!-- Caption Details & Tags -->
