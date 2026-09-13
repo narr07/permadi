@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
-import SvgDesigner from '~/components/SvgDesigner.vue'
-import SvgDev from '~/components/SvgDev.vue'
-import SvgGuru from '~/components/SvgGuru.vue'
+import { computed, defineAsyncComponent, onMounted, onUnmounted, ref } from 'vue'
+
+const SvgDev = defineAsyncComponent(() => import('~/components/SvgDev.vue'))
+const SvgDesigner = defineAsyncComponent(() => import('~/components/SvgDesigner.vue'))
+const SvgGuru = defineAsyncComponent(() => import('~/components/SvgGuru.vue'))
 
 const { locale } = useI18n()
 

@@ -92,7 +92,7 @@ const socialLinks = [
 						</div>
 
 						<div class="w-full lg:max-w-md">
-							<NewsletterForm />
+							<LazyNewsletterForm hydrate-on-visible />
 						</div>
 					</div>
 				</div>

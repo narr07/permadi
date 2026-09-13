@@ -24,6 +24,8 @@ export default defineNuxtConfig({
 	},
 	vitalizer: {
 		disableStylesheets: true,
+		disablePrefetchLinks: true,
+		disablePreloadLinks: true,
 	},
 	a11y: {
 		defaultHighlight: false,
