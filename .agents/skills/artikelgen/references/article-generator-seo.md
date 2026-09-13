@@ -91,16 +91,19 @@ Pastikan 5 parameter kunci berikut telah terdefinisi:
 - [ ] **Penyelarasan Buyer Persona**: Jawab pertanyaan spesifik dan *pain points* nyata.
 - [ ] **Evaluasi Otoritas Topikal (Topic Clusters)**: Bangun gugus topik yang saling berkaitan.
 
-### Tahap 2: Arsitektur Metadata & Optimasi On-Page
-- [ ] **Optimasi Judul SEO (Title Tag)**: Maksimal 50–58 karakter (total dengan suffix ` | Permadi` **maksimal 70 karakter termasuk spasi**), kata kunci utama di depan/tengah, mengandung proposisi nilai riil. **Hindari tanda titik dua (`:`)** agar judul mengalir alami (*fluid sentence-style*) dan tidak berkesan robotik.
-- [ ] **Penyelarasan H1 dan Title Tag**: Wajib identik atau sangat mirip. Tidak ada backtick atau emoji di H1.
-- [ ] **Penulisan Meta Deskripsi**: 140–160 karakter persuasif, to-the-point, mengandung kata kunci utama + 1 kata kunci sekunder.
-- [ ] **Struktur URL Slug Bersih**: Huruf kecil, dipisah tanda hubung (`-`), fokus pada kata kunci inti.
+### Tahap 2: Arsitektur Metadata & Optimasi On-Page (Standar Karakter Google & AEO/GEO)
+- [ ] **Optimasi Judul SEO (Title Tag)**: Minimal 50 karakter, maksimal 58–60 karakter (total dengan suffix ` | Permadi` **maksimal 70 karakter termasuk spasi / ~550 px**), kata kunci utama di depan/tengah. **Hindari tanda titik dua (`:`)** agar judul mengalir alami (*fluid sentence-style*) dan tidak berkesan robotik.
+- [ ] **Penyelarasan H1 dan Title Tag**: Minimal 20 karakter (~3–4 kata), maksimal 60–70 karakter (~8–10 kata). Wajib identik atau sangat mirip. Tidak ada backtick atau emoji di H1.
+- [ ] **Penulisan Meta Deskripsi**: Minimal 70 karakter, aman seluler 105 karakter, hingga 135–160 karakter untuk desktop. Persuasif, to-the-point, mengandung primary keyword + 1 secondary keyword.
+- [ ] **Struktur URL Slug Bersih**: Minimal 10 karakter (~1–2 kata kunci), maksimal 17–40 karakter (< 5 kata, optimal 21–25 karakter). Huruf kecil, dipisah tanda hubung (`-`), ramah sitasi AI engine.
+- [ ] **Heading H2 & H3 Subtopik**: H2 berukuran 15–60 karakter (4–8 kata), H3 berukuran 15–50/60 karakter (4–8 kata).
 
-### Tahap 2.5: Distribusi Semantik & TF-IDF Matrix
+### Tahap 2.5: Distribusi Semantik, TF-IDF Matrix & Snippet Chunks
+- [ ] **Jawaban Langsung (BLUF / AI Snippet Chunk)**: Paragraf definitif 40–60 kata (~250–400 karakter) tepat di awal artikel atau di bawah H2/H3 untuk merebut Google Featured Snippets.
 - [ ] **Cakupan Kata Kunci Body (100%)**: Seluruh target kata kunci di `tags` wajib muncul minimal 1–3 kali secara natural di dalam body artikel (Dilarang ada tag dengan frekuensi 0 di body).
+- [ ] **Paragraf Body Ringkas**: Minimal 1 kalimat (~50–100 karakter), maksimal 2–4 kalimat (< 5 baris di layar seluler) untuk mencegah dinding teks.
 - [ ] **Penekanan Semantik**: Berikan format `**tebal**` atau `*miring*` pada 1–3 istilah kunci untuk memperkuat bobot TF-IDF.
-- [ ] **Optimasi Alt Text**: Sisipkan primary keyword pada teks alt gambar featured (maksimal 125 karakter).
+- [ ] **Optimasi Alt Text**: Minimal 10 karakter, maksimal 125 karakter, kontekstual deskriptif dan memuat primary keyword.
 
 ### Tahap 3: Pendahuluan (The Problem Hook & Benefit)
 - [ ] **Tembak Akar Masalah Langsung**: Bongkar friksi/kesulitan nyata dalam 100 kata pertama bersama kata kunci utama.

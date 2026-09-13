@@ -4,7 +4,7 @@ import { onClickOutside } from '@vueuse/core'
 
 const { locale } = useI18n()
 
-// 1. Fetch page data (pages_id atau pages_en)
+// 1. Fetch page metadata
 const pageCollection = computed(() => (locale.value === 'id' ? 'pages_id' : 'pages_en'))
 const currentPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/gallery'))
 
@@ -14,13 +14,15 @@ const { data: page } = await useAsyncData(
 	{ watch: [locale] },
 )
 
-// 2. Fetch gallery items dari Cloudinary API dengan Stale-While-Revalidate (SWR)
+// 2. Fetch gallery items from Cloudinary API with SWR (Lazy & Non-blocking)
 const nuxtApp = useNuxtApp()
 const { data: cloudinaryItems, refresh: refreshGallery } = await useAsyncData<GalleryItem[]>(
 	'cloudinary-gallery-list',
 	async () => {
 		try {
-			const res = await $fetch<GalleryItem[]>('/api/cloudinary-gallery')
+			const res = await $fetch<GalleryItem[]>('/api/cloudinary-gallery', {
+				timeout: 3000,
+			})
 			if (Array.isArray(res) && res.length > 0) {
 				return res
 			}
@@ -33,6 +35,7 @@ const { data: cloudinaryItems, refresh: refreshGallery } = await useAsyncData<Ga
 	},
 	{
 		default: () => [],
+		lazy: true,
 	},
 )
 
@@ -91,11 +94,10 @@ const filteredGallery = computed(() => {
 	return allItems.value.filter((item: any) => item.tags?.includes(selectedTag.value))
 })
 
-// 3. INFINITE SCROLL & BATCH LOADING (14 foto per batch = 2 siklus penuh pola bento)
-const itemsPerPage = 14
+// 3. Batch Loading & Infinite Scroll
+const itemsPerPage = 12
 const currentLimit = ref(itemsPerPage)
 
-// Reset limit saat filter tag berganti
 watch(selectedTag, () => {
 	currentLimit.value = itemsPerPage
 })
@@ -117,23 +119,18 @@ function loadMore() {
 	setTimeout(() => {
 		currentLimit.value += itemsPerPage
 		isLoadingMore.value = false
-	}, 300)
+	}, 250)
 }
 
-// Track image load status untuk transisi pixelated LQIP -> High-res gambar
 const loadedImages = ref<Record<string, boolean>>({})
 
 function onImageLoad(id: string) {
 	loadedImages.value[id] = true
 }
 
-
-
-// Intersection Observer Sentinel for Auto Infinite Scroll
 const sentinelEl = ref<HTMLElement | null>(null)
 
 onMounted(() => {
-	// Revalidasi di latar belakang agar foto baru Cloudinary langsung muncul tanpa harus deploy ulang
 	refreshGallery()
 
 	if (typeof IntersectionObserver !== 'undefined') {
@@ -143,7 +140,7 @@ onMounted(() => {
 					loadMore()
 				}
 			},
-			{ rootMargin: '250px' },
+			{ rootMargin: '300px' },
 		)
 
 		if (sentinelEl.value) {
@@ -157,7 +154,7 @@ onMounted(() => {
 	}
 })
 
-// 4. Single Photo Modal (Progressive Instant Preview with Next/Prev navigation)
+// 4. Single Specimen Modal
 const selectedPhoto = ref<any | null>(null)
 const currentModalIndex = ref<number>(-1)
 const isModalImageLoaded = ref(false)
@@ -245,8 +242,8 @@ useHead(() => {
 })
 
 useSeoMeta({
-	title: () => page.value?.title,
-	description: () => page.value?.description,
+	title: () => page.value?.title || (locale.value === 'id' ? 'Galeri Visual & Dokumentasi | Permadi' : 'Visual Gallery & Documentation | Permadi'),
+	description: () => page.value?.description || (locale.value === 'id' ? 'Arsip dokumentasi visual, seni grafis, dan fotografi karya Dinar Permadi Yusup.' : 'Visual documentation archive, graphic arts, and photography by Dinar Permadi Yusup.'),
 	author: () => 'Dinar Permadi Yusup',
 	colorScheme: 'light dark',
 	themeColor: '#14b898',
@@ -266,8 +263,8 @@ useSeoMeta({
 })
 
 defineOgImage('Bento', {
-	title: page.value?.title,
-	description: page.value?.description,
+	title: page.value?.title || 'Galeri Visual',
+	description: page.value?.description || 'Dokumentasi Visual & Fotografi',
 	category: locale.value === 'id' ? 'Galeri Visual & Dokumentasi' : 'Visual Gallery & Documentation',
 })
 
@@ -290,425 +287,375 @@ useSchemaOrg([
 			},
 		],
 	}),
-	// Google Images Licensable & Metadata Schema
-	...computed(() => {
-		const licenseUrl = 'https://creativecommons.org/licenses/by-nc-nd/4.0/'
-		const acquirePage = `${site.url}${locale.value === 'id' ? '/id/kontak' : '/contact'}`
-		return allItems.value.map((item: any) => ({
-			'@type': 'ImageObject',
-			'contentUrl': item.full_image || item.secure_url || item.image,
-			'url': item.full_image || item.secure_url || item.image,
-			'name': item.title || item.alt || 'Permadi Visual Artwork',
-			'caption': item.alt || item.title || 'Dokumentasi visual dan karya desain Dinar Permadi Yusup',
-			'description': item.alt || item.title || (locale.value === 'id' ? 'Karya visual dan dokumentasi desain grafis Dinar Permadi Yusup.' : 'Visual artwork and design documentation by Dinar Permadi Yusup.'),
-			'license': licenseUrl,
-			'acquireLicensePage': acquirePage,
-			'creditText': 'Dinar Permadi Yusup | Permadi',
-			'copyrightNotice': '© Dinar Permadi Yusup',
-			'datePublished': item.created_at ? new Date(item.created_at).toISOString() : undefined,
-			'creator': {
-				'@id': 'https://permadi.dev/#identity',
-			},
-		}))
-	}).value,
 ])
 </script>
 
 <template>
-	<div class="container-bento py-10 sm:py-14">
-		<!-- Header (Clean Bento Style without gradient) -->
-		<header
-			class="bento-card-clean relative z-30 mb-8 bg-slate-50/70 p-6 sm:mb-10 !overflow-visible dark:bg-slate-900/60 sm:p-8"
-		>
-			<div class="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-				<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
-				<div class="max-w-2xl">
-					<div class="mb-3.5 inline-flex items-center border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 tracking-tighter font-mono dark:border-brand-800/60 dark:bg-brand-950 dark:text-accent">
-						<span>{{ page?.eyebrow || (locale === 'id' ? 'Dokumentasi & Visual' : 'Snapshots & Visuals') }}</span>
+	<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+		<!-- Band 01: Swiss Broadside Masthead (4:8 Asymmetric Grid) -->
+		<header class="w-full border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#001e1c]">
+			<div class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-slate-200/80 dark:divide-[#134e43]">
+				<!-- Parameters Rail (Cols 1 to 4) -->
+				<div class="lg:col-span-4 p-6 sm:p-8 flex flex-col justify-between bg-slate-50/40 dark:bg-[#002420]/20">
+					<div>
+						<div class="mb-4 font-mono text-[11px] font-bold tracking-[0.2em] uppercase text-brand-700 dark:text-accent">
+							■ 03 // ARSIP VISUAL VOL. 26
+						</div>
+
+						<div class="divide-y divide-slate-200/80 dark:divide-[#134e43] font-mono text-xs">
+							<div class="flex items-baseline justify-between py-2.5">
+								<span class="text-slate-900/60 dark:text-slate-50/60">TOTAL SPESIMEN</span>
+								<span class="text-slate-900 dark:text-slate-50 tabular-nums font-bold">{{ allItems.length }} Dokumen</span>
+							</div>
+
+							<div class="flex items-baseline justify-between py-2.5">
+								<span class="text-slate-900/60 dark:text-slate-50/60">HOSTING MEDIA</span>
+								<span class="text-slate-900 dark:text-slate-50 font-medium">CLOUDINARY EDGE</span>
+							</div>
+
+							<div class="flex items-baseline justify-between py-2.5">
+								<span class="text-slate-900/60 dark:text-slate-50/60">OPTIMASI FORMAT</span>
+								<span class="text-brand-600 dark:text-accent font-bold">WEBP / AVIF LQIP</span>
+							</div>
+
+							<div class="flex items-baseline justify-between py-2.5">
+								<span class="text-slate-900/60 dark:text-slate-50/60">KURASI</span>
+								<span class="text-slate-900 dark:text-slate-50 font-medium">Dinar Permadi Yusup</span>
+							</div>
+						</div>
 					</div>
 
-					<h1 class="heading-page">
-						{{ page?.title || (locale === 'id' ? 'Galeri Visual' : 'Visual Gallery') }}
-					</h1>
-
-					<p class="heading-page-sub text-sm">
-						{{ page?.description || (locale === 'id' ? 'Koleksi dokumentasi workspace, seni visual, dan tangkapan karya yang dioptimasi via Cloudinary CDN.' : 'A curated collection of visual experiments, photography, and workspace snapshots served via Cloudinary CDN.') }}
-					</p>
+					<div class="mt-8 pt-6 border-t border-slate-200/80 dark:border-[#134e43] font-mono text-xs text-slate-900/50 dark:text-slate-50/50 flex items-center justify-between">
+						<span>HAK CIPTA</span>
+						<span>CC BY-NC-ND 4.0</span>
+					</div>
 				</div>
 
-				<!-- Sisi Kanan / Actions: Total Foto & Tag Dropdown Filter -->
-				<!-- Mobile: grid 2 kolom simetris; Desktop: flex-col teratur -->
-				<div class="z-20 grid grid-cols-2 w-full shrink-0 gap-2.5 md:w-auto md:flex md:flex-col">
-					<!-- Mini Bento Stat Pill: Total Foto -->
-					<div class="h-11 flex items-center gap-2 border border-slate-200/70 rounded-xl bg-white px-3.5 shadow-xs md:w-48 dark:border-slate-700/60 dark:bg-slate-800/80 sm:px-4">
-						<span class="i-hugeicons-image-02 shrink-0 text-sm text-brand-700 dark:text-brand-400" />
-						<span class="truncate text-xs text-slate-800 font-bold font-mono dark:text-slate-100">
-							{{ filteredGallery?.length || 0 }} {{ locale === 'id' ? 'Foto' : 'Photos' }}
-						</span>
+				<!-- Monumental Typographic Statement Field (Cols 5 to 12) -->
+				<div class="lg:col-span-8 p-6 sm:p-10 lg:p-12 flex flex-col justify-between">
+					<div>
+						<div class="mb-4 font-mono text-[11px] font-bold tracking-[0.2em] uppercase text-brand-700 dark:text-accent">
+							DOKUMENTASI VISUAL &amp; STUDIO
+						</div>
+
+						<h1 class="font-heading font-800 text-3xl sm:text-5xl lg:text-6xl tracking-[-0.035em] text-slate-900 dark:text-slate-50 leading-[0.95] text-balance mb-6">
+							{{ page?.title || (locale === 'id' ? 'Galeri Visual & Dokumentasi' : 'Visual Gallery & Documentation') }}
+						</h1>
+
+						<p class="font-sans text-base sm:text-lg text-slate-900/80 dark:text-slate-50/80 leading-relaxed max-w-[58ch] mb-8">
+							{{ page?.description || (locale === 'id' ? 'Koleksi dokumentasi workspace, seni visual, dan tangkapan karya desain yang dioptimasi secara presisi melalui Cloudinary Edge CDN.' : 'A curated collection of visual experiments, photography, and workspace snapshots served via Cloudinary CDN.') }}
+						</p>
+
+						<div class="flex flex-wrap gap-2 font-mono text-xs text-slate-900/60 dark:text-slate-50/60">
+							<span class="px-2.5 py-1 border border-slate-300 dark:border-[#134e43] uppercase">#FOTOGRAFI</span>
+							<span class="px-2.5 py-1 border border-slate-300 dark:border-[#134e43] uppercase">#WORKSPACE</span>
+							<span class="px-2.5 py-1 border border-slate-300 dark:border-[#134e43] uppercase">#ARSITEKTUR</span>
+							<span class="px-2.5 py-1 border border-slate-300 dark:border-[#134e43] uppercase">#DESAIN</span>
+						</div>
 					</div>
 
-					<!-- Dropdown Tag Selector -->
-					<div
-						ref="tagDropdownRef"
-						class="relative md:w-48"
-					>
-						<button
-							type="button"
-							class="h-11 w-full flex cursor-pointer items-center justify-between gap-2 border rounded-xl px-3.5 text-xs font-semibold shadow-xs transition-all sm:px-4"
-							:class="selectedTag !== 'ALL'
-								? 'bg-brand-700 text-white border-brand-600 shadow-brand-700/20'
-								: 'bg-white dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 border-slate-200/70 dark:border-slate-700/60 hover:bg-slate-50 dark:hover:bg-slate-800'"
-							:aria-expanded="isTagDropdownOpen"
-							aria-label="Pilih topik filter"
-							@click="isTagDropdownOpen = !isTagDropdownOpen"
-						>
-							<span class="flex items-center gap-2 truncate">
-								<span
-									class="i-hugeicons-filter-horizontal shrink-0 text-sm"
-									:class="selectedTag !== 'ALL' ? 'text-white' : 'text-brand-700 dark:text-brand-400'"
-								/>
-								<span class="truncate">
-									{{ selectedTag === 'ALL' ? (locale === 'id' ? 'Semua Topik' : 'All Topics') : `#${selectedTag}` }}
-								</span>
-							</span>
-							<span
-								class="i-hugeicons-arrow-down-01 ml-0.5 shrink-0 text-xs transition-transform duration-200"
-								:class="{ 'rotate-180': isTagDropdownOpen }"
-							/>
-						</button>
-
-						<!-- Dropdown Popover Menu -->
-						<Transition
-							enter-active-class="transition duration-150 ease-out"
-							enter-from-class="transform scale-95 opacity-0 -translate-y-1"
-							enter-to-class="transform scale-100 opacity-100 translate-y-0"
-							leave-active-class="transition duration-100 ease-in"
-							leave-from-class="transform scale-100 opacity-100 translate-y-0"
-							leave-to-class="transform scale-95 opacity-0 -translate-y-1"
-						>
-							<div
-								v-if="isTagDropdownOpen"
-								class="absolute right-0 top-full z-50 mt-2 max-w-[90vw] w-64 flex flex-col overflow-hidden border border-slate-200 rounded-2xl bg-white p-2 shadow-2xl sm:w-72 dark:border-[#134e43] dark:bg-[#001714]"
-							>
-								<!-- Tag Search Input inside Dropdown -->
-								<div
-									v-if="availableTags.length > 5"
-									class="mb-1.5 shrink-0 border-b border-slate-100 px-1 pb-2 dark:border-white/10"
-								>
-									<div class="relative">
-										<span class="i-hugeicons-search-01 absolute left-2.5 top-1/2 text-xs text-slate-500 -translate-y-1/2" />
-										<input
-											v-model="tagSearchQuery"
-											type="text"
-											:placeholder="locale === 'id' ? 'Cari tag...' : 'Search tags...'"
-											class="w-full border border-slate-200 rounded-lg bg-slate-50 py-1.5 pl-8 pr-3 text-xs text-slate-900 dark:border-white/10 dark:bg-[#002420] dark:text-white placeholder:text-slate-500 focus:outline-none"
-										>
-									</div>
-								</div>
-
-								<!-- List of Options -->
-								<div class="custom-scrollbar max-h-60 overflow-y-auto overscroll-contain pr-1 space-y-0.5">
-									<!-- "All Topics" Option -->
-									<button
-										type="button"
-										class="w-full flex cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-xs transition-colors"
-										:class="selectedTag === 'ALL'
-											? 'bg-brand-500/15 dark:bg-brand-500/25 text-brand-800 dark:text-brand-300 font-bold'
-											: 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'"
-										@click="selectTag('ALL')"
-									>
-										<span class="flex items-center gap-2">
-											<span class="i-hugeicons-grid-view text-xs" />
-											{{ locale === 'id' ? 'Semua Topik' : 'All Topics' }}
-										</span>
-										<span class="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-700 font-medium font-mono dark:bg-white/10 dark:text-slate-400">
-											{{ allItems?.length || 0 }}
-										</span>
-									</button>
-
-									<!-- Tags Options -->
-									<button
-										v-for="tag in filteredDropdownTags"
-										:key="tag"
-										type="button"
-										class="w-full flex cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-xs transition-colors"
-										:class="selectedTag === tag
-											? 'bg-brand-500/15 dark:bg-brand-500/25 text-brand-800 dark:text-brand-300 font-bold'
-											: 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'"
-										@click="selectTag(tag)"
-									>
-										<span class="flex items-center gap-2 truncate">
-											<span class="i-hugeicons-tag-01 shrink-0 text-xs" />
-											<span class="truncate">#{{ tag }}</span>
-										</span>
-										<span
-											v-if="tagCounts[tag]"
-											class="ml-2 shrink-0 rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-700 font-medium font-mono dark:bg-white/10 dark:text-slate-400"
-										>
-											{{ tagCounts[tag] }}
-										</span>
-									</button>
-
-									<!-- Empty Filter Search -->
-									<div
-										v-if="filteredDropdownTags.length === 0"
-										class="py-4 text-center text-xs text-slate-500"
-									>
-										{{ locale === 'id' ? 'Tag tidak ditemukan' : 'No tag found' }}
-									</div>
-								</div>
-							</div>
-						</Transition>
+					<div class="mt-8 pt-6 border-t border-slate-200/80 dark:border-[#134e43] font-mono text-xs text-slate-900/50 dark:text-slate-50/50 flex items-center justify-between">
+						<span>ARSIP PERMADI.DEV</span>
+						<span>KISI MODULAR 12-KOLOM</span>
 					</div>
 				</div>
 			</div>
 		</header>
 
-		<!-- Masonry Gallery (1 Kolom di Mobile, 2 Kolom di Tablet, 3 Kolom di Desktop) -->
+		<!-- Band 02: Swiss Filter Strip & Metric Ledger Bar -->
+		<div class="w-full border-x border-b border-slate-200/80 dark:border-[#134e43] bg-slate-50/70 dark:bg-[#002420]/30 px-4 sm:px-6 py-3 font-mono text-xs flex items-center justify-between gap-4 flex-wrap">
+			<!-- Tag Filter Buttons -->
+			<div class="flex items-center gap-1.5 flex-wrap">
+				<span class="text-slate-900/50 dark:text-slate-50/50 font-bold uppercase mr-1 text-[11px]">
+					FILTER:
+				</span>
+
+				<!-- All Topics -->
+				<button
+					type="button"
+					class="px-2.5 py-1 border font-bold uppercase tracking-wider text-[11px] transition-colors cursor-pointer"
+					:class="selectedTag === 'ALL'
+						? 'bg-slate-900 text-white dark:bg-brand-500 dark:text-slate-950 border-transparent'
+						: 'border-slate-300 dark:border-[#134e43] text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#002420]'"
+					@click="selectTag('ALL')"
+				>
+					SEMUA ({{ allItems.length }})
+				</button>
+
+				<!-- Individual Tags -->
+				<button
+					v-for="tag in availableTags"
+					:key="tag"
+					type="button"
+					class="px-2.5 py-1 border uppercase tracking-wider text-[11px] transition-colors cursor-pointer"
+					:class="selectedTag === tag
+						? 'bg-slate-900 text-white dark:bg-brand-500 dark:text-slate-950 border-transparent font-bold'
+						: 'border-slate-300 dark:border-[#134e43] text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#002420]'"
+					@click="selectTag(tag)"
+				>
+					#{{ tag }} ({{ tagCounts[tag] || 0 }})
+				</button>
+			</div>
+
+			<!-- Quick Metric Indicator -->
+			<div class="text-[11px] font-bold uppercase tracking-wider text-slate-900/50 dark:text-slate-50/50 tabular-nums">
+				DITAMPILKAN: {{ displayedItems.length }} / {{ filteredGallery.length }}
+			</div>
+		</div>
+
+		<!-- Band 03: The Swiss Modular Image Grid (Rigorous 3-Column Ledger) -->
 		<div
 			v-if="displayedItems.length > 0"
-			class="columns-1 gap-4 sm:columns-2 sm:gap-6 lg:columns-3"
+			class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-x border-b border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#001e1c]"
 		>
 			<div
 				v-for="(item, i) in displayedItems"
 				:key="item.public_id || i"
 				tabindex="0"
 				role="button"
-				:aria-label="item.title || (locale === 'id' ? 'Buka foto galeri' : 'Open gallery photo')"
-				class="group bento-card-outline relative mb-4 block w-full cursor-pointer overflow-hidden bento-lift rounded-2xl bg-slate-100 dark:bg-slate-800 break-inside-avoid !p-0 sm:mb-6"
-				:style="{ aspectRatio: item.width && item.height ? `${item.width} / ${item.height}` : 'auto' }"
+				:aria-label="item.title || (locale === 'id' ? 'Buka spesimen foto' : 'Open photo specimen')"
+				class="group flex flex-col justify-between border-b md:border-b-0 border-r-0 md:border-r border-slate-200/80 dark:border-[#134e43] transition-colors hover:bg-slate-50/80 dark:hover:bg-[#002420]/40 cursor-pointer select-none font-mono text-xs"
 				@click="openModal(item)"
 				@keydown.enter.prevent="openModal(item)"
 				@keydown.space.prevent="openModal(item)"
 			>
-				<!-- Background Neutral Skeleton Ringan (Bebas GPU Blur Lag) -->
-				<div
-					class="pointer-events-none absolute inset-0 h-full w-full bg-slate-200/60 dark:bg-slate-800/60"
-					aria-hidden="true"
-				/>
+				<!-- Specimen Header Rail -->
+				<div class="px-4 py-3 border-b border-slate-200/80 dark:border-[#134e43] flex items-center justify-between bg-slate-50/50 dark:bg-[#002420]/30 text-[10px] font-bold uppercase tracking-wider">
+					<div class="flex items-center gap-1.5 text-brand-700 dark:text-accent">
+						<span class="w-1.5 h-1.5 bg-brand-500 inline-block" />
+						<span>SPESIMEN {{ String(i + 1).padStart(2, '0') }}</span>
+					</div>
+					<span class="text-slate-900/40 dark:text-slate-50/40 tabular-nums">
+						{{ item.width || 720 }}×{{ item.height || 540 }} HD
+					</span>
+				</div>
 
-				<!-- 1. Official Cloudinary Pixelated LQIP Placeholder (blok piksel tegas & artistik) -->
-				<img
-					v-if="item.placeholder_image"
-					:src="item.placeholder_image"
-					alt=""
-					aria-hidden="true"
-					decoding="async"
-					class="pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out"
-					:class="loadedImages[item.public_id] ? 'opacity-0' : 'opacity-100'"
-					style="image-rendering: pixelated;"
-				>
+				<!-- Image Frame (Pure Rectilinear Architecture) -->
+				<div class="relative w-full aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-[#001714]">
+					<!-- LQIP Pixelated Placeholder -->
+					<img
+						v-if="item.placeholder_image"
+						:src="item.placeholder_image"
+						alt=""
+						aria-hidden="true"
+						decoding="async"
+						class="pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
+						:class="loadedImages[item.public_id] ? 'opacity-0' : 'opacity-100'"
+						style="image-rendering: pixelated;"
+					>
 
-				<!-- 2. Gambar Utama Resolusi Penuh (Fade in halus saat selesai diunduh) -->
-				<img
-					:src="item.image"
-					:alt="item.title || (locale === 'id' ? 'Foto galeri' : 'Gallery photo')"
-					decoding="async"
-					:width="item.width || 720"
-					:height="item.height || 540"
-					class="relative z-1 block h-full w-full object-cover transition-all duration-700 ease-out group-hover:scale-105"
-					:class="i === 0 || loadedImages[item.public_id] ? 'opacity-100' : 'opacity-0'"
-					:loading="i < 3 ? 'eager' : 'lazy'"
-					:fetchpriority="i === 0 ? 'high' : 'auto'"
-					@load="onImageLoad(item.public_id)"
-				>
+					<!-- High-Res Main Image -->
+					<img
+						:src="item.image"
+						:alt="item.title || 'Foto galeri'"
+						decoding="async"
+						:width="item.width || 720"
+						:height="item.height || 540"
+						class="relative z-1 h-full w-full object-cover transition-transform duration-300 group-hover:scale-103"
+						:class="i === 0 || loadedImages[item.public_id] ? 'opacity-100' : 'opacity-0'"
+						:loading="i < 6 ? 'eager' : 'lazy'"
+						:fetchpriority="i === 0 ? 'high' : 'auto'"
+						@load="onImageLoad(item.public_id)"
+					>
+				</div>
 
-				<!-- Overlay on Hover -->
-				<div class="absolute inset-0 z-10 flex flex-col justify-end from-slate-950/85 via-slate-950/30 to-transparent bg-gradient-to-t p-4 text-white opacity-0 transition-opacity duration-300 sm:p-5 group-hover:opacity-100">
-					<div class="flex items-center justify-between gap-2">
-						<h2 class="truncate text-sm text-white font-semibold font-heading transition-colors duration-100 sm:text-base group-hover:text-brand-300 dark:group-hover:text-accent">
+				<!-- Specimen Footer Details -->
+				<div class="p-4 flex flex-col justify-between flex-1 border-t border-slate-200/80 dark:border-[#134e43]">
+					<div>
+						<h2 class="font-heading font-800 text-base text-slate-900 dark:text-slate-50 leading-snug group-hover:text-brand-600 dark:group-hover:text-accent transition-colors mb-2">
 							{{ item.title }}
 						</h2>
-						<span class="shrink-0 rounded-full bg-white/20 p-1.5 backdrop-blur-md">
-							<span class="i-hugeicons-search-01 text-xs" />
-						</span>
-					</div>
-					<div
-						v-if="item.tags && item.tags.length"
-						class="mt-2 flex flex-wrap gap-1.5"
-					>
-						<span
-							v-for="tag in item.tags.slice(0, 3)"
-							:key="tag"
-							class="max-w-[120px] truncate rounded-full bg-white/15 px-2 py-0.5 text-[10px] text-slate-100 backdrop-blur-md sm:text-xs"
+
+						<div
+							v-if="item.tags && item.tags.length"
+							class="flex flex-wrap gap-1.5 mb-4"
 						>
-							#{{ tag }}
+							<span
+								v-for="tag in item.tags.slice(0, 3)"
+								:key="tag"
+								class="px-1.5 py-0.5 border border-slate-200 dark:border-[#134e43] text-[10px] text-slate-900/70 dark:text-slate-50/70 uppercase"
+							>
+								#{{ tag }}
+							</span>
+						</div>
+					</div>
+
+					<div class="pt-3 border-t border-slate-100 dark:border-[#134e43]/40 flex items-center justify-between text-[11px] text-slate-900/50 dark:text-slate-50/50">
+						<span>DOKUMEN FOTO</span>
+						<span class="group-hover:text-brand-600 dark:group-hover:text-accent font-bold flex items-center gap-1 transition-colors">
+							INSPEKSI <span class="i-lucide-arrow-up-right text-xs" />
 						</span>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<!-- Infinite Scroll Trigger Sentinel & Loading Indicator -->
+		<!-- Infinite Scroll Trigger Sentinel & Load More Strip -->
 		<div
 			ref="sentinelEl"
-			class="flex flex-col items-center justify-center py-8"
+			class="w-full border-x border-b border-slate-200/80 dark:border-[#134e43] bg-slate-50/60 dark:bg-[#002420]/30 p-6 flex flex-col items-center justify-center font-mono text-xs"
 		>
 			<div
 				v-if="isLoadingMore"
-				class="flex items-center gap-2 text-meta text-xs text-brand-800 font-medium dark:text-brand-400"
+				class="flex items-center gap-2 text-brand-700 dark:text-accent font-bold uppercase tracking-wider"
 			>
-				<span class="i-hugeicons-loading-03 animate-spin text-base" />
-				{{ locale === 'id' ? 'Memuat foto lainnya...' : 'Loading more photos...' }}
+				<span class="i-lucide-loader-2 animate-spin text-sm" />
+				<span>{{ locale === 'id' ? 'MEMUAT SPESIMEN LAINNYA...' : 'LOADING MORE SPECIMENS...' }}</span>
 			</div>
 
 			<button
 				v-else-if="hasMore"
 				type="button"
-				class="btn-ghost inline-flex cursor-pointer items-center gap-1.5 border border-slate-300 px-5 py-2 text-xs font-semibold dark:border-slate-700 hover:border-brand-700 dark:hover:border-brand-500"
+				class="px-5 py-2.5 border border-slate-300 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent text-slate-900 dark:text-slate-50 font-bold uppercase tracking-wider transition-colors cursor-pointer flex items-center gap-2"
 				@click="loadMore"
 			>
-				<span class="i-hugeicons-arrow-down-01 text-sm" />
-				{{ locale === 'id' ? 'Muat Lebih Banyak Foto' : 'Load More Photos' }}
+				<span>↓ {{ locale === 'id' ? 'MUAT LEBIH BANYAK FOTO' : 'LOAD MORE PHOTOS' }}</span>
+				<span class="text-slate-900/40 dark:text-slate-50/40 tabular-nums">
+					({{ filteredGallery.length - displayedItems.length }} TERSISA)
+				</span>
 			</button>
+
+			<div
+				v-else
+				class="text-[11px] font-bold uppercase tracking-wider text-slate-900/40 dark:text-slate-50/40"
+			>
+				■ AKHIR ARSIP FOTO // {{ filteredGallery.length }} TOTAL SPESIMEN TERCATAT
+			</div>
 		</div>
 
 		<!-- Empty State -->
 		<div
 			v-if="displayedItems.length === 0"
-			class="bento-card-subtle py-16 text-center"
+			class="w-full border-x border-b border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#001e1c] p-12 text-center font-mono text-xs"
 		>
-			<span class="i-hugeicons-image-02 mx-auto mb-2 block text-4xl text-slate-400 opacity-50" />
-			<p class="text-base text-slate-700 font-medium dark:text-slate-300">
-				{{ locale === 'id' ? 'Belum ada foto galeri yang ditemukan' : 'No gallery photos found' }}
-			</p>
-			<p class="mt-1 text-meta text-xs">
-				{{ locale === 'id' ? 'Pastikan folder "gallery" di Cloudinary telah memiliki aset foto.' : 'Make sure the "gallery" folder in your Cloudinary account has uploaded photos.' }}
+			<div class="mb-2 text-brand-600 dark:text-accent font-bold text-sm">
+				■ TIDAK ADA SPESIMEN TERSEDIA
+			</div>
+			<p class="text-slate-900/60 dark:text-slate-50/60">
+				{{ locale === 'id' ? 'Tidak ada foto yang cocok dengan filter tag terpilih.' : 'No photos match the selected tag filter.' }}
 			</p>
 		</div>
 
 		<!-- Page Content Markdown if any -->
 		<article
 			v-if="page"
-			class="mt-12 max-w-3xl prose prose-slate dark:prose-invert"
+			class="mt-12 max-w-4xl mx-auto prose prose-slate dark:prose-invert font-sans"
 		>
 			<ContentRenderer :value="page" />
 		</article>
 
-		<!-- SINGLE PHOTO MODAL (Wrapped in ClientOnly with Symmetrical Actions) -->
+		<!-- Band 05: Swiss Specimen Inspection Sheet (Lightbox Modal) -->
 		<ClientOnly>
 			<Teleport to="body">
 				<Transition
-					enter-active-class="transition duration-200 ease-out"
-					enter-from-class="opacity-0 scale-95"
+					enter-active-class="transition duration-150 ease-out"
+					enter-from-class="opacity-0 scale-98"
 					enter-to-class="opacity-100 scale-100"
-					leave-active-class="transition duration-150 ease-in"
+					leave-active-class="transition duration-100 ease-in"
 					leave-from-class="opacity-100 scale-100"
-					leave-to-class="opacity-0 scale-95"
+					leave-to-class="opacity-0 scale-98"
 				>
 					<div
 						v-if="selectedPhoto"
-						class="fixed inset-0 z-100 flex items-center justify-center bg-slate-950/90 p-3 backdrop-blur-md sm:p-6"
+						class="fixed inset-0 z-100 flex items-center justify-center bg-slate-950/85 backdrop-blur-xs p-3 sm:p-6 font-mono text-xs"
 						@click.self="closeModal"
 					>
-						<div class="relative max-w-4xl w-full flex flex-col items-center">
-							<!-- Symmetrical Modal Header Bar -->
-							<div class="mb-3 w-full flex items-center justify-between px-1">
-								<div class="max-w-[60%] flex items-center gap-2 sm:max-w-[70%]">
-									<span class="truncate text-sm text-white/90 font-semibold font-heading">
+						<div class="relative max-w-5xl w-full border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#001e1c] shadow-2xl flex flex-col">
+							<!-- Inspection Sheet Header -->
+							<div class="p-3.5 sm:p-4 border-b border-slate-200/80 dark:border-[#134e43] bg-slate-50/80 dark:bg-[#002420]/60 flex items-center justify-between gap-4 flex-wrap">
+								<div class="flex items-center gap-2 font-bold uppercase tracking-wider text-[11px] truncate">
+									<span class="w-2 h-2 bg-brand-500 inline-block shrink-0" />
+									<span class="text-brand-700 dark:text-accent shrink-0">
+										SPESIMEN [{{ String(currentModalIndex + 1).padStart(2, '0') }}/{{ String(filteredGallery.length).padStart(2, '0') }}]
+									</span>
+									<span class="text-slate-300 dark:text-[#134e43]">|</span>
+									<span class="text-slate-900 dark:text-slate-50 truncate">
 										{{ selectedPhoto.title }}
 									</span>
-									<span class="shrink-0 rounded-full bg-white/10 px-2 py-0.5 text-[10px] text-white/70 font-mono sm:text-xs">
-										{{ currentModalIndex + 1 }} / {{ filteredGallery.length }}
-									</span>
 								</div>
-								<div class="flex items-center gap-2">
-									<!-- Download High Res File Button -->
+
+								<!-- Action Controls -->
+								<div class="flex items-center gap-2 font-mono text-xs">
+									<!-- Prev Button -->
+									<button
+										type="button"
+										:disabled="!hasPrevPhoto"
+										class="px-2 py-1 border border-slate-300 dark:border-[#134e43] transition-colors cursor-pointer text-[10px] uppercase font-bold"
+										:class="hasPrevPhoto ? 'hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent' : 'opacity-40 cursor-not-allowed'"
+										title="Foto Sebelumnya (Panah Kiri)"
+										@click="prevPhoto"
+									>
+										← SEBELUMNYA
+									</button>
+
+									<!-- Next Button -->
+									<button
+										type="button"
+										:disabled="!hasNextPhoto"
+										class="px-2 py-1 border border-slate-300 dark:border-[#134e43] transition-colors cursor-pointer text-[10px] uppercase font-bold"
+										:class="hasNextPhoto ? 'hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent' : 'opacity-40 cursor-not-allowed'"
+										title="Foto Selanjutnya (Panah Kanan)"
+										@click="nextPhoto"
+									>
+										BERIKUTNYA →
+									</button>
+
+									<!-- Download HD Button -->
 									<a
 										v-if="selectedPhoto.download_url || selectedPhoto.full_image"
 										:href="selectedPhoto.download_url || selectedPhoto.full_image"
 										target="_blank"
 										rel="noopener"
 										download
-										class="h-9 inline-flex cursor-pointer items-center justify-center gap-1.5 border border-white/15 rounded-full bg-slate-900/80 px-3 text-xs text-white/90 backdrop-blur-md transition hover:border-brand-400/50 hover:bg-slate-800 hover:text-white"
-										:aria-label="locale === 'id' ? 'Unduh HD' : 'Download HD'"
-										:title="locale === 'id' ? 'Unduh file resolusi penuh' : 'Download full resolution file'"
+										class="px-2 py-1 border border-slate-300 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent transition-colors cursor-pointer text-[10px] uppercase font-bold hidden sm:inline-flex items-center gap-1"
 									>
-										<span class="i-hugeicons-download-02 text-sm text-brand-400" />
-										<span class="font-medium font-sans">{{ locale === 'id' ? 'Unduh HD' : 'Download HD' }}</span>
+										<span class="i-lucide-download text-xs" />
+										<span>UNDUH HD</span>
 									</a>
 
-									<!-- Open High Res Direct Link Button -->
-									<a
-										v-if="selectedPhoto.full_image || selectedPhoto.image"
-										:href="selectedPhoto.full_image || selectedPhoto.image"
-										target="_blank"
-										rel="noopener"
-										class="h-9 w-9 inline-flex cursor-pointer items-center justify-center border border-white/15 rounded-full bg-slate-900/80 text-white/80 backdrop-blur-md transition hover:border-brand-400/50 hover:bg-slate-800 hover:text-white"
-										:aria-label="locale === 'id' ? 'Buka resolusi penuh' : 'Open full resolution'"
-										:title="locale === 'id' ? 'Buka resolusi penuh' : 'Open full resolution'"
-									>
-										<span class="i-hugeicons-maximize-02 text-base" />
-									</a>
 									<!-- Close Button -->
 									<button
 										type="button"
-										class="h-9 w-9 inline-flex cursor-pointer items-center justify-center border border-white/15 rounded-full bg-slate-900/80 text-white/80 backdrop-blur-md transition hover:border-red/50 hover:bg-slate-800 hover:text-white"
-										:aria-label="locale === 'id' ? 'Tutup' : 'Close'"
+										class="px-2.5 py-1 border border-slate-300 dark:border-[#134e43] hover:text-rose-600 dark:hover:text-rose-400 transition-colors cursor-pointer text-[10px] uppercase font-bold"
+										title="Tutup (Esc)"
 										@click="closeModal"
 									>
-										<span class="i-hugeicons-cancel-01 text-base" />
+										✕
 									</button>
 								</div>
 							</div>
 
-							<!-- High Quality Single Image with Progressive Pixelated Placeholder & Next/Prev Controls -->
-							<div class="relative max-h-[80vh] min-h-[240px] w-full flex items-center justify-center overflow-hidden border border-white/10 rounded-bento bg-slate-900/90 shadow-2xl sm:min-h-[360px]">
-								<!-- Prev Navigation Button -->
-								<button
-									v-if="hasPrevPhoto"
-									type="button"
-									class="absolute left-2 top-1/2 z-30 h-10 w-10 flex -translate-y-1/2 cursor-pointer items-center justify-center border border-white/20 rounded-full bg-slate-900/80 text-white shadow-xl backdrop-blur-md transition sm:left-4 sm:h-12 sm:w-12 hover:border-brand-400 hover:bg-slate-800 hover:scale-105 active:scale-95"
-									:aria-label="locale === 'id' ? 'Foto sebelumnya' : 'Previous photo'"
-									:title="locale === 'id' ? 'Foto sebelumnya (Panah Kiri)' : 'Previous photo (Left Arrow)'"
-									@click.stop="prevPhoto"
-								>
-									<span class="i-hugeicons-arrow-left-01 text-xl sm:text-2xl" />
-								</button>
-
-								<!-- Next Navigation Button -->
-								<button
-									v-if="hasNextPhoto"
-									type="button"
-									class="absolute right-2 top-1/2 z-30 h-10 w-10 flex -translate-y-1/2 cursor-pointer items-center justify-center border border-white/20 rounded-full bg-slate-900/80 text-white shadow-xl backdrop-blur-md transition sm:right-4 sm:h-12 sm:w-12 hover:border-brand-400 hover:bg-slate-800 hover:scale-110 active:scale-95"
-									:aria-label="locale === 'id' ? 'Foto selanjutnya' : 'Next photo'"
-									:title="locale === 'id' ? 'Foto selanjutnya (Panah Kanan)' : 'Next photo (Right Arrow)'"
-									@click.stop="nextPhoto"
-								>
-									<span class="i-hugeicons-arrow-right-01 text-xl sm:text-2xl" />
-								</button>
-								<!-- 1. Official Cloudinary Pixelated LQIP Placeholder (muncul instan tanpa animasi berputar) -->
-								<img
-									v-if="selectedPhoto.placeholder_image"
-									:src="selectedPhoto.placeholder_image"
-									alt=""
-									aria-hidden="true"
-									class="pointer-events-none absolute inset-0 h-full w-full object-contain transition-opacity duration-500"
-									:class="isModalImageLoaded ? 'opacity-0' : 'opacity-100'"
-									style="image-rendering: pixelated;"
-								>
-
-								<!-- 2. Optimized crisp modal preview image (loads fast ~80-120KB) -->
+							<!-- Image Canvas -->
+							<div class="relative max-h-[70vh] min-h-[300px] w-full flex items-center justify-center overflow-hidden bg-slate-950 p-2 sm:p-4">
 								<img
 									:src="selectedPhoto.preview_image || selectedPhoto.image"
 									:alt="selectedPhoto.title"
 									decoding="async"
-									class="relative z-10 max-h-[75vh] max-w-full w-auto rounded-bento object-contain transition-opacity duration-300"
+									class="relative z-10 max-h-[66vh] max-w-full w-auto object-contain transition-opacity duration-300"
 									:class="isModalImageLoaded ? 'opacity-100' : 'opacity-0'"
 									@load="isModalImageLoaded = true"
 								>
 							</div>
 
-							<!-- Caption Details & Tags -->
-							<div class="mt-3.5 w-full flex flex-wrap items-center justify-between gap-2 px-1 text-xs text-white/80">
+							<!-- Technical Parameters Ledger -->
+							<div class="p-3.5 sm:p-4 border-t border-slate-200/80 dark:border-[#134e43] bg-slate-50/80 dark:bg-[#002420]/60 flex items-center justify-between gap-4 flex-wrap text-[11px] text-slate-900/70 dark:text-slate-50/70">
+								<div class="flex items-center gap-2 flex-wrap">
+									<span class="font-bold text-slate-900 dark:text-slate-50">PARAMETER:</span>
+									<span class="tabular-nums">{{ selectedPhoto.width || 720 }}×{{ selectedPhoto.height || 540 }} PX</span>
+									<span>//</span>
+									<span>FORMAT: CLOUDINARY SWR</span>
+									<span>//</span>
+									<span>LISENSI: CC BY-NC-ND 4.0</span>
+								</div>
+
 								<div
 									v-if="selectedPhoto.tags && selectedPhoto.tags.length"
-									class="flex flex-wrap items-center gap-1.5"
+									class="flex items-center gap-1.5"
 								>
 									<span
 										v-for="tag in selectedPhoto.tags"
 										:key="tag"
-										class="rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] text-white"
+										class="px-1.5 py-0.5 border border-slate-300 dark:border-[#134e43] text-[10px] uppercase"
 									>
 										#{{ tag }}
 									</span>

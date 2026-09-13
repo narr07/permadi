@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Motion } from 'motion-v'
 import { computed, onMounted, ref } from 'vue'
 import { useReactionsStore } from '~/stores/useReactionsStore'
 import ReactionButton from './ReactionButton.vue'
@@ -47,147 +46,190 @@ const reactionsList = computed(() => [
 	{
 		type: 'THINKING' as const,
 		emoji: '🧐',
-		title: locale.value === 'id' ? 'Insightful / Bikin Mikir' : 'Insightful',
+		title: locale.value === 'id' ? 'Insightful' : 'Insightful',
 	},
 	{
 		type: 'AMAZED' as const,
 		emoji: '😲',
-		title: locale.value === 'id' ? 'Keren / Terpukau' : 'Amazed',
+		title: locale.value === 'id' ? 'Impresif' : 'Amazed',
 	},
 ])
+
+const clapPercentage = computed(() => {
+	if (!reactionsTotal.value) return 0
+	return Math.round(((articleState.value.total.CLAPPING || 0) / reactionsTotal.value) * 100)
+})
+
+const thinkingPercentage = computed(() => {
+	if (!reactionsTotal.value) return 0
+	return Math.round(((articleState.value.total.THINKING || 0) / reactionsTotal.value) * 100)
+})
+
+const amazedPercentage = computed(() => {
+	if (!reactionsTotal.value) return 0
+	return Math.round(((articleState.value.total.AMAZED || 0) / reactionsTotal.value) * 100)
+})
 </script>
 
 <template>
-	<!-- Inline Bento Reaction Box at the End of Article -->
+	<!-- Swiss Editorial Reaction & Engagement Ledger -->
 	<section
-		aria-label="Article Reactions"
-		class="not-prose my-8 select-none border border-slate-200/80 rounded-2xl bg-white/80 p-4 shadow-xs backdrop-blur-md transition-all sm:my-10 dark:border-slate-800/80 dark:bg-slate-900/80 sm:p-5"
+		aria-label="Respon dan Evaluasi Naskah"
+		class="not-prose my-12 border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#001e1c] font-mono select-none"
 	>
-		<div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
-			<!-- Header / Question -->
-			<div class="flex items-center self-start gap-3 sm:self-auto">
-
-				<div>
-					<p class="text-sm text-slate-950 font-bold tracking-tight font-heading dark:text-slate-50">
-						{{ locale === 'id' ? 'Bagaimana artikel ini?' : 'What do you think?' }}
-					</p>
-					<p class="text-xs text-slate-500 dark:text-slate-400">
-						{{ locale === 'id' ? 'Tinggalkan reaksi atau lihat statistik pembaca' : 'Leave a reaction or view reader insights' }}
-					</p>
-				</div>
+		<!-- Ledger Masthead -->
+		<div class="px-5 py-3.5 sm:px-6 border-b border-slate-200/80 dark:border-[#134e43] bg-slate-50/70 dark:bg-[#002420]/50 flex items-center justify-between flex-wrap gap-2 text-xs">
+			<div class="flex items-center gap-2 font-bold tracking-[0.2em] uppercase text-[11px] text-brand-700 dark:text-accent">
+				<span class="w-2 h-2 bg-brand-500 inline-block" />
+				<span>■ 04 // EVALUASI NASKAH &amp; RESPON PEMBACA</span>
 			</div>
+			<div class="text-[11px] text-slate-900/50 dark:text-slate-50/50 tabular-nums">
+				TOTAL: {{ formatNumber(reactionsTotal) }} RESPON TERCATAT
+			</div>
+		</div>
 
-			<!-- Reaction Buttons Container -->
-			<div class="w-full flex flex-wrap items-center justify-center gap-2 sm:w-auto sm:justify-end">
-				<!-- Reaction Buttons (👏, 🧐, 😲) -->
+		<!-- Explanatory Prompt -->
+		<div class="px-5 py-3 border-b border-slate-200/80 dark:border-[#134e43] text-xs text-slate-900/70 dark:text-slate-50/70 flex items-center justify-between flex-wrap gap-2">
+			<span>{{ locale === 'id' ? 'Bagaimana impresi teknis Anda terhadap naskah ini? Tinggalkan respon tipografis:' : 'What is your technical evaluation of this document? Leave a response:' }}</span>
+			<span class="text-[10px] text-slate-900/40 dark:text-slate-50/40 uppercase">BATAS: 10 RESPON / KATEGORI</span>
+		</div>
+
+		<!-- 4-Column Modular Ledger Grid -->
+		<div class="grid grid-cols-2 md:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-200/80 dark:divide-[#134e43]">
+			<!-- Reaction Cells 01, 02, 03 -->
+			<div
+				v-for="(item, idx) in reactionsList"
+				:key="item.type"
+				class="h-full border-b md:border-b-0 border-slate-200/80 dark:border-[#134e43]"
+			>
 				<ReactionButton
-					v-for="item in reactionsList"
-					:key="item.type"
 					:slug="slug"
 					:type="item.type"
 					:emoji="item.emoji"
 					:title="item.title"
+					:index="idx + 1"
 					:section="activeSection"
 				/>
+			</div>
 
-				<!-- Subtle Bento Divider -->
-				<div class="mx-0.5 h-4 w-[1px] bg-slate-200 dark:bg-slate-800" />
-
-				<!-- Insight Trigger Button -->
-				<Motion
-					:while-hover="{ scale: 1.08 }"
-					:while-tap="{ scale: 0.92 }"
-					:transition="{ type: 'spring', stiffness: 400, damping: 17 }"
+			<!-- Reaction Cell 04: Analytics / Insight Toggle Cell -->
+			<div class="h-full">
+				<button
+					type="button"
+					:aria-expanded="isInsightOpen"
+					class="group w-full h-full p-4 sm:p-5 flex flex-col justify-between text-left transition-all font-mono text-xs cursor-pointer select-none bg-white dark:bg-[#001e1c]"
+					:class="isInsightOpen ? 'bg-slate-100 dark:bg-[#002420]' : 'hover:bg-slate-50 dark:hover:bg-[#002420]/40 text-slate-900/80 dark:text-slate-50/80'"
+					@click="isInsightOpen = !isInsightOpen"
 				>
-					<button
-						type="button"
-						:title="locale === 'id' ? 'Lihat Statistik Artikel' : 'View Article Insights'"
-						:aria-label="locale === 'id' ? 'Lihat Statistik Artikel' : 'View Article Insights'"
-						class="h-8 flex items-center gap-1.5 border rounded-full px-2.5 text-xs font-medium transition-all duration-150"
-						:class="[
-							isInsightOpen
-								? 'border-brand-500 bg-brand-50 text-brand-800 shadow-xs dark:border-brand-400 dark:bg-brand-950/60 dark:text-brand-300'
-								: 'border-slate-200/80 bg-slate-50/70 text-slate-700 hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:border-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-100',
-						]"
-						@click="isInsightOpen = !isInsightOpen"
-					>
-						<span class="i-lucide-bar-chart-2 text-sm text-brand-700 dark:text-brand-400" />
-						<span class="text-xs text-slate-700 font-semibold font-mono tabular-nums dark:text-slate-300">{{ formatNumber(reactionsTotal) }}</span>
-					</button>
-				</Motion>
+					<!-- Top Strip -->
+					<div class="flex items-center justify-between gap-2 mb-3">
+						<span class="text-[11px] font-bold tabular-nums text-slate-900/50 dark:text-slate-50/50">
+							[04]
+						</span>
+						<span class="text-xl sm:text-2xl transition-transform duration-150 group-hover:scale-115">
+							📊
+						</span>
+					</div>
+
+					<!-- Title -->
+					<div class="font-bold uppercase tracking-wider text-[11px] text-slate-900 dark:text-slate-50 mb-4 truncate">
+						{{ locale === 'id' ? 'STATISTIK' : 'INSIGHTS' }}
+					</div>
+
+					<!-- Bottom Status -->
+					<div class="pt-3 border-t border-slate-200/80 dark:border-[#134e43] flex items-baseline justify-between text-[11px] w-full">
+						<span class="font-bold tabular-nums text-sm sm:text-base text-brand-600 dark:text-accent">
+							{{ formatNumber(views) }}
+						</span>
+						<span class="text-[10px] uppercase font-semibold tabular-nums text-slate-900/50 dark:text-slate-50/50">
+							{{ isInsightOpen ? 'TUTUP ▲' : 'METRIK ▼' }}
+						</span>
+					</div>
+				</button>
 			</div>
 		</div>
 
-		<!-- Teleport Modal to Body for Centralized Modal Popover -->
-		<ClientOnly>
-			<Teleport to="body">
-				<div
-					v-if="isInsightOpen"
-					class="pointer-events-none fixed inset-0 z-[9999] flex items-center justify-center p-4"
-				>
-					<!-- Backdrop that closes modal on click -->
-					<div
-						class="pointer-events-auto fixed inset-0 bg-slate-950/50 backdrop-blur-[3px]"
-						@click="isInsightOpen = false"
-					/>
-
-					<!-- Popover Card (Bento Style) -->
-					<Motion
-						:initial="{ opacity: 0, y: 12, scale: 0.95 }"
-						:animate="{ opacity: 1, y: 0, scale: 1 }"
-						:exit="{ opacity: 0, y: 8, scale: 0.96 }"
-						:transition="{ duration: 0.16, ease: 'easeOut' }"
-						class="pointer-events-auto relative z-10 max-w-[340px] w-full border border-slate-200/90 rounded-2xl bg-white/95 p-4 text-slate-900 shadow-2xl backdrop-blur-2xl dark:border-slate-800/90 dark:bg-slate-900/95 dark:text-slate-100"
-					>
-						<!-- Header with Locale Support -->
-						<div class="mb-3 flex items-center justify-between border-b border-slate-200/70 pb-2.5 dark:border-slate-800/70">
-							<div class="flex items-center gap-2 text-xs text-brand-900 font-bold tracking-wider font-heading uppercase dark:text-brand-300">
-								<span class="i-lucide-bar-chart-2 text-sm text-brand-700 dark:text-brand-400" />
-								<span>{{ locale === 'id' ? 'Statistik Artikel' : 'Article Insights' }}</span>
-							</div>
-							<button
-								type="button"
-								class="rounded-lg p-1 text-slate-500 transition-colors hover:bg-slate-100 dark:text-slate-400 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-white"
-								:aria-label="locale === 'id' ? 'Tutup' : 'Close'"
-								@click="isInsightOpen = false"
-							>
-								<span class="i-lucide-x text-sm" />
-							</button>
-						</div>
-
-						<!-- 3 Main Metrics Grid (Bento Style) -->
-						<div class="grid grid-cols-3 gap-2 py-1 text-center sm:gap-2.5">
-							<div class="flex flex-col items-center border border-slate-200/70 rounded-xl bg-slate-50/80 p-2 shadow-xs dark:border-slate-800/70 dark:bg-slate-800/50 sm:p-2.5">
-								<span class="text-[11px] text-meta text-slate-600 font-medium dark:text-slate-400">Views</span>
-								<span class="mt-0.5 text-base text-slate-950 font-bold font-mono sm:text-lg dark:text-slate-50">
-									{{ formatNumber(views) }}
-								</span>
-							</div>
-
-							<div class="flex flex-col items-center border border-slate-200/70 rounded-xl bg-slate-50/80 p-2 shadow-xs dark:border-slate-800/70 dark:bg-slate-800/50 sm:p-2.5">
-								<span class="text-[11px] text-meta text-slate-600 font-medium dark:text-slate-400">Shares</span>
-								<span class="mt-0.5 text-base text-brand-700 font-bold font-mono sm:text-lg dark:text-brand-400">
-									{{ formatNumber(shares) }}
-								</span>
-							</div>
-
-							<div class="flex flex-col items-center border border-slate-200/70 rounded-xl bg-slate-50/80 p-2 shadow-xs dark:border-slate-800/70 dark:bg-slate-800/50 sm:p-2.5">
-								<span class="text-[11px] text-meta text-slate-600 font-medium dark:text-slate-400">Reactions</span>
-								<span class="mt-0.5 text-base text-accent font-bold font-mono sm:text-lg">
-									{{ formatNumber(reactionsTotal) }}
-								</span>
-							</div>
-						</div>
-
-						<!-- Reaction Breakdown Pills -->
-						<div class="mt-3 flex items-center justify-between border-t border-slate-200/70 px-1 pt-2.5 text-xs text-slate-600 dark:border-slate-800/70 dark:text-slate-400">
-							<span class="inline-flex items-center gap-1 font-mono">👏 {{ articleState.total.CLAPPING || 0 }}</span>
-							<span class="inline-flex items-center gap-1 font-mono">🧐 {{ articleState.total.THINKING || 0 }}</span>
-							<span class="inline-flex items-center gap-1 font-mono">😲 {{ articleState.total.AMAZED || 0 }}</span>
-						</div>
-					</Motion>
+		<!-- Collapsible Swiss Analytics Matrix Ledger -->
+		<div
+			v-if="isInsightOpen"
+			class="border-t border-slate-200/80 dark:border-[#134e43] bg-slate-50/50 dark:bg-[#002420]/30 p-5 sm:p-6"
+		>
+			<div class="mb-4 pb-2 border-b border-slate-200/80 dark:border-[#134e43] flex items-center justify-between text-[11px] font-bold uppercase tracking-wider">
+				<div class="flex items-center gap-2 text-brand-700 dark:text-accent">
+					<span class="w-1.5 h-1.5 bg-brand-500 inline-block" />
+					<span>LEDGER PARAMETER ANALITIK DOKUMEN</span>
 				</div>
-			</Teleport>
-		</ClientOnly>
+				<button
+					type="button"
+					class="text-slate-900/50 hover:text-slate-900 dark:text-slate-50/50 dark:hover:text-slate-50 cursor-pointer"
+					@click="isInsightOpen = false"
+				>
+					TUTUP ✕
+				</button>
+			</div>
+
+			<!-- 3 Specimen Metrics -->
+			<div class="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#001e1c] mb-5">
+				<div class="p-3.5 text-center">
+					<span class="text-[10px] text-slate-900/50 dark:text-slate-50/50 font-bold uppercase tracking-wider block mb-1">
+						TOTAL TAYANGAN
+					</span>
+					<span class="text-xl sm:text-2xl font-bold tabular-nums text-slate-900 dark:text-slate-50">
+						{{ formatNumber(views) }}
+					</span>
+				</div>
+
+				<div class="p-3.5 text-center">
+					<span class="text-[10px] text-slate-900/50 dark:text-slate-50/50 font-bold uppercase tracking-wider block mb-1">
+						REFERENSI &amp; TAUTAN
+					</span>
+					<span class="text-xl sm:text-2xl font-bold tabular-nums text-brand-600 dark:text-accent">
+						{{ formatNumber(shares) }}
+					</span>
+				</div>
+
+				<div class="p-3.5 text-center">
+					<span class="text-[10px] text-slate-900/50 dark:text-slate-50/50 font-bold uppercase tracking-wider block mb-1">
+						TOTAL REAKSI
+					</span>
+					<span class="text-xl sm:text-2xl font-bold tabular-nums text-slate-900 dark:text-slate-50">
+						{{ formatNumber(reactionsTotal) }}
+					</span>
+				</div>
+			</div>
+
+			<!-- Hairline Distribution Bars -->
+			<div class="space-y-3 text-xs">
+				<div class="space-y-1">
+					<div class="flex justify-between text-[11px]">
+						<span>👏 TEPUK TANGAN (CLAPPING)</span>
+						<span class="tabular-nums font-bold">{{ articleState.total.CLAPPING || 0 }} ({{ clapPercentage }}%)</span>
+					</div>
+					<div class="w-full h-1.5 bg-slate-200/80 dark:bg-[#134e43]">
+						<div class="h-full bg-brand-500 transition-all duration-300" :style="{ width: `${clapPercentage}%` }" />
+					</div>
+				</div>
+
+				<div class="space-y-1">
+					<div class="flex justify-between text-[11px]">
+						<span>🧐 INSIGHTFUL (THINKING)</span>
+						<span class="tabular-nums font-bold">{{ articleState.total.THINKING || 0 }} ({{ thinkingPercentage }}%)</span>
+					</div>
+					<div class="w-full h-1.5 bg-slate-200/80 dark:bg-[#134e43]">
+						<div class="h-full bg-brand-600 dark:bg-brand-400 transition-all duration-300" :style="{ width: `${thinkingPercentage}%` }" />
+					</div>
+				</div>
+
+				<div class="space-y-1">
+					<div class="flex justify-between text-[11px]">
+						<span>😲 IMPRESIF (AMAZED)</span>
+						<span class="tabular-nums font-bold">{{ articleState.total.AMAZED || 0 }} ({{ amazedPercentage }}%)</span>
+					</div>
+					<div class="w-full h-1.5 bg-slate-200/80 dark:bg-[#134e43]">
+						<div class="h-full bg-brand-700 dark:bg-accent transition-all duration-300" :style="{ width: `${amazedPercentage}%` }" />
+					</div>
+				</div>
+			</div>
+		</div>
 	</section>
 </template>

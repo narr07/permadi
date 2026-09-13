@@ -1,36 +1,24 @@
 <script setup lang="ts">
-import { onClickOutside } from '@vueuse/core'
-
 const { locale } = useI18n()
-const localePath = useLocalePath()
 const { getCategoryLabel } = useCategoryLabel()
 const { formatDate } = useFormatDate()
+
 const pageCollection = computed(() => (locale.value === 'id' ? 'pages_id' : 'pages_en'))
 const blogCollection = computed(() => (locale.value === 'id' ? 'blog_id' : 'blog_en'))
 const currentPath = computed(() => (locale.value === 'id' ? '/id/blog' : '/blog'))
 
-const selectedTag = ref<string>('ALL')
-const isTagDropdownOpen = ref(false)
-const tagDropdownRef = ref<HTMLElement | null>(null)
-const tagSearchQuery = ref('')
-
-onClickOutside(tagDropdownRef, () => {
-	if (isTagDropdownOpen.value) {
-		isTagDropdownOpen.value = false
-	}
-})
-
+// Page metadata
 const { data: page } = await useAsyncData(
 	() => `blog-index-${locale.value}`,
 	() => queryCollection(pageCollection.value).path(currentPath.value).select('title', 'description', 'eyebrow').first(),
 	{ watch: [locale] },
 )
 
+// All blog articles (SSR)
 const { data: posts } = await useAsyncData(
 	() => `blog-posts-list-${locale.value}`,
 	() => queryCollection(blogCollection.value)
 		.order('date', 'DESC')
-		.select('title', 'description', 'date', 'category', 'tags', 'slug', 'path', 'readingTime')
 		.all(),
 	{ watch: [locale] },
 )
@@ -41,32 +29,33 @@ function cleanSlug(pathStr: string): string {
 	return lastPart.replace(/^\d+\./, '')
 }
 
-const allTags = computed(() => {
-	if (!posts.value)
-		return []
-	const tagSet = new Set<string>()
-	for (const post of posts.value) {
-		if (post.category) {
-			tagSet.add(post.category)
-		}
-		if (Array.isArray(post.tags)) {
-			post.tags.forEach((tag: string) => tagSet.add(tag))
-		}
-	}
-	return Array.from(tagSet)
-})
+// Active filter tag
+const selectedTag = ref<string>('ALL')
 
-const filteredDropdownTags = computed(() => {
-	const q = tagSearchQuery.value.trim().toLowerCase()
-	if (!q)
-		return allTags.value
-	return allTags.value.filter((t: string) => t.toLowerCase().includes(q))
+// Extract top unique tags/categories
+const filterTabs = computed(() => {
+	if (!posts.value)
+		return ['ALL']
+	const tagsSet = new Set<string>()
+	posts.value.forEach((item: any) => {
+		if (item.category) {
+			tagsSet.add(String(item.category).trim().toUpperCase())
+		}
+		const tags = item.tags || []
+		tags.forEach((t: string) => {
+			const upper = String(t).trim().toUpperCase()
+			if (['NUXT', 'VUE', 'CSS', 'TAILWIND', 'PENDIDIKAN', 'DESAIN', 'PERFORMANCE', 'TUTORIAL'].includes(upper)) {
+				tagsSet.add(upper)
+			}
+		})
+	})
+	return ['ALL', ...Array.from(tagsSet)]
 })
 
 const route = useRoute()
 const router = useRouter()
 
-// 4. Bento SEO-Friendly Pagination (1 Hero Full Width + 6 Grid = 7 Artikel)
+// Pagination: 7 articles per page (1 lead + 6 grid)
 const postsPerPage = 7
 
 const currentPage = computed(() => {
@@ -74,7 +63,6 @@ const currentPage = computed(() => {
 	return p > 0 && !isNaN(p) ? Math.floor(p) : 1
 })
 
-// Otomatis scroll ke paling atas saat halaman pagination berganti
 watch(currentPage, () => {
 	if (import.meta.client) {
 		window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
@@ -83,8 +71,6 @@ watch(currentPage, () => {
 
 function selectTag(tag: string) {
 	selectedTag.value = tag
-	isTagDropdownOpen.value = false
-	tagSearchQuery.value = ''
 	if (route.query.page) {
 		const q = { ...route.query }
 		delete q.page
@@ -92,38 +78,28 @@ function selectTag(tag: string) {
 	}
 }
 
-const tagCounts = computed(() => {
-	const map: Record<string, number> = {}
-	if (posts.value) {
-		for (const post of posts.value) {
-			if (post.category) {
-				map[post.category] = (map[post.category] || 0) + 1
-			}
-			if (Array.isArray(post.tags)) {
-				for (const tag of post.tags) {
-					map[tag] = (map[tag] || 0) + 1
-				}
-			}
-		}
-	}
-	return map
-})
-
+// Filtered articles list
 const filteredPosts = computed(() => {
 	if (!posts.value)
 		return []
 	return posts.value
-		.filter((post: any) => {
-			return selectedTag.value === 'ALL'
-				|| post.category === selectedTag.value
-				|| post.tags?.includes(selectedTag.value)
+		.filter((item: any) => {
+			if (selectedTag.value === 'ALL')
+				return true
+			const target = selectedTag.value.toUpperCase()
+			const cat = String(item.category || '').toUpperCase()
+			const tags = (item.tags || []).map((t: string) => String(t).toUpperCase())
+			return cat === target || tags.includes(target)
 		})
-		.map((post: any) => ({
-			...post,
-			url: locale.value === 'id'
-				? `/id/blog/${post.slug || cleanSlug(post.path)}`
-				: `/blog/${post.slug || cleanSlug(post.path)}`,
-		}))
+		.map((item: any, idx: number) => {
+			const postSlug = item.slug || cleanSlug(item.path || '')
+			const basePath = locale.value === 'id' ? `/id/blog/${postSlug}` : `/blog/${postSlug}`
+			return {
+				...item,
+				url: basePath,
+				indexNum: String(idx + 1).padStart(2, '0'),
+			}
+		})
 })
 
 const totalPages = computed(() => {
@@ -133,6 +109,20 @@ const totalPages = computed(() => {
 const paginatedPosts = computed(() => {
 	const start = (currentPage.value - 1) * postsPerPage
 	return filteredPosts.value.slice(start, start + postsPerPage)
+})
+
+const leadPost = computed(() => {
+	if (currentPage.value === 1 && selectedTag.value === 'ALL' && paginatedPosts.value.length > 0) {
+		return paginatedPosts.value[0]
+	}
+	return null
+})
+
+const gridPosts = computed(() => {
+	if (leadPost.value) {
+		return paginatedPosts.value.slice(1)
+	}
+	return paginatedPosts.value
 })
 
 function getPaginationUrl(pageNumber: number) {
@@ -149,22 +139,16 @@ function getPaginationUrl(pageNumber: number) {
 	}
 }
 
-function scrollToTop() {
-	if (import.meta.client) {
-		window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-	}
-}
-
 useSeoMeta({
-	title: computed(() => page.value?.title),
-	description: computed(() => page.value?.description),
-	ogTitle: computed(() => page.value?.title),
-	ogDescription: computed(() => page.value?.description),
+	title: computed(() => page.value?.title || (locale.value === 'id' ? 'Blog & Catatan Teknis' : 'Blog & Technical Notes')),
+	description: computed(() => page.value?.description || (locale.value === 'id' ? 'Kumpulan tulisan seputar pemrograman web, sistem antarmuka, dan teknologi pendidikan.' : 'Articles and notes on web engineering, UI systems, and education.')),
+	ogTitle: computed(() => page.value?.title || 'Blog & Catatan Teknis'),
+	ogDescription: computed(() => page.value?.description || 'Arsip catatan teknis Dinar Permadi Yusup.'),
 })
 
 defineOgImage('Bento', {
-	title: page.value?.title,
-	description: page.value?.description,
+	title: page.value?.title || 'Blog & Catatan Teknis',
+	description: page.value?.description || 'Arsip artikel karya Dinar Permadi Yusup.',
 })
 
 useSchemaOrg([
@@ -175,372 +159,335 @@ useSchemaOrg([
 </script>
 
 <template>
-	<div class="container-bento py-10 sm:py-14">
-		<!-- Page Header (Clean Bento Style without gradient) -->
-		<header
-			class="bento-card-clean relative z-30 mb-8 bg-slate-50/70 p-6 sm:mb-10 !overflow-visible dark:bg-slate-900/60 sm:p-8"
-		>
-			<div class="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-				<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
-				<div class="max-w-2xl">
-					<div class="mb-3.5 inline-flex items-center border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 tracking-tighter font-mono dark:border-brand-800/60 dark:bg-brand-950 dark:text-accent">
-						<span>{{ page?.eyebrow || (locale === 'id' ? 'Artikel & Catatan' : 'Articles & Insights') }}</span>
+	<div class="w-full bg-white dark:bg-[#001e1c]">
+		<!-- Band 01: Swiss Masthead & Archival Spec Rail (4:8 Asymmetric Split) -->
+		<header class="w-full border-b border-slate-200/80 dark:border-[#134e43]">
+			<div class="grid grid-cols-1 lg:grid-cols-12">
+				<!-- Meta Rail (4 Columns) -->
+				<div class="lg:col-span-4 p-6 sm:p-8 lg:p-10 lg:border-r border-b lg:border-b-0 border-slate-200/80 dark:border-[#134e43] bg-slate-50/50 dark:bg-[#002420]/40 flex flex-col justify-between">
+					<div>
+						<div class="mb-4 flex items-center justify-between font-mono text-[11px] font-bold tracking-[0.2em] uppercase">
+							<div class="flex items-center gap-2 text-brand-700 dark:text-accent">
+								<span class="w-2 h-2 rounded-none bg-brand-500 inline-block" />
+								<span>02 // ARSIP TULISAN</span>
+							</div>
+							<span class="text-slate-900/40 tabular-nums dark:text-slate-50/40">
+								VOL. 26
+							</span>
+						</div>
+
+						<span class="block font-mono text-[11px] uppercase tracking-[0.15em] text-slate-900/50 dark:text-slate-50/50 mb-1.5">
+							KLASIFIKASI NASKAH
+						</span>
+						<h2 class="font-heading font-800 text-2xl sm:text-3xl text-slate-900 dark:text-slate-50 leading-tight">
+							{{ page?.eyebrow || (locale === 'id' ? 'Catatan & Esai' : 'Writing & Essays') }}
+						</h2>
 					</div>
 
-					<h1 class="heading-page">
-						{{ page?.title || (locale === 'id' ? 'Blog & Catatan Teknis' : 'Blog & Technical Notes') }}
-					</h1>
+					<!-- Spec Parameters Table -->
+					<div class="mt-8 pt-6 border-t border-slate-200/80 dark:border-[#134e43]">
+						<div class="divide-y divide-slate-200/80 dark:divide-[#134e43] font-mono text-xs">
+							<div class="flex items-baseline justify-between py-2">
+								<span class="text-slate-900/60 dark:text-slate-50/60">TOTAL NASKAH</span>
+								<span class="font-bold text-slate-900 dark:text-slate-50 tabular-nums">{{ posts?.length || 0 }} Artikel</span>
+							</div>
 
-					<p class="heading-page-sub text-sm">
-						{{ page?.description || (locale === 'id' ? 'Kumpulan artikel seputar pemrograman, rekayasa web, eksplorasi desain grafis, dan teknologi pendidikan oleh Permadi.' : 'Articles and practical notes on software development, web engineering, graphic design, and educational technology by Permadi.') }}
-					</p>
+							<div class="flex items-baseline justify-between py-2">
+								<span class="text-slate-900/60 dark:text-slate-50/60">TOPIK AKTIF</span>
+								<span class="font-bold text-brand-600 dark:text-brand-400 uppercase">{{ selectedTag === 'ALL' ? (locale === 'id' ? 'SEMUA' : 'ALL') : selectedTag }}</span>
+							</div>
+
+							<div class="flex items-baseline justify-between py-2">
+								<span class="text-slate-900/60 dark:text-slate-50/60">SISTEM KISI</span>
+								<span class="text-slate-900 dark:text-slate-50">12-Kolom Modular</span>
+							</div>
+
+							<div class="flex items-baseline justify-between py-2">
+								<span class="text-slate-900/60 dark:text-slate-50/60">STATUS</span>
+								<span class="text-brand-600 dark:text-brand-400 font-semibold">TERPUBLIKASI</span>
+							</div>
+						</div>
+					</div>
 				</div>
 
-				<!-- Sisi Kanan / Actions: Total Artikel & Tag Dropdown Filter -->
-				<!-- Mobile: grid 2 kolom simetris; Desktop: flex-col teratur -->
-				<div class="z-20 grid grid-cols-2 w-full shrink-0 gap-2.5 md:w-auto md:flex md:flex-col">
-					<!-- Mini Bento Stat Pill: Total Artikel -->
-					<div class="h-11 flex items-center gap-2 border border-slate-200/70 rounded-xl bg-white px-3.5 shadow-xs md:w-48 dark:border-slate-700/60 dark:bg-slate-800/80 sm:px-4">
-						<span class="i-hugeicons-book-open-01 shrink-0 text-sm text-brand-700 dark:text-brand-400" />
-						<span class="truncate text-xs text-slate-800 font-bold font-mono dark:text-slate-100">
-							{{ posts?.length || 0 }} {{ locale === 'id' ? 'Artikel' : 'Articles' }}
-						</span>
+				<!-- Typographic Statement Field (8 Columns) -->
+				<div class="lg:col-span-8 p-6 sm:p-10 lg:p-12 flex flex-col justify-between">
+					<div>
+						<div class="mb-4 font-mono text-[11px] font-bold tracking-[0.2em] uppercase text-brand-700 dark:text-accent">
+							WACANA REKAYASA &amp; PENDIDIKAN // 2024–2026
+						</div>
+
+						<h1 class="font-heading font-800 text-3xl sm:text-5xl lg:text-6xl tracking-[-0.035em] text-slate-900 dark:text-slate-50 leading-[0.95] text-balance mb-6">
+							{{ page?.title || (locale === 'id' ? 'Blog & Catatan Teknis' : 'Blog & Technical Notes') }}
+						</h1>
+
+						<p class="font-sans text-base sm:text-lg text-slate-900/80 dark:text-slate-50/80 leading-relaxed max-w-[56ch]">
+							{{ page?.description || (locale === 'id' ? 'Kumpulan tulisan terkurasi seputar rekayasa aplikasi web modern, arsitektur sistem komponen, metodologi visual, dan pedagogi pendidikan sekolah dasar.' : 'Curated technical essays on modern web engineering, UI component architecture, visual methodologies, and primary education technology.') }}
+						</p>
 					</div>
 
-					<!-- Dropdown Tag Selector -->
-					<div
-						ref="tagDropdownRef"
-						class="relative md:w-48"
-					>
-						<button
-							type="button"
-							class="h-11 w-full flex cursor-pointer items-center justify-between gap-2 border rounded-xl px-3.5 text-xs font-semibold shadow-xs transition-all sm:px-4"
-							:class="selectedTag !== 'ALL'
-								? 'bg-brand-700 text-white border-brand-600 shadow-brand-700/20'
-								: 'bg-white dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 border-slate-200/70 dark:border-slate-700/60 hover:bg-slate-50 dark:hover:bg-slate-800'"
-							:aria-expanded="isTagDropdownOpen"
-							aria-label="Pilih topik filter"
-							@click="isTagDropdownOpen = !isTagDropdownOpen"
-						>
-							<span class="flex items-center gap-2 truncate">
-								<span
-									class="i-hugeicons-filter-horizontal shrink-0 text-sm"
-									:class="selectedTag !== 'ALL' ? 'text-white' : 'text-brand-700 dark:text-brand-400'"
-								/>
-								<span class="truncate">
-									{{ selectedTag === 'ALL' ? (locale === 'id' ? 'Semua Topik' : 'All Topics') : `#${getCategoryLabel(selectedTag)}` }}
-								</span>
-							</span>
-							<span
-								class="i-hugeicons-arrow-down-01 ml-0.5 shrink-0 text-xs transition-transform duration-200"
-								:class="{ 'rotate-180': isTagDropdownOpen }"
-							/>
-						</button>
-
-						<!-- Dropdown Popover Menu -->
-						<Transition
-							enter-active-class="transition duration-150 ease-out"
-							enter-from-class="transform scale-95 opacity-0 -translate-y-1"
-							enter-to-class="transform scale-100 opacity-100 translate-y-0"
-							leave-active-class="transition duration-100 ease-in"
-							leave-from-class="transform scale-100 opacity-100 translate-y-0"
-							leave-to-class="transform scale-95 opacity-0 -translate-y-1"
-						>
-							<div
-								v-if="isTagDropdownOpen"
-								class="absolute right-0 top-full z-50 mt-2 max-w-[90vw] w-64 flex flex-col overflow-hidden border border-slate-200 rounded-2xl bg-white p-2 shadow-2xl sm:w-72 dark:border-[#134e43] dark:bg-[#001714]"
-							>
-								<!-- Tag Search Input inside Dropdown -->
-								<div
-									v-if="allTags.length > 5"
-									class="mb-1.5 shrink-0 border-b border-slate-100 px-1 pb-2 dark:border-white/10"
-								>
-									<div class="relative">
-										<span class="i-hugeicons-search-01 absolute left-2.5 top-1/2 text-xs text-slate-500 -translate-y-1/2" />
-										<input
-											v-model="tagSearchQuery"
-											type="text"
-											:placeholder="locale === 'id' ? 'Cari tag...' : 'Search tags...'"
-											class="w-full border border-slate-200 rounded-lg bg-slate-50 py-1.5 pl-8 pr-3 text-xs text-slate-900 dark:border-white/10 dark:bg-[#002420] dark:text-white placeholder:text-slate-500 focus:outline-none"
-										>
-									</div>
-								</div>
-
-								<!-- List of Options -->
-								<div class="custom-scrollbar max-h-60 overflow-y-auto overscroll-contain pr-1 space-y-0.5">
-									<!-- "All Topics" Option -->
-									<button
-										type="button"
-										class="w-full flex cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-xs transition-colors"
-										:class="selectedTag === 'ALL'
-											? 'bg-brand-500/15 dark:bg-brand-500/25 text-brand-800 dark:text-brand-300 font-bold'
-											: 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'"
-										@click="selectTag('ALL')"
-									>
-										<span class="flex items-center gap-2">
-											<span class="i-hugeicons-grid-view text-xs" />
-											{{ locale === 'id' ? 'Semua Topik' : 'All Topics' }}
-										</span>
-										<span class="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-700 font-medium font-mono dark:bg-white/10 dark:text-slate-400">
-											{{ posts?.length || 0 }}
-										</span>
-									</button>
-
-									<!-- Tags Options -->
-									<button
-										v-for="tag in filteredDropdownTags"
-										:key="tag"
-										type="button"
-										class="w-full flex cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-xs transition-colors"
-										:class="selectedTag === tag
-											? 'bg-brand-500/15 dark:bg-brand-500/25 text-brand-800 dark:text-brand-300 font-bold'
-											: 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'"
-										@click="selectTag(tag)"
-									>
-										<span class="flex items-center gap-2 truncate">
-											<span class="i-hugeicons-tag-01 shrink-0 text-xs" />
-											<span class="truncate">#{{ getCategoryLabel(tag) }}</span>
-										</span>
-										<span
-											v-if="tagCounts[tag]"
-											class="ml-2 shrink-0 rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-700 font-medium font-mono dark:bg-white/10 dark:text-slate-400"
-										>
-											{{ tagCounts[tag] }}
-										</span>
-									</button>
-
-									<!-- Empty Filter Search -->
-									<div
-										v-if="filteredDropdownTags.length === 0"
-										class="px-3 py-4 text-center text-xs text-slate-500"
-									>
-										{{ locale === 'id' ? 'Topik tidak ditemukan' : 'No topics found' }}
-									</div>
-								</div>
-							</div>
-						</Transition>
+					<div class="mt-8 pt-6 border-t border-slate-200/80 dark:border-[#134e43] font-mono text-xs text-slate-900/50 dark:text-slate-50/50 flex items-center justify-between">
+						<span>DIREKTORI ARTIKEL PERMADI.DEV</span>
+						<span>EDISI N° 2026</span>
 					</div>
 				</div>
 			</div>
 		</header>
 
-		<!-- Bento Grid Articles -->
-		<template v-if="filteredPosts.length > 0">
-			<div class="bento-grid">
-				<div
-					v-for="(post, index) in paginatedPosts"
-					:key="post.url"
-					:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-						? 'lg:col-span-12 md:col-span-12'
-						: 'lg:col-span-6 md:col-span-6'"
+		<!-- Band 02: Architectural Rectangular Filter Strip -->
+		<nav
+			aria-label="Filter topik artikel"
+			class="w-full border-b border-slate-200/80 dark:border-[#134e43] bg-slate-50/60 dark:bg-[#002420]/40 px-6 sm:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3 font-mono text-xs"
+		>
+			<div class="flex flex-wrap items-center gap-2">
+				<span class="text-slate-900/50 dark:text-slate-50/50 uppercase mr-1 text-[11px]">FILTER:</span>
+				<button
+					v-for="tag in filterTabs"
+					:key="tag"
+					type="button"
+					class="px-3.5 py-1.5 border uppercase font-bold tracking-wider transition-colors cursor-pointer"
+					:class="selectedTag === tag
+						? 'swiss-filter-active'
+						: 'bg-white dark:bg-[#001e1c] text-slate-900/75 dark:text-slate-50/75 border-slate-300 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
+					@click="selectTag(tag)"
 				>
-					<NuxtLink
-						:to="post.url"
-						class="group bento-card-outline block h-full flex flex-col justify-between bento-lift p-5 sm:p-6"
-						:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-							? 'featured-post-card bg-brand-900 dark:bg-[#002b27] border-brand-800 dark:border-[#134e43] shadow-md !text-white'
-							: ''"
-					>
-						<div>
-							<!-- Badges Row (Category + Tags) -->
-							<div class="mb-2 flex flex-wrap items-center gap-1.5">
-								<!-- Category Badge -->
-								<span
-									v-if="post.category"
-									class="inline-flex shrink-0 items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold tracking-wide uppercase"
-									:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-										? '!bg-white/20 !text-white !border !border-white/30'
-										: 'bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-300 border border-brand-200/60 dark:border-brand-800/60'"
-								>
-									{{ getCategoryLabel(post.category) }}
-								</span>
-
-								<!-- Primary Tag (Full badge) -->
-								<span
-									v-if="post.tags?.[0]"
-									class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium"
-									:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-										? '!bg-brand-400/25 !text-brand-200 !border !border-brand-400/30'
-										: 'bg-brand-500/10 dark:bg-brand-400/10 text-brand-700 dark:text-brand-300 border border-brand-500/20 dark:border-brand-400/20'"
-								>
-									#{{ post.tags[0] }}
-								</span>
-
-								<!-- Secondary Tag (Desktop only) -->
-								<span
-									v-if="post.tags?.[1]"
-									class="hidden items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium sm:inline-flex"
-									:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-										? '!bg-white/15 !text-slate-100 !border !border-white/20'
-										: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50'"
-								>
-									#{{ post.tags[1] }}
-								</span>
-
-								<!-- Extra Tags Count Pill -->
-								<span
-									v-if="post.tags && post.tags.length > 2"
-									class="inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-mono"
-									:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-										? '!bg-white/15 !text-brand-200'
-										: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'"
-								>
-									+{{ post.tags.length - 2 }}
-								</span>
-							</div>
-
-							<!-- Date Badge -->
-							<div
-								v-if="post.date"
-								class="mb-3.5 flex items-center"
-							>
-								<span
-									class="inline-flex items-center gap-1.5 border rounded-full px-2.5 py-0.5 text-[11px] font-bold font-mono shadow-xs transition-colors"
-									:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-										? 'bg-white/15 text-white border-white/20'
-										: 'border-slate-200/90 bg-slate-100 text-slate-800 dark:border-slate-700/80 dark:bg-slate-800/90 dark:text-slate-200'"
-								>
-									<span
-										class="i-hugeicons-calendar-03 text-xs"
-										:class="currentPage === 1 && index === 0 && selectedTag === 'ALL' ? 'text-accent' : 'text-brand-600 dark:text-brand-400'"
-									/>
-									<span>{{ formatDate(post.date) }}</span>
-								</span>
-							</div>
-
-							<!-- Title -->
-							<h2
-								class="sm:text-2xls line-clamp-2 text-xl font-bold leading-snug font-heading transition-colors duration-200 lg:text-2xl"
-								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-									? '!text-white group-hover:!text-accent md:text-3xl lg:text-4xl'
-									: 'text-slate-900 dark:text-slate-100 group-hover:text-brand-900 dark:group-hover:text-accent'"
-							>
-								{{ post.title }}
-							</h2>
-
-							<!-- Description -->
-							<p
-								class="line-clamp-2 mt-2 text-xs leading-relaxed transition-colors duration-200 sm:text-sm"
-								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-									? '!text-slate-100 group-hover:!text-white'
-									: 'text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'"
-							>
-								{{ post.description }}
-							</p>
-						</div>
-
-						<!-- Footer Meta -->
-						<div
-							class="mt-5 flex items-center justify-between border-t pt-3.5 text-xs"
-							:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-								? '!border-white/20 !text-slate-200'
-								: 'border-slate-200/60 dark:border-slate-800/60 text-slate-600 dark:text-slate-400'"
-						>
-							<span class="flex items-center gap-1.5 text-[11px] font-mono">
-								<span
-									class="i-hugeicons-clock-01 text-xs"
-									:class="currentPage === 1 && index === 0 && selectedTag === 'ALL' ? '!text-brand-300' : 'text-brand-700 dark:text-brand-400'"
-								/>
-								{{ locale === 'id' ? `${post.readingTime || 5} menit baca` : `${post.readingTime || 5} min read` }}
-							</span>
-							<span
-								class="flex items-center gap-1 text-xs font-bold transition-all group-hover:translate-x-0.5"
-								:class="currentPage === 1 && index === 0 && selectedTag === 'ALL'
-									? '!text-white group-hover:!text-accent font-bold'
-									: 'text-brand-800 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-accent font-semibold'"
-							>
-								{{ locale === 'id' ? 'Baca Artikel' : 'Read Article' }} <span class="i-hugeicons-arrow-right-01 text-xs" />
-							</span>
-						</div>
-					</NuxtLink>
-				</div>
+					<span>{{ tag === 'ALL' ? (locale === 'id' ? 'SEMUA' : 'ALL') : tag }}</span>
+				</button>
 			</div>
 
-			<!-- Bento SEO-Friendly Pagination -->
-			<nav
-				v-if="totalPages > 1"
-				:aria-label="locale === 'id' ? 'Navigasi Halaman Artikel' : 'Article Page Navigation'"
-				class="mt-10 flex select-none items-center justify-center gap-2 sm:mt-14"
+			<span class="text-slate-900/40 dark:text-slate-50/40 tabular-nums uppercase text-[11px]">
+				MENAMPILKAN {{ filteredPosts.length }} DARI {{ posts?.length || 0 }} NASKAH
+			</span>
+		</nav>
+
+		<!-- Band 03: Lead Featured Article Plate (When on First Page & All Topics) -->
+		<article
+			v-if="leadPost"
+			class="w-full border-b border-slate-200/80 dark:border-[#134e43]"
+		>
+			<div class="grid grid-cols-1 lg:grid-cols-12">
+				<!-- Lead Article Information (Cols 1 to 7) -->
+				<div class="lg:col-span-7 p-6 sm:p-8 lg:p-10 lg:border-r border-b lg:border-b-0 border-slate-200/80 dark:border-[#134e43] flex flex-col justify-between">
+					<div>
+						<div class="mb-4 flex items-center justify-between font-mono text-[11px] font-bold tracking-widest uppercase">
+							<span class="text-brand-700 dark:text-accent">
+								SPESIMEN 01 // NASKAH UTAMA
+							</span>
+							<span class="text-slate-900/40 dark:text-slate-50/40 tabular-nums">
+								{{ formatDate(leadPost.date) }}
+							</span>
+						</div>
+
+						<h2 class="font-heading font-800 text-2xl sm:text-4xl text-slate-900 dark:text-slate-50 leading-tight mb-4">
+							<NuxtLink :to="leadPost.url" class="hover:text-brand-600 transition-colors">
+								{{ leadPost.title }}
+							</NuxtLink>
+						</h2>
+
+						<p class="font-sans text-xs sm:text-sm text-slate-900/75 dark:text-slate-50/75 leading-relaxed mb-6 max-w-[62ch]">
+							{{ leadPost.description }}
+						</p>
+
+						<!-- Tags Strip -->
+						<div class="flex flex-wrap gap-1.5 mb-6">
+							<span
+								v-for="tag in (leadPost.tags || []).slice(0, 5)"
+								:key="tag"
+								class="px-2 py-1 font-mono text-[10px] uppercase border border-slate-300 dark:border-[#134e43] text-slate-900/75 dark:text-slate-50/75"
+							>
+								#{{ tag }}
+							</span>
+						</div>
+					</div>
+
+					<div class="pt-6 border-t border-slate-200/80 dark:border-[#134e43] flex flex-wrap items-center justify-between gap-4">
+						<NuxtLink
+							:to="leadPost.url"
+							class="px-5 py-2.5 bg-brand-500 text-slate-950 font-mono font-bold text-xs uppercase tracking-wider hover:bg-brand-400 transition-colors flex items-center gap-2"
+						>
+							<span>BACA NASKAH LENGKAP</span>
+							<span class="i-lucide-arrow-up-right text-sm" />
+						</NuxtLink>
+
+						<div class="flex items-center gap-2 font-mono text-xs text-slate-900/60 dark:text-slate-50/60">
+							<span class="w-1.5 h-1.5 rounded-none bg-brand-500 inline-block" />
+							<span>{{ leadPost.readingTime || 5 }} MENIT BACA</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Right Editorial Excerpt Frame (Cols 8 to 12) -->
+				<div class="lg:col-span-5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between bg-slate-50/40 dark:bg-[#002420]/20">
+					<div>
+						<div class="mb-4 font-mono text-[10px] uppercase tracking-widest text-slate-900/50 dark:text-slate-50/50">
+							RINGKASAN TEORETIS // ESENSI
+						</div>
+
+						<blockquote class="font-heading font-700 text-xl sm:text-2xl text-slate-900 dark:text-slate-50 leading-snug mb-6 border-l-2 border-brand-500 pl-4">
+							"Arsitektur perangkat lunak yang kokoh bertumpu pada kesederhanaan struktur dan ketelitian batas komponen."
+						</blockquote>
+
+						<div class="font-mono text-xs space-y-2 text-slate-900/70 dark:text-slate-50/70">
+							<div class="flex items-center justify-between border-b border-slate-200/60 dark:border-[#134e43] py-1.5">
+								<span>PENULIS</span>
+								<span class="font-semibold text-slate-900 dark:text-slate-50">Dinar Permadi Yusup</span>
+							</div>
+							<div class="flex items-center justify-between border-b border-slate-200/60 dark:border-[#134e43] py-1.5">
+								<span>KATEGORI</span>
+								<span class="font-bold uppercase text-brand-600 dark:text-brand-400">{{ getCategoryLabel(leadPost.category) }}</span>
+							</div>
+							<div class="flex items-center justify-between py-1.5">
+								<span>LISENSI</span>
+								<span>CC BY-NC-SA 4.0</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="mt-8 pt-4 border-t border-slate-200/80 dark:border-[#134e43] font-mono text-[10px] uppercase tracking-widest text-slate-900/40 dark:text-slate-50/40 flex items-center justify-between">
+						<span>REF. 01.01</span>
+						<span>PUBLIKASI DIGITAL</span>
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<!-- Band 04: Continuous Sequential Modular Grid for Other Articles -->
+		<div
+			v-if="gridPosts.length > 0"
+			class="w-full border-b border-slate-200/80 dark:border-[#134e43]"
+		>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 divide-y md:divide-y-0 divide-slate-200/80 dark:divide-[#134e43]">
+				<article
+					v-for="(item, idx) in gridPosts"
+					:key="item.url"
+					class="flex flex-col justify-between p-6 sm:p-8 transition-colors duration-150 group hover:(bg-slate-50/80 dark:bg-[#002420]/40)"
+					:class="[
+						idx % 3 !== 2 ? 'lg:border-r border-slate-200/80 dark:border-[#134e43]' : '',
+						idx % 2 !== 1 ? 'md:border-r lg:border-r-0 border-slate-200/80 dark:border-[#134e43]' : '',
+						idx >= 3 ? 'lg:border-t border-slate-200/80 dark:border-[#134e43]' : '',
+						idx >= 2 ? 'md:border-t lg:border-t-0 border-slate-200/80 dark:border-[#134e43]' : '',
+					]"
+				>
+					<div>
+						<!-- Item Meta -->
+						<div class="mb-3 flex items-center justify-between font-mono text-[11px]">
+							<span class="font-bold text-brand-600 dark:text-brand-400">
+								SPESIMEN {{ item.indexNum }} // [{{ (item.category || 'UMUM').toUpperCase() }}]
+							</span>
+							<span class="text-slate-900/40 dark:text-slate-50/40 tabular-nums">
+								{{ formatDate(item.date) }}
+							</span>
+						</div>
+
+						<h3 class="font-heading font-800 text-xl text-slate-900 dark:text-slate-50 leading-snug mb-3 transition-colors group-hover:text-brand-700 dark:group-hover:text-brand-300">
+							<NuxtLink :to="item.url">
+								{{ item.title }}
+							</NuxtLink>
+						</h3>
+
+						<p class="font-sans text-xs sm:text-sm text-slate-900/70 dark:text-slate-50/70 leading-relaxed mb-6 line-clamp-3">
+							{{ item.description }}
+						</p>
+					</div>
+
+					<div class="pt-4 border-t border-slate-200/80 dark:border-[#134e43] flex items-center justify-between">
+						<NuxtLink
+							:to="item.url"
+							class="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-slate-900 dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-brand-400 uppercase tracking-wider"
+						>
+							<span>BACA CATATAN</span>
+							<span class="i-lucide-arrow-up-right text-sm transition-transform group-hover:(translate-x-0.5 -translate-y-0.5)" />
+						</NuxtLink>
+
+						<span class="font-mono text-[11px] text-slate-900/50 dark:text-slate-50/50 tabular-nums">
+							{{ item.readingTime || 4 }} MIN READ
+						</span>
+					</div>
+				</article>
+			</div>
+		</div>
+
+		<!-- Empty State -->
+		<div
+			v-else-if="!leadPost"
+			class="p-12 text-center border-b border-slate-200/80 dark:border-[#134e43]"
+		>
+			<span class="font-mono text-sm text-slate-900/50 dark:text-slate-50/50 uppercase tracking-widest block mb-2">
+				TIDAK ADA NASKAH DITEMUKAN
+			</span>
+			<p class="font-sans text-xs text-slate-900/70 dark:text-slate-50/70 mb-4">
+				Tidak ada artikel yang sesuai dengan filter #{{ selectedTag }}.
+			</p>
+			<button
+				type="button"
+				class="px-4 py-2 border border-slate-900 dark:border-slate-50 font-mono text-xs font-bold uppercase tracking-wider"
+				@click="selectTag('ALL')"
 			>
-				<!-- Tombol Previous -->
+				RESET FILTER
+			</button>
+		</div>
+
+		<!-- Band 05: Pagination Strip -->
+		<nav
+			v-if="totalPages > 1"
+			:aria-label="locale === 'id' ? 'Navigasi Halaman Blog' : 'Blog Page Navigation'"
+			class="px-6 py-6 sm:px-8 border-b border-slate-200/80 dark:border-[#134e43] bg-slate-50/50 dark:bg-[#002420]/30 flex flex-wrap items-center justify-between gap-4 font-mono text-xs"
+		>
+			<div class="flex items-center gap-2">
+				<span class="text-slate-900/50 dark:text-slate-50/50 uppercase">HALAMAN:</span>
+				<NuxtLink
+					v-for="pageNum in totalPages"
+					:key="pageNum"
+					:to="getPaginationUrl(pageNum)"
+					class="w-8 h-8 flex items-center justify-center font-bold transition-colors"
+					:class="pageNum === currentPage
+						? 'swiss-filter-active'
+						: 'border border-slate-300 dark:border-[#134e43] text-slate-900 dark:text-slate-50 hover:border-brand-500'"
+				>
+					{{ pageNum }}
+				</NuxtLink>
+			</div>
+
+			<div class="flex items-center gap-3">
 				<NuxtLink
 					v-if="currentPage > 1"
 					:to="getPaginationUrl(currentPage - 1)"
-					:aria-label="locale === 'id' ? 'Halaman sebelumnya' : 'Previous page'"
-					class="inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold shadow-xs transition-all dark:border-slate-700/70 hover:border-brand-500/60 dark:bg-slate-800/80 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
-					@click="scrollToTop"
+					class="px-3 py-1.5 border border-slate-300 dark:border-[#134e43] font-bold uppercase hover:border-brand-500 transition-colors"
 				>
-					<span
-						class="i-hugeicons-arrow-left-01 text-xs"
-						aria-hidden="true"
-					/>
-					<span class="sr-only sm:not-sr-only sm:inline">{{ locale === 'id' ? 'Sebelumnya' : 'Previous' }}</span>
+					← SEBELUMNYA
 				</NuxtLink>
-				<span
-					v-else
-					class="inline-flex cursor-not-allowed items-center gap-1.5 border border-slate-200/40 rounded-xl bg-slate-100/50 px-3.5 py-2 text-xs text-slate-400 font-semibold dark:border-slate-800/40 dark:bg-slate-900/40 dark:text-slate-600"
-					aria-disabled="true"
-				>
-					<span
-						class="i-hugeicons-arrow-left-01 text-xs"
-						aria-hidden="true"
-					/>
-					<span class="sr-only sm:not-sr-only sm:inline">{{ locale === 'id' ? 'Sebelumnya' : 'Previous' }}</span>
-				</span>
-
-				<!-- Nomor Halaman -->
-				<div class="flex items-center gap-1 sm:gap-1.5">
-					<NuxtLink
-						v-for="pageNum in totalPages"
-						:key="pageNum"
-						:to="getPaginationUrl(pageNum)"
-						:aria-label="locale === 'id' ? `Halaman ${pageNum}` : `Page ${pageNum}`"
-						class="h-9 w-9 flex items-center justify-center rounded-xl text-xs font-bold font-mono transition-all sm:h-10 sm:w-10 sm:text-sm"
-						:class="pageNum === currentPage
-							? 'bg-brand-700 text-white shadow-sm shadow-brand-700/30 dark:bg-brand-500 dark:text-slate-950'
-							: 'border border-slate-200/70 dark:border-slate-700/60 bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:border-brand-500/60 dark:hover:border-brand-400/60 hover:text-brand-700 dark:hover:text-brand-300'"
-						:aria-current="pageNum === currentPage ? 'page' : undefined"
-						@click="scrollToTop"
-					>
-						{{ pageNum }}
-					</NuxtLink>
-				</div>
-
-				<!-- Tombol Next -->
 				<NuxtLink
 					v-if="currentPage < totalPages"
 					:to="getPaginationUrl(currentPage + 1)"
-					:aria-label="locale === 'id' ? 'Halaman berikutnya' : 'Next page'"
-					class="inline-flex items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white px-3.5 py-2 text-xs text-slate-700 font-semibold shadow-xs transition-all dark:border-slate-700/70 hover:border-brand-500/60 dark:bg-slate-800/80 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400/60 dark:hover:text-brand-300"
-					@click="scrollToTop"
+					class="px-3 py-1.5 border border-slate-300 dark:border-[#134e43] font-bold uppercase hover:border-brand-500 transition-colors"
 				>
-					<span class="sr-only sm:not-sr-only sm:inline">{{ locale === 'id' ? 'Berikutnya' : 'Next' }}</span>
-					<span
-						class="i-hugeicons-arrow-right-01 text-xs"
-						aria-hidden="true"
-					/>
+					BERIKUTNYA →
 				</NuxtLink>
-				<span
-					v-else
-					class="inline-flex cursor-not-allowed items-center gap-1.5 border border-slate-200/40 rounded-xl bg-slate-100/50 px-3.5 py-2 text-xs text-slate-400 font-semibold dark:border-slate-800/40 dark:bg-slate-900/40 dark:text-slate-600"
-					aria-disabled="true"
-				>
-					<span class="sr-only sm:not-sr-only sm:inline">{{ locale === 'id' ? 'Berikutnya' : 'Next' }}</span>
-					<span
-						class="i-hugeicons-arrow-right-01 text-xs"
-						aria-hidden="true"
-					/>
-				</span>
-			</nav>
-		</template>
+			</div>
+		</nav>
 
-		<!-- Empty State -->
-		<EmptyState
-			v-else
-			icon="i-hugeicons-search-01"
-			title="Tidak Ada Artikel Ditemukan"
-			description="Coba ubah kata kunci pencarian atau pilih filter kategori topik lain."
-			:actions="[{ label: 'Reset Filter', to: localePath('/blog') }]"
-		/>
+		<!-- Bottom Archival Colophon -->
+		<div class="px-6 py-4 sm:px-8 bg-slate-50/80 dark:bg-[#002420]/60 font-mono text-[11px] text-slate-900/50 dark:text-slate-50/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+			<div>
+				DOKUMENTASI SISTEM REKAYASA &amp; PUBLIKASI // PERMADI.DEV
+			</div>
+			<div>
+				MAJALENGKA, INDONESIA · KISI 12-KOLOM
+			</div>
+		</div>
 	</div>
 </template>
+
+<style scoped>
+.swiss-filter-active {
+	background-color: #001e1c !important;
+	color: #ffffff !important;
+	border-color: #001e1c !important;
+}
+
+:global(.dark) .swiss-filter-active {
+	background-color: #f8fafa !important;
+	color: #001e1c !important;
+	border-color: #f8fafa !important;
+}
+</style>

@@ -16,11 +16,9 @@ const sizeValue = computed(() => {
 		<svg
 			:width="sizeValue"
 			:height="sizeValue"
-			:style="{ width: sizeValue, height: sizeValue }"
 			class="block shrink-0"
 			viewBox="0 0 800 800"
 			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
 			aria-label="Logo"
 		>
 			<g clip-path="url(#clip0_1011_38)">

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ReactionType } from '~/stores/useReactionsStore'
-import { Motion } from 'motion-v'
 import { computed, ref } from 'vue'
 import { MAX_REACTION_LIMIT, useReactionsStore } from '~/stores/useReactionsStore'
 import EmojiParticle from './EmojiParticle.vue'
@@ -10,6 +9,7 @@ const props = defineProps<{
 	type: ReactionType
 	emoji: string
 	title: string
+	index?: number
 	section?: string
 }>()
 
@@ -43,8 +43,8 @@ function removeParticle(id: string) {
 </script>
 
 <template>
-	<div class="relative inline-flex flex-col items-center">
-		<!-- Partikel emoji melayang -->
+	<div class="relative w-full h-full">
+		<!-- Floating Emoji Particles -->
 		<EmojiParticle
 			v-for="particle in particles"
 			:id="particle.id"
@@ -53,48 +53,48 @@ function removeParticle(id: string) {
 			@remove="removeParticle"
 		/>
 
-		<!-- Tombol Reaksi (Bento Compact Pill) -->
-		<Motion
-			:while-hover="{ scale: isMaxedOut ? 1 : 1.08 }"
-			:while-tap="{ scale: isMaxedOut ? 1 : 0.92 }"
-			:transition="{ type: 'spring', stiffness: 400, damping: 17 }"
+		<!-- Swiss Modular Reaction Cell -->
+		<button
+			type="button"
+			:title="isMaxedOut ? `Maksimal (${MAX_REACTION_LIMIT}/${MAX_REACTION_LIMIT}) tercapai!` : `${title} (${userCount}/${MAX_REACTION_LIMIT})`"
+			:disabled="isMaxedOut"
+			class="group w-full h-full p-4 sm:p-5 flex flex-col justify-between text-left transition-all font-mono text-xs cursor-pointer select-none bg-white dark:bg-[#001e1c]"
+			:class="[
+				isMaxedOut
+					? 'opacity-80 cursor-default bg-slate-50/60 dark:bg-[#002420]/50'
+					: userCount > 0
+						? 'bg-brand-50/40 dark:bg-[#002420]/60 text-slate-900 dark:text-slate-50 hover:bg-brand-50/70 dark:hover:bg-[#002420]'
+						: 'hover:bg-slate-50 dark:hover:bg-[#002420]/40 text-slate-900/80 dark:text-slate-50/80',
+			]"
+			@click="handleClick"
 		>
-			<button
-				type="button"
-				:title="isMaxedOut ? `Maksimal (${MAX_REACTION_LIMIT}/${MAX_REACTION_LIMIT}) tercapai!` : `${title} (${userCount}/${MAX_REACTION_LIMIT})`"
-				:disabled="isMaxedOut"
-				class="group relative flex items-center gap-1 border rounded-full px-2 py-1 text-xs font-medium transition-all duration-150 sm:gap-1.5 sm:px-2.5 sm:py-1"
-				:class="[
-					isMaxedOut
-						? 'border-brand-500/40 bg-brand-50/80 text-brand-900 dark:bg-brand-950/50 dark:text-brand-300 dark:border-brand-400/40 cursor-default shadow-2xs'
-						: userCount > 0
-							? 'border-brand-200 bg-brand-50/50 text-brand-900 dark:border-brand-800/80 dark:bg-brand-950/30 dark:text-brand-200 hover:border-brand-400 hover:bg-brand-50 dark:hover:bg-brand-950/60'
-							: 'border-transparent bg-transparent text-slate-700 hover:border-slate-200 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:border-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-100',
-				]"
-				@click="handleClick"
-			>
-				<!-- Icon Emoji -->
-				<span class="text-sm transition-transform duration-150 group-hover:scale-110 sm:text-base">
+			<!-- Top Indicator Strip: Sequential number and Emoji -->
+			<div class="flex items-center justify-between gap-2 mb-3">
+				<span class="text-[11px] font-bold tabular-nums text-slate-900/50 dark:text-slate-50/50">
+					[{{ String(index || 1).padStart(2, '0') }}]
+				</span>
+				<span class="text-xl sm:text-2xl transition-transform duration-150 group-hover:scale-115">
 					{{ emoji }}
 				</span>
+			</div>
 
-				<!-- Counter Badge -->
-				<span
-					class="text-[11px] font-semibold font-mono tabular-nums sm:text-xs"
-					:class="isMaxedOut || userCount > 0 ? 'text-brand-900 dark:text-brand-300 font-bold' : 'text-slate-700 dark:text-slate-300'"
-				>
+			<!-- Middle: Title -->
+			<div class="font-bold uppercase tracking-wider text-[11px] text-slate-900 dark:text-slate-50 mb-4 truncate">
+				{{ title }}
+			</div>
+
+			<!-- Bottom: Total Count & User Quota -->
+			<div class="pt-3 border-t border-slate-200/80 dark:border-[#134e43] flex items-baseline justify-between text-[11px] w-full">
+				<span class="font-bold tabular-nums text-sm sm:text-base text-brand-600 dark:text-accent">
 					{{ totalCount }}
 				</span>
-
-				<!-- Mini User Indicator Badge -->
 				<span
-					v-if="userCount > 0"
-					class="shadow-2xs absolute h-3.5 min-w-3.5 flex items-center justify-center border border-white rounded-full px-0.5 text-[9px] font-bold -right-1 -top-1 dark:border-slate-900"
-					:class="isMaxedOut ? 'bg-accent text-slate-950' : 'bg-brand-600 text-white dark:bg-brand-500'"
+					class="text-[10px] uppercase font-semibold tabular-nums"
+					:class="isMaxedOut ? 'text-brand-600 dark:text-accent font-bold' : userCount > 0 ? 'text-brand-600 dark:text-accent' : 'text-slate-900/40 dark:text-slate-50/40'"
 				>
-					{{ userCount }}
+					{{ userCount > 0 ? `${userCount}/${MAX_REACTION_LIMIT}` : `+1` }}
 				</span>
-			</button>
-		</Motion>
+			</div>
+		</button>
 	</div>
 </template>

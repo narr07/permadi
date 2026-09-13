@@ -1,11 +1,77 @@
 @import '@unocss/reset/tailwind.css';
 
+/* GT America Font Family (Grilli Type) */
+@font-face {
+	font-family: 'GT America';
+	src: url('/fonts/gt-america/GT-America-LCGV-Standard-Regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'GT America';
+	src: url('/fonts/gt-america/GT-America-LCGV-Standard-Medium.woff2') format('woff2');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'GT America';
+	src: url('/fonts/gt-america/GT-America-LCGV-Standard-Bold.woff2') format('woff2');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'GT America Compressed';
+	src: url('/fonts/gt-america/GT-America-LCGV-Compressed-Bold.woff2') format('woff2');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'GT America Mono';
+	src: url('/fonts/gt-america/GT-America-LCGV-Mono-Regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'GT America Mono';
+	src: url('/fonts/gt-america/GT-America-LCGV-Mono-Medium.woff2') format('woff2');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* GT Pressura Font Family (Grilli Type) */
+@font-face {
+	font-family: 'GT Pressura';
+	src: url('/fonts/gt-pressura/GT-Pressura-LCGV-Standard-Bold.woff2') format('woff2');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'GT Pressura';
+	src: url('/fonts/gt-pressura/GT-Pressura-LCGV-Standard-Black.woff2') format('woff2');
+	font-weight: 800;
+	font-style: normal;
+	font-display: swap;
+}
+
 :root {
-	--canvas: #ccfbf2;
-	--ink: #000b07;
-	--heading: #000b07;
+	--canvas: #f8fafa;
+	--ink: #001e1c;
+	--heading: #001e1c;
 	--card: #ffffff;
-	--border-clean: #c5d9d7;
+	--border-clean: #deeae9;
 	--muted: #0f7662;
 	--accent: #f9bc60;
 	--sand: #facd87;
@@ -14,9 +80,9 @@
 }
 
 .dark {
-	--canvas: #000b07;
+	--canvas: #001e1c;
 	--ink: #f8fafa;
-	--heading: #f9bc60;
+	--heading: #f8fafa;
 	--card: #002b27;
 	--border-clean: #134e43;
 	--muted: #84a8a4;
@@ -28,7 +94,7 @@
 html {
 	font-size: 16px;
 	font-family:
-		'Plus Jakarta Sans',
+		'GT America',
 		system-ui,
 		-apple-system,
 		BlinkMacSystemFont,
@@ -44,7 +110,7 @@ html {
 }
 
 body {
-	font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+	font-family: 'GT America', system-ui, -apple-system, sans-serif;
 	font-weight: 400;
 	line-height: 1.65;
 	min-height: 100vh;
@@ -55,11 +121,15 @@ body {
 		color 0.25s ease;
 }
 
+/* Swiss International Typographic Style: Rectilinear Discipline */
+* {
+	border-radius: 0 !important;
+}
+
 /* Accessible Keyboard Focus Indicators (WCAG AA) */
 :focus-visible {
 	outline: 2px solid #14b898;
 	outline-offset: 2px;
-	border-radius: 4px;
 }
 
 .dark :focus-visible {

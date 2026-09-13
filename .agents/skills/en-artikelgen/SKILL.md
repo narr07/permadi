@@ -62,25 +62,40 @@ Gemini Spark utilizes native **Google Search & Google Trends web grounding** to 
 ## 1. Writing Standards & Content Format (Quick Ref)
 
 - **Default Language**: Native, natural, engaging professional English.
-- **Hook & Reality**: Tackle the core friction immediately in the opening section.
-- **Featured Image (Shared Single Asset)**: Use the **EXACT SAME image path and filename** as the ID version (e.g. `![Descriptive English alt text](/article/slug-name.webp)`), only varying the alt text, so that a single WebP asset in `public/article/` serves both language versions.
+- **Hook & Direct Answer (BLUF Chunk)**: Deliver a concise definitive answer/problem diagnosis in **40–60 words (~250–400 characters)** within the opening section for Google Featured Snippets & AI answers.
+- **Paragraphs**: Keep regular text paragraphs between **1 sentence (~50–100 chars)** and **2–4 sentences (< 5 lines on mobile)** to avoid walls of text.
+- **Featured Image (Shared Single Asset)**: Use the **EXACT SAME image path and filename** as the ID version (e.g. `![Descriptive English alt text](/article/slug-name.webp)`), only varying the alt text (**min 10 characters, max 125 characters**).
 - **Links**: Minimum 2–3 internal links (`/blog/related-slug`) and 2–3 external authoritative citations.
 - **Closing & FAQ Components**:
   - Closing section MUST use `::conclusion ... ::` (Decision Guide).
   - FAQ at the end MUST use `::faq` + `::faq-item{question="..."}`.
 - **Output Presentation**: ALWAYS provide the final article draft in **ONE** complete fenced code block `~~~~md ... ~~~~`.
 
+### 📏 Character & Word Limits Protocol (Google SEO, AEO & GEO Standards)
+
+| Element | Minimum | Maximum / Target | SEO & AI Search (AEO/GEO) Rationale |
+| :--- | :--- | :--- | :--- |
+| **Title Tag (`title`)** | 50 chars | 58–60 chars (~550 px) | Total $\le$ 70 chars with suffix ` \| Permadi`. Prevents SERP truncation and rewrite. |
+| **Meta Description** | 70 chars | 105 chars (Mobile) / 135–160 (Desktop) | Prevents clipping on mobile screens while optimizing desktop SERP snippet CTR. |
+| **URL Slug** | 10 chars | 17–40 chars (< 5 words) | Medium-length slugs (especially 21–25 chars) achieve the highest citation rate in AI search. |
+| **H1 Tag** | 20 chars (~3–4 words) | 60–70 chars (~8–10 words) | Aligned with Title tag; clear, punchy topical foundation. |
+| **H2 & H3 Subheadings** | 15 chars (~2–3 words) | 50–60 chars (4–8 words) | Focused scanning for human readers and clean semantic parsing for LLM indexers. |
+| **Direct Answer (BLUF)** | 40 words (~250 chars) | 60 words (~400 chars) | Optimal window to trigger Google Featured Snippets and instant AI Overviews. |
+| **Regular Paragraph** | 1 sentence (~50–100 chars) | 2–4 sentences (< 5 mobile lines) | Eliminates mobile fatigue and forms self-contained modular chunks. |
+| **Image Alt Text** | 10 chars | 125 chars | Screen reader accessibility and Google image indexer prioritization. |
+
 ### Standard Frontmatter Schema (`content/en/blog` / `content/id/blog`)
-* **`title`**: **Max 50–58 characters** (strictly **<= 70 characters with spaces** including the site suffix ` | Permadi`). **AVOID COLONS (`:`) IN TITLES** unless strictly necessary; write natural, fluid headlines instead of formulaic `Topic: Subtopic`.
-* **`description`**: **140–160 characters** compelling meta description with primary keyword.
+* **`title`**: **Min 50, Max 50–58 characters** (strictly **<= 70 characters with spaces** including the site suffix ` | Permadi`). **AVOID COLONS (`:`) IN TITLES** unless strictly necessary; write natural, fluid headlines instead of formulaic `Topic: Subtopic`.
+* **`description`**: **Min 70 chars, 105 chars (safe mobile limit), up to 135–160 characters (desktop)**. Compelling meta description with primary keyword.
+* **URL Slug**: **10–40 characters** (< 5 words, sweet spot 21–25 chars).
 * **`tags`**: 3–5 target keywords, **all of which MUST appear 1–3 times in the body text** (TF-IDF completeness).
 
 ```yaml
 ---
-title: "Practical Guide to Modern Graphic and UI Design" # Natural headline without colons, max 50-58 chars (total <= 70)
+title: "Practical Guide to Modern Graphic and UI Design" # Natural headline without colons, 50-58 chars (total <= 70)
 category: technology
 date: YYYY-MM-DD
-description: Direct, compelling 140-160 character meta description with primary keyword and no AI clichés.
+description: Practical guide to choosing modern graphic and UI design styles for functional and engaging web interfaces. # 70-105 chars (mobile) / 135-160 (desktop)
 tags:
   - primary-keyword
   - secondary-keyword

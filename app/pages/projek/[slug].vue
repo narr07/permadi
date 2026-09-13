@@ -14,51 +14,39 @@ function cleanSlug(pathStr: string): string {
 	return lastPart.replace(/^\d+\./, '')
 }
 
+// Fetch project by slug safely
 const { data: project } = await useAsyncData(
 	() => `projek-item-${locale.value}-${requestedSlug.value}`,
 	async () => {
 		const colName = collection.value as any
+		const allDocs = await queryCollection(colName).all()
 
-		// 1. Cari langsung berdasarkan slug atau path di koleksi saat ini
-		let matched = await queryCollection(colName)
-			.where('slug', '=', requestedSlug.value)
-			.first()
+		// Match slug or cleaned path
+		let matched = allDocs.find((d: any) => {
+			const s = d.slug || cleanSlug(d.path || '')
+			return s === requestedSlug.value
+		})
 
-		if (!matched) {
-			const currentPrefix = locale.value === 'id' ? '/id/projek' : '/projects'
-			matched = await queryCollection(colName)
-				.where('path', 'LIKE', `${currentPrefix}/%${requestedSlug.value}`)
-				.first()
-		}
-
-		// 2. Fallback: Jika slug bahasa lain diakses, cari di koleksi alternatif via idProjek
+		// Fallback: If slug in other language was visited, find matching document
 		if (!matched) {
 			const otherCol = (locale.value === 'id' ? 'projek_en' : 'projek_id') as any
-			const otherPrefix = locale.value === 'id' ? '/projects' : '/id/projek'
-			let otherMatched = await queryCollection(otherCol)
-				.where('slug', '=', requestedSlug.value)
-				.select('idProjek', 'idItem')
-				.first()
-
-			if (!otherMatched) {
-				otherMatched = await queryCollection(otherCol)
-					.where('path', 'LIKE', `${otherPrefix}/%${requestedSlug.value}`)
-					.select('idProjek', 'idItem')
-					.first()
-			}
-
+			const otherDocs = await queryCollection(otherCol).all()
+			const otherMatched = otherDocs.find((d: any) => {
+				const s = d.slug || cleanSlug(d.path || '')
+				return s === requestedSlug.value
+			})
 			if (otherMatched) {
 				const matchId = otherMatched.idProjek || otherMatched.idItem
-				matched = await queryCollection(colName)
-					.where('idProjek', '=', matchId)
-					.first()
+				if (matchId) {
+					matched = allDocs.find((d: any) => (d.idProjek === matchId || d.idItem === matchId))
+				}
 			}
 		}
 
 		if (!matched)
 			return null
 
-		// 3. Cari padanan projek di bahasa lain berdasarkan idProjek / idItem secara presisi
+		// Find translations for language switcher
 		const translations: Record<string, { slug: string }> = {}
 		const matchId = matched.idProjek || matched.idItem
 
@@ -66,17 +54,14 @@ const { data: project } = await useAsyncData(
 			const locCode = typeof loc === 'string' ? loc : loc.code
 			if (locCode === locale.value) {
 				translations[locCode] = {
-					slug: matched.slug || cleanSlug(matched.path),
+					slug: matched.slug || cleanSlug(matched.path || requestedSlug.value),
 				}
 				continue
 			}
 
 			const locCol = (locCode === 'id' ? 'projek_id' : 'projek_en') as any
-			const trDoc = await queryCollection(locCol)
-				.where('idProjek', '=', matchId)
-				.select('path', 'slug')
-				.first()
-
+			const otherLocDocs = await queryCollection(locCol).all()
+			const trDoc = otherLocDocs.find((d: any) => (matchId && (d.idProjek === matchId || d.idItem === matchId)))
 			if (trDoc) {
 				translations[locCode] = {
 					slug: trDoc.slug || cleanSlug(trDoc.path),
@@ -102,8 +87,6 @@ watch(
 	{ immediate: true },
 )
 
-provide('pageTitle', computed(() => project.value?.doc?.title || ''))
-
 if (!project.value?.doc) {
 	throw createError({
 		statusCode: 404,
@@ -118,15 +101,6 @@ const canonicalUrl = computed(() => {
 	return `${site.url}${prefix}/${currentSlug}`
 })
 
-useHead({
-	link: [
-		{
-			rel: 'canonical',
-			href: () => canonicalUrl.value,
-		},
-	],
-})
-
 useSeoMeta({
 	title: () => project.value?.doc?.title,
 	description: () => project.value?.doc?.description,
@@ -135,21 +109,8 @@ useSeoMeta({
 	themeColor: '#14b898',
 	ogTitle: () => project.value?.doc?.title,
 	ogDescription: () => project.value?.doc?.description,
-	ogImageAlt: () => project.value?.doc?.title,
 	ogType: 'website',
 	ogUrl: () => canonicalUrl.value,
-	ogSiteName: 'Permadi',
-	ogLocale: () => (locale.value === 'id' ? 'id_ID' : 'en_US'),
-	twitterCard: 'summary_large_image',
-	twitterSite: '@dinarpermadi07',
-	twitterCreator: '@dinarpermadi07',
-	twitterTitle: () => project.value?.doc?.title,
-	twitterDescription: () => project.value?.doc?.description,
-	twitterLabel1: () => (locale.value === 'id' ? 'Kategori Projek' : 'Project Category'),
-	twitterData1: () => (project.value?.doc?.category ? getCategoryLabel(project.value.doc.category) : undefined),
-	twitterLabel2: () => (locale.value === 'id' ? 'Pengembang' : 'Developer'),
-	twitterData2: () => 'Dinar Permadi Yusup',
-	robots: 'index, follow, max-image-preview:large',
 })
 
 defineOgImage('Bento', {
@@ -158,409 +119,215 @@ defineOgImage('Bento', {
 	category: locale.value === 'id' ? 'Studi Kasus Projek' : 'Project Case Study',
 })
 
-useSchemaOrg([
-	defineSoftwareApp({
-		name: () => project.value?.doc?.title,
-		description: () => project.value?.doc?.description,
-		applicationCategory: () => (project.value?.doc?.category === 'mobile' ? 'MobileApplication' : (project.value?.doc?.category === 'design' ? 'DesignApplication' : 'WebApplication')),
-		operatingSystem: 'All, Web Browser',
-		datePublished: () => (project.value?.doc?.date ? new Date(project.value.doc.date).toISOString() : undefined),
-		offers: {
-			'@type': 'Offer',
-			'price': '0',
-			'priceCurrency': 'USD',
-		},
-		aggregateRating: {
-			'@type': 'AggregateRating',
-			'itemReviewed': {
-				'@type': 'SoftwareApplication',
-				'name': project.value?.doc?.title || 'Permadi Project',
-				'image': project.value?.doc?.image
-					? (project.value.doc.image.startsWith('http') ? project.value.doc.image : `https://permadi.dev${project.value.doc.image}`)
-					: 'https://permadi.dev/logo.png',
-				'applicationCategory': project.value?.doc?.category === 'mobile' ? 'MobileApplication' : 'WebApplication',
-				'operatingSystem': 'All, Web Browser',
-				'offers': {
-					'@type': 'Offer',
-					'price': '0',
-					'priceCurrency': 'USD',
-				},
-			},
-			'ratingValue': '4.9',
-			'ratingCount': '28',
-			'reviewCount': '28',
-			'bestRating': '5',
-			'worstRating': '1',
-		},
-		review: [
-			{
-				'@type': 'Review',
-				'itemReviewed': {
-					'@type': 'SoftwareApplication',
-					'name': project.value?.doc?.title || 'Permadi Project',
-					'image': project.value?.doc?.image
-						? (project.value.doc.image.startsWith('http') ? project.value.doc.image : `https://permadi.dev${project.value.doc.image}`)
-						: 'https://permadi.dev/logo.png',
-					'applicationCategory': project.value?.doc?.category === 'mobile' ? 'MobileApplication' : 'WebApplication',
-					'operatingSystem': 'All, Web Browser',
-					'offers': {
-						'@type': 'Offer',
-						'price': '0',
-						'priceCurrency': 'USD',
-					},
-				},
-				'author': {
-					'@type': 'Person',
-					'name': 'Alex Pratama',
-					'url': 'https://permadi.dev',
-					'image': 'https://permadi.dev/logo.png',
-					'jobTitle': 'Senior Software Engineer',
-					'worksFor': 'Tech Community',
-					'sameAs': ['https://github.com/narr07'],
-				},
-				'datePublished': () => (project.value?.doc?.date ? new Date(project.value.doc.date).toISOString() : '2026-08-20T00:00:00.000Z'),
-				'reviewBody': locale.value === 'id'
-					? 'Aplikasi dan antarmuka yang sangat bersih, responsif, dan mudah digunakan.'
-					: 'Exceptional application with clean architecture, great UI, and high performance.',
-				'reviewRating': {
-					'@type': 'Rating',
-					'ratingValue': '5',
-					'bestRating': '5',
-					'worstRating': '1',
-				},
-			},
-		],
-		url: () => project.value?.doc?.link || canonicalUrl.value,
-		author: {
-			name: 'Dinar Permadi Yusup',
-			url: 'https://permadi.dev',
-		},
-	}),
-	defineBreadcrumb({
-		itemListElement: [
-			{
-				name: (): string => (locale.value === 'id' ? 'Beranda' : 'Home'),
-				item: (): string => (locale.value === 'id' ? '/id' : '/'),
-			},
-			{
-				name: (): string => (locale.value === 'id' ? 'Projek' : 'Projects'),
-				item: (): string => (locale.value === 'id' ? '/id/projek' : '/projects'),
-			},
-			{
-				name: (): string => project.value?.doc?.title || '',
-				item: (): string => canonicalUrl.value,
-			},
-		],
-	}),
-])
-
-// Koleksi tangkapan layar untuk Bento Gallery
 const allScreenshots = computed(() => {
 	const doc = project.value?.doc
 	if (!doc)
 		return []
 	const list: string[] = []
+	if (doc.image) {
+		list.push(doc.image)
+	}
 	if (doc.images && Array.isArray(doc.images)) {
 		list.push(...doc.images)
 	}
-	else if (doc.image) {
-		list.push(doc.image)
-	}
-	// Hapus duplikasi jika ada
 	return Array.from(new Set(list))
-})
-
-// State & Handler Lightbox interaktif
-const activeLightboxIndex = ref<number | null>(null)
-
-function openLightbox(index: number) {
-	activeLightboxIndex.value = index
-}
-
-function closeLightbox() {
-	activeLightboxIndex.value = null
-}
-
-function nextImage() {
-	if (activeLightboxIndex.value !== null && allScreenshots.value.length > 0) {
-		activeLightboxIndex.value = (activeLightboxIndex.value + 1) % allScreenshots.value.length
-	}
-}
-
-function prevImage() {
-	if (activeLightboxIndex.value !== null && allScreenshots.value.length > 0) {
-		activeLightboxIndex.value
-			= (activeLightboxIndex.value - 1 + allScreenshots.value.length) % allScreenshots.value.length
-	}
-}
-
-onMounted(() => {
-	function handleKeydown(e: KeyboardEvent) {
-		if (activeLightboxIndex.value === null)
-			return
-		if (e.key === 'Escape')
-			closeLightbox()
-		else if (e.key === 'ArrowRight')
-			nextImage()
-		else if (e.key === 'ArrowLeft')
-			prevImage()
-	}
-	window.addEventListener('keydown', handleKeydown)
-	onUnmounted(() => window.removeEventListener('keydown', handleKeydown))
 })
 </script>
 
 <template>
-	<div class="container-bento py-10 sm:py-14">
-		<!-- Back Button -->
-		<NuxtLink
-			:to="locale === 'id' ? '/id/projek' : '/projects'"
-			class="mb-6 inline-flex items-center gap-1.5 text-xs text-slate-700 font-semibold transition-colors dark:text-slate-200 hover:text-brand-900 focus-ring dark:hover:text-brand-300"
+	<div
+		v-if="project?.doc"
+		class="w-full bg-white dark:bg-[#001e1c]"
+	>
+		<!-- Navigation Top Rail -->
+		<nav
+			aria-label="Breadcrumb navigasi"
+			class="w-full border-b border-slate-200/80 dark:border-[#134e43] bg-slate-50/60 dark:bg-[#002420]/40 px-6 sm:px-8 py-3.5 flex items-center justify-between font-mono text-xs"
 		>
-			<span class="i-hugeicons-arrow-left-01 text-sm" /> {{ locale === 'id' ? 'Kembali ke Semua Projek' : 'Back to All Projects' }}
-		</NuxtLink>
-
-		<!-- Project Article Container -->
-		<article
-			v-if="project?.doc"
-			class="mx-auto max-w-4xl"
-		>
-			<!-- Bento Card Header with Spotlight -->
-			<header
-
-				class="bento-card-clean relative mb-10 overflow-hidden border border-slate-200/80 rounded-bento bg-white/90 p-6 shadow-sm dark:border-[#134e43] dark:bg-[#002b27]/90 md:p-9 sm:p-8"
+			<NuxtLink
+				:to="locale === 'id' ? '/id/projek' : '/projects'"
+				class="inline-flex items-center gap-2 text-slate-900 font-bold uppercase tracking-wider hover:text-brand-600 dark:text-slate-50 dark:hover:text-brand-400"
 			>
-				<!-- Category & Tags Badge Row -->
-				<div class="mb-3.5 flex flex-wrap items-center gap-2">
-					<span
-						v-if="project.doc.category"
-						class="inline-flex items-center border border-brand-200/60 rounded-full bg-brand-100/80 px-3 py-1 text-xs text-brand-800 font-semibold tracking-wider uppercase dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300"
-					>
-						{{ getCategoryLabel(project.doc.category) }}
-					</span>
-					<span
-						v-for="tag in (project.doc.tags || project.doc.tech || [])"
-						:key="tag"
-						class="border border-slate-200/60 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs text-slate-700 font-medium dark:border-slate-700/60 dark:bg-slate-800/80 dark:text-slate-300"
-					>
-						#{{ tag }}
-					</span>
-				</div>
+				<span class="i-lucide-arrow-left text-xs" />
+				<span>{{ locale === 'id' ? 'KEMBALI KE ARSIP PROJEK' : 'BACK TO PROJECTS ARCHIVE' }}</span>
+			</NuxtLink>
 
-				<!-- Title (Barlow, Bold, Responsive) -->
-				<h1 class="text-2xl text-[#000b07] font-bold leading-[1.18] tracking-tight font-heading lg:text-[2.5rem] md:text-4xl sm:text-3xl dark:text-[#f8fafa]">
-					{{ project.doc.title }}
-				</h1>
+			<div class="flex items-center gap-3 text-slate-900/40 dark:text-slate-50/40 uppercase">
+				<span class="hidden sm:inline">SPESIFIKASI STUDI KASUS</span>
+				<span class="font-bold text-brand-600 dark:text-brand-400">[{{ project.doc.category?.toUpperCase() || 'WEB' }}]</span>
+			</div>
+		</nav>
 
-				<!-- Description Lead Text (Refined compact size) -->
-				<p class="mt-3.5 max-w-3xl text-body text-sm text-slate-600 leading-relaxed sm:text-[15px] dark:text-slate-300">
-					{{ project.doc.description }}
-				</p>
-
-				<!-- Bento Metadata & Action Footer -->
-				<div class="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-slate-200/70 pt-5 text-xs dark:border-slate-800/70">
-					<div class="flex flex-wrap items-center gap-2 sm:gap-3">
-						<div class="inline-flex items-center gap-1.5 border border-slate-200/60 rounded-xl bg-slate-100/80 px-3 py-1.5 text-slate-700 font-medium dark:border-[#134e43] dark:bg-[#042f27] dark:text-slate-200">
-							<span class="i-hugeicons-calendar-03 text-sm text-brand-700 dark:text-brand-400" />
-							<span>{{ formatDate(project.doc.date) || '2025' }}</span>
+		<!-- Header Band: Parameter Rail + Display Title -->
+		<header class="w-full border-b border-slate-200/80 dark:border-[#134e43]">
+			<div class="grid grid-cols-1 lg:grid-cols-12">
+				<!-- Parameter Spec Sheet (Cols 1 to 4) -->
+				<div class="lg:col-span-4 p-6 sm:p-8 lg:p-10 lg:border-r border-b lg:border-b-0 border-slate-200/80 dark:border-[#134e43] bg-slate-50/50 dark:bg-[#002420]/40 flex flex-col justify-between">
+					<div>
+						<div class="mb-4 font-mono text-[11px] font-bold tracking-[0.2em] uppercase text-brand-700 dark:text-accent">
+							PARAMETER TEKNIS
 						</div>
-						<div class="inline-flex items-center gap-1.5 border border-slate-200/60 rounded-xl bg-slate-100/80 px-3 py-1.5 text-slate-700 font-medium dark:border-[#134e43] dark:bg-[#042f27] dark:text-slate-200">
-							<span class="i-hugeicons-clock-01 text-sm text-brand-700 dark:text-brand-400" />
-							<span>{{ locale === 'id' ? `${project.doc.readingTime || 4} menit baca` : `${project.doc.readingTime || 4} min read` }}</span>
+
+						<div class="divide-y divide-slate-200/80 dark:divide-[#134e43] font-mono text-xs">
+							<div class="flex items-baseline justify-between py-2.5">
+								<span class="text-slate-900/60 dark:text-slate-50/60">TANGGAL RILIS</span>
+								<span class="text-slate-900 dark:text-slate-50 tabular-nums font-semibold">{{ formatDate(project.doc.date) }}</span>
+							</div>
+
+							<div class="flex items-baseline justify-between py-2.5">
+								<span class="text-slate-900/60 dark:text-slate-50/60">WAKTU BACA</span>
+								<span class="text-slate-900 dark:text-slate-50 tabular-nums">{{ project.doc.readingTime || 4 }} Menit</span>
+							</div>
+
+							<div class="flex items-baseline justify-between py-2.5">
+								<span class="text-slate-900/60 dark:text-slate-50/60">KATEGORI</span>
+								<span class="text-brand-600 dark:text-brand-400 font-bold uppercase">{{ getCategoryLabel(project.doc.category) }}</span>
+							</div>
+
+							<div class="flex items-baseline justify-between py-2.5">
+								<span class="text-slate-900/60 dark:text-slate-50/60">PENGEMBANG</span>
+								<span class="text-slate-900 dark:text-slate-50">Dinar Permadi Yusup</span>
+							</div>
 						</div>
 					</div>
 
-					<!-- External Links -->
-					<div class="flex items-center gap-2">
-						<a
-							v-if="project.doc.repo"
-							:href="project.doc.repo"
-							target="_blank"
-							rel="noopener"
-							class="btn-ghost inline-flex items-center gap-1.5 border border-slate-200 text-xs font-semibold dark:border-slate-700 !px-3.5 !py-1.5"
-						>
-							<span class="i-hugeicons-github text-xs" /> {{ locale === 'id' ? 'Kode Sumber' : 'Source Code' }}
-						</a>
+					<!-- Direct Action Buttons -->
+					<div class="mt-8 pt-6 border-t border-slate-200/80 dark:border-[#134e43] flex flex-col gap-2.5">
 						<a
 							v-if="project.doc.link"
 							:href="project.doc.link"
 							target="_blank"
-							rel="noopener"
-							class="btn-primary inline-flex items-center gap-1.5 text-xs !px-4 !py-1.5"
+							rel="noopener noreferrer"
+							class="w-full px-5 py-3 bg-brand-500 text-slate-950 font-mono font-bold text-xs uppercase tracking-wider hover:bg-brand-400 transition-colors flex items-center justify-between"
 						>
-							<span class="i-hugeicons-link-square-02 text-xs" /> {{ locale === 'id' ? 'Kunjungi Web' : 'Live Demo' }}
+							<span>KUNJUNGI WEB DEMO</span>
+							<span class="i-lucide-external-link text-sm" />
+						</a>
+
+						<a
+							v-if="project.doc.repo"
+							:href="project.doc.repo"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="w-full px-5 py-3 border border-slate-300 dark:border-[#134e43] text-slate-900 dark:text-slate-50 font-mono font-bold text-xs uppercase tracking-wider hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400 transition-colors flex items-center justify-between"
+						>
+							<span>REPOSITORI GITHUB</span>
+							<span class="i-lucide-github text-sm" />
 						</a>
 					</div>
 				</div>
-			</header>
 
-			<!-- 1. BENTO SHOWCASE GALLERY (Bento Style Grid) -->
-			<section
-				v-if="allScreenshots.length > 0"
-				class="mb-12"
-			>
-				<div class="mb-4 flex items-center justify-between">
-					<span class="flex items-center gap-1.5 text-meta text-xs text-brand-800 font-semibold uppercase dark:text-brand-400">
-						<span class="i-hugeicons-image-02 text-xs" /> {{ locale === 'id' ? 'Galeri Pratinjau & Tangkapan Layar' : 'Screenshots & Visual Preview' }}
-					</span>
-					<span class="text-meta text-xs">
-						{{ allScreenshots.length }} {{ locale === 'id' ? 'Gambar' : 'Screenshots' }} • {{ locale === 'id' ? 'Klik untuk perbesar' : 'Click to expand' }}
-					</span>
+				<!-- Typographic Statement Field (Cols 5 to 12) -->
+				<div class="lg:col-span-8 p-6 sm:p-10 lg:p-12 flex flex-col justify-between">
+					<div>
+						<div class="mb-4 font-mono text-[11px] font-bold tracking-[0.2em] uppercase text-brand-700 dark:text-accent">
+							STUDI KASUS SISTEM
+						</div>
+
+						<h1 class="font-heading font-800 text-3xl sm:text-5xl lg:text-6xl tracking-[-0.035em] text-slate-900 dark:text-slate-50 leading-[0.95] text-balance mb-6">
+							{{ project.doc.title }}
+						</h1>
+
+						<p class="font-sans text-base sm:text-lg text-slate-900/80 dark:text-slate-50/80 leading-relaxed max-w-[58ch] mb-8">
+							{{ project.doc.description }}
+						</p>
+
+						<!-- Tech Stack Tags -->
+						<div class="flex flex-wrap gap-2">
+							<span
+								v-for="tech in (project.doc.tags || project.doc.tech || [])"
+								:key="tech"
+								class="px-2.5 py-1 font-mono text-xs uppercase border border-slate-300 dark:border-[#134e43] text-slate-900/80 dark:text-slate-50/80"
+							>
+								#{{ tech }}
+							</span>
+						</div>
+					</div>
+
+					<div class="mt-8 pt-6 border-t border-slate-200/80 dark:border-[#134e43] font-mono text-xs text-slate-900/50 dark:text-slate-50/50 flex items-center justify-between">
+						<span>ARSIP PERMADI.DEV</span>
+						<span>KISI MODULAR 12-KOLOM</span>
+					</div>
 				</div>
+			</div>
+		</header>
 
-				<div class="grid grid-cols-1 gap-3 lg:grid-cols-12 sm:grid-cols-6 sm:gap-4">
-					<!-- Hero Bento Card (Span 8 if multiple, span 12 if single) -->
-					<div
-						role="button"
-						tabindex="0"
-						:aria-label="locale === 'id' ? 'Buka galeri pratinjau gambar utama' : 'Open main preview screenshot'"
-						class="group bento-card-clean relative cursor-pointer overflow-hidden rounded-bento bg-slate-100 dark:bg-slate-800/80 !p-0 focus-ring"
-						:class="allScreenshots.length === 1 ? 'col-span-12 aspect-video' : 'col-span-12 lg:col-span-8 aspect-video'"
-						@click="openLightbox(0)"
-						@keydown.enter.prevent="openLightbox(0)"
-						@keydown.space.prevent="openLightbox(0)"
-					>
+		<!-- Visual Media Band -->
+		<section
+			v-if="allScreenshots.length > 0"
+			class="w-full border-b border-slate-200/80 dark:border-[#134e43]"
+		>
+			<div class="p-6 sm:p-8 lg:p-10 bg-slate-50/30 dark:bg-[#002420]/20">
+				<div class="max-w-4xl mx-auto">
+					<div class="w-full aspect-video border border-slate-200/80 dark:border-[#134e43] overflow-hidden">
 						<NuxtImg
 							:src="allScreenshots[0]"
 							:alt="project.doc.title"
 							format="webp"
 							quality="85"
+							class="w-full h-full object-cover"
 							loading="eager"
-							fetchpriority="high"
-							preload
-							decoding="async"
-							placeholder
-							class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 						/>
-						<div class="absolute inset-0 flex items-end justify-between from-slate-950/80 via-transparent to-transparent bg-gradient-to-t p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-							<span class="flex items-center gap-1.5 border border-white/10 rounded-full bg-slate-900/80 px-2.5 py-1 text-xs text-white font-semibold backdrop-blur-md">
-								<span class="i-hugeicons-image-02 text-xs text-brand-400" /> {{ locale === 'id' ? 'Tampilan Utama' : 'Featured Preview' }}
-							</span>
-							<span class="rounded-full bg-brand-500/90 px-2.5 py-1 text-xs text-white font-medium shadow-xs backdrop-blur-md">
-								{{ locale === 'id' ? 'Buka Pratinjau' : 'Open Preview' }}
-							</span>
-						</div>
 					</div>
 
-					<!-- Secondary Bento Tiles -->
-					<template v-if="allScreenshots.length > 1">
-						<div
-							v-for="(img, idx) in allScreenshots.slice(1)"
-							:key="idx"
-							role="button"
-							tabindex="0"
-							:aria-label="`${project.doc.title} - ${locale === 'id' ? 'Buka gambar pratinjau' : 'Open screenshot preview'} ${idx + 2}`"
-							class="group bento-card-clean relative cursor-pointer overflow-hidden rounded-bento bg-slate-100 dark:bg-slate-800/80 !p-0 focus-ring"
-							:class="allScreenshots.length === 2 ? 'col-span-12 lg:col-span-4 aspect-video' : (idx === 0 ? 'col-span-12 sm:col-span-6 lg:col-span-4 aspect-video' : 'col-span-6 sm:col-span-3 lg:col-span-4 aspect-video')"
-							@click="openLightbox(idx + 1)"
-							@keydown.enter.prevent="openLightbox(idx + 1)"
-							@keydown.space.prevent="openLightbox(idx + 1)"
-						>
-							<NuxtImg
-								:src="img"
-								:alt="`${project.doc.title} ${idx + 2}`"
-								format="webp"
-								quality="80"
-								loading="lazy"
-								decoding="async"
-								placeholder
-								class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-							/>
-							<div class="absolute inset-0 flex items-center justify-center bg-slate-950/50 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-								<span class="border border-white/20 rounded-full bg-white/20 p-2 text-white backdrop-blur-md">
-									<span class="i-hugeicons-search-01 text-base" />
-								</span>
-							</div>
-						</div>
-					</template>
+					<div class="mt-3 flex items-center justify-between font-mono text-[10px] text-slate-900/50 dark:text-slate-50/50 uppercase tracking-widest">
+						<span>FIG. 01 // TAMPILAN UTAMA ANTARMUKA SISTEM</span>
+						<span>RESOLUSI TINGGI (16:9)</span>
+					</div>
 				</div>
-			</section>
 
-			<!-- 2. Prose Case Study Content -->
-			<div class="max-w-none text-slate-700 leading-relaxed font-sans prose prose-slate dark:text-slate-200 dark:prose-invert">
-				<ContentRenderer :value="project.doc" />
-			</div>
-		</article>
-
-		<!-- 3. FULLSCREEN BENTO LIGHTBOX MODAL -->
-		<Teleport to="body">
-			<Transition
-				enter-active-class="transition duration-200 ease-out"
-				enter-from-class="opacity-0"
-				enter-to-class="opacity-100"
-				leave-active-class="transition duration-150 ease-in"
-				leave-from-class="opacity-100"
-				leave-to-class="opacity-0"
-			>
+				<!-- Additional Gallery Strip if Available -->
 				<div
-					v-if="activeLightboxIndex !== null"
-					class="fixed inset-0 z-100 flex items-center justify-center bg-slate-950/90 p-3 backdrop-blur-md sm:p-6"
-					@click.self="closeLightbox"
+					v-if="allScreenshots.length > 1"
+					class="max-w-4xl mx-auto mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4"
 				>
-					<div class="relative max-w-5xl w-full flex flex-col items-center">
-						<!-- Close Button -->
-						<button
-							type="button"
-							class="absolute right-0 border border-white/10 rounded-full bg-slate-900/60 p-2 text-white/70 backdrop-blur-md transition-colors -top-12 sm:right-0 hover:text-white"
-							aria-label="Tutup"
-							@click="closeLightbox"
-						>
-							<span class="i-hugeicons-cancel-01 text-lg" />
-						</button>
-
-						<!-- Image Container -->
-						<div class="relative max-h-[82vh] w-full flex items-center justify-center overflow-hidden border border-white/10 rounded-bento bg-slate-900/80 shadow-2xl">
-							<img
-								:src="allScreenshots[activeLightboxIndex]"
-								:alt="project?.doc?.title"
-								class="max-h-[80vh] max-w-full w-auto rounded-bento object-contain"
-							>
-
-							<!-- Prev / Next Navigation -->
-							<button
-								v-if="allScreenshots.length > 1"
-								type="button"
-								class="absolute left-3 top-1/2 border border-white/10 rounded-full bg-slate-900/70 p-2.5 text-white backdrop-blur-md transition-all -translate-y-1/2 active:scale-95 hover:bg-slate-900"
-								aria-label="Sebelumnya"
-								@click="prevImage"
-							>
-								<span class="i-hugeicons-arrow-left-01 text-base" />
-							</button>
-							<button
-								v-if="allScreenshots.length > 1"
-								type="button"
-								class="absolute right-3 top-1/2 border border-white/10 rounded-full bg-slate-900/70 p-2.5 text-white backdrop-blur-md transition-all -translate-y-1/2 active:scale-95 hover:bg-slate-900"
-								aria-label="Selanjutnya"
-								@click="nextImage"
-							>
-								<span class="i-hugeicons-arrow-right-01 text-base" />
-							</button>
-						</div>
-
-						<!-- Lightbox Caption & Thumbnails Strip -->
-						<div class="mt-4 w-full flex items-center justify-between px-2 text-xs text-white/70">
-							<span class="mr-4 truncate text-white font-medium">
-								{{ project?.doc?.title }} ({{ activeLightboxIndex + 1 }} / {{ allScreenshots.length }})
-							</span>
-							<div class="flex items-center gap-1.5 overflow-x-auto py-1">
-								<button
-									v-for="(thumb, tIdx) in allScreenshots"
-									:key="tIdx"
-									type="button"
-									class="h-7 w-10 shrink-0 cursor-pointer overflow-hidden border rounded transition-all"
-									:class="tIdx === activeLightboxIndex ? 'border-brand-400 ring-2 ring-brand-400/50 scale-105' : 'border-white/20 opacity-50 hover:opacity-100'"
-									@click="openLightbox(tIdx)"
-								>
-									<img
-										:src="thumb"
-										class="h-full w-full object-cover"
-									>
-								</button>
-							</div>
+					<div
+						v-for="(img, idx) in allScreenshots.slice(1)"
+						:key="idx"
+						class="border border-slate-200/80 dark:border-[#134e43]"
+					>
+						<NuxtImg
+							:src="img"
+							:alt="`${project.doc.title} pratinjau ${idx + 2}`"
+							format="webp"
+							quality="80"
+							class="w-full aspect-video object-cover"
+							loading="lazy"
+						/>
+						<div class="p-2 bg-white dark:bg-[#001e1c] border-t border-slate-200/80 dark:border-[#134e43] font-mono text-[9px] text-slate-900/50 dark:text-slate-50/50 uppercase">
+							FIG. 0{{ idx + 2 }} // TAMPILAN DETAIL
 						</div>
 					</div>
 				</div>
-			</Transition>
-		</Teleport>
+			</div>
+		</section>
+
+		<!-- Content Prose Band -->
+		<main class="w-full border-b border-slate-200/80 dark:border-[#134e43] p-6 sm:p-10 lg:p-14">
+			<div class="max-w-3xl mx-auto">
+				<div class="font-mono text-[11px] font-bold tracking-[0.2em] uppercase text-brand-700 dark:text-accent mb-8 pb-3 border-b border-slate-200/80 dark:border-[#134e43]">
+					DOKUMENTASI TEKNIS &amp; CATATAN REKAYASA
+				</div>
+
+				<div class="prose prose-slate dark:prose-invert max-w-none font-sans text-slate-900/85 dark:text-slate-50/85 leading-relaxed">
+					<ContentRenderer :value="project.doc" />
+				</div>
+			</div>
+		</main>
+
+		<!-- Bottom Archival Colophon Strip -->
+		<footer class="w-full bg-slate-50/80 dark:bg-[#002420]/60 px-6 py-6 sm:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 font-mono text-xs">
+			<NuxtLink
+				:to="locale === 'id' ? '/id/projek' : '/projects'"
+				class="inline-flex items-center gap-2 text-slate-900 font-bold uppercase tracking-wider hover:text-brand-600 dark:text-slate-50 dark:hover:text-brand-400"
+			>
+				<span class="i-lucide-arrow-left text-xs" />
+				<span>KEMBALI KE SELURUH PROJEK</span>
+			</NuxtLink>
+
+			<div class="text-slate-900/50 dark:text-slate-50/50">
+				DINAR PERMADI YUSUP · SISTEM KISI MODULAR 12-KOLOM
+			</div>
+		</footer>
 	</div>
 </template>

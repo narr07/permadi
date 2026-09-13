@@ -28,14 +28,80 @@ Berdasarkan audit TF-IDF (Target Skor > 85%), setiap target kata kunci yang dida
 
 | Elemen Halaman | Alokasi & Aturan Distribusi Kata Kunci | Standar TF-IDF |
 | :--- | :--- | :--- |
-| **`title` (Frontmatter)** | Wajib memuat **Primary Keyword** di awal/tengah. **Panjang judul MAKSIMAL 50–58 karakter** (sehingga total dengan suffix ` \| Permadi` **TIDAK MELEBIHI 70 KARAKTER DENGAN SPASI**). **Hindari tanda titik dua (`:`)** kecuali jika mutlak diperlukan. | Prioritas Tertinggi |
-| **`description`** | Wajib memuat Primary Keyword + 1 Secondary Keyword secara natural. Panjang **140–160 karakter**. | Sangat Tinggi |
+| **`title` (Frontmatter)** | Wajib memuat **Primary Keyword** di awal/tengah. **Minimal 50 karakter, maksimal 58–60 karakter** (sehingga total dengan suffix ` \| Permadi` **TIDAK MELEBIHI 70 KARAKTER DENGAN SPASI / ~550 px**). **Hindari tanda titik dua (`:`)** kecuali jika mutlak diperlukan. | Prioritas Tertinggi |
+| **`description`** | Wajib memuat Primary Keyword + 1 Secondary Keyword secara natural. **Minimal 70 karakter, 105 karakter (rekomendasi aman seluler), hingga 135–160 karakter (desktop)**. | Sangat Tinggi |
+| **URL Slug** | **Minimal 10 karakter** (~1–2 kata kunci), **maksimal 17–40 karakter** (< 5 kata) untuk sitasi optimal pencarian AI & keterbacaan. | Fondasi URL |
 | **`tags` (Meta Keywords)** | 3–5 target kata kunci spesifik (kombinasi *primary*, *secondary*, dan *LSI topic*). | 100% Tercakup |
 | **Body Paragraphs** | **SEMUA kata kunci di `tags` WAJIB MUNCUL minimal 1–3 kali** di dalam teks body artikel. Dilarang keras membiarkan tag memiliki kemunculan 0 kali di body! Kerapatan alami 1–2.5% tanpa *keyword stuffing*. | Wajib Lengkap |
-| **Heading `H1` / `H2` / `H3`** | `H1` memuat Primary Keyword. Subtopik `##` (H2) dan `###` (H3) memuat variasi kata kunci turunan & *rising queries*. | Relevansi Struktur |
-| **Featured Alt Text** | Memuat Primary Keyword secara kontekstual deskriptif (maksimal 125 karakter). | Visual SEO |
+| **Heading `H1`** | Memuat Primary Keyword. **Minimal 20 karakter (~3–4 kata), maksimal 60–70 karakter (~8–10 kata)**, selaras dengan Title Tag. | Hierarki Utama |
+| **Heading `H2` & `H3`** | Subtopik `##` (H2) dan `###` (H3) memuat variasi kata kunci turunan & *rising queries*. **Minimal 15 karakter, maksimal 50–60 karakter (4–8 kata)**. | Relevansi Struktur |
+| **Featured Alt Text** | Memuat Primary Keyword secara kontekstual deskriptif. **Minimal 10 karakter, maksimal 125 karakter**. | Visual SEO |
 | **Penekanan Bold / Italic** | Berikan penekanan `**tebal**` atau `*miring*` pada istilah kunci secara selektif (1–3 kali) untuk memandu pemindaian mata dan sinyal semantik. | Penekanan Makna |
 | **Internal Link Anchors** | Sisipkan 2–3 tautan internal ke artikel blog lain menggunakan anchor text deskriptif yang memuat kata kunci terkait (`[panduan font](/id/blog/sejarah-font-ttf-otf)`). | Topical Authority |
+
+---
+
+## 📏 STANDAR LENGKAP BATASAN KARAKTER & KATA (SEO GOOGLE, AEO & GEO PROTOCOL)
+
+Setiap artikel yang dihasilkan **WAJIB MEMATUHI BATASAN JUMLAH KARAKTER & KATA** berikut demi memastikan performa indeks Google SERP tanpa terpotong, keterbacaan mobile maksimal, serta kemudahan sitasi oleh mesin pencari bertenaga kecerdasan buatan (*AI Search Engines / Perplexity / Google AI Overviews / SearchGPT*):
+
+### 1. On-Page Metadata & URL
+
+* **Title Tag (`<title>` / Frontmatter `title`)**:
+  * **Minimal**: **50 karakter**.
+  * **Maksimal**: **60 karakter** (atau sekitar **550 piksel**; judul frontmatter disarankan 50–58 karakter agar total bersama suffix ` \| Permadi` tetap $\le$ 70 karakter).
+  * *Alasan*: Jika kurang dari 50 karakter, judul berisiko dianggap kurang deskriptif. Jika melebihi 60 karakter, judul akan terpotong (*truncated*) di SERP Google atau diubah otomatis oleh mesin pencari.
+* **Meta Description (`description`)**:
+  * **Minimal**: **70 karakter**.
+  * **Maksimal**: **105 karakter** (rekomendasi aman untuk tampilan seluler) hingga **135–160 karakter** (untuk tampilan desktop).
+  * *Alasan*: Meta deskripsi yang melebihi 105 karakter terpotong pada layar ponsel/seluler, sedangkan desktop menampung hingga 160 karakter.
+* **URL Slug**:
+  * **Minimal**: **10 karakter** (~1–2 kata kunci utama).
+  * **Maksimal**: **17–40 karakter** (di bawah 5 kata).
+  * *Alasan*: Analisis menunjukkan URL slug berukuran sedang (17–40 karakter, khususnya 21–25 karakter) memperoleh jumlah sitasi dan keterbacaan tertinggi di platform pencarian AI (AEO/GEO) dibandingkan URL yang terlalu pendek atau terlalu panjang.
+
+### 2. Tag Heading dalam Artikel
+
+* **Tag H1 (Judul Utama Artikel)**:
+  * **Minimal**: **20 karakter** (~3–4 kata).
+  * **Maksimal**: **60–70 karakter** (~8–10 kata).
+  * *Alasan*: H1 harus sangat mirip atau identik dengan Title Tag agar konsisten. H1 tidak terpotong di halaman web, namun tetap harus padat dan langsung menyampaikan topik utama.
+* **Tag H2 (Subjudul Bagian Utama)**:
+  * **Minimal**: **15 karakter** (~3 kata).
+  * **Maksimal**: **60 karakter** (~4–8 kata).
+  * *Alasan*: Heading yang terfokus (4–8 kata) mempermudah pemindaian (*scanning*) mata pembaca dan membantu sistem AI memetakan hierarki topik.
+* **Tag H3 (Subbagian / Detail Subtopik)**:
+  * **Minimal**: **15 karakter** (~2–3 kata).
+  * **Maksimal**: **50–60 karakter** (~4–8 kata).
+  * *Alasan*: H3 digunakan untuk memecah pembahasan H2 secara rinci tanpa menggunakan judul yang berbelit-belit.
+
+### 3. Struktur Paragraf & Elemen Media
+
+* **Paragraf Jawaban Langsung (BLUF / AI Snippet Chunk)**:
+  * **Minimal**: **40 kata** (~250 karakter).
+  * **Maksimal**: **60 kata** (~400 karakter).
+  * *Alasan*: Paragraf ringkas 40–60 kata yang diletakkan tepat di bawah H2/H3 merupakan format paling ideal untuk merebut *Featured Snippets* Google dan langsung diekstrak oleh mesin AI sebagai jawaban definitif.
+* **Paragraf Teks Biasa**:
+  * **Minimal**: **1 kalimat** (~50–100 karakter).
+  * **Maksimal**: **2–4 kalimat** (di bawah 5 baris pada layar seluler).
+  * *Alasan*: Paragraf pendek mencegah dinding teks (*wall of text*) yang melelahkan pembaca seluler dan memfasilitasi ekstraksi paragraf mandiri (*self-contained chunks*).
+* **Image Alt Text (Teks Alternatif Gambar)**:
+  * **Minimal**: **10 karakter**.
+  * **Maksimal**: **125 karakter atau kurang**.
+  * *Alasan*: Pembaca layar (*screen reader*) untuk aksesibilitas dan *crawler* gambar Google memprioritaskan deskripsi ringkas, informatif, dan padat di bawah 125 karakter.
+
+### Rangkuman Ringkas Batasan Karakter & Kata
+
+| Elemen Konten | Batas Minimal | Batas Maksimal / Ideal |
+| :--- | :--- | :--- |
+| **Title Tag** | 50 karakter | 60 karakter / 550 px (total $\le$ 70 kar dengan suffix) |
+| **Meta Description** | 70 karakter | 105 karakter (Seluler) / 135–160 (Desktop) |
+| **URL Slug** | 10 karakter | 17–40 karakter (< 5 kata) |
+| **H1 Tag** | 20 karakter | 60–70 karakter (~8–10 kata) |
+| **H2 & H3 Tag** | 15 karakter | 50–60 karakter (4–8 kata) |
+| **Jawaban Snippet (BLUF)** | 40 kata (~250 kar) | 60 kata (~400 kar) |
+| **Paragraf Biasa** | 1 kalimat (~50–100 kar) | 2–4 kalimat (< 5 baris seluler) |
+| **Image Alt Text** | 10 karakter | 125 karakter |
 
 ---
 
@@ -102,17 +168,18 @@ Sajikan ringkasan singkat (1–2 baris) sebelum draf artikel:
 Setiap file `.md` (baik ID maupun EN) **WAJIB** memiliki komponen berikut secara urut:
 
 ### A. Frontmatter YAML Baku & Batasan Karakter
-* **`title` (Format & Panjang Judul)**: **MAKSIMAL 50–58 KARAKTER** (*Total dengan suffix site ` \| Permadi` tidak boleh melebihi 70 karakter dengan spasi*). Memuat Primary Keyword.
+* **`title` (Format & Panjang Judul)**: **MINIMAL 50 & MAKSIMAL 50–58 KARAKTER** (*Total dengan suffix site ` \| Permadi` tidak boleh melebihi 70 karakter dengan spasi / ~550 px*). Wajib memuat Primary Keyword.
 * **HINDARI TANDA TITIK DUA (`:`) PADA JUDUL**: Dilarang menggunakan pola klise formula AI `Topik: Subtopik`. Buatlah judul yang mengalir alami (*fluid natural headline*) tanpa tanda titik dua (`:`), kecuali jika benar-benar mutlak dibutuhkan.
-* **`description`**: **140–160 KARAKTER** natural, to the point, memuat primary keyword + 1 secondary keyword tanpa kata klise robot.
+* **`description`**: **MINIMAL 70 KARAKTER, AMAN SELULER 105 KARAKTER, HINGGA 135–160 KARAKTER (DESKTOP)**. Natural, to the point, memuat primary keyword + 1 secondary keyword tanpa kata klise robot.
+* **URL Slug**: **10–40 KARAKTER** (< 5 kata, optimal 21–25 karakter) demi sitasi optimal mesin AI (AEO/GEO).
 * **`tags`**: 3–5 target keyword yang seluruhnya akan dipakai di teks body artikel.
 
 ```yaml
 ---
-title: "Panduan Memilih Gaya Desain Grafis dan UI Modern" # Alami tanpa titik dua, maksimal 50-58 karakter (total <= 70)
+title: "Panduan Memilih Gaya Desain Grafis dan UI Modern" # Alami tanpa titik dua, 50-58 karakter (total <= 70)
 category: desain
 date: YYYY-MM-DD
-description: Meta deskripsi 140-160 karakter natural, to the point, memuat kata kunci utama tanpa kata klise robot.
+description: Panduan memilih gaya desain grafis dan UI modern untuk estetika web yang fungsional dan berkarakter. # 70-105 kar (seluler) / 135-160 (desktop)
 tags:
   - primary-keyword
   - secondary-keyword
@@ -121,9 +188,9 @@ tags:
 ```
 
 ### B. Struktur Isi Konten & MDC Native
-1. **Pembuka**: Langsung tembak masalah inti / realitas lapangan dalam 100 kata pertama (mengandung primary keyword secara natural). Tanpa basa-basi sejarah atau kalimat pembuka klise.
-2. **Gambar Featured (Shared 1 File Asset)**: `![Alt text deskriptif memuat keyword](/article/nama-gambar.webp)`. **WAJIB gunakan path & nama file foto yang SAMA PERSIS** antara versi ID dan EN (hanya teks alt yang disesuaikan ke bahasa target).
-3. **Isi Artikel**: Subtopik `##` dan `###` dengan gaya lugas, analogi dunia nyata segar, tabel perbandingan, dan pembahasan *trade-offs*. Pastikan seluruh keyword dari `tags` termuat di body paragraf.
+1. **Pembuka (BLUF / Direct Answer AI Chunk)**: Langsung tembak jawaban ringkas definitif atau realitas lapangan dalam **40–60 kata (~250–400 karakter)** di awal artikel (mengandung primary keyword secara natural). Tanpa basa-basi sejarah atau kalimat pembuka klise.
+2. **Gambar Featured (Shared 1 File Asset)**: `![Alt text deskriptif memuat keyword](/article/nama-gambar.webp)`. Alt text **minimal 10 karakter, maksimal 125 karakter**. **WAJIB gunakan path & nama file foto yang SAMA PERSIS** antara versi ID dan EN (hanya teks alt yang disesuaikan ke bahasa target).
+3. **Isi Artikel & Paragraf**: Subtopik `##` (min 15, maks 60 kar) dan `###` (min 15, maks 50–60 kar). Paragraf teks biasa **1 kalimat (~50–100 kar) hingga 2–4 kalimat (< 5 baris di layar seluler)** untuk mencegah dinding teks (*wall of text*). Seluruh keyword dari `tags` termuat di body paragraf.
 4. **Komponen MDC Pendukung**:
    - `::steps` (jika ada tutorial bertahap, tanpa nomor di judul `###`).
    - `::tip`, `::note`, atau `::warning` untuk peringatan praktis / kesalahan umum lapangan.

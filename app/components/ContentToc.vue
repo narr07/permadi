@@ -13,13 +13,25 @@ const props = withDefaults(
 		links?: TocLinkItem[]
 		title?: string
 		mode?: 'mobile' | 'desktop' | 'all'
+		showClose?: boolean
+		showPin?: boolean
+		isPinned?: boolean
 	}>(),
 	{
 		links: () => [],
 		title: '',
 		mode: 'all',
+		showClose: false,
+		showPin: false,
+		isPinned: false,
 	},
 )
+
+const emit = defineEmits<{
+	(e: 'close'): void
+	(e: 'togglePin'): void
+	(e: 'navigate', id: string): void
+}>()
 
 const { locale } = useI18n()
 
@@ -36,7 +48,7 @@ onClickOutside(mobileContainerRef, () => {
 const displayTitle = computed(() => {
 	if (props.title)
 		return props.title
-	return locale.value === 'id' ? 'Daftar Isi' : 'Table of Contents'
+	return locale.value === 'id' ? 'DAFTAR ISI NASKAH' : 'TABLE OF CONTENTS'
 })
 
 function flattenWithLevel(links: TocLinkItem[], level = 0): { link: TocLinkItem, level: number }[] {
@@ -48,7 +60,7 @@ function flattenWithLevel(links: TocLinkItem[], level = 0): { link: TocLinkItem,
 
 const flatList = computed(() => flattenWithLevel(props.links || []))
 
-// Throttled Real-time Scrollspy Tracker (ringan & hemat CPU)
+// Throttled real-time scrollspy tracker
 const updateActiveHeading = useThrottleFn(() => {
 	if (import.meta.server)
 		return
@@ -56,7 +68,7 @@ const updateActiveHeading = useThrottleFn(() => {
 	if (!flat.length)
 		return
 
-	const offset = 120
+	const offset = 140
 
 	for (let i = flat.length - 1; i >= 0; i--) {
 		const entry = flat[i]
@@ -76,7 +88,7 @@ const updateActiveHeading = useThrottleFn(() => {
 	if (flat[0]) {
 		activeId.value = flat[0].link.id
 	}
-}, 120)
+}, 100)
 
 function scrollToHeading(id: string) {
 	const target = document.getElementById(id)
@@ -95,6 +107,7 @@ function scrollToHeading(id: string) {
 		history.replaceState(null, '', `#${encodeURIComponent(id)}`)
 	}
 	mobileOpen.value = false
+	emit('navigate', id)
 }
 
 function scrollToTop() {
@@ -113,49 +126,6 @@ const progressPercentage = computed(() => {
 	if (!flatList.value.length)
 		return 0
 	return Math.round(((activeIndex.value + 1) / flatList.value.length) * 100)
-})
-
-const desktopListRef = ref<HTMLElement | null>(null)
-const mobileListRef = ref<HTMLElement | null>(null)
-
-function autoScrollToc(container: HTMLElement | null, id: string) {
-	if (!container || !id || !import.meta.client)
-		return
-	const escapedId = typeof CSS !== 'undefined' && typeof CSS.escape === 'function' ? CSS.escape(id) : id
-	const selector = `[data-toc-id="${escapedId}"]`
-	const activeEl = container.querySelector<HTMLElement>(selector)
-	if (!activeEl)
-		return
-
-	const elTop = activeEl.offsetTop
-	const elHeight = activeEl.offsetHeight
-	const containerTop = container.scrollTop
-	const containerHeight = container.clientHeight
-
-	if (elTop + elHeight > containerTop + containerHeight) {
-		container.scrollTo({
-			top: elTop + elHeight - containerHeight + 8,
-			behavior: 'smooth',
-		})
-	}
-	else if (elTop < containerTop) {
-		container.scrollTo({
-			top: Math.max(0, elTop - 8),
-			behavior: 'smooth',
-		})
-	}
-}
-
-watch(activeId, (newId) => {
-	if (!newId || import.meta.server)
-		return
-
-	nextTick(() => {
-		autoScrollToc(desktopListRef.value, newId)
-		if (mobileOpen.value) {
-			autoScrollToc(mobileListRef.value, newId)
-		}
-	})
 })
 
 onMounted(() => {
@@ -183,169 +153,161 @@ onUnmounted(() => {
 <template>
 	<nav
 		v-if="links && links.length > 0"
-		class="content-toc pointer-events-auto w-full"
+		class="w-full font-mono text-xs"
 		:aria-label="locale === 'id' ? 'Daftar Isi Artikel' : 'Table of Contents'"
 	>
-		<!-- 1. Mobile Bento Floating Island Bar -->
+		<!-- 1. Mobile Swiss Sticky Accordion Bar -->
 		<div
 			v-if="mode === 'mobile' || mode === 'all'"
 			ref="mobileContainerRef"
-			class="pointer-events-auto w-full"
+			class="w-full border-b border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#001e1c]"
 			:class="mode === 'all' ? 'lg:hidden' : ''"
 		>
-			<div class="border border-slate-200/80 rounded-2xl bg-white px-3.5 py-2 shadow-md dark:border-[#134e43] dark:bg-[#002b27] sm:p-3">
-				<!-- Trigger Bar Button -->
-				<button
-					type="button"
-					class="w-full flex cursor-pointer touch-manipulation select-none items-center justify-between gap-3 text-left focus:outline-none"
-					:aria-expanded="mobileOpen"
-					aria-controls="mobile-toc-list"
-					:aria-label="locale === 'id' ? 'Buka atau tutup daftar isi' : 'Toggle Table of Contents'"
-					@click="mobileOpen = !mobileOpen"
+			<button
+				type="button"
+				class="w-full px-4 py-3 flex items-center justify-between gap-3 text-left transition-colors hover:bg-slate-50 dark:hover:bg-[#002420]/50 cursor-pointer"
+				:aria-expanded="mobileOpen"
+				@click="mobileOpen = !mobileOpen"
+			>
+				<div class="flex items-center gap-2 font-bold tracking-wider uppercase text-[11px]">
+					<span class="w-1.5 h-1.5 bg-brand-500 inline-block" />
+					<span class="text-slate-900 dark:text-slate-50">{{ displayTitle }}</span>
+					<span class="text-slate-900/40 dark:text-slate-50/40 tabular-nums">
+						[{{ String(activeIndex + 1).padStart(2, '0') }}/{{ String(flatList.length).padStart(2, '0') }}]
+					</span>
+				</div>
+
+				<div class="flex items-center gap-1.5 text-slate-900/60 dark:text-slate-50/60 text-xs">
+					<span>{{ mobileOpen ? 'TUTUP' : 'LIHAT' }}</span>
+					<span :class="mobileOpen ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'" class="text-sm" />
+				</div>
+			</button>
+
+			<!-- Mobile Reading Progress Line -->
+			<div class="w-full h-[2px] bg-slate-200/60 dark:bg-[#134e43]/60">
+				<div
+					class="h-full bg-brand-500 transition-all duration-200"
+					:style="{ width: `${progressPercentage}%` }"
+				/>
+			</div>
+
+			<!-- Mobile Expandable Index List -->
+			<div
+				v-if="mobileOpen"
+				class="border-t border-slate-200/80 dark:border-[#134e43] max-h-72 overflow-y-auto divide-y divide-slate-200/60 dark:divide-[#134e43]/60 bg-slate-50/50 dark:bg-[#002420]/30"
+			>
+				<a
+					v-for="(item, idx) in flatList"
+					:key="item.link.id"
+					:href="`#${item.link.id}`"
+					class="flex items-baseline justify-between gap-3 px-4 py-2.5 transition-colors"
+					:class="[
+						item.level > 0 ? 'pl-8' : 'pl-4',
+						item.link.id === activeId
+							? 'bg-brand-500/10 text-brand-700 dark:text-accent font-bold border-l-2 border-brand-500'
+							: 'text-slate-900/70 dark:text-slate-50/70 hover:text-brand-600 dark:hover:text-brand-400',
+					]"
+					@click.prevent="scrollToHeading(item.link.id)"
 				>
-					<div class="flex items-center gap-2">
-						<span class="section-label text-[10px] text-brand-700 font-bold tracking-wider uppercase dark:text-brand-400">
-							{{ displayTitle }}
-						</span>
-						<span class="border border-brand-200/50 rounded-full bg-brand-50/90 px-2 py-0.5 text-[10px] text-brand-800 font-bold font-mono dark:border-brand-900/50 dark:bg-brand-950/70 dark:text-brand-400">
-							{{ activeIndex + 1 }}/{{ flatList.length }}
-						</span>
-					</div>
-
-					<div class="h-6 w-6 flex shrink-0 items-center justify-center border border-slate-200/60 rounded-full bg-slate-100 text-slate-700 dark:border-[#134e43] dark:bg-[#042f27] dark:text-slate-300">
-						<span
-							:class="mobileOpen ? 'i-hugeicons-arrow-up-01' : 'i-hugeicons-arrow-down-01'"
-							class="text-xs transition-transform duration-150"
-						/>
-					</div>
-				</button>
-
-				<!-- Expanded Dropdown Bento List (Fast Transition) -->
-				<Transition
-					enter-active-class="transition-all duration-200 ease-out"
-					enter-from-class="opacity-0 max-h-0"
-					enter-to-class="opacity-100 max-h-[60vh]"
-					leave-active-class="transition-all duration-150 ease-in"
-					leave-from-class="opacity-100 max-h-[60vh]"
-					leave-to-class="opacity-0 max-h-0"
-				>
-					<div
-						v-if="mobileOpen"
-						id="mobile-toc-list"
-						ref="mobileListRef"
-						class="custom-scrollbar mt-3 max-h-60 overflow-y-auto border-t border-slate-200/60 pt-3 space-y-1 dark:border-[#134e43]"
-					>
-						<div
-							role="progressbar"
-							:aria-valuenow="progressPercentage"
-							aria-valuemin="0"
-							aria-valuemax="100"
-							:aria-label="locale === 'id' ? 'Progres Membaca' : 'Reading Progress'"
-							class="mb-3 h-1 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-[#042f27]"
-						>
-							<div
-								class="h-full bg-brand-700 transition-all duration-300 ease-out dark:bg-brand-400"
-								:style="{ width: `${progressPercentage}%` }"
-							/>
-						</div>
-
-						<a
-							v-for="(item, idx) in flatList"
-							:key="item.link.id"
-							:href="`#${item.link.id}`"
-							:data-toc-id="item.link.id"
-							class="group flex items-center justify-between gap-2 border border-transparent rounded-xl text-xs font-medium transition-all"
-							:class="[
-								item.level > 0 ? 'pl-5 pr-3 py-1.5 text-[11.5px]' : 'px-3 py-2',
-								item.link.id === activeId
-									? 'text-brand-900 dark:text-brand-400 bg-slate-100/80 dark:bg-white/5 font-bold'
-									: 'text-slate-700 dark:text-slate-300 hover:(text-brand-900 dark:text-brand-400 border-brand-500/30 dark:border-brand-400/20 bg-slate-50/60 dark:bg-white/5)',
-							]"
-							@click.prevent="scrollToHeading(item.link.id)"
-						>
-							<span class="truncate">{{ item.link.text }}</span>
-							<span
-								class="shrink-0 text-[10px] font-mono"
-								:class="item.link.id === activeId ? 'opacity-90 font-bold text-brand-900 dark:text-brand-400' : 'opacity-60 group-hover:opacity-100'"
-							>
-								{{ idx < 9 ? `0${idx + 1}` : idx + 1 }}
-							</span>
-						</a>
-					</div>
-				</Transition>
+					<span class="truncate">{{ item.link.text }}</span>
+					<span class="shrink-0 tabular-nums text-[10px] text-slate-900/40 dark:text-slate-50/40">
+						{{ String(idx + 1).padStart(2, '0') }}
+					</span>
+				</a>
 			</div>
 		</div>
 
-		<!-- 2. Desktop Bento Sticky Card Widget -->
+		<!-- 2. Desktop Swiss Architectural Sidebar Rail -->
 		<div
 			v-if="mode === 'desktop' || mode === 'all'"
 			class="w-full"
 			:class="mode === 'all' ? 'hidden lg:block' : ''"
 		>
-			<div class="bento-card-clean relative overflow-hidden border border-slate-200/80 bg-white p-4 shadow-sm dark:border-[#134e43] dark:bg-[#002b27] sm:p-4.5">
-				<!-- Header Bento Section (Single-row clean alignment) -->
-				<div class="mb-2.5 flex items-center justify-between gap-2 border-b border-slate-200/60 pb-2.5 dark:border-slate-800/60">
-					<span class="whitespace-nowrap text-[11px] text-brand-700 font-bold tracking-wider font-sans uppercase dark:text-brand-400">
-						{{ displayTitle }}
-					</span>
-					<span class="shrink-0 whitespace-nowrap border border-brand-200/50 rounded-full bg-brand-50/90 px-2 py-0.5 text-[10px] text-brand-800 font-bold font-mono dark:border-brand-900/50 dark:bg-brand-950/70 dark:text-brand-400">
-						{{ activeIndex + 1 }}/{{ flatList.length }}
-					</span>
+			<div class="border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#001e1c]">
+				<!-- Masthead / Header of TOC -->
+				<div class="p-4 border-b border-slate-200/80 dark:border-[#134e43] bg-slate-50/60 dark:bg-[#002420]/40 flex items-center justify-between">
+					<div class="flex items-center gap-2 font-bold tracking-widest text-[11px] uppercase text-brand-700 dark:text-accent">
+						<span class="w-2 h-2 bg-brand-500 inline-block" />
+						<span>{{ displayTitle }}</span>
+					</div>
+
+					<div class="flex items-center gap-2">
+						<span class="text-slate-900/50 dark:text-slate-50/50 tabular-nums text-[10px] font-bold">
+							{{ String(activeIndex + 1).padStart(2, '0') }} / {{ String(flatList.length).padStart(2, '0') }}
+						</span>
+
+						<!-- Pin / Unpin Trigger -->
+						<button
+							v-if="showPin"
+							type="button"
+							class="text-slate-900/60 hover:text-brand-600 dark:text-slate-50/60 dark:hover:text-accent text-[10px] font-mono font-bold uppercase transition-colors cursor-pointer px-1.5 py-0.5 border border-slate-300 dark:border-[#134e43]"
+							:title="isPinned ? 'Lepas Sematan' : 'Sematkan ke Sisi'"
+							@click="emit('togglePin')"
+						>
+							{{ isPinned ? 'LEPAS' : 'SEMAT' }}
+						</button>
+
+						<!-- Close / Collapse Trigger -->
+						<button
+							v-if="showClose"
+							type="button"
+							class="text-slate-900/60 hover:text-rose-600 dark:text-slate-50/60 dark:hover:text-rose-400 text-[10px] font-mono font-bold uppercase transition-colors cursor-pointer px-1.5 py-0.5 border border-slate-300 dark:border-[#134e43]"
+							:title="locale === 'id' ? 'Tutup Daftar Isi' : 'Close Table of Contents'"
+							@click="emit('close')"
+						>
+							✕
+						</button>
+					</div>
 				</div>
 
-				<!-- Reading Progress Bar -->
+				<!-- Hairline Reading Progress Gauge -->
 				<div
 					role="progressbar"
 					:aria-valuenow="progressPercentage"
 					aria-valuemin="0"
 					aria-valuemax="100"
-					:aria-label="locale === 'id' ? 'Progres Membaca' : 'Reading Progress'"
-					class="mb-3 h-1 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800/80"
+					class="w-full h-[2px] bg-slate-200/60 dark:bg-[#134e43]/60"
 				>
 					<div
-						class="h-full bg-brand-700 transition-all duration-300 ease-out dark:bg-brand-400"
+						class="h-full bg-brand-500 transition-all duration-200"
 						:style="{ width: `${progressPercentage}%` }"
 					/>
 				</div>
 
-				<!-- Bento Items List (Active like Hover, Hover with Outline) -->
-				<div
-					ref="desktopListRef"
-					class="custom-scrollbar max-h-[40vh] min-h-[3.5rem] overflow-y-auto pr-1 space-y-1"
-				>
+				<!-- Sequential Tabular Index List -->
+				<div class="max-h-[calc(100vh-14rem)] overflow-y-auto divide-y divide-slate-100 dark:divide-[#134e43]/40">
 					<a
 						v-for="(item, idx) in flatList"
 						:key="item.link.id"
 						:href="`#${item.link.id}`"
-						:data-toc-id="item.link.id"
-						class="group flex items-center justify-between gap-2.5 border border-transparent rounded-xl text-xs font-medium transition-all"
+						class="group flex items-baseline justify-between gap-3 p-3 transition-colors text-xs"
 						:class="[
-							item.level > 0 ? 'pl-5 pr-3 py-1.5 text-[11.5px]' : 'px-3 py-1.5',
+							item.level > 0 ? 'pl-6' : 'pl-3',
 							item.link.id === activeId
-								? 'text-brand-900 dark:text-brand-400 bg-slate-100/80 dark:bg-white/5 font-bold'
-								: 'text-slate-700 dark:text-slate-300 hover:(text-brand-900 dark:text-brand-400 border-brand-500/30 dark:border-brand-400/20 bg-slate-50/60 dark:bg-white/5)',
+								? 'bg-slate-100/80 dark:bg-[#002420] text-brand-700 dark:text-accent font-bold border-l-2 border-brand-500'
+								: 'text-slate-900/75 dark:text-slate-50/75 hover:bg-slate-50 dark:hover:bg-[#002420]/40 hover:text-brand-600 dark:hover:text-brand-400',
 						]"
 						@click.prevent="scrollToHeading(item.link.id)"
 					>
-						<span class="truncate">{{ item.link.text }}</span>
+						<span class="truncate leading-snug">{{ item.link.text }}</span>
 						<span
-							class="shrink-0 text-[10px] font-mono transition-opacity"
-							:class="item.link.id === activeId ? 'opacity-90 font-bold text-brand-900 dark:text-brand-400' : 'opacity-60 group-hover:opacity-100'"
+							class="shrink-0 text-[10px] tabular-nums font-mono"
+							:class="item.link.id === activeId ? 'text-brand-600 dark:text-accent font-bold' : 'text-slate-900/40 dark:text-slate-50/40 group-hover:text-slate-900 dark:group-hover:text-slate-50'"
 						>
-							{{ idx < 9 ? `0${idx + 1}` : idx + 1 }}
+							{{ String(idx + 1).padStart(2, '0') }}
 						</span>
 					</a>
 				</div>
 
-				<!-- Bento Footer Action (Back to top) -->
-				<div class="mt-3 border-t border-slate-200/60 pt-2 dark:border-slate-800/60">
+				<!-- Back to Top Trigger -->
+				<div class="p-3 border-t border-slate-200/80 dark:border-[#134e43] bg-slate-50/60 dark:bg-[#002420]/40">
 					<button
 						type="button"
-						class="w-full flex cursor-pointer select-none items-center justify-center gap-1.5 rounded-xl py-1.5 text-xs text-slate-700 font-medium transition-colors dark:text-slate-300 hover:text-brand-700 dark:hover:text-brand-400"
+						class="w-full py-1.5 flex items-center justify-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-900/70 hover:text-brand-600 dark:text-slate-50/70 dark:hover:text-brand-400 transition-colors cursor-pointer"
 						@click="scrollToTop"
 					>
-						<span class="i-hugeicons-arrow-up-01 text-xs" />
-						<span>{{ locale === 'id' ? 'Kembali ke atas' : 'Back to top' }}</span>
+						<span class="i-lucide-arrow-up text-xs" />
+						<span>{{ locale === 'id' ? 'KEMBALI KE PUNCAK' : 'BACK TO TOP' }}</span>
 					</button>
 				</div>
 			</div>
