@@ -93,22 +93,22 @@ onUnmounted(() => {
 			</span>
 
 			<!-- Controls: Prev / Next Buttons -->
-			<div class="flex items-center gap-1.5">
+			<div class="flex items-center gap-2">
 				<button
 					type="button"
-					class="h-8 w-8 flex items-center justify-center border border-slate-200/80 rounded-full bg-white/90 text-slate-700 shadow-sm transition-all active:scale-95 dark:border-slate-700/80 hover:border-brand-500 dark:bg-slate-800/90 dark:text-slate-200 hover:text-brand-900 dark:hover:border-brand-400 dark:hover:text-brand-300"
+					class="h-9 min-h-[36px] min-w-[36px] w-9 flex items-center justify-center border border-slate-200/80 rounded-full bg-white/90 text-slate-700 shadow-sm transition-all active:scale-95 dark:border-slate-700/80 hover:border-brand-500 dark:bg-slate-800/90 dark:text-slate-200 hover:text-brand-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 dark:hover:border-brand-400 dark:hover:text-brand-300"
 					:aria-label="locale === 'id' ? 'Slide sebelumnya' : 'Previous slide'"
 					@click="prev"
 				>
-					<span class="i-hugeicons-arrow-left-01 text-xs" />
+					<span class="i-hugeicons-arrow-left-01 text-sm" />
 				</button>
 				<button
 					type="button"
-					class="h-8 w-8 flex items-center justify-center border border-slate-200/80 rounded-full bg-white/90 text-slate-700 shadow-sm transition-all active:scale-95 dark:border-slate-700/80 hover:border-brand-500 dark:bg-slate-800/90 dark:text-slate-200 hover:text-brand-900 dark:hover:border-brand-400 dark:hover:text-brand-300"
+					class="h-9 min-h-[36px] min-w-[36px] w-9 flex items-center justify-center border border-slate-200/80 rounded-full bg-white/90 text-slate-700 shadow-sm transition-all active:scale-95 dark:border-slate-700/80 hover:border-brand-500 dark:bg-slate-800/90 dark:text-slate-200 hover:text-brand-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 dark:hover:border-brand-400 dark:hover:text-brand-300"
 					:aria-label="locale === 'id' ? 'Slide berikutnya' : 'Next slide'"
 					@click="next"
 				>
-					<span class="i-hugeicons-arrow-right-01 text-xs" />
+					<span class="i-hugeicons-arrow-right-01 text-sm" />
 				</button>
 			</div>
 		</div>
@@ -149,17 +149,21 @@ onUnmounted(() => {
 					</p>
 				</div>
 
-				<!-- Dots Indicator -->
-				<div class="flex shrink-0 items-center gap-1.5">
+				<!-- Dots Indicator with Accessible Target Size (>= 40px hit area) -->
+				<div class="flex shrink-0 items-center">
 					<button
 						v-for="(slide, idx) in slides"
 						:key="slide.id"
 						type="button"
-						class="h-2 rounded-full transition-all duration-300"
-						:class="idx === currentIndex ? 'w-6 bg-brand-600 dark:bg-brand-400' : 'w-2 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600'"
-						:aria-label="`Go to slide ${idx + 1}`"
+						class="group relative min-h-[44px] min-w-[28px] flex items-center justify-center rounded-full p-1.5 transition-transform active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+						:aria-label="locale === 'id' ? `Buka slide ${idx + 1}` : `Go to slide ${idx + 1}`"
 						@click="goTo(idx)"
-					/>
+					>
+						<span
+							class="h-2 rounded-full transition-all duration-300"
+							:class="idx === currentIndex ? 'w-6 bg-brand-600 dark:bg-brand-400' : 'w-2 bg-slate-300 dark:bg-slate-700 group-hover:bg-slate-400 dark:group-hover:bg-slate-600'"
+						/>
+					</button>
 				</div>
 			</div>
 		</div>
