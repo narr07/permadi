@@ -26,7 +26,7 @@ export default defineConfig({
 		presetTypography({
 			cssExtend: {
 				'h1,h2,h3,h4,h5,h6': {
-					'font-family': '\'GT Zirkon\', sans-serif',
+					'font-family': '\'GT Mechanik Poly\', sans-serif',
 					'font-weight': '700',
 					'letter-spacing': '-0.025em',
 					'color': '#001e1c',
@@ -170,7 +170,7 @@ export default defineConfig({
 	theme: {
 		fontFamily: {
 			sans: ['"GT America"', 'system-ui', 'sans-serif'],
-			heading: ['"GT Zirkon"', 'sans-serif'],
+			heading: ['"GT Mechanik Poly"', 'sans-serif'],
 			mono: ['"GT America Mono"', 'monospace'],
 		},
 		breakpoints: {
@@ -215,7 +215,7 @@ export default defineConfig({
 
 	shortcuts: {
 		// Status & Badges
-		'status-dot': 'w-2 h-2 rounded-none bg-brand-500 inline-block shadow-[0_0_0_2px_#ccfbf2] dark:shadow-[0_0_0_2px_rgba(20,184,152,0.2)]',
+		'status-dot': 'w-2 h-2 rounded-none bg-brand-500 inline-block shadow-[0_0_0_2px_#ccfbf2] dark:shadow-[0_0_0_2px_rgba(20,184,152,0.2)] animate-status-pulse',
 		'section-label': 'uppercase tracking-[0.15em] text-[11px] font-bold text-brand-700 dark:text-accent font-sans',
 		'eyebrow': 'section-label',
 		'kicker': 'section-label',
@@ -223,19 +223,19 @@ export default defineConfig({
 
 		'focus-ring': 'outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0',
 
-		'heading-page': 'font-heading font-700 text-3xl sm:text-5xl lg:text-6xl tracking-tight text-slate-950 dark:text-slate-50 leading-[1.05] mb-3',
+		'heading-page': 'font-heading font-900 text-3xl sm:text-5xl lg:text-6xl tracking-tight text-slate-950 dark:text-slate-50 leading-[1.05] mb-3',
 		'heading-page-sub': 'text-slate-950/80 dark:text-slate-50/80 text-base sm:text-lg leading-relaxed max-w-xl',
 
-		'heading-hero': 'font-heading font-700 mb-4 text-4xl sm:text-6xl leading-[0.95] tracking-tight text-slate-950 dark:text-slate-50',
+		'heading-hero': 'font-heading font-900 mb-4 text-4xl sm:text-6xl leading-[0.95] tracking-tight text-slate-950 dark:text-slate-50',
 		'heading-sub': 'text-slate-950/80 dark:text-slate-50/80 text-base sm:text-lg leading-relaxed max-w-xl',
-		'heading-card-lg': 'font-heading font-700 text-xl tracking-tight text-slate-950 dark:text-slate-50',
-		'heading-card-md': 'font-heading font-700 text-lg text-slate-950 dark:text-slate-50',
+		'heading-card-lg': 'font-heading font-900 text-xl tracking-tight text-slate-950 dark:text-slate-50',
+		'heading-card-md': 'font-heading font-900 text-lg text-slate-950 dark:text-slate-50',
 		'text-body': 'font-sans text-sm text-slate-950 dark:text-slate-50',
 		'text-meta': 'font-sans text-xs text-slate-950/70 dark:text-slate-50/70',
 
-		'btn-primary': 'focus-ring inline-flex items-center justify-center gap-2 px-5 py-2.5 font-bold text-white bg-brand-900 hover:bg-brand-950 dark:bg-brand-400 dark:text-slate-950 dark:hover:bg-brand-300 active:scale-[0.98] transition-all',
-		'btn-ghost': 'focus-ring inline-flex items-center justify-center gap-2 px-5 py-2.5 font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all',
-		'icon-btn': 'focus-ring flex items-center justify-center w-9 h-9 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors',
+		'btn-primary': 'focus-ring inline-flex items-center justify-center gap-2 px-5 py-2.5 font-bold text-white bg-brand-900 hover:bg-brand-950 dark:bg-brand-400 dark:text-slate-950 dark:hover:bg-brand-300 hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-150 cursor-pointer',
+		'btn-ghost': 'focus-ring inline-flex items-center justify-center gap-2 px-5 py-2.5 font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-[0.98] transition-all duration-150 cursor-pointer',
+		'icon-btn': 'focus-ring flex items-center justify-center w-9 h-9 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 hover:scale-105 active:scale-[0.92] transition-all duration-150 cursor-pointer',
 		'badge-neutral': 'inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60',
 
 		// Swiss International Style System Shortcuts
@@ -246,18 +246,18 @@ export default defineConfig({
 		'swiss-card-4': 'col-span-1 sm:col-span-3 lg:col-span-4 p-6 border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27]',
 		'swiss-card-6': 'col-span-1 sm:col-span-6 lg:col-span-6 p-6 sm:p-8 border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27]',
 		'swiss-eyebrow': 'text-[11px] font-bold tracking-[0.15em] uppercase text-brand-700 dark:text-accent font-sans',
-		'swiss-h1': 'font-heading font-700 text-4xl sm:text-6xl tracking-tight text-slate-900 dark:text-slate-50 leading-[0.95] text-balance',
-		'swiss-h2': 'font-heading font-700 text-2xl sm:text-4xl tracking-tight text-slate-900 dark:text-slate-50 leading-tight',
-		'swiss-h3': 'font-heading font-700 text-xl sm:text-2xl tracking-tight text-slate-900 dark:text-slate-50 leading-snug',
+		'swiss-h1': 'font-heading font-900 text-4xl sm:text-6xl tracking-tight text-slate-900 dark:text-slate-50 leading-[0.95] text-balance',
+		'swiss-h2': 'font-heading font-900 text-2xl sm:text-4xl tracking-tight text-slate-900 dark:text-slate-50 leading-tight',
+		'swiss-h3': 'font-heading font-900 text-xl sm:text-2xl tracking-tight text-slate-900 dark:text-slate-50 leading-snug',
 		'swiss-body': 'font-sans text-sm sm:text-base text-slate-900/70 dark:text-slate-50/70 leading-relaxed max-w-[60ch]',
 		'swiss-meta': 'font-mono text-xs text-slate-900/40 dark:text-slate-50/40 tabular-nums',
 		'swiss-hairline-b': 'border-b border-slate-200/80 dark:border-[#134e43]',
 		'swiss-hairline-t': 'border-t border-slate-200/80 dark:border-[#134e43]',
 		'swiss-hairline-r': 'border-r border-slate-200/80 dark:border-[#134e43]',
 		'swiss-spec-row': 'flex items-baseline justify-between py-2.5 swiss-hairline-b text-xs sm:text-sm',
-		'swiss-btn-primary': 'inline-flex items-center justify-center gap-2 px-5 py-2.5 font-sans font-700 text-sm text-slate-950 bg-brand-400 hover:bg-brand-300 dark:bg-brand-400 dark:text-slate-950 dark:hover:bg-brand-300 active:scale-[0.98] transition-transform duration-150',
-		'swiss-btn-outline': 'inline-flex items-center justify-center gap-2 px-5 py-2.5 font-sans font-600 text-sm text-slate-900 dark:text-slate-50 border border-slate-300 dark:border-[#134e43] hover:border-brand-500 dark:hover:border-brand-400 active:scale-[0.98] transition-colors duration-150',
-		'swiss-status-dot': 'w-2 h-2 rounded-none bg-brand-500 inline-block shadow-[0_0_0_2px_#ccfbf2] dark:shadow-[0_0_0_2px_rgba(20,184,152,0.2)]',
+		'swiss-btn-primary': 'inline-flex items-center justify-center gap-2 px-5 py-2.5 font-sans font-700 text-sm text-slate-950 bg-brand-400 hover:bg-brand-300 dark:bg-brand-400 dark:text-slate-950 dark:hover:bg-brand-300 hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-150 cursor-pointer shadow-xs',
+		'swiss-btn-outline': 'inline-flex items-center justify-center gap-2 px-5 py-2.5 font-sans font-600 text-sm text-slate-900 dark:text-slate-50 border border-slate-300 dark:border-[#134e43] hover:border-brand-500 dark:hover:border-brand-400 hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-150 cursor-pointer',
+		'swiss-status-dot': 'w-2 h-2 rounded-none bg-brand-500 inline-block shadow-[0_0_0_2px_#ccfbf2] dark:shadow-[0_0_0_2px_rgba(20,184,152,0.2)] animate-status-pulse',
 	},
 
 	rules: [

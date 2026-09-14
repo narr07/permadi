@@ -28,25 +28,25 @@ useSchemaOrg([
 	defineWebPage({
 		'@type': 'ProfilePage',
 		'mainEntity': definePerson({
-			name: 'Dinar Permadi Yusup',
-			alternateName: 'Permadi',
-			jobTitle: 'Frontend Developer & Graphic Designer',
-			url: 'https://permadi.dev',
-			image: '/logo.png',
-			sameAs: [
+			name: computed(() => page.value?.person_meta?.name || 'Dinar Permadi Yusup'),
+			alternateName: computed(() => page.value?.person_meta?.alternateName || 'Permadi'),
+			jobTitle: computed(() => page.value?.person_meta?.jobTitle || 'Frontend Developer & Graphic Designer'),
+			url: computed(() => page.value?.person_meta?.url || 'https://permadi.dev'),
+			image: computed(() => page.value?.person_meta?.image || '/logo.png'),
+			sameAs: computed(() => page.value?.person_meta?.sameAs || [
 				'https://github.com/narr07',
 				'https://x.com/dinarpermadi07',
 				'https://www.behance.net/narr07',
 				'https://www.instagram.com/narr07/',
-			],
-			worksFor: 'SDN Teja II',
+			]),
+			worksFor: computed(() => page.value?.person_meta?.worksFor || 'SDN Teja II'),
 		}),
 	}),
 ])
 </script>
 
 <template>
-	<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+	<div class="mx-auto max-w-6xl px-4 py-10 lg:px-8 sm:px-6 sm:py-14">
 		<!-- Page Header -->
 		<header
 			class="relative z-10 mb-8 border border-slate-200/80 bg-slate-50/70 p-6 sm:mb-10 dark:border-[#134e43] dark:bg-slate-900/60 sm:p-8"
@@ -88,7 +88,7 @@ useSchemaOrg([
 			<!-- Main Biography Card (Span 7) -->
 			<div
 				v-if="page?.story_card"
-				class="border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] flex flex-col justify-between p-6 md:col-span-7 sm:p-8"
+				class="flex flex-col justify-between border border-slate-200/80 bg-white p-6 md:col-span-7 dark:border-[#134e43] dark:bg-[#002b27] sm:p-8"
 			>
 				<div>
 					<span
@@ -97,7 +97,7 @@ useSchemaOrg([
 					>
 						{{ page.story_card.label }}
 					</span>
-					<h2 class="mb-4 text-2xl text-slate-900 font-semibold leading-tight font-heading sm:text-3xl dark:text-white">
+					<h2 class="mb-4 text-2xl text-slate-900 font-900 leading-tight font-heading sm:text-3xl dark:text-white">
 						{{ page.story_card.title }}
 					</h2>
 					<p
@@ -128,7 +128,7 @@ useSchemaOrg([
 			<!-- Toolkit & Tech Stack Card (Span 5) -->
 			<div
 				v-if="page?.toolkit_card"
-				class="border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] flex flex-col justify-between p-6 md:col-span-5 sm:p-7"
+				class="flex flex-col justify-between border border-slate-200/80 bg-white p-6 md:col-span-5 dark:border-[#134e43] dark:bg-[#002b27] sm:p-7"
 			>
 				<div>
 					<span
@@ -137,7 +137,7 @@ useSchemaOrg([
 					>
 						{{ page.toolkit_card.label }}
 					</span>
-					<h3 class="mb-4 text-xl text-slate-900 font-semibold font-heading sm:text-2xl dark:text-white">
+					<h3 class="mb-4 text-xl text-slate-900 font-900 font-heading sm:text-2xl dark:text-white">
 						{{ page.toolkit_card.title }}
 					</h3>
 					<ul
@@ -147,9 +147,9 @@ useSchemaOrg([
 						<li
 							v-for="t in page.toolkit_card.tools"
 							:key="t.name"
-							class="flex items-center justify-between pt-2.5 text-xs first:pt-0"
+							class="group flex items-center justify-between px-1.5 py-1 text-xs transition-all duration-150 hover:bg-slate-50 first:pt-0 dark:hover:bg-slate-800/50"
 						>
-							<span class="text-slate-900 font-semibold dark:text-white">{{ t.name }}</span>
+							<span class="text-slate-900 font-semibold transition-colors dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400">{{ t.name }}</span>
 							<span class="text-[11px] text-slate-600 font-mono dark:text-slate-400">{{ t.desc }}</span>
 						</li>
 					</ul>
@@ -165,7 +165,7 @@ useSchemaOrg([
 					<span class="mb-2 block text-xs text-slate-800 font-semibold tracking-wider font-mono uppercase">
 						{{ page?.location_card?.label || (locale === 'id' ? 'Lokasi & Zona Waktu' : 'Location & Timezone') }}
 					</span>
-					<h3 class="mb-2 text-2xl text-brand-950 font-semibold font-heading dark:text-brand-950">
+					<h3 class="mb-2 text-2xl text-brand-950 font-900 font-heading dark:text-brand-950">
 						{{ page?.location_card?.title || 'Majalengka, Indonesia' }}
 					</h3>
 					<p class="text-xs text-slate-800 leading-relaxed sm:text-sm">
@@ -185,7 +185,7 @@ useSchemaOrg([
 			<div class="hero-card-clean flex flex-col justify-between p-6 md:col-span-7 sm:p-8">
 				<div>
 					<span class="mb-3 block text-xs text-brand-300 font-semibold tracking-widest uppercase">
-						{{ locale === 'id' ? 'Prinsip Utama' : 'Core Principles' }}
+						{{ page?.principles_label || (locale === 'id' ? 'Prinsip Utama' : 'Core Principles') }}
 					</span>
 					<div
 						v-if="page?.principles && page.principles.length > 0"
@@ -196,7 +196,7 @@ useSchemaOrg([
 							:key="p.title"
 							class="border-b border-brand-900/60 pb-3 last:border-b-0 last:pb-0"
 						>
-							<h4 class="text-sm text-white font-semibold font-heading sm:text-base">
+							<h4 class="text-sm text-white font-900 font-heading sm:text-base">
 								{{ p.title }}
 							</h4>
 							<p class="mt-1 text-xs text-slate-300 leading-relaxed">
@@ -205,7 +205,7 @@ useSchemaOrg([
 						</div>
 					</div>
 					<div v-else>
-						<h3 class="mb-3 text-2xl text-white font-semibold leading-tight font-heading sm:text-3xl">
+						<h3 class="mb-3 text-2xl text-white font-900 leading-tight font-heading sm:text-3xl">
 							{{ locale === 'id' ? 'Kecepatan, Tipografi Presisi, dan Kode yang Bersih.' : 'Speed, Typographic Precision, and Maintainable Code.' }}
 						</h3>
 						<p class="max-w-lg text-xs text-slate-300 leading-relaxed sm:text-sm">
@@ -214,7 +214,7 @@ useSchemaOrg([
 					</div>
 				</div>
 				<div class="mt-6 flex items-center justify-between border-t border-brand-900/60 pt-3 text-xs text-brand-300">
-					<span>Crafted with Intention</span>
+					<span>{{ page?.principles_footer || 'Crafted with Intention' }}</span>
 					<span>© {{ new Date().getFullYear() }}</span>
 				</div>
 			</div>
@@ -222,13 +222,13 @@ useSchemaOrg([
 			<!-- Journey & Dedication Section (Span 12) -->
 			<div
 				v-if="page?.journey"
-				class="border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] flex flex-col items-start justify-between gap-6 p-6 md:col-span-12 md:flex-row sm:p-8"
+				class="flex flex-col items-start justify-between gap-6 border border-slate-200/80 bg-white p-6 md:col-span-12 md:flex-row dark:border-[#134e43] dark:bg-[#002b27] sm:p-8"
 			>
 				<div class="max-w-2xl">
 					<span class="mb-2 block section-label text-brand-700 dark:text-brand-400">
 						{{ page.journey.label || (locale === 'id' ? 'Latar Belakang & Perjalanan' : 'Background & Journey') }}
 					</span>
-					<h3 class="mb-3 text-2xl text-slate-900 font-semibold leading-tight font-heading sm:text-3xl dark:text-white">
+					<h3 class="mb-3 text-2xl text-slate-900 font-900 leading-tight font-heading sm:text-3xl dark:text-white">
 						{{ page.journey.title }}
 					</h3>
 					<p class="text-sm text-slate-700 leading-relaxed sm:text-base dark:text-slate-300">
@@ -237,16 +237,16 @@ useSchemaOrg([
 				</div>
 				<div class="flex shrink-0 items-center gap-3">
 					<NuxtLink
-						:to="localePath('/projek')"
-						class="btn-brand text-xs font-semibold"
+						:to="localePath(page.journey.primary_link_to || '/projek')"
+						class="btn-brand cursor-pointer text-xs font-semibold shadow-xs transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
 					>
-						{{ locale === 'id' ? 'Lihat Portofolio' : 'View Portfolio' }}
+						{{ page.journey.primary_link_text || (locale === 'id' ? 'Lihat Portofolio' : 'View Portfolio') }}
 					</NuxtLink>
 					<NuxtLink
-						:to="localePath('/kontak')"
-						class="btn-ghost text-xs font-semibold"
+						:to="localePath(page.journey.secondary_link_to || '/kontak')"
+						class="btn-ghost cursor-pointer text-xs font-semibold transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
 					>
-						{{ locale === 'id' ? 'Hubungi Saya' : 'Get in Touch' }}
+						{{ page.journey.secondary_link_text || (locale === 'id' ? 'Hubungi Saya' : 'Get in Touch') }}
 					</NuxtLink>
 				</div>
 			</div>

@@ -9,7 +9,7 @@ story_card:
   lead: Lulusan Universitas Pendidikan Indonesia (UPI) yang gemar menghitung dan memecahkan masalah melalui baris kode (Nuxt, Flutter, Python, PHP) dan komposisi visual yang presisi.
   bio: Di luar ruang kelas dan editor kode, saya menikmati eksplorasi matematika, mendesain aset visual, dan merancang media ajar interaktif.
   link_text: Eksplorasi Studi Kasus Projek
-  link_to: /projek
+  link_to: /id/projek
 toolkit_card:
   label: Toolkit & Framework
   title: Teknologi & Software Pilihan
@@ -33,6 +33,8 @@ location_card:
   description: Bekerja secara remote dan berkolaborasi dengan tim di berbagai belahan dunia.
   timezone: GMT+7
   badge: Available Globally
+principles_label: Prinsip Utama
+principles_footer: Crafted with Intention
 principles:
   - title: Logika Numerik & Presisi
     description: Menghadirkan algoritma dan struktur kode yang efisien, rapi, dan konsisten di setiap arsitektur sistem.
@@ -44,3 +46,19 @@ journey:
   label: Latar Belakang & Perjalanan
   title: Perjalanan & Dedikasi
   description: Sebagai seorang guru SD lulusan Universitas Pendidikan Indonesia (UPI), kecintaan saya pada angka dan logika membawa saya mendalami dunia programming dan desain grafis. Saya memadukan ketelitian pengajaran dengan rekayasa aplikasi web & mobile (Nuxt & Flutter) serta estetika visual Adobe Creative Cloud.
+  primary_link_text: Lihat Portofolio
+  primary_link_to: /id/projek
+  secondary_link_text: Hubungi Saya
+  secondary_link_to: /id/kontak
+person_meta:
+  name: Dinar Permadi Yusup
+  alternateName: Permadi
+  jobTitle: Frontend Developer & Graphic Designer
+  url: https://permadi.dev
+  image: /logo.png
+  worksFor: SDN Teja II
+  sameAs:
+    - https://github.com/narr07
+    - https://x.com/dinarpermadi07
+    - https://www.behance.net/narr07
+    - https://www.instagram.com/narr07/

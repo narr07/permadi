@@ -9,7 +9,7 @@ story_card:
   lead: A Universitas Pendidikan Indonesia (UPI) graduate passionate about numbers, coding modern web & mobile apps (Nuxt, Flutter, Python, PHP), and crafting graphic design systems.
   bio: Outside the classroom and code editor, you will find me exploring math puzzles, designing graphic assets, and creating interactive teaching media.
   link_text: Explore Project Case Studies
-  link_to: /projek
+  link_to: /projects
 toolkit_card:
   label: Toolkit & Frameworks
   title: Core Technologies & Software
@@ -33,6 +33,8 @@ location_card:
   description: Working remotely and collaborating with teams across the globe.
   timezone: GMT+7
   badge: Available Globally
+principles_label: Core Principles
+principles_footer: Crafted with Intention
 principles:
   - title: Mathematical Logic & Precision
     description: Architecting efficient, clean, and modular code structures with consistent algorithmic logic.
@@ -44,3 +46,19 @@ journey:
   label: Background & Journey
   title: Journey & Dedication
   description: As an elementary school teacher graduated from Universitas Pendidikan Indonesia (UPI), my love for mathematics and logic naturally led me to code and graphic design. I blend pedagogical clarity with web & mobile development (Nuxt & Flutter) and Adobe Creative Cloud visual craft.
+  primary_link_text: View Portfolio
+  primary_link_to: /projects
+  secondary_link_text: Get in Touch
+  secondary_link_to: /contact
+person_meta:
+  name: Dinar Permadi Yusup
+  alternateName: Permadi
+  jobTitle: Frontend Developer & Graphic Designer
+  url: https://permadi.dev
+  image: /logo.png
+  worksFor: SDN Teja II
+  sameAs:
+    - https://github.com/narr07
+    - https://x.com/dinarpermadi07
+    - https://www.behance.net/narr07
+    - https://www.instagram.com/narr07/

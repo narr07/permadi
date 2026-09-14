@@ -39,7 +39,7 @@ const resolvedIcon = computed(() => {
 
 <template>
 	<div
-		class="prose-card group relative flex flex-col justify-between overflow-hidden border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] p-5 shadow-xs transition-all duration-300 sm:p-6"
+		class="prose-card group relative flex flex-col justify-between overflow-hidden border border-slate-200/80 bg-white p-5 shadow-xs transition-all duration-300 dark:border-[#134e43] dark:bg-[#002b27] sm:p-6"
 		:class="[
 			props.to ? 'cursor-pointer hover:border-brand-500/50 hover:shadow-md dark:hover:border-brand-400/50' : '',
 			props.class,

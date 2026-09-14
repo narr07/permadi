@@ -3,60 +3,122 @@ description: Arsip hidup karya web, eksperimen antarmuka, dan catatan oleh seora
 eyebrow: Permadi / Guru SD, Developer & Desainer
 headline: Sudut kecil di belantara internet.
 hero:
-  status: Tersedia untuk proyek terpilih
-  kicker: Guru SD · Nuxt & Flutter Developer · Desainer Grafis
-  headline: Merajut logika, kode,
-  headline_italic: dan estetika visual
-  headline_suffix: secara presisi.
-  description: Guru SD lulusan <a href="https://www.upi.edu" target="_blank" rel="noopener noreferrer" class="font-semibold text-brand-300 underline underline-offset-4 decoration-brand-400/60 hover:text-white transition-colors">UPI</a> yang gemar berhitung, berkreasi lewat Nuxt & Flutter (JS, Python, PHP), serta merancang karya visual dengan ekosistem Adobe.
-  location: Majalengka, ID
-  timezone: GMT+7 / Local time
+  section_number: "01 // MANIFEST"
+  issue_number: "N° 2026.01"
+  author_title: "PRAKTISI & PENDIDIK"
+  author_name: "Dinar Permadi"
+  author_role: "Guru SD & Perajin Kode"
+  author_bio: "Membawa ketelitian matematika dari ruang kelas ke dalam arsitektur web modern, presisi tata letak, dan rekayasa perangkat lunak."
+  specs:
+    spec_title: "SPESIFIKASI SISTEM"
+    status_label: "STATUS"
+    status: "TERSEDIA PROYEK"
+    almamater_label: "ALMAMATER"
+    almamater: "UPI Bandung"
+    location_label: "LOKASI"
+    location: "Majalengka, ID"
+    time_label: "WAKTU LOKAL"
+    timezone: "WIB"
+    coords_label: "KOORDINAT"
+    coordinates: "6°50'S 108°13'E"
+  kicker: "01.A // PRINSIP & VISI REKAYASA"
+  headline: "Menghubungkan logika berhitung, baris kode, dan ketelitian visual jadi satu cara kerja."
+  thesis: "Sebagai guru SD di Majalengka, saya percaya cara berpikir yang sama dipakai di kelas dan di kode: rapi, tidak berbelit, dan tidak ada yang dipajang cuma buat gaya-gayaan. Prinsip itu yang saya bawa ke Nuxt 4, Flutter, dan tata letak ala tipografi Swiss: semuanya harus punya alasan, bukan hiasan."
   links:
-    - label: Lihat Portofolio
-      to: /id/projek
-      icon: i-hugeicons-arrow-up-right-01
-      variant: primary
-      trailing: false
-    - label: Hubungi Saya
-      to: /id/kontak
-      variant: outline
-philosophy:
-  number: 01 / 07
-  quote: Desain yang baik itu tenang.
-  quote_bold: Desain luar biasa akan selalu membekas.
-  label: Permadi Philosophy
+    - label: "JELAJAHI PROJEK"
+      to: "/id/projek"
+      icon: "i-ph-arrow-up-right"
+    - label: "MULAI DISKUSI"
+      to: "/id/kontak"
+      icon: "i-ph-arrow-right"
 project_section:
-  label: Projek Terbaru
-  fallback_title: Empat proyek, banyak pelajaran berharga.
-  fallback_description: Koleksi studi kasus sistem web dan eksplorasi desain modular, dari kebutuhan pendidikan hingga produk digital.
-  all_link_text: Buka Semua Projek
+  label: "02 // STUDI KASUS & REKAYASA SISTEM"
+  count_badge: "ARSIP PILIHAN (03 KARYA)"
+  correlation_badge: "KORELASI: PENDIDIKAN × REKAYASA KODE"
+  fallback_title: "Empat proyek, banyak pelajaran berharga."
+  fallback_description: "Koleksi studi kasus sistem web dan eksplorasi desain modular, dari kebutuhan pendidikan hingga produk digital."
+  all_link_text: "BUKA SELURUH ARSIP PROJEK (01–06)"
+  all_link_to: "/id/projek"
+philosophy:
+  section_label: "03 // DOKTRIN & FILOSOFI"
+  number: "PRINSIP 01"
+  quote: "Desain yang baik itu tenang."
+  quote_bold: "Desain luar biasa akan selalu membekas."
+  description: "Sebagai guru SD lulusan UPI di Majalengka, saya melihat bahwa matematika mengajarkan kebenaran yang tidak bisa ditawar, sedangkan tipografi mengajarkan cara menyampaikannya secara tertib, bersahaja, dan penuh rasa hormat pada pembaca."
+  pedagogy_tag: "PEDAGOGI × REKAYASA DIGITAL"
+  institution_tag: "UPI BANDUNG"
+  label: "Permadi Philosophy"
 skills_section:
-  code_kicker: Arsitektur Kode
-  code_title: Programming
-  code_desc: Membangun aplikasi web full-stack performa tinggi, aplikasi mobile lintas platform, dan otomasi logika data.
-  code_tag: Ekosistem Modern
+  matrix_label: "04 // DUAL TOOLKIT MATRIX"
+  matrix_tag: "DISIPLIN TEKNIS"
+  code_kicker: "A // LOGIKA & SISTEM"
+  code_title: "Software Engineering"
+  code_desc: "Membangun aplikasi web full-stack performa tinggi, aplikasi mobile lintas platform, dan otomasi logika data."
+  code_tag: "Ekosistem Modern"
   code_items:
-    - name: Nuxt & Vue 3
-      icon: /icons/f-nuxt.svg
-    - name: Flutter & Dart
-      icon: /icons/f-flutter.svg
-    - name: Python
-      icon: /icons/b-python.svg
-  design_kicker: Eksplorasi Visual
-  design_title: Design
-  design_desc: Merancang identitas visual presisi, karya grafis raster/vektor, dan desain antarmuka modern.
-  design_tag: Presisi & Harmoni
+    - name: "Nuxt 4 & Vue 3"
+      desc: "SSR, Nitro Engine & UnoCSS"
+      icon: "/icons/f-nuxt.svg"
+    - name: "Flutter & Dart"
+      desc: "Cross-Platform Mobile Apps"
+      icon: "/icons/f-flutter.svg"
+    - name: "Python & PHP"
+      desc: "Automasi Data, API & Backend"
+      icon: "/icons/b-python.svg"
+    - name: "Cloudflare Edge"
+      desc: "Workers, SQLite D1 & Pages"
+      icon: "i-ph-cloud"
+  design_kicker: "B // VISUAL & GRAFIS"
+  design_title: "Graphic & Editorial"
+  design_desc: "Merancang identitas visual presisi, karya grafis raster/vektor, dan desain antarmuka modern."
+  design_tag: "Presisi & Harmoni"
   design_items:
-    - name: Illustrator
-      icon: /icons/d-illustrator.svg
-    - name: Photoshop
-      icon: /icons/d-photoshop.svg
-    - name: Figma
-      icon: /icons/d-figma.svg
-  all_link_text: Eksplorasi Semua Karya & Studi Kasus
-  all_link_to: /projek
+    - name: "Adobe Illustrator"
+      desc: "Identitas Vektor & Grid Geometris"
+      icon: "/icons/d-illustrator.svg"
+    - name: "Adobe Photoshop"
+      desc: "Komposisi Raster & Media Ajar"
+      icon: "/icons/d-photoshop.svg"
+    - name: "Figma UI Architecture"
+      desc: "Design Tokens & Komponen Sistem"
+      icon: "/icons/d-figma.svg"
+    - name: "Swiss Typography"
+      desc: "Struktur Grid & Hirarki Konten"
+      icon: "i-ph-text-aa"
+  all_link_text: "Eksplorasi Semua Karya & Studi Kasus"
+  all_link_to: "/id/projek"
 writing:
-  label: Tulisan & Catatan
-  title: Catatan seputar web, desain, dan dunia pendidikan.
-  all_link_text: Lihat Semua Tulisan
-
+  label: "05 // TULISAN & CATATAN TERBARU"
+  volume: "JOURNAL // VOL. 2026"
+  col_no: "NO."
+  col_title: "JUDUL TULISAN & KAJIAN TEKNIS"
+  col_discipline: "DISIPLIN"
+  col_date: "TANGGAL"
+  footer_tag: "PUBLIKASI: TEKNOLOGI & RUANG KELAS"
+  title: "Catatan seputar web, desain, dan dunia pendidikan."
+  all_link_text: "BUKA SELURUH TULISAN & ESAI"
+  all_link_to: "/id/blog"
+colophon:
+  section_number: "06 // HUBUNGI & KOLABORASI"
+  status: "TERSEDIA PROYEK"
+  headline: "Tertarik berkolaborasi atau mendiskusikan sistem baru?"
+  description: "Terbuka untuk diajak ngobrol soal proyek frontend dengan Nuxt, aplikasi mobile pakai Flutter, desain grafis sistematis, atau ide-ide teknologi untuk dunia pendidikan."
+  email: "dinar@permadi.dev"
+  response_time: "WAKTU RESPON RATA-RATA: 1–2 HARI KERJA // MAJALENGKA (WIB / GMT+7)"
+  socials_title: "PLATFORM DIGITAL"
+  socials:
+    - name: "GitHub"
+      handle: "narr07"
+      url: "https://github.com/narr07"
+    - name: "X / Twitter"
+      handle: "dinarpermadi07"
+      url: "https://x.com/dinarpermadi07"
+    - name: "Instagram"
+      handle: "narr07"
+      url: "https://www.instagram.com/narr07/"
+    - name: "Behance"
+      handle: "narr07"
+      url: "https://www.behance.net/narr07"
+  almamater_note: "LULUSAN UNIVERSITAS PENDIDIKAN INDONESIA (UPI) BANDUNG · PROVINSI JAWA BARAT"
+  typography_credits: "TIPOGRAFI: GT MECHANIK POLY & GT AMERICA (GRILLI TYPE)"
+  copyright: "© 2026 DINAR PERMADI YUSUP. ALL RIGHTS RESERVED."

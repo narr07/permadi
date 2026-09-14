@@ -43,76 +43,130 @@ const homeSchema = z.object({
 	headline: property(z.string().optional()).editor({ label: 'Headline Utama' }),
 	description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Singkat', description: 'Deskripsi intro beranda' }),
 
-	// Hero Card Utama (Kiri Atas)
+	// Hero Card Utama (Swiss Manifest & System Spec Rail)
 	hero: z.object({
-		status: property(z.string().optional()).editor({ label: 'Status Ketersediaan', tooltip: 'Contoh: Tersedia untuk Projek Baru' }),
-		kicker: property(z.string().optional()).editor({ label: 'Sub-judul Kicker' }),
+		section_number: property(z.string().optional()).editor({ label: 'Nomor Manifest', tooltip: 'Contoh: 01 // MANIFEST' }),
+		issue_number: property(z.string().optional()).editor({ label: 'Nomor Isu / Volume', tooltip: 'Contoh: N° 2026.01' }),
+		author_title: property(z.string().optional()).editor({ label: 'Gelar / Panggilan Penulis', tooltip: 'Contoh: PRAKTISI & PENDIDIK' }),
+		author_name: property(z.string().optional()).editor({ label: 'Nama Penulis', tooltip: 'Contoh: Dinar Permadi' }),
+		author_role: property(z.string().optional()).editor({ label: 'Peran / Profesi', tooltip: 'Contoh: Guru SD & Perajin Kode' }),
+		author_bio: property(z.string().optional()).editor({ input: 'textarea', label: 'Biografi Singkat Penulis' }),
+
+		// Spesifikasi Sistem (System Spec Rail)
+		specs: z.object({
+			spec_title: property(z.string().optional()).editor({ label: 'Judul Spesifikasi', tooltip: 'Contoh: SPESIFIKASI SISTEM' }),
+			status_label: property(z.string().optional()).editor({ label: 'Label Status' }),
+			status: property(z.string().optional()).editor({ label: 'Status Ketersediaan' }),
+			almamater_label: property(z.string().optional()).editor({ label: 'Label Almamater' }),
+			almamater: property(z.string().optional()).editor({ label: 'Almamater' }),
+			location_label: property(z.string().optional()).editor({ label: 'Label Lokasi' }),
+			location: property(z.string().optional()).editor({ label: 'Lokasi' }),
+			time_label: property(z.string().optional()).editor({ label: 'Label Waktu Lokal' }),
+			timezone: property(z.string().optional()).editor({ label: 'Zona Waktu' }),
+			coords_label: property(z.string().optional()).editor({ label: 'Label Koordinat' }),
+			coordinates: property(z.string().optional()).editor({ label: 'Koordinat Geografis' }),
+		}).optional(),
+
+		// Typographic Statement (Sisi Kanan)
+		kicker: property(z.string().optional()).editor({ label: 'Sub-judul Kicker', tooltip: 'Contoh: 01.A // PRINSIP & VISI REKAYASA' }),
 		headline: property(z.string().optional()).editor({ label: 'Headline Hero' }),
 		headline_italic: property(z.string().optional()).editor({ label: 'Kata Bercetak Miring' }),
 		headline_suffix: property(z.string().optional()).editor({ label: 'Akhiran Headline' }),
+		thesis: property(z.string().optional()).editor({ input: 'textarea', label: 'Tesis / Pernyataan Prinsip' }),
 		description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Hero Card' }),
-		location: property(z.string().optional()).editor({ label: 'Lokasi' }),
-		timezone: property(z.string().optional()).editor({ label: 'Zona Waktu' }),
 		links: z.array(createLinkSchema()).optional(),
 	}).optional(),
 
-	// Projek Terpilih (Kanan Atas)
+	// Projek Terpilih (02 // Kasus Studi)
 	project_section: z.object({
-		label: property(z.string().optional()).editor({ label: 'Label Bagian' }),
+		label: property(z.string().optional()).editor({ label: 'Label Bagian', tooltip: 'Contoh: 02 // STUDI KASUS & REKAYASA SISTEM' }),
+		count_badge: property(z.string().optional()).editor({ label: 'Badge Jumlah', tooltip: 'Contoh: ARSIP PILIHAN (03 KARYA)' }),
+		correlation_badge: property(z.string().optional()).editor({ label: 'Badge Korelasi', tooltip: 'Contoh: KORELASI: PENDIDIKAN × REKAYASA KODE' }),
 		fallback_title: property(z.string().optional()).editor({ label: 'Judul Cadangan' }),
 		fallback_description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Cadangan' }),
 		all_link_text: property(z.string().optional()).editor({ label: 'Teks Link Lihat Semua' }),
+		all_link_to: property(z.string().optional()).editor({ label: 'Tautan Tujuan Link Bawah', tooltip: 'Default: /projek' }),
 	}).optional(),
 
-	// Filosofi Bento (Kiri Tengah - Kartu Kuning)
+	// Filosofi Bento / Doktrin (03 // Doktrin & Filosofi)
 	philosophy: z.object({
-		number: property(z.string().optional()).editor({ label: 'Nomor Urut', tooltip: 'Contoh: 01' }),
+		section_label: property(z.string().optional()).editor({ label: 'Label Bagian', tooltip: 'Contoh: 03 // DOKTRIN & FILOSOFI' }),
+		number: property(z.string().optional()).editor({ label: 'Nomor Urut', tooltip: 'Contoh: PRINSIP 01' }),
 		quote: property(z.string().optional()).editor({ input: 'textarea', label: 'Kutipan / Filosofi' }),
 		quote_bold: property(z.string().optional()).editor({ label: 'Bagian Kutipan yang Tebal' }),
+		description: property(z.string().optional()).editor({ input: 'textarea', label: 'Penjelasan Pedagogi & Filosofi' }),
+		pedagogy_tag: property(z.string().optional()).editor({ label: 'Tag Pedagogi Kiri', tooltip: 'Contoh: PEDAGOGI × REKAYASA DIGITAL' }),
+		institution_tag: property(z.string().optional()).editor({ label: 'Tag Institusi Kanan', tooltip: 'Contoh: UPI BANDUNG' }),
 		label: property(z.string().optional()).editor({ label: 'Label Kartu' }),
 	}).optional(),
 
-	// Bagian Keahlian & Tech Stack Bento
+	// Bagian Keahlian & Tech Stack Bento (04 // Dual Toolkit Matrix)
 	skills_section: z.object({
-		code_kicker: property(z.string().optional()).editor({ label: 'Kicker Programming', tooltip: 'Contoh: Arsitektur Kode' }),
-		code_title: property(z.string().optional()).editor({ label: 'Judul Programming', description: 'Default: Programming' }),
+		matrix_label: property(z.string().optional()).editor({ label: 'Label Matrix', tooltip: 'Contoh: 04 // DUAL TOOLKIT MATRIX' }),
+		matrix_tag: property(z.string().optional()).editor({ label: 'Tag Matrix', tooltip: 'Contoh: DISIPLIN TEKNIS' }),
+		code_kicker: property(z.string().optional()).editor({ label: 'Kicker Programming', tooltip: 'Contoh: A // LOGIKA & SISTEM' }),
+		code_title: property(z.string().optional()).editor({ label: 'Judul Programming', description: 'Default: Software Engineering' }),
 		code_desc: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Programming' }),
-		code_tag: property(z.string().optional()).editor({ label: 'Tag Status Programming', tooltip: 'Contoh: Ekosistem Modern' }),
+		code_tag: property(z.string().optional()).editor({ label: 'Tag Status Programming' }),
 		code_items: z.array(z.object({
-			name: property(z.string()).editor({ label: 'Nama Teknologi', tooltip: 'Contoh: Nuxt & Vue 3, Flutter & Dart, Python' }),
+			name: property(z.string()).editor({ label: 'Nama Teknologi' }),
+			desc: property(z.string().optional()).editor({ label: 'Subjudul / Keterangan', tooltip: 'Contoh: SSR, Nitro Engine & UnoCSS' }),
 			icon: property(z.string().optional()).editor({
 				input: 'icon',
 				iconLibraries: ['ph', 'vscode-icons'],
 				label: 'Pilih Ikon (Iconify / Path)',
-				description: 'Pilih ikon dari Iconify (Phosphor Icons, VS Code Icons) atau ketik path file SVG lokal (misal: /icons/f-nuxt.svg)',
 			}),
 			role: property(z.string().optional()).editor({ hidden: true }),
-			desc: property(z.string().optional()).editor({ hidden: true }),
 		})).optional(),
-		design_kicker: property(z.string().optional()).editor({ label: 'Kicker Design', tooltip: 'Contoh: Eksplorasi Visual' }),
-		design_title: property(z.string().optional()).editor({ label: 'Judul Design', description: 'Default: Design' }),
+		design_kicker: property(z.string().optional()).editor({ label: 'Kicker Design', tooltip: 'Contoh: B // VISUAL & GRAFIS' }),
+		design_title: property(z.string().optional()).editor({ label: 'Judul Design', description: 'Default: Graphic & Editorial' }),
 		design_desc: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Design' }),
-		design_tag: property(z.string().optional()).editor({ label: 'Tag Status Design', tooltip: 'Contoh: Presisi & Harmoni' }),
+		design_tag: property(z.string().optional()).editor({ label: 'Tag Status Design' }),
 		design_items: z.array(z.object({
-			name: property(z.string()).editor({ label: 'Nama Software / Tool', tooltip: 'Contoh: Illustrator, Photoshop, Figma' }),
+			name: property(z.string()).editor({ label: 'Nama Tool' }),
+			desc: property(z.string().optional()).editor({ label: 'Subjudul / Keterangan', tooltip: 'Contoh: Identitas Vektor & Grid Geometris' }),
 			icon: property(z.string().optional()).editor({
 				input: 'icon',
 				iconLibraries: ['ph', 'vscode-icons'],
 				label: 'Pilih Ikon (Iconify / Path)',
-				description: 'Pilih ikon dari Iconify (Phosphor Icons, VS Code Icons) atau ketik path file SVG lokal (misal: /icons/d-illustrator.svg)',
 			}),
 			role: property(z.string().optional()).editor({ hidden: true }),
-			desc: property(z.string().optional()).editor({ hidden: true }),
 		})).optional(),
 		all_link_text: property(z.string().optional()).editor({ label: 'Teks Link Bawah', tooltip: 'Contoh: Eksplorasi Semua Karya & Studi Kasus' }),
 		all_link_to: property(z.string().optional()).editor({ label: 'Tautan Tujuan Link Bawah', tooltip: 'Default: /projek' }),
 	}).optional(),
 
-	// Tulisan & Catatan Terbaru (Paling Bawah / 12 Kolom Penuh)
+	// Tulisan & Catatan Terbaru (05 // Journal & Arsip)
 	writing: z.object({
-		label: property(z.string().optional()).editor({ label: 'Label Tulisan' }),
+		label: property(z.string().optional()).editor({ label: 'Label Tulisan', tooltip: 'Contoh: 05 // TULISAN & CATATAN TERBARU' }),
+		volume: property(z.string().optional()).editor({ label: 'Volume / Seri Jurnal', tooltip: 'Contoh: JOURNAL // VOL. 2026' }),
+		col_no: property(z.string().optional()).editor({ label: 'Label Kolom No', tooltip: 'Contoh: NO.' }),
+		col_title: property(z.string().optional()).editor({ label: 'Label Kolom Judul', tooltip: 'Contoh: JUDUL TULISAN & KAJIAN TEKNIS' }),
+		col_discipline: property(z.string().optional()).editor({ label: 'Label Kolom Disiplin', tooltip: 'Contoh: DISIPLIN' }),
+		col_date: property(z.string().optional()).editor({ label: 'Label Kolom Tanggal', tooltip: 'Contoh: TANGGAL' }),
+		footer_tag: property(z.string().optional()).editor({ label: 'Tag Footer Jurnal', tooltip: 'Contoh: PUBLIKASI: TEKNOLOGI & RUANG KELAS' }),
 		title: property(z.string().optional()).editor({ label: 'Judul Bagian Blog' }),
 		all_link_text: property(z.string().optional()).editor({ label: 'Teks Link Semua Artikel' }),
+		all_link_to: property(z.string().optional()).editor({ label: 'Tautan Tujuan Semua Artikel', tooltip: 'Default: /blog' }),
+	}).optional(),
+
+	// Colophon & Kontak Beranda (06 // Hubungi & Kolaborasi)
+	colophon: z.object({
+		section_number: property(z.string().optional()).editor({ label: 'Nomor Bagian', tooltip: 'Contoh: 06 // HUBUNGI & KOLABORASI' }),
+		status: property(z.string().optional()).editor({ label: 'Status Ketersediaan', tooltip: 'Contoh: TERSEDIA PROYEK' }),
+		headline: property(z.string().optional()).editor({ label: 'Headline Pertanyaan' }),
+		description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Kolaborasi' }),
+		email: property(z.string().optional()).editor({ label: 'Alamat Email' }),
+		response_time: property(z.string().optional()).editor({ label: 'Waktu Respon' }),
+		socials_title: property(z.string().optional()).editor({ label: 'Judul Media Sosial', tooltip: 'Contoh: PLATFORM DIGITAL' }),
+		socials: z.array(z.object({
+			name: property(z.string()).editor({ label: 'Nama Jejaring' }),
+			handle: property(z.string()).editor({ label: 'Handle / Username' }),
+			url: property(z.string()).editor({ label: 'Tautan URL' }),
+		})).optional(),
+		almamater_note: property(z.string().optional()).editor({ label: 'Catatan Almamater' }),
+		typography_credits: property(z.string().optional()).editor({ label: 'Kredit Tipografi' }),
+		copyright: property(z.string().optional()).editor({ label: 'Teks Hak Cipta' }),
 	}).optional(),
 })
 
@@ -156,6 +210,8 @@ const aboutSchema = z.object({
 		badge: property(z.string().optional()).editor({ label: 'Badge Ketersediaan' }),
 	}).optional(),
 
+	principles_label: property(z.string().optional()).editor({ label: 'Label Bagian Prinsip', tooltip: 'Contoh: Prinsip Utama' }),
+	principles_footer: property(z.string().optional()).editor({ label: 'Badge Footer Prinsip', tooltip: 'Contoh: Crafted with Intention' }),
 	principles: z.array(z.object({
 		title: property(z.string()).editor({ label: 'Judul Prinsip' }),
 		description: property(z.string()).editor({ input: 'textarea', label: 'Penjelasan Prinsip' }),
@@ -165,6 +221,20 @@ const aboutSchema = z.object({
 		label: property(z.string().optional()).editor({ label: 'Label Perjalanan' }),
 		title: property(z.string().optional()).editor({ label: 'Judul Perjalanan' }),
 		description: property(z.string().optional()).editor({ input: 'textarea', label: 'Deskripsi Perjalanan' }),
+		primary_link_text: property(z.string().optional()).editor({ label: 'Teks Tombol Utama' }),
+		primary_link_to: property(z.string().optional()).editor({ label: 'Tautan Tombol Utama' }),
+		secondary_link_text: property(z.string().optional()).editor({ label: 'Teks Tombol Sekunder' }),
+		secondary_link_to: property(z.string().optional()).editor({ label: 'Tautan Tombol Sekunder' }),
+	}).optional(),
+
+	person_meta: z.object({
+		name: property(z.string().optional()).editor({ label: 'Nama Lengkap' }),
+		alternateName: property(z.string().optional()).editor({ label: 'Nama Panggilan' }),
+		jobTitle: property(z.string().optional()).editor({ label: 'Profesi / Jabatan' }),
+		url: property(z.string().optional()).editor({ label: 'URL Profil' }),
+		image: property(z.string().optional()).editor({ label: 'URL Avatar / Gambar' }),
+		worksFor: property(z.string().optional()).editor({ label: 'Instansi / Perusahaan' }),
+		sameAs: property(z.array(z.string()).optional()).editor({ label: 'Tautan Media Sosial' }),
 	}).optional(),
 })
 

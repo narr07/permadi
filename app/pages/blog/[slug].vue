@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
 import { onClickOutside, useEventListener } from '@vueuse/core'
+import { onMounted, onUnmounted, ref } from 'vue'
 import AppReactionsBar from '~/components/reactions/AppReactionsBar.vue'
 
 const route = useRoute()
@@ -282,19 +282,19 @@ defineOgImage('Bento', {
 		<!-- Navigation Top Rail -->
 		<nav
 			aria-label="Breadcrumb navigasi"
-			class="w-full border-b border-slate-200/80 dark:border-[#134e43] bg-slate-50/60 dark:bg-[#002420]/40 px-6 sm:px-8 py-3.5 flex items-center justify-between font-mono text-xs"
+			class="w-full flex items-center justify-between border-b border-slate-200/80 bg-slate-50/60 px-6 py-3.5 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/40 sm:px-8"
 		>
 			<NuxtLink
 				:to="locale === 'id' ? '/id/blog' : '/blog'"
-				class="inline-flex items-center gap-2 text-slate-900 font-bold uppercase tracking-wider hover:text-brand-600 dark:text-slate-50 dark:hover:text-brand-400"
+				class="group inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
-				<span class="i-ph-arrow-left text-xs" />
+				<span class="i-ph-arrow-left text-xs transition-transform duration-150 group-hover:-translate-x-1" />
 				<span>{{ locale === 'id' ? 'KEMBALI KE ARSIP BLOG' : 'BACK TO BLOG ARCHIVE' }}</span>
 			</NuxtLink>
 
-			<div class="flex items-center gap-3 text-slate-900/40 dark:text-slate-50/40 uppercase">
+			<div class="flex items-center gap-3 text-slate-900/40 uppercase dark:text-slate-50/40">
 				<span class="hidden sm:inline">DOKUMEN TEKNIS</span>
-				<span class="font-bold text-brand-600 dark:text-brand-400">[{{ (post.doc.category || 'UMUM').toUpperCase() }}]</span>
+				<span class="text-brand-600 font-bold dark:text-brand-400">[{{ (post.doc.category || 'UMUM').toUpperCase() }}]</span>
 			</div>
 		</nav>
 
@@ -302,53 +302,53 @@ defineOgImage('Bento', {
 		<header class="w-full border-b border-slate-200/80 dark:border-[#134e43]">
 			<div class="grid grid-cols-1 lg:grid-cols-12">
 				<!-- Parameter Spec Sheet & TOC rail (Cols 1 to 4) -->
-				<div class="lg:col-span-4 p-6 sm:p-8 lg:p-10 lg:border-r border-b lg:border-b-0 border-slate-200/80 dark:border-[#134e43] bg-slate-50/50 dark:bg-[#002420]/40 flex flex-col justify-between">
+				<div class="flex flex-col justify-between border-b border-slate-200/80 bg-slate-50/50 p-6 lg:col-span-4 lg:border-b-0 lg:border-r dark:border-[#134e43] dark:bg-[#002420]/40 lg:p-10 sm:p-8">
 					<div>
-						<div class="mb-4 font-mono text-[11px] font-bold tracking-[0.2em] uppercase text-brand-700 dark:text-accent">
+						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
 							PARAMETER NASKAH
 						</div>
 
-						<div class="divide-y divide-slate-200/80 dark:divide-[#134e43] font-mono text-xs mb-8">
+						<div class="mb-8 text-xs font-mono divide-y divide-slate-200/80 dark:divide-[#134e43]">
 							<div class="flex items-baseline justify-between py-2.5">
 								<span class="text-slate-900/60 dark:text-slate-50/60">TANGGAL RILIS</span>
-								<span class="text-slate-900 dark:text-slate-50 tabular-nums font-semibold">{{ formatDate(post.doc.date) }}</span>
+								<span class="text-slate-900 font-semibold tabular-nums dark:text-slate-50">{{ formatDate(post.doc.date) }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
 								<span class="text-slate-900/60 dark:text-slate-50/60">WAKTU BACA</span>
-								<span class="text-slate-900 dark:text-slate-50 tabular-nums">{{ post.doc.readingTime || 5 }} Menit</span>
+								<span class="text-slate-900 tabular-nums dark:text-slate-50">{{ post.doc.readingTime || 5 }} Menit</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
 								<span class="text-slate-900/60 dark:text-slate-50/60">KATEGORI</span>
-								<span class="text-brand-600 dark:text-brand-400 font-bold uppercase">{{ getCategoryLabel(post.doc.category) }}</span>
+								<span class="text-brand-600 font-bold uppercase dark:text-brand-400">{{ getCategoryLabel(post.doc.category) }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
 								<span class="text-slate-900/60 dark:text-slate-50/60">PENULIS</span>
-								<span class="text-slate-900 dark:text-slate-50 font-medium">Dinar Permadi Yusup</span>
+								<span class="text-slate-900 font-medium dark:text-slate-50">Dinar Permadi Yusup</span>
 							</div>
 						</div>
 					</div>
 
-					<div class="mt-8 pt-6 border-t border-slate-200/80 dark:border-[#134e43] font-mono text-xs text-slate-900/50 dark:text-slate-50/50 flex items-center justify-between">
+					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-900/50 font-mono dark:border-[#134e43] dark:text-slate-50/50">
 						<span>LISENSI KONTEN</span>
 						<span>CC BY-NC-SA 4.0</span>
 					</div>
 				</div>
 
 				<!-- Typographic Statement Field (Cols 5 to 12) -->
-				<div class="lg:col-span-8 p-6 sm:p-10 lg:p-12 flex flex-col justify-between">
+				<div class="flex flex-col justify-between p-6 lg:col-span-8 lg:p-12 sm:p-10">
 					<div>
-						<div class="mb-4 font-mono text-[11px] font-bold tracking-[0.2em] uppercase text-brand-700 dark:text-accent">
+						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
 							WACANA TEKNIS &amp; PEDAGOGIS
 						</div>
 
-						<h1 class="font-heading font-700 text-3xl sm:text-5xl lg:text-6xl tracking-[-0.035em] text-slate-900 dark:text-slate-50 leading-[0.95] text-balance mb-6">
+						<h1 class="mb-6 text-balance text-3xl text-slate-900 font-700 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
 							{{ post.doc.title }}
 						</h1>
 
-						<p class="font-sans text-base sm:text-lg text-slate-900/80 dark:text-slate-50/80 leading-relaxed max-w-[58ch] mb-8">
+						<p class="mb-8 max-w-[58ch] text-base text-slate-900/80 leading-relaxed font-sans sm:text-lg dark:text-slate-50/80">
 							{{ post.doc.description }}
 						</p>
 
@@ -357,14 +357,14 @@ defineOgImage('Bento', {
 							<span
 								v-for="tag in (post.doc.tags || [])"
 								:key="tag"
-								class="px-2.5 py-1 font-mono text-xs uppercase border border-slate-300 dark:border-[#134e43] text-slate-900/80 dark:text-slate-50/80"
+								class="border border-slate-300 px-2.5 py-1 text-xs text-slate-900/80 font-mono uppercase dark:border-[#134e43] dark:text-slate-50/80"
 							>
 								#{{ tag }}
 							</span>
 						</div>
 					</div>
 
-					<div class="mt-8 pt-6 border-t border-slate-200/80 dark:border-[#134e43] font-mono text-xs text-slate-900/50 dark:text-slate-50/50 flex items-center justify-between">
+					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-900/50 font-mono dark:border-[#134e43] dark:text-slate-50/50">
 						<span>ARSIP PERMADI.DEV</span>
 					</div>
 				</div>
@@ -375,34 +375,37 @@ defineOgImage('Bento', {
 		<div
 			v-if="tocLinks.length > 0"
 			ref="tocDropdownRef"
-			class="sticky top-14 z-30 w-full border-b border-slate-200/80 dark:border-[#134e43] bg-white/95 dark:bg-[#001e1c]/95 backdrop-blur-xs font-mono text-xs"
+			class="backdrop-blur-xs sticky top-14 z-30 w-full border-b border-slate-200/80 bg-white/95 text-xs font-mono dark:border-[#134e43] dark:bg-[#001e1c]/95"
 			aria-label="Status Membaca dan Daftar Isi"
 		>
 			<!-- Top Strip Bar -->
-			<div class="px-4 sm:px-8 py-2.5 flex items-center justify-between gap-4">
+			<div class="flex items-center justify-between gap-4 px-4 py-2.5 sm:px-8">
 				<!-- Current Section Indicator -->
 				<div class="flex items-center gap-2 truncate text-[11px]">
-					<span class="w-1.5 h-1.5 bg-brand-500 inline-block shrink-0" />
-					<span class="text-slate-900/50 dark:text-slate-50/50 shrink-0 font-bold uppercase tracking-wider">
+					<span class="inline-block h-1.5 w-1.5 shrink-0 bg-brand-500" />
+					<span class="shrink-0 text-slate-900/50 font-bold tracking-wider uppercase dark:text-slate-50/50">
 						SEKSI [{{ String(activeHeadingIndex + 1).padStart(2, '0') }}/{{ String(tocLinks.length).padStart(2, '0') }}]:
 					</span>
-					<span class="text-slate-900 dark:text-slate-50 font-bold truncate">
+					<span class="truncate text-slate-900 font-bold dark:text-slate-50">
 						{{ currentActiveHeadingText }}
 					</span>
 				</div>
 
 				<!-- Navigation Actions -->
-				<div class="flex items-center gap-2.5 shrink-0 text-[11px] font-bold uppercase tracking-wider">
+				<div class="flex shrink-0 items-center gap-2.5 text-[11px] font-bold tracking-wider uppercase">
 					<!-- Dropdown Trigger Button -->
 					<button
 						type="button"
-						class="px-2.5 py-1 border border-slate-300 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent transition-colors flex items-center gap-1.5 cursor-pointer"
+						class="flex cursor-pointer items-center gap-1.5 border border-slate-300 px-2.5 py-1 transition-all duration-150 active:scale-95 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent"
 						:class="isTocDropdownOpen ? 'bg-slate-900 text-white dark:bg-brand-500 dark:text-slate-950 border-transparent' : 'text-slate-800 dark:text-slate-200'"
 						:aria-expanded="isTocDropdownOpen"
 						@click="toggleTocDropdown"
 					>
 						<span>DAFTAR ISI ({{ String(tocLinks.length).padStart(2, '0') }})</span>
-						<span :class="isTocDropdownOpen ? 'i-ph-caret-up' : 'i-ph-caret-down'" class="text-xs" />
+						<span
+							:class="isTocDropdownOpen ? 'rotate-180' : 'rotate-0'"
+							class="i-ph-caret-down text-xs transition-transform duration-200"
+						/>
 					</button>
 
 					<span class="text-slate-300 dark:text-[#134e43]">|</span>
@@ -410,7 +413,7 @@ defineOgImage('Bento', {
 					<!-- Top of Page Action -->
 					<button
 						type="button"
-						class="text-slate-900/60 hover:text-brand-600 dark:text-slate-50/60 dark:hover:text-accent transition-colors cursor-pointer"
+						class="cursor-pointer text-slate-900/60 transition-all duration-150 active:scale-95 dark:text-slate-50/60 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-accent"
 						@click="scrollToTop"
 					>
 						PUNCAK ↑
@@ -421,17 +424,17 @@ defineOgImage('Bento', {
 			<!-- Dropdown Architectural Modular Index Panel -->
 			<div
 				v-if="isTocDropdownOpen"
-				class="w-full border-t border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#001e1c] shadow-2xl overflow-hidden font-mono text-xs"
+				class="w-full overflow-hidden border-t border-slate-200/80 bg-white text-xs font-mono shadow-2xl dark:border-[#134e43] dark:bg-[#001e1c]"
 			>
 				<!-- Dropdown Panel Header -->
-				<div class="px-6 py-2.5 border-b border-slate-200/80 dark:border-[#134e43] bg-slate-50/80 dark:bg-[#002420]/60 flex items-center justify-between text-[11px] font-bold uppercase tracking-wider">
+				<div class="flex items-center justify-between border-b border-slate-200/80 bg-slate-50/80 px-6 py-2.5 text-[11px] font-bold tracking-wider uppercase dark:border-[#134e43] dark:bg-[#002420]/60">
 					<div class="flex items-center gap-2 text-brand-700 dark:text-accent">
-						<span class="w-1.5 h-1.5 bg-brand-500 inline-block" />
+						<span class="inline-block h-1.5 w-1.5 bg-brand-500" />
 						<span>INDIKATOR STRUKTUR ARTIKEL // {{ String(tocLinks.length).padStart(2, '0') }} SEKSI</span>
 					</div>
 					<button
 						type="button"
-						class="text-slate-900/50 hover:text-slate-900 dark:text-slate-50/50 dark:hover:text-slate-50 text-[10px] cursor-pointer"
+						class="cursor-pointer text-[10px] text-slate-900/50 dark:text-slate-50/50 hover:text-slate-900 dark:hover:text-slate-50"
 						@click="isTocDropdownOpen = false"
 					>
 						TUTUP [ESC] ✕
@@ -439,35 +442,35 @@ defineOgImage('Bento', {
 				</div>
 
 				<!-- 3-Column Scrollable Modular Ledger Grid -->
-				<div class="max-h-[55vh] overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200/80 dark:divide-[#134e43]">
+				<div class="grid grid-cols-1 max-h-[55vh] overflow-y-auto lg:grid-cols-3 md:grid-cols-2 divide-y divide-slate-200/80 md:divide-x md:divide-y-0 dark:divide-[#134e43]">
 					<a
 						v-for="(link, idx) in tocLinks"
 						:key="link.id"
 						:href="`#${link.id}`"
-						class="group p-3.5 sm:p-4 flex items-start gap-3 transition-colors cursor-pointer border-b md:border-b-0 border-slate-200/80 dark:border-[#134e43]"
+						class="group flex cursor-pointer items-start gap-3 border-b border-slate-200/80 p-3.5 transition-colors md:border-b-0 dark:border-[#134e43] sm:p-4"
 						:class="link.id === activeSection ? 'bg-brand-500/10 dark:bg-[#002420] text-brand-700 dark:text-accent font-bold' : 'hover:bg-slate-50 dark:hover:bg-[#002420]/40 text-slate-900/80 dark:text-slate-50/80'"
 						@click.prevent="selectHeading(link.id)"
 					>
 						<span
-							class="shrink-0 font-mono text-xs tabular-nums"
+							class="shrink-0 text-xs font-mono tabular-nums"
 							:class="link.id === activeSection ? 'text-brand-600 dark:text-accent font-bold' : 'text-slate-400 dark:text-slate-500 group-hover:text-brand-600'"
 						>
 							{{ String(idx + 1).padStart(2, '0') }}.
 						</span>
-						<div class="flex-1 min-w-0">
-							<span class="font-mono text-xs leading-snug line-clamp-2">
+						<div class="min-w-0 flex-1">
+							<span class="line-clamp-2 text-xs leading-snug font-mono">
 								{{ link.text }}
 							</span>
 						</div>
 						<span
 							v-if="link.id === activeSection"
-							class="shrink-0 text-[10px] text-brand-600 dark:text-accent font-bold uppercase"
+							class="shrink-0 text-[10px] text-brand-600 font-bold uppercase dark:text-accent"
 						>
 							AKTIF
 						</span>
 						<span
 							v-else
-							class="shrink-0 text-[10px] text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity"
+							class="shrink-0 text-[10px] text-slate-400 opacity-0 transition-opacity group-hover:opacity-100"
 						>
 							→
 						</span>
@@ -475,7 +478,7 @@ defineOgImage('Bento', {
 				</div>
 
 				<!-- Dropdown Panel Footer Strip -->
-				<div class="px-6 py-2 border-t border-slate-200/80 dark:border-[#134e43] bg-slate-50/50 dark:bg-[#002420]/30 flex items-center justify-between text-[10px] text-slate-900/40 dark:text-slate-50/40">
+				<div class="flex items-center justify-between border-t border-slate-200/80 bg-slate-50/50 px-6 py-2 text-[10px] text-slate-900/40 dark:border-[#134e43] dark:bg-[#002420]/30 dark:text-slate-50/40">
 					<span>ARSIP DOKUMENTASI PERMADI.DEV</span>
 					<span>KLIK SEKSI UNTUK BERPINDAH LANGSUNG</span>
 				</div>
@@ -483,21 +486,21 @@ defineOgImage('Bento', {
 		</div>
 
 		<!-- Band 02: Primary Technical Reading Canvas (Full-Width, Spacious & Monumental) -->
-		<main class="w-full border-b border-slate-200/80 dark:border-[#134e43] p-6 sm:p-10 lg:p-14">
-			<div class="max-w-4xl mx-auto">
+		<main class="w-full border-b border-slate-200/80 p-6 dark:border-[#134e43] lg:p-14 sm:p-10">
+			<div class="mx-auto max-w-4xl">
 				<!-- Section Sub-Header -->
-				<div class="font-mono text-[11px] font-bold tracking-[0.2em] uppercase text-brand-700 dark:text-accent mb-8 pb-3 border-b border-slate-200/80 dark:border-[#134e43] flex items-center justify-between">
+				<div class="mb-8 flex items-center justify-between border-b border-slate-200/80 pb-3 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:border-[#134e43] dark:text-accent">
 					<span>■ 02 // DOKUMENTASI LENGKAP &amp; BEDAH TEKNIS</span>
-					<span class="tabular-nums text-slate-900/40 dark:text-slate-50/40">KORPUS 01</span>
+					<span class="text-slate-900/40 tabular-nums dark:text-slate-50/40">KORPUS 01</span>
 				</div>
 
 				<!-- Expansive Full-Measure Prose Content -->
-				<div class="prose prose-slate dark:prose-invert max-w-[76ch] font-sans text-slate-900/85 dark:text-slate-50/85 leading-relaxed">
+				<div class="max-w-[76ch] text-slate-900/85 leading-relaxed font-sans prose prose-slate dark:text-slate-50/85 dark:prose-invert">
 					<ContentRenderer :value="post.doc" />
 				</div>
 
 				<!-- Reactions Bar Component -->
-				<div class="mt-14 pt-8 border-t border-slate-200/80 dark:border-[#134e43]">
+				<div class="mt-14 border-t border-slate-200/80 pt-8 dark:border-[#134e43]">
 					<AppReactionsBar
 						v-if="post?.doc"
 						:slug="contentIdentifier"
@@ -510,49 +513,55 @@ defineOgImage('Bento', {
 		<!-- Surround Articles Navigation (Previous / Next) -->
 		<nav
 			v-if="surround && (surround[0] || surround[1])"
-			class="w-full border-b border-slate-200/80 dark:border-[#134e43] grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-slate-200/80 dark:divide-[#134e43]"
+			class="grid grid-cols-1 w-full border-b border-slate-200/80 sm:grid-cols-2 divide-y divide-slate-200/80 dark:border-[#134e43] sm:divide-x sm:divide-y-0 dark:divide-[#134e43]"
 			aria-label="Navigasi Naskah Sebelumnya dan Berikutnya"
 		>
 			<!-- Previous Article -->
-			<div class="p-6 sm:p-8 flex flex-col justify-between group hover:bg-slate-50/80 dark:hover:bg-[#002420]/40 transition-colors">
+			<div class="group flex flex-col justify-between p-6 transition-colors hover:bg-slate-50/80 sm:p-8 dark:hover:bg-[#002420]/40">
 				<div v-if="surround[0]">
-					<span class="font-mono text-[11px] font-bold uppercase tracking-widest text-slate-900/50 dark:text-slate-50/50 block mb-2">
+					<span class="mb-2 block text-[11px] text-slate-900/50 font-bold tracking-widest font-mono uppercase dark:text-slate-50/50">
 						← NASKAH SEBELUMNYA
 					</span>
-					<h3 class="font-heading font-700 text-lg text-slate-900 dark:text-slate-50 leading-snug group-hover:text-brand-600 transition-colors">
+					<h3 class="text-lg text-slate-900 font-700 leading-snug font-heading transition-colors dark:text-slate-50 group-hover:text-brand-600">
 						<NuxtLink :to="locale === 'id' ? `/id/blog/${surround[0].slug || cleanSlug(surround[0].path)}` : `/blog/${surround[0].slug || cleanSlug(surround[0].path)}`">
 							{{ surround[0].title }}
 						</NuxtLink>
 					</h3>
 				</div>
-				<div v-else class="text-slate-900/30 dark:text-slate-50/30 font-mono text-xs uppercase">
+				<div
+					v-else
+					class="text-xs text-slate-900/30 font-mono uppercase dark:text-slate-50/30"
+				>
 					AWAL ARSIP PUBLIKASI
 				</div>
 			</div>
 
 			<!-- Next Article -->
-			<div class="p-6 sm:p-8 flex flex-col justify-between text-right group hover:bg-slate-50/80 dark:hover:bg-[#002420]/40 transition-colors">
+			<div class="group flex flex-col justify-between p-6 text-right transition-colors hover:bg-slate-50/80 sm:p-8 dark:hover:bg-[#002420]/40">
 				<div v-if="surround[1]">
-					<span class="font-mono text-[11px] font-bold uppercase tracking-widest text-slate-900/50 dark:text-slate-50/50 block mb-2">
+					<span class="mb-2 block text-[11px] text-slate-900/50 font-bold tracking-widest font-mono uppercase dark:text-slate-50/50">
 						NASKAH BERIKUTNYA →
 					</span>
-					<h3 class="font-heading font-700 text-lg text-slate-900 dark:text-slate-50 leading-snug group-hover:text-brand-600 transition-colors">
+					<h3 class="text-lg text-slate-900 font-700 leading-snug font-heading transition-colors dark:text-slate-50 group-hover:text-brand-600">
 						<NuxtLink :to="locale === 'id' ? `/id/blog/${surround[1].slug || cleanSlug(surround[1].path)}` : `/blog/${surround[1].slug || cleanSlug(surround[1].path)}`">
 							{{ surround[1].title }}
 						</NuxtLink>
 					</h3>
 				</div>
-				<div v-else class="text-slate-900/30 dark:text-slate-50/30 font-mono text-xs uppercase">
+				<div
+					v-else
+					class="text-xs text-slate-900/30 font-mono uppercase dark:text-slate-50/30"
+				>
 					AKHIR ARSIP PUBLIKASI
 				</div>
 			</div>
 		</nav>
 
 		<!-- Bottom Archival Colophon Strip -->
-		<footer class="w-full bg-slate-50/80 dark:bg-[#002420]/60 px-6 py-6 sm:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 font-mono text-xs">
+		<footer class="w-full flex flex-col items-start justify-between gap-4 bg-slate-50/80 px-6 py-6 text-xs font-mono sm:flex-row sm:items-center dark:bg-[#002420]/60 sm:px-8">
 			<NuxtLink
 				:to="locale === 'id' ? '/id/blog' : '/blog'"
-				class="inline-flex items-center gap-2 text-slate-900 font-bold uppercase tracking-wider hover:text-brand-600 dark:text-slate-50 dark:hover:text-brand-400"
+				class="inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
 				<span class="i-ph-arrow-left text-xs" />
 				<span>KEMBALI KE SELURUH NASKAH</span>

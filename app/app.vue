@@ -94,11 +94,11 @@ defineOgImage('Bento', {
 </script>
 
 <template>
-	<div class="relative mx-auto max-w-6xl min-h-screen w-full flex flex-col justify-between selection:(bg-brand-500 text-white) border-x border-slate-200/80 bg-white dark:border-[#134e43] dark:bg-[#001e1c]">
+	<div class="relative mx-auto max-w-6xl min-h-screen w-full flex flex-col justify-between border-x border-slate-200/80 bg-white dark:border-[#134e43] dark:bg-[#001e1c] selection:(bg-brand-500 text-white)">
 		<!-- Skip to Main Content for A11y / Keyboard Focus Management -->
 		<a
 			href="#main"
-			class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-none focus:bg-brand-500 focus:px-4 focus:py-2 focus:text-slate-950 focus:font-mono focus:font-bold focus:shadow-lg focus:outline-none"
+			class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-none focus:bg-brand-500 focus:px-4 focus:py-2 focus:text-slate-950 focus:font-bold focus:font-mono focus:shadow-lg focus:outline-none"
 		>
 			{{ locale === 'id' ? 'Lewati ke konten utama' : 'Skip to main content' }}
 		</a>

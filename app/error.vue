@@ -96,7 +96,7 @@ useSeoMeta({
 
 		<!-- Main Error Content -->
 		<main class="relative z-10 my-auto py-10">
-			<div class="max-w-4xl mx-auto px-4 sm:px-6">
+			<div class="mx-auto max-w-4xl px-4 sm:px-6">
 				<!-- 1. Hero Card -->
 				<div class="relative border border-slate-200/90 bg-white/95 p-6 shadow-lg backdrop-blur-2xl dark:border-[#134e43] dark:bg-[#002b27]/95 md:p-12 sm:p-8">
 					<div class="relative z-10 flex flex-col items-center text-center">
@@ -120,7 +120,7 @@ useSeoMeta({
 						</p>
 
 						<!-- Primary CTA Buttons -->
-						<div class="mt-8 flex flex-wrap items-center justify-center gap-3 font-mono text-xs uppercase font-bold">
+						<div class="mt-8 flex flex-wrap items-center justify-center gap-3 text-xs font-bold font-mono uppercase">
 							<button
 								type="button"
 								class="inline-flex cursor-pointer items-center gap-2 border border-brand-500 bg-brand-600 px-5 py-2.5 text-white shadow-md transition-colors active:scale-95 dark:bg-brand-500 hover:bg-brand-700 dark:hover:bg-brand-600"
@@ -147,7 +147,7 @@ useSeoMeta({
 					<!-- Card 1: Blog -->
 					<button
 						type="button"
-						class="group flex cursor-pointer items-center gap-3.5 border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] hover:border-brand-500 p-4 text-left transition-colors"
+						class="group flex cursor-pointer items-center gap-3.5 border border-slate-200/80 bg-white p-4 text-left transition-colors dark:border-[#134e43] hover:border-brand-500 dark:bg-[#002b27]"
 						@click="handleClearError('/blog')"
 					>
 						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-brand-500/25 bg-brand-500/10 text-brand-600 dark:border-brand-400/20 dark:bg-brand-500/15 dark:text-brand-400">
@@ -157,7 +157,7 @@ useSeoMeta({
 							<strong class="block truncate text-sm text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
 								{{ locale === 'id' ? 'Artikel Blog' : 'Blog Articles' }}
 							</strong>
-							<span class="block truncate text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+							<span class="block truncate text-[11px] text-slate-500 font-mono dark:text-slate-400">
 								{{ locale === 'id' ? 'Tutorial & Wawasan' : 'Tutorials & Insights' }}
 							</span>
 						</div>
@@ -166,7 +166,7 @@ useSeoMeta({
 					<!-- Card 2: Projek -->
 					<button
 						type="button"
-						class="group flex cursor-pointer items-center gap-3.5 border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] hover:border-brand-500 p-4 text-left transition-colors"
+						class="group flex cursor-pointer items-center gap-3.5 border border-slate-200/80 bg-white p-4 text-left transition-colors dark:border-[#134e43] hover:border-brand-500 dark:bg-[#002b27]"
 						@click="handleClearError(locale === 'id' ? '/id/projek' : '/projects')"
 					>
 						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-teal-500/25 bg-teal-500/10 text-teal-600 dark:border-teal-400/20 dark:bg-teal-500/15 dark:text-teal-400">
@@ -176,7 +176,7 @@ useSeoMeta({
 							<strong class="block truncate text-sm text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
 								{{ locale === 'id' ? 'Portofolio Projek' : 'Project Showcase' }}
 							</strong>
-							<span class="block truncate text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+							<span class="block truncate text-[11px] text-slate-500 font-mono dark:text-slate-400">
 								{{ locale === 'id' ? 'Karya & Eksperimen' : 'Works & Experiments' }}
 							</span>
 						</div>
@@ -185,7 +185,7 @@ useSeoMeta({
 					<!-- Card 3: Tentang -->
 					<button
 						type="button"
-						class="group flex cursor-pointer items-center gap-3.5 border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] hover:border-brand-500 p-4 text-left transition-colors"
+						class="group flex cursor-pointer items-center gap-3.5 border border-slate-200/80 bg-white p-4 text-left transition-colors dark:border-[#134e43] hover:border-brand-500 dark:bg-[#002b27]"
 						@click="handleClearError(locale === 'id' ? '/id/tentang' : '/about')"
 					>
 						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-emerald-500/25 bg-emerald-500/10 text-emerald-600 dark:border-emerald-400/20 dark:bg-emerald-500/15 dark:text-emerald-400">
@@ -195,7 +195,7 @@ useSeoMeta({
 							<strong class="block truncate text-sm text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
 								{{ locale === 'id' ? 'Tentang Saya' : 'About Me' }}
 							</strong>
-							<span class="block truncate text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+							<span class="block truncate text-[11px] text-slate-500 font-mono dark:text-slate-400">
 								{{ locale === 'id' ? 'Profil & Pengalaman' : 'Profile & Journey' }}
 							</span>
 						</div>
@@ -204,7 +204,7 @@ useSeoMeta({
 					<!-- Card 4: Kontak -->
 					<button
 						type="button"
-						class="group flex cursor-pointer items-center gap-3.5 border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] hover:border-brand-500 p-4 text-left transition-colors"
+						class="group flex cursor-pointer items-center gap-3.5 border border-slate-200/80 bg-white p-4 text-left transition-colors dark:border-[#134e43] hover:border-brand-500 dark:bg-[#002b27]"
 						@click="handleClearError(locale === 'id' ? '/id/kontak' : '/contact')"
 					>
 						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-brand-500/25 bg-brand-500/10 text-brand-600 dark:border-brand-400/20 dark:bg-brand-500/15 dark:text-brand-400">
@@ -214,7 +214,7 @@ useSeoMeta({
 							<strong class="block truncate text-sm text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
 								{{ locale === 'id' ? 'Kontak' : 'Contact' }}
 							</strong>
-							<span class="block truncate text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+							<span class="block truncate text-[11px] text-slate-500 font-mono dark:text-slate-400">
 								{{ locale === 'id' ? 'Kirim Pesan' : 'Get in Touch' }}
 							</span>
 						</div>
@@ -225,7 +225,7 @@ useSeoMeta({
 
 		<!-- Footer -->
 		<footer class="relative z-10 border-t border-slate-200/80 py-6 dark:border-[#134e43]">
-			<div class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col items-center justify-between gap-3 text-center text-xs text-slate-600 sm:flex-row sm:text-left dark:text-slate-400 font-mono">
+			<div class="mx-auto max-w-4xl flex flex-col items-center justify-between gap-3 px-4 text-center text-xs text-slate-600 font-mono sm:flex-row sm:px-6 sm:text-left dark:text-slate-400">
 				<p>
 					permadi.dev <span class="text-slate-500">© {{ new Date().getFullYear() }}</span>
 				</p>

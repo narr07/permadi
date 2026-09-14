@@ -153,38 +153,41 @@ onUnmounted(() => {
 <template>
 	<nav
 		v-if="links && links.length > 0"
-		class="w-full font-mono text-xs"
+		class="w-full text-xs font-mono"
 		:aria-label="locale === 'id' ? 'Daftar Isi Artikel' : 'Table of Contents'"
 	>
 		<!-- 1. Mobile Swiss Sticky Accordion Bar -->
 		<div
 			v-if="mode === 'mobile' || mode === 'all'"
 			ref="mobileContainerRef"
-			class="w-full border-b border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#001e1c]"
+			class="w-full border-b border-slate-200/80 bg-white dark:border-[#134e43] dark:bg-[#001e1c]"
 			:class="mode === 'all' ? 'lg:hidden' : ''"
 		>
 			<button
 				type="button"
-				class="w-full px-4 py-3 flex items-center justify-between gap-3 text-left transition-colors hover:bg-slate-50 dark:hover:bg-[#002420]/50 cursor-pointer"
+				class="w-full flex cursor-pointer items-center justify-between gap-3 px-4 py-3 text-left transition-colors hover:bg-slate-50 dark:hover:bg-[#002420]/50"
 				:aria-expanded="mobileOpen"
 				@click="mobileOpen = !mobileOpen"
 			>
-				<div class="flex items-center gap-2 font-bold tracking-wider uppercase text-[11px]">
-					<span class="w-1.5 h-1.5 bg-brand-500 inline-block" />
+				<div class="flex items-center gap-2 text-[11px] font-bold tracking-wider uppercase">
+					<span class="inline-block h-1.5 w-1.5 bg-brand-500" />
 					<span class="text-slate-900 dark:text-slate-50">{{ displayTitle }}</span>
-					<span class="text-slate-900/40 dark:text-slate-50/40 tabular-nums">
+					<span class="text-slate-900/40 tabular-nums dark:text-slate-50/40">
 						[{{ String(activeIndex + 1).padStart(2, '0') }}/{{ String(flatList.length).padStart(2, '0') }}]
 					</span>
 				</div>
 
-				<div class="flex items-center gap-1.5 text-slate-900/60 dark:text-slate-50/60 text-xs">
+				<div class="flex items-center gap-1.5 text-xs text-slate-900/60 dark:text-slate-50/60">
 					<span>{{ mobileOpen ? 'TUTUP' : 'LIHAT' }}</span>
-					<span :class="mobileOpen ? 'i-ph-caret-up' : 'i-ph-caret-down'" class="text-sm" />
+					<span
+						:class="mobileOpen ? 'i-ph-caret-up' : 'i-ph-caret-down'"
+						class="text-sm"
+					/>
 				</div>
 			</button>
 
 			<!-- Mobile Reading Progress Line -->
-			<div class="w-full h-[2px] bg-slate-200/60 dark:bg-[#134e43]/60">
+			<div class="h-[2px] w-full bg-slate-200/60 dark:bg-[#134e43]/60">
 				<div
 					class="h-full bg-brand-500 transition-all duration-200"
 					:style="{ width: `${progressPercentage}%` }"
@@ -194,7 +197,7 @@ onUnmounted(() => {
 			<!-- Mobile Expandable Index List -->
 			<div
 				v-if="mobileOpen"
-				class="border-t border-slate-200/80 dark:border-[#134e43] max-h-72 overflow-y-auto divide-y divide-slate-200/60 dark:divide-[#134e43]/60 bg-slate-50/50 dark:bg-[#002420]/30"
+				class="max-h-72 overflow-y-auto border-t border-slate-200/80 bg-slate-50/50 divide-y divide-slate-200/60 dark:border-[#134e43] dark:bg-[#002420]/30 dark:divide-[#134e43]/60"
 			>
 				<a
 					v-for="(item, idx) in flatList"
@@ -210,7 +213,7 @@ onUnmounted(() => {
 					@click.prevent="scrollToHeading(item.link.id)"
 				>
 					<span class="truncate">{{ item.link.text }}</span>
-					<span class="shrink-0 tabular-nums text-[10px] text-slate-900/40 dark:text-slate-50/40">
+					<span class="shrink-0 text-[10px] text-slate-900/40 tabular-nums dark:text-slate-50/40">
 						{{ String(idx + 1).padStart(2, '0') }}
 					</span>
 				</a>
@@ -223,16 +226,16 @@ onUnmounted(() => {
 			class="w-full"
 			:class="mode === 'all' ? 'hidden lg:block' : ''"
 		>
-			<div class="border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#001e1c]">
+			<div class="border border-slate-200/80 bg-white dark:border-[#134e43] dark:bg-[#001e1c]">
 				<!-- Masthead / Header of TOC -->
-				<div class="p-4 border-b border-slate-200/80 dark:border-[#134e43] bg-slate-50/60 dark:bg-[#002420]/40 flex items-center justify-between">
-					<div class="flex items-center gap-2 font-bold tracking-widest text-[11px] uppercase text-brand-700 dark:text-accent">
-						<span class="w-2 h-2 bg-brand-500 inline-block" />
+				<div class="flex items-center justify-between border-b border-slate-200/80 bg-slate-50/60 p-4 dark:border-[#134e43] dark:bg-[#002420]/40">
+					<div class="flex items-center gap-2 text-[11px] text-brand-700 font-bold tracking-widest uppercase dark:text-accent">
+						<span class="inline-block h-2 w-2 bg-brand-500" />
 						<span>{{ displayTitle }}</span>
 					</div>
 
 					<div class="flex items-center gap-2">
-						<span class="text-slate-900/50 dark:text-slate-50/50 tabular-nums text-[10px] font-bold">
+						<span class="text-[10px] text-slate-900/50 font-bold tabular-nums dark:text-slate-50/50">
 							{{ String(activeIndex + 1).padStart(2, '0') }} / {{ String(flatList.length).padStart(2, '0') }}
 						</span>
 
@@ -240,7 +243,7 @@ onUnmounted(() => {
 						<button
 							v-if="showPin"
 							type="button"
-							class="text-slate-900/60 hover:text-brand-600 dark:text-slate-50/60 dark:hover:text-accent text-[10px] font-mono font-bold uppercase transition-colors cursor-pointer px-1.5 py-0.5 border border-slate-300 dark:border-[#134e43]"
+							class="cursor-pointer border border-slate-300 px-1.5 py-0.5 text-[10px] text-slate-900/60 font-bold font-mono uppercase transition-colors dark:border-[#134e43] dark:text-slate-50/60 hover:text-brand-600 dark:hover:text-accent"
 							:title="isPinned ? 'Lepas Sematan' : 'Sematkan ke Sisi'"
 							@click="emit('togglePin')"
 						>
@@ -251,7 +254,7 @@ onUnmounted(() => {
 						<button
 							v-if="showClose"
 							type="button"
-							class="text-slate-900/60 hover:text-rose-600 dark:text-slate-50/60 dark:hover:text-rose-400 text-[10px] font-mono font-bold uppercase transition-colors cursor-pointer px-1.5 py-0.5 border border-slate-300 dark:border-[#134e43]"
+							class="cursor-pointer border border-slate-300 px-1.5 py-0.5 text-[10px] text-slate-900/60 font-bold font-mono uppercase transition-colors dark:border-[#134e43] dark:text-slate-50/60 hover:text-rose-600 dark:hover:text-rose-400"
 							:title="locale === 'id' ? 'Tutup Daftar Isi' : 'Close Table of Contents'"
 							@click="emit('close')"
 						>
@@ -266,7 +269,7 @@ onUnmounted(() => {
 					:aria-valuenow="progressPercentage"
 					aria-valuemin="0"
 					aria-valuemax="100"
-					class="w-full h-[2px] bg-slate-200/60 dark:bg-[#134e43]/60"
+					class="h-[2px] w-full bg-slate-200/60 dark:bg-[#134e43]/60"
 				>
 					<div
 						class="h-full bg-brand-500 transition-all duration-200"
@@ -280,7 +283,7 @@ onUnmounted(() => {
 						v-for="(item, idx) in flatList"
 						:key="item.link.id"
 						:href="`#${item.link.id}`"
-						class="group flex items-baseline justify-between gap-3 p-3 transition-colors text-xs"
+						class="group flex items-baseline justify-between gap-3 p-3 text-xs transition-colors"
 						:class="[
 							item.level > 0 ? 'pl-6' : 'pl-3',
 							item.link.id === activeId
@@ -291,7 +294,7 @@ onUnmounted(() => {
 					>
 						<span class="truncate leading-snug">{{ item.link.text }}</span>
 						<span
-							class="shrink-0 text-[10px] tabular-nums font-mono"
+							class="shrink-0 text-[10px] font-mono tabular-nums"
 							:class="item.link.id === activeId ? 'text-brand-600 dark:text-accent font-bold' : 'text-slate-900/40 dark:text-slate-50/40 group-hover:text-slate-900 dark:group-hover:text-slate-50'"
 						>
 							{{ String(idx + 1).padStart(2, '0') }}
@@ -300,10 +303,10 @@ onUnmounted(() => {
 				</div>
 
 				<!-- Back to Top Trigger -->
-				<div class="p-3 border-t border-slate-200/80 dark:border-[#134e43] bg-slate-50/60 dark:bg-[#002420]/40">
+				<div class="border-t border-slate-200/80 bg-slate-50/60 p-3 dark:border-[#134e43] dark:bg-[#002420]/40">
 					<button
 						type="button"
-						class="w-full py-1.5 flex items-center justify-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-900/70 hover:text-brand-600 dark:text-slate-50/70 dark:hover:text-brand-400 transition-colors cursor-pointer"
+						class="w-full flex cursor-pointer items-center justify-center gap-1.5 py-1.5 text-[11px] text-slate-900/70 font-bold tracking-wider uppercase transition-colors dark:text-slate-50/70 hover:text-brand-600 dark:hover:text-brand-400"
 						@click="scrollToTop"
 					>
 						<span class="i-ph-arrow-up text-xs" />

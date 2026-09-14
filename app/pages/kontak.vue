@@ -28,7 +28,7 @@ useSchemaOrg([
 </script>
 
 <template>
-	<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+	<div class="mx-auto max-w-6xl px-4 py-10 lg:px-8 sm:px-6 sm:py-14">
 		<!-- Page Header -->
 		<header
 			class="relative z-10 mb-8 border border-slate-200/80 bg-slate-50/70 p-6 sm:mb-10 dark:border-[#134e43] dark:bg-slate-900/60 sm:p-8"
@@ -48,11 +48,11 @@ useSchemaOrg([
 					</div>
 
 					<h1 class="heading-page">
-						{{ page?.headline || page?.title || (locale === 'id' ? 'Kontak & Kolaborasi' : 'Contact & Collaboration') }}
+						{{ page?.headline || page?.title }}
 					</h1>
 
 					<p class="heading-page-sub">
-						{{ page?.lead || page?.description || (locale === 'id' ? 'Tertarik berdiskusi tentang proyek baru, konsultasi frontend, atau sekadar bertukar pikiran? Silakan hubungi saya.' : 'Interested in discussing new projects, frontend consulting, or just sharing thoughts? Feel free to reach out.') }}
+						{{ page?.lead || page?.description }}
 					</p>
 				</div>
 
@@ -70,13 +70,13 @@ useSchemaOrg([
 			<!-- Direct Email Card -->
 			<div
 				v-if="page?.email_card"
-				class="relative border border-[#134e43] bg-[#002b27] text-[#f8fafa] flex flex-col justify-between p-6 md:col-span-7 sm:p-8"
+				class="relative flex flex-col justify-between border border-[#134e43] bg-[#002b27] p-6 text-[#f8fafa] md:col-span-7 sm:p-8"
 			>
 				<div>
 					<span class="mb-3 flex items-center gap-1.5 text-xs text-brand-300 font-semibold tracking-wide">
 						<span class="i-ph-envelope-simple text-xs" /> {{ page.email_card.label || 'Direct Inquiries' }}
 					</span>
-					<h3 class="text-3xl text-white font-semibold tracking-tight font-heading sm:text-5xl">
+					<h3 class="text-3xl text-white font-900 tracking-tight font-heading sm:text-5xl">
 						{{ page.email_card.email || 'dinar@permadi.dev' }}
 					</h3>
 					<p
@@ -89,10 +89,10 @@ useSchemaOrg([
 				<div class="mt-8 flex items-center justify-between border-t border-brand-900/60 pt-4">
 					<a
 						:href="`mailto:${page.email_card.email || 'dinar@permadi.dev'}`"
-						class="inline-flex items-center gap-1.5 bg-brand-400 px-5 py-2.5 text-xs text-slate-950 font-bold transition-all hover:bg-brand-300"
+						class="group inline-flex cursor-pointer items-center gap-1.5 bg-brand-400 px-5 py-2.5 text-xs text-slate-950 font-bold shadow-xs transition-all duration-150 active:scale-95 hover:bg-brand-300 hover:-translate-y-0.5"
 					>
 						{{ page.email_card.button_text || (locale === 'id' ? 'Kirim Email Sekarang' : 'Send Email Now') }}
-						<span class="i-ph-arrow-up-right text-xs" />
+						<span class="i-ph-arrow-up-right text-xs transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
 					</a>
 					<span
 						v-if="page.email_card.meta"
@@ -106,24 +106,24 @@ useSchemaOrg([
 			<!-- Location & Status Card -->
 			<div
 				v-if="page?.status_card"
-				class="relative border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] text-slate-900 dark:text-slate-50 flex flex-col justify-between p-6 md:col-span-5 sm:p-7"
+				class="relative flex flex-col justify-between border border-slate-200/80 bg-white p-6 text-slate-900 md:col-span-5 dark:border-[#134e43] dark:bg-[#002b27] sm:p-7 dark:text-slate-50"
 			>
 				<div>
-					<span class="mb-3 flex items-center gap-1.5 text-xs text-slate-800 dark:text-slate-200 font-semibold tracking-wide">
-						<span class="inline-block h-2 w-2 rounded-none bg-emerald-600" />
+					<span class="mb-3 flex items-center gap-1.5 text-xs text-slate-800 font-semibold tracking-wide dark:text-slate-200">
+						<span class="animate-status-pulse inline-block h-2 w-2 rounded-none bg-emerald-500" />
 						{{ page.status_card.label || (locale === 'id' ? 'Status Ketersediaan' : 'Availability Status') }}
 					</span>
-					<h3 class="text-2xl font-semibold leading-tight font-heading">
-						{{ page.status_card.title || 'Open for Projects & Consulting' }}
+					<h3 class="text-2xl font-900 leading-tight font-heading">
+						{{ page.status_card.title }}
 					</h3>
 					<p
 						v-if="page.status_card.description"
-						class="mt-2 text-xs text-slate-700 dark:text-slate-300 leading-relaxed sm:text-sm"
+						class="mt-2 text-xs text-slate-700 leading-relaxed sm:text-sm dark:text-slate-300"
 					>
 						{{ page.status_card.description }}
 					</p>
 				</div>
-				<div class="mt-6 flex items-center justify-between border-t border-slate-200 dark:border-[#134e43] pt-3 text-xs text-slate-800 dark:text-slate-300 font-mono">
+				<div class="mt-6 flex items-center justify-between border-t border-slate-200 pt-3 text-xs text-slate-800 font-mono dark:border-[#134e43] dark:text-slate-300">
 					<span
 						v-if="page.status_card.location"
 						class="flex items-center gap-1"
@@ -140,7 +140,7 @@ useSchemaOrg([
 			<!-- Social Channels -->
 			<div
 				v-if="page?.social_card"
-				class="border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] flex flex-col justify-between p-6 md:col-span-6 sm:p-7"
+				class="flex flex-col justify-between border border-slate-200/80 bg-white p-6 md:col-span-6 dark:border-[#134e43] dark:bg-[#002b27] sm:p-7"
 			>
 				<div>
 					<span
@@ -149,8 +149,8 @@ useSchemaOrg([
 					>
 						{{ page.social_card.label }}
 					</span>
-					<h3 class="text-2xl text-slate-900 font-semibold font-heading dark:text-white">
-						{{ page.social_card.title || (locale === 'id' ? 'Temukan saya di platform digital' : 'Connect across the web') }}
+					<h3 class="text-2xl text-slate-900 font-900 font-heading dark:text-white">
+						{{ page.social_card.title }}
 					</h3>
 					<p
 						v-if="page.social_card.description"
@@ -169,11 +169,11 @@ useSchemaOrg([
 						:href="item.url"
 						target="_blank"
 						rel="noopener"
-						class="group block border border-slate-200/80 dark:border-[#134e43] bg-slate-50 p-3 text-center transition-all dark:bg-slate-800/60 hover:(bg-brand-50 text-brand-800) focus-ring dark:hover:(bg-brand-950/40 text-brand-400)"
+						class="group block border border-slate-200/80 bg-slate-50 p-3 text-center transition-all duration-150 active:scale-95 dark:border-[#134e43] dark:bg-slate-800/60 hover:(bg-brand-50 text-brand-800 -translate-y-0.5) focus-ring dark:hover:(bg-brand-950/40 text-brand-400)"
 					>
 						<span
 							:class="item.icon || 'i-ph-link-simple'"
-							class="mx-auto mb-1 block text-xl"
+							class="mx-auto mb-1 block text-xl transition-transform duration-150 group-hover:scale-110"
 						/>
 						<span class="text-xs font-semibold">{{ item.name }}</span>
 					</a>
@@ -183,7 +183,7 @@ useSchemaOrg([
 			<!-- Newsletter -->
 			<div
 				v-if="page?.newsletter_card"
-				class="border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] flex flex-col justify-between p-6 md:col-span-6 sm:p-7"
+				class="flex flex-col justify-between border border-slate-200/80 bg-white p-6 md:col-span-6 dark:border-[#134e43] dark:bg-[#002b27] sm:p-7"
 			>
 				<div>
 					<span
@@ -192,8 +192,8 @@ useSchemaOrg([
 					>
 						{{ page.newsletter_card.label }}
 					</span>
-					<h3 class="text-2xl text-slate-900 font-semibold font-heading dark:text-white">
-						{{ page.newsletter_card.title || (locale === 'id' ? 'Berlangganan Newsletter' : 'Newsletter Subscription') }}
+					<h3 class="text-2xl text-slate-900 font-900 font-heading dark:text-white">
+						{{ page.newsletter_card.title }}
 					</h3>
 					<p
 						v-if="page.newsletter_card.description"

@@ -178,10 +178,11 @@ const onSubmit = handleSubmit(async (values) => {
 
 .newsletter-btn:hover:not(:disabled) {
 	background-color: #0f7662;
+	transform: translateY(-1px);
 }
 
 .newsletter-btn:active:not(:disabled) {
-	transform: scale(0.98);
+	transform: scale(0.97);
 }
 
 .newsletter-btn:disabled {

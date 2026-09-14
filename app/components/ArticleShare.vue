@@ -168,7 +168,7 @@ async function handleCopyLink() {
 					<span class="i-ph-share-network text-xs" />
 					<span>{{ locale === 'id' ? 'Bagikan Tulisan' : 'Share Article' }}</span>
 				</div>
-				<h2 class="text-base text-slate-900 font-bold font-heading sm:text-lg dark:text-white">
+				<h2 class="text-base text-slate-900 font-900 font-heading sm:text-lg dark:text-white">
 					{{ locale === 'id' ? 'Menemukan bacaan bermanfaat? Bagikan ke jejaring Anda' : 'Found this insightful? Share it with your network' }}
 				</h2>
 			</div>
@@ -176,13 +176,13 @@ async function handleCopyLink() {
 			<!-- Quick Copy Button -->
 			<button
 				type="button"
-				class="inline-flex cursor-pointer items-center self-start gap-2 border border-slate-200/70 bg-slate-100/90 px-3.5 py-2 text-xs text-slate-700 font-semibold transition-all duration-200 sm:self-auto dark:border-[#134e43] dark:bg-[#042f27] hover:bg-white dark:text-slate-200 focus-ring dark:hover:bg-[#073d32]"
+				class="inline-flex cursor-pointer items-center self-start gap-2 border border-slate-200/70 bg-slate-100/90 px-3.5 py-2 text-xs text-slate-700 font-semibold transition-all duration-150 active:scale-95 sm:self-auto dark:border-[#134e43] dark:bg-[#042f27] hover:bg-white dark:text-slate-200 focus-ring hover:-translate-y-0.5 dark:hover:bg-[#073d32]"
 				:aria-label="locale === 'id' ? 'Salin tautan artikel' : 'Copy article link'"
 				@click="handleCopyLink"
 			>
 				<span
-					:class="copied ? 'i-ph-check-circle text-emerald-600 dark:text-emerald-400' : 'i-ph-link-simple text-brand-700 dark:text-brand-400'"
-					class="text-sm transition-transform"
+					:class="copied ? 'i-ph-check-circle text-emerald-600 dark:text-emerald-400 scale-110' : 'i-ph-link-simple text-brand-700 dark:text-brand-400 scale-100'"
+					class="text-sm transition-transform duration-200"
 				/>
 				<span>{{ copied ? (locale === 'id' ? 'Tautan Tersalin!' : 'Link Copied!') : (locale === 'id' ? 'Salin Tautan' : 'Copy Link') }}</span>
 			</button>
@@ -201,7 +201,7 @@ async function handleCopyLink() {
 				:url="shareUrl"
 				rel="nofollow noopener noreferrer"
 				user="dinarpermadi07"
-				class="group aspect-square flex flex-1 items-center justify-center border border-slate-200/70 bg-slate-50 text-slate-700 transition-all duration-200 dark:border-[#134e43]/90 dark:bg-[#002420]/80 hover:bg-white dark:text-slate-300 hover:shadow-sm dark:hover:bg-[#003833]"
+				class="group aspect-square flex flex-1 items-center justify-center border border-slate-200/70 bg-slate-50 text-slate-700 transition-all duration-150 active:scale-95 dark:border-[#134e43]/90 dark:bg-[#002420]/80 hover:bg-white dark:text-slate-300 hover:shadow-sm hover:-translate-y-0.5 dark:hover:bg-[#003833]"
 				:class="net.hoverClass"
 				:aria-label="`Share to ${net.label}`"
 				@click="onShareClick(net.name)"

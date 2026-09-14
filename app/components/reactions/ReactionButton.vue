@@ -26,9 +26,15 @@ interface ParticleItem {
 }
 const particles = ref<ParticleItem[]>([])
 
+const isBouncing = ref(false)
+
 function handleClick() {
 	const allowed = store.addReaction(props.slug, props.type, props.section || 'general')
 	if (allowed) {
+		isBouncing.value = true
+		setTimeout(() => {
+			isBouncing.value = false
+		}, 350)
 		const newParticle: ParticleItem = {
 			id: `p-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
 			emoji: props.emoji,
@@ -43,7 +49,7 @@ function removeParticle(id: string) {
 </script>
 
 <template>
-	<div class="relative w-full h-full">
+	<div class="relative h-full w-full">
 		<!-- Floating Emoji Particles -->
 		<EmojiParticle
 			v-for="particle in particles"
@@ -58,7 +64,7 @@ function removeParticle(id: string) {
 			type="button"
 			:title="isMaxedOut ? `Maksimal (${MAX_REACTION_LIMIT}/${MAX_REACTION_LIMIT}) tercapai!` : `${title} (${userCount}/${MAX_REACTION_LIMIT})`"
 			:disabled="isMaxedOut"
-			class="group w-full h-full p-4 sm:p-5 flex flex-col justify-between text-left transition-all font-mono text-xs cursor-pointer select-none bg-white dark:bg-[#001e1c]"
+			class="group h-full w-full flex flex-col cursor-pointer select-none justify-between bg-white p-4 text-left text-xs font-mono transition-all duration-150 active:scale-[0.98] dark:bg-[#001e1c] sm:p-5"
 			:class="[
 				isMaxedOut
 					? 'opacity-80 cursor-default bg-slate-50/60 dark:bg-[#002420]/50'
@@ -69,27 +75,33 @@ function removeParticle(id: string) {
 			@click="handleClick"
 		>
 			<!-- Top Indicator Strip: Sequential number and Emoji -->
-			<div class="flex items-center justify-between gap-2 mb-3">
-				<span class="text-[11px] font-bold tabular-nums text-slate-900/50 dark:text-slate-50/50">
+			<div class="mb-3 flex items-center justify-between gap-2">
+				<span class="text-[11px] text-slate-900/50 font-bold tabular-nums dark:text-slate-50/50">
 					[{{ String(index || 1).padStart(2, '0') }}]
 				</span>
-				<span class="text-xl sm:text-2xl transition-transform duration-150 group-hover:scale-115">
+				<span
+					class="text-xl transition-transform duration-150 sm:text-2xl"
+					:class="isBouncing ? 'animate-spring-bounce' : 'group-hover:scale-115'"
+				>
 					{{ emoji }}
 				</span>
 			</div>
 
 			<!-- Middle: Title -->
-			<div class="font-bold uppercase tracking-wider text-[11px] text-slate-900 dark:text-slate-50 mb-4 truncate">
+			<div class="mb-4 truncate text-[11px] text-slate-900 font-bold tracking-wider uppercase dark:text-slate-50">
 				{{ title }}
 			</div>
 
 			<!-- Bottom: Total Count & User Quota -->
-			<div class="pt-3 border-t border-slate-200/80 dark:border-[#134e43] flex items-baseline justify-between text-[11px] w-full">
-				<span class="font-bold tabular-nums text-sm sm:text-base text-brand-600 dark:text-accent">
+			<div class="w-full flex items-baseline justify-between border-t border-slate-200/80 pt-3 text-[11px] dark:border-[#134e43]">
+				<span
+					class="inline-block text-sm text-brand-600 font-bold tabular-nums transition-transform duration-150 sm:text-base dark:text-accent"
+					:class="isBouncing ? 'animate-count-bump' : ''"
+				>
 					{{ totalCount }}
 				</span>
 				<span
-					class="text-[10px] uppercase font-semibold tabular-nums"
+					class="text-[10px] font-semibold uppercase tabular-nums"
 					:class="isMaxedOut ? 'text-brand-600 dark:text-accent font-bold' : userCount > 0 ? 'text-brand-600 dark:text-accent' : 'text-slate-900/40 dark:text-slate-50/40'"
 				>
 					{{ userCount > 0 ? `${userCount}/${MAX_REACTION_LIMIT}` : `+1` }}

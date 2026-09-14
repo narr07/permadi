@@ -338,7 +338,7 @@ useSchemaOrg([
 							DOKUMENTASI VISUAL &amp; STUDIO
 						</div>
 
-						<h1 class="mb-6 text-balance text-3xl text-slate-900 font-700 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
+						<h1 class="mb-6 text-balance text-3xl text-slate-900 font-900 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
 							{{ page?.title || (locale === 'id' ? 'Galeri Visual & Dokumentasi' : 'Visual Gallery & Documentation') }}
 						</h1>
 
@@ -372,7 +372,7 @@ useSchemaOrg([
 				<!-- All Topics -->
 				<button
 					type="button"
-					class="cursor-pointer border px-2.5 py-1 text-[11px] font-bold tracking-wider uppercase transition-colors"
+					class="cursor-pointer border px-2.5 py-1 text-[11px] font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
 					:class="selectedTag === 'ALL'
 						? 'bg-slate-900 text-white dark:bg-brand-500 dark:text-slate-950 border-transparent'
 						: 'border-slate-300 dark:border-[#134e43] text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#002420]'"
@@ -386,7 +386,7 @@ useSchemaOrg([
 					v-for="tag in availableTags"
 					:key="tag"
 					type="button"
-					class="cursor-pointer border px-2.5 py-1 text-[11px] tracking-wider uppercase transition-colors"
+					class="cursor-pointer border px-2.5 py-1 text-[11px] tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
 					:class="selectedTag === tag
 						? 'bg-slate-900 text-white dark:bg-brand-500 dark:text-slate-950 border-transparent font-bold'
 						: 'border-slate-300 dark:border-[#134e43] text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#002420]'"
@@ -413,7 +413,7 @@ useSchemaOrg([
 				tabindex="0"
 				role="button"
 				:aria-label="item.title || (locale === 'id' ? 'Buka spesimen foto' : 'Open photo specimen')"
-				class="group flex flex-col cursor-pointer select-none justify-between border-b border-r-0 border-slate-200/80 text-xs font-mono transition-colors md:border-b-0 md:border-r dark:border-[#134e43] hover:bg-slate-50/80 dark:hover:bg-[#002420]/40"
+				class="group flex flex-col cursor-pointer select-none justify-between border-b border-r-0 border-slate-200/80 text-xs font-mono transition-all duration-150 active:scale-[0.99] md:border-b-0 md:border-r dark:border-[#134e43] hover:bg-slate-50/80 dark:hover:bg-[#002420]/40"
 				@click="openModal(item)"
 				@keydown.enter.prevent="openModal(item)"
 				@keydown.space.prevent="openModal(item)"
@@ -461,7 +461,7 @@ useSchemaOrg([
 				<!-- Specimen Footer Details -->
 				<div class="flex flex-1 flex-col justify-between border-t border-slate-200/80 p-4 dark:border-[#134e43]">
 					<div>
-						<h2 class="mb-2 text-base text-slate-900 font-700 leading-snug font-heading transition-colors dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-accent">
+						<h2 class="mb-2 text-base text-slate-900 font-900 leading-snug font-heading transition-colors dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-accent">
 							{{ item.title }}
 						</h2>
 
@@ -482,7 +482,7 @@ useSchemaOrg([
 					<div class="flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] text-slate-900/50 dark:border-[#134e43]/40 dark:text-slate-50/50">
 						<span>DOKUMEN FOTO</span>
 						<span class="flex items-center gap-1 font-bold transition-colors group-hover:text-brand-600 dark:group-hover:text-accent">
-							INSPEKSI <span class="i-ph-arrow-up-right text-xs" />
+							INSPEKSI <span class="i-ph-arrow-up-right text-xs transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
 						</span>
 					</div>
 				</div>
@@ -505,7 +505,7 @@ useSchemaOrg([
 			<button
 				v-else-if="hasMore"
 				type="button"
-				class="flex cursor-pointer items-center gap-2 border border-slate-300 px-5 py-2.5 text-slate-900 font-bold tracking-wider uppercase transition-colors dark:border-[#134e43] hover:border-brand-500 dark:text-slate-50 hover:text-brand-600 dark:hover:text-accent"
+				class="flex cursor-pointer items-center gap-2 border border-slate-300 px-5 py-2.5 text-slate-900 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 dark:border-[#134e43] hover:border-brand-500 dark:text-slate-50 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-accent"
 				@click="loadMore"
 			>
 				<span>↓ {{ locale === 'id' ? 'MUAT LEBIH BANYAK FOTO' : 'LOAD MORE PHOTOS' }}</span>
@@ -579,8 +579,8 @@ useSchemaOrg([
 									<button
 										type="button"
 										:disabled="!hasPrevPhoto"
-										class="cursor-pointer border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-colors dark:border-[#134e43]"
-										:class="hasPrevPhoto ? 'hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent' : 'opacity-40 cursor-not-allowed'"
+										class="cursor-pointer border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-all duration-150 dark:border-[#134e43]"
+										:class="hasPrevPhoto ? 'hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent hover:-translate-y-0.5 active:scale-95' : 'opacity-40 cursor-not-allowed'"
 										title="Foto Sebelumnya (Panah Kiri)"
 										@click="prevPhoto"
 									>
@@ -591,8 +591,8 @@ useSchemaOrg([
 									<button
 										type="button"
 										:disabled="!hasNextPhoto"
-										class="cursor-pointer border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-colors dark:border-[#134e43]"
-										:class="hasNextPhoto ? 'hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent' : 'opacity-40 cursor-not-allowed'"
+										class="cursor-pointer border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-all duration-150 dark:border-[#134e43]"
+										:class="hasNextPhoto ? 'hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent hover:-translate-y-0.5 active:scale-95' : 'opacity-40 cursor-not-allowed'"
 										title="Foto Selanjutnya (Panah Kanan)"
 										@click="nextPhoto"
 									>
@@ -606,7 +606,7 @@ useSchemaOrg([
 										target="_blank"
 										rel="noopener"
 										download
-										class="hidden cursor-pointer items-center gap-1 border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-colors sm:inline-flex dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent"
+										class="hidden cursor-pointer items-center gap-1 border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-all duration-150 sm:inline-flex active:scale-95 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-accent"
 									>
 										<span class="i-ph-download-simple text-xs" />
 										<span>UNDUH HD</span>
@@ -615,7 +615,7 @@ useSchemaOrg([
 									<!-- Close Button -->
 									<button
 										type="button"
-										class="cursor-pointer border border-slate-300 px-2.5 py-1 text-[10px] font-bold uppercase transition-colors dark:border-[#134e43] hover:text-rose-600 dark:hover:text-rose-400"
+										class="cursor-pointer border border-slate-300 px-2.5 py-1 text-[10px] font-bold uppercase transition-all duration-150 active:scale-95 dark:border-[#134e43] hover:text-rose-600 hover:-translate-y-0.5 dark:hover:text-rose-400"
 										title="Tutup (Esc)"
 										@click="closeModal"
 									>

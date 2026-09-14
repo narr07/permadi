@@ -10,8 +10,15 @@ interface PostItem {
 
 interface WritingSection {
 	label?: string
+	volume?: string
+	col_no?: string
+	col_title?: string
+	col_discipline?: string
+	col_date?: string
+	footer_tag?: string
 	title?: string
 	all_link_text?: string
+	all_link_to?: string
 }
 
 const props = defineProps<{
@@ -20,6 +27,7 @@ const props = defineProps<{
 }>()
 
 const localePath = useLocalePath()
+const { locale } = useI18n()
 
 const defaultPosts = [
 	{
@@ -87,16 +95,16 @@ const formattedPosts = computed(() => {
 				<span>{{ writing?.label || '05 // TULISAN & CATATAN TERBARU' }}</span>
 			</div>
 			<span class="text-slate-900/40 tabular-nums dark:text-slate-50/40">
-				JOURNAL // VOL. 2026
+				{{ writing?.volume || 'JOURNAL // VOL. 2026' }}
 			</span>
 		</div>
 
 		<!-- Table Header Row (Desktop) -->
 		<div class="grid-cols-12 hidden gap-4 border-b border-slate-200/80 bg-slate-50/50 px-6 py-3 text-[10px] text-slate-900/50 tracking-widest font-mono uppercase md:grid dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-8 dark:text-slate-50/50">
-			<span class="col-span-1">NO.</span>
-			<span class="col-span-8">JUDUL TULISAN &amp; KAJIAN TEKNIS</span>
-			<span class="col-span-2 text-center">DISIPLIN</span>
-			<span class="col-span-1 text-right">TANGGAL</span>
+			<span class="col-span-1">{{ writing?.col_no || 'NO.' }}</span>
+			<span class="col-span-8">{{ writing?.col_title || (locale === 'id' ? 'JUDUL TULISAN & KAJIAN TEKNIS' : 'ARTICLE TITLE & ESSAYS') }}</span>
+			<span class="col-span-2 text-center">{{ writing?.col_discipline || (locale === 'id' ? 'DISIPLIN' : 'DISCIPLINE') }}</span>
+			<span class="col-span-1 text-right">{{ writing?.col_date || (locale === 'id' ? 'TANGGAL' : 'DATE') }}</span>
 		</div>
 
 		<!-- Tabular Journal Rows -->
@@ -105,13 +113,13 @@ const formattedPosts = computed(() => {
 				v-for="post in formattedPosts"
 				:key="post.index"
 				:to="localePath(post.link)"
-				class="group min-h-[56px] flex flex-col items-start gap-2 px-6 py-5 transition-colors duration-150 md:grid md:grid-cols-12 md:items-center md:gap-4 hover:(bg-slate-50/90 dark:bg-[#002420]/50) sm:px-8"
+				class="group min-h-[56px] flex flex-col cursor-pointer items-start gap-2 px-6 py-5 transition-all duration-150 md:grid md:grid-cols-12 hover:(translate-x-0.5 bg-slate-50/90 dark:bg-[#002420]/50) active:scale-[0.99] md:items-center md:gap-4 sm:px-8"
 			>
 				<span class="col-span-1 text-xs text-brand-600 font-bold font-mono tabular-nums dark:text-brand-400">
 					{{ post.index }}
 				</span>
 
-				<span class="col-span-8 text-base text-slate-900 font-700 leading-snug font-heading transition-colors duration-150 sm:text-lg dark:text-slate-50 group-hover:text-brand-700 dark:group-hover:text-brand-300">
+				<span class="col-span-8 text-base text-slate-900 font-900 leading-snug font-heading transition-colors duration-150 sm:text-lg dark:text-slate-50 group-hover:text-brand-700 dark:group-hover:text-brand-300">
 					{{ post.title }}
 				</span>
 
@@ -130,14 +138,14 @@ const formattedPosts = computed(() => {
 		<!-- Footer Link Strip -->
 		<div class="flex items-center justify-between border-t border-slate-200/80 bg-slate-50/50 px-6 py-3.5 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-8">
 			<span class="hidden text-slate-900/40 uppercase sm:inline dark:text-slate-50/40">
-				PUBLIKASI: TEKNOLOGI &amp; RUANG KELAS
+				{{ writing?.footer_tag || (locale === 'id' ? 'PUBLIKASI: TEKNOLOGI & RUANG KELAS' : 'PUBLICATIONS: TECH & CLASSROOM') }}
 			</span>
 			<NuxtLink
-				:to="localePath('/blog')"
-				class="ml-auto inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase underline underline-offset-4 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
+				:to="localePath(writing?.all_link_to || '/blog')"
+				class="group ml-auto inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase underline underline-offset-4 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
-				<span>{{ writing?.all_link_text || 'BUKA SELURUH TULISAN & ESAI' }}</span>
-				<span class="i-ph-arrow-right text-xs" />
+				<span>{{ writing?.all_link_text || (locale === 'id' ? 'LIHAT SELURUH ARSIP TULISAN' : 'VIEW ALL WRITING ARCHIVE') }}</span>
+				<span class="i-ph-arrow-right text-xs transition-transform duration-150 group-hover:translate-x-1" />
 			</NuxtLink>
 		</div>
 	</section>

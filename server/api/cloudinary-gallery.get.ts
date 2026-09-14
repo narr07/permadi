@@ -103,7 +103,7 @@ export default defineCachedEventHandler(
 					// 4. Full original resolution HD (untuk tombol direct open / preview penuh)
 					const fullCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_1920,f_auto,q_auto:good/${versionPrefix}${resource.public_id}.${resource.format}`
 					// 5. Direct HD download URL (Cloudinary fl_attachment otomatis memicu download file langsung)
-					const cleanFilename = (resource.public_id.split('/').pop() || 'permadi_artwork').replace(/[^a-zA-Z0-9_-]/g, '_')
+					const cleanFilename = (resource.public_id.split('/').pop() || 'permadi_artwork').replace(/[^\w-]/g, '_')
 					const downloadCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/fl_attachment:${cleanFilename}/${versionPrefix}${resource.public_id}.${resource.format}`
 
 					// Fallback: use readable name from public_id (e.g. "gallery/isola_v1" -> "Isola V1")

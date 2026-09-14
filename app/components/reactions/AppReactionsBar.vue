@@ -56,17 +56,20 @@ const reactionsList = computed(() => [
 ])
 
 const clapPercentage = computed(() => {
-	if (!reactionsTotal.value) return 0
+	if (!reactionsTotal.value)
+		return 0
 	return Math.round(((articleState.value.total.CLAPPING || 0) / reactionsTotal.value) * 100)
 })
 
 const thinkingPercentage = computed(() => {
-	if (!reactionsTotal.value) return 0
+	if (!reactionsTotal.value)
+		return 0
 	return Math.round(((articleState.value.total.THINKING || 0) / reactionsTotal.value) * 100)
 })
 
 const amazedPercentage = computed(() => {
-	if (!reactionsTotal.value) return 0
+	if (!reactionsTotal.value)
+		return 0
 	return Math.round(((articleState.value.total.AMAZED || 0) / reactionsTotal.value) * 100)
 })
 </script>
@@ -75,32 +78,32 @@ const amazedPercentage = computed(() => {
 	<!-- Swiss Editorial Reaction & Engagement Ledger -->
 	<section
 		aria-label="Respon dan Evaluasi Naskah"
-		class="not-prose my-12 border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#001e1c] font-mono select-none"
+		class="not-prose my-12 select-none border border-slate-200/80 bg-white font-mono dark:border-[#134e43] dark:bg-[#001e1c]"
 	>
 		<!-- Ledger Masthead -->
-		<div class="px-5 py-3.5 sm:px-6 border-b border-slate-200/80 dark:border-[#134e43] bg-slate-50/70 dark:bg-[#002420]/50 flex items-center justify-between flex-wrap gap-2 text-xs">
-			<div class="flex items-center gap-2 font-bold tracking-[0.2em] uppercase text-[11px] text-brand-700 dark:text-accent">
-				<span class="w-2 h-2 bg-brand-500 inline-block" />
+		<div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/80 bg-slate-50/70 px-5 py-3.5 text-xs dark:border-[#134e43] dark:bg-[#002420]/50 sm:px-6">
+			<div class="flex items-center gap-2 text-[11px] text-brand-700 font-bold tracking-[0.2em] uppercase dark:text-accent">
+				<span class="inline-block h-2 w-2 bg-brand-500" />
 				<span>■ 04 // EVALUASI NASKAH &amp; RESPON PEMBACA</span>
 			</div>
-			<div class="text-[11px] text-slate-900/50 dark:text-slate-50/50 tabular-nums">
+			<div class="text-[11px] text-slate-900/50 tabular-nums dark:text-slate-50/50">
 				TOTAL: {{ formatNumber(reactionsTotal) }} RESPON TERCATAT
 			</div>
 		</div>
 
 		<!-- Explanatory Prompt -->
-		<div class="px-5 py-3 border-b border-slate-200/80 dark:border-[#134e43] text-xs text-slate-900/70 dark:text-slate-50/70 flex items-center justify-between flex-wrap gap-2">
+		<div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/80 px-5 py-3 text-xs text-slate-900/70 dark:border-[#134e43] dark:text-slate-50/70">
 			<span>{{ locale === 'id' ? 'Bagaimana impresi teknis Anda terhadap naskah ini? Tinggalkan respon tipografis:' : 'What is your technical evaluation of this document? Leave a response:' }}</span>
-			<span class="text-[10px] text-slate-900/40 dark:text-slate-50/40 uppercase">BATAS: 10 RESPON / KATEGORI</span>
+			<span class="text-[10px] text-slate-900/40 uppercase dark:text-slate-50/40">BATAS: 10 RESPON / KATEGORI</span>
 		</div>
 
 		<!-- 4-Column Modular Ledger Grid -->
-		<div class="grid grid-cols-2 md:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-200/80 dark:divide-[#134e43]">
+		<div class="grid grid-cols-2 md:grid-cols-4 divide-y divide-slate-200/80 sm:divide-x sm:divide-y-0 dark:divide-[#134e43]">
 			<!-- Reaction Cells 01, 02, 03 -->
 			<div
 				v-for="(item, idx) in reactionsList"
 				:key="item.type"
-				class="h-full border-b md:border-b-0 border-slate-200/80 dark:border-[#134e43]"
+				class="h-full border-b border-slate-200/80 md:border-b-0 dark:border-[#134e43]"
 			>
 				<ReactionButton
 					:slug="slug"
@@ -117,31 +120,31 @@ const amazedPercentage = computed(() => {
 				<button
 					type="button"
 					:aria-expanded="isInsightOpen"
-					class="group w-full h-full p-4 sm:p-5 flex flex-col justify-between text-left transition-all font-mono text-xs cursor-pointer select-none bg-white dark:bg-[#001e1c]"
+					class="group h-full w-full flex flex-col cursor-pointer select-none justify-between bg-white p-4 text-left text-xs font-mono transition-all duration-150 active:scale-[0.98] dark:bg-[#001e1c] sm:p-5"
 					:class="isInsightOpen ? 'bg-slate-100 dark:bg-[#002420]' : 'hover:bg-slate-50 dark:hover:bg-[#002420]/40 text-slate-900/80 dark:text-slate-50/80'"
 					@click="isInsightOpen = !isInsightOpen"
 				>
 					<!-- Top Strip -->
-					<div class="flex items-center justify-between gap-2 mb-3">
-						<span class="text-[11px] font-bold tabular-nums text-slate-900/50 dark:text-slate-50/50">
+					<div class="mb-3 flex items-center justify-between gap-2">
+						<span class="text-[11px] text-slate-900/50 font-bold tabular-nums dark:text-slate-50/50">
 							[04]
 						</span>
-						<span class="text-xl sm:text-2xl transition-transform duration-150 group-hover:scale-115">
+						<span class="text-xl transition-transform duration-150 group-hover:scale-115 sm:text-2xl">
 							📊
 						</span>
 					</div>
 
 					<!-- Title -->
-					<div class="font-bold uppercase tracking-wider text-[11px] text-slate-900 dark:text-slate-50 mb-4 truncate">
+					<div class="mb-4 truncate text-[11px] text-slate-900 font-bold tracking-wider uppercase dark:text-slate-50">
 						{{ locale === 'id' ? 'STATISTIK' : 'INSIGHTS' }}
 					</div>
 
 					<!-- Bottom Status -->
-					<div class="pt-3 border-t border-slate-200/80 dark:border-[#134e43] flex items-baseline justify-between text-[11px] w-full">
-						<span class="font-bold tabular-nums text-sm sm:text-base text-brand-600 dark:text-accent">
+					<div class="w-full flex items-baseline justify-between border-t border-slate-200/80 pt-3 text-[11px] dark:border-[#134e43]">
+						<span class="text-sm text-brand-600 font-bold tabular-nums sm:text-base dark:text-accent">
 							{{ formatNumber(views) }}
 						</span>
-						<span class="text-[10px] uppercase font-semibold tabular-nums text-slate-900/50 dark:text-slate-50/50">
+						<span class="text-[10px] text-slate-900/50 font-semibold uppercase tabular-nums dark:text-slate-50/50">
 							{{ isInsightOpen ? 'TUTUP ▲' : 'METRIK ▼' }}
 						</span>
 					</div>
@@ -152,16 +155,16 @@ const amazedPercentage = computed(() => {
 		<!-- Collapsible Swiss Analytics Matrix Ledger -->
 		<div
 			v-if="isInsightOpen"
-			class="border-t border-slate-200/80 dark:border-[#134e43] bg-slate-50/50 dark:bg-[#002420]/30 p-5 sm:p-6"
+			class="border-t border-slate-200/80 bg-slate-50/50 p-5 dark:border-[#134e43] dark:bg-[#002420]/30 sm:p-6"
 		>
-			<div class="mb-4 pb-2 border-b border-slate-200/80 dark:border-[#134e43] flex items-center justify-between text-[11px] font-bold uppercase tracking-wider">
+			<div class="mb-4 flex items-center justify-between border-b border-slate-200/80 pb-2 text-[11px] font-bold tracking-wider uppercase dark:border-[#134e43]">
 				<div class="flex items-center gap-2 text-brand-700 dark:text-accent">
-					<span class="w-1.5 h-1.5 bg-brand-500 inline-block" />
+					<span class="inline-block h-1.5 w-1.5 bg-brand-500" />
 					<span>LEDGER PARAMETER ANALITIK DOKUMEN</span>
 				</div>
 				<button
 					type="button"
-					class="text-slate-900/50 hover:text-slate-900 dark:text-slate-50/50 dark:hover:text-slate-50 cursor-pointer"
+					class="cursor-pointer text-slate-900/50 transition-transform duration-150 active:scale-95 dark:text-slate-50/50 hover:text-slate-900 dark:hover:text-slate-50"
 					@click="isInsightOpen = false"
 				>
 					TUTUP ✕
@@ -169,64 +172,73 @@ const amazedPercentage = computed(() => {
 			</div>
 
 			<!-- 3 Specimen Metrics -->
-			<div class="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#001e1c] mb-5">
+			<div class="grid grid-cols-1 mb-5 border border-slate-200/80 bg-white sm:grid-cols-3 divide-y dark:border-[#134e43] dark:bg-[#001e1c] sm:divide-x sm:divide-y-0">
 				<div class="p-3.5 text-center">
-					<span class="text-[10px] text-slate-900/50 dark:text-slate-50/50 font-bold uppercase tracking-wider block mb-1">
+					<span class="mb-1 block text-[10px] text-slate-900/50 font-bold tracking-wider uppercase dark:text-slate-50/50">
 						TOTAL TAYANGAN
 					</span>
-					<span class="text-xl sm:text-2xl font-bold tabular-nums text-slate-900 dark:text-slate-50">
+					<span class="text-xl text-slate-900 font-bold tabular-nums sm:text-2xl dark:text-slate-50">
 						{{ formatNumber(views) }}
 					</span>
 				</div>
 
 				<div class="p-3.5 text-center">
-					<span class="text-[10px] text-slate-900/50 dark:text-slate-50/50 font-bold uppercase tracking-wider block mb-1">
+					<span class="mb-1 block text-[10px] text-slate-900/50 font-bold tracking-wider uppercase dark:text-slate-50/50">
 						REFERENSI &amp; TAUTAN
 					</span>
-					<span class="text-xl sm:text-2xl font-bold tabular-nums text-brand-600 dark:text-accent">
+					<span class="text-xl text-brand-600 font-bold tabular-nums sm:text-2xl dark:text-accent">
 						{{ formatNumber(shares) }}
 					</span>
 				</div>
 
 				<div class="p-3.5 text-center">
-					<span class="text-[10px] text-slate-900/50 dark:text-slate-50/50 font-bold uppercase tracking-wider block mb-1">
+					<span class="mb-1 block text-[10px] text-slate-900/50 font-bold tracking-wider uppercase dark:text-slate-50/50">
 						TOTAL REAKSI
 					</span>
-					<span class="text-xl sm:text-2xl font-bold tabular-nums text-slate-900 dark:text-slate-50">
+					<span class="text-xl text-slate-900 font-bold tabular-nums sm:text-2xl dark:text-slate-50">
 						{{ formatNumber(reactionsTotal) }}
 					</span>
 				</div>
 			</div>
 
 			<!-- Hairline Distribution Bars -->
-			<div class="space-y-3 text-xs">
+			<div class="text-xs space-y-3">
 				<div class="space-y-1">
 					<div class="flex justify-between text-[11px]">
 						<span>👏 TEPUK TANGAN (CLAPPING)</span>
-						<span class="tabular-nums font-bold">{{ articleState.total.CLAPPING || 0 }} ({{ clapPercentage }}%)</span>
+						<span class="font-bold tabular-nums">{{ articleState.total.CLAPPING || 0 }} ({{ clapPercentage }}%)</span>
 					</div>
-					<div class="w-full h-1.5 bg-slate-200/80 dark:bg-[#134e43]">
-						<div class="h-full bg-brand-500 transition-all duration-300" :style="{ width: `${clapPercentage}%` }" />
+					<div class="h-1.5 w-full bg-slate-200/80 dark:bg-[#134e43]">
+						<div
+							class="h-full bg-brand-500 transition-all duration-300"
+							:style="{ width: `${clapPercentage}%` }"
+						/>
 					</div>
 				</div>
 
 				<div class="space-y-1">
 					<div class="flex justify-between text-[11px]">
 						<span>🧐 INSIGHTFUL (THINKING)</span>
-						<span class="tabular-nums font-bold">{{ articleState.total.THINKING || 0 }} ({{ thinkingPercentage }}%)</span>
+						<span class="font-bold tabular-nums">{{ articleState.total.THINKING || 0 }} ({{ thinkingPercentage }}%)</span>
 					</div>
-					<div class="w-full h-1.5 bg-slate-200/80 dark:bg-[#134e43]">
-						<div class="h-full bg-brand-600 dark:bg-brand-400 transition-all duration-300" :style="{ width: `${thinkingPercentage}%` }" />
+					<div class="h-1.5 w-full bg-slate-200/80 dark:bg-[#134e43]">
+						<div
+							class="h-full bg-brand-600 transition-all duration-300 dark:bg-brand-400"
+							:style="{ width: `${thinkingPercentage}%` }"
+						/>
 					</div>
 				</div>
 
 				<div class="space-y-1">
 					<div class="flex justify-between text-[11px]">
 						<span>😲 IMPRESIF (AMAZED)</span>
-						<span class="tabular-nums font-bold">{{ articleState.total.AMAZED || 0 }} ({{ amazedPercentage }}%)</span>
+						<span class="font-bold tabular-nums">{{ articleState.total.AMAZED || 0 }} ({{ amazedPercentage }}%)</span>
 					</div>
-					<div class="w-full h-1.5 bg-slate-200/80 dark:bg-[#134e43]">
-						<div class="h-full bg-brand-700 dark:bg-accent transition-all duration-300" :style="{ width: `${amazedPercentage}%` }" />
+					<div class="h-1.5 w-full bg-slate-200/80 dark:bg-[#134e43]">
+						<div
+							class="h-full bg-brand-700 transition-all duration-300 dark:bg-accent"
+							:style="{ width: `${amazedPercentage}%` }"
+						/>
 					</div>
 				</div>
 			</div>
