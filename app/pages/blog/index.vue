@@ -169,7 +169,7 @@ useSchemaOrg([
 						<div class="mb-4 flex items-center justify-between text-[11px] font-bold tracking-[0.2em] font-mono uppercase">
 							<div class="flex items-center gap-2 text-brand-700 dark:text-accent">
 								<span class="inline-block h-2 w-2 rounded-none bg-brand-500" />
-								<span>02 // ARSIP TULISAN</span>
+								<span>{{ locale === 'id' ? '02 // ARSIP TULISAN' : '02 // WRITING ARCHIVE' }}</span>
 							</div>
 							<span class="text-slate-600 tabular-nums dark:text-slate-400">
 								VOL. 26
@@ -177,7 +177,7 @@ useSchemaOrg([
 						</div>
 
 						<span class="mb-1.5 block text-[11px] text-slate-600 tracking-[0.15em] font-mono uppercase dark:text-slate-400">
-							KLASIFIKASI NASKAH
+							{{ locale === 'id' ? 'KLASIFIKASI NASKAH' : 'ARCHIVE INDEX' }}
 						</span>
 						<h2 class="text-2xl text-slate-900 font-700 leading-tight font-heading sm:text-3xl dark:text-slate-50">
 							{{ page?.eyebrow || (locale === 'id' ? 'Catatan & Esai' : 'Writing & Essays') }}
@@ -188,18 +188,18 @@ useSchemaOrg([
 					<div class="mt-8 border-t border-slate-200/80 pt-6 dark:border-[#134e43]">
 						<div class="text-xs font-mono divide-y divide-slate-200/80 dark:divide-[#134e43]">
 							<div class="flex items-baseline justify-between py-2">
-								<span class="text-slate-700 dark:text-slate-300">TOTAL NASKAH</span>
-								<span class="text-slate-900 font-bold tabular-nums dark:text-slate-50">{{ posts?.length || 0 }} Artikel</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ locale === 'id' ? 'TOTAL NASKAH' : 'TOTAL ARTICLES' }}</span>
+								<span class="text-slate-900 font-bold tabular-nums dark:text-slate-50">{{ posts?.length || 0 }} {{ locale === 'id' ? 'Artikel' : 'Articles' }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2">
-								<span class="text-slate-700 dark:text-slate-300">TOPIK AKTIF</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ locale === 'id' ? 'TOPIK AKTIF' : 'ACTIVE TOPIC' }}</span>
 								<span class="text-brand-600 font-bold uppercase dark:text-brand-400">{{ selectedTag === 'ALL' ? (locale === 'id' ? 'SEMUA' : 'ALL') : selectedTag }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2">
 								<span class="text-slate-700 dark:text-slate-300">STATUS</span>
-								<span class="text-brand-600 font-semibold dark:text-brand-400">TERPUBLIKASI</span>
+								<span class="text-brand-600 font-semibold dark:text-brand-400">{{ locale === 'id' ? 'TERPUBLIKASI' : 'PUBLISHED' }}</span>
 							</div>
 						</div>
 					</div>
@@ -209,11 +209,11 @@ useSchemaOrg([
 				<div class="flex flex-col justify-between p-6 lg:col-span-8 lg:p-12 sm:p-10">
 					<div>
 						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							WACANA REKAYASA &amp; PENDIDIKAN // 2024–2026
+							{{ locale === 'id' ? 'WACANA REKAYASA & PENDIDIKAN // 2024–2026' : 'ENGINEERING & PEDAGOGY DISPATCHES // 2024–2026' }}
 						</div>
 
 						<h1 class="mb-6 text-balance text-3xl text-slate-900 font-700 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
-							{{ page?.title || (locale === 'id' ? 'Blog & Catatan Teknis' : 'Blog & Technical Notes') }}
+							{{ page?.title || (locale === 'id' ? 'Blog & Catatan Lapangan' : 'Blog & Field Notes') }}
 						</h1>
 
 						<p class="max-w-[56ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
@@ -222,7 +222,7 @@ useSchemaOrg([
 					</div>
 
 					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
-						<span>DIREKTORI ARTIKEL PERMADI.DEV</span>
+						<span>{{ locale === 'id' ? 'DIREKTORI ARTIKEL PERMADI.DEV' : 'PERMADI.DEV ARTICLE DIRECTORY' }}</span>
 					</div>
 				</div>
 			</div>
@@ -250,7 +250,7 @@ useSchemaOrg([
 			</div>
 
 			<span class="text-[11px] text-slate-600 uppercase tabular-nums dark:text-slate-400">
-				MENAMPILKAN {{ filteredPosts.length }} DARI {{ posts?.length || 0 }} NASKAH
+				{{ locale === 'id' ? `MENAMPILKAN ${filteredPosts.length} DARI ${posts?.length || 0} NASKAH` : `SHOWING ${filteredPosts.length} OF ${posts?.length || 0} ARTICLES` }}
 			</span>
 		</nav>
 
@@ -265,7 +265,7 @@ useSchemaOrg([
 					<div>
 						<div class="mb-4 flex items-center justify-between text-[11px] font-bold tracking-widest font-mono uppercase">
 							<span class="text-brand-700 dark:text-accent">
-								SPESIMEN 01 // NASKAH UTAMA
+								{{ locale === 'id' ? 'SPESIMEN 01 // NASKAH UTAMA' : 'SPECIMEN 01 // FEATURED ARTICLE' }}
 							</span>
 							<span class="text-slate-600 tabular-nums dark:text-slate-400">
 								{{ formatDate(leadPost.date) }}
@@ -302,13 +302,13 @@ useSchemaOrg([
 							:to="leadPost.url"
 							class="group flex cursor-pointer items-center gap-2 bg-brand-500 px-5 py-2.5 text-xs text-slate-950 font-bold tracking-wider font-mono uppercase shadow-xs transition-all duration-150 active:scale-95 hover:bg-brand-400 hover:-translate-y-0.5"
 						>
-							<span>BACA NASKAH LENGKAP</span>
+							<span>{{ locale === 'id' ? 'BACA NASKAH LENGKAP' : 'READ FULL ARTICLE' }}</span>
 							<span class="i-swisspost-arrowupright text-sm transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
 						</NuxtLink>
 
 						<div class="flex items-center gap-2 text-xs text-slate-700 font-mono dark:text-slate-300">
 							<span class="inline-block h-1.5 w-1.5 rounded-none bg-brand-500" />
-							<span>{{ leadPost.readingTime || 5 }} MENIT BACA</span>
+							<span>{{ leadPost.readingTime || 5 }} {{ locale === 'id' ? 'MENIT BACA' : 'MIN READ' }}</span>
 						</div>
 					</div>
 				</div>
@@ -317,24 +317,24 @@ useSchemaOrg([
 				<div class="flex flex-col justify-between bg-slate-50/40 p-6 lg:col-span-5 dark:bg-[#002420]/20 lg:p-10 sm:p-8">
 					<div>
 						<div class="mb-4 text-[10px] text-slate-600 tracking-widest font-mono uppercase dark:text-slate-400">
-							RINGKASAN TEORETIS // ESENSI
+							{{ locale === 'id' ? 'RINGKASAN TEORETIS // ESENSI' : 'THEORETICAL ABSTRACT // CORE' }}
 						</div>
 
 						<blockquote class="mb-6 border-l-2 border-brand-500 pl-4 text-xl text-slate-900 font-700 leading-snug font-heading sm:text-2xl dark:text-slate-50">
-							"Arsitektur perangkat lunak yang kokoh bertumpu pada kesederhanaan struktur dan ketelitian batas komponen."
+							{{ locale === 'id' ? '"Arsitektur perangkat lunak yang kokoh bertumpu pada kesederhanaan struktur dan ketelitian batas komponen."' : '"Robust software architecture rests on structural simplicity and clear component boundaries."' }}
 						</blockquote>
 
 						<div class="text-xs text-slate-700 font-mono space-y-2 dark:text-slate-300">
 							<div class="flex items-center justify-between border-b border-slate-200/60 py-1.5 dark:border-[#134e43]">
-								<span>PENULIS</span>
+								<span>{{ locale === 'id' ? 'PENULIS' : 'AUTHOR' }}</span>
 								<span class="text-slate-900 font-semibold dark:text-slate-50">Dinar Permadi Yusup</span>
 							</div>
 							<div class="flex items-center justify-between border-b border-slate-200/60 py-1.5 dark:border-[#134e43]">
-								<span>KATEGORI</span>
+								<span>{{ locale === 'id' ? 'KATEGORI' : 'CATEGORY' }}</span>
 								<span class="text-brand-600 font-bold uppercase dark:text-brand-400">{{ getCategoryLabel(leadPost.category) }}</span>
 							</div>
 							<div class="flex items-center justify-between py-1.5">
-								<span>LISENSI</span>
+								<span>{{ locale === 'id' ? 'LISENSI' : 'LICENSE' }}</span>
 								<span>CC BY-NC-SA 4.0</span>
 							</div>
 						</div>
@@ -342,7 +342,7 @@ useSchemaOrg([
 
 					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-4 text-[10px] text-slate-600 tracking-widest font-mono uppercase dark:border-[#134e43] dark:text-slate-400">
 						<span>REF. 01.01</span>
-						<span>PUBLIKASI DIGITAL</span>
+						<span>{{ locale === 'id' ? 'PUBLIKASI DIGITAL' : 'DIGITAL DISPATCH' }}</span>
 					</div>
 				</div>
 			</div>
@@ -392,12 +392,12 @@ useSchemaOrg([
 							:to="item.url"
 							class="inline-flex items-center gap-1.5 text-xs text-slate-900 font-bold tracking-wider font-mono uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 group-hover:text-brand-600 hover:-translate-y-0.5 dark:group-hover:text-brand-400"
 						>
-							<span>BACA CATATAN</span>
+							<span>{{ locale === 'id' ? 'BACA CATATAN' : 'READ ARTICLE' }}</span>
 							<span class="i-swisspost-arrowupright text-sm transition-transform group-hover:(translate-x-0.5 -translate-y-0.5)" />
 						</NuxtLink>
 
 						<span class="text-[11px] text-slate-600 font-mono tabular-nums dark:text-slate-400">
-							{{ item.readingTime || 4 }} MIN READ
+							{{ item.readingTime || 4 }} {{ locale === 'id' ? 'MENIT BACA' : 'MIN READ' }}
 						</span>
 					</div>
 				</article>
@@ -410,17 +410,17 @@ useSchemaOrg([
 			class="border-b border-slate-200/80 p-12 text-center dark:border-[#134e43]"
 		>
 			<span class="mb-2 block text-sm text-slate-600 tracking-widest font-mono uppercase dark:text-slate-400">
-				TIDAK ADA NASKAH DITEMUKAN
+				{{ locale === 'id' ? 'TIDAK ADA NASKAH DITEMUKAN' : 'NO ARTICLES FOUND' }}
 			</span>
 			<p class="mb-4 text-xs text-slate-700 font-sans dark:text-slate-300">
-				Tidak ada artikel yang sesuai dengan filter #{{ selectedTag }}.
+				{{ locale === 'id' ? `Tidak ada artikel yang sesuai dengan filter #${selectedTag}.` : `No articles found matching filter #${selectedTag}.` }}
 			</p>
 			<button
 				type="button"
 				class="border border-slate-900 px-4 py-2 text-xs font-bold tracking-wider font-mono uppercase dark:border-slate-50"
 				@click="selectTag('ALL')"
 			>
-				RESET FILTER
+				{{ locale === 'id' ? 'RESET FILTER' : 'RESET FILTER' }}
 			</button>
 		</div>
 
@@ -431,7 +431,7 @@ useSchemaOrg([
 			class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 bg-slate-50/50 px-6 py-6 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-8"
 		>
 			<div class="flex items-center gap-2">
-				<span class="text-slate-600 uppercase dark:text-slate-400">HALAMAN:</span>
+				<span class="text-slate-600 uppercase dark:text-slate-400">{{ locale === 'id' ? 'HALAMAN:' : 'PAGE:' }}</span>
 				<NuxtLink
 					v-for="pageNum in totalPages"
 					:key="pageNum"
@@ -451,14 +451,14 @@ useSchemaOrg([
 					:to="getPaginationUrl(currentPage - 1)"
 					class="border border-slate-300 px-3 py-1.5 font-bold uppercase transition-colors dark:border-[#134e43] hover:border-brand-500"
 				>
-					← SEBELUMNYA
+					{{ locale === 'id' ? '← SEBELUMNYA' : '← PREVIOUS' }}
 				</NuxtLink>
 				<NuxtLink
 					v-if="currentPage < totalPages"
 					:to="getPaginationUrl(currentPage + 1)"
 					class="border border-slate-300 px-3 py-1.5 font-bold uppercase transition-colors dark:border-[#134e43] hover:border-brand-500"
 				>
-					BERIKUTNYA →
+					{{ locale === 'id' ? 'BERIKUTNYA →' : 'NEXT →' }}
 				</NuxtLink>
 			</div>
 		</nav>
@@ -466,7 +466,7 @@ useSchemaOrg([
 		<!-- Bottom Archival Colophon -->
 		<div class="flex flex-col items-start justify-between gap-2 bg-slate-50/80 px-6 py-4 text-[11px] text-slate-600 font-mono sm:flex-row sm:items-center dark:bg-[#002420]/60 sm:px-8 dark:text-slate-400">
 			<div>
-				DOKUMENTASI SISTEM REKAYASA &amp; PUBLIKASI // PERMADI.DEV
+				{{ locale === 'id' ? 'DOKUMENTASI SISTEM REKAYASA & PUBLIKASI // PERMADI.DEV' : 'ENGINEERING SYSTEMS & EDITORIAL ARCHIVE // PERMADI.DEV' }}
 			</div>
 			<div>
 				MAJALENGKA, INDONESIA

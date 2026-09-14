@@ -154,7 +154,7 @@ defineOgImage('Bento', {
 						<div class="mb-4 flex items-center justify-between text-[11px] font-bold tracking-[0.2em] font-mono uppercase">
 							<div class="flex items-center gap-2 text-brand-700 dark:text-accent">
 								<span class="inline-block h-2 w-2 rounded-none bg-brand-500" />
-								<span>01 // KATALOG KARYA</span>
+								<span>{{ locale === 'id' ? '01 // KATALOG KARYA' : '01 // SELECTED WORKS' }}</span>
 							</div>
 							<span class="text-slate-600 tabular-nums dark:text-slate-400">
 								VOL. 26
@@ -162,7 +162,7 @@ defineOgImage('Bento', {
 						</div>
 
 						<span class="mb-1.5 block text-[11px] text-slate-600 tracking-[0.15em] font-mono uppercase dark:text-slate-400">
-							KLASIFIKASI ARSIP
+							{{ locale === 'id' ? 'KLASIFIKASI ARSIP' : 'ARCHIVE CLASSIFICATION' }}
 						</span>
 						<h2 class="text-2xl text-slate-900 font-700 leading-tight font-heading sm:text-3xl dark:text-slate-50">
 							{{ page?.eyebrow || (locale === 'id' ? 'Karya & Rekayasa' : 'Work & Systems') }}
@@ -173,18 +173,18 @@ defineOgImage('Bento', {
 					<div class="mt-8 border-t border-slate-200/80 pt-6 dark:border-[#134e43]">
 						<div class="text-xs font-mono divide-y divide-slate-200/80 dark:divide-[#134e43]">
 							<div class="flex items-baseline justify-between py-2">
-								<span class="text-slate-700 dark:text-slate-300">TOTAL SPESIMEN</span>
-								<span class="text-slate-900 font-bold tabular-nums dark:text-slate-50">{{ projects?.length || 0 }} Proyek</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ locale === 'id' ? 'TOTAL SPESIMEN' : 'TOTAL SPECIMENS' }}</span>
+								<span class="text-slate-900 font-bold tabular-nums dark:text-slate-50">{{ projects?.length || 0 }} {{ locale === 'id' ? 'Proyek' : 'Projects' }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2">
-								<span class="text-slate-700 dark:text-slate-300">FILTER AKTIF</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ locale === 'id' ? 'FILTER AKTIF' : 'ACTIVE FILTER' }}</span>
 								<span class="text-brand-600 font-bold uppercase dark:text-brand-400">{{ selectedTag === 'ALL' ? (locale === 'id' ? 'SEMUA' : 'ALL') : selectedTag }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2">
 								<span class="text-slate-700 dark:text-slate-300">STATUS</span>
-								<span class="text-brand-600 font-semibold dark:text-brand-400">TERDOKUMENTASI</span>
+								<span class="text-brand-600 font-semibold dark:text-brand-400">{{ locale === 'id' ? 'TERDOKUMENTASI' : 'DOCUMENTED' }}</span>
 							</div>
 						</div>
 					</div>
@@ -194,11 +194,11 @@ defineOgImage('Bento', {
 				<div class="flex flex-col justify-between p-6 lg:col-span-8 lg:p-12 sm:p-10">
 					<div>
 						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							ARSIP TERKURASI // 2024–2026
+							{{ locale === 'id' ? 'ARSIP TERKURASI // 2024–2026' : 'CURATED ARCHIVE // 2024–2026' }}
 						</div>
 
 						<h1 class="mb-6 text-balance text-3xl text-slate-900 font-700 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
-							{{ page?.title || (locale === 'id' ? 'Portofolio Projek & Studi Kasus' : 'Projects & Case Studies') }}
+							{{ page?.title || (locale === 'id' ? 'Arsip Projek & Studi Kasus' : 'Projects & Case Studies Archive') }}
 						</h1>
 
 						<p class="max-w-[56ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
@@ -207,7 +207,7 @@ defineOgImage('Bento', {
 					</div>
 
 					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
-						<span>DIREKTORI REKAYASA DIGITAL</span>
+						<span>{{ locale === 'id' ? 'DIREKTORI REKAYASA DIGITAL' : 'DIGITAL ENGINEERING DIRECTORY' }}</span>
 					</div>
 				</div>
 			</div>
@@ -235,7 +235,7 @@ defineOgImage('Bento', {
 			</div>
 
 			<span class="text-[11px] text-slate-600 uppercase tabular-nums dark:text-slate-400">
-				MENAMPILKAN {{ filteredProjects.length }} DARI {{ projects?.length || 0 }} KARYA
+				{{ locale === 'id' ? `MENAMPILKAN ${filteredProjects.length} DARI ${projects?.length || 0} KARYA` : `SHOWING ${filteredProjects.length} OF ${projects?.length || 0} WORKS` }}
 			</span>
 		</nav>
 
@@ -250,7 +250,7 @@ defineOgImage('Bento', {
 					<div>
 						<div class="mb-4 flex items-center justify-between text-[11px] font-bold tracking-widest font-mono uppercase">
 							<span class="text-brand-700 dark:text-accent">
-								SPESIMEN 01 // UNGGULAN
+								{{ locale === 'id' ? 'SPESIMEN 01 // UNGGULAN' : 'SPECIMEN 01 // FEATURED' }}
 							</span>
 							<span class="text-slate-600 tabular-nums dark:text-slate-400">
 								{{ formatDate(leadProject.date) }}
@@ -287,7 +287,7 @@ defineOgImage('Bento', {
 							:to="leadProject.url"
 							class="group flex cursor-pointer items-center gap-2 bg-brand-500 px-5 py-2.5 text-xs text-slate-950 font-bold tracking-wider font-mono uppercase shadow-xs transition-all duration-150 active:scale-95 hover:bg-brand-400 hover:-translate-y-0.5"
 						>
-							<span>BUKA STUDI KASUS</span>
+							<span>{{ locale === 'id' ? 'BUKA STUDI KASUS' : 'VIEW CASE STUDY' }}</span>
 							<span class="i-swisspost-arrowupright text-sm transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
 						</NuxtLink>
 
@@ -334,8 +334,8 @@ defineOgImage('Bento', {
 					</div>
 
 					<div class="mt-4 flex items-center justify-between text-[10px] text-slate-600 tracking-widest font-mono uppercase dark:text-slate-400">
-						<span>FIG. 01.01 // PRATINJAU VISUAL ANTARMUKA</span>
-						<span>RASIO: 16:9</span>
+						<span>{{ locale === 'id' ? 'FIG. 01.01 // PRATINJAU VISUAL ANTARMUKA' : 'FIG. 01.01 // INTERFACE VISUAL PREVIEW' }}</span>
+						<span>{{ locale === 'id' ? 'RASIO: 16:9' : 'RATIO: 16:9' }}</span>
 					</div>
 				</div>
 			</div>
@@ -400,7 +400,7 @@ defineOgImage('Bento', {
 							:to="item.url"
 							class="inline-flex items-center gap-1.5 text-xs text-slate-900 font-bold tracking-wider font-mono uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 group-hover:text-brand-600 hover:-translate-y-0.5 dark:group-hover:text-brand-400"
 						>
-							<span>STUDI KASUS</span>
+							<span>{{ locale === 'id' ? 'STUDI KASUS' : 'CASE STUDY' }}</span>
 							<span class="i-swisspost-arrowupright text-sm transition-transform group-hover:(translate-x-0.5 -translate-y-0.5)" />
 						</NuxtLink>
 
@@ -440,10 +440,10 @@ defineOgImage('Bento', {
 			class="border-b border-slate-200/80 p-12 text-center dark:border-[#134e43]"
 		>
 			<span class="mb-2 block text-sm text-slate-600 tracking-widest font-mono uppercase dark:text-slate-400">
-				TIDAK ADA SPESIMEN DITEMUKAN
+				{{ locale === 'id' ? 'TIDAK ADA SPESIMEN DITEMUKAN' : 'NO SPECIMENS FOUND' }}
 			</span>
 			<p class="mb-4 text-xs text-slate-700 font-sans dark:text-slate-300">
-				Tidak ada projek yang sesuai dengan filter #{{ selectedTag }}.
+				{{ locale === 'id' ? `Tidak ada projek yang sesuai dengan filter #${selectedTag}.` : `No projects matching filter #${selectedTag}.` }}
 			</p>
 			<button
 				type="button"
@@ -461,7 +461,7 @@ defineOgImage('Bento', {
 			class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 bg-slate-50/50 px-6 py-6 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-8"
 		>
 			<div class="flex items-center gap-2">
-				<span class="text-slate-600 uppercase dark:text-slate-400">HALAMAN:</span>
+				<span class="text-slate-600 uppercase dark:text-slate-400">{{ locale === 'id' ? 'HALAMAN:' : 'PAGE:' }}</span>
 				<NuxtLink
 					v-for="pageNum in totalPages"
 					:key="pageNum"
@@ -481,14 +481,14 @@ defineOgImage('Bento', {
 					:to="getPaginationUrl(currentPage - 1)"
 					class="border border-slate-300 px-3 py-1.5 font-bold uppercase transition-colors dark:border-[#134e43] hover:border-brand-500"
 				>
-					← SEBELUMNYA
+					{{ locale === 'id' ? '← SEBELUMNYA' : '← PREVIOUS' }}
 				</NuxtLink>
 				<NuxtLink
 					v-if="currentPage < totalPages"
 					:to="getPaginationUrl(currentPage + 1)"
 					class="border border-slate-300 px-3 py-1.5 font-bold uppercase transition-colors dark:border-[#134e43] hover:border-brand-500"
 				>
-					BERIKUTNYA →
+					{{ locale === 'id' ? 'BERIKUTNYA →' : 'NEXT →' }}
 				</NuxtLink>
 			</div>
 		</nav>
@@ -496,7 +496,7 @@ defineOgImage('Bento', {
 		<!-- Bottom Archival Colophon -->
 		<div class="flex flex-col items-start justify-between gap-2 bg-slate-50/80 px-6 py-4 text-[11px] text-slate-600 font-mono sm:flex-row sm:items-center dark:bg-[#002420]/60 sm:px-8 dark:text-slate-400">
 			<div>
-				DOKUMENTASI SISTEM REKAYASA &amp; STUDI KASUS // PERMADI.DEV
+				{{ locale === 'id' ? 'DOKUMENTASI SISTEM REKAYASA & STUDI KASUS // PERMADI.DEV' : 'ENGINEERING SYSTEMS & CASE STUDIES // PERMADI.DEV' }}
 			</div>
 			<div>
 				MAJALENGKA, INDONESIA

@@ -299,34 +299,34 @@ useSchemaOrg([
 				<div class="flex flex-col justify-between bg-slate-50/40 p-6 lg:col-span-4 dark:bg-[#002420]/20 sm:p-8">
 					<div>
 						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							■ 03 // ARSIP VISUAL VOL. 26
+							{{ locale === 'id' ? '■ 03 // ARSIP VISUAL VOL. 26' : '■ 03 // VISUAL ARCHIVE VOL. 26' }}
 						</div>
 
 						<div class="text-xs font-mono divide-y divide-slate-200/80 dark:divide-[#134e43]">
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">TOTAL SPESIMEN</span>
-								<span class="text-slate-900 font-bold tabular-nums dark:text-slate-50">{{ allItems.length }} Dokumen</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ locale === 'id' ? 'TOTAL SPESIMEN' : 'TOTAL SPECIMENS' }}</span>
+								<span class="text-slate-900 font-bold tabular-nums dark:text-slate-50">{{ allItems.length }} {{ locale === 'id' ? 'Dokumen' : 'Documents' }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">HOSTING MEDIA</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ locale === 'id' ? 'HOSTING MEDIA' : 'MEDIA HOSTING' }}</span>
 								<span class="text-slate-900 font-medium dark:text-slate-50">CLOUDINARY EDGE</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">OPTIMASI FORMAT</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ locale === 'id' ? 'OPTIMASI FORMAT' : 'FORMAT OPTIMIZATION' }}</span>
 								<span class="text-brand-600 font-bold dark:text-accent">WEBP / AVIF LQIP</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">KURASI</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ locale === 'id' ? 'KURASI' : 'CURATION' }}</span>
 								<span class="text-slate-900 font-medium dark:text-slate-50">Dinar Permadi Yusup</span>
 							</div>
 						</div>
 					</div>
 
 					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
-						<span>HAK CIPTA</span>
+						<span>{{ locale === 'id' ? 'HAK CIPTA' : 'COPYRIGHT' }}</span>
 						<span>CC BY-NC-ND 4.0</span>
 					</div>
 				</div>
@@ -335,7 +335,7 @@ useSchemaOrg([
 				<div class="flex flex-col justify-between p-6 lg:col-span-8 lg:p-12 sm:p-10">
 					<div>
 						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							DOKUMENTASI VISUAL &amp; STUDIO
+							{{ locale === 'id' ? 'DOKUMENTASI VISUAL & STUDIO' : 'VISUAL DOCUMENTATION & STUDIO' }}
 						</div>
 
 						<h1 class="mb-6 text-balance text-3xl text-slate-900 font-900 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
@@ -355,7 +355,7 @@ useSchemaOrg([
 					</div>
 
 					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
-						<span>ARSIP PERMADI.DEV</span>
+						<span>{{ locale === 'id' ? 'ARSIP PERMADI.DEV' : 'PERMADI.DEV ARCHIVE' }}</span>
 					</div>
 				</div>
 			</div>
@@ -378,7 +378,7 @@ useSchemaOrg([
 						: 'border-slate-300 dark:border-[#134e43] text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#002420]'"
 					@click="selectTag('ALL')"
 				>
-					SEMUA ({{ allItems.length }})
+					{{ locale === 'id' ? 'SEMUA' : 'ALL' }} ({{ allItems.length }})
 				</button>
 
 				<!-- Individual Tags -->
@@ -398,7 +398,7 @@ useSchemaOrg([
 
 			<!-- Quick Metric Indicator -->
 			<div class="text-[11px] text-slate-600 font-bold tracking-wider uppercase tabular-nums dark:text-slate-400">
-				DITAMPILKAN: {{ displayedItems.length }} / {{ filteredGallery.length }}
+				{{ locale === 'id' ? 'DITAMPILKAN:' : 'DISPLAYING:' }} {{ displayedItems.length }} / {{ filteredGallery.length }}
 			</div>
 		</div>
 
@@ -422,7 +422,7 @@ useSchemaOrg([
 				<div class="flex items-center justify-between border-b border-slate-200/80 bg-slate-50/50 px-4 py-3 text-[10px] font-bold tracking-wider uppercase dark:border-[#134e43] dark:bg-[#002420]/30">
 					<div class="flex items-center gap-1.5 text-brand-700 dark:text-accent">
 						<span class="inline-block h-1.5 w-1.5 bg-brand-500" />
-						<span>SPESIMEN {{ String(i + 1).padStart(2, '0') }}</span>
+						<span>{{ locale === 'id' ? 'SPESIMEN' : 'SPECIMEN' }} {{ String(i + 1).padStart(2, '0') }}</span>
 					</div>
 					<span class="text-slate-600 tabular-nums dark:text-slate-400">
 						{{ item.width || 720 }}×{{ item.height || 540 }} HD
@@ -518,7 +518,7 @@ useSchemaOrg([
 				v-else
 				class="text-[11px] text-slate-600 font-bold tracking-wider uppercase dark:text-slate-400"
 			>
-				■ AKHIR ARSIP FOTO // {{ filteredGallery.length }} TOTAL SPESIMEN TERCATAT
+				{{ locale === 'id' ? `■ AKHIR ARSIP FOTO // ${filteredGallery.length} TOTAL SPESIMEN TERCATAT` : `■ END OF VISUAL ARCHIVE // ${filteredGallery.length} TOTAL SPECIMENS CATALOGED` }}
 			</div>
 		</div>
 
@@ -528,7 +528,7 @@ useSchemaOrg([
 			class="w-full border-x border-b border-slate-200/80 bg-white p-12 text-center text-xs font-mono dark:border-[#134e43] dark:bg-[#001e1c]"
 		>
 			<div class="mb-2 text-sm text-brand-600 font-bold dark:text-accent">
-				■ TIDAK ADA SPESIMEN TERSEDIA
+				{{ locale === 'id' ? '■ TIDAK ADA SPESIMEN TERSEDIA' : '■ NO SPECIMENS AVAILABLE' }}
 			</div>
 			<p class="text-slate-700 dark:text-slate-300">
 				{{ locale === 'id' ? 'Tidak ada foto yang cocok dengan filter tag terpilih.' : 'No photos match the selected tag filter.' }}
@@ -565,7 +565,7 @@ useSchemaOrg([
 								<div class="flex items-center gap-2 truncate text-[11px] font-bold tracking-wider uppercase">
 									<span class="inline-block h-2 w-2 shrink-0 bg-brand-500" />
 									<span class="shrink-0 text-brand-700 dark:text-accent">
-										SPESIMEN [{{ String(currentModalIndex + 1).padStart(2, '0') }}/{{ String(filteredGallery.length).padStart(2, '0') }}]
+										{{ locale === 'id' ? 'SPESIMEN' : 'SPECIMEN' }} [{{ String(currentModalIndex + 1).padStart(2, '0') }}/{{ String(filteredGallery.length).padStart(2, '0') }}]
 									</span>
 									<span class="text-slate-300 dark:text-[#134e43]">|</span>
 									<span class="truncate text-slate-900 dark:text-slate-50">
@@ -584,7 +584,7 @@ useSchemaOrg([
 										title="Foto Sebelumnya (Panah Kiri)"
 										@click="prevPhoto"
 									>
-										← SEBELUMNYA
+										{{ locale === 'id' ? '← SEBELUMNYA' : '← PREVIOUS' }}
 									</button>
 
 									<!-- Next Button -->
@@ -596,7 +596,7 @@ useSchemaOrg([
 										title="Foto Selanjutnya (Panah Kanan)"
 										@click="nextPhoto"
 									>
-										BERIKUTNYA →
+										{{ locale === 'id' ? 'BERIKUTNYA →' : 'NEXT →' }}
 									</button>
 
 									<!-- Download HD Button -->
@@ -609,7 +609,7 @@ useSchemaOrg([
 										class="hidden cursor-pointer items-center gap-1 border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-all duration-150 sm:inline-flex active:scale-95 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-accent"
 									>
 										<span class="i-swisspost-download text-xs" />
-										<span>UNDUH HD</span>
+										<span>{{ locale === 'id' ? 'UNDUH HD' : 'DOWNLOAD HD' }}</span>
 									</a>
 
 									<!-- Close Button -->
@@ -639,12 +639,12 @@ useSchemaOrg([
 							<!-- Technical Parameters Ledger -->
 							<div class="flex flex-wrap items-center justify-between gap-4 border-t border-slate-200/80 bg-slate-50/80 p-3.5 text-[11px] text-slate-700 dark:border-[#134e43] dark:bg-[#002420]/60 sm:p-4 dark:text-slate-300">
 								<div class="flex flex-wrap items-center gap-2">
-									<span class="text-slate-900 font-bold dark:text-slate-50">PARAMETER:</span>
+									<span class="text-slate-900 font-bold dark:text-slate-50">{{ locale === 'id' ? 'PARAMETER:' : 'PARAMETERS:' }}</span>
 									<span class="tabular-nums">{{ selectedPhoto.width || 720 }}×{{ selectedPhoto.height || 540 }} PX</span>
 									<span>//</span>
 									<span>FORMAT: CLOUDINARY SWR</span>
 									<span>//</span>
-									<span>LISENSI: CC BY-NC-ND 4.0</span>
+									<span>{{ locale === 'id' ? 'LISENSI: CC BY-NC-ND 4.0' : 'LICENSE: CC BY-NC-ND 4.0' }}</span>
 								</div>
 
 								<div
