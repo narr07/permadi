@@ -25,6 +25,16 @@ useSchemaOrg([
 		'@type': 'ContactPage',
 	}),
 ])
+
+function getSocialIcon(name?: string, icon?: string) {
+	if (icon && icon.startsWith('i-swisspost-')) return icon
+	const n = (name || '').toLowerCase()
+	if (n.includes('git')) return 'i-swisspost-github'
+	if (n.includes('twit') || n === 'x') return 'i-swisspost-twitterx'
+	if (n.includes('insta')) return 'i-swisspost-instagram'
+	if (n.includes('behance')) return 'i-swisspost-icondesign'
+	return 'i-swisspost-link'
+}
 </script>
 
 <template>
@@ -37,13 +47,14 @@ useSchemaOrg([
 				<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
 				<div class="max-w-2xl">
 					<div class="mb-3.5 flex items-center justify-between gap-3">
-						<div class="inline-flex items-center border border-brand-200/60 bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
+						<div class="inline-flex items-center gap-1.5 border border-brand-200/60 bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
+							<span class="i-swisspost-documentemail text-xs" />
 							<span>{{ page?.section_label || (locale === 'id' ? 'Kontak & Kolaborasi' : 'Contact & Connect') }}</span>
 						</div>
 
 						<!-- Logo Compact Badge di Mobile -->
 						<div class="flex shrink-0 items-center justify-center border border-slate-200/70 bg-white p-1.5 shadow-xs md:hidden dark:border-slate-700/60 dark:bg-slate-800/80">
-							<Logo :size="36" />
+							<StaticLogo :size="36" />
 						</div>
 					</div>
 
@@ -59,7 +70,7 @@ useSchemaOrg([
 				<!-- Sisi Kanan: Interactive Logo Widget (Desktop) -->
 				<div class="hidden shrink-0 items-center justify-center md:flex">
 					<div class="border border-brand-500/30 bg-white p-6 shadow-sm dark:border-brand-400/20 dark:bg-[#002b27]">
-						<Logo size="64" />
+						<StaticLogo :size="64" />
 					</div>
 				</div>
 			</div>
@@ -73,15 +84,15 @@ useSchemaOrg([
 				class="relative flex flex-col justify-between border border-[#134e43] bg-[#002b27] p-6 text-[#f8fafa] md:col-span-7 sm:p-8"
 			>
 				<div>
-					<span class="mb-3 flex items-center gap-1.5 text-xs text-brand-300 font-semibold tracking-wide">
-						<span class="i-swisspost-mail text-xs" /> {{ page.email_card.label || 'Direct Inquiries' }}
+					<span class="mb-3 flex items-center gap-1.5 text-xs text-brand-200 font-semibold tracking-wide">
+						<span class="i-swisspost-mail text-xs text-brand-300" /> {{ page.email_card.label || 'Direct Inquiries' }}
 					</span>
 					<h3 class="text-3xl text-white font-900 tracking-tight font-heading sm:text-5xl">
 						{{ page.email_card.email || 'dinar@permadi.dev' }}
 					</h3>
 					<p
 						v-if="page.email_card.description"
-						class="mt-3 max-w-md text-sm text-slate-300 leading-relaxed"
+						class="mt-3 max-w-md text-sm text-slate-200 leading-relaxed"
 					>
 						{{ page.email_card.description }}
 					</p>
@@ -96,7 +107,7 @@ useSchemaOrg([
 					</a>
 					<span
 						v-if="page.email_card.meta"
-						class="text-xs text-brand-300/80"
+						class="text-xs text-brand-200 font-mono font-medium"
 					>
 						{{ page.email_card.meta }}
 					</span>
@@ -113,7 +124,7 @@ useSchemaOrg([
 						<span class="animate-status-pulse inline-block h-2 w-2 rounded-none bg-emerald-500" />
 						{{ page.status_card.label || (locale === 'id' ? 'Status Ketersediaan' : 'Availability Status') }}
 					</span>
-					<h3 class="text-2xl font-900 leading-tight font-heading">
+					<h3 class="text-2xl text-slate-900 font-900 leading-tight font-heading dark:text-white">
 						{{ page.status_card.title }}
 					</h3>
 					<p
@@ -123,15 +134,15 @@ useSchemaOrg([
 						{{ page.status_card.description }}
 					</p>
 				</div>
-				<div class="mt-6 flex items-center justify-between border-t border-slate-200 pt-3 text-xs text-slate-800 font-mono dark:border-[#134e43] dark:text-slate-300">
+				<div class="mt-6 flex items-center justify-between border-t border-slate-200/60 pt-3 text-xs text-slate-700 font-mono dark:border-slate-800/60 dark:text-slate-300">
 					<span
 						v-if="page.status_card.location"
-						class="flex items-center gap-1"
+						class="flex items-center gap-1.5 font-semibold"
 					>
-						<span class="i-swisspost-locationpin text-sm" />
+						<span class="i-swisspost-locationpin text-sm text-brand-600 dark:text-brand-400" />
 						{{ page.status_card.location }}
 					</span>
-					<span v-if="page.status_card.timezone">
+					<span v-if="page.status_card.timezone" class="font-medium">
 						{{ page.status_card.timezone }}
 					</span>
 				</div>
@@ -145,7 +156,7 @@ useSchemaOrg([
 				<div>
 					<span
 						v-if="page.social_card.label"
-						class="mb-2 block section-label text-brand-700 dark:text-brand-400"
+						class="mb-2 block section-label text-brand-800 dark:text-brand-300"
 					>
 						{{ page.social_card.label }}
 					</span>
@@ -169,13 +180,13 @@ useSchemaOrg([
 						:href="item.url"
 						target="_blank"
 						rel="noopener"
-						class="group block border border-slate-200/80 bg-slate-50 p-3 text-center transition-all duration-150 active:scale-95 dark:border-[#134e43] dark:bg-slate-800/60 hover:(bg-brand-50 text-brand-800 -translate-y-0.5) focus-ring dark:hover:(bg-brand-950/40 text-brand-400)"
+						class="group block border border-slate-200/80 bg-slate-50 p-3 text-center text-slate-900 transition-all duration-150 active:scale-95 dark:border-[#134e43] dark:bg-slate-800/60 dark:text-slate-100 hover:(bg-brand-50 text-brand-950 -translate-y-0.5) focus-ring dark:hover:(bg-brand-950/40 text-brand-200)"
 					>
 						<span
-							:class="item.icon || 'i-swisspost-link'"
-							class="mx-auto mb-1 block text-xl transition-transform duration-150 group-hover:scale-110"
+							:class="getSocialIcon(item.name, item.icon)"
+							class="mx-auto mb-1 block text-xl text-slate-800 transition-transform duration-150 group-hover:scale-110 dark:text-slate-200 group-hover:text-brand-950 dark:group-hover:text-brand-200"
 						/>
-						<span class="text-xs font-semibold">{{ item.name }}</span>
+						<span class="text-xs text-slate-900 font-semibold dark:text-slate-100">{{ item.name }}</span>
 					</a>
 				</div>
 			</div>
@@ -188,7 +199,7 @@ useSchemaOrg([
 				<div>
 					<span
 						v-if="page.newsletter_card.label"
-						class="mb-2 block section-label text-brand-700 dark:text-brand-400"
+						class="mb-2 block section-label text-brand-800 dark:text-brand-300"
 					>
 						{{ page.newsletter_card.label }}
 					</span>

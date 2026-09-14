@@ -23,7 +23,6 @@ const sizeValue = computed(() => {
 			class="block h-full w-full rounded-full"
 			viewBox="0 0 800 800"
 			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
 			aria-label="Permadi Logo"
 		>
 			<!-- Base Circle Shape -->

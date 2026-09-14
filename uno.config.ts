@@ -9,6 +9,41 @@ import {
 } from 'unocss'
 
 export default defineConfig({
+	content: {
+		pipeline: {
+			include: [
+				/\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html|ya?ml)($|\?)/,
+				'content/**/*.yml',
+				'content/**/*.yaml',
+			],
+		},
+	},
+
+	safelist: [
+		'i-swisspost-github',
+		'i-swisspost-twitterx',
+		'i-swisspost-instagram',
+		'i-swisspost-icondesign',
+		'i-swisspost-brush',
+		'i-swisspost-mail',
+		'i-swisspost-locationpin',
+		'i-swisspost-arrowright',
+		'i-swisspost-arrowupright',
+		'i-swisspost-arrowleft',
+		'i-swisspost-arrowup',
+		'i-swisspost-globecontinents',
+		'i-swisspost-code',
+		'i-swisspost-checkmark',
+		'i-swisspost-link',
+		'i-swisspost-userunknown',
+		'i-swisspost-wifion',
+		'i-swisspost-documentemail',
+		'i-swisspost-search',
+		'i-swisspost-reloadright',
+		'i-swisspost-closex',
+		'i-swisspost-desktop',
+	],
+
 	presets: [
 		presetWind3({
 			dark: 'class',
@@ -237,7 +272,7 @@ export default defineConfig({
 	shortcuts: {
 		// Status & Badges
 		'status-dot': 'w-2 h-2 rounded-none bg-brand-500 inline-block shadow-[0_0_0_2px_#ccfbf2] dark:shadow-[0_0_0_2px_rgba(20,184,152,0.2)] animate-status-pulse',
-		'section-label': 'uppercase tracking-[0.15em] text-[11px] font-bold text-brand-700 dark:text-accent font-sans',
+		'section-label': 'uppercase tracking-[0.15em] text-[11px] font-bold text-brand-800 dark:text-accent font-sans',
 		'eyebrow': 'section-label',
 		'kicker': 'section-label',
 		'shadow-xs': 'shadow-sm',
@@ -245,14 +280,14 @@ export default defineConfig({
 		'focus-ring': 'outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0',
 
 		'heading-page': 'font-heading font-900 text-3xl sm:text-5xl lg:text-6xl tracking-tight text-slate-950 dark:text-slate-50 leading-[1.05] mb-3',
-		'heading-page-sub': 'text-slate-950/80 dark:text-slate-50/80 text-base sm:text-lg leading-relaxed max-w-xl',
+		'heading-page-sub': 'text-slate-700 dark:text-slate-200 text-base sm:text-lg leading-relaxed max-w-xl',
 
 		'heading-hero': 'font-heading font-900 mb-4 text-4xl sm:text-6xl leading-[0.95] tracking-tight text-slate-950 dark:text-slate-50',
-		'heading-sub': 'text-slate-950/80 dark:text-slate-50/80 text-base sm:text-lg leading-relaxed max-w-xl',
+		'heading-sub': 'text-slate-700 dark:text-slate-200 text-base sm:text-lg leading-relaxed max-w-xl',
 		'heading-card-lg': 'font-heading font-900 text-xl tracking-tight text-slate-950 dark:text-slate-50',
 		'heading-card-md': 'font-heading font-900 text-lg text-slate-950 dark:text-slate-50',
 		'text-body': 'font-sans text-sm text-slate-950 dark:text-slate-50',
-		'text-meta': 'font-sans text-xs text-slate-950/70 dark:text-slate-50/70',
+		'text-meta': 'font-sans text-xs text-slate-700 dark:text-slate-300',
 
 		'btn-primary': 'focus-ring inline-flex items-center justify-center gap-2 px-5 py-2.5 font-bold text-white bg-brand-900 hover:bg-brand-950 dark:bg-brand-400 dark:text-slate-950 dark:hover:bg-brand-300 hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-150 cursor-pointer',
 		'btn-ghost': 'focus-ring inline-flex items-center justify-center gap-2 px-5 py-2.5 font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-[0.98] transition-all duration-150 cursor-pointer',
@@ -264,14 +299,13 @@ export default defineConfig({
 		'swiss-grid-12': 'grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-12 gap-4 sm:gap-6 auto-rows-auto',
 		'swiss-lead-8': 'col-span-1 sm:grid-cols-6 lg:col-span-8 p-6 sm:p-8 border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27]',
 		'swiss-rail-4': 'col-span-1 sm:col-span-6 lg:col-span-4 p-6 sm:p-8 border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] flex flex-col justify-between',
-		'swiss-card-4': 'col-span-1 sm:col-span-3 lg:col-span-4 p-6 border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27]',
-		'swiss-card-6': 'col-span-1 sm:col-span-6 lg:col-span-6 p-6 sm:p-8 border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27]',
-		'swiss-eyebrow': 'text-[11px] font-bold tracking-[0.15em] uppercase text-brand-700 dark:text-accent font-sans',
+		'swiss-card-flat': 'border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] p-6',
+		'swiss-card-interactive': 'border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] p-6 hover:border-brand-500 transition-colors',
 		'swiss-h1': 'font-heading font-900 text-4xl sm:text-6xl tracking-tight text-slate-900 dark:text-slate-50 leading-[0.95] text-balance',
 		'swiss-h2': 'font-heading font-900 text-2xl sm:text-4xl tracking-tight text-slate-900 dark:text-slate-50 leading-tight',
 		'swiss-h3': 'font-heading font-900 text-xl sm:text-2xl tracking-tight text-slate-900 dark:text-slate-50 leading-snug',
-		'swiss-body': 'font-sans text-sm sm:text-base text-slate-900/70 dark:text-slate-50/70 leading-relaxed max-w-[60ch]',
-		'swiss-meta': 'font-mono text-xs text-slate-900/40 dark:text-slate-50/40 tabular-nums',
+		'swiss-body': 'font-sans text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed max-w-[60ch]',
+		'swiss-meta': 'font-mono text-xs text-slate-600 dark:text-slate-400 tabular-nums',
 		'swiss-hairline-b': 'border-b border-slate-200/80 dark:border-[#134e43]',
 		'swiss-hairline-t': 'border-t border-slate-200/80 dark:border-[#134e43]',
 		'swiss-hairline-r': 'border-r border-slate-200/80 dark:border-[#134e43]',

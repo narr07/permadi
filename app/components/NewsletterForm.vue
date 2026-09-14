@@ -153,7 +153,7 @@ const onSubmit = handleSubmit(async (values) => {
 }
 
 .newsletter-input::placeholder {
-	color: #84a8a4;
+	color: #375c58;
 }
 
 .newsletter-btn {
@@ -210,7 +210,7 @@ const onSubmit = handleSubmit(async (values) => {
 }
 
 :global(.dark) .newsletter-input::placeholder {
-	color: #537c77;
+	color: #84a8a4;
 }
 
 :global(.dark) .newsletter-btn {

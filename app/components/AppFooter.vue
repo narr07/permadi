@@ -31,7 +31,7 @@ const socialLinks = [
 		v-if="isHomePage"
 		class="w-full flex items-center justify-between border-t border-slate-200/80 bg-slate-50/90 px-6 py-4 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/80 sm:px-8"
 	>
-		<span class="text-slate-900/50 tracking-wider uppercase dark:text-slate-50/50">
+		<span class="text-slate-600 tracking-wider uppercase dark:text-slate-400">
 			MAJALENGKA, JAWA BARAT
 		</span>
 
@@ -59,7 +59,7 @@ const socialLinks = [
 				<h3 class="mb-2 text-xl text-slate-900 font-900 font-heading sm:text-2xl dark:text-slate-50">
 					{{ t('newsletter.title', 'Info Artikel & Kajian Desain') }}
 				</h3>
-				<p class="text-xs text-slate-900/70 leading-relaxed font-sans sm:text-sm dark:text-slate-50/70">
+				<p class="text-xs text-slate-700 leading-relaxed font-sans sm:text-sm dark:text-slate-300">
 					{{ t('newsletter.description', 'Dapatkan tulisan teknis, insight pedagogi, dan rancangan terbaru langsung di inbox email kamu. Bebas spam.') }}
 				</p>
 			</div>
@@ -71,7 +71,7 @@ const socialLinks = [
 
 		<!-- Bottom Copyright & Back to Top Strip -->
 		<div class="flex flex-col items-start justify-between gap-4 bg-slate-50/60 px-6 py-4 text-xs font-mono sm:flex-row sm:items-center dark:bg-[#002420]/40 sm:px-8">
-			<div class="flex items-center gap-2 text-slate-900/60 dark:text-slate-50/60">
+			<div class="flex items-center gap-2 text-slate-700 dark:text-slate-300">
 				<span>© 2021–<ClientOnly fallback="2026">{{ currentYear }}</ClientOnly></span>
 				<span>·</span>
 				<span class="text-slate-900 font-bold dark:text-slate-100">Dinar Permadi Yusup</span>

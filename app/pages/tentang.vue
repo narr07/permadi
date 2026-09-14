@@ -43,6 +43,16 @@ useSchemaOrg([
 		}),
 	}),
 ])
+
+function getToolIcon(name?: string) {
+	const n = (name || '').toLowerCase()
+	if (n.includes('nuxt') || n.includes('vue')) return 'i-swisspost-code'
+	if (n.includes('flutter') || n.includes('dart') || n.includes('mobile')) return 'i-swisspost-desktop'
+	if (n.includes('adobe') || n.includes('photo') || n.includes('design')) return 'i-swisspost-brush'
+	if (n.includes('cloudflare') || n.includes('nitro') || n.includes('edge')) return 'i-swisspost-globecontinents'
+	if (n.includes('unocss') || n.includes('tailwind')) return 'i-swisspost-icondesign'
+	return 'i-swisspost-code'
+}
 </script>
 
 <template>
@@ -55,13 +65,14 @@ useSchemaOrg([
 				<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
 				<div class="max-w-2xl">
 					<div class="mb-3.5 flex items-center justify-between gap-3">
-						<div class="inline-flex items-center border border-brand-200/60 bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
+						<div class="inline-flex items-center gap-1.5 border border-brand-200/60 bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
+							<span class="i-swisspost-userunknown text-xs" />
 							<span>{{ page?.section_label || (locale === 'id' ? 'Tentang Saya' : 'About Me') }}</span>
 						</div>
 
 						<!-- Logo Compact Badge di Mobile -->
 						<div class="flex shrink-0 items-center justify-center border border-slate-200/70 bg-white p-1.5 shadow-xs md:hidden dark:border-slate-700/60 dark:bg-slate-800/80">
-							<Logo :size="36" />
+							<StaticLogo :size="36" />
 						</div>
 					</div>
 
@@ -77,7 +88,7 @@ useSchemaOrg([
 				<!-- Sisi Kanan: Interactive Logo Widget (Desktop) -->
 				<div class="hidden shrink-0 items-center justify-center md:flex">
 					<div class="border border-brand-500/30 bg-white p-6 shadow-sm dark:border-brand-400/20 dark:bg-[#002b27]">
-						<Logo size="64" />
+						<StaticLogo :size="64" />
 					</div>
 				</div>
 			</div>
@@ -93,7 +104,7 @@ useSchemaOrg([
 				<div>
 					<span
 						v-if="page.story_card.label"
-						class="mb-3 block section-label text-brand-700 dark:text-brand-400"
+						class="mb-3 block section-label text-brand-800 dark:text-brand-300"
 					>
 						{{ page.story_card.label }}
 					</span>
@@ -133,7 +144,7 @@ useSchemaOrg([
 				<div>
 					<span
 						v-if="page.toolkit_card.label"
-						class="mb-3 block section-label text-brand-700 dark:text-brand-400"
+						class="mb-3 block section-label text-brand-800 dark:text-brand-300"
 					>
 						{{ page.toolkit_card.label }}
 					</span>
@@ -142,14 +153,20 @@ useSchemaOrg([
 					</h3>
 					<ul
 						v-if="page.toolkit_card.tools && page.toolkit_card.tools.length > 0"
-						class="space-y-3 divide-y divide-slate-200/50 dark:divide-slate-800/50"
+						class="space-y-2.5 divide-y divide-slate-200/50 dark:divide-slate-800/50"
 					>
 						<li
 							v-for="t in page.toolkit_card.tools"
 							:key="t.name"
 							class="group flex items-center justify-between px-1.5 py-1 text-xs transition-all duration-150 hover:bg-slate-50 first:pt-0 dark:hover:bg-slate-800/50"
 						>
-							<span class="text-slate-900 font-semibold transition-colors dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400">{{ t.name }}</span>
+							<span class="flex items-center gap-1.5 text-slate-900 font-semibold transition-colors dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400">
+								<span
+									:class="getToolIcon(t.name)"
+									class="text-[11px] text-brand-600 dark:text-brand-400"
+								/>
+								{{ t.name }}
+							</span>
 							<span class="text-[11px] text-slate-600 font-mono dark:text-slate-400">{{ t.desc }}</span>
 						</li>
 					</ul>
@@ -159,32 +176,36 @@ useSchemaOrg([
 				</div>
 			</div>
 
-			<!-- Location & Remote Work Card (Span 5 - Warm Sand) -->
-			<div class="sand-card-clean flex flex-col justify-between p-6 md:col-span-5 sm:p-7">
+			<!-- Location & Remote Work Card (Span 5) -->
+			<div class="flex flex-col justify-between border border-slate-200/80 bg-white p-6 md:col-span-5 dark:border-[#134e43] dark:bg-[#002b27] sm:p-7">
 				<div>
-					<span class="mb-2 block text-xs text-slate-800 font-semibold tracking-wider font-mono uppercase">
+					<span class="mb-2 block section-label text-brand-800 dark:text-brand-300">
 						{{ page?.location_card?.label || (locale === 'id' ? 'Lokasi & Zona Waktu' : 'Location & Timezone') }}
 					</span>
-					<h3 class="mb-2 text-2xl text-brand-950 font-900 font-heading dark:text-brand-950">
-						{{ page?.location_card?.title || 'Majalengka, Indonesia' }}
+					<h3 class="mb-2 flex items-center gap-1.5 text-2xl text-slate-900 font-900 font-heading dark:text-white">
+						<span class="i-swisspost-locationpin text-xl text-brand-600 dark:text-brand-400 shrink-0" />
+						<span>{{ page?.location_card?.title || 'Majalengka, Indonesia' }}</span>
 					</h3>
-					<p class="text-xs text-slate-800 leading-relaxed sm:text-sm">
+					<p class="text-xs text-slate-700 leading-relaxed sm:text-sm dark:text-slate-300">
 						{{ page?.location_card?.description || (locale === 'id' ? 'Bekerja secara remote dan berkolaborasi dengan tim di berbagai belahan dunia.' : 'Working remotely and collaborating with teams across the globe.') }}
 					</p>
 				</div>
-				<div class="mt-6 flex items-center justify-between border-t border-slate-900/10 pt-3 text-xs text-slate-800 font-mono">
-					<span class="flex items-center gap-1">
-						<span class="i-swisspost-locationpin text-sm text-slate-900" />
+				<div class="mt-6 flex items-center justify-between border-t border-slate-200/60 pt-3 text-xs text-slate-700 font-mono dark:border-slate-800/60 dark:text-slate-300">
+					<span class="flex items-center gap-1.5 font-semibold">
+						<span class="i-swisspost-globecontinents text-sm text-brand-600 dark:text-brand-400" />
 						{{ page?.location_card?.timezone || 'GMT+7' }}
 					</span>
-					<span>{{ page?.location_card?.badge || 'Available Globally' }}</span>
+					<span class="inline-flex items-center gap-1 border border-brand-200/60 bg-brand-50 px-2 py-0.5 text-[11px] text-brand-900 dark:border-brand-800/60 dark:bg-brand-950/60 dark:text-brand-300 font-medium">
+						{{ page?.location_card?.badge || 'Available Globally' }}
+					</span>
 				</div>
 			</div>
 
 			<!-- Digital Philosophy & Core Principles Card (Span 7) -->
-			<div class="hero-card-clean flex flex-col justify-between p-6 md:col-span-7 sm:p-8">
+			<div class="flex flex-col justify-between border border-[#134e43] bg-[#002b27] p-6 text-[#f8fafa] md:col-span-7 sm:p-8">
 				<div>
-					<span class="mb-3 block text-xs text-brand-300 font-semibold tracking-widest uppercase">
+					<span class="mb-3 flex items-center gap-1.5 text-xs text-brand-300 font-semibold tracking-widest uppercase">
+						<span class="i-swisspost-checkmark text-xs" />
 						{{ page?.principles_label || (locale === 'id' ? 'Prinsip Utama' : 'Core Principles') }}
 					</span>
 					<div
@@ -194,26 +215,29 @@ useSchemaOrg([
 						<div
 							v-for="p in page.principles"
 							:key="p.title"
-							class="border-b border-brand-900/60 pb-3 last:border-b-0 last:pb-0"
+							class="flex items-start gap-2.5 border-b border-brand-900/60 pb-3 last:border-b-0 last:pb-0"
 						>
-							<h4 class="text-sm text-white font-900 font-heading sm:text-base">
-								{{ p.title }}
-							</h4>
-							<p class="mt-1 text-xs text-slate-300 leading-relaxed">
-								{{ p.description }}
-							</p>
+							<span class="i-swisspost-checkmark text-brand-300 mt-1 shrink-0 text-xs" />
+							<div>
+								<h4 class="text-sm text-white font-900 font-heading sm:text-base">
+									{{ p.title }}
+								</h4>
+								<p class="mt-1 text-xs text-slate-200 leading-relaxed">
+									{{ p.description }}
+								</p>
+							</div>
 						</div>
 					</div>
 					<div v-else>
 						<h3 class="mb-3 text-2xl text-white font-900 leading-tight font-heading sm:text-3xl">
 							{{ locale === 'id' ? 'Kecepatan, Tipografi Presisi, dan Kode yang Bersih.' : 'Speed, Typographic Precision, and Maintainable Code.' }}
 						</h3>
-						<p class="max-w-lg text-xs text-slate-300 leading-relaxed sm:text-sm">
+						<p class="max-w-lg text-xs text-slate-200 leading-relaxed sm:text-sm">
 							{{ locale === 'id' ? 'Setiap baris kode dan elemen antarmuka dirancang dengan tujuan yang jelas: memberikan interaksi yang cepat, aksesibel, dan tahan lama.' : 'Every line of code and interface element is built with intention: delivering fast, accessible, and durable digital products.' }}
 						</p>
 					</div>
 				</div>
-				<div class="mt-6 flex items-center justify-between border-t border-brand-900/60 pt-3 text-xs text-brand-300">
+				<div class="mt-6 flex items-center justify-between border-t border-brand-900/60 pt-3 text-xs text-brand-300 font-mono">
 					<span>{{ page?.principles_footer || 'Crafted with Intention' }}</span>
 					<span>© {{ new Date().getFullYear() }}</span>
 				</div>
@@ -238,14 +262,16 @@ useSchemaOrg([
 				<div class="flex shrink-0 items-center gap-3">
 					<NuxtLink
 						:to="localePath(page.journey.primary_link_to || '/projek')"
-						class="btn-brand cursor-pointer text-xs font-semibold shadow-xs transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
+						class="btn-brand inline-flex cursor-pointer items-center gap-1.5 text-xs font-semibold shadow-xs transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
 					>
 						{{ page.journey.primary_link_text || (locale === 'id' ? 'Lihat Portofolio' : 'View Portfolio') }}
+						<span class="i-swisspost-arrowright text-xs" />
 					</NuxtLink>
 					<NuxtLink
 						:to="localePath(page.journey.secondary_link_to || '/kontak')"
-						class="btn-ghost cursor-pointer text-xs font-semibold transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
+						class="btn-ghost inline-flex cursor-pointer items-center gap-1.5 text-xs font-semibold transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
 					>
+						<span class="i-swisspost-mail text-xs" />
 						{{ page.journey.secondary_link_text || (locale === 'id' ? 'Hubungi Saya' : 'Get in Touch') }}
 					</NuxtLink>
 				</div>

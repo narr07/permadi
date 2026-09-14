@@ -20,16 +20,16 @@ social_card:
   items:
     - name: GitHub
       url: https://github.com/narr07
-      icon: i-hugeicons-github
+      icon: i-swisspost-github
     - name: X / Twitter
       url: https://x.com/dinarpermadi07
-      icon: i-hugeicons-new-twitter
+      icon: i-swisspost-twitterx
     - name: Instagram
       url: https://www.instagram.com/narr07/
-      icon: i-hugeicons-instagram
+      icon: i-swisspost-instagram
     - name: Behance
       url: https://www.behance.net/narr07
-      icon: i-hugeicons-behance-02
+      icon: i-swisspost-icondesign
 status_card:
   label: Status Ketersediaan
   title: Open for Projects & Consulting
