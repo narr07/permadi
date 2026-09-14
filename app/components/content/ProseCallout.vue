@@ -72,65 +72,65 @@ const colorConfig = computed(() => {
 		case 'warning':
 		case 'yellow':
 			return {
-				border: 'border-[#ffd803]',
-				bg: 'bg-[#ffd803]/90 shadow-md',
-				icon: 'text-slate-950',
-				text: 'text-slate-950',
-				hover: props.to ? 'hover:bg-[#ffd803] hover:shadow-lg' : '',
+				border: 'border-amber-500/40 dark:border-amber-400/30',
+				bg: 'bg-amber-500/5 dark:bg-amber-950/20',
+				icon: 'text-amber-600 dark:text-amber-400',
+				text: 'text-slate-900 dark:text-slate-100',
+				hover: props.to ? 'hover:border-amber-500 dark:hover:border-amber-400' : '',
 			}
 		case 'accent':
 			return {
-				border: 'border-[#f9bc60]',
-				bg: 'bg-[#f9bc60]/90 shadow-md',
-				icon: 'text-slate-950',
-				text: 'text-slate-950',
-				hover: props.to ? 'hover:bg-[#f9bc60] hover:shadow-lg' : '',
+				border: 'border-amber-400/40 dark:border-amber-300/30',
+				bg: 'bg-amber-400/5 dark:bg-amber-900/20',
+				icon: 'text-amber-600 dark:text-amber-400',
+				text: 'text-slate-900 dark:text-slate-100',
+				hover: props.to ? 'hover:border-amber-400' : '',
 			}
 		case 'error':
 		case 'danger':
 		case 'red':
 			return {
-				border: 'border-[#ef4565]',
-				bg: 'bg-[#ef4565]/90 shadow-md',
-				icon: 'text-white',
-				text: 'text-white',
-				hover: props.to ? 'hover:bg-[#ef4565] hover:shadow-lg' : '',
+				border: 'border-rose-500/40 dark:border-rose-400/30',
+				bg: 'bg-rose-500/5 dark:bg-rose-950/20',
+				icon: 'text-rose-600 dark:text-rose-400',
+				text: 'text-slate-900 dark:text-slate-100',
+				hover: props.to ? 'hover:border-rose-500 dark:hover:border-rose-400' : '',
 			}
 		case 'info':
 		case 'blue':
 			return {
-				border: 'border-[#3da9fc]',
-				bg: 'bg-[#3da9fc]/90 shadow-md',
-				icon: 'text-white',
-				text: 'text-white',
-				hover: props.to ? 'hover:bg-[#3da9fc] hover:shadow-lg' : '',
+				border: 'border-sky-500/40 dark:border-sky-400/30',
+				bg: 'bg-sky-500/5 dark:bg-sky-950/20',
+				icon: 'text-sky-600 dark:text-sky-400',
+				text: 'text-slate-900 dark:text-slate-100',
+				hover: props.to ? 'hover:border-sky-500 dark:hover:border-sky-400' : '',
 			}
 		case 'success':
 		case 'green':
 			return {
-				border: 'border-[#2cb67d]',
-				bg: 'bg-[#2cb67d]/90 shadow-md',
-				icon: 'text-white',
-				text: 'text-white',
-				hover: props.to ? 'hover:bg-[#2cb67d] hover:shadow-lg' : '',
+				border: 'border-emerald-500/40 dark:border-emerald-400/30',
+				bg: 'bg-emerald-500/5 dark:bg-emerald-950/20',
+				icon: 'text-emerald-600 dark:text-emerald-400',
+				text: 'text-slate-900 dark:text-slate-100',
+				hover: props.to ? 'hover:border-emerald-500 dark:hover:border-emerald-400' : '',
 			}
 		case 'neutral':
 		case 'gray':
 			return {
-				border: 'border-[#90b4ce]',
-				bg: 'bg-[#90b4ce]/90 shadow-md',
-				icon: 'text-slate-950',
-				text: 'text-slate-950',
-				hover: props.to ? 'hover:bg-[#90b4ce] hover:shadow-lg' : '',
+				border: 'border-slate-300 dark:border-white/15',
+				bg: 'bg-slate-50 dark:bg-white/[0.02]',
+				icon: 'text-slate-600 dark:text-slate-400',
+				text: 'text-slate-900 dark:text-slate-100',
+				hover: props.to ? 'hover:border-slate-400 dark:hover:border-white/25' : '',
 			}
 		case 'primary':
 		default:
 			return {
-				border: 'border-brand-500/40 dark:border-brand-400/35',
-				bg: 'bg-white dark:bg-slate-950 shadow-xs',
+				border: 'border-[#14b898]/40 dark:border-[#14b898]/30',
+				bg: 'bg-[#14b898]/5 dark:bg-[#14b898]/10',
 				icon: 'text-[#0f7662] dark:text-[#5eeacf]',
-				text: 'text-slate-950 dark:text-slate-100',
-				hover: props.to ? 'hover:border-brand-500 hover:shadow-md dark:hover:border-brand-400' : '',
+				text: 'text-slate-900 dark:text-slate-100',
+				hover: props.to ? 'hover:border-[#14b898]' : '',
 			}
 	}
 })
@@ -138,7 +138,7 @@ const colorConfig = computed(() => {
 
 <template>
 	<div
-		class="callout-card group relative my-6 overflow-hidden border p-4 transition-all duration-300 sm:p-5"
+		class="callout-card group relative my-6 border p-4 transition-all duration-200 sm:p-5"
 		:class="[
 			colorConfig.border,
 			colorConfig.bg,
