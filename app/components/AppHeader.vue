@@ -130,7 +130,7 @@ onMounted(() => {
 				<button
 					type="button"
 					:aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-					class="inline-flex cursor-pointer items-center justify-center border border-slate-300 p-1.5 text-slate-800 transition-all duration-150 active:scale-90 hover:border-brand-500 hover:text-brand-700 dark:border-[#134e43] dark:text-slate-200 dark:hover:border-brand-400 dark:hover:text-accent"
+					class="inline-flex cursor-pointer items-center justify-center border border-slate-300 p-1.5 text-slate-800 transition-all duration-150 active:scale-90 dark:border-[#134e43] hover:border-brand-500 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400 dark:hover:text-accent"
 					@click="toggleDark($event)"
 				>
 					<span class="i-swisspost-sun shrink-0 text-base text-slate-800 dark:hidden" />

@@ -66,6 +66,7 @@ export default defineNuxtConfig({
 		clientNodePlaceholder: true,
 		navigationRepaint: true,
 		crossOriginPrefetch: true,
+		viewTransition: true,
 		defaults: {
 			nuxtLink: {
 				prefetch: false,

@@ -212,7 +212,7 @@ useSchemaOrg([
 							{{ locale === 'id' ? 'WACANA REKAYASA & PENDIDIKAN // 2024–2026' : 'ENGINEERING & PEDAGOGY DISPATCHES // 2024–2026' }}
 						</div>
 
-						<h1 class="mb-6 text-balance text-3xl text-slate-900 font-700 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
+						<h1 class="mb-6 text-balance text-3xl text-slate-900 font-900 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
 							{{ page?.title || (locale === 'id' ? 'Blog & Catatan Lapangan' : 'Blog & Field Notes') }}
 						</h1>
 

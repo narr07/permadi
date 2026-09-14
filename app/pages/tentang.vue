@@ -46,11 +46,16 @@ useSchemaOrg([
 
 function getToolIcon(name?: string) {
 	const n = (name || '').toLowerCase()
-	if (n.includes('nuxt') || n.includes('vue')) return 'i-swisspost-code'
-	if (n.includes('flutter') || n.includes('dart') || n.includes('mobile')) return 'i-swisspost-desktop'
-	if (n.includes('adobe') || n.includes('photo') || n.includes('design')) return 'i-swisspost-brush'
-	if (n.includes('cloudflare') || n.includes('nitro') || n.includes('edge')) return 'i-swisspost-globecontinents'
-	if (n.includes('unocss') || n.includes('tailwind')) return 'i-swisspost-icondesign'
+	if (n.includes('nuxt') || n.includes('vue'))
+		return 'i-swisspost-code'
+	if (n.includes('flutter') || n.includes('dart') || n.includes('mobile'))
+		return 'i-swisspost-desktop'
+	if (n.includes('adobe') || n.includes('photo') || n.includes('design'))
+		return 'i-swisspost-brush'
+	if (n.includes('cloudflare') || n.includes('nitro') || n.includes('edge'))
+		return 'i-swisspost-globecontinents'
+	if (n.includes('unocss') || n.includes('tailwind'))
+		return 'i-swisspost-icondesign'
 	return 'i-swisspost-code'
 }
 </script>
@@ -183,7 +188,7 @@ function getToolIcon(name?: string) {
 						{{ page?.location_card?.label || (locale === 'id' ? 'Lokasi & Zona Waktu' : 'Location & Timezone') }}
 					</span>
 					<h3 class="mb-2 flex items-center gap-1.5 text-2xl text-slate-900 font-900 font-heading dark:text-white">
-						<span class="i-swisspost-locationpin text-xl text-brand-600 dark:text-brand-400 shrink-0" />
+						<span class="i-swisspost-locationpin shrink-0 text-xl text-brand-600 dark:text-brand-400" />
 						<span>{{ page?.location_card?.title || 'Majalengka, Indonesia' }}</span>
 					</h3>
 					<p class="text-xs text-slate-700 leading-relaxed sm:text-sm dark:text-slate-300">
@@ -195,7 +200,7 @@ function getToolIcon(name?: string) {
 						<span class="i-swisspost-globecontinents text-sm text-brand-600 dark:text-brand-400" />
 						{{ page?.location_card?.timezone || 'GMT+7' }}
 					</span>
-					<span class="inline-flex items-center gap-1 border border-brand-200/60 bg-brand-50 px-2 py-0.5 text-[11px] text-brand-900 dark:border-brand-800/60 dark:bg-brand-950/60 dark:text-brand-300 font-medium">
+					<span class="inline-flex items-center gap-1 border border-brand-200/60 bg-brand-50 px-2 py-0.5 text-[11px] text-brand-900 font-medium dark:border-brand-800/60 dark:bg-brand-950/60 dark:text-brand-300">
 						{{ page?.location_card?.badge || 'Available Globally' }}
 					</span>
 				</div>
@@ -217,7 +222,7 @@ function getToolIcon(name?: string) {
 							:key="p.title"
 							class="flex items-start gap-2.5 border-b border-brand-900/60 pb-3 last:border-b-0 last:pb-0"
 						>
-							<span class="i-swisspost-checkmark text-brand-300 mt-1 shrink-0 text-xs" />
+							<span class="i-swisspost-checkmark mt-1 shrink-0 text-xs text-brand-300" />
 							<div>
 								<h4 class="text-sm text-white font-900 font-heading sm:text-base">
 									{{ p.title }}

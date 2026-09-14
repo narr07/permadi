@@ -197,7 +197,7 @@ defineOgImage('Bento', {
 							{{ locale === 'id' ? 'ARSIP TERKURASI // 2024–2026' : 'CURATED ARCHIVE // 2024–2026' }}
 						</div>
 
-						<h1 class="mb-6 text-balance text-3xl text-slate-900 font-700 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
+						<h1 class="mb-6 text-balance text-3xl text-slate-900 font-900 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
 							{{ page?.title || (locale === 'id' ? 'Arsip Projek & Studi Kasus' : 'Projects & Case Studies Archive') }}
 						</h1>
 
@@ -406,14 +406,14 @@ defineOgImage('Bento', {
 
 						<div
 							v-if="item.demoUrl || item.link || item.githubUrl || item.repo"
-							class="flex items-center gap-2 text-slate-600 dark:text-slate-400"
+							class="flex items-center gap-4 text-slate-600 dark:text-slate-400"
 						>
 							<a
 								v-if="item.githubUrl || item.repo"
 								:href="item.githubUrl || item.repo"
 								target="_blank"
 								rel="noopener noreferrer"
-								class="hover:text-brand-600 dark:hover:text-brand-400"
+								class="inline-flex cursor-pointer items-center justify-center border border-slate-300 p-1.5 text-slate-800 transition-all duration-150 active:scale-90 dark:border-[#134e43] hover:border-brand-500 dark:text-slate-200 hover:text-brand-600 hover:text-brand-700 dark:hover:border-brand-400 dark:hover:text-accent dark:hover:text-brand-400"
 								aria-label="GitHub Repository"
 							>
 								<span class="i-swisspost-github text-sm" />
@@ -423,7 +423,7 @@ defineOgImage('Bento', {
 								:href="item.demoUrl || item.link"
 								target="_blank"
 								rel="noopener noreferrer"
-								class="hover:text-brand-600 dark:hover:text-brand-400"
+								class="inline-flex cursor-pointer items-center justify-center border border-slate-300 p-1.5 text-slate-800 transition-all duration-150 active:scale-90 dark:border-[#134e43] hover:border-brand-500 dark:text-slate-200 hover:text-brand-600 hover:text-brand-700 dark:hover:border-brand-400 dark:hover:text-accent dark:hover:text-brand-400"
 								aria-label="Demo"
 							>
 								<span class="i-swisspost-linkexternal text-sm" />

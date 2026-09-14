@@ -62,7 +62,7 @@ export default defineConfig({
 			collections: {
 				swisspost: FileSystemIconLoader(
 					'./node_modules/@swisspost/design-system-icons/public/post-icons',
-					svg => {
+					(svg) => {
 						const match24 = svg.match(/<symbol id="s24" viewBox="([^"]+)">([\s\S]*?)<\/symbol>/)
 						if (match24) {
 							return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${match24[1]}" fill="currentColor">${match24[2]}</svg>`

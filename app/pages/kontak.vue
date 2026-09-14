@@ -27,12 +27,17 @@ useSchemaOrg([
 ])
 
 function getSocialIcon(name?: string, icon?: string) {
-	if (icon && icon.startsWith('i-swisspost-')) return icon
+	if (icon && icon.startsWith('i-swisspost-'))
+		return icon
 	const n = (name || '').toLowerCase()
-	if (n.includes('git')) return 'i-swisspost-github'
-	if (n.includes('twit') || n === 'x') return 'i-swisspost-twitterx'
-	if (n.includes('insta')) return 'i-swisspost-instagram'
-	if (n.includes('behance')) return 'i-swisspost-icondesign'
+	if (n.includes('git'))
+		return 'i-swisspost-github'
+	if (n.includes('twit') || n === 'x')
+		return 'i-swisspost-twitterx'
+	if (n.includes('insta'))
+		return 'i-swisspost-instagram'
+	if (n.includes('behance'))
+		return 'i-swisspost-icondesign'
 	return 'i-swisspost-link'
 }
 </script>
@@ -107,7 +112,7 @@ function getSocialIcon(name?: string, icon?: string) {
 					</a>
 					<span
 						v-if="page.email_card.meta"
-						class="text-xs text-brand-200 font-mono font-medium"
+						class="text-xs text-brand-200 font-medium font-mono"
 					>
 						{{ page.email_card.meta }}
 					</span>
@@ -142,7 +147,10 @@ function getSocialIcon(name?: string, icon?: string) {
 						<span class="i-swisspost-locationpin text-sm text-brand-600 dark:text-brand-400" />
 						{{ page.status_card.location }}
 					</span>
-					<span v-if="page.status_card.timezone" class="font-medium">
+					<span
+						v-if="page.status_card.timezone"
+						class="font-medium"
+					>
 						{{ page.status_card.timezone }}
 					</span>
 				</div>
@@ -180,7 +188,7 @@ function getSocialIcon(name?: string, icon?: string) {
 						:href="item.url"
 						target="_blank"
 						rel="noopener"
-						class="group block border border-slate-200/80 bg-slate-50 p-3 text-center text-slate-900 transition-all duration-150 active:scale-95 dark:border-[#134e43] dark:bg-slate-800/60 dark:text-slate-100 hover:(bg-brand-50 text-brand-950 -translate-y-0.5) focus-ring dark:hover:(bg-brand-950/40 text-brand-200)"
+						class="group block border border-slate-200/80 bg-slate-50 p-3 text-center text-slate-900 transition-all duration-150 active:scale-95 dark:border-[#134e43] dark:bg-slate-800/60 hover:(bg-brand-50 text-brand-950 -translate-y-0.5) dark:text-slate-100 focus-ring dark:hover:(bg-brand-950/40 text-brand-200)"
 					>
 						<span
 							:class="getSocialIcon(item.name, item.icon)"
