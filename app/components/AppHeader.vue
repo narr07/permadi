@@ -130,19 +130,11 @@ onMounted(() => {
 				<button
 					type="button"
 					:aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-					class="inline-flex cursor-pointer items-center justify-center p-1.5 text-slate-700 transition-all duration-150 active:scale-90 hover:scale-110 dark:text-slate-200 hover:text-brand-600 dark:hover:text-accent"
+					class="inline-flex cursor-pointer items-center justify-center border border-slate-300 p-1.5 text-slate-800 transition-all duration-150 active:scale-90 hover:border-brand-500 hover:text-brand-700 dark:border-[#134e43] dark:text-slate-200 dark:hover:border-brand-400 dark:hover:text-accent"
 					@click="toggleDark($event)"
 				>
-					<ClientOnly>
-						<span
-							class="shrink-0 text-base transition-transform duration-300"
-							:class="isDark ? 'i-ph-moon text-accent rotate-[-12deg]' : 'i-ph-sun text-slate-700 rotate-0'"
-						/>
-						<template #fallback>
-							<span class="i-ph-sun shrink-0 text-base dark:hidden" />
-							<span class="i-ph-moon hidden shrink-0 text-base text-accent dark:inline-block" />
-						</template>
-					</ClientOnly>
+					<span class="i-swisspost-sun shrink-0 text-base text-slate-800 dark:hidden" />
+					<span class="i-swisspost-moon hidden shrink-0 text-base text-accent dark:inline-block" />
 				</button>
 
 				<!-- Mobile Hamburger Button -->
@@ -151,12 +143,12 @@ onMounted(() => {
 					aria-controls="mobile-navigation"
 					:aria-expanded="mobileOpen"
 					aria-label="Toggle navigation menu"
-					class="cursor-pointer p-1 text-slate-900 transition-transform duration-150 md:hidden active:scale-90 dark:text-slate-50"
+					class="cursor-pointer border border-slate-300 p-1.5 text-slate-900 transition-transform duration-150 md:hidden active:scale-90 dark:border-[#134e43] dark:text-slate-50"
 					@click="mobileOpen = !mobileOpen"
 				>
 					<span
-						class="text-xl"
-						:class="mobileOpen ? 'i-ph-x' : 'i-ph-list'"
+						class="block text-base"
+						:class="mobileOpen ? 'i-swisspost-closex' : 'i-swisspost-burger'"
 					/>
 				</button>
 			</div>
@@ -187,7 +179,7 @@ onMounted(() => {
 						@click="mobileOpen = false"
 					>
 						<span>0{{ idx + 1 }} / {{ item.label.toUpperCase() }}</span>
-						<span class="i-ph-arrow-right text-xs text-slate-400" />
+						<span class="i-swisspost-arrowright text-xs text-slate-600 dark:text-slate-400" />
 					</NuxtLink>
 
 					<div class="flex items-center justify-between pt-3">

@@ -42,6 +42,9 @@ export default defineConfig({
 		'i-swisspost-reloadright',
 		'i-swisspost-closex',
 		'i-swisspost-desktop',
+		'i-swisspost-sun',
+		'i-swisspost-moon',
+		'i-swisspost-burger',
 	],
 
 	presets: [
