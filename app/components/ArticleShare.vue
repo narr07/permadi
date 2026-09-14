@@ -32,50 +32,54 @@ function onShareClick(network: string) {
 	}
 }
 
-const networks = [
-	{
-		name: 'x' as const,
-		label: 'X (Twitter)',
-		shortLabel: 'X',
-		icon: 'i-swisspost-twitterx',
-		hoverClass: 'hover:border-slate-900 dark:hover:border-white hover:text-slate-900 dark:hover:text-white',
-	},
-	{
-		name: 'whatsapp' as const,
-		label: 'WhatsApp',
-		shortLabel: 'WA',
-		icon: 'i-swisspost-whatsapp',
-		hoverClass: 'hover:border-[#25D366] hover:text-[#25D366]',
-	},
-	{
-		name: 'linkedin' as const,
-		label: 'LinkedIn',
-		shortLabel: 'LinkedIn',
-		icon: 'i-swisspost-linkedin',
-		hoverClass: 'hover:border-[#0A66C2] hover:text-[#0A66C2]',
-	},
-	{
-		name: 'telegram' as const,
-		label: 'Telegram',
-		shortLabel: 'Telegram',
-		icon: 'i-swisspost-send',
-		hoverClass: 'hover:border-[#26A5E4] hover:text-[#26A5E4]',
-	},
-	{
-		name: 'threads' as const,
-		label: 'Threads',
-		shortLabel: 'Threads',
-		icon: 'i-swisspost-comment',
-		hoverClass: 'hover:border-slate-900 dark:hover:border-white hover:text-slate-900 dark:hover:text-white',
-	},
-	{
-		name: 'facebook' as const,
-		label: 'Facebook',
-		shortLabel: 'FB',
-		icon: 'i-swisspost-facebook',
-		hoverClass: 'hover:border-[#1877F2] hover:text-[#1877F2]',
-	},
-]
+const shareNetworks = computed(() => {
+	const u = encodeURIComponent(shareUrl.value)
+	const t = encodeURIComponent(props.title || 'Permadi')
+	return [
+		{
+			name: 'x',
+			label: 'X (Twitter)',
+			shortLabel: 'X',
+			icon: 'i-swisspost-twitterx',
+			shareUrl: `https://twitter.com/intent/tweet?url=${u}&text=${t}`,
+		},
+		{
+			name: 'whatsapp',
+			label: 'WhatsApp',
+			shortLabel: 'WA',
+			icon: 'i-swisspost-whatsapp',
+			shareUrl: `https://api.whatsapp.com/send?text=${t}%20${u}`,
+		},
+		{
+			name: 'linkedin',
+			label: 'LinkedIn',
+			shortLabel: 'LinkedIn',
+			icon: 'i-swisspost-linkedin',
+			shareUrl: `https://www.linkedin.com/sharing/share-offsite/?url=${u}`,
+		},
+		{
+			name: 'telegram',
+			label: 'Telegram',
+			shortLabel: 'Telegram',
+			icon: 'i-swisspost-send',
+			shareUrl: `https://t.me/share/url?url=${u}&text=${t}`,
+		},
+		{
+			name: 'threads',
+			label: 'Threads',
+			shortLabel: 'Threads',
+			icon: 'i-swisspost-comment',
+			shareUrl: `https://threads.net/intent/post?text=${t}%20${u}`,
+		},
+		{
+			name: 'facebook',
+			label: 'Facebook',
+			shortLabel: 'FB',
+			icon: 'i-swisspost-facebook',
+			shareUrl: `https://www.facebook.com/sharer/sharer.php?u=${u}`,
+		},
+	]
+})
 
 const shareUrl = computed(() => {
 	if (props.url) {
@@ -131,27 +135,21 @@ async function handleCopyLink() {
 
 		<!-- 6-Col Grid of Swiss Post Social Icons -->
 		<div class="grid grid-cols-6 gap-1.5">
-			<SocialShare
-				v-for="net in networks"
+			<a
+				v-for="net in shareNetworks"
 				:key="net.name"
-				:network="net.name"
-				:styled="false"
-				:label="false"
-				:icon="false"
-				:title="title"
-				:description="description"
-				:url="shareUrl"
+				:href="net.shareUrl"
+				target="_blank"
 				rel="nofollow noopener noreferrer"
-				user="dinarpermadi07"
 				class="group aspect-square flex items-center justify-center border border-slate-300 bg-white p-1 text-slate-800 transition-colors duration-150 active:scale-[0.98] dark:border-[#134e43] dark:bg-[#001e1c] hover:bg-slate-900 dark:text-slate-200 hover:text-white dark:hover:bg-brand-500 dark:hover:text-slate-950"
 				:aria-label="`Share to ${net.label}`"
 				@click="onShareClick(net.name)"
 			>
 				<span
 					:class="net.icon"
-					class="shrink-0 text-xs"
+					class="shrink-0 text-sm"
 				/>
-			</SocialShare>
+			</a>
 		</div>
 	</div>
 
@@ -190,28 +188,22 @@ async function handleCopyLink() {
 
 		<!-- Social Share Buttons Grid: 6 Modular Columns -->
 		<div class="grid grid-cols-2 gap-2 md:grid-cols-6 sm:grid-cols-3 sm:gap-3">
-			<SocialShare
-				v-for="net in networks"
+			<a
+				v-for="net in shareNetworks"
 				:key="net.name"
-				:network="net.name"
-				:styled="false"
-				:label="false"
-				:icon="false"
-				:title="title"
-				:description="description"
-				:url="shareUrl"
+				:href="net.shareUrl"
+				target="_blank"
 				rel="nofollow noopener noreferrer"
-				user="dinarpermadi07"
 				class="group flex items-center justify-center gap-2 border border-slate-300 bg-slate-50/70 px-3 py-2.5 text-xs text-slate-800 font-bold tracking-wider font-mono uppercase transition-colors duration-150 active:scale-[0.98] dark:border-[#134e43] dark:bg-[#001e1c] hover:bg-slate-900 dark:text-slate-200 hover:text-white dark:hover:bg-brand-500 dark:hover:text-slate-950"
 				:aria-label="`Bagikan ke ${net.label}`"
 				@click="onShareClick(net.name)"
 			>
 				<span
 					:class="net.icon"
-					class="shrink-0 text-sm"
+					class="shrink-0 text-base"
 				/>
 				<span>{{ net.shortLabel }}</span>
-			</SocialShare>
+			</a>
 		</div>
 
 		<!-- Swiss Footnote / Ledger Strip -->
