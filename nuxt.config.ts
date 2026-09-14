@@ -158,18 +158,6 @@ export default defineNuxtConfig({
 
 	fonts: {
 		families: [
-			{
-				name: 'Permadi Heading',
-				global: true,
-			},
-			{
-				name: 'Permadi Body',
-				global: true,
-			},
-			{
-				name: 'Permadi Mono',
-				global: true,
-			},
 			{ name: 'Barlow', weights: [800], subsets: ['latin'], preload: true, display: 'swap' },
 			{ name: 'Plus Jakarta Sans', weights: [400], subsets: ['latin'], preload: true, display: 'swap' },
 			{ name: 'Plus Jakarta Sans', weights: [700], subsets: ['latin'], preload: false, display: 'swap' },
@@ -190,12 +178,6 @@ export default defineNuxtConfig({
 		defaults: {
 			component: 'Bento',
 		},
-		fonts: [
-			'Permadi Heading:700',
-			'Permadi Heading:900',
-			'Permadi Body:400',
-			'Permadi Mono:400',
-		],
 	},
 
 	app: {
