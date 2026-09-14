@@ -24,7 +24,21 @@ export default defineConfig({
 			collections: {
 				swisspost: FileSystemIconLoader(
 					'./node_modules/@swisspost/design-system-icons/public/post-icons',
-					svg => svg.replace(/<svg\b([^>]*)>/, '<svg$1 fill="currentColor">'),
+					svg => {
+						const match24 = svg.match(/<symbol id="s24" viewBox="([^"]+)">([\s\S]*?)<\/symbol>/)
+						if (match24) {
+							return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${match24[1]}" fill="currentColor">${match24[2]}</svg>`
+						}
+						const match16 = svg.match(/<symbol id="s16" viewBox="([^"]+)">([\s\S]*?)<\/symbol>/)
+						if (match16) {
+							return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${match16[1]}" fill="currentColor">${match16[2]}</svg>`
+						}
+						const matchAny = svg.match(/<symbol id="s\d+" viewBox="([^"]+)">([\s\S]*?)<\/symbol>/)
+						if (matchAny) {
+							return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${matchAny[1]}" fill="currentColor">${matchAny[2]}</svg>`
+						}
+						return svg.replace(/<svg\b([^>]*)>/, '<svg$1 fill="currentColor">')
+					},
 				),
 			},
 		}),
