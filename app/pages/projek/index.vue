@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { locale } = useI18n()
-const { getCategoryLabel } = useCategoryLabel()
+// const { getCategoryLabel } = useCategoryLabel()
 const { formatDate } = useFormatDate()
 
 const collection = computed(() => (locale.value === 'id' ? 'projek_id' : 'projek_en'))

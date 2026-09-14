@@ -176,9 +176,11 @@ export default defineNuxtConfig({
 	},
 
 	ogImage: {
-		defaults: {
-			component: 'Bento',
-		},
+		zeroRuntime: true,
+		// defaults: {
+
+		// 	component: 'Bento',
+		// },
 	},
 
 	app: {
@@ -208,7 +210,7 @@ export default defineNuxtConfig({
 	},
 	scripts: {
 		defaultScriptOptions: {
-			trigger: 'idle',
+			trigger: 'onNuxtReady',
 			proxy: false,
 		},
 		registry: {
@@ -240,7 +242,6 @@ export default defineNuxtConfig({
 		},
 	},
 	studio: {
-		enabled: true,
 		repository: {
 			provider: 'github',
 			owner: 'narr07',
@@ -512,9 +513,7 @@ export default defineNuxtConfig({
 			},
 		},
 	},
-	ogImage: {
-		zeroRuntime: true,
-	},
+
 	nitro: {
 		preset: 'cloudflare_module',
 		prerender: {
