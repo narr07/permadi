@@ -111,7 +111,7 @@ const iconMap: Record<string, string> = {
 	'shell': 'i-vscode-icons-file-type-shell',
 	'powershell': 'i-vscode-icons-file-type-powershell',
 	'ps1': 'i-vscode-icons-file-type-powershell',
-	'terminal': 'i-lucide-terminal',
+	'terminal': 'i-ph-terminal-window',
 }
 
 function resolveIcon(filename?: string, language?: string): string {
@@ -215,7 +215,7 @@ function handleCopy() {
 				<span
 					class="transition-transform duration-200"
 					:class="[
-						copied ? 'i-lucide-check text-brand-300 scale-110' : 'i-lucide-copy text-brand-300/80 group-hover/btn:scale-110',
+						copied ? 'i-ph-check text-brand-300 scale-110' : 'i-ph-copy text-brand-300/80 group-hover/btn:scale-110',
 					]"
 				/>
 				<span class="text-[11px] font-medium">

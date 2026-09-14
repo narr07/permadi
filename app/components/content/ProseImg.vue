@@ -153,7 +153,7 @@ onUnmounted(() => {
 						aria-label="Close Zoom"
 						@click.stop="closeZoom"
 					>
-						<span class="i-hugeicons-cancel-01 text-lg" />
+						<span class="i-ph-x text-lg" />
 					</button>
 
 					<!-- Zoomed Image with Smooth Scale -->

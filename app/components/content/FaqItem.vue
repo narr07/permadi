@@ -48,11 +48,11 @@ function handleToggle() {
 
 <template>
 	<div
-		class="bento-faq-item overflow-hidden border border-slate-200/90 rounded-2xl bg-white shadow-xs transition-all duration-200 dark:border-slate-800/90 dark:bg-slate-950"
+		class="faq-item overflow-hidden border border-slate-200/90 bg-white shadow-xs transition-all duration-200 dark:border-[#134e43] dark:bg-[#002b27]"
 		:class="[
 			isOpen
-				? 'border-brand-500/50 ring-1 ring-brand-500/25 dark:border-brand-400/40 dark:ring-brand-400/20 shadow-sm'
-				: 'hover:border-slate-300 dark:hover:border-slate-700',
+				? 'border-brand-500/50 dark:border-brand-400/40 shadow-sm'
+				: 'hover:border-slate-300 dark:hover:border-[#134e43]',
 			props.class,
 		]"
 	>
@@ -81,7 +81,7 @@ function handleToggle() {
 			</div>
 
 			<span
-				class="i-hugeicons-arrow-down-01 shrink-0 text-base text-slate-400 transition-transform duration-200 dark:text-slate-500"
+				class="i-ph-arrow-down shrink-0 text-base text-slate-400 transition-transform duration-200 dark:text-slate-500"
 				:class="{ 'rotate-180 text-brand-600 dark:text-brand-400': isOpen }"
 			/>
 		</button>

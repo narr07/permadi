@@ -63,10 +63,10 @@ const onSubmit = handleSubmit(async (values) => {
 		class="w-full"
 		@submit.prevent="onSubmit"
 	>
-		<!-- Bento Integrated Bar (Nuxt style) -->
+		<!-- Integrated Newsletter Bar -->
 		<div
-			class="bento-subscribe-box"
-			:class="{ 'bento-subscribe-box-error': errors.email || serverError }"
+			class="newsletter-box"
+			:class="{ 'newsletter-box-error': errors.email || serverError }"
 		>
 			<input
 				v-model="email"
@@ -76,17 +76,17 @@ const onSubmit = handleSubmit(async (values) => {
 				spellcheck="false"
 				aria-label="Email"
 				:placeholder="t('newsletter.placeholder', 'you@domain.com')"
-				class="bento-subscribe-input"
+				class="newsletter-input"
 			>
 
 			<button
 				type="submit"
-				class="bento-subscribe-btn"
+				class="newsletter-btn"
 				:disabled="isSubmitting"
 			>
 				<span
 					v-if="isSubmitting"
-					class="i-hugeicons-loading-03 animate-spin text-xs"
+					class="i-ph-spinner animate-spin text-xs"
 				/>
 				<span>{{ isSubmitting ? (locale === 'id' ? 'Mengirim…' : 'Sending…') : t('newsletter.button', 'Subscribe') }}</span>
 			</button>
@@ -96,50 +96,50 @@ const onSubmit = handleSubmit(async (values) => {
 		<p
 			v-if="errors.email"
 			aria-live="polite"
-			class="mt-1.5 flex items-center gap-1 text-xs text-red font-medium"
+			class="mt-1.5 flex items-center gap-1 text-xs text-[#ef4565] font-medium"
 		>
-			<span class="i-hugeicons-alert-circle text-xs" /> {{ errors.email }}
+			<span class="i-ph-warning-circle text-xs" /> {{ errors.email }}
 		</p>
 		<p
 			v-else-if="serverError"
 			aria-live="polite"
-			class="mt-1.5 flex items-center gap-1 text-xs text-red font-medium"
+			class="mt-1.5 flex items-center gap-1 text-xs text-[#ef4565] font-medium"
 		>
-			<span class="i-hugeicons-alert-circle text-xs" /> {{ serverError }}
+			<span class="i-ph-warning-circle text-xs" /> {{ serverError }}
 		</p>
 		<p
 			v-if="isSuccess"
 			aria-live="polite"
 			class="mt-1.5 flex items-center gap-1 text-xs text-emerald-700 font-medium dark:text-emerald-300"
 		>
-			<span class="i-hugeicons-checkmark-circle-02 text-xs" /> {{ successMessage }}
+			<span class="i-ph-check-circle text-xs" /> {{ successMessage }}
 		</p>
 	</form>
 </template>
 
 <style scoped>
-.bento-subscribe-box {
+.newsletter-box {
 	display: flex;
 	align-items: center;
 	padding: 4px;
-	border-radius: 12px;
+	border-radius: 0;
 	background-color: #ffffff;
 	border: 1px solid #c5d9d7;
 	transition: all 0.15s ease;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
-.bento-subscribe-box:focus-within {
+.newsletter-box:focus-within {
 	border-color: #14b898;
-	box-shadow: 0 0 0 3px rgba(20, 184, 152, 0.18);
+	box-shadow: 0 0 0 2px rgba(20, 184, 152, 0.18);
 }
 
-.bento-subscribe-box-error {
+.newsletter-box-error {
 	border-color: #ef4565 !important;
-	box-shadow: 0 0 0 3px rgba(239, 69, 101, 0.2) !important;
+	box-shadow: 0 0 0 2px rgba(239, 69, 101, 0.2) !important;
 }
 
-.bento-subscribe-input {
+.newsletter-input {
 	flex: 1;
 	min-width: 0;
 	height: 36px;
@@ -149,23 +149,26 @@ const onSubmit = handleSubmit(async (values) => {
 	font-size: 14px;
 	color: #000b07;
 	outline: none;
+	border-radius: 0;
 }
 
-.bento-subscribe-input::placeholder {
+.newsletter-input::placeholder {
 	color: #84a8a4;
 }
 
-.bento-subscribe-btn {
+.newsletter-btn {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	gap: 6px;
 	height: 36px;
 	padding: 0 16px;
-	border-radius: 8px;
+	border-radius: 0;
 	border: none;
 	font-size: 13px;
-	font-weight: 600;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
 	cursor: pointer;
 	white-space: nowrap;
 	background-color: #001e1c;
@@ -173,48 +176,48 @@ const onSubmit = handleSubmit(async (values) => {
 	transition: all 0.15s ease;
 }
 
-.bento-subscribe-btn:hover:not(:disabled) {
+.newsletter-btn:hover:not(:disabled) {
 	background-color: #0f7662;
 }
 
-.bento-subscribe-btn:active:not(:disabled) {
-	transform: scale(0.97);
+.newsletter-btn:active:not(:disabled) {
+	transform: scale(0.98);
 }
 
-.bento-subscribe-btn:disabled {
+.newsletter-btn:disabled {
 	opacity: 0.6;
 	cursor: not-allowed;
 }
 
-.bento-subscribe-btn:focus-visible {
+.newsletter-btn:focus-visible {
 	outline: 2px solid #14b898;
 	outline-offset: 2px;
 }
 
-:global(.dark) .bento-subscribe-box {
+:global(.dark) .newsletter-box {
 	background-color: #001e1c;
 	border-color: #134e43;
 }
 
-:global(.dark) .bento-subscribe-box:focus-within {
+:global(.dark) .newsletter-box:focus-within {
 	border-color: #2bd4b5;
-	box-shadow: 0 0 0 3px rgba(43, 212, 181, 0.18);
+	box-shadow: 0 0 0 2px rgba(43, 212, 181, 0.18);
 }
 
-:global(.dark) .bento-subscribe-input {
+:global(.dark) .newsletter-input {
 	color: #f8fafa;
 }
 
-:global(.dark) .bento-subscribe-input::placeholder {
+:global(.dark) .newsletter-input::placeholder {
 	color: #537c77;
 }
 
-:global(.dark) .bento-subscribe-btn {
+:global(.dark) .newsletter-btn {
 	background-color: #ffffff;
 	color: #001e1c;
 }
 
-:global(.dark) .bento-subscribe-btn:hover:not(:disabled) {
+:global(.dark) .newsletter-btn:hover:not(:disabled) {
 	background-color: #f0fdfa;
 	color: #0f7662;
 }

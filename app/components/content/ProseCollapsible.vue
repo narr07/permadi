@@ -14,7 +14,7 @@ const props = withDefaults(
 		name: 'Details',
 		openText: 'Show',
 		closeText: 'Hide',
-		icon: 'i-hugeicons-arrow-down-01',
+		icon: 'i-ph-arrow-down',
 		defaultOpen: false,
 		class: undefined,
 	},

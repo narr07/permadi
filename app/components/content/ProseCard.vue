@@ -29,17 +29,17 @@ const isExternal = computed(() => {
 const resolvedIcon = computed(() => {
 	if (!props.icon)
 		return undefined
-	if (props.icon === 'i-hugeicons-database')
-		return 'i-hugeicons-database-01'
-	if (props.icon === 'i-hugeicons-global')
-		return 'i-hugeicons-globe-02'
+	if (props.icon === 'i-ph-database')
+		return 'i-ph-database-01'
+	if (props.icon === 'i-ph-globe')
+		return 'i-ph-globe-hemisphere-west'
 	return props.icon
 })
 </script>
 
 <template>
 	<div
-		class="prose-card group bento-card-clean relative flex flex-col justify-between overflow-hidden rounded-2xl p-5 shadow-xs transition-all duration-300 sm:p-6"
+		class="prose-card group relative flex flex-col justify-between overflow-hidden border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] p-5 shadow-xs transition-all duration-300 sm:p-6"
 		:class="[
 			props.to ? 'cursor-pointer hover:border-brand-500/50 hover:shadow-md dark:hover:border-brand-400/50' : '',
 			props.class,
@@ -68,7 +68,7 @@ const resolvedIcon = computed(() => {
 				<span
 					v-if="props.to"
 					class="text-slate-400 transition-transform duration-300 group-hover:translate-x-0.5 dark:text-slate-500 group-hover:-translate-y-0.5"
-					:class="isExternal ? 'i-hugeicons-arrow-up-right-01 text-base' : 'i-hugeicons-arrow-right-01 text-base'"
+					:class="isExternal ? 'i-ph-arrow-up-right text-base' : 'i-ph-arrow-right text-base'"
 				/>
 			</div>
 

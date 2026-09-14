@@ -1,0 +1,7 @@
+interface:
+  display_name: "Laws of UX + Design Spec"
+  short_description: "UX laws, evidence, metrics, and design-governance checks"
+  default_prompt: "Use $laws-of-ux-2 to review this interface. Return a verdict, P0-P3 findings, Keep/Fix/Quick Wins, applied laws, metrics, acceptance checks, and BuddyUp design-spec notes when relevant."
+
+policy:
+  allow_implicit_invocation: true

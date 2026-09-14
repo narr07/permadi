@@ -88,30 +88,24 @@ useSeoMeta({
 					class="shadow-2xs inline-flex cursor-pointer items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white/80 px-3.5 py-1.5 text-xs text-slate-700 font-semibold backdrop-blur-md transition-all dark:border-[#134e43] hover:border-brand-500/40 dark:bg-[#002b27]/80 hover:bg-white dark:text-slate-200 dark:hover:bg-[#042f27]"
 					@click="handleClearError('/')"
 				>
-					<span class="i-hugeicons-home-01 text-sm text-brand-600 dark:text-brand-400" />
+					<span class="i-ph-house text-sm text-brand-600 dark:text-brand-400" />
 					<span>{{ locale === 'id' ? 'Beranda' : 'Home' }}</span>
 				</button>
 			</div>
 		</header>
 
-		<!-- Main Bento Error Content -->
+		<!-- Main Error Content -->
 		<main class="relative z-10 my-auto py-10">
-			<div class="container-bento max-w-4xl">
-				<!-- 1. Hero Bento Card -->
-				<div class="bento-card-clean relative overflow-hidden border border-slate-200/90 rounded-bento bg-white/95 p-6 shadow-lg backdrop-blur-2xl dark:border-[#134e43] dark:bg-[#002b27]/95 md:p-12 sm:p-8">
-					<!-- Ambient Glow Behind Logo -->
-					<div
-						class="pointer-events-none absolute left-1/2 top-12 h-44 w-44 rounded-full bg-brand-400/20 blur-2xl -translate-x-1/2 dark:bg-brand-400/10"
-						aria-hidden="true"
-					/>
-
+			<div class="max-w-4xl mx-auto px-4 sm:px-6">
+				<!-- 1. Hero Card -->
+				<div class="relative border border-slate-200/90 bg-white/95 p-6 shadow-lg backdrop-blur-2xl dark:border-[#134e43] dark:bg-[#002b27]/95 md:p-12 sm:p-8">
 					<div class="relative z-10 flex flex-col items-center text-center">
-						<!-- Interactive Logo with Bento Floating Frame -->
-						<div class="bg-linear-to-b mb-6 inline-flex border border-brand-500/30 rounded-3xl from-brand-50/80 to-teal-100/40 p-4 shadow-sm backdrop-blur-md transition-transform duration-300 hover:scale-105 dark:border-brand-400/25 dark:from-[#042f27]/90 dark:to-[#001c19]/90">
+						<!-- Logo Frame -->
+						<div class="mb-6 inline-flex border border-brand-500/30 bg-brand-50/80 p-4 shadow-sm backdrop-blur-md dark:border-brand-400/25 dark:bg-[#042f27]/90">
 							<Logo size="72" />
 						</div>
 
-						<div class="mb-4 inline-flex items-center border border-brand-300/80 rounded-full bg-brand-100/90 px-3.5 py-1 text-xs text-brand-900 font-bold tracking-wider font-mono uppercase dark:border-brand-700/60 dark:bg-brand-950/90 dark:text-brand-300">
+						<div class="mb-4 inline-flex items-center border border-brand-300/80 bg-brand-100/90 px-3.5 py-1 text-xs text-brand-900 font-bold tracking-wider font-mono uppercase dark:border-brand-700/60 dark:bg-brand-950/90 dark:text-brand-300">
 							<span>ERROR {{ statusCode }}</span>
 						</div>
 
@@ -126,44 +120,44 @@ useSeoMeta({
 						</p>
 
 						<!-- Primary CTA Buttons -->
-						<div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+						<div class="mt-8 flex flex-wrap items-center justify-center gap-3 font-mono text-xs uppercase font-bold">
 							<button
 								type="button"
-								class="inline-flex cursor-pointer items-center gap-2 border border-transparent rounded-xl bg-brand-600 px-5 py-2.5 text-sm text-white font-semibold shadow-md transition-all duration-200 active:scale-95 dark:bg-brand-500 hover:bg-brand-700 focus-ring hover:-translate-y-0.5 dark:hover:bg-brand-600"
+								class="inline-flex cursor-pointer items-center gap-2 border border-brand-500 bg-brand-600 px-5 py-2.5 text-white shadow-md transition-colors active:scale-95 dark:bg-brand-500 hover:bg-brand-700 dark:hover:bg-brand-600"
 								@click="handleClearError('/')"
 							>
-								<span class="i-hugeicons-home-01 text-base" />
+								<span class="i-ph-house text-base" />
 								<span>{{ locale === 'id' ? 'Kembali ke Beranda' : 'Back to Home' }}</span>
 							</button>
 
 							<button
 								type="button"
-								class="inline-flex cursor-pointer items-center gap-2 border border-slate-200/80 rounded-xl bg-slate-100/90 px-4.5 py-2.5 text-sm text-slate-700 font-semibold transition-all duration-200 dark:border-[#134e43] dark:bg-[#042f27] hover:bg-white dark:text-slate-200 focus-ring hover:-translate-y-0.5 dark:hover:bg-[#073d32]"
+								class="inline-flex cursor-pointer items-center gap-2 border border-slate-300 bg-slate-100/90 px-4.5 py-2.5 text-slate-700 transition-colors dark:border-[#134e43] dark:bg-[#042f27] hover:bg-white dark:text-slate-200 dark:hover:bg-[#073d32]"
 								@click="handleClearError('/blog')"
 							>
-								<span class="i-hugeicons-book-open-01 text-base text-brand-600 dark:text-brand-400" />
+								<span class="i-ph-book-open text-base text-brand-600 dark:text-brand-400" />
 								<span>{{ locale === 'id' ? 'Baca Artikel Blog' : 'Read Blog' }}</span>
 							</button>
 						</div>
 					</div>
 				</div>
 
-				<!-- 2. Bento Quick Discovery Grid (4 Nav Cards) -->
+				<!-- 2. Quick Discovery Grid (4 Nav Cards) -->
 				<div class="grid grid-cols-1 mt-6 gap-4 lg:grid-cols-4 sm:grid-cols-2">
 					<!-- Card 1: Blog -->
 					<button
 						type="button"
-						class="group bento-card-clean flex cursor-pointer items-center gap-3.5 bento-lift rounded-bento p-4 text-left"
+						class="group flex cursor-pointer items-center gap-3.5 border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] hover:border-brand-500 p-4 text-left transition-colors"
 						@click="handleClearError('/blog')"
 					>
-						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-brand-500/25 rounded-xl bg-brand-500/10 text-brand-600 dark:border-brand-400/20 dark:bg-brand-500/15 dark:text-brand-400">
-							<span class="i-hugeicons-news text-xl" />
+						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-brand-500/25 bg-brand-500/10 text-brand-600 dark:border-brand-400/20 dark:bg-brand-500/15 dark:text-brand-400">
+							<span class="i-ph-newspaper text-xl" />
 						</div>
 						<div class="overflow-hidden">
 							<strong class="block truncate text-sm text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
 								{{ locale === 'id' ? 'Artikel Blog' : 'Blog Articles' }}
 							</strong>
-							<span class="block truncate text-[11px] text-slate-500 dark:text-slate-400">
+							<span class="block truncate text-[11px] text-slate-500 dark:text-slate-400 font-mono">
 								{{ locale === 'id' ? 'Tutorial & Wawasan' : 'Tutorials & Insights' }}
 							</span>
 						</div>
@@ -172,17 +166,17 @@ useSeoMeta({
 					<!-- Card 2: Projek -->
 					<button
 						type="button"
-						class="group bento-card-clean flex cursor-pointer items-center gap-3.5 bento-lift rounded-bento p-4 text-left"
+						class="group flex cursor-pointer items-center gap-3.5 border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] hover:border-brand-500 p-4 text-left transition-colors"
 						@click="handleClearError(locale === 'id' ? '/id/projek' : '/projects')"
 					>
-						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-teal-500/25 rounded-xl bg-teal-500/10 text-teal-600 dark:border-teal-400/20 dark:bg-teal-500/15 dark:text-teal-400">
-							<span class="i-hugeicons-folder-02 text-xl" />
+						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-teal-500/25 bg-teal-500/10 text-teal-600 dark:border-teal-400/20 dark:bg-teal-500/15 dark:text-teal-400">
+							<span class="i-ph-folder text-xl" />
 						</div>
 						<div class="overflow-hidden">
 							<strong class="block truncate text-sm text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
 								{{ locale === 'id' ? 'Portofolio Projek' : 'Project Showcase' }}
 							</strong>
-							<span class="block truncate text-[11px] text-slate-500 dark:text-slate-400">
+							<span class="block truncate text-[11px] text-slate-500 dark:text-slate-400 font-mono">
 								{{ locale === 'id' ? 'Karya & Eksperimen' : 'Works & Experiments' }}
 							</span>
 						</div>
@@ -191,17 +185,17 @@ useSeoMeta({
 					<!-- Card 3: Tentang -->
 					<button
 						type="button"
-						class="group bento-card-clean flex cursor-pointer items-center gap-3.5 bento-lift rounded-bento p-4 text-left"
+						class="group flex cursor-pointer items-center gap-3.5 border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] hover:border-brand-500 p-4 text-left transition-colors"
 						@click="handleClearError(locale === 'id' ? '/id/tentang' : '/about')"
 					>
-						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-emerald-500/25 rounded-xl bg-emerald-500/10 text-emerald-600 dark:border-emerald-400/20 dark:bg-emerald-500/15 dark:text-emerald-400">
-							<span class="i-hugeicons-user-circle text-xl" />
+						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-emerald-500/25 bg-emerald-500/10 text-emerald-600 dark:border-emerald-400/20 dark:bg-emerald-500/15 dark:text-emerald-400">
+							<span class="i-ph-user-circle text-xl" />
 						</div>
 						<div class="overflow-hidden">
 							<strong class="block truncate text-sm text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
 								{{ locale === 'id' ? 'Tentang Saya' : 'About Me' }}
 							</strong>
-							<span class="block truncate text-[11px] text-slate-500 dark:text-slate-400">
+							<span class="block truncate text-[11px] text-slate-500 dark:text-slate-400 font-mono">
 								{{ locale === 'id' ? 'Profil & Pengalaman' : 'Profile & Journey' }}
 							</span>
 						</div>
@@ -210,17 +204,17 @@ useSeoMeta({
 					<!-- Card 4: Kontak -->
 					<button
 						type="button"
-						class="group bento-card-clean flex cursor-pointer items-center gap-3.5 bento-lift rounded-bento p-4 text-left"
+						class="group flex cursor-pointer items-center gap-3.5 border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] hover:border-brand-500 p-4 text-left transition-colors"
 						@click="handleClearError(locale === 'id' ? '/id/kontak' : '/contact')"
 					>
-						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-cyan-500/25 rounded-xl bg-cyan-500/10 text-cyan-600 dark:border-cyan-400/20 dark:bg-cyan-500/15 dark:text-cyan-400">
-							<span class="i-hugeicons-mail-01 text-xl" />
+						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-brand-500/25 bg-brand-500/10 text-brand-600 dark:border-brand-400/20 dark:bg-brand-500/15 dark:text-brand-400">
+							<span class="i-ph-envelope-simple text-xl" />
 						</div>
 						<div class="overflow-hidden">
 							<strong class="block truncate text-sm text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
 								{{ locale === 'id' ? 'Kontak' : 'Contact' }}
 							</strong>
-							<span class="block truncate text-[11px] text-slate-500 dark:text-slate-400">
+							<span class="block truncate text-[11px] text-slate-500 dark:text-slate-400 font-mono">
 								{{ locale === 'id' ? 'Kirim Pesan' : 'Get in Touch' }}
 							</span>
 						</div>
@@ -230,13 +224,10 @@ useSeoMeta({
 		</main>
 
 		<!-- Footer -->
-		<footer class="relative z-10 border-t border-slate-200/80 py-6 dark:border-slate-800/80">
-			<div class="container-bento flex flex-col items-center justify-between gap-3 text-center text-xs text-slate-600 sm:flex-row sm:text-left dark:text-slate-400">
-				<p class="font-sans">
+		<footer class="relative z-10 border-t border-slate-200/80 py-6 dark:border-[#134e43]">
+			<div class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col items-center justify-between gap-3 text-center text-xs text-slate-600 sm:flex-row sm:text-left dark:text-slate-400 font-mono">
+				<p>
 					permadi.dev <span class="text-slate-500">© {{ new Date().getFullYear() }}</span>
-				</p>
-				<p class="text-[11px] text-slate-500 font-mono dark:text-slate-400">
-					Permadi Deep Teal Design System
 				</p>
 			</div>
 		</footer>

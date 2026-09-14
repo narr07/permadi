@@ -45,7 +45,7 @@ const diagramResult = computed(() => {
 			class="w-full border border-amber-500/30 rounded-xl bg-amber-500/10 p-4 text-xs text-amber-200"
 		>
 			<div class="flex items-center gap-2 font-medium">
-				<span class="i-lucide-alert-triangle text-amber-400" />
+				<span class="i-ph-warning text-amber-400" />
 				<span>Diagram Mermaid tidak valid:</span>
 			</div>
 			<p class="mt-1 text-[11px] font-mono opacity-80">

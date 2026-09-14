@@ -164,7 +164,7 @@ defineOgImage('Bento', {
 						<span class="block font-mono text-[11px] uppercase tracking-[0.15em] text-slate-900/50 dark:text-slate-50/50 mb-1.5">
 							KLASIFIKASI ARSIP
 						</span>
-						<h2 class="font-heading font-800 text-2xl sm:text-3xl text-slate-900 dark:text-slate-50 leading-tight">
+						<h2 class="font-heading font-700 text-2xl sm:text-3xl text-slate-900 dark:text-slate-50 leading-tight">
 							{{ page?.eyebrow || (locale === 'id' ? 'Karya & Rekayasa' : 'Work & Systems') }}
 						</h2>
 					</div>
@@ -182,10 +182,6 @@ defineOgImage('Bento', {
 								<span class="font-bold text-brand-600 dark:text-brand-400 uppercase">{{ selectedTag === 'ALL' ? (locale === 'id' ? 'SEMUA' : 'ALL') : selectedTag }}</span>
 							</div>
 
-							<div class="flex items-baseline justify-between py-2">
-								<span class="text-slate-900/60 dark:text-slate-50/60">SISTEM KISI</span>
-								<span class="text-slate-900 dark:text-slate-50">12-Kolom Modular</span>
-							</div>
 
 							<div class="flex items-baseline justify-between py-2">
 								<span class="text-slate-900/60 dark:text-slate-50/60">STATUS</span>
@@ -202,7 +198,7 @@ defineOgImage('Bento', {
 							ARSIP TERKURASI // 2024–2026
 						</div>
 
-						<h1 class="font-heading font-800 text-3xl sm:text-5xl lg:text-6xl tracking-[-0.035em] text-slate-900 dark:text-slate-50 leading-[0.95] text-balance mb-6">
+						<h1 class="font-heading font-700 text-3xl sm:text-5xl lg:text-6xl tracking-[-0.035em] text-slate-900 dark:text-slate-50 leading-[0.95] text-balance mb-6">
 							{{ page?.title || (locale === 'id' ? 'Portofolio Projek & Studi Kasus' : 'Projects & Case Studies') }}
 						</h1>
 
@@ -213,7 +209,6 @@ defineOgImage('Bento', {
 
 					<div class="mt-8 pt-6 border-t border-slate-200/80 dark:border-[#134e43] font-mono text-xs text-slate-900/50 dark:text-slate-50/50 flex items-center justify-between">
 						<span>DIREKTORI REKAYASA DIGITAL</span>
-						<span>EDISI N° 2026</span>
 					</div>
 				</div>
 			</div>
@@ -263,7 +258,7 @@ defineOgImage('Bento', {
 							</span>
 						</div>
 
-						<h2 class="font-heading font-800 text-2xl sm:text-4xl text-slate-900 dark:text-slate-50 leading-tight mb-4">
+						<h2 class="font-heading font-700 text-2xl sm:text-4xl text-slate-900 dark:text-slate-50 leading-tight mb-4">
 							<NuxtLink :to="leadProject.url" class="hover:text-brand-600 transition-colors">
 								{{ leadProject.title }}
 							</NuxtLink>
@@ -291,7 +286,7 @@ defineOgImage('Bento', {
 							class="px-5 py-2.5 bg-brand-500 text-slate-950 font-mono font-bold text-xs uppercase tracking-wider hover:bg-brand-400 transition-colors flex items-center gap-2"
 						>
 							<span>BUKA STUDI KASUS</span>
-							<span class="i-lucide-arrow-up-right text-sm" />
+							<span class="i-ph-arrow-up-right text-sm" />
 						</NuxtLink>
 
 						<div
@@ -387,7 +382,7 @@ defineOgImage('Bento', {
 							</span>
 						</div>
 
-						<h3 class="font-heading font-800 text-xl text-slate-900 dark:text-slate-50 leading-snug mb-3 transition-colors group-hover:text-brand-700 dark:group-hover:text-brand-300">
+						<h3 class="font-heading font-700 text-xl text-slate-900 dark:text-slate-50 leading-snug mb-3 transition-colors group-hover:text-brand-700 dark:group-hover:text-brand-300">
 							<NuxtLink :to="item.url">
 								{{ item.title }}
 							</NuxtLink>
@@ -404,7 +399,7 @@ defineOgImage('Bento', {
 							class="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-slate-900 dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-brand-400 uppercase tracking-wider"
 						>
 							<span>STUDI KASUS</span>
-							<span class="i-lucide-arrow-up-right text-sm transition-transform group-hover:(translate-x-0.5 -translate-y-0.5)" />
+							<span class="i-ph-arrow-up-right text-sm transition-transform group-hover:(translate-x-0.5 -translate-y-0.5)" />
 						</NuxtLink>
 
 						<div
@@ -419,7 +414,7 @@ defineOgImage('Bento', {
 								class="hover:text-brand-600 dark:hover:text-brand-400"
 								aria-label="GitHub Repository"
 							>
-								<span class="i-lucide-github text-sm" />
+								<span class="i-ph-github-logo text-sm" />
 							</a>
 							<a
 								v-if="item.demoUrl || item.link"
@@ -429,7 +424,7 @@ defineOgImage('Bento', {
 								class="hover:text-brand-600 dark:hover:text-brand-400"
 								aria-label="Demo"
 							>
-								<span class="i-lucide-external-link text-sm" />
+								<span class="i-ph-arrow-square-out text-sm" />
 							</a>
 						</div>
 					</div>
@@ -502,7 +497,7 @@ defineOgImage('Bento', {
 				DOKUMENTASI SISTEM REKAYASA &amp; STUDI KASUS // PERMADI.DEV
 			</div>
 			<div>
-				MAJALENGKA, INDONESIA · KISI 12-KOLOM
+				MAJALENGKA, INDONESIA
 			</div>
 		</div>
 	</div>

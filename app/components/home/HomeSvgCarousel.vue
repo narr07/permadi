@@ -100,7 +100,7 @@ onUnmounted(() => {
 					:aria-label="locale === 'id' ? 'Slide sebelumnya' : 'Previous slide'"
 					@click="prev"
 				>
-					<span class="i-hugeicons-arrow-left-01 text-sm" />
+					<span class="i-ph-arrow-left text-sm" />
 				</button>
 				<button
 					type="button"
@@ -108,7 +108,7 @@ onUnmounted(() => {
 					:aria-label="locale === 'id' ? 'Slide berikutnya' : 'Next slide'"
 					@click="next"
 				>
-					<span class="i-hugeicons-arrow-right-01 text-sm" />
+					<span class="i-ph-arrow-right text-sm" />
 				</button>
 			</div>
 		</div>

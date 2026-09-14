@@ -148,7 +148,7 @@ const allScreenshots = computed(() => {
 				:to="locale === 'id' ? '/id/projek' : '/projects'"
 				class="inline-flex items-center gap-2 text-slate-900 font-bold uppercase tracking-wider hover:text-brand-600 dark:text-slate-50 dark:hover:text-brand-400"
 			>
-				<span class="i-lucide-arrow-left text-xs" />
+				<span class="i-ph-arrow-left text-xs" />
 				<span>{{ locale === 'id' ? 'KEMBALI KE ARSIP PROJEK' : 'BACK TO PROJECTS ARCHIVE' }}</span>
 			</NuxtLink>
 
@@ -201,7 +201,7 @@ const allScreenshots = computed(() => {
 							class="w-full px-5 py-3 bg-brand-500 text-slate-950 font-mono font-bold text-xs uppercase tracking-wider hover:bg-brand-400 transition-colors flex items-center justify-between"
 						>
 							<span>KUNJUNGI WEB DEMO</span>
-							<span class="i-lucide-external-link text-sm" />
+							<span class="i-ph-arrow-square-out text-sm" />
 						</a>
 
 						<a
@@ -212,7 +212,7 @@ const allScreenshots = computed(() => {
 							class="w-full px-5 py-3 border border-slate-300 dark:border-[#134e43] text-slate-900 dark:text-slate-50 font-mono font-bold text-xs uppercase tracking-wider hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400 transition-colors flex items-center justify-between"
 						>
 							<span>REPOSITORI GITHUB</span>
-							<span class="i-lucide-github text-sm" />
+							<span class="i-ph-github-logo text-sm" />
 						</a>
 					</div>
 				</div>
@@ -224,7 +224,7 @@ const allScreenshots = computed(() => {
 							STUDI KASUS SISTEM
 						</div>
 
-						<h1 class="font-heading font-800 text-3xl sm:text-5xl lg:text-6xl tracking-[-0.035em] text-slate-900 dark:text-slate-50 leading-[0.95] text-balance mb-6">
+						<h1 class="font-heading font-700 text-3xl sm:text-5xl lg:text-6xl tracking-[-0.035em] text-slate-900 dark:text-slate-50 leading-[0.95] text-balance mb-6">
 							{{ project.doc.title }}
 						</h1>
 
@@ -246,7 +246,6 @@ const allScreenshots = computed(() => {
 
 					<div class="mt-8 pt-6 border-t border-slate-200/80 dark:border-[#134e43] font-mono text-xs text-slate-900/50 dark:text-slate-50/50 flex items-center justify-between">
 						<span>ARSIP PERMADI.DEV</span>
-						<span>KISI MODULAR 12-KOLOM</span>
 					</div>
 				</div>
 			</div>
@@ -321,12 +320,12 @@ const allScreenshots = computed(() => {
 				:to="locale === 'id' ? '/id/projek' : '/projects'"
 				class="inline-flex items-center gap-2 text-slate-900 font-bold uppercase tracking-wider hover:text-brand-600 dark:text-slate-50 dark:hover:text-brand-400"
 			>
-				<span class="i-lucide-arrow-left text-xs" />
+				<span class="i-ph-arrow-left text-xs" />
 				<span>KEMBALI KE SELURUH PROJEK</span>
 			</NuxtLink>
 
 			<div class="text-slate-900/50 dark:text-slate-50/50">
-				DINAR PERMADI YUSUP · SISTEM KISI MODULAR 12-KOLOM
+				DINAR PERMADI YUSUP
 			</div>
 		</footer>
 	</div>

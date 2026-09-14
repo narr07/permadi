@@ -5,7 +5,7 @@ function createLinkSchema() {
 	return z.object({
 		label: property(z.string()).editor({ label: 'Teks Tombol / Label' }),
 		to: property(z.string()).editor({ label: 'Tautan Tujuan (URL/Path)', tooltip: 'Contoh: /projek atau https://github.com' }),
-		icon: property(z.string().optional()).editor({ input: 'icon', iconLibraries: ['hugeicons', 'simple-icons'], label: 'Ikon' }),
+		icon: property(z.string().optional()).editor({ input: 'icon', iconLibraries: ['ph', 'vscode-icons'], label: 'Ikon' }),
 		trailing: property(z.boolean().optional()).editor({ label: 'Ikon di Kanan' }),
 		target: property(z.string().optional()).editor({ label: 'Target', tooltip: '_blank untuk tab baru' }),
 		variant: property(z.string().optional()).editor({ label: 'Varian Tombol' }),
@@ -82,9 +82,9 @@ const homeSchema = z.object({
 			name: property(z.string()).editor({ label: 'Nama Teknologi', tooltip: 'Contoh: Nuxt & Vue 3, Flutter & Dart, Python' }),
 			icon: property(z.string().optional()).editor({
 				input: 'icon',
-				iconLibraries: ['simple-icons', 'hugeicons', 'vscode-icons', 'lucide'],
+				iconLibraries: ['ph', 'vscode-icons'],
 				label: 'Pilih Ikon (Iconify / Path)',
-				description: 'Pilih ikon dari Iconify (Simple Icons, Hugeicons, dsb) atau ketik path file SVG lokal (misal: /icons/f-nuxt.svg)',
+				description: 'Pilih ikon dari Iconify (Phosphor Icons, VS Code Icons) atau ketik path file SVG lokal (misal: /icons/f-nuxt.svg)',
 			}),
 			role: property(z.string().optional()).editor({ hidden: true }),
 			desc: property(z.string().optional()).editor({ hidden: true }),
@@ -97,9 +97,9 @@ const homeSchema = z.object({
 			name: property(z.string()).editor({ label: 'Nama Software / Tool', tooltip: 'Contoh: Illustrator, Photoshop, Figma' }),
 			icon: property(z.string().optional()).editor({
 				input: 'icon',
-				iconLibraries: ['simple-icons', 'hugeicons', 'vscode-icons', 'lucide'],
+				iconLibraries: ['ph', 'vscode-icons'],
 				label: 'Pilih Ikon (Iconify / Path)',
-				description: 'Pilih ikon dari Iconify (Simple Icons, Hugeicons, dsb) atau ketik path file SVG lokal (misal: /icons/d-illustrator.svg)',
+				description: 'Pilih ikon dari Iconify (Phosphor Icons, VS Code Icons) atau ketik path file SVG lokal (misal: /icons/d-illustrator.svg)',
 			}),
 			role: property(z.string().optional()).editor({ hidden: true }),
 			desc: property(z.string().optional()).editor({ hidden: true }),
@@ -204,7 +204,7 @@ const contactSchema = z.object({
 		items: z.array(z.object({
 			name: property(z.string()).editor({ label: 'Nama Jejaring' }),
 			url: property(z.string()).editor({ label: 'Tautan URL' }),
-			icon: property(z.string().optional()).editor({ input: 'icon', iconLibraries: ['hugeicons', 'simple-icons'], label: 'Ikon' }),
+			icon: property(z.string().optional()).editor({ input: 'icon', iconLibraries: ['ph', 'vscode-icons'], label: 'Ikon' }),
 		})).optional(),
 	}).optional(),
 

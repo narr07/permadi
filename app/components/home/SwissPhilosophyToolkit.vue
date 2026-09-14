@@ -19,6 +19,8 @@
 		philosophy?: PhilosophyData
 		skillsData?: SkillsData
 	}>()
+
+	const { locale } = useI18n()
 </script>
 
 <template>
@@ -37,7 +39,7 @@
 					</div>
 
 					<blockquote class="my-6">
-						<p class="font-heading font-800 text-2xl sm:text-3xl lg:text-[2rem] tracking-tight text-slate-900 leading-snug dark:text-slate-50 text-balance">
+						<p class="font-heading font-700 text-2xl sm:text-3xl lg:text-[2rem] tracking-tight text-slate-900 leading-snug dark:text-slate-50 text-balance">
 							“{{ philosophy?.quote || 'Desain yang baik itu tenang.' }}
 							<span class="text-brand-600 block dark:text-[#5eeacf]">
 								{{ philosophy?.quote_bold || 'Desain luar biasa akan selalu membekas.' }}”
@@ -79,7 +81,7 @@
 								<span class="font-mono text-[11px] text-brand-600 font-bold tracking-widest uppercase dark:text-brand-400">
 									A // LOGIKA &amp; SISTEM
 								</span>
-								<h3 class="font-heading font-800 text-lg text-slate-900 dark:text-slate-50 mt-1">
+								<h3 class="font-heading font-700 text-lg text-slate-900 dark:text-slate-50 mt-1">
 									Software Engineering
 								</h3>
 							</div>
@@ -122,7 +124,7 @@
 								<span class="font-mono text-[11px] text-[#f9bc60] font-bold tracking-widest uppercase">
 									B // VISUAL &amp; GRAFIS
 								</span>
-								<h3 class="font-heading font-800 text-lg text-slate-900 dark:text-slate-50 mt-1">
+								<h3 class="font-heading font-700 text-lg text-slate-900 dark:text-slate-50 mt-1">
 									Graphic &amp; Editorial
 								</h3>
 							</div>
@@ -152,8 +154,8 @@
 								<li class="flex items-start gap-2.5">
 									<span class="font-mono text-[10px] text-[#f9bc60] font-bold pt-0.5">04.</span>
 									<div>
-										<strong class="font-semibold text-slate-900 dark:text-slate-50">Sistem Grid Swiss</strong>
-										<span class="block text-slate-900/60 text-xs dark:text-slate-50/60">Modul 12-Kolom &amp; Rasionalitas Tipografi</span>
+										<strong class="font-semibold text-slate-900 dark:text-slate-50">Tipografi &amp; Tata Letak Swiss</strong>
+										<span class="block text-slate-900/60 text-xs dark:text-slate-50/60">Hirarki ruang, presisi teks, dan kejelasan baca</span>
 									</div>
 								</li>
 							</ul>
@@ -162,7 +164,7 @@
 				</div>
 
 				<div class="mt-8 pt-4 border-t border-slate-200/80 dark:border-[#134e43] font-mono text-[11px] text-slate-900/50 dark:text-slate-50/50 flex items-center justify-between">
-					<span>STANDAR OPERASI: TANPA DEKORASI NON-FUNGSIONAL</span>
+					<span>{{ locale === 'id' ? 'PRINSIP KERJA: TIDAK ADA HIASAN TANPA FUNGSI' : 'WORKING PRINCIPLE: NO ORNAMENT WITHOUT FUNCTION' }}</span>
 					<span>INDEX 03–04</span>
 				</div>
 			</div>

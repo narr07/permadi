@@ -288,7 +288,7 @@ defineOgImage('Bento', {
 				:to="locale === 'id' ? '/id/blog' : '/blog'"
 				class="inline-flex items-center gap-2 text-slate-900 font-bold uppercase tracking-wider hover:text-brand-600 dark:text-slate-50 dark:hover:text-brand-400"
 			>
-				<span class="i-lucide-arrow-left text-xs" />
+				<span class="i-ph-arrow-left text-xs" />
 				<span>{{ locale === 'id' ? 'KEMBALI KE ARSIP BLOG' : 'BACK TO BLOG ARCHIVE' }}</span>
 			</NuxtLink>
 
@@ -344,7 +344,7 @@ defineOgImage('Bento', {
 							WACANA TEKNIS &amp; PEDAGOGIS
 						</div>
 
-						<h1 class="font-heading font-800 text-3xl sm:text-5xl lg:text-6xl tracking-[-0.035em] text-slate-900 dark:text-slate-50 leading-[0.95] text-balance mb-6">
+						<h1 class="font-heading font-700 text-3xl sm:text-5xl lg:text-6xl tracking-[-0.035em] text-slate-900 dark:text-slate-50 leading-[0.95] text-balance mb-6">
 							{{ post.doc.title }}
 						</h1>
 
@@ -366,7 +366,6 @@ defineOgImage('Bento', {
 
 					<div class="mt-8 pt-6 border-t border-slate-200/80 dark:border-[#134e43] font-mono text-xs text-slate-900/50 dark:text-slate-50/50 flex items-center justify-between">
 						<span>ARSIP PERMADI.DEV</span>
-						<span>KISI MODULAR 12-KOLOM</span>
 					</div>
 				</div>
 			</div>
@@ -403,7 +402,7 @@ defineOgImage('Bento', {
 						@click="toggleTocDropdown"
 					>
 						<span>DAFTAR ISI ({{ String(tocLinks.length).padStart(2, '0') }})</span>
-						<span :class="isTocDropdownOpen ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'" class="text-xs" />
+						<span :class="isTocDropdownOpen ? 'i-ph-caret-up' : 'i-ph-caret-down'" class="text-xs" />
 					</button>
 
 					<span class="text-slate-300 dark:text-[#134e43]">|</span>
@@ -520,7 +519,7 @@ defineOgImage('Bento', {
 					<span class="font-mono text-[11px] font-bold uppercase tracking-widest text-slate-900/50 dark:text-slate-50/50 block mb-2">
 						← NASKAH SEBELUMNYA
 					</span>
-					<h3 class="font-heading font-800 text-lg text-slate-900 dark:text-slate-50 leading-snug group-hover:text-brand-600 transition-colors">
+					<h3 class="font-heading font-700 text-lg text-slate-900 dark:text-slate-50 leading-snug group-hover:text-brand-600 transition-colors">
 						<NuxtLink :to="locale === 'id' ? `/id/blog/${surround[0].slug || cleanSlug(surround[0].path)}` : `/blog/${surround[0].slug || cleanSlug(surround[0].path)}`">
 							{{ surround[0].title }}
 						</NuxtLink>
@@ -537,7 +536,7 @@ defineOgImage('Bento', {
 					<span class="font-mono text-[11px] font-bold uppercase tracking-widest text-slate-900/50 dark:text-slate-50/50 block mb-2">
 						NASKAH BERIKUTNYA →
 					</span>
-					<h3 class="font-heading font-800 text-lg text-slate-900 dark:text-slate-50 leading-snug group-hover:text-brand-600 transition-colors">
+					<h3 class="font-heading font-700 text-lg text-slate-900 dark:text-slate-50 leading-snug group-hover:text-brand-600 transition-colors">
 						<NuxtLink :to="locale === 'id' ? `/id/blog/${surround[1].slug || cleanSlug(surround[1].path)}` : `/blog/${surround[1].slug || cleanSlug(surround[1].path)}`">
 							{{ surround[1].title }}
 						</NuxtLink>
@@ -555,12 +554,12 @@ defineOgImage('Bento', {
 				:to="locale === 'id' ? '/id/blog' : '/blog'"
 				class="inline-flex items-center gap-2 text-slate-900 font-bold uppercase tracking-wider hover:text-brand-600 dark:text-slate-50 dark:hover:text-brand-400"
 			>
-				<span class="i-lucide-arrow-left text-xs" />
+				<span class="i-ph-arrow-left text-xs" />
 				<span>KEMBALI KE SELURUH NASKAH</span>
 			</NuxtLink>
 
 			<div class="text-slate-900/50 dark:text-slate-50/50">
-				DINAR PERMADI YUSUP · SISTEM KISI MODULAR 12-KOLOM
+				DINAR PERMADI YUSUP
 			</div>
 		</footer>
 	</div>

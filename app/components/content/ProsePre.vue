@@ -118,7 +118,7 @@ const iconMap: Record<string, string> = {
 	'shell': 'i-vscode-icons-file-type-shell',
 	'powershell': 'i-vscode-icons-file-type-powershell',
 	'ps1': 'i-vscode-icons-file-type-powershell',
-	'terminal': 'i-lucide-terminal',
+	'terminal': 'i-ph-terminal-window',
 }
 
 const fileIcon = computed(() => {
@@ -156,7 +156,7 @@ function handleCopy() {
 			<!-- Left: File Icon & Filename & Language Tag -->
 			<div class="min-w-0 flex items-center gap-2.5">
 				<span
-					:class="isMermaid ? 'i-lucide-network text-brand-400' : fileIcon"
+					:class="isMermaid ? 'i-ph-tree-structure text-brand-400' : fileIcon"
 					class="shrink-0 text-sm"
 				/>
 				<span
@@ -206,7 +206,7 @@ function handleCopy() {
 					@click="handleCopy"
 				>
 					<span
-						:class="copied ? 'i-lucide-check text-brand-400' : 'i-lucide-copy'"
+						:class="copied ? 'i-ph-check text-brand-400' : 'i-ph-copy'"
 						class="shrink-0 text-xs"
 					/>
 					<span class="text-[11px] font-medium font-sans">

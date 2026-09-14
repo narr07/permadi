@@ -87,10 +87,10 @@
 						<span class="font-bold text-brand-600 dark:text-brand-400">
 							{{ p.index }} // {{ p.year }}
 						</span>
-						<span class="i-hugeicons-arrow-up-right-01 text-base text-slate-900/40 transition-transform duration-200 group-hover:(translate-x-1 -translate-y-1 text-brand-500) dark:text-slate-50/40" />
+						<span class="i-ph-arrow-up-right text-base text-slate-900/40 transition-transform duration-200 group-hover:(translate-x-1 -translate-y-1 text-brand-500) dark:text-slate-50/40" />
 					</div>
 
-					<h3 class="font-heading font-800 text-xl sm:text-2xl text-slate-900 mb-4 leading-snug transition-colors group-hover:text-brand-700 dark:text-slate-50 dark:group-hover:text-brand-300">
+					<h3 class="font-heading font-700 text-xl sm:text-2xl text-slate-900 mb-4 leading-snug transition-colors group-hover:text-brand-700 dark:text-slate-50 dark:group-hover:text-brand-300">
 						<NuxtLink :to="localePath(p.link)">
 							{{ p.title }}
 						</NuxtLink>
@@ -123,7 +123,7 @@
 				class="inline-flex items-center gap-2 text-slate-900 font-bold uppercase tracking-wider underline underline-offset-4 hover:text-brand-600 dark:text-slate-50 dark:hover:text-brand-400 ml-auto"
 			>
 				<span>{{ allLinkText || 'BUKA SELURUH ARSIP PROJEK (01–06)' }}</span>
-				<span class="i-hugeicons-arrow-right-01 text-xs" />
+				<span class="i-ph-arrow-right text-xs" />
 			</NuxtLink>
 		</div>
 	</section>

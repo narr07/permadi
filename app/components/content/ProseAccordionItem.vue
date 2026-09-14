@@ -16,7 +16,7 @@ const props = withDefaults(
 		 */
 		description?: string
 		/**
-		 * Leading icon name (e.g. i-hugeicons-database-01, i-hugeicons-sparkles)
+		 * Leading icon name (e.g. i-ph-database-01, i-ph-sparkle)
 		 */
 		icon?: string
 		/**
@@ -49,7 +49,7 @@ const toggle = inject<((id: string) => void) | null>('accordionToggle', null)
 const isItemOpen = inject<((id: string) => boolean) | null>('accordionIsOpen', null)
 const parentTrailingIcon = inject<any>('accordionTrailingIcon', null)
 
-const resolvedTrailingIcon = computed(() => props.trailingIcon || parentTrailingIcon?.value || 'i-hugeicons-arrow-down-01')
+const resolvedTrailingIcon = computed(() => props.trailingIcon || parentTrailingIcon?.value || 'i-ph-arrow-down')
 
 const internalOpen = ref(props.defaultOpen)
 
@@ -83,21 +83,21 @@ function handleToggle() {
 const resolvedIcon = computed(() => {
 	if (!props.icon)
 		return undefined
-	if (props.icon === 'i-hugeicons-database')
-		return 'i-hugeicons-database-01'
-	if (props.icon === 'i-hugeicons-global')
-		return 'i-hugeicons-globe-02'
+	if (props.icon === 'i-ph-database')
+		return 'i-ph-database-01'
+	if (props.icon === 'i-ph-globe')
+		return 'i-ph-globe-hemisphere-west'
 	return props.icon
 })
 </script>
 
 <template>
 	<div
-		class="bento-accordion-item overflow-hidden border rounded-2xl bg-white shadow-xs transition-all duration-200 dark:border-slate-800/80 dark:bg-slate-950"
+		class="accordion-item overflow-hidden border bg-white shadow-xs transition-all duration-200 dark:border-[#134e43] dark:bg-[#002b27]"
 		:class="[
 			isOpen
-				? 'border-brand-500/50 ring-1 ring-brand-500/25 dark:border-brand-400/40 dark:ring-brand-400/20'
-				: 'border-slate-200/90 hover:border-slate-300 dark:border-slate-800 dark:hover:border-slate-700',
+				? 'border-brand-500/50 dark:border-brand-400/40'
+				: 'border-slate-200/90 hover:border-slate-300 dark:border-[#134e43] dark:hover:border-brand-400/50',
 			props.class,
 		]"
 	>

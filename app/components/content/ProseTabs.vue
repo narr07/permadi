@@ -71,14 +71,14 @@ const tabs = computed(() => {
 function resolveIcon(icon?: string) {
 	if (!icon)
 		return undefined
-	if (icon === 'i-hugeicons-database' || icon === 'database')
-		return 'i-hugeicons-database-01'
-	if (icon === 'i-hugeicons-global' || icon === 'global')
-		return 'i-hugeicons-globe-02'
-	if (icon === 'i-hugeicons-shield-01' || icon === 'i-hugeicons-shield' || icon === 'security')
-		return 'i-hugeicons-shield-02'
-	if (icon === 'i-hugeicons-flash-01' || icon === 'scalability' || icon === 'lightning')
-		return 'i-hugeicons-flash'
+	if (icon === 'i-ph-database' || icon === 'database')
+		return 'i-ph-database-01'
+	if (icon === 'i-ph-globe' || icon === 'global')
+		return 'i-ph-globe-hemisphere-west'
+	if (icon === 'i-ph-shield-check-01' || icon === 'i-ph-shield-check' || icon === 'security')
+		return 'i-ph-shield-check-02'
+	if (icon === 'i-ph-lightning-01' || icon === 'scalability' || icon === 'lightning')
+		return 'i-ph-lightning'
 	return icon
 }
 

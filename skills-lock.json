@@ -91,6 +91,18 @@
       "skillPath": "skills/seo/content/keyword-research/SKILL.md",
       "computedHash": "8d7bbcdb5c7b8715bbc3e421e9253fc21d47b116f196c7853bbf7775744c4250"
     },
+    "laws-of-ux-2": {
+      "source": "sznnnnn/laws-of-ux-skill",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "39533eafe38d24716a75981167ab791883a07c6b1cfdab5ba4556199c892b841"
+    },
+    "micro-interactions": {
+      "source": "solinkz/micro-interactions-skill",
+      "sourceType": "github",
+      "skillPath": "skills/micro-interactions/SKILL.md",
+      "computedHash": "0e7a87532cd1f287d2d8d3f92a8fa0803e6af637b64ae68f0f7a3b9cc6cde37c"
+    },
     "motion": {
       "source": "onmax/nuxt-skills",
       "sourceType": "github",

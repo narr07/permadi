@@ -46,21 +46,21 @@ useSchemaOrg([
 </script>
 
 <template>
-	<div class="container-bento py-10 sm:py-14">
-		<!-- Page Header (Clean Bento Style without gradient) -->
+	<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+		<!-- Page Header -->
 		<header
-			class="bento-card-clean relative z-10 mb-8 bg-slate-50/70 p-6 sm:mb-10 dark:bg-slate-900/60 sm:p-8"
+			class="relative z-10 mb-8 border border-slate-200/80 bg-slate-50/70 p-6 sm:mb-10 dark:border-[#134e43] dark:bg-slate-900/60 sm:p-8"
 		>
 			<div class="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-center">
 				<!-- Sisi Kiri: Eyebrow + Judul + Deskripsi -->
 				<div class="max-w-2xl">
 					<div class="mb-3.5 flex items-center justify-between gap-3">
-						<div class="inline-flex items-center border border-brand-200/60 rounded-xl bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
+						<div class="inline-flex items-center border border-brand-200/60 bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
 							<span>{{ page?.section_label || (locale === 'id' ? 'Tentang Saya' : 'About Me') }}</span>
 						</div>
 
 						<!-- Logo Compact Badge di Mobile -->
-						<div class="flex shrink-0 items-center justify-center border border-slate-200/70 rounded-xl bg-white p-1.5 shadow-xs md:hidden dark:border-slate-700/60 dark:bg-slate-800/80">
+						<div class="flex shrink-0 items-center justify-center border border-slate-200/70 bg-white p-1.5 shadow-xs md:hidden dark:border-slate-700/60 dark:bg-slate-800/80">
 							<Logo :size="36" />
 						</div>
 					</div>
@@ -74,21 +74,21 @@ useSchemaOrg([
 					</p>
 				</div>
 
-				<!-- Sisi Kanan: Interactive Logo Bento Widget (Desktop) -->
+				<!-- Sisi Kanan: Interactive Logo Widget (Desktop) -->
 				<div class="hidden shrink-0 items-center justify-center md:flex">
-					<div class="flex items-center justify-center border border-slate-200/70 rounded-2xl bg-white p-4 shadow-xs transition-colors duration-100 dark:border-slate-700/60 hover:border-brand-500 dark:bg-slate-800/80 dark:hover:border-brand-400">
-						<Logo :size="84" />
+					<div class="border border-brand-500/30 bg-white p-6 shadow-sm dark:border-brand-400/20 dark:bg-[#002b27]">
+						<Logo size="64" />
 					</div>
 				</div>
 			</div>
 		</header>
 
-		<!-- Bento About Grid -->
+		<!-- About Grid -->
 		<div class="grid grid-cols-1 mb-12 gap-4 md:grid-cols-12 sm:gap-5">
 			<!-- Main Biography Card (Span 7) -->
 			<div
 				v-if="page?.story_card"
-				class="bento-card-clean flex flex-col justify-between p-6 md:col-span-7 sm:p-8"
+				class="border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] flex flex-col justify-between p-6 md:col-span-7 sm:p-8"
 			>
 				<div>
 					<span
@@ -120,7 +120,7 @@ useSchemaOrg([
 						class="group flex items-center gap-1.5 hover:text-brand-950 hover:underline"
 					>
 						{{ page.story_card.link_text || (locale === 'id' ? 'Eksplorasi Studi Kasus Projek' : 'Explore Project Case Studies') }}
-						<span class="i-hugeicons-arrow-right-01 text-xs transition-transform group-hover:translate-x-0.5" />
+						<span class="i-ph-arrow-right text-xs transition-transform group-hover:translate-x-0.5" />
 					</NuxtLink>
 				</div>
 			</div>
@@ -128,7 +128,7 @@ useSchemaOrg([
 			<!-- Toolkit & Tech Stack Card (Span 5) -->
 			<div
 				v-if="page?.toolkit_card"
-				class="bento-card-clean flex flex-col justify-between p-6 md:col-span-5 sm:p-7"
+				class="border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] flex flex-col justify-between p-6 md:col-span-5 sm:p-7"
 			>
 				<div>
 					<span
@@ -174,7 +174,7 @@ useSchemaOrg([
 				</div>
 				<div class="mt-6 flex items-center justify-between border-t border-slate-900/10 pt-3 text-xs text-slate-800 font-mono">
 					<span class="flex items-center gap-1">
-						<span class="i-hugeicons-location-01 text-sm text-slate-900" />
+						<span class="i-ph-map-pin text-sm text-slate-900" />
 						{{ page?.location_card?.timezone || 'GMT+7' }}
 					</span>
 					<span>{{ page?.location_card?.badge || 'Available Globally' }}</span>
@@ -222,7 +222,7 @@ useSchemaOrg([
 			<!-- Journey & Dedication Section (Span 12) -->
 			<div
 				v-if="page?.journey"
-				class="bento-card-clean flex flex-col items-start justify-between gap-6 p-6 md:col-span-12 md:flex-row sm:p-8"
+				class="border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] flex flex-col items-start justify-between gap-6 p-6 md:col-span-12 md:flex-row sm:p-8"
 			>
 				<div class="max-w-2xl">
 					<span class="mb-2 block section-label text-brand-700 dark:text-brand-400">

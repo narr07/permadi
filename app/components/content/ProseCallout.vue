@@ -9,7 +9,7 @@ const props = withDefaults(
 		 */
 		color?: 'primary' | 'neutral' | 'accent' | 'success' | 'warning' | 'error' | 'info'
 		/**
-		 * Optional leading icon (e.g. i-hugeicons-information-circle, i-hugeicons-bulb, i-hugeicons-alert-02)
+		 * Optional leading icon (e.g. i-ph-info, i-ph-lightbulb, i-ph-warning)
 		 */
 		icon?: string
 		/**
@@ -50,20 +50,20 @@ const defaultIcon = computed(() => {
 		return props.icon
 	switch (resolvedColor.value) {
 		case 'success':
-			return 'i-hugeicons-checkmark-circle-02'
+			return 'i-ph-check-circle'
 		case 'warning':
-			return 'i-hugeicons-alert-02'
+			return 'i-ph-warning'
 		case 'error':
-			return 'i-hugeicons-alert-circle'
+			return 'i-ph-warning-circle'
 		case 'info':
-			return 'i-hugeicons-information-circle'
+			return 'i-ph-info'
 		case 'accent':
-			return 'i-hugeicons-sparkles'
+			return 'i-ph-sparkle'
 		case 'neutral':
-			return 'i-hugeicons-note-01'
+			return 'i-ph-notepad'
 		case 'primary':
 		default:
-			return 'i-hugeicons-bulb'
+			return 'i-ph-lightbulb'
 	}
 })
 
@@ -138,7 +138,7 @@ const colorConfig = computed(() => {
 
 <template>
 	<div
-		class="bento-callout group relative my-6 overflow-hidden border rounded-2xl p-4 transition-all duration-300 sm:p-5"
+		class="callout-card group relative my-6 overflow-hidden border p-4 transition-all duration-300 sm:p-5"
 		:class="[
 			colorConfig.border,
 			colorConfig.bg,
@@ -162,7 +162,7 @@ const colorConfig = computed(() => {
 			class="pointer-events-none absolute right-3.5 top-3.5 text-slate-400 transition-colors group-hover:text-current"
 			:class="colorConfig.icon"
 		>
-			<span class="i-lucide-external-link text-xs" />
+			<span class="i-ph-arrow-square-out text-xs" />
 		</div>
 
 		<!-- Content Layout (Leading Icon + Body) -->

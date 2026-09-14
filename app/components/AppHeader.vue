@@ -71,12 +71,6 @@
 				<span class="tracking-[0.12em]">PERMADI.DEV // DINAR PERMADI</span>
 			</NuxtLink>
 
-			<!-- Center Location & Live Status -->
-			<div class="hidden lg:flex items-center gap-2.5 font-mono text-[11px] text-slate-900/60 dark:text-slate-50/60">
-				<span class="w-1.5 h-1.5 rounded-none bg-brand-500 inline-block shadow-[0_0_0_2px_#ccfbf2] dark:shadow-[0_0_0_2px_rgba(20,184,152,0.2)]" />
-				<span class="tabular-nums">MAJALENGKA, ID · GMT+7</span>
-			</div>
-
 			<!-- Navigation & Utility Rail -->
 			<div class="flex items-center gap-4 sm:gap-6">
 				<!-- Desktop Nav Links -->
@@ -121,11 +115,19 @@
 				<button
 					type="button"
 					:aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-					class="p-1 cursor-pointer text-slate-900/70 transition-colors hover:text-brand-500 dark:text-slate-50/70 dark:hover:text-brand-400"
+					class="p-1.5 cursor-pointer inline-flex items-center justify-center text-slate-700 hover:text-brand-600 dark:text-slate-200 dark:hover:text-accent transition-colors"
 					@click="toggleDark($event)"
 				>
-					<span class="i-hugeicons-sun-01 text-base dark:hidden" />
-					<span class="i-hugeicons-moon-02 hidden text-base dark:inline" />
+					<ClientOnly>
+						<span
+							class="text-base shrink-0 transition-transform duration-200"
+							:class="isDark ? 'i-ph-moon text-accent' : 'i-ph-sun text-slate-700'"
+						/>
+						<template #fallback>
+							<span class="i-ph-sun text-base shrink-0 dark:hidden" />
+							<span class="i-ph-moon text-base shrink-0 hidden dark:inline-block text-accent" />
+						</template>
+					</ClientOnly>
 				</button>
 
 				<!-- Mobile Hamburger Button -->
@@ -139,7 +141,7 @@
 				>
 					<span
 						class="text-xl"
-						:class="mobileOpen ? 'i-hugeicons-cancel-01' : 'i-hugeicons-menu-01'"
+						:class="mobileOpen ? 'i-ph-x' : 'i-ph-list'"
 					/>
 				</button>
 			</div>
@@ -170,7 +172,7 @@
 						@click="mobileOpen = false"
 					>
 						<span>0{{ idx + 1 }} / {{ item.label.toUpperCase() }}</span>
-						<span class="i-hugeicons-arrow-right-01 text-xs text-slate-400" />
+						<span class="i-ph-arrow-right text-xs text-slate-400" />
 					</NuxtLink>
 
 					<div class="flex items-center justify-between pt-3">

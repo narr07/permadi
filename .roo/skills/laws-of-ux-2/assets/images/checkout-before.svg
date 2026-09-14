@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <rect width="1200" height="700" fill="#f8fafc"/>
+  <rect x="80" y="60" width="1040" height="580" rx="16" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="120" y="115" font-family="Arial, sans-serif" font-size="34" fill="#0f172a">Checkout (Before)</text>
+  <rect x="120" y="160" width="460" height="360" rx="10" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="145" y="200" font-family="Arial, sans-serif" font-size="24" fill="#334155">Shipping Methods (7 options)</text>
+  <text x="145" y="245" font-family="Arial, sans-serif" font-size="20" fill="#64748b">- Standard 3-5 days</text>
+  <text x="145" y="278" font-family="Arial, sans-serif" font-size="20" fill="#64748b">- Express next day</text>
+  <text x="145" y="311" font-family="Arial, sans-serif" font-size="20" fill="#64748b">- Pickup point</text>
+  <text x="145" y="344" font-family="Arial, sans-serif" font-size="20" fill="#64748b">- Priority + insurance</text>
+  <text x="145" y="377" font-family="Arial, sans-serif" font-size="20" fill="#64748b">- Weekend delivery</text>
+  <text x="145" y="410" font-family="Arial, sans-serif" font-size="20" fill="#64748b">- Eco route</text>
+  <text x="145" y="443" font-family="Arial, sans-serif" font-size="20" fill="#64748b">- Partner fleet</text>
+
+  <rect x="610" y="160" width="470" height="360" rx="10" fill="#fff7ed" stroke="#fdba74"/>
+  <text x="635" y="200" font-family="Arial, sans-serif" font-size="24" fill="#9a3412">Optional settings mixed in</text>
+  <text x="635" y="245" font-family="Arial, sans-serif" font-size="20" fill="#9a3412">Coupon / Points / Invoice / Gift Wrap</text>
+  <text x="635" y="290" font-family="Arial, sans-serif" font-size="20" fill="#9a3412">Competes with required checkout fields</text>
+
+  <rect x="430" y="560" width="340" height="56" rx="28" fill="#94a3b8"/>
+  <text x="530" y="596" font-family="Arial, sans-serif" font-size="24" fill="#ffffff">Pay Now</text>
+  <text x="790" y="596" font-family="Arial, sans-serif" font-size="18" fill="#ef4444">Low contrast / weak emphasis</text>
+</svg>

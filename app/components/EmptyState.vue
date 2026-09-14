@@ -8,7 +8,7 @@ defineProps<{
 </script>
 
 <template>
-	<div class="bento-card-subtle flex flex-col items-center rounded-bento px-4 py-12 text-center">
+	<div class="border border-slate-200/80 dark:border-[#134e43] bg-slate-50/80 dark:bg-[#002b27] flex flex-col items-center px-4 py-12 text-center">
 		<span
 			:class="icon"
 			class="mb-4 text-4xl text-slate-300 dark:text-slate-600"

@@ -69,7 +69,7 @@ function isImagePath(icon?: string) {
 
 function getIconClass(icon?: string) {
 	if (!icon)
-		return 'i-hugeicons-code-folder'
+		return 'i-ph-file-code'
 	if (icon.startsWith('i-'))
 		return icon
 	if (icon.includes(':'))

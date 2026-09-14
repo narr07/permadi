@@ -16,12 +16,12 @@
 	}
 
 	const socialLinks = [
-		{ name: 'GitHub', url: 'https://github.com/narr07', icon: 'i-hugeicons-github', ariaLabel: 'GitHub' },
-		{ name: 'X', url: 'https://x.com/dinarpermadi07', icon: 'i-hugeicons-new-twitter', ariaLabel: 'X' },
-		{ name: 'Instagram', url: 'https://www.instagram.com/narr07/', icon: 'i-hugeicons-instagram', ariaLabel: 'Instagram' },
-		{ name: 'Behance', url: 'https://www.behance.net/narr07', icon: 'i-hugeicons-behance-02', ariaLabel: 'Behance' },
-		{ name: 'RSS', url: '/feed.xml', icon: 'i-hugeicons-rss', ariaLabel: 'RSS Feed' },
-		{ name: 'Email', url: 'mailto:dinar@permadi.dev', icon: 'i-hugeicons-mail-at-sign-01', ariaLabel: 'Email' },
+		{ name: 'GitHub', url: 'https://github.com/narr07', icon: 'i-ph-github-logo', ariaLabel: 'GitHub' },
+		{ name: 'X', url: 'https://x.com/dinarpermadi07', icon: 'i-ph-x-logo', ariaLabel: 'X' },
+		{ name: 'Instagram', url: 'https://www.instagram.com/narr07/', icon: 'i-ph-instagram-logo', ariaLabel: 'Instagram' },
+		{ name: 'Behance', url: 'https://www.behance.net/narr07', icon: 'i-ph-behance-logo', ariaLabel: 'Behance' },
+		{ name: 'RSS', url: '/feed.xml', icon: 'i-ph-rss-simple', ariaLabel: 'RSS Feed' },
+		{ name: 'Email', url: 'mailto:dinar@permadi.dev', icon: 'i-ph-at', ariaLabel: 'Email' },
 	]
 </script>
 
@@ -32,7 +32,7 @@
 		class="w-full border-t border-slate-200/80 bg-slate-50/90 px-6 py-4 dark:border-[#134e43] dark:bg-[#002420]/80 sm:px-8 font-mono text-xs flex items-center justify-between"
 	>
 		<span class="text-slate-900/50 uppercase dark:text-slate-50/50 tracking-wider">
-			MAJALENGKA, JAWA BARAT · SISTEM KISI 12-KOLOM
+			MAJALENGKA, JAWA BARAT
 		</span>
 
 		<button
@@ -41,7 +41,7 @@
 			@click="scrollToTop"
 		>
 			<span>KEMBALI KE ATAS</span>
-			<span class="i-hugeicons-arrow-up-02 text-xs" />
+			<span class="i-ph-arrow-up text-xs" />
 		</button>
 	</footer>
 
@@ -56,7 +56,7 @@
 				<div class="mb-2 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-brand-700 dark:text-accent">
 					{{ t('sections.newsletter_title', 'WARTA TEKNIS') }}
 				</div>
-				<h3 class="font-heading font-800 text-xl sm:text-2xl text-slate-900 dark:text-slate-50 mb-2">
+				<h3 class="font-heading font-700 text-xl sm:text-2xl text-slate-900 dark:text-slate-50 mb-2">
 					{{ t('newsletter.title', 'Info Artikel & Kajian Desain') }}
 				</h3>
 				<p class="font-sans text-xs sm:text-sm text-slate-900/70 dark:text-slate-50/70 leading-relaxed">
@@ -84,7 +84,7 @@
 				@click="scrollToTop"
 			>
 				<span>{{ locale === 'id' ? 'Kembali ke Atas' : 'Back to Top' }}</span>
-				<span class="i-hugeicons-arrow-up-02 text-xs" />
+				<span class="i-ph-arrow-up text-xs" />
 			</button>
 		</div>
 	</footer>

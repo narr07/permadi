@@ -62,64 +62,64 @@ const defaultLinks = computed(() => [
 	{
 		label: t('nav.home', 'Home'),
 		description: locale.value === 'id' ? 'Halaman utama & ringkasan profil' : 'Overview & main landing',
-		icon: 'i-hugeicons-home-01',
+		icon: 'i-ph-house',
 		to: localePath('/'),
 	},
 	{
 		label: t('nav.blog', 'Blog'),
 		description: locale.value === 'id' ? 'Artikel teknis, tutorial, dan catatan pengembangan' : 'Technical articles, tutorials & dev notes',
-		icon: 'i-hugeicons-book-open-01',
+		icon: 'i-ph-book-open',
 		to: localePath('/blog'),
 	},
 	{
 		label: t('nav.projects', 'Projects'),
 		description: locale.value === 'id' ? 'Koleksi studi kasus aplikasi & demo karya' : 'Explore case studies and live demos',
-		icon: 'i-hugeicons-code-folder',
+		icon: 'i-ph-file-code',
 		to: locale.value === 'id' ? '/id/projek' : '/projects',
 	},
 	{
 		label: t('nav.gallery', 'Gallery'),
 		description: locale.value === 'id' ? 'Koleksi foto visual & cuplikan karya' : 'Visual snapshots, photos & design',
-		icon: 'i-hugeicons-image-02',
+		icon: 'i-ph-image',
 		to: locale.value === 'id' ? '/id/galeri' : '/gallery',
 	},
 	{
 		label: t('nav.about', 'About'),
 		description: locale.value === 'id' ? 'Biografi singkat, keahlian, dan riwayat karir' : 'Biography, skillset, and career',
-		icon: 'i-hugeicons-user-circle',
+		icon: 'i-ph-user-circle',
 		to: locale.value === 'id' ? '/id/tentang' : '/about',
 	},
 	{
 		label: t('nav.contact', 'Contact'),
 		description: locale.value === 'id' ? 'Diskusikan projek baru atau kirim pesan' : 'Discuss new projects or get in touch',
-		icon: 'i-hugeicons-mail-01',
+		icon: 'i-ph-envelope-simple',
 		to: locale.value === 'id' ? '/id/kontak' : '/contact',
 	},
 	{
 		label: 'GitHub',
 		description: 'github.com/narr07',
-		icon: 'i-hugeicons-github',
+		icon: 'i-ph-github-logo',
 		href: 'https://github.com/narr07',
 		target: '_blank',
 	},
 	{
 		label: 'X (Twitter)',
 		description: 'x.com/dinarpermadi07',
-		icon: 'i-hugeicons-new-twitter',
+		icon: 'i-ph-x-logo',
 		href: 'https://x.com/dinarpermadi07',
 		target: '_blank',
 	},
 	{
 		label: 'Behance',
 		description: 'behance.net/narr07',
-		icon: 'i-hugeicons-behance-02',
+		icon: 'i-ph-behance-logo',
 		href: 'https://www.behance.net/narr07',
 		target: '_blank',
 	},
 	{
 		label: 'Instagram',
 		description: 'instagram.com/narr07',
-		icon: 'i-hugeicons-instagram',
+		icon: 'i-ph-instagram-logo',
 		href: 'https://www.instagram.com/narr07/',
 		target: '_blank',
 	},
@@ -233,7 +233,7 @@ onMounted(() => {
 			:aria-label="t('search.shortcut', 'Cari (Ctrl+K)')"
 			@click="openModal"
 		>
-			<span class="i-hugeicons-search-01 text-base text-slate-800 dark:text-slate-100" />
+			<span class="i-ph-magnifying-glass text-base text-slate-800 dark:text-slate-100" />
 		</button>
 
 		<!-- Modal Backdrop & Blur -->
@@ -255,8 +255,8 @@ onMounted(() => {
 					@click.self="closeModal"
 					@keydown="handleModalKeydown"
 				>
-					<!-- Bento Command Palette Card -->
-					<div class="animate-scale-in max-h-[80vh] max-w-2xl w-full flex flex-col overflow-hidden border border-slate-200 rounded-bento bg-white shadow-2xl backdrop-blur-xl transition-all dark:border-slate-800 dark:bg-slate-900">
+					<!-- Command Palette Modal -->
+					<div class="animate-scale-in max-h-[80vh] max-w-2xl w-full flex flex-col overflow-hidden border border-slate-200 bg-white shadow-2xl backdrop-blur-xl transition-all dark:border-slate-800 dark:bg-slate-900">
 						<!-- Top Search Bar -->
 						<div class="flex items-center gap-3 border-b border-slate-200 px-4 py-3 dark:border-slate-800">
 							<input
@@ -275,7 +275,7 @@ onMounted(() => {
 
 							<span
 								v-if="status === 'loading'"
-								class="i-hugeicons-loading-03 shrink-0 animate-spin text-base text-brand-600 dark:text-brand-400"
+								class="i-ph-spinner shrink-0 animate-spin text-base text-brand-600 dark:text-brand-400"
 								aria-live="polite"
 							/>
 
@@ -285,7 +285,7 @@ onMounted(() => {
 								aria-label="Tutup"
 								@click="closeModal"
 							>
-								<span class="i-hugeicons-cancel-01 text-base" />
+								<span class="i-ph-x text-base" />
 							</button>
 						</div>
 
@@ -309,7 +309,7 @@ onMounted(() => {
 										<button
 											v-if="item.action === 'ai-chat'"
 											type="button"
-											class="group w-full flex cursor-pointer items-center justify-between border border-transparent rounded-bento px-3 py-2.5 text-left text-sm transition-all duration-150"
+											class="group w-full flex cursor-pointer items-center justify-between border border-transparent px-3 py-2.5 text-left text-sm transition-all duration-150"
 											:class="idx === selectedIndex
 												? 'bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-300 border-brand-200 dark:border-brand-800'
 												: 'text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-slate-200 dark:hover:border-slate-700'"
@@ -333,7 +333,7 @@ onMounted(() => {
 												<kbd
 													v-for="k in item.kbds"
 													:key="k"
-													class="border border-slate-300 rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-700 font-semibold font-mono dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+													class="border border-slate-300 rounded-none bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-700 font-semibold font-mono dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
 												>
 													{{ k }}
 												</kbd>
@@ -344,7 +344,7 @@ onMounted(() => {
 										<NuxtLink
 											v-else-if="item.to"
 											:to="item.to"
-											class="group flex cursor-pointer items-center justify-between border border-transparent rounded-bento px-3 py-2.5 text-sm transition-all duration-150"
+											class="group flex cursor-pointer items-center justify-between border border-transparent px-3 py-2.5 text-sm transition-all duration-150"
 											:class="idx === selectedIndex
 												? 'bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-300 border-brand-200 dark:border-brand-800'
 												: 'text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-slate-200 dark:hover:border-slate-700'"
@@ -368,7 +368,7 @@ onMounted(() => {
 												<kbd
 													v-for="k in item.kbds"
 													:key="k"
-													class="border border-slate-300 rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-700 font-semibold font-mono dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+													class="border border-slate-300 rounded-none bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-700 font-semibold font-mono dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
 												>
 													{{ k }}
 												</kbd>
@@ -381,7 +381,7 @@ onMounted(() => {
 											:href="item.href"
 											:target="item.target"
 											rel="noopener"
-											class="group flex cursor-pointer items-center justify-between border border-transparent rounded-bento px-3 py-2.5 text-sm transition-all duration-150"
+											class="group flex cursor-pointer items-center justify-between border border-transparent px-3 py-2.5 text-sm transition-all duration-150"
 											:class="idx === selectedIndex
 												? 'bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-300 border-brand-200 dark:border-brand-800'
 												: 'text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-slate-200 dark:hover:border-slate-700'"
@@ -407,7 +407,7 @@ onMounted(() => {
 								v-else-if="results.length === 0 && status !== 'loading'"
 								class="py-10 text-center"
 							>
-								<span class="i-hugeicons-search-01 mx-auto mb-2 block text-2xl text-slate-400 opacity-60" />
+								<span class="i-ph-magnifying-glass mx-auto mb-2 block text-2xl text-slate-400 opacity-60" />
 								<p class="text-sm text-slate-800 font-medium dark:text-slate-200">
 									{{ t('search.no_results', 'Tidak ada hasil untuk') }} "<strong>{{ searchQuery }}</strong>"
 								</p>
@@ -434,7 +434,7 @@ onMounted(() => {
 										>
 											<NuxtLink
 												:to="getTargetUrl(item)"
-												class="group block cursor-pointer border border-transparent rounded-bento px-3 py-2 text-sm transition-all duration-150"
+												class="group block cursor-pointer border border-transparent px-3 py-2 text-sm transition-all duration-150"
 												:class="activeItems.indexOf(item) === selectedIndex
 													? 'bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-300 border-brand-200 dark:border-brand-800'
 													: 'text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-slate-200 dark:hover:border-slate-700'"
@@ -445,7 +445,7 @@ onMounted(() => {
 														class="text-slate-900 font-bold transition-colors dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-brand-400"
 														v-html="item.snippets?.title || item.title"
 													/>
-													<span class="i-hugeicons-arrow-right-01 shrink-0 text-xs text-slate-500 group-hover:text-brand-600" />
+													<span class="i-ph-arrow-right shrink-0 text-xs text-slate-500 group-hover:text-brand-600" />
 												</div>
 												<div
 													v-if="item.snippets?.content"
@@ -473,18 +473,18 @@ onMounted(() => {
 										>
 											<NuxtLink
 												:to="getTargetUrl(item)"
-												class="group block cursor-pointer border border-transparent rounded-bento px-3 py-2 text-sm transition-all duration-150"
+												class="group block cursor-pointer border border-transparent px-3 py-2 text-sm transition-all duration-150"
 												:class="activeItems.indexOf(item) === selectedIndex
-													? 'bg-blue/10 text-blue dark:bg-blue/20 dark:text-blue border-blue/30 dark:border-blue/40'
+													? 'bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-300 border-brand-200 dark:border-brand-800'
 													: 'text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-slate-200 dark:hover:border-slate-700'"
 												@click="closeModal"
 											>
 												<div class="flex items-center justify-between gap-2">
 													<div
-														class="text-slate-900 font-bold transition-colors dark:text-slate-50 group-hover:text-blue"
+														class="text-slate-900 font-bold transition-colors dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-brand-400"
 														v-html="item.snippets?.title || item.title"
 													/>
-													<span class="i-hugeicons-arrow-right-01 shrink-0 text-xs text-slate-500 group-hover:text-blue" />
+													<span class="i-ph-arrow-right shrink-0 text-xs text-slate-500 group-hover:text-brand-600" />
 												</div>
 												<div
 													v-if="item.snippets?.content"
@@ -512,7 +512,7 @@ onMounted(() => {
 										>
 											<NuxtLink
 												:to="getTargetUrl(item)"
-												class="group block cursor-pointer border border-transparent rounded-bento px-3 py-2 text-sm transition-all duration-150"
+												class="group block cursor-pointer border border-transparent px-3 py-2 text-sm transition-all duration-150"
 												:class="activeItems.indexOf(item) === selectedIndex
 													? 'bg-accent/15 text-brand-900 dark:bg-accent/20 dark:text-accent border-accent/40 dark:border-accent/50'
 													: 'text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-slate-200 dark:hover:border-slate-700'"
@@ -523,7 +523,7 @@ onMounted(() => {
 														class="text-slate-900 font-bold transition-colors dark:text-slate-50 group-hover:text-accent"
 														v-html="item.snippets?.title || item.title"
 													/>
-													<span class="i-hugeicons-arrow-right-01 shrink-0 text-xs text-slate-500 group-hover:text-accent" />
+													<span class="i-ph-arrow-right shrink-0 text-xs text-slate-500 group-hover:text-accent" />
 												</div>
 												<div
 													v-if="item.snippets?.content"

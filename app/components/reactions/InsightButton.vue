@@ -52,7 +52,7 @@ function formatNumber(num: number): string {
 			<!-- Header with Locale Support -->
 			<div class="mb-3 flex items-center justify-between border-b border-slate-200/70 pb-2.5 dark:border-slate-800/70">
 				<div class="flex items-center gap-2 text-xs text-brand-900 font-bold tracking-wider font-heading uppercase dark:text-brand-300">
-					<span class="i-lucide-bar-chart-2 text-sm text-brand-700 dark:text-brand-400" />
+					<span class="i-ph-chart-bar text-sm text-brand-700 dark:text-brand-400" />
 					<span>{{ locale === 'id' ? 'Statistik Artikel' : 'Article Insights' }}</span>
 				</div>
 				<button
@@ -61,7 +61,7 @@ function formatNumber(num: number): string {
 					:aria-label="locale === 'id' ? 'Tutup' : 'Close'"
 					@click="isOpen = false"
 				>
-					<span class="i-lucide-x text-sm" />
+					<span class="i-ph-x text-sm" />
 				</button>
 			</div>
 
@@ -115,7 +115,7 @@ function formatNumber(num: number): string {
 				]"
 				@click="isOpen = !isOpen"
 			>
-				<span class="i-lucide-bar-chart-2 text-xs sm:text-sm" />
+				<span class="i-ph-chart-bar text-xs sm:text-sm" />
 			</button>
 		</Motion>
 	</div>

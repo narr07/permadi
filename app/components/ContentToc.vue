@@ -179,7 +179,7 @@ onUnmounted(() => {
 
 				<div class="flex items-center gap-1.5 text-slate-900/60 dark:text-slate-50/60 text-xs">
 					<span>{{ mobileOpen ? 'TUTUP' : 'LIHAT' }}</span>
-					<span :class="mobileOpen ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'" class="text-sm" />
+					<span :class="mobileOpen ? 'i-ph-caret-up' : 'i-ph-caret-down'" class="text-sm" />
 				</div>
 			</button>
 
@@ -306,7 +306,7 @@ onUnmounted(() => {
 						class="w-full py-1.5 flex items-center justify-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-900/70 hover:text-brand-600 dark:text-slate-50/70 dark:hover:text-brand-400 transition-colors cursor-pointer"
 						@click="scrollToTop"
 					>
-						<span class="i-lucide-arrow-up text-xs" />
+						<span class="i-ph-arrow-up text-xs" />
 						<span>{{ locale === 'id' ? 'KEMBALI KE PUNCAK' : 'BACK TO TOP' }}</span>
 					</button>
 				</div>

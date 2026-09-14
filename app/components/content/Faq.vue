@@ -13,7 +13,7 @@ const props = withDefaults(
 	{
 		title: undefined,
 		description: '',
-		icon: 'i-hugeicons-help-circle',
+		icon: 'i-ph-question',
 		single: true,
 		hideHeader: false,
 		class: undefined,

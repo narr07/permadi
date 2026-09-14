@@ -26,9 +26,9 @@ export default defineConfig({
 		presetTypography({
 			cssExtend: {
 				'h1,h2,h3,h4,h5,h6': {
-					'font-family': '\'GT Pressura\', sans-serif',
-					'font-weight': '800',
-					'letter-spacing': '-0.03em',
+					'font-family': '\'GT Zirkon\', sans-serif',
+					'font-weight': '700',
+					'letter-spacing': '-0.025em',
 					'color': '#001e1c',
 				},
 				'h1 a, h2 a, h3 a, h4 a, h5 a, h6 a': {
@@ -74,8 +74,8 @@ export default defineConfig({
 					'transition': 'all 0.15s ease',
 				},
 				'.dark a': {
-					'color': '#2cb67d',
-					'text-decoration-color': 'rgba(44, 182, 125, 0.4)',
+					'color': '#2bd4b5',
+					'text-decoration-color': 'rgba(43, 212, 181, 0.4)',
 				},
 				'blockquote': {
 					'font-style': 'normal',
@@ -83,7 +83,7 @@ export default defineConfig({
 					'color': '#224844',
 					'background': '#eff6f5',
 					'border-left': '4px solid #0f7662',
-					'border-radius': '0 16px 16px 0',
+					'border-radius': '0',
 					'padding': '1rem 1.25rem',
 					'margin': '1.75rem 0',
 				},
@@ -147,7 +147,7 @@ export default defineConfig({
 					'color': '#0f7662',
 					'background-color': '#ccfbf2',
 					'border': '1px dashed #14b898',
-					'border-radius': '6px',
+					'border-radius': '0',
 					'padding': '0.01em 0.4em',
 				},
 				'.dark :not(pre) > code': {
@@ -170,7 +170,7 @@ export default defineConfig({
 	theme: {
 		fontFamily: {
 			sans: ['"GT America"', 'system-ui', 'sans-serif'],
-			heading: ['"GT Pressura"', 'sans-serif'],
+			heading: ['"GT Zirkon"', 'sans-serif'],
 			mono: ['"GT America Mono"', 'monospace'],
 		},
 		breakpoints: {
@@ -209,66 +209,34 @@ export default defineConfig({
 				900: '#001e1c',
 				950: '#000c0a',
 			},
-			gray: '#90b4ce',
 			accent: '#f9bc60',
-			yellow: '#ffd803',
-			blue: '#3da9fc',
-			red: '#ef4565',
-			green: '#2cb67d',
-			purple: '#994ff3',
-		},
-
-		borderRadius: {
-			'bento': '0.75rem',
-			'bento-island': '9999px',
 		},
 	},
 
 	shortcuts: {
 		// Status & Badges
-		'status-dot': 'w-2 h-2 rounded-full bg-brand-500 inline-block shadow-[0_0_0_4px_#ccfbf2] dark:shadow-[0_0_0_4px_rgba(20,184,152,0.2)]',
+		'status-dot': 'w-2 h-2 rounded-none bg-brand-500 inline-block shadow-[0_0_0_2px_#ccfbf2] dark:shadow-[0_0_0_2px_rgba(20,184,152,0.2)]',
 		'section-label': 'uppercase tracking-[0.15em] text-[11px] font-bold text-brand-700 dark:text-accent font-sans',
 		'eyebrow': 'section-label',
 		'kicker': 'section-label',
 		'shadow-xs': 'shadow-sm',
 
-		// Bento Card variants
-		'bento-card-base': 'relative rounded-bento p-6 transition-all duration-100 ease-out',
-		'bento-card-solid': 'bento-card-base bg-brand-500 text-white hover:bg-brand-600',
-		'bento-card-outline': 'bento-card-base border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-brand-500 dark:hover:border-brand-400',
-		'bento-card-soft': 'bento-card-base bg-brand-50/70 dark:bg-brand-950/30 border border-brand-100/50 dark:border-brand-900/30 hover:border-brand-500/60 dark:hover:border-brand-400/60',
-		'bento-card-subtle': 'bento-card-base bg-slate-50/80 dark:bg-slate-900/80 border border-slate-200/60 dark:border-slate-800/60 hover:border-brand-500/60 dark:hover:border-brand-400/60',
-		'bento-card-ghost': 'bento-card-base bg-transparent hover:bg-slate-100/70 dark:hover:bg-slate-800/50 border border-transparent hover:border-slate-200/60 dark:hover:border-slate-800/60',
-
-		// Clean Bento Cards (Maximized with UnoCSS)
-		'bento-card-clean': 'relative rounded-2xl overflow-hidden border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27] shadow-sm transition-all duration-200 hover:(border-brand-500/50 dark:border-brand-400/40 shadow-md)',
-		'hero-card-clean': 'relative rounded-2xl overflow-hidden border border-[#134e43] bg-[#002b27] text-[#f8fafa] shadow-sm transition-all duration-200',
-		'sand-card-clean': 'relative rounded-2xl overflow-hidden border border-[#facd87] bg-[#facd87] text-[#000b07] shadow-sm transition-all duration-200',
-		'sky-card-clean': 'relative rounded-2xl overflow-hidden border border-[#7dd3fc] bg-[#7dd3fc] text-[#000b07] shadow-sm transition-all duration-200',
-
-		'bento-lift': 'hover:border-brand-500 dark:hover:border-brand-400',
-		'bento-highlight': 'border border-brand-500/30 dark:border-brand-400/20',
 		'focus-ring': 'outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0',
 
-		'bento-grid': 'grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-12 gap-4 sm:gap-6 auto-rows-[minmax(160px,auto)]',
-		'container-bento': 'max-w-6xl mx-auto px-4 sm:px-6 lg:px-8',
-
-		'nav-island': 'flex items-center gap-2 rounded-bento-island bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/70 dark:border-slate-800/70 shadow-sm',
-
-		'heading-page': 'font-heading font-800 text-3xl sm:text-5xl lg:text-6xl tracking-tight text-slate-950 dark:text-slate-50 leading-[1.05] mb-3',
+		'heading-page': 'font-heading font-700 text-3xl sm:text-5xl lg:text-6xl tracking-tight text-slate-950 dark:text-slate-50 leading-[1.05] mb-3',
 		'heading-page-sub': 'text-slate-950/80 dark:text-slate-50/80 text-base sm:text-lg leading-relaxed max-w-xl',
 
-		'heading-hero': 'font-heading font-800 mb-4 text-4xl sm:text-6xl leading-[0.95] tracking-tight text-slate-950 dark:text-slate-50',
+		'heading-hero': 'font-heading font-700 mb-4 text-4xl sm:text-6xl leading-[0.95] tracking-tight text-slate-950 dark:text-slate-50',
 		'heading-sub': 'text-slate-950/80 dark:text-slate-50/80 text-base sm:text-lg leading-relaxed max-w-xl',
-		'heading-card-lg': 'font-heading font-800 text-xl tracking-tight text-slate-950 dark:text-slate-50',
-		'heading-card-md': 'font-heading font-800 text-lg text-slate-950 dark:text-slate-50',
+		'heading-card-lg': 'font-heading font-700 text-xl tracking-tight text-slate-950 dark:text-slate-50',
+		'heading-card-md': 'font-heading font-700 text-lg text-slate-950 dark:text-slate-50',
 		'text-body': 'font-sans text-sm text-slate-950 dark:text-slate-50',
 		'text-meta': 'font-sans text-xs text-slate-950/70 dark:text-slate-50/70',
 
-		'btn-primary': 'focus-ring inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-bento font-700 text-white bg-brand-900 hover:bg-brand-950 dark:bg-brand-400 dark:text-slate-950 dark:hover:bg-brand-300 active:scale-95 transition-all shadow-sm shadow-brand-900/20',
-		'btn-ghost': 'focus-ring inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-bento font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all',
-		'icon-btn': 'focus-ring flex items-center justify-center w-9 h-9 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors',
-		'badge-neutral': 'inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60',
+		'btn-primary': 'focus-ring inline-flex items-center justify-center gap-2 px-5 py-2.5 font-bold text-white bg-brand-900 hover:bg-brand-950 dark:bg-brand-400 dark:text-slate-950 dark:hover:bg-brand-300 active:scale-[0.98] transition-all',
+		'btn-ghost': 'focus-ring inline-flex items-center justify-center gap-2 px-5 py-2.5 font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all',
+		'icon-btn': 'focus-ring flex items-center justify-center w-9 h-9 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors',
+		'badge-neutral': 'inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60',
 
 		// Swiss International Style System Shortcuts
 		'swiss-container': 'max-w-6xl mx-auto px-4 sm:px-6 lg:px-8',
@@ -278,9 +246,9 @@ export default defineConfig({
 		'swiss-card-4': 'col-span-1 sm:col-span-3 lg:col-span-4 p-6 border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27]',
 		'swiss-card-6': 'col-span-1 sm:col-span-6 lg:col-span-6 p-6 sm:p-8 border border-slate-200/80 dark:border-[#134e43] bg-white dark:bg-[#002b27]',
 		'swiss-eyebrow': 'text-[11px] font-bold tracking-[0.15em] uppercase text-brand-700 dark:text-accent font-sans',
-		'swiss-h1': 'font-heading font-800 text-4xl sm:text-6xl tracking-tight text-slate-900 dark:text-slate-50 leading-[0.95] text-balance',
-		'swiss-h2': 'font-heading font-800 text-2xl sm:text-4xl tracking-tight text-slate-900 dark:text-slate-50 leading-tight',
-		'swiss-h3': 'font-heading font-800 text-xl sm:text-2xl tracking-tight text-slate-900 dark:text-slate-50 leading-snug',
+		'swiss-h1': 'font-heading font-700 text-4xl sm:text-6xl tracking-tight text-slate-900 dark:text-slate-50 leading-[0.95] text-balance',
+		'swiss-h2': 'font-heading font-700 text-2xl sm:text-4xl tracking-tight text-slate-900 dark:text-slate-50 leading-tight',
+		'swiss-h3': 'font-heading font-700 text-xl sm:text-2xl tracking-tight text-slate-900 dark:text-slate-50 leading-snug',
 		'swiss-body': 'font-sans text-sm sm:text-base text-slate-900/70 dark:text-slate-50/70 leading-relaxed max-w-[60ch]',
 		'swiss-meta': 'font-mono text-xs text-slate-900/40 dark:text-slate-50/40 tabular-nums',
 		'swiss-hairline-b': 'border-b border-slate-200/80 dark:border-[#134e43]',
@@ -289,7 +257,7 @@ export default defineConfig({
 		'swiss-spec-row': 'flex items-baseline justify-between py-2.5 swiss-hairline-b text-xs sm:text-sm',
 		'swiss-btn-primary': 'inline-flex items-center justify-center gap-2 px-5 py-2.5 font-sans font-700 text-sm text-slate-950 bg-brand-400 hover:bg-brand-300 dark:bg-brand-400 dark:text-slate-950 dark:hover:bg-brand-300 active:scale-[0.98] transition-transform duration-150',
 		'swiss-btn-outline': 'inline-flex items-center justify-center gap-2 px-5 py-2.5 font-sans font-600 text-sm text-slate-900 dark:text-slate-50 border border-slate-300 dark:border-[#134e43] hover:border-brand-500 dark:hover:border-brand-400 active:scale-[0.98] transition-colors duration-150',
-		'swiss-status-dot': 'w-2 h-2 rounded-full bg-brand-500 inline-block shadow-[0_0_0_4px_#ccfbf2] dark:shadow-[0_0_0_4px_rgba(20,184,152,0.2)]',
+		'swiss-status-dot': 'w-2 h-2 rounded-none bg-brand-500 inline-block shadow-[0_0_0_2px_#ccfbf2] dark:shadow-[0_0_0_2px_rgba(20,184,152,0.2)]',
 	},
 
 	rules: [
@@ -300,12 +268,12 @@ export default defineConfig({
 	],
 
 	safelist: [
-		'i-hugeicons-home-01',
-		'i-hugeicons-book-02',
-		'i-hugeicons-folder-02',
-		'i-hugeicons-image-02',
-		'i-hugeicons-sun-01',
-		'i-hugeicons-moon-02',
-		'i-hugeicons-search-01',
+		'i-ph-house',
+		'i-ph-book-bookmark',
+		'i-ph-folder',
+		'i-ph-image',
+		'i-ph-sun',
+		'i-ph-moon',
+		'i-ph-magnifying-glass',
 	],
 })
