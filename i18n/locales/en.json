@@ -32,18 +32,18 @@
 		"latest_posts_title": "Latest Posts",
 		"tech_stack_title": "Tech Stack",
 		"connect_title": "Connect",
-		"newsletter_title": "Technical Dispatch"
+		"newsletter_title": "Newsletter"
 	},
 	"newsletter": {
-		"title": "Technical Notes & Design Inquiries",
-		"description": "Periodic essays on frontend architecture, typographic craft, and educational systems sent directly to your inbox. No fluff, zero spam.",
-		"placeholder": "you@domain.com",
+		"title": "Stay Updated",
+		"description": "Get technical articles, design insights, and new project deep dives straight to your inbox. No spam.",
+		"placeholder": "your{'@'}email.com…",
 		"button": "Subscribe",
-		"subscribing": "Joining…",
-		"success": "Thank you for subscribing. You are on the dispatch list.",
-		"already_subscribed": "This email address is already subscribed.",
-		"error_required": "Please enter your email address.",
-		"error_invalid": "Please provide a valid email format.",
-		"error_failed": "Subscription attempt failed. Please try again in a moment."
+		"subscribing": "Subscribing…",
+		"success": "Thank you! You have subscribed to new article updates.",
+		"already_subscribed": "Your email is already subscribed.",
+		"error_required": "Email is required",
+		"error_invalid": "Invalid email format",
+		"error_failed": "Failed to subscribe. Please try again later."
 	}
 }
