@@ -65,7 +65,7 @@ const activeSocials = computed(() => {
 					</h2>
 
 					<p class="mb-8 max-w-[54ch] text-sm text-slate-800 leading-relaxed font-sans sm:text-base dark:text-slate-200">
-						{{ colophon?.description || (locale === 'id' ? 'Terbuka untuk diajak ngobrol soal proyek frontend dengan Nuxt, aplikasi mobile pakai Flutter, desain grafis sistematis, atau ide-ide teknologi untuk dunia pendidikan.' : 'Open to chat about frontend projects with Nuxt, mobile apps using Flutter, systematic graphic design, or educational technology ideas.') }}
+						{{ colophon?.description || (locale === 'id' ? 'Terbuka untuk bertukar pikiran seputar arsitektur frontend dengan Nuxt, aplikasi mobile Flutter, eksplorasi desain grafis, maupun inovasi pembelajaran di sekolah dasar.' : 'Open to conversations about frontend architecture with Nuxt, cross-platform mobile apps with Flutter, typographic design systems, or tech in elementary education.') }}
 					</p>
 
 					<div class="my-6">

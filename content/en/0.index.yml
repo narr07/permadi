@@ -1,14 +1,14 @@
 title: Dinar Permadi Yusup | Frontend Developer & Graphic Designer
-description: A living archive of web projects, interface experiments, and notes by an elementary school teacher and UPI alumnus passionate about programming (Nuxt, Flutter, Python, PHP) and graphic design.
-eyebrow: Permadi / Teacher, Developer & Designer
-headline: A small corner of the internet.
+description: A living archive of digital systems, interface experiments, and field notes by a primary school teacher building with Nuxt, Flutter, and Swiss typographic discipline.
+eyebrow: Permadi / Educator, Developer & Designer
+headline: A quiet corner of the open web.
 hero:
   section_number: "01 // MANIFEST"
   issue_number: "N° 2026.01"
   author_title: "PRACTITIONER & EDUCATOR"
   author_name: "Dinar Permadi"
   author_role: "Primary School Teacher & Code Craftsman"
-  author_bio: "Bringing mathematical precision from the elementary classroom into modern web architecture, editorial layout, and software engineering."
+  author_bio: "Bringing classroom mathematical precision into modern web architecture, editorial layout, and software engineering."
   specs:
     spec_title: "SYSTEM SPECIFICATIONS"
     status_label: "STATUS"
@@ -23,7 +23,7 @@ hero:
     coordinates: "6°50'S 108°13'E"
   kicker: "01.A // PRINCIPLES & ENGINEERING VISION"
   headline: "Connecting numerical logic, clean code, and visual precision into one unified craft."
-  thesis: "As an elementary school teacher in Majalengka, I believe the same mindset applies in the classroom and in code: clean, straightforward, and nothing added just for show. That is the principle I bring to Nuxt 4, Flutter, and Swiss typography: everything needs a reason, not just decoration."
+  thesis: "Teaching in an elementary classroom shaped how I write software: clear, unpretentious, and free of filler. That conviction guides everything I build with Nuxt 4, Flutter, and Swiss typography—every pixel and function must earn its place, not merely decorate it."
   links:
     - label: "EXPLORE PROJECTS"
       to: "/projects"
@@ -35,16 +35,16 @@ project_section:
   label: "02 // SELECTED CASE STUDIES & SYSTEMS"
   count_badge: "CURATED ARCHIVE (03 WORKS)"
   correlation_badge: "CORRELATION: EDUCATION × CODE CRAFT"
-  fallback_title: "Four projects, many lessons."
-  fallback_description: "A collection of web systems case studies and modular design, from education tools to digital products."
-  all_link_text: "OPEN COMPLETE PROJECT ARCHIVE (01–06)"
+  fallback_title: "Selected works and the hard lessons behind them."
+  fallback_description: "A collection of web systems, mobile apps, and modular interfaces—spanning classroom utilities to digital products."
+  all_link_text: "OPEN COMPLETE PROJECT ARCHIVE"
   all_link_to: "/projects"
 philosophy:
   section_label: "03 // DOCTRINE & ETHOS"
   number: "PRINCIPLE 01"
   quote: "Good design is quiet."
   quote_bold: "Great design stays with you."
-  description: "As an elementary school teacher graduated from UPI in Majalengka, I believe mathematics teaches non-negotiable truths, while typography teaches how to deliver them with order, modesty, and deep respect for the reader."
+  description: "Mathematics teaches truths that cannot be negotiated. Typography teaches how to present them—ordered, modest, and respectful of the reader."
   pedagogy_tag: "PEDAGOGY × DIGITAL CRAFT"
   institution_tag: "UPI BANDUNG"
   label: "Permadi Philosophy"
@@ -53,7 +53,7 @@ skills_section:
   matrix_tag: "TECHNICAL DISCIPLINES"
   code_kicker: "A // LOGIC & SYSTEMS"
   code_title: "Software Engineering"
-  code_desc: "Crafting high-performance web systems, cross-platform mobile apps, and data automation."
+  code_desc: "Building resilient full-stack web applications, cross-platform mobile tools, and automated data workflows."
   code_tag: "Modern Ecosystem"
   code_items:
     - name: "Nuxt 4 & Vue 3"
@@ -70,7 +70,7 @@ skills_section:
       icon: "i-swisspost-cloud"
   design_kicker: "B // VISUAL & GRAPHIC"
   design_title: "Graphic & Editorial"
-  design_desc: "Designing precision visual identity, raster/vector artwork, and modern interface systems."
+  design_desc: "Crafting distinctive visual identities, vector and raster artwork, and grid-driven interface systems."
   design_tag: "Precision & Harmony"
   design_items:
     - name: "Adobe Illustrator"
@@ -85,7 +85,7 @@ skills_section:
     - name: "Swiss Typography"
       desc: "Grid Structures & Content Hierarchy"
       icon: "i-swisspost-paragraph"
-  all_link_text: "Explore All Works & Case Studies"
+  all_link_text: "Explore Implementation Across Projects"
   all_link_to: "/projects"
 writing:
   label: "05 // RECENT WRITING & NOTES"
@@ -95,16 +95,16 @@ writing:
   col_discipline: "DISCIPLINE"
   col_date: "DATE"
   footer_tag: "PUBLICATIONS: TECH & CLASSROOM"
-  title: "Notes on code, design, and education."
-  all_link_text: "OPEN ALL WRITINGS & ESSAYS"
+  title: "Field notes on software engineering, visual systems, and the classroom."
+  all_link_text: "READ ALL ESSAYS & FIELD NOTES"
   all_link_to: "/blog"
 colophon:
   section_number: "06 // INQUIRIES & COLLABORATION"
   status: "AVAILABLE FOR PROJECTS"
   headline: "Interested in collaboration or discussing a new project?"
-  description: "Open to chat about frontend projects with Nuxt, mobile apps using Flutter, systematic graphic design, or educational technology ideas."
+  description: "Open to conversations about frontend architecture with Nuxt, cross-platform mobile apps with Flutter, typographic design systems, or tech in elementary education."
   email: "dinar@permadi.dev"
-  response_time: "AVERAGE RESPONSE TIME: 1–2 BUSINESS DAYS // MAJALENGKA (WIB / GMT+7)"
+  response_time: "TYPICAL RESPONSE TIME: 1–2 BUSINESS DAYS // MAJALENGKA (WIB / GMT+7)"
   socials_title: "DIGITAL PLATFORMS"
   socials:
     - name: "GitHub"

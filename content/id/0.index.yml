@@ -1,6 +1,6 @@
 title: Dinar Permadi Yusup | Frontend Developer & Desainer Grafis
-description: Arsip hidup karya web, eksperimen antarmuka, dan catatan oleh seorang guru SD lulusan UPI yang menggemari coding (Nuxt, Flutter, Python, PHP) serta desain grafis.
-eyebrow: Permadi / Guru SD, Developer & Desainer
+description: Arsip hidup sistem web, eksperimen antarmuka, dan catatan lapangan oleh seorang guru SD di Majalengka yang merancang dengan Nuxt, Flutter, dan disiplin tipografi Swiss.
+eyebrow: Permadi / Guru SD, Pengembang Web & Desainer
 headline: Sudut kecil di belantara internet.
 hero:
   section_number: "01 // MANIFEST"
@@ -23,7 +23,7 @@ hero:
     coordinates: "6°50'S 108°13'E"
   kicker: "01.A // PRINSIP & VISI REKAYASA"
   headline: "Menghubungkan logika berhitung, baris kode, dan ketelitian visual jadi satu cara kerja."
-  thesis: "Sebagai guru SD di Majalengka, saya percaya cara berpikir yang sama dipakai di kelas dan di kode: rapi, tidak berbelit, dan tidak ada yang dipajang cuma buat gaya-gayaan. Prinsip itu yang saya bawa ke Nuxt 4, Flutter, dan tata letak ala tipografi Swiss: semuanya harus punya alasan, bukan hiasan."
+  thesis: "Mengajar di sekolah dasar Majalengka membentuk cara saya memandang kode: lugas, tertib, dan bebas dari basa-basi visual. Prinsip ini saya bawa ke setiap baris Nuxt 4, Flutter, dan sistem tata letak Swiss—tiap piksel dan fungsi harus punya alasan, bukan sekadar tempelan."
   links:
     - label: "JELAJAHI PROJEK"
       to: "/id/projek"
@@ -35,16 +35,16 @@ project_section:
   label: "02 // STUDI KASUS & REKAYASA SISTEM"
   count_badge: "ARSIP PILIHAN (03 KARYA)"
   correlation_badge: "KORELASI: PENDIDIKAN × REKAYASA KODE"
-  fallback_title: "Empat proyek, banyak pelajaran berharga."
-  fallback_description: "Koleksi studi kasus sistem web dan eksplorasi desain modular, dari kebutuhan pendidikan hingga produk digital."
-  all_link_text: "BUKA SELURUH ARSIP PROJEK (01–06)"
+  fallback_title: "Karya pilihan dan pelajaran nyata di baliknya."
+  fallback_description: "Koleksi studi kasus sistem web, aplikasi mobile, dan tata letak modular—dari ruang kelas hingga produk digital."
+  all_link_text: "BUKA SELURUH ARSIP PROJEK"
   all_link_to: "/id/projek"
 philosophy:
   section_label: "03 // DOKTRIN & FILOSOFI"
   number: "PRINSIP 01"
   quote: "Desain yang baik itu tenang."
   quote_bold: "Desain luar biasa akan selalu membekas."
-  description: "Sebagai guru SD lulusan UPI di Majalengka, saya melihat bahwa matematika mengajarkan kebenaran yang tidak bisa ditawar, sedangkan tipografi mengajarkan cara menyampaikannya secara tertib, bersahaja, dan penuh rasa hormat pada pembaca."
+  description: "Matematika mengajarkan kebenaran yang tidak bisa ditawar. Tipografi mengajarkan cara menyampaikannya—tertib, bersahaja, dan menghargai akal sehat pembaca."
   pedagogy_tag: "PEDAGOGI × REKAYASA DIGITAL"
   institution_tag: "UPI BANDUNG"
   label: "Permadi Philosophy"
@@ -53,7 +53,7 @@ skills_section:
   matrix_tag: "DISIPLIN TEKNIS"
   code_kicker: "A // LOGIKA & SISTEM"
   code_title: "Software Engineering"
-  code_desc: "Membangun aplikasi web full-stack performa tinggi, aplikasi mobile lintas platform, dan otomasi logika data."
+  code_desc: "Membangun aplikasi web full-stack responsif, aplikasi mobile lintas platform, dan otomasi alur data."
   code_tag: "Ekosistem Modern"
   code_items:
     - name: "Nuxt 4 & Vue 3"
@@ -70,7 +70,7 @@ skills_section:
       icon: "i-swisspost-cloud"
   design_kicker: "B // VISUAL & GRAFIS"
   design_title: "Graphic & Editorial"
-  design_desc: "Merancang identitas visual presisi, karya grafis raster/vektor, dan desain antarmuka modern."
+  design_desc: "Merancang identitas visual berkarakter, komposisi grafis presisi, dan sistem antarmuka berbasis grid."
   design_tag: "Presisi & Harmoni"
   design_items:
     - name: "Adobe Illustrator"
@@ -85,7 +85,7 @@ skills_section:
     - name: "Swiss Typography"
       desc: "Struktur Grid & Hirarki Konten"
       icon: "i-swisspost-paragraph"
-  all_link_text: "Eksplorasi Semua Karya & Studi Kasus"
+  all_link_text: "Jelajahi Penerapannya di Arsip Karya"
   all_link_to: "/id/projek"
 writing:
   label: "05 // TULISAN & CATATAN TERBARU"
@@ -95,14 +95,14 @@ writing:
   col_discipline: "DISIPLIN"
   col_date: "TANGGAL"
   footer_tag: "PUBLIKASI: TEKNOLOGI & RUANG KELAS"
-  title: "Catatan seputar web, desain, dan dunia pendidikan."
+  title: "Catatan lapangan seputar rekayasa kode, desain, dan ruang kelas."
   all_link_text: "BUKA SELURUH TULISAN & ESAI"
   all_link_to: "/id/blog"
 colophon:
   section_number: "06 // HUBUNGI & KOLABORASI"
   status: "TERSEDIA PROYEK"
   headline: "Tertarik berkolaborasi atau mendiskusikan sistem baru?"
-  description: "Terbuka untuk diajak ngobrol soal proyek frontend dengan Nuxt, aplikasi mobile pakai Flutter, desain grafis sistematis, atau ide-ide teknologi untuk dunia pendidikan."
+  description: "Terbuka untuk bertukar pikiran seputar arsitektur frontend dengan Nuxt, aplikasi mobile Flutter, eksplorasi desain grafis, maupun inovasi pembelajaran di sekolah dasar."
   email: "dinar@permadi.dev"
   response_time: "WAKTU RESPON RATA-RATA: 1–2 HARI KERJA // MAJALENGKA (WIB / GMT+7)"
   socials_title: "PLATFORM DIGITAL"
