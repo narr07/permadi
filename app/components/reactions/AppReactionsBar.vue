@@ -86,15 +86,15 @@ const amazedPercentage = computed(() => {
 				<span class="inline-block h-2 w-2 bg-brand-500" />
 				<span>■ 04 // EVALUASI NASKAH &amp; RESPON PEMBACA</span>
 			</div>
-			<div class="text-[11px] text-slate-900/50 tabular-nums dark:text-slate-50/50">
+			<div class="text-[11px] text-slate-600 tabular-nums dark:text-slate-400">
 				TOTAL: {{ formatNumber(reactionsTotal) }} RESPON TERCATAT
 			</div>
 		</div>
 
 		<!-- Explanatory Prompt -->
-		<div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/80 px-5 py-3 text-xs text-slate-900/70 dark:border-[#134e43] dark:text-slate-50/70">
+		<div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/80 px-5 py-3 text-xs text-slate-700 dark:border-[#134e43] dark:text-slate-300">
 			<span>{{ locale === 'id' ? 'Bagaimana impresi teknis Anda terhadap naskah ini? Tinggalkan respon tipografis:' : 'What is your technical evaluation of this document? Leave a response:' }}</span>
-			<span class="text-[10px] text-slate-900/40 uppercase dark:text-slate-50/40">BATAS: 10 RESPON / KATEGORI</span>
+			<span class="text-[10px] text-slate-600 uppercase dark:text-slate-400">BATAS: 10 RESPON / KATEGORI</span>
 		</div>
 
 		<!-- 4-Column Modular Ledger Grid -->
@@ -121,12 +121,12 @@ const amazedPercentage = computed(() => {
 					type="button"
 					:aria-expanded="isInsightOpen"
 					class="group h-full w-full flex flex-col cursor-pointer select-none justify-between bg-white p-4 text-left text-xs font-mono transition-all duration-150 active:scale-[0.98] dark:bg-[#001e1c] sm:p-5"
-					:class="isInsightOpen ? 'bg-slate-100 dark:bg-[#002420]' : 'hover:bg-slate-50 dark:hover:bg-[#002420]/40 text-slate-900/80 dark:text-slate-50/80'"
+					:class="isInsightOpen ? 'bg-slate-100 dark:bg-[#002420]' : 'hover:bg-slate-50 dark:hover:bg-[#002420]/40 text-slate-800 dark:text-slate-200'"
 					@click="isInsightOpen = !isInsightOpen"
 				>
 					<!-- Top Strip -->
 					<div class="mb-3 flex items-center justify-between gap-2">
-						<span class="text-[11px] text-slate-900/50 font-bold tabular-nums dark:text-slate-50/50">
+						<span class="text-[11px] text-slate-600 font-bold tabular-nums dark:text-slate-400">
 							[04]
 						</span>
 						<span class="text-xl transition-transform duration-150 group-hover:scale-115 sm:text-2xl">
@@ -144,7 +144,7 @@ const amazedPercentage = computed(() => {
 						<span class="text-sm text-brand-600 font-bold tabular-nums sm:text-base dark:text-accent">
 							{{ formatNumber(views) }}
 						</span>
-						<span class="text-[10px] text-slate-900/50 font-semibold uppercase tabular-nums dark:text-slate-50/50">
+						<span class="text-[10px] text-slate-600 font-semibold uppercase tabular-nums dark:text-slate-400">
 							{{ isInsightOpen ? 'TUTUP ▲' : 'METRIK ▼' }}
 						</span>
 					</div>
@@ -164,7 +164,7 @@ const amazedPercentage = computed(() => {
 				</div>
 				<button
 					type="button"
-					class="cursor-pointer text-slate-900/50 transition-transform duration-150 active:scale-95 dark:text-slate-50/50 hover:text-slate-900 dark:hover:text-slate-50"
+					class="cursor-pointer text-slate-600 transition-transform duration-150 active:scale-95 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-50"
 					@click="isInsightOpen = false"
 				>
 					TUTUP ✕
@@ -174,7 +174,7 @@ const amazedPercentage = computed(() => {
 			<!-- 3 Specimen Metrics -->
 			<div class="grid grid-cols-1 mb-5 border border-slate-200/80 bg-white sm:grid-cols-3 divide-y dark:border-[#134e43] dark:bg-[#001e1c] sm:divide-x sm:divide-y-0">
 				<div class="p-3.5 text-center">
-					<span class="mb-1 block text-[10px] text-slate-900/50 font-bold tracking-wider uppercase dark:text-slate-50/50">
+					<span class="mb-1 block text-[10px] text-slate-600 font-bold tracking-wider uppercase dark:text-slate-400">
 						TOTAL TAYANGAN
 					</span>
 					<span class="text-xl text-slate-900 font-bold tabular-nums sm:text-2xl dark:text-slate-50">
@@ -183,7 +183,7 @@ const amazedPercentage = computed(() => {
 				</div>
 
 				<div class="p-3.5 text-center">
-					<span class="mb-1 block text-[10px] text-slate-900/50 font-bold tracking-wider uppercase dark:text-slate-50/50">
+					<span class="mb-1 block text-[10px] text-slate-600 font-bold tracking-wider uppercase dark:text-slate-400">
 						REFERENSI &amp; TAUTAN
 					</span>
 					<span class="text-xl text-brand-600 font-bold tabular-nums sm:text-2xl dark:text-accent">
@@ -192,7 +192,7 @@ const amazedPercentage = computed(() => {
 				</div>
 
 				<div class="p-3.5 text-center">
-					<span class="mb-1 block text-[10px] text-slate-900/50 font-bold tracking-wider uppercase dark:text-slate-50/50">
+					<span class="mb-1 block text-[10px] text-slate-600 font-bold tracking-wider uppercase dark:text-slate-400">
 						TOTAL REAKSI
 					</span>
 					<span class="text-xl text-slate-900 font-bold tabular-nums sm:text-2xl dark:text-slate-50">

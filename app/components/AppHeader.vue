@@ -95,9 +95,9 @@ onMounted(() => {
 						:key="item.to"
 						:to="item.to"
 						class="transition-all duration-150 active:scale-[0.96] hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-brand-400"
-						:class="isItemActive(item) ? 'font-bold text-brand-700 dark:text-brand-400 underline underline-offset-4' : 'text-slate-900/70 dark:text-slate-50/70'"
+						:class="isItemActive(item) ? 'font-bold text-brand-700 dark:text-brand-400 underline underline-offset-4' : 'text-slate-700 dark:text-slate-300'"
 					>
-						<span class="mr-1 text-slate-900/40 dark:text-slate-50/40">0{{ idx + 1 }} /</span>
+						<span class="mr-1 text-slate-600 dark:text-slate-400">0{{ idx + 1 }} /</span>
 						<span>{{ item.label.toUpperCase() }}</span>
 					</NuxtLink>
 				</nav>
@@ -108,7 +108,7 @@ onMounted(() => {
 				<AppSearchModal />
 
 				<!-- Language Switcher -->
-				<div class="hidden items-center gap-1 text-xs text-slate-900/70 font-mono sm:flex dark:text-slate-50/70">
+				<div class="hidden items-center gap-1 text-xs text-slate-700 font-mono sm:flex dark:text-slate-300">
 					<NuxtLink
 						:to="switchLocalePath('id')"
 						class="px-1 py-0.5 transition-all duration-150 active:scale-90 hover:text-brand-500"
@@ -116,7 +116,7 @@ onMounted(() => {
 					>
 						ID
 					</NuxtLink>
-					<span class="text-slate-900/30 dark:text-slate-50/30">/</span>
+					<span class="text-slate-600 dark:text-slate-400">/</span>
 					<NuxtLink
 						:to="switchLocalePath('en')"
 						class="px-1 py-0.5 transition-all duration-150 active:scale-90 hover:text-brand-500"
@@ -183,7 +183,7 @@ onMounted(() => {
 						:key="item.to"
 						:to="item.to"
 						class="flex items-center justify-between py-3"
-						:class="isItemActive(item) ? 'font-bold text-brand-600 dark:text-brand-400' : 'text-slate-900/80 dark:text-slate-50/80'"
+						:class="isItemActive(item) ? 'font-bold text-brand-600 dark:text-brand-400' : 'text-slate-800 dark:text-slate-200'"
 						@click="mobileOpen = false"
 					>
 						<span>0{{ idx + 1 }} / {{ item.label.toUpperCase() }}</span>
@@ -191,16 +191,16 @@ onMounted(() => {
 					</NuxtLink>
 
 					<div class="flex items-center justify-between pt-3">
-						<span class="text-xs text-slate-900/50 dark:text-slate-50/50">BAHASA</span>
+						<span class="text-xs text-slate-600 dark:text-slate-400">BAHASA</span>
 						<div class="flex items-center gap-3">
 							<NuxtLink
 								:to="switchLocalePath('id')"
-								:class="locale === 'id' ? 'font-bold text-brand-500' : ''"
+								:class="locale === 'id' ? 'font-bold text-brand-700 dark:text-brand-300' : ''"
 							>ID</NuxtLink>
 							<span>/</span>
 							<NuxtLink
 								:to="switchLocalePath('en')"
-								:class="locale === 'en' ? 'font-bold text-brand-500' : ''"
+								:class="locale === 'en' ? 'font-bold text-brand-700 dark:text-brand-300' : ''"
 							>EN</NuxtLink>
 						</div>
 					</div>

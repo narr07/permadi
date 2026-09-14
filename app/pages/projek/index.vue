@@ -156,12 +156,12 @@ defineOgImage('Bento', {
 								<span class="inline-block h-2 w-2 rounded-none bg-brand-500" />
 								<span>01 // KATALOG KARYA</span>
 							</div>
-							<span class="text-slate-900/40 tabular-nums dark:text-slate-50/40">
+							<span class="text-slate-600 tabular-nums dark:text-slate-400">
 								VOL. 26
 							</span>
 						</div>
 
-						<span class="mb-1.5 block text-[11px] text-slate-900/50 tracking-[0.15em] font-mono uppercase dark:text-slate-50/50">
+						<span class="mb-1.5 block text-[11px] text-slate-600 tracking-[0.15em] font-mono uppercase dark:text-slate-400">
 							KLASIFIKASI ARSIP
 						</span>
 						<h2 class="text-2xl text-slate-900 font-700 leading-tight font-heading sm:text-3xl dark:text-slate-50">
@@ -173,17 +173,17 @@ defineOgImage('Bento', {
 					<div class="mt-8 border-t border-slate-200/80 pt-6 dark:border-[#134e43]">
 						<div class="text-xs font-mono divide-y divide-slate-200/80 dark:divide-[#134e43]">
 							<div class="flex items-baseline justify-between py-2">
-								<span class="text-slate-900/60 dark:text-slate-50/60">TOTAL SPESIMEN</span>
+								<span class="text-slate-700 dark:text-slate-300">TOTAL SPESIMEN</span>
 								<span class="text-slate-900 font-bold tabular-nums dark:text-slate-50">{{ projects?.length || 0 }} Proyek</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2">
-								<span class="text-slate-900/60 dark:text-slate-50/60">FILTER AKTIF</span>
+								<span class="text-slate-700 dark:text-slate-300">FILTER AKTIF</span>
 								<span class="text-brand-600 font-bold uppercase dark:text-brand-400">{{ selectedTag === 'ALL' ? (locale === 'id' ? 'SEMUA' : 'ALL') : selectedTag }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2">
-								<span class="text-slate-900/60 dark:text-slate-50/60">STATUS</span>
+								<span class="text-slate-700 dark:text-slate-300">STATUS</span>
 								<span class="text-brand-600 font-semibold dark:text-brand-400">TERDOKUMENTASI</span>
 							</div>
 						</div>
@@ -201,12 +201,12 @@ defineOgImage('Bento', {
 							{{ page?.title || (locale === 'id' ? 'Portofolio Projek & Studi Kasus' : 'Projects & Case Studies') }}
 						</h1>
 
-						<p class="max-w-[56ch] text-base text-slate-900/80 leading-relaxed font-sans sm:text-lg dark:text-slate-50/80">
+						<p class="max-w-[56ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
 							{{ page?.description || (locale === 'id' ? 'Dokumentasi rekayasa aplikasi web modern, sistem komponen UI, aplikasi mobile Flutter, dan eksplorasi identitas visual berbasis kisi rasional.' : 'Curated documentation of web applications, UI component systems, mobile apps, and graphic identity design.') }}
 						</p>
 					</div>
 
-					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-900/50 font-mono dark:border-[#134e43] dark:text-slate-50/50">
+					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
 						<span>DIREKTORI REKAYASA DIGITAL</span>
 					</div>
 				</div>
@@ -219,7 +219,7 @@ defineOgImage('Bento', {
 			class="w-full flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 bg-slate-50/60 px-6 py-3.5 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/40 sm:px-8"
 		>
 			<div class="flex flex-wrap items-center gap-2">
-				<span class="mr-1 text-[11px] text-slate-900/50 uppercase dark:text-slate-50/50">FILTER:</span>
+				<span class="mr-1 text-[11px] text-slate-600 uppercase dark:text-slate-400">FILTER:</span>
 				<button
 					v-for="tag in filterTabs"
 					:key="tag"
@@ -227,14 +227,14 @@ defineOgImage('Bento', {
 					class="cursor-pointer border px-3.5 py-1.5 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
 					:class="selectedTag === tag
 						? 'swiss-filter-active'
-						: 'bg-white dark:bg-[#001e1c] text-slate-900/75 dark:text-slate-50/75 border-slate-300 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
+						: 'bg-white dark:bg-[#001e1c] text-slate-800 dark:text-slate-200 border-slate-300 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
 					@click="selectTag(tag)"
 				>
 					<span>{{ tag === 'ALL' ? (locale === 'id' ? 'SEMUA' : 'ALL') : tag }}</span>
 				</button>
 			</div>
 
-			<span class="text-[11px] text-slate-900/40 uppercase tabular-nums dark:text-slate-50/40">
+			<span class="text-[11px] text-slate-600 uppercase tabular-nums dark:text-slate-400">
 				MENAMPILKAN {{ filteredProjects.length }} DARI {{ projects?.length || 0 }} KARYA
 			</span>
 		</nav>
@@ -252,7 +252,7 @@ defineOgImage('Bento', {
 							<span class="text-brand-700 dark:text-accent">
 								SPESIMEN 01 // UNGGULAN
 							</span>
-							<span class="text-slate-900/40 tabular-nums dark:text-slate-50/40">
+							<span class="text-slate-600 tabular-nums dark:text-slate-400">
 								{{ formatDate(leadProject.date) }}
 							</span>
 						</div>
@@ -266,7 +266,7 @@ defineOgImage('Bento', {
 							</NuxtLink>
 						</h2>
 
-						<p class="mb-6 text-xs text-slate-900/75 leading-relaxed font-sans sm:text-sm dark:text-slate-50/75">
+						<p class="mb-6 text-xs text-slate-800 leading-relaxed font-sans sm:text-sm dark:text-slate-200">
 							{{ leadProject.description }}
 						</p>
 
@@ -275,7 +275,7 @@ defineOgImage('Bento', {
 							<span
 								v-for="tech in (leadProject.tags || leadProject.tech || []).slice(0, 5)"
 								:key="tech"
-								class="border border-slate-300 px-2 py-1 text-[10px] text-slate-900/75 font-mono uppercase dark:border-[#134e43] dark:text-slate-50/75"
+								class="border border-slate-300 px-2 py-1 text-[10px] text-slate-800 font-mono uppercase dark:border-[#134e43] dark:text-slate-200"
 							>
 								{{ tech }}
 							</span>
@@ -300,7 +300,7 @@ defineOgImage('Bento', {
 								:href="leadProject.githubUrl || leadProject.repo"
 								target="_blank"
 								rel="noopener noreferrer"
-								class="text-slate-900/70 underline underline-offset-4 dark:text-slate-50/70 hover:text-brand-600 dark:hover:text-brand-400"
+								class="text-slate-700 underline underline-offset-4 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400"
 							>
 								GITHUB ↗
 							</a>
@@ -309,7 +309,7 @@ defineOgImage('Bento', {
 								:href="leadProject.demoUrl || leadProject.link"
 								target="_blank"
 								rel="noopener noreferrer"
-								class="text-slate-900/70 underline underline-offset-4 dark:text-slate-50/70 hover:text-brand-600 dark:hover:text-brand-400"
+								class="text-slate-700 underline underline-offset-4 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400"
 							>
 								DEMO ↗
 							</a>
@@ -333,7 +333,7 @@ defineOgImage('Bento', {
 						/>
 					</div>
 
-					<div class="mt-4 flex items-center justify-between text-[10px] text-slate-900/50 tracking-widest font-mono uppercase dark:text-slate-50/50">
+					<div class="mt-4 flex items-center justify-between text-[10px] text-slate-600 tracking-widest font-mono uppercase dark:text-slate-400">
 						<span>FIG. 01.01 // PRATINJAU VISUAL ANTARMUKA</span>
 						<span>RASIO: 16:9</span>
 					</div>
@@ -379,7 +379,7 @@ defineOgImage('Bento', {
 							<span class="text-brand-600 font-bold dark:text-brand-400">
 								SPESIMEN {{ item.indexNum }} // [{{ item.category?.toUpperCase() || 'WEB' }}]
 							</span>
-							<span class="text-slate-900/40 tabular-nums dark:text-slate-50/40">
+							<span class="text-slate-600 tabular-nums dark:text-slate-400">
 								{{ formatDate(item.date) }}
 							</span>
 						</div>
@@ -390,7 +390,7 @@ defineOgImage('Bento', {
 							</NuxtLink>
 						</h3>
 
-						<p class="mb-6 text-xs text-slate-900/70 leading-relaxed font-sans sm:text-sm dark:text-slate-50/70">
+						<p class="mb-6 text-xs text-slate-700 leading-relaxed font-sans sm:text-sm dark:text-slate-300">
 							{{ item.description }}
 						</p>
 					</div>
@@ -406,7 +406,7 @@ defineOgImage('Bento', {
 
 						<div
 							v-if="item.demoUrl || item.link || item.githubUrl || item.repo"
-							class="flex items-center gap-2 text-slate-900/50 dark:text-slate-50/50"
+							class="flex items-center gap-2 text-slate-600 dark:text-slate-400"
 						>
 							<a
 								v-if="item.githubUrl || item.repo"
@@ -439,10 +439,10 @@ defineOgImage('Bento', {
 			v-else-if="!leadProject"
 			class="border-b border-slate-200/80 p-12 text-center dark:border-[#134e43]"
 		>
-			<span class="mb-2 block text-sm text-slate-900/50 tracking-widest font-mono uppercase dark:text-slate-50/50">
+			<span class="mb-2 block text-sm text-slate-600 tracking-widest font-mono uppercase dark:text-slate-400">
 				TIDAK ADA SPESIMEN DITEMUKAN
 			</span>
-			<p class="mb-4 text-xs text-slate-900/70 font-sans dark:text-slate-50/70">
+			<p class="mb-4 text-xs text-slate-700 font-sans dark:text-slate-300">
 				Tidak ada projek yang sesuai dengan filter #{{ selectedTag }}.
 			</p>
 			<button
@@ -461,7 +461,7 @@ defineOgImage('Bento', {
 			class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 bg-slate-50/50 px-6 py-6 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-8"
 		>
 			<div class="flex items-center gap-2">
-				<span class="text-slate-900/50 uppercase dark:text-slate-50/50">HALAMAN:</span>
+				<span class="text-slate-600 uppercase dark:text-slate-400">HALAMAN:</span>
 				<NuxtLink
 					v-for="pageNum in totalPages"
 					:key="pageNum"
@@ -494,7 +494,7 @@ defineOgImage('Bento', {
 		</nav>
 
 		<!-- Bottom Archival Colophon -->
-		<div class="flex flex-col items-start justify-between gap-2 bg-slate-50/80 px-6 py-4 text-[11px] text-slate-900/50 font-mono sm:flex-row sm:items-center dark:bg-[#002420]/60 sm:px-8 dark:text-slate-50/50">
+		<div class="flex flex-col items-start justify-between gap-2 bg-slate-50/80 px-6 py-4 text-[11px] text-slate-600 font-mono sm:flex-row sm:items-center dark:bg-[#002420]/60 sm:px-8 dark:text-slate-400">
 			<div>
 				DOKUMENTASI SISTEM REKAYASA &amp; STUDI KASUS // PERMADI.DEV
 			</div>

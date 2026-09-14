@@ -172,12 +172,12 @@ onUnmounted(() => {
 				<div class="flex items-center gap-2 text-[11px] font-bold tracking-wider uppercase">
 					<span class="inline-block h-1.5 w-1.5 bg-brand-500" />
 					<span class="text-slate-900 dark:text-slate-50">{{ displayTitle }}</span>
-					<span class="text-slate-900/40 tabular-nums dark:text-slate-50/40">
+					<span class="text-slate-600 tabular-nums dark:text-slate-400">
 						[{{ String(activeIndex + 1).padStart(2, '0') }}/{{ String(flatList.length).padStart(2, '0') }}]
 					</span>
 				</div>
 
-				<div class="flex items-center gap-1.5 text-xs text-slate-900/60 dark:text-slate-50/60">
+				<div class="flex items-center gap-1.5 text-xs text-slate-700 dark:text-slate-300">
 					<span>{{ mobileOpen ? 'TUTUP' : 'LIHAT' }}</span>
 					<span
 						:class="mobileOpen ? 'i-swisspost-chevronup' : 'i-swisspost-chevrondown'"
@@ -208,12 +208,12 @@ onUnmounted(() => {
 						item.level > 0 ? 'pl-8' : 'pl-4',
 						item.link.id === activeId
 							? 'bg-brand-500/10 text-brand-700 dark:text-accent font-bold border-l-2 border-brand-500'
-							: 'text-slate-900/70 dark:text-slate-50/70 hover:text-brand-600 dark:hover:text-brand-400',
+							: 'text-slate-700 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400',
 					]"
 					@click.prevent="scrollToHeading(item.link.id)"
 				>
 					<span class="truncate">{{ item.link.text }}</span>
-					<span class="shrink-0 text-[10px] text-slate-900/40 tabular-nums dark:text-slate-50/40">
+					<span class="shrink-0 text-[10px] text-slate-600 tabular-nums dark:text-slate-400">
 						{{ String(idx + 1).padStart(2, '0') }}
 					</span>
 				</a>
@@ -235,7 +235,7 @@ onUnmounted(() => {
 					</div>
 
 					<div class="flex items-center gap-2">
-						<span class="text-[10px] text-slate-900/50 font-bold tabular-nums dark:text-slate-50/50">
+						<span class="text-[10px] text-slate-600 font-bold tabular-nums dark:text-slate-400">
 							{{ String(activeIndex + 1).padStart(2, '0') }} / {{ String(flatList.length).padStart(2, '0') }}
 						</span>
 
@@ -243,7 +243,7 @@ onUnmounted(() => {
 						<button
 							v-if="showPin"
 							type="button"
-							class="cursor-pointer border border-slate-300 px-1.5 py-0.5 text-[10px] text-slate-900/60 font-bold font-mono uppercase transition-colors dark:border-[#134e43] dark:text-slate-50/60 hover:text-brand-600 dark:hover:text-accent"
+							class="cursor-pointer border border-slate-300 px-1.5 py-0.5 text-[10px] text-slate-700 font-bold font-mono uppercase transition-colors dark:border-[#134e43] dark:text-slate-300 hover:text-brand-600 dark:hover:text-accent"
 							:title="isPinned ? 'Lepas Sematan' : 'Sematkan ke Sisi'"
 							@click="emit('togglePin')"
 						>
@@ -254,7 +254,7 @@ onUnmounted(() => {
 						<button
 							v-if="showClose"
 							type="button"
-							class="cursor-pointer border border-slate-300 px-1.5 py-0.5 text-[10px] text-slate-900/60 font-bold font-mono uppercase transition-colors dark:border-[#134e43] dark:text-slate-50/60 hover:text-rose-600 dark:hover:text-rose-400"
+							class="cursor-pointer border border-slate-300 px-1.5 py-0.5 text-[10px] text-slate-700 font-bold font-mono uppercase transition-colors dark:border-[#134e43] dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-400"
 							:title="locale === 'id' ? 'Tutup Daftar Isi' : 'Close Table of Contents'"
 							@click="emit('close')"
 						>
@@ -288,14 +288,14 @@ onUnmounted(() => {
 							item.level > 0 ? 'pl-6' : 'pl-3',
 							item.link.id === activeId
 								? 'bg-slate-100/80 dark:bg-[#002420] text-brand-700 dark:text-accent font-bold border-l-2 border-brand-500'
-								: 'text-slate-900/75 dark:text-slate-50/75 hover:bg-slate-50 dark:hover:bg-[#002420]/40 hover:text-brand-600 dark:hover:text-brand-400',
+								: 'text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#002420]/40 hover:text-brand-600 dark:hover:text-brand-400',
 						]"
 						@click.prevent="scrollToHeading(item.link.id)"
 					>
 						<span class="truncate leading-snug">{{ item.link.text }}</span>
 						<span
 							class="shrink-0 text-[10px] font-mono tabular-nums"
-							:class="item.link.id === activeId ? 'text-brand-600 dark:text-accent font-bold' : 'text-slate-900/40 dark:text-slate-50/40 group-hover:text-slate-900 dark:group-hover:text-slate-50'"
+							:class="item.link.id === activeId ? 'text-brand-600 dark:text-accent font-bold' : 'text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-slate-50'"
 						>
 							{{ String(idx + 1).padStart(2, '0') }}
 						</span>
@@ -306,7 +306,7 @@ onUnmounted(() => {
 				<div class="border-t border-slate-200/80 bg-slate-50/60 p-3 dark:border-[#134e43] dark:bg-[#002420]/40">
 					<button
 						type="button"
-						class="w-full flex cursor-pointer items-center justify-center gap-1.5 py-1.5 text-[11px] text-slate-900/70 font-bold tracking-wider uppercase transition-colors dark:text-slate-50/70 hover:text-brand-600 dark:hover:text-brand-400"
+						class="w-full flex cursor-pointer items-center justify-center gap-1.5 py-1.5 text-[11px] text-slate-700 font-bold tracking-wider uppercase transition-colors dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400"
 						@click="scrollToTop"
 					>
 						<span class="i-swisspost-arrowup text-xs" />

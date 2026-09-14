@@ -215,7 +215,7 @@ function handleCopy() {
 				<span
 					class="transition-transform duration-200"
 					:class="[
-						copied ? 'i-swisspost-checkmark text-brand-300 scale-110' : 'i-swisspost-copy text-brand-300/80 group-hover/btn:scale-110',
+						copied ? 'i-swisspost-checkmark text-brand-300 scale-110' : 'i-swisspost-copy text-brand-300 group-hover/btn:scale-110',
 					]"
 				/>
 				<span class="text-[11px] font-medium">

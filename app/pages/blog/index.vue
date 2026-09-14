@@ -171,12 +171,12 @@ useSchemaOrg([
 								<span class="inline-block h-2 w-2 rounded-none bg-brand-500" />
 								<span>02 // ARSIP TULISAN</span>
 							</div>
-							<span class="text-slate-900/40 tabular-nums dark:text-slate-50/40">
+							<span class="text-slate-600 tabular-nums dark:text-slate-400">
 								VOL. 26
 							</span>
 						</div>
 
-						<span class="mb-1.5 block text-[11px] text-slate-900/50 tracking-[0.15em] font-mono uppercase dark:text-slate-50/50">
+						<span class="mb-1.5 block text-[11px] text-slate-600 tracking-[0.15em] font-mono uppercase dark:text-slate-400">
 							KLASIFIKASI NASKAH
 						</span>
 						<h2 class="text-2xl text-slate-900 font-700 leading-tight font-heading sm:text-3xl dark:text-slate-50">
@@ -188,17 +188,17 @@ useSchemaOrg([
 					<div class="mt-8 border-t border-slate-200/80 pt-6 dark:border-[#134e43]">
 						<div class="text-xs font-mono divide-y divide-slate-200/80 dark:divide-[#134e43]">
 							<div class="flex items-baseline justify-between py-2">
-								<span class="text-slate-900/60 dark:text-slate-50/60">TOTAL NASKAH</span>
+								<span class="text-slate-700 dark:text-slate-300">TOTAL NASKAH</span>
 								<span class="text-slate-900 font-bold tabular-nums dark:text-slate-50">{{ posts?.length || 0 }} Artikel</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2">
-								<span class="text-slate-900/60 dark:text-slate-50/60">TOPIK AKTIF</span>
+								<span class="text-slate-700 dark:text-slate-300">TOPIK AKTIF</span>
 								<span class="text-brand-600 font-bold uppercase dark:text-brand-400">{{ selectedTag === 'ALL' ? (locale === 'id' ? 'SEMUA' : 'ALL') : selectedTag }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2">
-								<span class="text-slate-900/60 dark:text-slate-50/60">STATUS</span>
+								<span class="text-slate-700 dark:text-slate-300">STATUS</span>
 								<span class="text-brand-600 font-semibold dark:text-brand-400">TERPUBLIKASI</span>
 							</div>
 						</div>
@@ -216,12 +216,12 @@ useSchemaOrg([
 							{{ page?.title || (locale === 'id' ? 'Blog & Catatan Teknis' : 'Blog & Technical Notes') }}
 						</h1>
 
-						<p class="max-w-[56ch] text-base text-slate-900/80 leading-relaxed font-sans sm:text-lg dark:text-slate-50/80">
+						<p class="max-w-[56ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
 							{{ page?.description || (locale === 'id' ? 'Kumpulan tulisan terkurasi seputar rekayasa aplikasi web modern, arsitektur sistem komponen, metodologi visual, dan pedagogi pendidikan sekolah dasar.' : 'Curated technical essays on modern web engineering, UI component architecture, visual methodologies, and primary education technology.') }}
 						</p>
 					</div>
 
-					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-900/50 font-mono dark:border-[#134e43] dark:text-slate-50/50">
+					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
 						<span>DIREKTORI ARTIKEL PERMADI.DEV</span>
 					</div>
 				</div>
@@ -234,7 +234,7 @@ useSchemaOrg([
 			class="w-full flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 bg-slate-50/60 px-6 py-3.5 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/40 sm:px-8"
 		>
 			<div class="flex flex-wrap items-center gap-2">
-				<span class="mr-1 text-[11px] text-slate-900/50 uppercase dark:text-slate-50/50">FILTER:</span>
+				<span class="mr-1 text-[11px] text-slate-600 uppercase dark:text-slate-400">FILTER:</span>
 				<button
 					v-for="tag in filterTabs"
 					:key="tag"
@@ -242,14 +242,14 @@ useSchemaOrg([
 					class="cursor-pointer border px-3.5 py-1.5 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
 					:class="selectedTag === tag
 						? 'swiss-filter-active'
-						: 'bg-white dark:bg-[#001e1c] text-slate-900/75 dark:text-slate-50/75 border-slate-300 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
+						: 'bg-white dark:bg-[#001e1c] text-slate-800 dark:text-slate-200 border-slate-300 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
 					@click="selectTag(tag)"
 				>
 					<span>{{ tag === 'ALL' ? (locale === 'id' ? 'SEMUA' : 'ALL') : tag }}</span>
 				</button>
 			</div>
 
-			<span class="text-[11px] text-slate-900/40 uppercase tabular-nums dark:text-slate-50/40">
+			<span class="text-[11px] text-slate-600 uppercase tabular-nums dark:text-slate-400">
 				MENAMPILKAN {{ filteredPosts.length }} DARI {{ posts?.length || 0 }} NASKAH
 			</span>
 		</nav>
@@ -267,7 +267,7 @@ useSchemaOrg([
 							<span class="text-brand-700 dark:text-accent">
 								SPESIMEN 01 // NASKAH UTAMA
 							</span>
-							<span class="text-slate-900/40 tabular-nums dark:text-slate-50/40">
+							<span class="text-slate-600 tabular-nums dark:text-slate-400">
 								{{ formatDate(leadPost.date) }}
 							</span>
 						</div>
@@ -281,7 +281,7 @@ useSchemaOrg([
 							</NuxtLink>
 						</h2>
 
-						<p class="mb-6 max-w-[62ch] text-xs text-slate-900/75 leading-relaxed font-sans sm:text-sm dark:text-slate-50/75">
+						<p class="mb-6 max-w-[62ch] text-xs text-slate-800 leading-relaxed font-sans sm:text-sm dark:text-slate-200">
 							{{ leadPost.description }}
 						</p>
 
@@ -290,7 +290,7 @@ useSchemaOrg([
 							<span
 								v-for="tag in (leadPost.tags || []).slice(0, 5)"
 								:key="tag"
-								class="border border-slate-300 px-2 py-1 text-[10px] text-slate-900/75 font-mono uppercase dark:border-[#134e43] dark:text-slate-50/75"
+								class="border border-slate-300 px-2 py-1 text-[10px] text-slate-800 font-mono uppercase dark:border-[#134e43] dark:text-slate-200"
 							>
 								#{{ tag }}
 							</span>
@@ -306,7 +306,7 @@ useSchemaOrg([
 							<span class="i-swisspost-arrowupright text-sm transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
 						</NuxtLink>
 
-						<div class="flex items-center gap-2 text-xs text-slate-900/60 font-mono dark:text-slate-50/60">
+						<div class="flex items-center gap-2 text-xs text-slate-700 font-mono dark:text-slate-300">
 							<span class="inline-block h-1.5 w-1.5 rounded-none bg-brand-500" />
 							<span>{{ leadPost.readingTime || 5 }} MENIT BACA</span>
 						</div>
@@ -316,7 +316,7 @@ useSchemaOrg([
 				<!-- Right Editorial Excerpt Frame (Cols 8 to 12) -->
 				<div class="flex flex-col justify-between bg-slate-50/40 p-6 lg:col-span-5 dark:bg-[#002420]/20 lg:p-10 sm:p-8">
 					<div>
-						<div class="mb-4 text-[10px] text-slate-900/50 tracking-widest font-mono uppercase dark:text-slate-50/50">
+						<div class="mb-4 text-[10px] text-slate-600 tracking-widest font-mono uppercase dark:text-slate-400">
 							RINGKASAN TEORETIS // ESENSI
 						</div>
 
@@ -324,7 +324,7 @@ useSchemaOrg([
 							"Arsitektur perangkat lunak yang kokoh bertumpu pada kesederhanaan struktur dan ketelitian batas komponen."
 						</blockquote>
 
-						<div class="text-xs text-slate-900/70 font-mono space-y-2 dark:text-slate-50/70">
+						<div class="text-xs text-slate-700 font-mono space-y-2 dark:text-slate-300">
 							<div class="flex items-center justify-between border-b border-slate-200/60 py-1.5 dark:border-[#134e43]">
 								<span>PENULIS</span>
 								<span class="text-slate-900 font-semibold dark:text-slate-50">Dinar Permadi Yusup</span>
@@ -340,7 +340,7 @@ useSchemaOrg([
 						</div>
 					</div>
 
-					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-4 text-[10px] text-slate-900/40 tracking-widest font-mono uppercase dark:border-[#134e43] dark:text-slate-50/40">
+					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-4 text-[10px] text-slate-600 tracking-widest font-mono uppercase dark:border-[#134e43] dark:text-slate-400">
 						<span>REF. 01.01</span>
 						<span>PUBLIKASI DIGITAL</span>
 					</div>
@@ -371,7 +371,7 @@ useSchemaOrg([
 							<span class="text-brand-600 font-bold dark:text-brand-400">
 								SPESIMEN {{ item.indexNum }} // [{{ (item.category || 'UMUM').toUpperCase() }}]
 							</span>
-							<span class="text-slate-900/40 tabular-nums dark:text-slate-50/40">
+							<span class="text-slate-600 tabular-nums dark:text-slate-400">
 								{{ formatDate(item.date) }}
 							</span>
 						</div>
@@ -382,7 +382,7 @@ useSchemaOrg([
 							</NuxtLink>
 						</h3>
 
-						<p class="line-clamp-3 mb-6 text-xs text-slate-900/70 leading-relaxed font-sans sm:text-sm dark:text-slate-50/70">
+						<p class="line-clamp-3 mb-6 text-xs text-slate-700 leading-relaxed font-sans sm:text-sm dark:text-slate-300">
 							{{ item.description }}
 						</p>
 					</div>
@@ -396,7 +396,7 @@ useSchemaOrg([
 							<span class="i-swisspost-arrowupright text-sm transition-transform group-hover:(translate-x-0.5 -translate-y-0.5)" />
 						</NuxtLink>
 
-						<span class="text-[11px] text-slate-900/50 font-mono tabular-nums dark:text-slate-50/50">
+						<span class="text-[11px] text-slate-600 font-mono tabular-nums dark:text-slate-400">
 							{{ item.readingTime || 4 }} MIN READ
 						</span>
 					</div>
@@ -409,10 +409,10 @@ useSchemaOrg([
 			v-else-if="!leadPost"
 			class="border-b border-slate-200/80 p-12 text-center dark:border-[#134e43]"
 		>
-			<span class="mb-2 block text-sm text-slate-900/50 tracking-widest font-mono uppercase dark:text-slate-50/50">
+			<span class="mb-2 block text-sm text-slate-600 tracking-widest font-mono uppercase dark:text-slate-400">
 				TIDAK ADA NASKAH DITEMUKAN
 			</span>
-			<p class="mb-4 text-xs text-slate-900/70 font-sans dark:text-slate-50/70">
+			<p class="mb-4 text-xs text-slate-700 font-sans dark:text-slate-300">
 				Tidak ada artikel yang sesuai dengan filter #{{ selectedTag }}.
 			</p>
 			<button
@@ -431,7 +431,7 @@ useSchemaOrg([
 			class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 bg-slate-50/50 px-6 py-6 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-8"
 		>
 			<div class="flex items-center gap-2">
-				<span class="text-slate-900/50 uppercase dark:text-slate-50/50">HALAMAN:</span>
+				<span class="text-slate-600 uppercase dark:text-slate-400">HALAMAN:</span>
 				<NuxtLink
 					v-for="pageNum in totalPages"
 					:key="pageNum"
@@ -464,7 +464,7 @@ useSchemaOrg([
 		</nav>
 
 		<!-- Bottom Archival Colophon -->
-		<div class="flex flex-col items-start justify-between gap-2 bg-slate-50/80 px-6 py-4 text-[11px] text-slate-900/50 font-mono sm:flex-row sm:items-center dark:bg-[#002420]/60 sm:px-8 dark:text-slate-50/50">
+		<div class="flex flex-col items-start justify-between gap-2 bg-slate-50/80 px-6 py-4 text-[11px] text-slate-600 font-mono sm:flex-row sm:items-center dark:bg-[#002420]/60 sm:px-8 dark:text-slate-400">
 			<div>
 				DOKUMENTASI SISTEM REKAYASA &amp; PUBLIKASI // PERMADI.DEV
 			</div>

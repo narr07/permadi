@@ -85,7 +85,7 @@ const colorVariantClasses = computed(() => {
 		if (v === 'solid')
 			return 'bg-[#f9bc60] text-slate-950 border-transparent'
 		if (v === 'outline')
-			return 'border border-[#f9bc60]/60 text-[#b47818] dark:text-[#f9bc60] bg-transparent'
+			return 'border border-[#f9bc60]/60 text-[#92400e] dark:text-[#f9bc60] bg-transparent'
 		if (v === 'soft')
 			return 'bg-[#f9bc60]/15 text-[#9a6410] dark:bg-[#f9bc60]/20 dark:text-[#facd87] border-transparent'
 		// subtle

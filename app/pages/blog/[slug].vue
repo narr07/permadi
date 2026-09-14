@@ -344,7 +344,7 @@ defineOgImage('Bento', {
 				<span>{{ locale === 'id' ? 'KEMBALI KE ARSIP BLOG' : 'BACK TO BLOG ARCHIVE' }}</span>
 			</NuxtLink>
 
-			<div class="flex items-center gap-3 text-slate-900/40 uppercase dark:text-slate-50/40">
+			<div class="flex items-center gap-3 text-slate-600 uppercase dark:text-slate-400">
 				<span class="hidden sm:inline">DOKUMEN TEKNIS</span>
 				<span class="text-brand-600 font-bold dark:text-brand-400">[{{ (post.doc.category || 'UMUM').toUpperCase() }}]</span>
 			</div>
@@ -362,28 +362,28 @@ defineOgImage('Bento', {
 
 						<div class="mb-8 text-xs font-mono divide-y divide-slate-200/80 dark:divide-[#134e43]">
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-900/60 dark:text-slate-50/60">TANGGAL RILIS</span>
+								<span class="text-slate-700 dark:text-slate-300">TANGGAL RILIS</span>
 								<span class="text-slate-900 font-semibold tabular-nums dark:text-slate-50">{{ formatDate(post.doc.date) }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-900/60 dark:text-slate-50/60">WAKTU BACA</span>
+								<span class="text-slate-700 dark:text-slate-300">WAKTU BACA</span>
 								<span class="text-slate-900 tabular-nums dark:text-slate-50">{{ post.doc.readingTime || 5 }} Menit</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-900/60 dark:text-slate-50/60">KATEGORI</span>
+								<span class="text-slate-700 dark:text-slate-300">KATEGORI</span>
 								<span class="text-brand-600 font-bold uppercase dark:text-brand-400">{{ getCategoryLabel(post.doc.category) }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-900/60 dark:text-slate-50/60">PENULIS</span>
+								<span class="text-slate-700 dark:text-slate-300">PENULIS</span>
 								<span class="text-slate-900 font-medium dark:text-slate-50">Dinar Permadi Yusup</span>
 							</div>
 						</div>
 					</div>
 
-					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-900/50 font-mono dark:border-[#134e43] dark:text-slate-50/50">
+					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
 						<span>LISENSI KONTEN</span>
 						<span>CC BY-NC-SA 4.0</span>
 					</div>
@@ -400,7 +400,7 @@ defineOgImage('Bento', {
 							{{ post.doc.title }}
 						</h1>
 
-						<p class="mb-8 max-w-[58ch] text-base text-slate-900/80 leading-relaxed font-sans sm:text-lg dark:text-slate-50/80">
+						<p class="mb-8 max-w-[58ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
 							{{ post.doc.description }}
 						</p>
 
@@ -409,14 +409,14 @@ defineOgImage('Bento', {
 							<span
 								v-for="tag in (post.doc.tags || [])"
 								:key="tag"
-								class="border border-slate-300 px-2.5 py-1 text-xs text-slate-900/80 font-mono uppercase dark:border-[#134e43] dark:text-slate-50/80"
+								class="border border-slate-300 px-2.5 py-1 text-xs text-slate-800 font-mono uppercase dark:border-[#134e43] dark:text-slate-200"
 							>
 								#{{ tag }}
 							</span>
 						</div>
 					</div>
 
-					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-900/50 font-mono dark:border-[#134e43] dark:text-slate-50/50">
+					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
 						<span>ARSIP PERMADI.DEV</span>
 					</div>
 				</div>
@@ -436,7 +436,7 @@ defineOgImage('Bento', {
 				<!-- Current Section Indicator -->
 				<div class="min-w-0 flex flex-1 items-center gap-2.5 text-[11px] leading-none">
 					<span class="inline-block h-2 w-2 shrink-0 bg-brand-500" />
-					<span class="shrink-0 text-slate-900/50 font-bold tracking-wider uppercase tabular-nums dark:text-slate-50/50">
+					<span class="shrink-0 text-slate-600 font-bold tracking-wider uppercase tabular-nums dark:text-slate-400">
 						[{{ String(activeHeadingIndex + 1).padStart(2, '0') }}/{{ String(flatTocList.length).padStart(2, '0') }}]:
 					</span>
 					<span class="truncate text-slate-900 font-bold dark:text-slate-50">
@@ -466,7 +466,7 @@ defineOgImage('Bento', {
 					<!-- Top of Page Action -->
 					<button
 						type="button"
-						class="h-8 inline-flex shrink-0 cursor-pointer items-center justify-center whitespace-nowrap text-slate-900/60 leading-none transition-all duration-150 active:scale-95 dark:text-slate-50/60 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-accent"
+						class="h-8 inline-flex shrink-0 cursor-pointer items-center justify-center whitespace-nowrap text-slate-700 leading-none transition-all duration-150 active:scale-95 dark:text-slate-300 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-accent"
 						@click="scrollToTop"
 					>
 						PUNCAK ↑
@@ -487,7 +487,7 @@ defineOgImage('Bento', {
 					</div>
 					<button
 						type="button"
-						class="cursor-pointer text-[10px] text-slate-900/50 dark:text-slate-50/50 hover:text-slate-900 dark:hover:text-slate-50"
+						class="cursor-pointer text-[10px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-50"
 						@click="isTocDropdownOpen = false"
 					>
 						TUTUP [ESC] ✕
@@ -501,7 +501,7 @@ defineOgImage('Bento', {
 						:key="link.id"
 						:href="`#${link.id}`"
 						class="group flex cursor-pointer items-start gap-3 border-b border-slate-200/80 p-3.5 transition-colors md:border-b-0 dark:border-[#134e43] sm:p-4"
-						:class="link.id === activeSection ? 'bg-brand-500/10 dark:bg-[#002420] text-brand-700 dark:text-accent font-bold' : 'hover:bg-slate-50 dark:hover:bg-[#002420]/40 text-slate-900/80 dark:text-slate-50/80'"
+						:class="link.id === activeSection ? 'bg-brand-500/10 dark:bg-[#002420] text-brand-700 dark:text-accent font-bold' : 'hover:bg-slate-50 dark:hover:bg-[#002420]/40 text-slate-800 dark:text-slate-200'"
 						@click.prevent="selectHeading(link.id)"
 					>
 						<span
@@ -531,7 +531,7 @@ defineOgImage('Bento', {
 				</div>
 
 				<!-- Dropdown Panel Footer Strip -->
-				<div class="flex items-center justify-between border-t border-slate-200/80 bg-slate-50/50 px-6 py-2 text-[10px] text-slate-900/40 dark:border-[#134e43] dark:bg-[#002420]/30 dark:text-slate-50/40">
+				<div class="flex items-center justify-between border-t border-slate-200/80 bg-slate-50/50 px-6 py-2 text-[10px] text-slate-600 dark:border-[#134e43] dark:bg-[#002420]/30 dark:text-slate-400">
 					<span>ARSIP DOKUMENTASI PERMADI.DEV</span>
 					<span>KLIK ITEM UNTUK BERPINDAH LANGSUNG</span>
 				</div>
@@ -544,11 +544,11 @@ defineOgImage('Bento', {
 				<!-- Section Sub-Header -->
 				<div class="mb-8 flex items-center justify-between border-b border-slate-200/80 pb-3 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:border-[#134e43] dark:text-accent">
 					<span>■ 02 // DOKUMENTASI LENGKAP &amp; BEDAH TEKNIS</span>
-					<span class="text-slate-900/40 tabular-nums dark:text-slate-50/40">KORPUS 01</span>
+					<span class="text-slate-600 tabular-nums dark:text-slate-400">KORPUS 01</span>
 				</div>
 
 				<!-- Expansive Full-Measure Prose Content Centered -->
-				<div class="max-w-none w-full text-slate-900/85 leading-relaxed font-sans prose prose-slate dark:text-slate-50/85 dark:prose-invert">
+				<div class="max-w-none w-full text-slate-800 leading-relaxed font-sans prose prose-slate dark:text-slate-100 dark:prose-invert">
 					<ContentRenderer :value="post.doc" />
 				</div>
 
@@ -581,7 +581,7 @@ defineOgImage('Bento', {
 			<!-- Previous Article -->
 			<div class="group flex flex-col justify-between p-6 transition-colors hover:bg-slate-50/80 sm:p-8 dark:hover:bg-[#002420]/40">
 				<div v-if="surround[0]">
-					<span class="mb-2 block text-[11px] text-slate-900/50 font-bold tracking-widest font-mono uppercase dark:text-slate-50/50">
+					<span class="mb-2 block text-[11px] text-slate-600 font-bold tracking-widest font-mono uppercase dark:text-slate-400">
 						← NASKAH SEBELUMNYA
 					</span>
 					<h3 class="text-lg text-slate-900 font-700 leading-snug font-heading transition-colors dark:text-slate-50 group-hover:text-brand-600">
@@ -592,7 +592,7 @@ defineOgImage('Bento', {
 				</div>
 				<div
 					v-else
-					class="text-xs text-slate-900/30 font-mono uppercase dark:text-slate-50/30"
+					class="text-xs text-slate-600 font-mono uppercase dark:text-slate-400"
 				>
 					AWAL ARSIP PUBLIKASI
 				</div>
@@ -601,7 +601,7 @@ defineOgImage('Bento', {
 			<!-- Next Article -->
 			<div class="group flex flex-col justify-between p-6 text-right transition-colors hover:bg-slate-50/80 sm:p-8 dark:hover:bg-[#002420]/40">
 				<div v-if="surround[1]">
-					<span class="mb-2 block text-[11px] text-slate-900/50 font-bold tracking-widest font-mono uppercase dark:text-slate-50/50">
+					<span class="mb-2 block text-[11px] text-slate-600 font-bold tracking-widest font-mono uppercase dark:text-slate-400">
 						NASKAH BERIKUTNYA →
 					</span>
 					<h3 class="text-lg text-slate-900 font-700 leading-snug font-heading transition-colors dark:text-slate-50 group-hover:text-brand-600">
@@ -612,7 +612,7 @@ defineOgImage('Bento', {
 				</div>
 				<div
 					v-else
-					class="text-xs text-slate-900/30 font-mono uppercase dark:text-slate-50/30"
+					class="text-xs text-slate-600 font-mono uppercase dark:text-slate-400"
 				>
 					AKHIR ARSIP PUBLIKASI
 				</div>
@@ -629,7 +629,7 @@ defineOgImage('Bento', {
 				<span>KEMBALI KE SELURUH NASKAH</span>
 			</NuxtLink>
 
-			<div class="text-slate-900/50 dark:text-slate-50/50">
+			<div class="text-slate-600 dark:text-slate-400">
 				DINAR PERMADI YUSUP
 			</div>
 		</footer>

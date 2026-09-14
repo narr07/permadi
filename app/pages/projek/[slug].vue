@@ -152,7 +152,7 @@ const allScreenshots = computed(() => {
 				<span>{{ locale === 'id' ? 'KEMBALI KE ARSIP PROJEK' : 'BACK TO PROJECTS ARCHIVE' }}</span>
 			</NuxtLink>
 
-			<div class="flex items-center gap-3 text-slate-900/40 uppercase dark:text-slate-50/40">
+			<div class="flex items-center gap-3 text-slate-600 uppercase dark:text-slate-400">
 				<span class="hidden sm:inline">SPESIFIKASI STUDI KASUS</span>
 				<span class="text-brand-600 font-bold dark:text-brand-400">[{{ project.doc.category?.toUpperCase() || 'WEB' }}]</span>
 			</div>
@@ -170,22 +170,22 @@ const allScreenshots = computed(() => {
 
 						<div class="text-xs font-mono divide-y divide-slate-200/80 dark:divide-[#134e43]">
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-900/60 dark:text-slate-50/60">TANGGAL RILIS</span>
+								<span class="text-slate-700 dark:text-slate-300">TANGGAL RILIS</span>
 								<span class="text-slate-900 font-semibold tabular-nums dark:text-slate-50">{{ formatDate(project.doc.date) }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-900/60 dark:text-slate-50/60">WAKTU BACA</span>
+								<span class="text-slate-700 dark:text-slate-300">WAKTU BACA</span>
 								<span class="text-slate-900 tabular-nums dark:text-slate-50">{{ project.doc.readingTime || 4 }} Menit</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-900/60 dark:text-slate-50/60">KATEGORI</span>
+								<span class="text-slate-700 dark:text-slate-300">KATEGORI</span>
 								<span class="text-brand-600 font-bold uppercase dark:text-brand-400">{{ getCategoryLabel(project.doc.category) }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-900/60 dark:text-slate-50/60">PENGEMBANG</span>
+								<span class="text-slate-700 dark:text-slate-300">PENGEMBANG</span>
 								<span class="text-slate-900 dark:text-slate-50">Dinar Permadi Yusup</span>
 							</div>
 						</div>
@@ -228,7 +228,7 @@ const allScreenshots = computed(() => {
 							{{ project.doc.title }}
 						</h1>
 
-						<p class="mb-8 max-w-[58ch] text-base text-slate-900/80 leading-relaxed font-sans sm:text-lg dark:text-slate-50/80">
+						<p class="mb-8 max-w-[58ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
 							{{ project.doc.description }}
 						</p>
 
@@ -237,14 +237,14 @@ const allScreenshots = computed(() => {
 							<span
 								v-for="tech in (project.doc.tags || project.doc.tech || [])"
 								:key="tech"
-								class="border border-slate-300 px-2.5 py-1 text-xs text-slate-900/80 font-mono uppercase dark:border-[#134e43] dark:text-slate-50/80"
+								class="border border-slate-300 px-2.5 py-1 text-xs text-slate-800 font-mono uppercase dark:border-[#134e43] dark:text-slate-200"
 							>
 								#{{ tech }}
 							</span>
 						</div>
 					</div>
 
-					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-900/50 font-mono dark:border-[#134e43] dark:text-slate-50/50">
+					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
 						<span>ARSIP PERMADI.DEV</span>
 					</div>
 				</div>
@@ -269,7 +269,7 @@ const allScreenshots = computed(() => {
 						/>
 					</div>
 
-					<div class="mt-3 flex items-center justify-between text-[10px] text-slate-900/50 tracking-widest font-mono uppercase dark:text-slate-50/50">
+					<div class="mt-3 flex items-center justify-between text-[10px] text-slate-600 tracking-widest font-mono uppercase dark:text-slate-400">
 						<span>FIG. 01 // TAMPILAN UTAMA ANTARMUKA SISTEM</span>
 						<span>RESOLUSI TINGGI (16:9)</span>
 					</div>
@@ -293,7 +293,7 @@ const allScreenshots = computed(() => {
 							class="aspect-video w-full object-cover"
 							loading="lazy"
 						/>
-						<div class="border-t border-slate-200/80 bg-white p-2 text-[9px] text-slate-900/50 font-mono uppercase dark:border-[#134e43] dark:bg-[#001e1c] dark:text-slate-50/50">
+						<div class="border-t border-slate-200/80 bg-white p-2 text-[9px] text-slate-600 font-mono uppercase dark:border-[#134e43] dark:bg-[#001e1c] dark:text-slate-400">
 							FIG. 0{{ idx + 2 }} // TAMPILAN DETAIL
 						</div>
 					</div>
@@ -308,7 +308,7 @@ const allScreenshots = computed(() => {
 					DOKUMENTASI TEKNIS &amp; CATATAN REKAYASA
 				</div>
 
-				<div class="max-w-none text-slate-900/85 leading-relaxed font-sans prose prose-slate dark:text-slate-50/85 dark:prose-invert">
+				<div class="max-w-none text-slate-800 leading-relaxed font-sans prose prose-slate dark:text-slate-100 dark:prose-invert">
 					<ContentRenderer :value="project.doc" />
 				</div>
 			</div>
@@ -324,7 +324,7 @@ const allScreenshots = computed(() => {
 				<span>KEMBALI KE SELURUH PROJEK</span>
 			</NuxtLink>
 
-			<div class="text-slate-900/50 dark:text-slate-50/50">
+			<div class="text-slate-600 dark:text-slate-400">
 				DINAR PERMADI YUSUP
 			</div>
 		</footer>

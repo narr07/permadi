@@ -81,7 +81,7 @@ const displayProjects = computed(() => {
 				<span class="inline-block h-2 w-2 rounded-none bg-brand-500" />
 				<span>{{ projectSection?.label || label || '02 // STUDI KASUS & REKAYASA SISTEM' }}</span>
 			</div>
-			<span class="text-slate-900/40 tabular-nums dark:text-slate-50/40">
+			<span class="text-slate-600 tabular-nums dark:text-slate-400">
 				{{ projectSection?.count_badge || 'ARSIP PILIHAN (03 KARYA)' }}
 			</span>
 		</div>
@@ -98,7 +98,7 @@ const displayProjects = computed(() => {
 						<span class="text-brand-600 font-bold dark:text-brand-400">
 							{{ p.index }} // {{ p.year }}
 						</span>
-						<span class="i-swisspost-arrowupright text-base text-slate-900/40 transition-transform duration-200 group-hover:(translate-x-1 text-brand-500 -translate-y-1) dark:text-slate-50/40" />
+						<span class="i-swisspost-arrowupright text-base text-slate-600 transition-transform duration-200 group-hover:(translate-x-1 text-brand-500 -translate-y-1) dark:text-slate-400" />
 					</div>
 
 					<h3 class="mb-4 text-xl text-slate-900 font-900 leading-snug font-heading transition-colors sm:text-2xl dark:text-slate-50 group-hover:text-brand-700 dark:group-hover:text-brand-300">
@@ -107,7 +107,7 @@ const displayProjects = computed(() => {
 						</NuxtLink>
 					</h3>
 
-					<p class="mb-8 text-xs text-slate-900/70 leading-relaxed font-sans sm:text-sm dark:text-slate-50/70">
+					<p class="mb-8 text-xs text-slate-700 leading-relaxed font-sans sm:text-sm dark:text-slate-300">
 						{{ p.description }}
 					</p>
 				</div>
@@ -116,7 +116,7 @@ const displayProjects = computed(() => {
 					<span
 						v-for="tag in p.tags"
 						:key="tag"
-						class="border border-slate-300 px-2 py-1 text-[10px] text-slate-900/80 font-mono uppercase transition-colors duration-150 dark:border-[#134e43] group-hover:border-brand-500/60 dark:text-slate-50/80"
+						class="border border-slate-300 px-2 py-1 text-[10px] text-slate-800 font-mono uppercase transition-colors duration-150 dark:border-[#134e43] group-hover:border-brand-500/60 dark:text-slate-200"
 					>
 						{{ tag }}
 					</span>
@@ -126,7 +126,7 @@ const displayProjects = computed(() => {
 
 		<!-- Footer Link Strip -->
 		<div class="flex items-center justify-between border-t border-slate-200/80 bg-slate-50/50 px-6 py-3.5 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-8">
-			<span class="hidden text-slate-900/40 uppercase sm:inline dark:text-slate-50/40">
+			<span class="hidden text-slate-600 uppercase sm:inline dark:text-slate-400">
 				{{ projectSection?.correlation_badge || 'KORELASI: PENDIDIKAN × REKAYASA KODE' }}
 			</span>
 			<NuxtLink

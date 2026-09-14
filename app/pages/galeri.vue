@@ -304,28 +304,28 @@ useSchemaOrg([
 
 						<div class="text-xs font-mono divide-y divide-slate-200/80 dark:divide-[#134e43]">
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-900/60 dark:text-slate-50/60">TOTAL SPESIMEN</span>
+								<span class="text-slate-700 dark:text-slate-300">TOTAL SPESIMEN</span>
 								<span class="text-slate-900 font-bold tabular-nums dark:text-slate-50">{{ allItems.length }} Dokumen</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-900/60 dark:text-slate-50/60">HOSTING MEDIA</span>
+								<span class="text-slate-700 dark:text-slate-300">HOSTING MEDIA</span>
 								<span class="text-slate-900 font-medium dark:text-slate-50">CLOUDINARY EDGE</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-900/60 dark:text-slate-50/60">OPTIMASI FORMAT</span>
+								<span class="text-slate-700 dark:text-slate-300">OPTIMASI FORMAT</span>
 								<span class="text-brand-600 font-bold dark:text-accent">WEBP / AVIF LQIP</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-900/60 dark:text-slate-50/60">KURASI</span>
+								<span class="text-slate-700 dark:text-slate-300">KURASI</span>
 								<span class="text-slate-900 font-medium dark:text-slate-50">Dinar Permadi Yusup</span>
 							</div>
 						</div>
 					</div>
 
-					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-900/50 font-mono dark:border-[#134e43] dark:text-slate-50/50">
+					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
 						<span>HAK CIPTA</span>
 						<span>CC BY-NC-ND 4.0</span>
 					</div>
@@ -342,11 +342,11 @@ useSchemaOrg([
 							{{ page?.title || (locale === 'id' ? 'Galeri Visual & Dokumentasi' : 'Visual Gallery & Documentation') }}
 						</h1>
 
-						<p class="mb-8 max-w-[58ch] text-base text-slate-900/80 leading-relaxed font-sans sm:text-lg dark:text-slate-50/80">
+						<p class="mb-8 max-w-[58ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
 							{{ page?.description || (locale === 'id' ? 'Koleksi dokumentasi workspace, seni visual, dan tangkapan karya desain yang dioptimasi secara presisi melalui Cloudinary Edge CDN.' : 'A curated collection of visual experiments, photography, and workspace snapshots served via Cloudinary CDN.') }}
 						</p>
 
-						<div class="flex flex-wrap gap-2 text-xs text-slate-900/60 font-mono dark:text-slate-50/60">
+						<div class="flex flex-wrap gap-2 text-xs text-slate-700 font-mono dark:text-slate-300">
 							<span class="border border-slate-300 px-2.5 py-1 uppercase dark:border-[#134e43]">#FOTOGRAFI</span>
 							<span class="border border-slate-300 px-2.5 py-1 uppercase dark:border-[#134e43]">#WORKSPACE</span>
 							<span class="border border-slate-300 px-2.5 py-1 uppercase dark:border-[#134e43]">#ARSITEKTUR</span>
@@ -354,7 +354,7 @@ useSchemaOrg([
 						</div>
 					</div>
 
-					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-900/50 font-mono dark:border-[#134e43] dark:text-slate-50/50">
+					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
 						<span>ARSIP PERMADI.DEV</span>
 					</div>
 				</div>
@@ -365,7 +365,7 @@ useSchemaOrg([
 		<div class="w-full flex flex-wrap items-center justify-between gap-4 border-x border-b border-slate-200/80 bg-slate-50/70 px-4 py-3 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-6">
 			<!-- Tag Filter Buttons -->
 			<div class="flex flex-wrap items-center gap-1.5">
-				<span class="mr-1 text-[11px] text-slate-900/50 font-bold uppercase dark:text-slate-50/50">
+				<span class="mr-1 text-[11px] text-slate-600 font-bold uppercase dark:text-slate-400">
 					FILTER:
 				</span>
 
@@ -397,7 +397,7 @@ useSchemaOrg([
 			</div>
 
 			<!-- Quick Metric Indicator -->
-			<div class="text-[11px] text-slate-900/50 font-bold tracking-wider uppercase tabular-nums dark:text-slate-50/50">
+			<div class="text-[11px] text-slate-600 font-bold tracking-wider uppercase tabular-nums dark:text-slate-400">
 				DITAMPILKAN: {{ displayedItems.length }} / {{ filteredGallery.length }}
 			</div>
 		</div>
@@ -424,7 +424,7 @@ useSchemaOrg([
 						<span class="inline-block h-1.5 w-1.5 bg-brand-500" />
 						<span>SPESIMEN {{ String(i + 1).padStart(2, '0') }}</span>
 					</div>
-					<span class="text-slate-900/40 tabular-nums dark:text-slate-50/40">
+					<span class="text-slate-600 tabular-nums dark:text-slate-400">
 						{{ item.width || 720 }}×{{ item.height || 540 }} HD
 					</span>
 				</div>
@@ -472,14 +472,14 @@ useSchemaOrg([
 							<span
 								v-for="tag in item.tags.slice(0, 3)"
 								:key="tag"
-								class="border border-slate-200 px-1.5 py-0.5 text-[10px] text-slate-900/70 uppercase dark:border-[#134e43] dark:text-slate-50/70"
+								class="border border-slate-200 px-1.5 py-0.5 text-[10px] text-slate-700 uppercase dark:border-[#134e43] dark:text-slate-300"
 							>
 								#{{ tag }}
 							</span>
 						</div>
 					</div>
 
-					<div class="flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] text-slate-900/50 dark:border-[#134e43]/40 dark:text-slate-50/50">
+					<div class="flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] text-slate-600 dark:border-[#134e43]/40 dark:text-slate-400">
 						<span>DOKUMEN FOTO</span>
 						<span class="flex items-center gap-1 font-bold transition-colors group-hover:text-brand-600 dark:group-hover:text-accent">
 							INSPEKSI <span class="i-swisspost-arrowupright text-xs transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
@@ -509,14 +509,14 @@ useSchemaOrg([
 				@click="loadMore"
 			>
 				<span>↓ {{ locale === 'id' ? 'MUAT LEBIH BANYAK FOTO' : 'LOAD MORE PHOTOS' }}</span>
-				<span class="text-slate-900/40 tabular-nums dark:text-slate-50/40">
+				<span class="text-slate-600 tabular-nums dark:text-slate-400">
 					({{ filteredGallery.length - displayedItems.length }} TERSISA)
 				</span>
 			</button>
 
 			<div
 				v-else
-				class="text-[11px] text-slate-900/40 font-bold tracking-wider uppercase dark:text-slate-50/40"
+				class="text-[11px] text-slate-600 font-bold tracking-wider uppercase dark:text-slate-400"
 			>
 				■ AKHIR ARSIP FOTO // {{ filteredGallery.length }} TOTAL SPESIMEN TERCATAT
 			</div>
@@ -530,7 +530,7 @@ useSchemaOrg([
 			<div class="mb-2 text-sm text-brand-600 font-bold dark:text-accent">
 				■ TIDAK ADA SPESIMEN TERSEDIA
 			</div>
-			<p class="text-slate-900/60 dark:text-slate-50/60">
+			<p class="text-slate-700 dark:text-slate-300">
 				{{ locale === 'id' ? 'Tidak ada foto yang cocok dengan filter tag terpilih.' : 'No photos match the selected tag filter.' }}
 			</p>
 		</div>
@@ -637,7 +637,7 @@ useSchemaOrg([
 							</div>
 
 							<!-- Technical Parameters Ledger -->
-							<div class="flex flex-wrap items-center justify-between gap-4 border-t border-slate-200/80 bg-slate-50/80 p-3.5 text-[11px] text-slate-900/70 dark:border-[#134e43] dark:bg-[#002420]/60 sm:p-4 dark:text-slate-50/70">
+							<div class="flex flex-wrap items-center justify-between gap-4 border-t border-slate-200/80 bg-slate-50/80 p-3.5 text-[11px] text-slate-700 dark:border-[#134e43] dark:bg-[#002420]/60 sm:p-4 dark:text-slate-300">
 								<div class="flex flex-wrap items-center gap-2">
 									<span class="text-slate-900 font-bold dark:text-slate-50">PARAMETER:</span>
 									<span class="tabular-nums">{{ selectedPhoto.width || 720 }}×{{ selectedPhoto.height || 540 }} PX</span>

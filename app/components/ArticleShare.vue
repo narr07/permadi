@@ -207,7 +207,7 @@ async function handleCopyLink() {
 		</div>
 
 		<!-- Swiss Footnote / Ledger Strip -->
-		<div class="mt-6 flex items-center justify-between border-t border-slate-200/80 pt-3 text-[10px] text-slate-900/40 font-mono uppercase dark:border-[#134e43] dark:text-slate-50/40">
+		<div class="mt-6 flex items-center justify-between border-t border-slate-200/80 pt-3 text-[10px] text-slate-600 font-mono uppercase dark:border-[#134e43] dark:text-slate-400">
 			<span>DISTRIBUSI TERBUKA // DOKUMEN PUBLIK</span>
 			<span class="tabular-nums">PERMADI.DEV</span>
 		</div>

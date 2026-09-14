@@ -94,13 +94,13 @@ const formattedPosts = computed(() => {
 				<span class="inline-block h-2 w-2 rounded-none bg-brand-500" />
 				<span>{{ writing?.label || '05 // TULISAN & CATATAN TERBARU' }}</span>
 			</div>
-			<span class="text-slate-900/40 tabular-nums dark:text-slate-50/40">
+			<span class="text-slate-600 tabular-nums dark:text-slate-400">
 				{{ writing?.volume || 'JOURNAL // VOL. 2026' }}
 			</span>
 		</div>
 
 		<!-- Table Header Row (Desktop) -->
-		<div class="grid-cols-12 hidden gap-4 border-b border-slate-200/80 bg-slate-50/50 px-6 py-3 text-[10px] text-slate-900/50 tracking-widest font-mono uppercase md:grid dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-8 dark:text-slate-50/50">
+		<div class="grid-cols-12 hidden gap-4 border-b border-slate-200/80 bg-slate-50/50 px-6 py-3 text-[10px] text-slate-600 tracking-widest font-mono uppercase md:grid dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-8 dark:text-slate-400">
 			<span class="col-span-1">{{ writing?.col_no || 'NO.' }}</span>
 			<span class="col-span-8">{{ writing?.col_title || (locale === 'id' ? 'JUDUL TULISAN & KAJIAN TEKNIS' : 'ARTICLE TITLE & ESSAYS') }}</span>
 			<span class="col-span-2 text-center">{{ writing?.col_discipline || (locale === 'id' ? 'DISIPLIN' : 'DISCIPLINE') }}</span>
@@ -123,21 +123,21 @@ const formattedPosts = computed(() => {
 					{{ post.title }}
 				</span>
 
-				<span class="col-span-2 hidden text-center text-[11px] text-slate-900/60 font-mono uppercase md:block dark:text-slate-50/60">
+				<span class="col-span-2 hidden text-center text-[11px] text-slate-700 font-mono uppercase md:block dark:text-slate-300">
 					[{{ post.category }}]
 				</span>
 
-				<span class="col-span-1 w-full flex items-center justify-between gap-2 text-xs text-slate-900/60 font-mono tabular-nums md:w-auto md:justify-end dark:text-slate-50/60">
-					<span class="text-[10px] text-slate-900/40 font-mono uppercase md:hidden">[{{ post.category }}]</span>
+				<span class="col-span-1 w-full flex items-center justify-between gap-2 text-xs text-slate-700 font-mono tabular-nums md:w-auto md:justify-end dark:text-slate-300">
+					<span class="text-[10px] text-slate-600 font-mono uppercase md:hidden">[{{ post.category }}]</span>
 					<span>{{ post.date }}</span>
-					<span class="i-swisspost-arrowupright text-sm text-slate-900/40 transition-transform duration-150 group-hover:(translate-x-0.5 text-brand-500 -translate-y-0.5) dark:text-slate-50/40" />
+					<span class="i-swisspost-arrowupright text-sm text-slate-600 transition-transform duration-150 group-hover:(translate-x-0.5 text-brand-500 -translate-y-0.5) dark:text-slate-400" />
 				</span>
 			</NuxtLink>
 		</div>
 
 		<!-- Footer Link Strip -->
 		<div class="flex items-center justify-between border-t border-slate-200/80 bg-slate-50/50 px-6 py-3.5 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-8">
-			<span class="hidden text-slate-900/40 uppercase sm:inline dark:text-slate-50/40">
+			<span class="hidden text-slate-600 uppercase sm:inline dark:text-slate-400">
 				{{ writing?.footer_tag || (locale === 'id' ? 'PUBLIKASI: TEKNOLOGI & RUANG KELAS' : 'PUBLICATIONS: TECH & CLASSROOM') }}
 			</span>
 			<NuxtLink

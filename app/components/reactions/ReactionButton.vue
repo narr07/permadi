@@ -70,13 +70,13 @@ function removeParticle(id: string) {
 					? 'opacity-80 cursor-default bg-slate-50/60 dark:bg-[#002420]/50'
 					: userCount > 0
 						? 'bg-brand-50/40 dark:bg-[#002420]/60 text-slate-900 dark:text-slate-50 hover:bg-brand-50/70 dark:hover:bg-[#002420]'
-						: 'hover:bg-slate-50 dark:hover:bg-[#002420]/40 text-slate-900/80 dark:text-slate-50/80',
+						: 'hover:bg-slate-50 dark:hover:bg-[#002420]/40 text-slate-800 dark:text-slate-200',
 			]"
 			@click="handleClick"
 		>
 			<!-- Top Indicator Strip: Sequential number and Emoji -->
 			<div class="mb-3 flex items-center justify-between gap-2">
-				<span class="text-[11px] text-slate-900/50 font-bold tabular-nums dark:text-slate-50/50">
+				<span class="text-[11px] text-slate-600 font-bold tabular-nums dark:text-slate-400">
 					[{{ String(index || 1).padStart(2, '0') }}]
 				</span>
 				<span
@@ -102,7 +102,7 @@ function removeParticle(id: string) {
 				</span>
 				<span
 					class="text-[10px] font-semibold uppercase tabular-nums"
-					:class="isMaxedOut ? 'text-brand-600 dark:text-accent font-bold' : userCount > 0 ? 'text-brand-600 dark:text-accent' : 'text-slate-900/40 dark:text-slate-50/40'"
+					:class="isMaxedOut ? 'text-brand-600 dark:text-accent font-bold' : userCount > 0 ? 'text-brand-600 dark:text-accent' : 'text-slate-600 dark:text-slate-400'"
 				>
 					{{ userCount > 0 ? `${userCount}/${MAX_REACTION_LIMIT}` : `+1` }}
 				</span>

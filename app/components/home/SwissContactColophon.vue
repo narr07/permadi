@@ -64,7 +64,7 @@ const activeSocials = computed(() => {
 						{{ colophon?.headline || (locale === 'id' ? 'Tertarik berkolaborasi atau mendiskusikan sistem baru?' : 'Interested in collaboration or discussing a new project?') }}
 					</h2>
 
-					<p class="mb-8 max-w-[54ch] text-sm text-slate-900/75 leading-relaxed font-sans sm:text-base dark:text-slate-50/75">
+					<p class="mb-8 max-w-[54ch] text-sm text-slate-800 leading-relaxed font-sans sm:text-base dark:text-slate-200">
 						{{ colophon?.description || (locale === 'id' ? 'Terbuka untuk diajak ngobrol soal proyek frontend dengan Nuxt, aplikasi mobile pakai Flutter, desain grafis sistematis, atau ide-ide teknologi untuk dunia pendidikan.' : 'Open to chat about frontend projects with Nuxt, mobile apps using Flutter, systematic graphic design, or educational technology ideas.') }}
 					</p>
 
@@ -79,7 +79,7 @@ const activeSocials = computed(() => {
 					</div>
 				</div>
 
-				<div class="mt-8 border-t border-slate-200/60 pt-4 text-xs text-slate-900/50 font-mono dark:border-[#134e43]/60 dark:text-slate-50/50">
+				<div class="mt-8 border-t border-slate-200/60 pt-4 text-xs text-slate-600 font-mono dark:border-[#134e43]/60 dark:text-slate-400">
 					{{ colophon?.response_time || 'WAKTU RESPON RATA-RATA: 1–2 HARI KERJA // MAJALENGKA (WIB / GMT+7)' }}
 				</div>
 			</div>
@@ -87,7 +87,7 @@ const activeSocials = computed(() => {
 			<!-- Right Column: Digital Platforms & Almamater (4 Columns) -->
 			<div class="flex flex-col justify-between border-t border-slate-200/80 bg-slate-50/50 p-6 lg:col-span-4 lg:border-l lg:border-t-0 dark:border-[#134e43] dark:bg-[#002420]/40 lg:p-10 sm:p-8">
 				<div>
-					<div class="mb-6 border-b border-slate-200/80 pb-2 text-[11px] text-slate-900/50 font-bold tracking-[0.2em] font-mono uppercase dark:border-[#134e43] dark:text-slate-50/50">
+					<div class="mb-6 border-b border-slate-200/80 pb-2 text-[11px] text-slate-600 font-bold tracking-[0.2em] font-mono uppercase dark:border-[#134e43] dark:text-slate-400">
 						{{ colophon?.socials_title || 'PLATFORM DIGITAL' }}
 					</div>
 
@@ -97,7 +97,7 @@ const activeSocials = computed(() => {
 							:key="s.name"
 							class="flex items-center justify-between border-b border-slate-200/60 pb-3 dark:border-[#134e43]/60"
 						>
-							<span class="text-slate-900/70 dark:text-slate-50/70">{{ s.name }}</span>
+							<span class="text-slate-700 dark:text-slate-300">{{ s.name }}</span>
 							<a
 								:href="s.url"
 								target="_blank"
@@ -111,14 +111,14 @@ const activeSocials = computed(() => {
 					</ul>
 				</div>
 
-				<div class="mt-8 border-t border-slate-200/80 pt-4 text-[10px] text-slate-900/50 leading-relaxed font-mono uppercase dark:border-[#134e43] dark:text-slate-50/50">
+				<div class="mt-8 border-t border-slate-200/80 pt-4 text-[10px] text-slate-600 leading-relaxed font-mono uppercase dark:border-[#134e43] dark:text-slate-400">
 					{{ colophon?.almamater_note || 'LULUSAN UNIVERSITAS PENDIDIKAN INDONESIA (UPI) BANDUNG · PROVINSI JAWA BARAT' }}
 				</div>
 			</div>
 		</div>
 
 		<!-- Swiss Colophon Strip -->
-		<div class="flex flex-col items-start justify-between gap-4 border-t border-slate-200/80 bg-slate-50/70 px-6 py-6 text-[11px] text-slate-900/50 font-mono sm:flex-row sm:items-center dark:border-[#134e43] dark:bg-[#002420]/60 sm:px-8 dark:text-slate-50/50">
+		<div class="flex flex-col items-start justify-between gap-4 border-t border-slate-200/80 bg-slate-50/70 px-6 py-6 text-[11px] text-slate-600 font-mono sm:flex-row sm:items-center dark:border-[#134e43] dark:bg-[#002420]/60 sm:px-8 dark:text-slate-400">
 			<div class="leading-relaxed">
 				{{ colophon?.typography_credits || 'TIPOGRAFI: GT MECHANIK POLY & GT AMERICA (GRILLI TYPE)' }}
 			</div>
