@@ -77,11 +77,11 @@ function getToolIcon(name?: string) {
 					</div>
 
 					<h1 class="heading-page">
-						{{ page?.headline || page?.title || (locale === 'id' ? 'Selalu ingin tahu. Bertindak dengan penuh niat.' : 'Curious by default. Intentional by choice.') }}
+						{{ page?.headline || page?.title || (locale === 'id' ? 'Menghitung dengan cermat. Merancang dengan penuh niat.' : 'Calculating with care. Designing with purpose.') }}
 					</h1>
 
 					<p class="heading-page-sub">
-						{{ page?.lead || page?.description || (locale === 'id' ? 'Fokus pada irisan antara desain antarmuka dan rekayasa perangkat lunak, mengubah interaksi bermakna menjadi produk yang bermanfaat.' : 'I care about the space between design and engineering, where a thoughtful interaction becomes a useful product.') }}
+						{{ page?.lead || page?.description || (locale === 'id' ? 'Menjembatani ruang kelas sekolah dasar, ketelitian logika hitung, arsitektur perangkat lunak modern, dan disiplin tata letak visual.' : 'Bridging classroom pedagogy, numerical clarity, modern software architecture, and typographic discipline.') }}
 					</p>
 				</div>
 
@@ -130,7 +130,7 @@ function getToolIcon(name?: string) {
 						:to="localePath(page.story_card.link_to || '/projek')"
 						class="group flex items-center gap-1.5 hover:text-brand-950 hover:underline"
 					>
-						{{ page.story_card.link_text || (locale === 'id' ? 'Eksplorasi Studi Kasus Projek' : 'Explore Project Case Studies') }}
+						{{ page.story_card.link_text || (locale === 'id' ? 'Lihat Arsip Studi Kasus' : 'Explore Case Studies') }}
 						<span class="i-swisspost-arrowright text-xs transition-transform group-hover:translate-x-0.5" />
 					</NuxtLink>
 				</div>
@@ -264,7 +264,7 @@ function getToolIcon(name?: string) {
 						:to="localePath(page.journey.primary_link_to || '/projek')"
 						class="btn-brand inline-flex cursor-pointer items-center gap-1.5 text-xs font-semibold shadow-xs transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
 					>
-						{{ page.journey.primary_link_text || (locale === 'id' ? 'Lihat Portofolio' : 'View Portfolio') }}
+						{{ page.journey.primary_link_text || (locale === 'id' ? 'Buka Arsip Karya' : 'Explore Projects') }}
 						<span class="i-swisspost-arrowright text-xs" />
 					</NuxtLink>
 					<NuxtLink
@@ -272,7 +272,7 @@ function getToolIcon(name?: string) {
 						class="btn-ghost inline-flex cursor-pointer items-center gap-1.5 text-xs font-semibold transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
 					>
 						<span class="i-swisspost-mail text-xs" />
-						{{ page.journey.secondary_link_text || (locale === 'id' ? 'Hubungi Saya' : 'Get in Touch') }}
+						{{ page.journey.secondary_link_text || (locale === 'id' ? 'Mulai Percakapan' : 'Start a Conversation') }}
 					</NuxtLink>
 				</div>
 			</div>

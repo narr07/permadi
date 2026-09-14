@@ -1,14 +1,14 @@
 title: About Dinar Permadi Yusup | Teacher, Developer & Designer
-description: Get to know Dinar Permadi Yusup, an elementary school teacher and UPI alumnus blending mathematical logic, software engineering (Nuxt, Flutter, Python, PHP), and Adobe graphic design craft.
+description: A closer look at Dinar Permadi Yusup—an elementary school teacher in Majalengka uniting mathematical precision, modern software engineering (Nuxt, Flutter, Python, PHP), and visual craft.
 headline: Calculating with care. Designing with purpose.
-lead: Bridging primary education, mathematical logic, software engineering, and visual design craft.
-section_label: A Little About Me
+lead: Bridging classroom pedagogy, numerical clarity, modern software architecture, and typographic discipline.
+section_label: Profile & Philosophy
 story_card:
   label: Philosophy & Story
-  title: I'm Permadi, an elementary teacher & digital craftsman based in Majalengka.
-  lead: A Universitas Pendidikan Indonesia (UPI) graduate passionate about numbers, coding modern web & mobile apps (Nuxt, Flutter, Python, PHP), and crafting graphic design systems.
-  bio: Outside the classroom and code editor, you will find me exploring math puzzles, designing graphic assets, and creating interactive teaching media.
-  link_text: Explore Project Case Studies
+  title: I'm Permadi, an elementary teacher and software craftsman based in Majalengka.
+  lead: Holding an education degree from Universitas Pendidikan Indonesia (UPI), I channel analytical rigor into clean code (Nuxt, Flutter, Python, PHP) and balanced visual compositions.
+  bio: Outside the classroom and terminal, I explore mathematical curiosities, design vector assets, and build interactive teaching tools for young learners.
+  link_text: Explore Case Studies
   link_to: /projects
 toolkit_card:
   label: Toolkit & Frameworks
@@ -30,25 +30,25 @@ toolkit_card:
 location_card:
   label: Location & Timezone
   title: Majalengka, Indonesia
-  description: Working remotely and collaborating with teams across the globe.
-  timezone: GMT+7
+  description: Based in Majalengka, collaborating remotely with teams and clients worldwide.
+  timezone: GMT+7 (WIB)
   badge: Available Globally
 principles_label: Core Principles
 principles_footer: Crafted with Intention
 principles:
   - title: Mathematical Logic & Precision
-    description: Architecting efficient, clean, and modular code structures with consistent algorithmic logic.
+    description: Structuring clean, maintainable codebases with rigorous algorithmic logic and clear separation of concerns.
   - title: Graphic Design Craft
-    description: Composing visual layouts, harmonic color palettes, and expressive typography across the complete Adobe ecosystem.
-  - title: Real-World Performance
-    description: Ensuring every web app (Nuxt) and mobile app (Flutter) is lightning-fast, accessible, and delightful to use.
+    description: Composing balanced layouts, harmonic palettes, and expressive typography across the Adobe Creative Suite.
+  - title: Real-World Usability
+    description: Ensuring every web application (Nuxt) and mobile tool (Flutter) is fast to load, universally accessible, and dependable.
 journey:
   label: Background & Journey
-  title: Journey & Dedication
-  description: As an elementary school teacher graduated from Universitas Pendidikan Indonesia (UPI), my love for mathematics and logic naturally led me to code and graphic design. I blend pedagogical clarity with web & mobile development (Nuxt & Flutter) and Adobe Creative Cloud visual craft.
-  primary_link_text: View Portfolio
+  title: From the Classroom to Digital Systems
+  description: My craft took root in the elementary classroom after completing my education degree at Universitas Pendidikan Indonesia (UPI). Teaching young students math nurtured a deep appreciation for clear, structured thinking—habits that translated directly into software engineering and graphic design. Today, I bring that pedagogical discipline to modern web architecture with Nuxt, cross-platform mobile apps with Flutter, and visual order across the Adobe suite.
+  primary_link_text: Explore Projects
   primary_link_to: /projects
-  secondary_link_text: Get in Touch
+  secondary_link_text: Start a Conversation
   secondary_link_to: /contact
 person_meta:
   name: Dinar Permadi Yusup

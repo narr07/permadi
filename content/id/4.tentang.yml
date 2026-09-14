@@ -1,14 +1,14 @@
 title: Tentang Dinar Permadi Yusup | Guru SD, Developer & Desainer
-description: Mengenal Dinar Permadi Yusup, guru SD lulusan UPI yang memadukan logika numerik, rekayasa software (Nuxt, Flutter, Python, PHP), dan kepekaan desain grafis Adobe.
+description: Catatan tentang Dinar Permadi Yusup—guru SD di Majalengka yang memadukan ketelitian matematika, arsitektur software (Nuxt, Flutter, Python, PHP), dan kepekaan desain visual.
 headline: Menghitung dengan cermat. Merancang dengan penuh niat.
-lead: Menjembatani dunia pendidikan dasar, logika matematika, rekayasa perangkat lunak, dan keindahan desain grafis.
-section_label: Tentang Saya
+lead: Menjembatani ruang kelas sekolah dasar, ketelitian logika hitung, arsitektur perangkat lunak modern, dan disiplin tata letak visual.
+section_label: Profil & Filosofi
 story_card:
   label: Filosofi & Profil
-  title: Saya Permadi, guru SD & digital craftsman dari Majalengka.
-  lead: Lulusan Universitas Pendidikan Indonesia (UPI) yang gemar menghitung dan memecahkan masalah melalui baris kode (Nuxt, Flutter, Python, PHP) dan komposisi visual yang presisi.
-  bio: Di luar ruang kelas dan editor kode, saya menikmati eksplorasi matematika, mendesain aset visual, dan merancang media ajar interaktif.
-  link_text: Eksplorasi Studi Kasus Projek
+  title: Saya Permadi, guru sekolah dasar dan perajin perangkat lunak dari Majalengka.
+  lead: Berbekal latar belakang pendidikan dari Universitas Pendidikan Indonesia (UPI), saya menyalurkan ketelitian berpikir ke dalam baris kode (Nuxt, Flutter, Python, PHP) dan tata letak visual yang presisi.
+  bio: Di luar ruang kelas dan teks editor, saya menghabiskan waktu mengeksplorasi konsep matematika, menyusun aset grafis, dan merancang media ajar interaktif untuk siswa.
+  link_text: Lihat Arsip Studi Kasus
   link_to: /id/projek
 toolkit_card:
   label: Toolkit & Framework
@@ -30,25 +30,25 @@ toolkit_card:
 location_card:
   label: Lokasi & Zona Waktu
   title: Majalengka, Indonesia
-  description: Bekerja secara remote dan berkolaborasi dengan tim di berbagai belahan dunia.
-  timezone: GMT+7
-  badge: Available Globally
+  description: Bekerja dari Majalengka, terbuka berkolaborasi secara remote dengan tim dan klien di mana saja.
+  timezone: GMT+7 (WIB)
+  badge: Tersedia Global
 principles_label: Prinsip Utama
-principles_footer: Crafted with Intention
+principles_footer: Dirancang dengan Penuh Niat
 principles:
   - title: Logika Numerik & Presisi
-    description: Menghadirkan algoritma dan struktur kode yang efisien, rapi, dan konsisten di setiap arsitektur sistem.
+    description: Menyusun algoritma dan struktur kode yang efisien, rapi, dan modular di setiap lapisan arsitektur.
   - title: Kepekaan Desain Grafis
-    description: Mengolah tata letak visual, harmoni warna, dan tipografi dengan standar tinggi menggunakan seluruh ekosistem Adobe.
-  - title: Performa & Kegunaan Nyata
-    description: Memastikan setiap aplikasi web (Nuxt) dan mobile (Flutter) berjalan secepat kilat dan mudah digunakan oleh siapa saja.
+    description: Mengolah tata letak visual, harmoni warna, dan hierarki tipografi dengan standar mutu tinggi lewat ekosistem Adobe.
+  - title: Keandalan & Kegunaan Nyata
+    description: Memastikan setiap aplikasi web (Nuxt) maupun mobile (Flutter) berjalan gegas, aksesibel, dan nyaman digunakan siapa saja.
 journey:
   label: Latar Belakang & Perjalanan
-  title: Perjalanan & Dedikasi
-  description: Sebagai seorang guru SD lulusan Universitas Pendidikan Indonesia (UPI), kecintaan saya pada angka dan logika membawa saya mendalami dunia programming dan desain grafis. Saya memadukan ketelitian pengajaran dengan rekayasa aplikasi web & mobile (Nuxt & Flutter) serta estetika visual Adobe Creative Cloud.
-  primary_link_text: Lihat Portofolio
+  title: Dari Ruang Kelas ke Rekayasa Digital
+  description: Perjalanan saya berakar dari ruang kelas sekolah dasar setelah menyelesaikan studi di Universitas Pendidikan Indonesia (UPI). Rutinitas mengajar matematika melatih ketahanan berpikir terstruktur—kebiasaan yang secara alami bermuara pada rekayasa perangkat lunak dan desain grafis. Hari ini, saya menyatukan disiplin pedagogi itu ke dalam arsitektur web modern dengan Nuxt, aplikasi lintas platform bersama Flutter, dan ketertiban visual lewat ekosistem Adobe.
+  primary_link_text: Buka Arsip Karya
   primary_link_to: /id/projek
-  secondary_link_text: Hubungi Saya
+  secondary_link_text: Mulai Percakapan
   secondary_link_to: /id/kontak
 person_meta:
   name: Dinar Permadi Yusup
