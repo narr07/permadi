@@ -21,10 +21,10 @@ withDefaults(
 		style="font-family: 'Permadi Body', sans-serif;"
 	>
 		<!-- Structural Hairline Border Frame -->
-		<div class="pointer-events-none absolute inset-5 border border-[#134e43]" />
+		<div class="absolute inset-5 border border-[#134e43]" />
 
 		<!-- Top Technical Spec Ledger Strip -->
-		<div class="relative z-10 w-full flex items-center justify-between border-b border-[#134e43] pb-6">
+		<div class="relative w-full flex items-center justify-between border-b border-[#134e43] pb-6">
 			<!-- Brand Mark & Node Identity -->
 			<div class="flex items-center gap-3">
 				<div class="h-3 w-3 bg-[#14b898]" />
@@ -53,7 +53,7 @@ withDefaults(
 		</div>
 
 		<!-- Central Modular Reading Canvas -->
-		<div class="relative z-10 my-auto flex flex-col justify-center py-6">
+		<div class="relative my-auto flex flex-col justify-center py-6">
 			<!-- Eyebrow -->
 			<div
 				class="mb-4 flex items-center gap-2 text-xs text-[#14b898] font-bold tracking-[0.25em] uppercase"
@@ -82,7 +82,7 @@ withDefaults(
 		</div>
 
 		<!-- Bottom Colophon & Architecture Matrix -->
-		<div class="relative z-10 w-full flex items-center justify-between border-t border-[#134e43] pt-5">
+		<div class="relative w-full flex items-center justify-between border-t border-[#134e43] pt-5">
 			<!-- Author & Role Ledger -->
 			<div class="flex items-center gap-4">
 				<div class="h-11 w-11 flex shrink-0 items-center justify-center border border-[#134e43] bg-[#002420]">

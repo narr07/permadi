@@ -63,13 +63,6 @@ const availableTags = computed(() => {
 	return Array.from(tagSet).sort()
 })
 
-const filteredDropdownTags = computed(() => {
-	const q = tagSearchQuery.value.trim().toLowerCase()
-	if (!q)
-		return availableTags.value
-	return availableTags.value.filter((t: string) => t.toLowerCase().includes(q))
-})
-
 function selectTag(tag: string) {
 	selectedTag.value = tag
 	isTagDropdownOpen.value = false

@@ -32,6 +32,16 @@ function onShareClick(network: string) {
 	}
 }
 
+const shareUrl = computed(() => {
+	if (props.url) {
+		return props.url
+	}
+	if (import.meta.client) {
+		return window.location.href
+	}
+	return `https://permadi.dev${route.fullPath}`
+})
+
 const shareNetworks = computed(() => {
 	const u = encodeURIComponent(shareUrl.value)
 	const t = encodeURIComponent(props.title || 'Permadi')
@@ -79,13 +89,6 @@ const shareNetworks = computed(() => {
 			shareUrl: `https://www.facebook.com/sharer/sharer.php?u=${u}`,
 		},
 	]
-})
-
-const shareUrl = computed(() => {
-	if (props.url) {
-		return props.url.startsWith('http') ? props.url : `https://permadi.dev${props.url}`
-	}
-	return `https://permadi.dev${route.fullPath}`
 })
 
 async function handleCopyLink() {

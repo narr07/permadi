@@ -48,7 +48,7 @@ const resolvedLevel = computed(() => String(props.level || '3'))
 .prose-steps :deep(h3),
 .prose-steps :deep(h4) {
 	position: relative;
-	font-family: 'Barlow', sans-serif;
+	font-family: 'Permadi Heading', sans-serif;
 	font-weight: 800;
 	letter-spacing: -0.025em;
 	color: #000b07;
@@ -99,7 +99,7 @@ const resolvedLevel = computed(() => String(props.level || '3'))
 	border-radius: 9999px;
 	font-size: 0.75rem;
 	font-weight: 700;
-	font-family: 'JetBrains Mono', monospace;
+	font-family: 'Permadi Mono', monospace;
 	background-color: #ffffff;
 	color: #0f7662;
 	border: 1px solid #ced7d5;

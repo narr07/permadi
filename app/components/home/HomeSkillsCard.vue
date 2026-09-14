@@ -33,7 +33,6 @@ const props = withDefaults(
 )
 
 const { locale } = useI18n()
-const localePath = useLocalePath()
 
 const defaultCodeSkills: SkillItem[] = [
 	{ name: 'Nuxt & Vue 3', icon: '/icons/f-nuxt.svg' },

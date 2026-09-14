@@ -14,15 +14,6 @@ function scrollToTop() {
 		window.scrollTo({ top: 0, behavior: 'smooth' })
 	}
 }
-
-const socialLinks = [
-	{ name: 'GitHub', url: 'https://github.com/narr07', icon: 'i-swisspost-github', ariaLabel: 'GitHub' },
-	{ name: 'X', url: 'https://x.com/dinarpermadi07', icon: 'i-swisspost-twitterx', ariaLabel: 'X' },
-	{ name: 'Instagram', url: 'https://www.instagram.com/narr07/', icon: 'i-swisspost-instagram', ariaLabel: 'Instagram' },
-	{ name: 'Behance', url: 'https://www.behance.net/narr07', icon: 'i-swisspost-icondesign', ariaLabel: 'Behance' },
-	{ name: 'RSS', url: '/feed.xml', icon: 'i-swisspost-wifion', ariaLabel: 'RSS Feed' },
-	{ name: 'Email', url: 'mailto:dinar@permadi.dev', icon: 'i-swisspost-documentemail', ariaLabel: 'Email' },
-]
 </script>
 
 <template>
@@ -32,7 +23,7 @@ const socialLinks = [
 		class="w-full flex items-center justify-between border-t border-slate-200/80 bg-slate-50/90 px-6 py-4 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/80 sm:px-8"
 	>
 		<span class="text-slate-600 tracking-wider uppercase dark:text-slate-400">
-			MAJALENGKA, JAWA BARAT
+			{{ locale === 'id' ? 'MAJALENGKA, JAWA BARAT' : 'MAJALENGKA, WEST JAVA' }}
 		</span>
 
 		<button
@@ -40,7 +31,7 @@ const socialLinks = [
 			class="inline-flex items-center gap-2 border border-slate-300 px-3 py-1.5 text-slate-900 font-bold tracking-wider uppercase transition-colors dark:border-[#134e43] hover:border-brand-500 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			@click="scrollToTop"
 		>
-			<span>KEMBALI KE ATAS</span>
+			<span>{{ locale === 'id' ? 'KEMBALI KE ATAS' : 'BACK TO TOP' }}</span>
 			<span class="i-swisspost-arrowup text-xs" />
 		</button>
 	</footer>

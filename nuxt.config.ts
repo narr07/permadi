@@ -158,19 +158,35 @@ export default defineNuxtConfig({
 	},
 
 	fonts: {
+		priority: ['local'],
 		families: [
-			{ name: 'Barlow', weights: [800], subsets: ['latin'], preload: true, display: 'swap' },
-			{ name: 'Plus Jakarta Sans', weights: [400], subsets: ['latin'], preload: true, display: 'swap' },
-			{ name: 'Plus Jakarta Sans', weights: [700], subsets: ['latin'], preload: false, display: 'swap' },
-			{ name: 'JetBrains Mono', weights: [400], subsets: ['latin'], preload: false, display: 'swap' },
+			{
+				name: 'Permadi Heading',
+				provider: 'local',
+				weights: [400, 700, 900],
+				global: true,
+			},
+			{
+				name: 'Permadi Body',
+				provider: 'local',
+				weights: [400, 700],
+				global: true,
+			},
+			{
+				name: 'Permadi Mono',
+				provider: 'local',
+				weights: [400],
+				global: true,
+			},
 		],
 		defaults: {
 			preload: false,
-			weights: [400, 700, 800],
+			weights: [400, 700, 900],
 			styles: ['normal'],
 			subsets: ['latin'],
 			fallbacks: {
 				'sans-serif': ['system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
+				'monospace': ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
 			},
 		},
 	},

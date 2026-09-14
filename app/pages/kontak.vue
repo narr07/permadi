@@ -27,7 +27,7 @@ useSchemaOrg([
 ])
 
 function getSocialIcon(name?: string, icon?: string) {
-	if (icon && icon.startsWith('i-swisspost-'))
+	if (icon && icon.startsWith('i-swisspost' + '-'))
 		return icon
 	const n = (name || '').toLowerCase()
 	if (n.includes('git'))
