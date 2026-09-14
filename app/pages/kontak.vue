@@ -49,7 +49,7 @@ function getSocialIcon(name?: string, icon?: string) {
 					<div class="mb-3.5 flex items-center justify-between gap-3">
 						<div class="inline-flex items-center gap-1.5 border border-brand-200/60 bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
 							<span class="i-swisspost-documentemail text-xs" />
-							<span>{{ page?.section_label || (locale === 'id' ? 'Kontak & Kolaborasi' : 'Contact & Connect') }}</span>
+							<span>{{ page?.section_label || (locale === 'id' ? 'Mari Terhubung' : 'Get in Touch') }}</span>
 						</div>
 
 						<!-- Logo Compact Badge di Mobile -->
@@ -85,7 +85,7 @@ function getSocialIcon(name?: string, icon?: string) {
 			>
 				<div>
 					<span class="mb-3 flex items-center gap-1.5 text-xs text-brand-200 font-semibold tracking-wide">
-						<span class="i-swisspost-mail text-xs text-brand-300" /> {{ page.email_card.label || 'Direct Inquiries' }}
+						<span class="i-swisspost-mail text-xs text-brand-300" /> {{ page.email_card.label || (locale === 'id' ? 'Pertanyaan Langsung' : 'Direct Inquiries') }}
 					</span>
 					<h3 class="text-3xl text-white font-900 tracking-tight font-heading sm:text-5xl">
 						{{ page.email_card.email || 'dinar@permadi.dev' }}
@@ -102,7 +102,7 @@ function getSocialIcon(name?: string, icon?: string) {
 						:href="`mailto:${page.email_card.email || 'dinar@permadi.dev'}`"
 						class="group inline-flex cursor-pointer items-center gap-1.5 bg-brand-400 px-5 py-2.5 text-xs text-slate-950 font-bold shadow-xs transition-all duration-150 active:scale-95 hover:bg-brand-300 hover:-translate-y-0.5"
 					>
-						{{ page.email_card.button_text || (locale === 'id' ? 'Kirim Email Sekarang' : 'Send Email Now') }}
+						{{ page.email_card.button_text || (locale === 'id' ? 'Kirim Email Langsung' : 'Send an Email') }}
 						<span class="i-swisspost-arrowupright text-xs transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
 					</a>
 					<span

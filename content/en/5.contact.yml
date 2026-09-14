@@ -1,22 +1,24 @@
 title: Contact & Collaboration | Dinar Permadi Yusup
-description: Get in touch with Dinar Permadi Yusup for web development (Nuxt), mobile applications (Flutter), graphic design, or educational technology collaborations.
+description: Reach out to Dinar Permadi Yusup for modern web systems (Nuxt), mobile applications (Flutter), typographic design, or educational technology projects.
+section_label: Get in Touch
+headline: Start a conversation or design a new system.
+lead: Open for discussions on Nuxt frontend architecture, Flutter cross-platform mobile apps, typographic design systems, or educational technology ideas.
 email_card:
   label: Direct Inquiries
   email: dinar@permadi.dev
-  description: Response within 1-2 business days for collaboration or project inquiries.
-  button_text: Send Email Now
-  meta: Available Worldwide
-headline: Contact & Collaboration
-lead: Interested in discussing new projects, frontend consulting, or just sharing thoughts? Feel free to reach out.
-newsletter_card:
-  label: Newsletter
-  title: Newsletter Subscription
-  description: Get curated insights on web performance, Vue/Nuxt engineering, and design systems.
-section_label: Get in Touch
+  description: Typical response within 1–2 business days for technical consulting, project proposals, or collaboration.
+  button_text: Send an Email
+  meta: Available Globally (UTC+7)
+status_card:
+  label: Availability Status
+  title: Open for Projects & Consulting
+  description: Based in Majalengka, West Java. Regularly collaborating across remote workflows and global time zones.
+  location: Majalengka, ID
+  timezone: WIB (UTC+7)
 social_card:
-  label: Social Channels
-  title: Connect across the web
-  description: Open source code repositories, design experiments, and visual captures.
+  label: Digital Channels
+  title: Public Spaces & Repositories
+  description: Open-source repositories, ongoing design experiments, and visual documentation.
   items:
     - name: GitHub
       url: https://github.com/narr07
@@ -30,9 +32,7 @@ social_card:
     - name: Behance
       url: https://www.behance.net/narr07
       icon: i-swisspost-icondesign
-status_card:
-  label: Availability Status
-  title: Open for Projects & Consulting
-  description: Based in Majalengka, Indonesia (UTC+7). Experienced in working remotely with global teams.
-  location: Majalengka, ID
-  timezone: GMT+7
+newsletter_card:
+  label: Newsletter
+  title: Curated Dispatches
+  description: Periodic field notes covering web performance, Nuxt engineering, Swiss typography, and classroom pedagogy.

@@ -1,22 +1,24 @@
 title: Kontak & Kolaborasi | Dinar Permadi Yusup
-description: Hubungi Dinar Permadi Yusup untuk peluang kolaborasi pengembangan web (Nuxt), aplikasi mobile (Flutter), desain grafis, atau proyek teknologi pendidikan.
-email_card:
-  label: Direct Inquiries
-  email: dinar@permadi.dev
-  description: Respon dalam 1-2 hari kerja untuk peluang kolaborasi atau penawaran kerja sama.
-  button_text: Kirim Email Sekarang
-  meta: Available Worldwide
-headline: Kontak & Kolaborasi
-lead: Tertarik berdiskusi tentang proyek baru, konsultasi frontend, atau sekadar bertukar pikiran? Silakan hubungi saya.
-newsletter_card:
-  label: Newsletter
-  title: Berlangganan Newsletter
-  description: Dapatkan artikel berkala seputar web performance, Vue/Nuxt, dan design system.
+description: Hubungi Dinar Permadi Yusup untuk kolaborasi rekayasa web (Nuxt), aplikasi mobile (Flutter), desain sistem grafis, atau eksplorasi teknologi pendidikan.
 section_label: Mari Terhubung
+headline: Mari memulai percakapan atau merancang sistem baru.
+lead: Pintu selalu terbuka untuk mendiskusikan arsitektur frontend Nuxt, aplikasi lintas platform Flutter, perancangan identitas visual, atau pertukaran gagasan seputar dunia pendidikan.
+email_card:
+  label: Pertanyaan Langsung
+  email: dinar@permadi.dev
+  description: Balasan biasanya dikirim dalam 1–2 hari kerja untuk diskusi proyek, konsultasi teknis, atau penawaran kerja sama.
+  button_text: Kirim Email Langsung
+  meta: Tersedia Global (WIB)
+status_card:
+  label: Status Ketersediaan
+  title: Terbuka untuk Proyek & Konsultasi
+  description: Berbasis di Majalengka, Jawa Barat. Bekerja secara teratur dengan alur kerja remote dan kolaborasi lintas zona waktu.
+  location: Majalengka, ID
+  timezone: WIB (GMT+7)
 social_card:
-  label: Saluran Sosial
-  title: Temukan saya di platform digital
-  description: Tautan portofolio, repositori kode sumber, dan aktivitas harian.
+  label: Jejaring Digital
+  title: Ruang Publik & Repositori
+  description: Arsip kode sumber terbuka, eksperimen desain berkala, dan dokumentasi visual.
   items:
     - name: GitHub
       url: https://github.com/narr07
@@ -30,9 +32,7 @@ social_card:
     - name: Behance
       url: https://www.behance.net/narr07
       icon: i-swisspost-icondesign
-status_card:
-  label: Status Ketersediaan
-  title: Open for Projects & Consulting
-  description: Berbasis di Majalengka, Indonesia (GMT+7). Terbiasa bekerja secara remote dengan tim global.
-  location: Majalengka, ID
-  timezone: GMT+7
+newsletter_card:
+  label: Warta Berkala
+  title: Catatan Terbitan Langsung
+  description: Kajian berkala seputar optimasi performa web, ekosistem Nuxt, tipografi Swiss, dan pedagogi ruang kelas.
