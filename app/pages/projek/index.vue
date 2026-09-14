@@ -288,7 +288,7 @@ defineOgImage('Bento', {
 							class="group flex cursor-pointer items-center gap-2 bg-brand-500 px-5 py-2.5 text-xs text-slate-950 font-bold tracking-wider font-mono uppercase shadow-xs transition-all duration-150 active:scale-95 hover:bg-brand-400 hover:-translate-y-0.5"
 						>
 							<span>BUKA STUDI KASUS</span>
-							<span class="i-ph-arrow-up-right text-sm transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
+							<span class="i-swisspost-arrowupright text-sm transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
 						</NuxtLink>
 
 						<div
@@ -401,7 +401,7 @@ defineOgImage('Bento', {
 							class="inline-flex items-center gap-1.5 text-xs text-slate-900 font-bold tracking-wider font-mono uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 group-hover:text-brand-600 hover:-translate-y-0.5 dark:group-hover:text-brand-400"
 						>
 							<span>STUDI KASUS</span>
-							<span class="i-ph-arrow-up-right text-sm transition-transform group-hover:(translate-x-0.5 -translate-y-0.5)" />
+							<span class="i-swisspost-arrowupright text-sm transition-transform group-hover:(translate-x-0.5 -translate-y-0.5)" />
 						</NuxtLink>
 
 						<div
@@ -416,7 +416,7 @@ defineOgImage('Bento', {
 								class="hover:text-brand-600 dark:hover:text-brand-400"
 								aria-label="GitHub Repository"
 							>
-								<span class="i-ph-github-logo text-sm" />
+								<span class="i-swisspost-github text-sm" />
 							</a>
 							<a
 								v-if="item.demoUrl || item.link"
@@ -426,7 +426,7 @@ defineOgImage('Bento', {
 								class="hover:text-brand-600 dark:hover:text-brand-400"
 								aria-label="Demo"
 							>
-								<span class="i-ph-arrow-square-out text-sm" />
+								<span class="i-swisspost-linkexternal text-sm" />
 							</a>
 						</div>
 					</div>

@@ -8,73 +8,120 @@ withDefaults(
 	}>(),
 	{
 		title: 'Permadi | Web Developer & Designer',
-		description: 'Personal Portfolio, Showcase of Projects & Technical Blog of Permadi.',
-		badge: 'permadi.dev',
-		category: 'Portfolio & Articles',
+		description: 'Dokumentasi teknis, portofolio karya frontend, dan studi kasus desain.',
+		badge: 'PERMADI.DEV',
+		category: 'PUBLIKASI TEKNIS',
 	},
 )
 </script>
 
 <template>
-	<div class="relative h-full w-full flex flex-col justify-between overflow-hidden bg-[#000f0d] p-12 text-white font-sans">
-		<!-- Top Bento Header Bar -->
-		<div class="w-full flex items-center justify-between">
-			<!-- Logo / Badge -->
-			<div class="flex items-center gap-3 border border-[#134e43] rounded-full bg-[#002420] px-4 py-2">
-				<div class="h-3 w-3 rounded-full bg-[#2bd4b5]" />
-				<span class="text-sm text-[#2bd4b5] font-semibold tracking-wider uppercase">
-					{{ badge }}
+	<div
+		class="relative h-full w-full flex flex-col justify-between overflow-hidden bg-[#001412] p-12 text-white"
+		style="font-family: 'Permadi Body', sans-serif;"
+	>
+		<!-- Structural Hairline Border Frame -->
+		<div class="pointer-events-none absolute inset-5 border border-[#134e43]" />
+
+		<!-- Top Technical Spec Ledger Strip -->
+		<div class="relative z-10 w-full flex items-center justify-between border-b border-[#134e43] pb-6">
+			<!-- Brand Mark & Node Identity -->
+			<div class="flex items-center gap-3">
+				<div class="h-3 w-3 bg-[#14b898]" />
+				<span
+					class="text-xs text-white font-bold tracking-[0.2em] uppercase"
+					style="font-family: 'Permadi Mono', monospace;"
+				>
+					{{ badge || 'PERMADI.DEV' }} // 2026
+				</span>
+				<div class="mx-2 h-4 w-[1px] bg-[#134e43]" />
+				<span
+					class="text-[11px] text-[#537c77] tracking-wider uppercase"
+					style="font-family: 'Permadi Mono', monospace;"
+				>
+					SPEC 01 // SWISS SYSTEM
 				</span>
 			</div>
 
-			<!-- Category / Section -->
-			<div class="border border-white/10 rounded-full bg-white/5 px-4 py-1.5 text-xs text-slate-300 font-medium">
-				{{ category }}
+			<!-- Category Indicator Badge -->
+			<div
+				class="border border-[#134e43] bg-[#002420] px-4 py-1.5 text-xs text-[#14b898] font-bold tracking-[0.15em] uppercase"
+				style="font-family: 'Permadi Mono', monospace;"
+			>
+				{{ category || 'PUBLIKASI TEKNIS' }}
 			</div>
 		</div>
 
-		<!-- Main Bento Content Card -->
-		<div class="my-auto flex flex-col justify-center border border-[#134e43] rounded-3xl bg-[#001e1a] p-10">
-			<h1 class="line-clamp-2 text-5xl text-white font-bold leading-[1.15] tracking-tight">
+		<!-- Central Modular Reading Canvas -->
+		<div class="relative z-10 my-auto flex flex-col justify-center py-6">
+			<!-- Eyebrow -->
+			<div
+				class="mb-4 flex items-center gap-2 text-xs text-[#14b898] font-bold tracking-[0.25em] uppercase"
+				style="font-family: 'Permadi Mono', monospace;"
+			>
+				<div class="h-2.5 w-2.5 bg-[#14b898]" />
+				<span>01 // ARSIP DOKUMEN &amp; WACANA TEKNIS</span>
+			</div>
+
+			<!-- Monumental Headline (Permadi Heading) -->
+			<h1
+				class="line-clamp-2 text-[52px] text-white font-black leading-[1.05] tracking-[-0.03em]"
+				style="font-family: 'Permadi Heading', sans-serif;"
+			>
 				{{ title }}
 			</h1>
+
+			<!-- Explanatory Body Copy (Permadi Body) -->
 			<p
 				v-if="description"
-				class="line-clamp-2 mt-4 text-xl text-slate-300 font-normal leading-relaxed"
+				class="line-clamp-2 mt-5 max-w-[1000px] text-[21px] text-slate-300 font-normal leading-relaxed"
+				style="font-family: 'Permadi Body', sans-serif;"
 			>
 				{{ description }}
 			</p>
 		</div>
 
-		<!-- Bottom Bento Footer Bar -->
-		<div class="w-full flex items-center justify-between border-t border-white/10 pt-4">
-			<!-- Author Profile -->
-			<div class="flex items-center gap-3">
-				<div class="h-10 w-10 flex shrink-0 items-center justify-center overflow-hidden border border-[#134e43] rounded-full bg-[#002420]">
-					<img
-						src="/logo.png"
-						width="40"
-						height="40"
-						class="h-10 w-10 rounded-full object-cover"
-						alt="Permadi Logo"
+		<!-- Bottom Colophon & Architecture Matrix -->
+		<div class="relative z-10 w-full flex items-center justify-between border-t border-[#134e43] pt-5">
+			<!-- Author & Role Ledger -->
+			<div class="flex items-center gap-4">
+				<div class="h-11 w-11 flex shrink-0 items-center justify-center border border-[#134e43] bg-[#002420]">
+					<span
+						class="text-base text-[#14b898] font-black tracking-tighter"
+						style="font-family: 'Permadi Heading', sans-serif;"
 					>
+						DP
+					</span>
 				</div>
-				<div class="flex flex-col">
-					<span class="text-sm text-white font-bold leading-tight">Permadi</span>
-					<span class="text-xs text-[#2bd4b5] leading-tight">Web Developer & Designer</span>
+				<div class="flex flex-col justify-center">
+					<span
+						class="text-sm text-white font-bold leading-snug tracking-wider uppercase"
+						style="font-family: 'Permadi Mono', monospace;"
+					>
+						DINAR PERMADI YUSUP
+					</span>
+					<span
+						class="text-xs text-[#537c77] leading-snug tracking-wider uppercase"
+						style="font-family: 'Permadi Mono', monospace;"
+					>
+						CREATIVE TECHNOLOGIST &amp; INTERFACE DESIGNER
+					</span>
 				</div>
 			</div>
 
-			<!-- Bento Tech Pills -->
-			<div class="flex items-center gap-2">
-				<span class="border border-white/10 rounded-lg bg-white/5 px-3 py-1 text-xs text-slate-300 font-mono">
-					Nuxt 4
+			<!-- Mathematical Spec Matrix -->
+			<div
+				class="flex items-center gap-4 text-xs text-slate-400 tabular-nums"
+				style="font-family: 'Permadi Mono', monospace;"
+			>
+				<span class="border border-[#134e43] bg-[#002420]/60 px-3 py-1.5 text-[11px] text-[#84a8a4] tracking-wider uppercase">
+					12-COL GRID
 				</span>
-				<span class="border border-white/10 rounded-lg bg-white/5 px-3 py-1 text-xs text-slate-300 font-mono">
-					Vue 3
+				<span class="border border-[#134e43] bg-[#002420]/60 px-3 py-1.5 text-[11px] text-[#84a8a4] tracking-wider uppercase">
+					PERMADI TYPOGRAPHY
 				</span>
-				<span class="border border-[#134e43] rounded-lg bg-[#002420] px-3 py-1 text-xs text-[#2bd4b5] font-mono">
-					Bento UI
+				<span class="border border-[#134e43] bg-[#002420] px-3 py-1.5 text-[11px] text-[#14b898] font-bold tracking-wider uppercase">
+					1200 × 630 PX
 				</span>
 			</div>
 		</div>

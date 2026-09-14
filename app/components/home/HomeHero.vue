@@ -96,7 +96,7 @@ const { locale } = useI18n()
 
 		<div class="mt-8 flex items-center justify-between border-t border-brand-900/60 pt-4 text-xs text-brand-300">
 			<span class="flex items-center gap-1">
-				<span class="i-ph-map-pin text-sm text-brand-300" />
+				<span class="i-swisspost-locationpin text-sm text-brand-300" />
 				{{ hero.location || 'Majalengka, ID' }}
 			</span>
 			<span>{{ hero.timezone || 'GMT+7 / Local time' }}</span>

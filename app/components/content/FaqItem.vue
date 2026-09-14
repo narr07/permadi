@@ -81,7 +81,7 @@ function handleToggle() {
 			</div>
 
 			<span
-				class="i-ph-arrow-down shrink-0 text-base text-slate-400 transition-transform duration-200 dark:text-slate-500"
+				class="i-swisspost-arrowdown shrink-0 text-base text-slate-400 transition-transform duration-200 dark:text-slate-500"
 				:class="{ 'rotate-180 text-brand-600 dark:text-brand-400': isOpen }"
 			/>
 		</button>

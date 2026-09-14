@@ -74,7 +74,7 @@ useSchemaOrg([
 			>
 				<div>
 					<span class="mb-3 flex items-center gap-1.5 text-xs text-brand-300 font-semibold tracking-wide">
-						<span class="i-ph-envelope-simple text-xs" /> {{ page.email_card.label || 'Direct Inquiries' }}
+						<span class="i-swisspost-mail text-xs" /> {{ page.email_card.label || 'Direct Inquiries' }}
 					</span>
 					<h3 class="text-3xl text-white font-900 tracking-tight font-heading sm:text-5xl">
 						{{ page.email_card.email || 'dinar@permadi.dev' }}
@@ -92,7 +92,7 @@ useSchemaOrg([
 						class="group inline-flex cursor-pointer items-center gap-1.5 bg-brand-400 px-5 py-2.5 text-xs text-slate-950 font-bold shadow-xs transition-all duration-150 active:scale-95 hover:bg-brand-300 hover:-translate-y-0.5"
 					>
 						{{ page.email_card.button_text || (locale === 'id' ? 'Kirim Email Sekarang' : 'Send Email Now') }}
-						<span class="i-ph-arrow-up-right text-xs transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
+						<span class="i-swisspost-arrowupright text-xs transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
 					</a>
 					<span
 						v-if="page.email_card.meta"
@@ -128,7 +128,7 @@ useSchemaOrg([
 						v-if="page.status_card.location"
 						class="flex items-center gap-1"
 					>
-						<span class="i-ph-map-pin text-sm" />
+						<span class="i-swisspost-locationpin text-sm" />
 						{{ page.status_card.location }}
 					</span>
 					<span v-if="page.status_card.timezone">
@@ -172,7 +172,7 @@ useSchemaOrg([
 						class="group block border border-slate-200/80 bg-slate-50 p-3 text-center transition-all duration-150 active:scale-95 dark:border-[#134e43] dark:bg-slate-800/60 hover:(bg-brand-50 text-brand-800 -translate-y-0.5) focus-ring dark:hover:(bg-brand-950/40 text-brand-400)"
 					>
 						<span
-							:class="item.icon || 'i-ph-link-simple'"
+							:class="item.icon || 'i-swisspost-link'"
 							class="mx-auto mb-1 block text-xl transition-transform duration-150 group-hover:scale-110"
 						/>
 						<span class="text-xs font-semibold">{{ item.name }}</span>

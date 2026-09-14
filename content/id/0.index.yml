@@ -27,10 +27,10 @@ hero:
   links:
     - label: "JELAJAHI PROJEK"
       to: "/id/projek"
-      icon: "i-ph-arrow-up-right"
+      icon: "i-swisspost-arrowupright"
     - label: "MULAI DISKUSI"
       to: "/id/kontak"
-      icon: "i-ph-arrow-right"
+      icon: "i-swisspost-arrowright"
 project_section:
   label: "02 // STUDI KASUS & REKAYASA SISTEM"
   count_badge: "ARSIP PILIHAN (03 KARYA)"
@@ -67,7 +67,7 @@ skills_section:
       icon: "/icons/b-python.svg"
     - name: "Cloudflare Edge"
       desc: "Workers, SQLite D1 & Pages"
-      icon: "i-ph-cloud"
+      icon: "i-swisspost-cloud"
   design_kicker: "B // VISUAL & GRAFIS"
   design_title: "Graphic & Editorial"
   design_desc: "Merancang identitas visual presisi, karya grafis raster/vektor, dan desain antarmuka modern."
@@ -84,7 +84,7 @@ skills_section:
       icon: "/icons/d-figma.svg"
     - name: "Swiss Typography"
       desc: "Struktur Grid & Hirarki Konten"
-      icon: "i-ph-text-aa"
+      icon: "i-swisspost-paragraph"
   all_link_text: "Eksplorasi Semua Karya & Studi Kasus"
   all_link_to: "/id/projek"
 writing:

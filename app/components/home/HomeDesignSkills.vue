@@ -73,7 +73,7 @@ function isImagePath(icon?: string) {
 
 function getIconClass(icon?: string) {
 	if (!icon)
-		return 'i-ph-pen-nib'
+		return 'i-swisspost-edit'
 	if (icon.startsWith('i-'))
 		return icon
 	if (icon.includes(':'))
@@ -90,7 +90,7 @@ function getIconClass(icon?: string) {
 					{{ skillsData.design_label || (locale === 'id' ? 'Desain Grafis & Antarmuka' : 'Graphic & Interface Design') }}
 				</span>
 				<span
-					class="i-ph-palette text-base text-slate-500 dark:text-slate-400"
+					class="i-swisspost-palette text-base text-slate-500 dark:text-slate-400"
 					aria-hidden="true"
 				/>
 			</div>
@@ -150,7 +150,7 @@ function getIconClass(icon?: string) {
 			class="group mt-6 flex items-center justify-between border-t border-slate-200/60 pt-3 text-xs text-brand-900 font-bold dark:border-slate-800/60 dark:text-brand-300 hover:text-brand-950 dark:hover:text-accent"
 		>
 			<span>{{ locale === 'id' ? 'Detail Toolkit & Filosofi' : 'Detailed Toolkit & Philosophy' }}</span>
-			<span class="i-ph-arrow-right text-xs transition-transform group-hover:translate-x-0.5" />
+			<span class="i-swisspost-arrowright text-xs transition-transform group-hover:translate-x-0.5" />
 		</NuxtLink>
 	</div>
 </template>

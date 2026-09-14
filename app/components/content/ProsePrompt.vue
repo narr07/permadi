@@ -11,7 +11,7 @@ const props = withDefaults(
 	}>(),
 	{
 		description: undefined,
-		icon: 'i-ph-magic-wand',
+		icon: 'i-swisspost-magicwand',
 		actions: () => ['copy'],
 		class: undefined,
 	},
@@ -80,7 +80,7 @@ function openInClaude() {
 					@click="handleCopy"
 				>
 					<span
-						:class="copied ? 'i-ph-check-circle text-brand-600 dark:text-brand-400' : 'i-ph-copy'"
+						:class="copied ? 'i-swisspost-checkmark text-brand-600 dark:text-brand-400' : 'i-swisspost-copy'"
 						class="shrink-0 text-xs"
 					/>
 					<span class="text-[11px] font-medium font-sans">

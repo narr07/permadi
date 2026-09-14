@@ -69,7 +69,7 @@ function getCategoryLabel(category?: string) {
 						class="group inline-flex shrink-0 items-center gap-1 text-xs text-brand-900 font-bold transition-colors dark:text-brand-300 hover:text-brand-950 dark:hover:text-accent"
 					>
 						<span>{{ locale === 'id' ? 'Lihat Semua' : 'View All' }}</span>
-						<span class="i-ph-arrow-right text-xs transition-transform group-hover:translate-x-0.5" />
+						<span class="i-swisspost-arrowright text-xs transition-transform group-hover:translate-x-0.5" />
 					</NuxtLink>
 				</div>
 
@@ -97,7 +97,7 @@ function getCategoryLabel(category?: string) {
 								</p>
 							</div>
 						</div>
-						<span class="i-ph-arrow-right shrink-0 text-xs text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-brand-700 dark:group-hover:text-brand-300" />
+						<span class="i-swisspost-arrowright shrink-0 text-xs text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-brand-700 dark:group-hover:text-brand-300" />
 					</NuxtLink>
 				</div>
 				<p
@@ -114,7 +114,7 @@ function getCategoryLabel(category?: string) {
 				class="group mt-4 flex items-center justify-between border-t border-slate-200/60 pt-3 text-xs text-brand-900 font-bold dark:border-slate-800/60 dark:text-brand-300 hover:text-brand-950 dark:hover:text-accent"
 			>
 				<span>{{ writing.all_link_text || (locale === 'id' ? 'Buka Arsip Semua Tulisan' : 'Browse All Articles Archive') }}</span>
-				<span class="i-ph-arrow-right text-xs transition-transform group-hover:translate-x-0.5" />
+				<span class="i-swisspost-arrowright text-xs transition-transform group-hover:translate-x-0.5" />
 			</NuxtLink>
 		</div>
 
@@ -165,7 +165,7 @@ function getCategoryLabel(category?: string) {
 			<div class="mt-5 flex items-center justify-between border-t border-slate-200/60 pt-3 text-xs text-brand-900 font-bold dark:border-slate-800/60 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-accent">
 				<span class="flex items-center gap-1.5">
 					<span>{{ locale === 'id' ? 'Baca Artikel' : 'Read Article' }}</span>
-					<span class="i-ph-arrow-right text-xs transition-transform group-hover:translate-x-1" />
+					<span class="i-swisspost-arrowright text-xs transition-transform group-hover:translate-x-1" />
 				</span>
 				<span class="text-[11px] text-slate-500 font-normal font-mono dark:text-slate-400">
 					{{ locale === 'id' ? `${featuredPost.readingTime || 5} mnt baca` : `${featuredPost.readingTime || 5} min read` }}

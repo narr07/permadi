@@ -130,7 +130,7 @@ const formattedPosts = computed(() => {
 				<span class="col-span-1 w-full flex items-center justify-between gap-2 text-xs text-slate-900/60 font-mono tabular-nums md:w-auto md:justify-end dark:text-slate-50/60">
 					<span class="text-[10px] text-slate-900/40 font-mono uppercase md:hidden">[{{ post.category }}]</span>
 					<span>{{ post.date }}</span>
-					<span class="i-ph-arrow-up-right text-sm text-slate-900/40 transition-transform duration-150 group-hover:(translate-x-0.5 text-brand-500 -translate-y-0.5) dark:text-slate-50/40" />
+					<span class="i-swisspost-arrowupright text-sm text-slate-900/40 transition-transform duration-150 group-hover:(translate-x-0.5 text-brand-500 -translate-y-0.5) dark:text-slate-50/40" />
 				</span>
 			</NuxtLink>
 		</div>
@@ -145,7 +145,7 @@ const formattedPosts = computed(() => {
 				class="group ml-auto inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase underline underline-offset-4 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
 				<span>{{ writing?.all_link_text || (locale === 'id' ? 'LIHAT SELURUH ARSIP TULISAN' : 'VIEW ALL WRITING ARCHIVE') }}</span>
-				<span class="i-ph-arrow-right text-xs transition-transform duration-150 group-hover:translate-x-1" />
+				<span class="i-swisspost-arrowright text-xs transition-transform duration-150 group-hover:translate-x-1" />
 			</NuxtLink>
 		</div>
 	</section>

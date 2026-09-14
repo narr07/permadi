@@ -9,7 +9,7 @@ const props = withDefaults(
 		 */
 		color?: 'primary' | 'neutral' | 'accent' | 'success' | 'warning' | 'error' | 'info'
 		/**
-		 * Optional leading icon (e.g. i-ph-info, i-ph-lightbulb, i-ph-warning)
+		 * Optional leading icon (e.g. i-swisspost-info, i-swisspost-bulb, i-swisspost-warning)
 		 */
 		icon?: string
 		/**
@@ -50,20 +50,20 @@ const defaultIcon = computed(() => {
 		return props.icon
 	switch (resolvedColor.value) {
 		case 'success':
-			return 'i-ph-check-circle'
+			return 'i-swisspost-checkmark'
 		case 'warning':
-			return 'i-ph-warning'
+			return 'i-swisspost-warning'
 		case 'error':
-			return 'i-ph-warning-circle'
+			return 'i-swisspost-warning'
 		case 'info':
-			return 'i-ph-info'
+			return 'i-swisspost-info'
 		case 'accent':
-			return 'i-ph-sparkle'
+			return 'i-swisspost-magicwand'
 		case 'neutral':
-			return 'i-ph-notepad'
+			return 'i-swisspost-edit'
 		case 'primary':
 		default:
-			return 'i-ph-lightbulb'
+			return 'i-swisspost-bulb'
 	}
 })
 
@@ -162,7 +162,7 @@ const colorConfig = computed(() => {
 			class="pointer-events-none absolute right-3.5 top-3.5 text-slate-400 transition-colors group-hover:text-current"
 			:class="colorConfig.icon"
 		>
-			<span class="i-ph-arrow-square-out text-xs" />
+			<span class="i-swisspost-linkexternal text-xs" />
 		</div>
 
 		<!-- Content Layout (Leading Icon + Body) -->

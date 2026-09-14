@@ -97,10 +97,10 @@ function resetFilter() {
 					aria-label="Pilih topik filter"
 					@click="isOpen = !isOpen"
 				>
-					<span class="i-ph-funnel text-sm" />
+					<span class="i-swisspost-filter text-sm" />
 					<span class="max-w-[180px] truncate sm:max-w-[260px]">{{ currentLabel }}</span>
 					<span
-						class="i-ph-arrow-down text-xs transition-transform duration-200"
+						class="i-swisspost-arrowdown text-xs transition-transform duration-200"
 						:class="{ 'rotate-180': isOpen }"
 					/>
 				</button>
@@ -124,7 +124,7 @@ function resetFilter() {
 							class="mb-1.5 shrink-0 border-b border-slate-100 px-1 pb-2 dark:border-white/10"
 						>
 							<div class="relative">
-								<span class="i-ph-magnifying-glass absolute left-2.5 top-1/2 text-xs text-slate-500 -translate-y-1/2" />
+								<span class="i-swisspost-search absolute left-2.5 top-1/2 text-xs text-slate-500 -translate-y-1/2" />
 								<input
 									v-model="tagSearchQuery"
 									type="text"
@@ -146,7 +146,7 @@ function resetFilter() {
 								@click="selectTag('ALL')"
 							>
 								<span class="flex items-center gap-2">
-									<span class="i-ph-squares-four text-xs" />
+									<span class="i-swisspost-designsystem text-xs" />
 									{{ defaultAllLabel }}
 								</span>
 								<span class="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-700 font-medium font-mono dark:bg-white/10 dark:text-slate-400">
@@ -166,7 +166,7 @@ function resetFilter() {
 								@click="selectTag(tag)"
 							>
 								<span class="flex items-center gap-2 truncate">
-									<span class="i-ph-tag shrink-0 text-xs" />
+									<span class="i-swisspost-tag shrink-0 text-xs" />
 									<span class="truncate">#{{ tag }}</span>
 								</span>
 								<span
@@ -203,7 +203,7 @@ function resetFilter() {
 					class="inline-flex cursor-pointer items-center gap-1 rounded-lg px-2.5 py-1 text-xs text-brand-800 font-medium transition-colors hover:bg-brand-50 dark:text-brand-400 focus-ring dark:hover:bg-brand-950/40"
 					@click="resetFilter"
 				>
-					<span class="i-ph-x text-xs" />
+					<span class="i-swisspost-closex text-xs" />
 					{{ locale === 'id' ? 'Reset' : 'Reset' }}
 				</button>
 			</div>

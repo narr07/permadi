@@ -13,7 +13,7 @@ const props = withDefaults(
 	{
 		title: undefined,
 		description: '',
-		icon: 'i-ph-question',
+		icon: 'i-swisspost-help',
 		single: true,
 		hideHeader: false,
 		class: undefined,

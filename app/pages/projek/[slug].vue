@@ -148,7 +148,7 @@ const allScreenshots = computed(() => {
 				:to="locale === 'id' ? '/id/projek' : '/projects'"
 				class="group inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
-				<span class="i-ph-arrow-left text-xs transition-transform duration-150 group-hover:-translate-x-1" />
+				<span class="i-swisspost-arrowleft text-xs transition-transform duration-150 group-hover:-translate-x-1" />
 				<span>{{ locale === 'id' ? 'KEMBALI KE ARSIP PROJEK' : 'BACK TO PROJECTS ARCHIVE' }}</span>
 			</NuxtLink>
 
@@ -201,7 +201,7 @@ const allScreenshots = computed(() => {
 							class="w-full flex items-center justify-between bg-brand-500 px-5 py-3 text-xs text-slate-950 font-bold tracking-wider font-mono uppercase transition-colors hover:bg-brand-400"
 						>
 							<span>KUNJUNGI WEB DEMO</span>
-							<span class="i-ph-arrow-square-out text-sm" />
+							<span class="i-swisspost-linkexternal text-sm" />
 						</a>
 
 						<a
@@ -212,7 +212,7 @@ const allScreenshots = computed(() => {
 							class="w-full flex items-center justify-between border border-slate-300 px-5 py-3 text-xs text-slate-900 font-bold tracking-wider font-mono uppercase transition-colors dark:border-[#134e43] hover:border-brand-500 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 						>
 							<span>REPOSITORI GITHUB</span>
-							<span class="i-ph-github-logo text-sm" />
+							<span class="i-swisspost-github text-sm" />
 						</a>
 					</div>
 				</div>
@@ -320,7 +320,7 @@ const allScreenshots = computed(() => {
 				:to="locale === 'id' ? '/id/projek' : '/projects'"
 				class="group inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
-				<span class="i-ph-arrow-left text-xs transition-transform duration-150 group-hover:-translate-x-1" />
+				<span class="i-swisspost-arrowleft text-xs transition-transform duration-150 group-hover:-translate-x-1" />
 				<span>KEMBALI KE SELURUH PROJEK</span>
 			</NuxtLink>
 

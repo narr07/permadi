@@ -146,12 +146,12 @@ onMounted(() => {
 						</span>
 					</div>
 
-					<!-- Monumental Display Headline in GT Mechanik Poly -->
+					<!-- Monumental Display Headline in Permadi Heading -->
 					<h1 class="mb-8 text-balance text-3xl text-slate-900 font-900 leading-[0.96] tracking-[-0.03em] font-heading lg:text-6xl sm:text-5xl xl:text-[4.25rem] dark:text-slate-50">
 						{{ hero?.headline || headline || (locale === 'id' ? 'Menghubungkan logika berhitung, baris kode, dan ketelitian visual jadi satu cara kerja.' : 'Connecting numerical logic, clean code, and visual precision into one unified craft.') }}
 					</h1>
 
-					<!-- Thesis Paragraph in GT America -->
+					<!-- Thesis Paragraph in Permadi Body -->
 					<p class="mb-10 max-w-[58ch] text-base text-slate-900/80 leading-relaxed font-sans sm:text-lg dark:text-slate-50/80">
 						{{ hero?.thesis || description || (locale === 'id' ? 'Sebagai guru SD di Majalengka, saya percaya cara berpikir yang sama dipakai di kelas dan di kode: rapi, tidak berbelit, dan tidak ada yang dipajang cuma buat gaya-gayaan. Prinsip itu yang saya bawa ke Nuxt 4, Flutter, dan tata letak ala tipografi Swiss: semuanya harus punya alasan, bukan hiasan.' : 'As an elementary school teacher in Majalengka, I believe the same mindset applies in the classroom and in code: clean, straightforward, and nothing added just for show. That is the principle I bring to Nuxt 4, Flutter, and Swiss typography: everything needs a reason, not just decoration.') }}
 					</p>
@@ -172,7 +172,7 @@ onMounted(() => {
 						>
 							<span>{{ link.label }}</span>
 							<span
-								:class="link.icon || (idx === 0 ? 'i-ph-arrow-up-right' : 'i-ph-arrow-right')"
+								:class="link.icon || (idx === 0 ? 'i-swisspost-arrowupright' : 'i-swisspost-arrowright')"
 								class="text-sm transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)"
 							/>
 						</NuxtLink>
@@ -186,7 +186,7 @@ onMounted(() => {
 							class="flex items-center gap-2.5 rounded-none bg-brand-500 px-6 py-3.5 text-xs text-slate-900 font-bold tracking-widest font-mono uppercase transition-all active:scale-[0.99] hover:bg-brand-400"
 						>
 							<span>{{ locale === 'id' ? 'JELAJAHI PROJEK' : 'EXPLORE PROJECTS' }}</span>
-							<span class="i-ph-arrow-up-right text-sm" />
+							<span class="i-swisspost-arrowupright text-sm" />
 						</NuxtLink>
 
 						<NuxtLink
@@ -194,7 +194,7 @@ onMounted(() => {
 							class="flex items-center gap-2.5 border border-slate-300 rounded-none px-6 py-3.5 text-xs text-slate-900 font-bold tracking-widest font-mono uppercase transition-all active:scale-[0.99] dark:border-[#134e43] hover:border-brand-500 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 						>
 							<span>{{ locale === 'id' ? 'MULAI DISKUSI' : 'START DISCUSSION' }}</span>
-							<span class="i-ph-arrow-right text-sm" />
+							<span class="i-swisspost-arrowright text-sm" />
 						</NuxtLink>
 					</div>
 				</div>

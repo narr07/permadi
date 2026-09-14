@@ -16,7 +16,7 @@ const props = withDefaults(
 		 */
 		description?: string
 		/**
-		 * Leading icon name (e.g. i-ph-database-01, i-ph-sparkle)
+		 * Leading icon name (e.g. i-swisspost-database, i-swisspost-magicwand)
 		 */
 		icon?: string
 		/**
@@ -49,7 +49,7 @@ const toggle = inject<((id: string) => void) | null>('accordionToggle', null)
 const isItemOpen = inject<((id: string) => boolean) | null>('accordionIsOpen', null)
 const parentTrailingIcon = inject<any>('accordionTrailingIcon', null)
 
-const resolvedTrailingIcon = computed(() => props.trailingIcon || parentTrailingIcon?.value || 'i-ph-arrow-down')
+const resolvedTrailingIcon = computed(() => props.trailingIcon || parentTrailingIcon?.value || 'i-swisspost-arrowdown')
 
 const internalOpen = ref(props.defaultOpen)
 
@@ -83,10 +83,10 @@ function handleToggle() {
 const resolvedIcon = computed(() => {
 	if (!props.icon)
 		return undefined
-	if (props.icon === 'i-ph-database')
-		return 'i-ph-database-01'
-	if (props.icon === 'i-ph-globe')
-		return 'i-ph-globe-hemisphere-west'
+	if (props.icon === 'i-swisspost-database')
+		return 'i-swisspost-database'
+	if (props.icon === 'i-swisspost-globecontinents')
+		return 'i-swisspost-globecontinents'
 	return props.icon
 })
 </script>

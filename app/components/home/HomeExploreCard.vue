@@ -37,7 +37,7 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/gall
 					v-else
 					class="h-full w-full flex items-center justify-center bg-slate-100 dark:bg-slate-800"
 				>
-					<span class="i-ph-image text-3xl text-slate-400" />
+					<span class="i-swisspost-picture text-3xl text-slate-400" />
 				</div>
 			</div>
 			<div class="flex items-center justify-between border-t border-slate-200/60 bg-white p-4 text-xs dark:border-slate-800/60 dark:bg-slate-900 sm:p-5">
@@ -49,7 +49,7 @@ const targetPath = computed(() => (locale.value === 'id' ? '/id/galeri' : '/gall
 						{{ text || (locale === 'id' ? 'Antarmuka yang terasa natural.' : 'Interfaces that feel inevitable.') }}
 					</strong>
 				</div>
-				<span class="i-ph-arrow-right text-slate-600 transition-transform group-hover:(translate-x-1 text-brand-700) dark:text-slate-400" />
+				<span class="i-swisspost-arrowright text-slate-600 transition-transform group-hover:(translate-x-1 text-brand-700) dark:text-slate-400" />
 			</div>
 		</NuxtLink>
 	</div>

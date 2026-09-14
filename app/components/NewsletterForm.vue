@@ -86,7 +86,7 @@ const onSubmit = handleSubmit(async (values) => {
 			>
 				<span
 					v-if="isSubmitting"
-					class="i-ph-spinner animate-spin text-xs"
+					class="i-swisspost-reloadright animate-spin text-xs"
 				/>
 				<span>{{ isSubmitting ? (locale === 'id' ? 'Mengirim…' : 'Sending…') : t('newsletter.button', 'Subscribe') }}</span>
 			</button>
@@ -98,21 +98,21 @@ const onSubmit = handleSubmit(async (values) => {
 			aria-live="polite"
 			class="mt-1.5 flex items-center gap-1 text-xs text-[#ef4565] font-medium"
 		>
-			<span class="i-ph-warning-circle text-xs" /> {{ errors.email }}
+			<span class="i-swisspost-warning text-xs" /> {{ errors.email }}
 		</p>
 		<p
 			v-else-if="serverError"
 			aria-live="polite"
 			class="mt-1.5 flex items-center gap-1 text-xs text-[#ef4565] font-medium"
 		>
-			<span class="i-ph-warning-circle text-xs" /> {{ serverError }}
+			<span class="i-swisspost-warning text-xs" /> {{ serverError }}
 		</p>
 		<p
 			v-if="isSuccess"
 			aria-live="polite"
 			class="mt-1.5 flex items-center gap-1 text-xs text-emerald-700 font-medium dark:text-emerald-300"
 		>
-			<span class="i-ph-check-circle text-xs" /> {{ successMessage }}
+			<span class="i-swisspost-checkmark text-xs" /> {{ successMessage }}
 		</p>
 	</form>
 </template>

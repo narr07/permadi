@@ -482,7 +482,7 @@ useSchemaOrg([
 					<div class="flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] text-slate-900/50 dark:border-[#134e43]/40 dark:text-slate-50/50">
 						<span>DOKUMEN FOTO</span>
 						<span class="flex items-center gap-1 font-bold transition-colors group-hover:text-brand-600 dark:group-hover:text-accent">
-							INSPEKSI <span class="i-ph-arrow-up-right text-xs transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
+							INSPEKSI <span class="i-swisspost-arrowupright text-xs transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
 						</span>
 					</div>
 				</div>
@@ -498,7 +498,7 @@ useSchemaOrg([
 				v-if="isLoadingMore"
 				class="flex items-center gap-2 text-brand-700 font-bold tracking-wider uppercase dark:text-accent"
 			>
-				<span class="i-ph-spinner animate-spin text-sm" />
+				<span class="i-swisspost-reloadright animate-spin text-sm" />
 				<span>{{ locale === 'id' ? 'MEMUAT SPESIMEN LAINNYA...' : 'LOADING MORE SPECIMENS...' }}</span>
 			</div>
 
@@ -608,7 +608,7 @@ useSchemaOrg([
 										download
 										class="hidden cursor-pointer items-center gap-1 border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-all duration-150 sm:inline-flex active:scale-95 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-accent"
 									>
-										<span class="i-ph-download-simple text-xs" />
+										<span class="i-swisspost-download text-xs" />
 										<span>UNDUH HD</span>
 									</a>
 

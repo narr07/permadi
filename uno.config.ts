@@ -1,3 +1,4 @@
+import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 import {
 	defineConfig,
 	presetIcons,
@@ -20,16 +21,22 @@ export default defineConfig({
 				'display': 'inline-block',
 				'vertical-align': 'middle',
 			},
-
+			collections: {
+				swisspost: FileSystemIconLoader(
+					'./node_modules/@swisspost/design-system-icons/public/post-icons',
+					svg => svg.replace(/<svg\b([^>]*)>/, '<svg$1 fill="currentColor">'),
+				),
+			},
 		}),
 
 		presetTypography({
 			cssExtend: {
 				'h1,h2,h3,h4,h5,h6': {
-					'font-family': '\'GT Mechanik Poly\', sans-serif',
+					'font-family': '\'Permadi Heading\', sans-serif',
 					'font-weight': '700',
 					'letter-spacing': '-0.025em',
 					'color': '#001e1c',
+					'scroll-margin-top': 'calc(var(--app-header-height, 65px) + 68px)',
 				},
 				'h1 a, h2 a, h3 a, h4 a, h5 a, h6 a': {
 					'color': '#001e1c',
@@ -169,9 +176,9 @@ export default defineConfig({
 
 	theme: {
 		fontFamily: {
-			sans: ['"GT America"', 'system-ui', 'sans-serif'],
-			heading: ['"GT Mechanik Poly"', 'sans-serif'],
-			mono: ['"GT America Mono"', 'monospace'],
+			sans: ['"Permadi Body"', 'system-ui', 'sans-serif'],
+			heading: ['"Permadi Heading"', 'sans-serif'],
+			mono: ['"Permadi Mono"', 'monospace'],
 		},
 		breakpoints: {
 			'sm': '640px',
@@ -268,12 +275,12 @@ export default defineConfig({
 	],
 
 	safelist: [
-		'i-ph-house',
-		'i-ph-book-bookmark',
-		'i-ph-folder',
-		'i-ph-image',
-		'i-ph-sun',
-		'i-ph-moon',
-		'i-ph-magnifying-glass',
+		'i-swisspost-home',
+		'i-swisspost-bookopen',
+		'i-swisspost-folder',
+		'i-swisspost-picture',
+		'i-swisspost-sun',
+		'i-swisspost-moon',
+		'i-swisspost-search',
 	],
 })

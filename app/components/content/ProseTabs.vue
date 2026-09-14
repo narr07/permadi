@@ -71,14 +71,14 @@ const tabs = computed(() => {
 function resolveIcon(icon?: string) {
 	if (!icon)
 		return undefined
-	if (icon === 'i-ph-database' || icon === 'database')
-		return 'i-ph-database-01'
-	if (icon === 'i-ph-globe' || icon === 'global')
-		return 'i-ph-globe-hemisphere-west'
-	if (icon === 'i-ph-shield-check-01' || icon === 'i-ph-shield-check' || icon === 'security')
-		return 'i-ph-shield-check-02'
-	if (icon === 'i-ph-lightning-01' || icon === 'scalability' || icon === 'lightning')
-		return 'i-ph-lightning'
+	if (icon === 'i-swisspost-database' || icon === 'database')
+		return 'i-swisspost-database'
+	if (icon === 'i-swisspost-globecontinents' || icon === 'global')
+		return 'i-swisspost-globecontinents'
+	if (icon === 'i-swisspost-maskshield' || icon === 'i-swisspost-maskshield' || icon === 'security')
+		return 'i-swisspost-maskshield'
+	if (icon === 'i-swisspost-flash' || icon === 'scalability' || icon === 'lightning')
+		return 'i-swisspost-flash'
 	return icon
 }
 

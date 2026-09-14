@@ -75,3 +75,7 @@ scripts/obsidian-plugin/
 
 # Drafts / Unpublished content staging
 drafts/
+
+# Python virtual environment & font backups
+.venv/
+public/fonts/_backup/

@@ -29,10 +29,10 @@ const isExternal = computed(() => {
 const resolvedIcon = computed(() => {
 	if (!props.icon)
 		return undefined
-	if (props.icon === 'i-ph-database')
-		return 'i-ph-database-01'
-	if (props.icon === 'i-ph-globe')
-		return 'i-ph-globe-hemisphere-west'
+	if (props.icon === 'i-swisspost-database')
+		return 'i-swisspost-database'
+	if (props.icon === 'i-swisspost-globecontinents')
+		return 'i-swisspost-globecontinents'
 	return props.icon
 })
 </script>
@@ -68,7 +68,7 @@ const resolvedIcon = computed(() => {
 				<span
 					v-if="props.to"
 					class="text-slate-400 transition-transform duration-300 group-hover:translate-x-0.5 dark:text-slate-500 group-hover:-translate-y-0.5"
-					:class="isExternal ? 'i-ph-arrow-up-right text-base' : 'i-ph-arrow-right text-base'"
+					:class="isExternal ? 'i-swisspost-arrowupright text-base' : 'i-swisspost-arrowright text-base'"
 				/>
 			</div>
 

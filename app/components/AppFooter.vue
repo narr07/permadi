@@ -16,12 +16,12 @@ function scrollToTop() {
 }
 
 const socialLinks = [
-	{ name: 'GitHub', url: 'https://github.com/narr07', icon: 'i-ph-github-logo', ariaLabel: 'GitHub' },
-	{ name: 'X', url: 'https://x.com/dinarpermadi07', icon: 'i-ph-x-logo', ariaLabel: 'X' },
-	{ name: 'Instagram', url: 'https://www.instagram.com/narr07/', icon: 'i-ph-instagram-logo', ariaLabel: 'Instagram' },
-	{ name: 'Behance', url: 'https://www.behance.net/narr07', icon: 'i-ph-behance-logo', ariaLabel: 'Behance' },
-	{ name: 'RSS', url: '/feed.xml', icon: 'i-ph-rss-simple', ariaLabel: 'RSS Feed' },
-	{ name: 'Email', url: 'mailto:dinar@permadi.dev', icon: 'i-ph-at', ariaLabel: 'Email' },
+	{ name: 'GitHub', url: 'https://github.com/narr07', icon: 'i-swisspost-github', ariaLabel: 'GitHub' },
+	{ name: 'X', url: 'https://x.com/dinarpermadi07', icon: 'i-swisspost-twitterx', ariaLabel: 'X' },
+	{ name: 'Instagram', url: 'https://www.instagram.com/narr07/', icon: 'i-swisspost-instagram', ariaLabel: 'Instagram' },
+	{ name: 'Behance', url: 'https://www.behance.net/narr07', icon: 'i-swisspost-icondesign', ariaLabel: 'Behance' },
+	{ name: 'RSS', url: '/feed.xml', icon: 'i-swisspost-wifion', ariaLabel: 'RSS Feed' },
+	{ name: 'Email', url: 'mailto:dinar@permadi.dev', icon: 'i-swisspost-documentemail', ariaLabel: 'Email' },
 ]
 </script>
 
@@ -41,7 +41,7 @@ const socialLinks = [
 			@click="scrollToTop"
 		>
 			<span>KEMBALI KE ATAS</span>
-			<span class="i-ph-arrow-up text-xs" />
+			<span class="i-swisspost-arrowup text-xs" />
 		</button>
 	</footer>
 
@@ -84,7 +84,7 @@ const socialLinks = [
 				@click="scrollToTop"
 			>
 				<span>{{ locale === 'id' ? 'Kembali ke Atas' : 'Back to Top' }}</span>
-				<span class="i-ph-arrow-up text-xs transition-transform duration-150 group-hover:-translate-y-0.5" />
+				<span class="i-swisspost-arrowup text-xs transition-transform duration-150 group-hover:-translate-y-0.5" />
 			</button>
 		</div>
 	</footer>

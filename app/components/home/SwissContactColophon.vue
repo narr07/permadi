@@ -71,10 +71,10 @@ const activeSocials = computed(() => {
 					<div class="my-6">
 						<a
 							:href="`mailto:${colophon?.email || 'dinar@permadi.dev'}`"
-							class="group inline-flex items-center gap-3 text-2xl text-brand-700 font-bold font-mono underline decoration-brand-500/50 underline-offset-8 transition-colors sm:text-4xl dark:text-[#5eeacf] hover:text-brand-500"
+							class="group inline-flex items-center gap-3 text-xl text-brand-700 font-bold font-mono underline decoration-brand-500/50 underline-offset-8 transition-colors sm:text-4xl dark:text-[#5eeacf] hover:text-brand-500"
 						>
 							<span>{{ colophon?.email || 'dinar@permadi.dev' }}</span>
-							<span class="i-ph-arrow-up-right text-2xl transition-transform duration-200 group-hover:(translate-x-1.5 -translate-y-1.5) sm:text-3xl" />
+							<span class="i-swisspost-arrowupright text-2xl transition-transform duration-200 group-hover:(translate-x-1.5 -translate-y-1.5) sm:text-3xl" />
 						</a>
 					</div>
 				</div>
@@ -105,7 +105,7 @@ const activeSocials = computed(() => {
 								class="group inline-flex items-center gap-1 text-slate-900 font-bold transition-all duration-150 active:scale-95 dark:text-slate-50 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-brand-400"
 							>
 								<span>@{{ s.handle }}</span>
-								<span class="i-ph-arrow-up-right text-[11px] transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
+								<span class="i-swisspost-arrowupright text-[11px] transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
 							</a>
 						</li>
 					</ul>

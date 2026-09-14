@@ -98,7 +98,7 @@ const displayProjects = computed(() => {
 						<span class="text-brand-600 font-bold dark:text-brand-400">
 							{{ p.index }} // {{ p.year }}
 						</span>
-						<span class="i-ph-arrow-up-right text-base text-slate-900/40 transition-transform duration-200 group-hover:(translate-x-1 text-brand-500 -translate-y-1) dark:text-slate-50/40" />
+						<span class="i-swisspost-arrowupright text-base text-slate-900/40 transition-transform duration-200 group-hover:(translate-x-1 text-brand-500 -translate-y-1) dark:text-slate-50/40" />
 					</div>
 
 					<h3 class="mb-4 text-xl text-slate-900 font-900 leading-snug font-heading transition-colors sm:text-2xl dark:text-slate-50 group-hover:text-brand-700 dark:group-hover:text-brand-300">
@@ -134,7 +134,7 @@ const displayProjects = computed(() => {
 				class="group ml-auto inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase underline underline-offset-4 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
 				<span>{{ projectSection?.all_link_text || allLinkText || 'BUKA SELURUH ARSIP PROJEK (01–06)' }}</span>
-				<span class="i-ph-arrow-right text-xs transition-transform duration-150 group-hover:translate-x-1" />
+				<span class="i-swisspost-arrowright text-xs transition-transform duration-150 group-hover:translate-x-1" />
 			</NuxtLink>
 		</div>
 	</section>

@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { onClickOutside, useEventListener } from '@vueuse/core'
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onClickOutside, useEventListener, useThrottleFn } from '@vueuse/core'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import ArticleShare from '~/components/ArticleShare.vue'
 import AppReactionsBar from '~/components/reactions/AppReactionsBar.vue'
 
 const route = useRoute()
 const { locale, locales } = useI18n()
-const localePath = useLocalePath()
 const setI18nParams = useSetI18nParams()
 const { getCategoryLabel } = useCategoryLabel()
 const { formatDate } = useFormatDate()
 
-const activeSection = ref('general')
+const activeSection = ref('')
 const isTocDropdownOpen = ref(false)
 const tocDropdownRef = ref<HTMLElement | null>(null)
 
@@ -30,9 +30,10 @@ function toggleTocDropdown() {
 	isTocDropdownOpen.value = !isTocDropdownOpen.value
 }
 
-function selectHeading(id: string) {
-	scrollToHeading(id)
+async function selectHeading(id: string) {
 	isTocDropdownOpen.value = false
+	await nextTick()
+	scrollToHeading(id)
 }
 
 function scrollToHeading(id: string) {
@@ -40,11 +41,15 @@ function scrollToHeading(id: string) {
 		return
 	const el = document.getElementById(id)
 	if (el) {
-		const offset = 80
-		const bodyRect = document.body.getBoundingClientRect().top
-		const elRect = el.getBoundingClientRect().top
+		const headerEl = document.querySelector('header')
+		const tocEl = tocDropdownRef.value
+		const headerHeight = headerEl ? headerEl.getBoundingClientRect().height : 65
+		const tocHeight = tocEl ? (tocEl.querySelector('.h-12') || tocEl).getBoundingClientRect().height : 48
+		const offset = headerHeight + tocHeight + 20
+
+		const elTop = window.scrollY + el.getBoundingClientRect().top
 		window.scrollTo({
-			top: elRect - bodyRect - offset,
+			top: Math.max(0, elTop - offset),
 			behavior: 'smooth',
 		})
 		activeSection.value = id
@@ -60,29 +65,6 @@ function scrollToTop() {
 		behavior: 'smooth',
 	})
 }
-
-onMounted(() => {
-	if (!import.meta.client)
-		return
-
-	const observer = new IntersectionObserver((entries) => {
-		entries.forEach((entry) => {
-			if (entry.isIntersecting) {
-				activeSection.value = entry.target.id || entry.target.textContent || 'general'
-			}
-		})
-	}, {
-		rootMargin: '-60px 0px -60% 0px',
-		threshold: 0.1,
-	})
-
-	const headings = document.querySelectorAll('article h2, article h3')
-	headings.forEach(h => observer.observe(h))
-
-	onUnmounted(() => {
-		observer.disconnect()
-	})
-})
 
 const requestedSlug = computed(() => route.params.slug as string)
 const collection = computed(() => (locale.value === 'id' ? 'blog_id' : 'blog_en'))
@@ -232,21 +214,91 @@ const tocLinks = computed(() => {
 	return links
 })
 
+function flattenLinks(links: any[]): any[] {
+	return links.flatMap((l: any) => [
+		l,
+		...(l.children ? flattenLinks(l.children) : []),
+	])
+}
+
+const flatTocList = computed(() => flattenLinks(tocLinks.value || []))
+
 const currentActiveHeadingText = computed(() => {
-	if (!tocLinks.value.length)
+	const list = flatTocList.value
+	if (!list.length)
 		return ''
-	const found = tocLinks.value.find((l: any) => l.id === activeSection.value)
+	const found = list.find((l: any) => l.id === activeSection.value)
 	if (found)
 		return found.text
-	return tocLinks.value[0]?.text || ''
+	return list[0]?.text || ''
 })
 
 const activeHeadingIndex = computed(() => {
-	if (!tocLinks.value.length)
+	const list = flatTocList.value
+	if (!list.length)
 		return 0
-	const idx = tocLinks.value.findIndex((l: any) => l.id === activeSection.value)
+	const idx = list.findIndex((l: any) => l.id === activeSection.value)
 	return idx >= 0 ? idx : 0
 })
+
+// Throttled real-time scrollspy for TOC navigation
+const updateActiveHeading = useThrottleFn(() => {
+	if (!import.meta.client)
+		return
+	const list = flatTocList.value
+	if (!list.length)
+		return
+
+	const headerEl = document.querySelector('header')
+	const tocEl = tocDropdownRef.value
+	const headerHeight = headerEl ? headerEl.getBoundingClientRect().height : 65
+	const tocHeight = tocEl ? (tocEl.querySelector('.h-12') || tocEl).getBoundingClientRect().height : 48
+	const offset = headerHeight + tocHeight + 24
+
+	for (let i = list.length - 1; i >= 0; i--) {
+		const item = list[i]
+		if (!item?.id)
+			continue
+		const el = document.getElementById(item.id)
+		if (el) {
+			const rect = el.getBoundingClientRect()
+			if (rect.top <= offset) {
+				activeSection.value = item.id
+				return
+			}
+		}
+	}
+
+	if (list[0]?.id) {
+		activeSection.value = list[0].id
+	}
+}, 80)
+
+onMounted(() => {
+	if (!import.meta.client)
+		return
+
+	nextTick(() => {
+		updateActiveHeading()
+		window.addEventListener('scroll', updateActiveHeading, { passive: true })
+	})
+})
+
+onUnmounted(() => {
+	if (import.meta.client) {
+		window.removeEventListener('scroll', updateActiveHeading)
+	}
+})
+
+watch(
+	() => post.value?.doc,
+	() => {
+		nextTick(() => {
+			updateActiveHeading()
+		})
+	},
+	{ deep: true },
+)
 
 const site = useSiteConfig()
 const canonicalUrl = computed(() => {
@@ -288,7 +340,7 @@ defineOgImage('Bento', {
 				:to="locale === 'id' ? '/id/blog' : '/blog'"
 				class="group inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
-				<span class="i-ph-arrow-left text-xs transition-transform duration-150 group-hover:-translate-x-1" />
+				<span class="i-swisspost-arrowleft text-xs transition-transform duration-150 group-hover:-translate-x-1" />
 				<span>{{ locale === 'id' ? 'KEMBALI KE ARSIP BLOG' : 'BACK TO BLOG ARCHIVE' }}</span>
 			</NuxtLink>
 
@@ -375,16 +427,17 @@ defineOgImage('Bento', {
 		<div
 			v-if="tocLinks.length > 0"
 			ref="tocDropdownRef"
-			class="backdrop-blur-xs sticky top-14 z-30 w-full border-b border-slate-200/80 bg-white/95 text-xs font-mono dark:border-[#134e43] dark:bg-[#001e1c]/95"
+			class="backdrop-blur-xs sticky z-30 w-full border-b border-slate-200/80 bg-white/95 text-xs font-mono dark:border-[#134e43] dark:bg-[#001e1c]/95"
+			:style="{ top: 'var(--app-header-height, 65px)' }"
 			aria-label="Status Membaca dan Daftar Isi"
 		>
 			<!-- Top Strip Bar -->
-			<div class="flex items-center justify-between gap-4 px-4 py-2.5 sm:px-8">
+			<div class="h-12 w-full flex items-center justify-between gap-4 px-4 sm:px-8">
 				<!-- Current Section Indicator -->
-				<div class="flex items-center gap-2 truncate text-[11px]">
-					<span class="inline-block h-1.5 w-1.5 shrink-0 bg-brand-500" />
-					<span class="shrink-0 text-slate-900/50 font-bold tracking-wider uppercase dark:text-slate-50/50">
-						SEKSI [{{ String(activeHeadingIndex + 1).padStart(2, '0') }}/{{ String(tocLinks.length).padStart(2, '0') }}]:
+				<div class="min-w-0 flex flex-1 items-center gap-2.5 text-[11px] leading-none">
+					<span class="inline-block h-2 w-2 shrink-0 bg-brand-500" />
+					<span class="shrink-0 text-slate-900/50 font-bold tracking-wider uppercase tabular-nums dark:text-slate-50/50">
+						[{{ String(activeHeadingIndex + 1).padStart(2, '0') }}/{{ String(flatTocList.length).padStart(2, '0') }}]:
 					</span>
 					<span class="truncate text-slate-900 font-bold dark:text-slate-50">
 						{{ currentActiveHeadingText }}
@@ -392,28 +445,28 @@ defineOgImage('Bento', {
 				</div>
 
 				<!-- Navigation Actions -->
-				<div class="flex shrink-0 items-center gap-2.5 text-[11px] font-bold tracking-wider uppercase">
+				<div class="flex shrink-0 items-center gap-3 text-[11px] font-bold tracking-wider uppercase">
 					<!-- Dropdown Trigger Button -->
 					<button
 						type="button"
-						class="flex cursor-pointer items-center gap-1.5 border border-slate-300 px-2.5 py-1 transition-all duration-150 active:scale-95 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent"
+						class="h-8 inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap border border-slate-300 px-3 leading-none transition-all duration-150 active:scale-95 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent"
 						:class="isTocDropdownOpen ? 'bg-slate-900 text-white dark:bg-brand-500 dark:text-slate-950 border-transparent' : 'text-slate-800 dark:text-slate-200'"
 						:aria-expanded="isTocDropdownOpen"
 						@click="toggleTocDropdown"
 					>
-						<span>DAFTAR ISI ({{ String(tocLinks.length).padStart(2, '0') }})</span>
+						<span class="whitespace-nowrap">DAFTAR ISI ({{ String(flatTocList.length).padStart(2, '0') }})</span>
 						<span
 							:class="isTocDropdownOpen ? 'rotate-180' : 'rotate-0'"
-							class="i-ph-caret-down text-xs transition-transform duration-200"
+							class="i-swisspost-chevrondown shrink-0 text-xs transition-transform duration-200"
 						/>
 					</button>
 
-					<span class="text-slate-300 dark:text-[#134e43]">|</span>
+					<span class="select-none text-slate-300 dark:text-[#134e43]">|</span>
 
 					<!-- Top of Page Action -->
 					<button
 						type="button"
-						class="cursor-pointer text-slate-900/60 transition-all duration-150 active:scale-95 dark:text-slate-50/60 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-accent"
+						class="h-8 inline-flex shrink-0 cursor-pointer items-center justify-center whitespace-nowrap text-slate-900/60 leading-none transition-all duration-150 active:scale-95 dark:text-slate-50/60 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-accent"
 						@click="scrollToTop"
 					>
 						PUNCAK ↑
@@ -424,13 +477,13 @@ defineOgImage('Bento', {
 			<!-- Dropdown Architectural Modular Index Panel -->
 			<div
 				v-if="isTocDropdownOpen"
-				class="w-full overflow-hidden border-t border-slate-200/80 bg-white text-xs font-mono shadow-2xl dark:border-[#134e43] dark:bg-[#001e1c]"
+				class="absolute left-0 right-0 top-full z-50 w-full overflow-hidden border-b border-t border-slate-200/80 bg-white text-xs font-mono shadow-2xl dark:border-[#134e43] dark:bg-[#001e1c]"
 			>
 				<!-- Dropdown Panel Header -->
 				<div class="flex items-center justify-between border-b border-slate-200/80 bg-slate-50/80 px-6 py-2.5 text-[11px] font-bold tracking-wider uppercase dark:border-[#134e43] dark:bg-[#002420]/60">
 					<div class="flex items-center gap-2 text-brand-700 dark:text-accent">
 						<span class="inline-block h-1.5 w-1.5 bg-brand-500" />
-						<span>INDIKATOR STRUKTUR ARTIKEL // {{ String(tocLinks.length).padStart(2, '0') }} SEKSI</span>
+						<span>INDIKATOR STRUKTUR ARTIKEL // {{ String(flatTocList.length).padStart(2, '0') }} BAGIAN</span>
 					</div>
 					<button
 						type="button"
@@ -444,7 +497,7 @@ defineOgImage('Bento', {
 				<!-- 3-Column Scrollable Modular Ledger Grid -->
 				<div class="grid grid-cols-1 max-h-[55vh] overflow-y-auto lg:grid-cols-3 md:grid-cols-2 divide-y divide-slate-200/80 md:divide-x md:divide-y-0 dark:divide-[#134e43]">
 					<a
-						v-for="(link, idx) in tocLinks"
+						v-for="(link, idx) in flatTocList"
 						:key="link.id"
 						:href="`#${link.id}`"
 						class="group flex cursor-pointer items-start gap-3 border-b border-slate-200/80 p-3.5 transition-colors md:border-b-0 dark:border-[#134e43] sm:p-4"
@@ -480,27 +533,36 @@ defineOgImage('Bento', {
 				<!-- Dropdown Panel Footer Strip -->
 				<div class="flex items-center justify-between border-t border-slate-200/80 bg-slate-50/50 px-6 py-2 text-[10px] text-slate-900/40 dark:border-[#134e43] dark:bg-[#002420]/30 dark:text-slate-50/40">
 					<span>ARSIP DOKUMENTASI PERMADI.DEV</span>
-					<span>KLIK SEKSI UNTUK BERPINDAH LANGSUNG</span>
+					<span>KLIK ITEM UNTUK BERPINDAH LANGSUNG</span>
 				</div>
 			</div>
 		</div>
 
-		<!-- Band 02: Primary Technical Reading Canvas (Full-Width, Spacious & Monumental) -->
+		<!-- Band 02: Primary Technical Reading Canvas (Centered Swiss Reading Column) -->
 		<main class="w-full border-b border-slate-200/80 p-6 dark:border-[#134e43] lg:p-14 sm:p-10">
-			<div class="mx-auto max-w-4xl">
+			<div class="mx-auto max-w-3xl">
 				<!-- Section Sub-Header -->
 				<div class="mb-8 flex items-center justify-between border-b border-slate-200/80 pb-3 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:border-[#134e43] dark:text-accent">
 					<span>■ 02 // DOKUMENTASI LENGKAP &amp; BEDAH TEKNIS</span>
 					<span class="text-slate-900/40 tabular-nums dark:text-slate-50/40">KORPUS 01</span>
 				</div>
 
-				<!-- Expansive Full-Measure Prose Content -->
-				<div class="max-w-[76ch] text-slate-900/85 leading-relaxed font-sans prose prose-slate dark:text-slate-50/85 dark:prose-invert">
+				<!-- Expansive Full-Measure Prose Content Centered -->
+				<div class="max-w-none w-full text-slate-900/85 leading-relaxed font-sans prose prose-slate dark:text-slate-50/85 dark:prose-invert">
 					<ContentRenderer :value="post.doc" />
 				</div>
 
+				<!-- Article Social Share Component -->
+				<ArticleShare
+					v-if="post?.doc"
+					:slug="contentIdentifier"
+					:title="post.doc.title"
+					:description="post.doc.description"
+					:url="canonicalUrl"
+				/>
+
 				<!-- Reactions Bar Component -->
-				<div class="mt-14 border-t border-slate-200/80 pt-8 dark:border-[#134e43]">
+				<div class="mt-8 border-t border-slate-200/80 pt-8 dark:border-[#134e43]">
 					<AppReactionsBar
 						v-if="post?.doc"
 						:slug="contentIdentifier"
@@ -563,7 +625,7 @@ defineOgImage('Bento', {
 				:to="locale === 'id' ? '/id/blog' : '/blog'"
 				class="inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
-				<span class="i-ph-arrow-left text-xs" />
+				<span class="i-swisspost-arrowleft text-xs" />
 				<span>KEMBALI KE SELURUH NASKAH</span>
 			</NuxtLink>
 

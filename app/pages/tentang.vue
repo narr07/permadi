@@ -120,7 +120,7 @@ useSchemaOrg([
 						class="group flex items-center gap-1.5 hover:text-brand-950 hover:underline"
 					>
 						{{ page.story_card.link_text || (locale === 'id' ? 'Eksplorasi Studi Kasus Projek' : 'Explore Project Case Studies') }}
-						<span class="i-ph-arrow-right text-xs transition-transform group-hover:translate-x-0.5" />
+						<span class="i-swisspost-arrowright text-xs transition-transform group-hover:translate-x-0.5" />
 					</NuxtLink>
 				</div>
 			</div>
@@ -174,7 +174,7 @@ useSchemaOrg([
 				</div>
 				<div class="mt-6 flex items-center justify-between border-t border-slate-900/10 pt-3 text-xs text-slate-800 font-mono">
 					<span class="flex items-center gap-1">
-						<span class="i-ph-map-pin text-sm text-slate-900" />
+						<span class="i-swisspost-locationpin text-sm text-slate-900" />
 						{{ page?.location_card?.timezone || 'GMT+7' }}
 					</span>
 					<span>{{ page?.location_card?.badge || 'Available Globally' }}</span>

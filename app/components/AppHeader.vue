@@ -53,6 +53,21 @@ const navItems = computed(() => [
 function isItemActive(item: { to: string, prefix: string }): boolean {
 	return route.path === item.to || route.path.startsWith(item.prefix)
 }
+
+onMounted(() => {
+	const updateHeight = () => {
+		if (headerContainerRef.value) {
+			const h = headerContainerRef.value.getBoundingClientRect().height
+			document.documentElement.style.setProperty('--app-header-height', `${h}px`)
+		}
+	}
+	updateHeight()
+	window.addEventListener('resize', updateHeight, { passive: true })
+	if (typeof ResizeObserver !== 'undefined' && headerContainerRef.value) {
+		const ro = new ResizeObserver(updateHeight)
+		ro.observe(headerContainerRef.value)
+	}
+})
 </script>
 
 <template>

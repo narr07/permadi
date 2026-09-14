@@ -88,7 +88,7 @@ useSeoMeta({
 					class="shadow-2xs inline-flex cursor-pointer items-center gap-1.5 border border-slate-200/80 rounded-xl bg-white/80 px-3.5 py-1.5 text-xs text-slate-700 font-semibold backdrop-blur-md transition-all dark:border-[#134e43] hover:border-brand-500/40 dark:bg-[#002b27]/80 hover:bg-white dark:text-slate-200 dark:hover:bg-[#042f27]"
 					@click="handleClearError('/')"
 				>
-					<span class="i-ph-house text-sm text-brand-600 dark:text-brand-400" />
+					<span class="i-swisspost-home text-sm text-brand-600 dark:text-brand-400" />
 					<span>{{ locale === 'id' ? 'Beranda' : 'Home' }}</span>
 				</button>
 			</div>
@@ -126,7 +126,7 @@ useSeoMeta({
 								class="inline-flex cursor-pointer items-center gap-2 border border-brand-500 bg-brand-600 px-5 py-2.5 text-white shadow-md transition-colors active:scale-95 dark:bg-brand-500 hover:bg-brand-700 dark:hover:bg-brand-600"
 								@click="handleClearError('/')"
 							>
-								<span class="i-ph-house text-base" />
+								<span class="i-swisspost-home text-base" />
 								<span>{{ locale === 'id' ? 'Kembali ke Beranda' : 'Back to Home' }}</span>
 							</button>
 
@@ -135,7 +135,7 @@ useSeoMeta({
 								class="inline-flex cursor-pointer items-center gap-2 border border-slate-300 bg-slate-100/90 px-4.5 py-2.5 text-slate-700 transition-colors dark:border-[#134e43] dark:bg-[#042f27] hover:bg-white dark:text-slate-200 dark:hover:bg-[#073d32]"
 								@click="handleClearError('/blog')"
 							>
-								<span class="i-ph-book-open text-base text-brand-600 dark:text-brand-400" />
+								<span class="i-swisspost-bookopen text-base text-brand-600 dark:text-brand-400" />
 								<span>{{ locale === 'id' ? 'Baca Artikel Blog' : 'Read Blog' }}</span>
 							</button>
 						</div>
@@ -151,7 +151,7 @@ useSeoMeta({
 						@click="handleClearError('/blog')"
 					>
 						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-brand-500/25 bg-brand-500/10 text-brand-600 dark:border-brand-400/20 dark:bg-brand-500/15 dark:text-brand-400">
-							<span class="i-ph-newspaper text-xl" />
+							<span class="i-swisspost-newspaper text-xl" />
 						</div>
 						<div class="overflow-hidden">
 							<strong class="block truncate text-sm text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
@@ -170,7 +170,7 @@ useSeoMeta({
 						@click="handleClearError(locale === 'id' ? '/id/projek' : '/projects')"
 					>
 						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-teal-500/25 bg-teal-500/10 text-teal-600 dark:border-teal-400/20 dark:bg-teal-500/15 dark:text-teal-400">
-							<span class="i-ph-folder text-xl" />
+							<span class="i-swisspost-folder text-xl" />
 						</div>
 						<div class="overflow-hidden">
 							<strong class="block truncate text-sm text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
@@ -189,7 +189,7 @@ useSeoMeta({
 						@click="handleClearError(locale === 'id' ? '/id/tentang' : '/about')"
 					>
 						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-emerald-500/25 bg-emerald-500/10 text-emerald-600 dark:border-emerald-400/20 dark:bg-emerald-500/15 dark:text-emerald-400">
-							<span class="i-ph-user-circle text-xl" />
+							<span class="i-swisspost-userunknown text-xl" />
 						</div>
 						<div class="overflow-hidden">
 							<strong class="block truncate text-sm text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">
@@ -208,7 +208,7 @@ useSeoMeta({
 						@click="handleClearError(locale === 'id' ? '/id/kontak' : '/contact')"
 					>
 						<div class="h-10 w-10 flex shrink-0 items-center justify-center border border-brand-500/25 bg-brand-500/10 text-brand-600 dark:border-brand-400/20 dark:bg-brand-500/15 dark:text-brand-400">
-							<span class="i-ph-envelope-simple text-xl" />
+							<span class="i-swisspost-mail text-xl" />
 						</div>
 						<div class="overflow-hidden">
 							<strong class="block truncate text-sm text-slate-900 font-semibold font-heading transition-colors dark:text-white group-hover:text-brand-800 dark:group-hover:text-brand-300">

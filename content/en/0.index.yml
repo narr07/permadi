@@ -27,10 +27,10 @@ hero:
   links:
     - label: "EXPLORE PROJECTS"
       to: "/projects"
-      icon: "i-ph-arrow-up-right"
+      icon: "i-swisspost-arrowupright"
     - label: "START DISCUSSION"
       to: "/contact"
-      icon: "i-ph-arrow-right"
+      icon: "i-swisspost-arrowright"
 project_section:
   label: "02 // SELECTED CASE STUDIES & SYSTEMS"
   count_badge: "CURATED ARCHIVE (03 WORKS)"
@@ -67,7 +67,7 @@ skills_section:
       icon: "/icons/b-python.svg"
     - name: "Cloudflare Edge"
       desc: "Workers, SQLite D1 & Pages"
-      icon: "i-ph-cloud"
+      icon: "i-swisspost-cloud"
   design_kicker: "B // VISUAL & GRAPHIC"
   design_title: "Graphic & Editorial"
   design_desc: "Designing precision visual identity, raster/vector artwork, and modern interface systems."
@@ -84,7 +84,7 @@ skills_section:
       icon: "/icons/d-figma.svg"
     - name: "Swiss Typography"
       desc: "Grid Structures & Content Hierarchy"
-      icon: "i-ph-text-aa"
+      icon: "i-swisspost-paragraph"
   all_link_text: "Explore All Works & Case Studies"
   all_link_to: "/projects"
 writing:

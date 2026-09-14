@@ -1,53 +1,59 @@
 @import '@unocss/reset/tailwind.css';
 
-/* GT America Font Family - Body (Grilli Type) */
+/* Permadi Body Font Family */
 @font-face {
-	font-family: 'GT America';
-	src: url('/fonts/gt-america/GT-America-LCGV-Standard-Regular.woff2') format('woff2');
+	font-family: 'Permadi Body';
+	src: url('/fonts/permadi-body/Permadi-Body-Regular.woff2') format('woff2');
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
-	font-family: 'GT America';
-	src: url('/fonts/gt-america/GT-America-LCGV-Standard-Bold.woff2') format('woff2');
+	font-family: 'Permadi Body';
+	src: url('/fonts/permadi-body/Permadi-Body-Bold.woff2') format('woff2');
 	font-weight: 700;
 	font-style: normal;
 	font-display: swap;
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
-	font-family: 'GT America Mono';
-	src: url('/fonts/gt-america/GT-America-LCGV-Mono-Regular.woff2') format('woff2');
+	font-family: 'Permadi Mono';
+	src: url('/fonts/permadi-body/Permadi-Body-Mono.woff2') format('woff2');
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* GT Mechanik Poly Font Family - Headings (Grilli Type) */
+/* Permadi Heading Font Family */
 @font-face {
-	font-family: 'GT Mechanik Poly';
-	src: url('/fonts/gt-mechanik/GT-Mechanik-Poly-Regular.woff2') format('woff2');
+	font-family: 'Permadi Heading';
+	src: url('/fonts/permadi-heading/Permadi-Heading-Regular.woff2') format('woff2');
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
-	font-family: 'GT Mechanik Poly';
-	src: url('/fonts/gt-mechanik/GT-Mechanik-Poly-Bold.woff2') format('woff2');
+	font-family: 'Permadi Heading';
+	src: url('/fonts/permadi-heading/Permadi-Heading-Bold.woff2') format('woff2');
 	font-weight: 700;
 	font-style: normal;
 	font-display: swap;
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
-	font-family: 'GT Mechanik Poly';
-	src: url('/fonts/gt-mechanik/GT-Mechanik-Poly-Black.woff2') format('woff2');
+	font-family: 'Permadi Heading';
+	src: url('/fonts/permadi-heading/Permadi-Heading-Black.woff2') format('woff2');
 	font-weight: 900;
 	font-style: normal;
 	font-display: swap;
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 :root {
@@ -73,7 +79,7 @@
 html {
 	font-size: 16px;
 	font-family:
-		'GT America',
+		'Permadi Body',
 		system-ui,
 		-apple-system,
 		BlinkMacSystemFont,
@@ -89,7 +95,7 @@ html {
 }
 
 body {
-	font-family: 'GT America', system-ui, -apple-system, sans-serif;
+	font-family: 'Permadi Body', system-ui, -apple-system, sans-serif;
 	font-weight: 400;
 	line-height: 1.65;
 	min-height: 100vh;
@@ -227,9 +233,10 @@ html.dark .shiki span,
 	margin-bottom: 0.25rem;
 }
 
-/* Prose Typography Heading Color (WCAG AAA Compliant - Slate 900) */
+/* Prose Typography Heading Color & Sticky Header Clearance (WCAG AAA Compliant) */
 .prose :where(h1, h2, h3, h4, h5, h6):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
 	color: #001e1c;
+	scroll-margin-top: calc(var(--app-header-height, 65px) + 48px + 20px);
 }
 
 .prose :where(h1, h2, h3, h4, h5, h6):not(:where([class~="not-prose"], [class~="not-prose"] *)) a {

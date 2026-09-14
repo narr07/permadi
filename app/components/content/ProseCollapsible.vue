@@ -14,7 +14,7 @@ const props = withDefaults(
 		name: 'Details',
 		openText: 'Show',
 		closeText: 'Hide',
-		icon: 'i-ph-arrow-down',
+		icon: 'i-swisspost-arrowdown',
 		defaultOpen: false,
 		class: undefined,
 	},
