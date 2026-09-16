@@ -2,13 +2,13 @@ title: Kontak & Kolaborasi | Dinar Permadi Yusup
 description: Hubungi Dinar Permadi Yusup untuk kolaborasi rekayasa web (Nuxt), aplikasi mobile (Flutter), desain sistem grafis, atau eksplorasi teknologi pendidikan.
 section_label: Mari Terhubung
 headline: Mari memulai percakapan atau merancang sistem baru.
-lead: Pintu selalu terbuka untuk mendiskusikan arsitektur frontend Nuxt, aplikasi lintas platform Flutter, perancangan identitas visual, atau pertukaran gagasan seputar dunia pendidikan.
+lead: Pintu selalu terbuka untuk berdiskusi seputar frontend Nuxt, aplikasi mobile Flutter, desain visual, atau bertukar ide tentang dunia pendidikan.
 email_card:
-  label: Pertanyaan Langsung
+  label: Kontak Langsung
   email: dinar@permadi.dev
-  description: Balasan biasanya dikirim dalam 1–2 hari kerja untuk diskusi proyek, konsultasi teknis, atau penawaran kerja sama.
+  description: Saya usahakan membalas pesan dalam 1–2 hari kerja untuk mendiskusikan proyek, konsultasi teknis, atau sekadar berbagi kabar.
   button_text: Kirim Email Langsung
-  meta: Tersedia Global (WIB)
+  meta: Kolaborasi Terbuka (WIB)
 status_card:
   label: Status Ketersediaan
   title: Terbuka untuk Proyek & Konsultasi
@@ -16,8 +16,8 @@ status_card:
   location: Majalengka, ID
   timezone: WIB (GMT+7)
 social_card:
-  label: Jejaring Digital
-  title: Ruang Publik & Repositori
+  label: Tautan & Media Sosial
+  title: Repositori & Profil Publik
   description: Arsip kode sumber terbuka, eksperimen desain berkala, dan dokumentasi visual.
   items:
     - name: GitHub
@@ -33,6 +33,6 @@ social_card:
       url: https://www.behance.net/narr07
       icon: i-swisspost-icondesign
 newsletter_card:
-  label: Warta Berkala
-  title: Catatan Terbitan Langsung
-  description: Kajian berkala seputar optimasi performa web, ekosistem Nuxt, tipografi Swiss, dan pedagogi ruang kelas.
+  label: Buletin & Kabar
+  title: Catatan & Pembaruan
+  description: Catatan seputar performa web, ekosistem Nuxt, tipografi Swiss, dan cerita dari ruang kelas.

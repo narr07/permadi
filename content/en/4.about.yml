@@ -1,11 +1,11 @@
 title: About Dinar Permadi Yusup | Teacher, Developer & Designer
-description: A closer look at Dinar Permadi Yusup—an elementary school teacher in Majalengka uniting mathematical precision, modern software engineering (Nuxt, Flutter, Python, PHP), and visual craft.
+description: A closer look at Dinar Permadi Yusup, an elementary school teacher in Majalengka uniting mathematical precision, modern software engineering (Nuxt, Flutter, Python, PHP), and visual craft.
 headline: Calculating with care. Designing with purpose.
-lead: Bridging classroom pedagogy, numerical clarity, modern software architecture, and typographic discipline.
+lead: Connecting classroom pedagogy, numerical clarity, and clean visual layouts across every line of code.
 section_label: Profile & Philosophy
 story_card:
   label: Philosophy & Story
-  title: I'm Permadi, an elementary teacher and software craftsman based in Majalengka.
+  title: I'm Permadi, an elementary school teacher and software developer based in Majalengka.
   lead: Holding an education degree from Universitas Pendidikan Indonesia (UPI), I channel analytical rigor into clean code (Nuxt, Flutter, Python, PHP) and balanced visual compositions.
   bio: Outside the classroom and terminal, I explore mathematical curiosities, design vector assets, and build interactive teaching tools for young learners.
   link_text: Explore Case Studies
@@ -32,20 +32,20 @@ location_card:
   title: Majalengka, Indonesia
   description: Based in Majalengka, collaborating remotely with teams and clients worldwide.
   timezone: GMT+7 (WIB)
-  badge: Available Globally
+  badge: Open for Collaboration
 principles_label: Core Principles
 principles_footer: Crafted with Intention
 principles:
   - title: Mathematical Logic & Precision
     description: Structuring clean, maintainable codebases with rigorous algorithmic logic and clear separation of concerns.
   - title: Graphic Design Craft
-    description: Composing balanced layouts, harmonic palettes, and expressive typography across the Adobe Creative Suite.
+    description: Composing balanced layouts, harmonic palettes, and clear typography across the Adobe Creative Suite.
   - title: Real-World Usability
-    description: Ensuring every web application (Nuxt) and mobile tool (Flutter) is fast to load, universally accessible, and dependable.
+    description: Ensuring web applications and mobile tools are fast to load, universally accessible, and dependable.
 journey:
   label: Background & Journey
   title: From the Classroom to Digital Systems
-  description: My craft took root in the elementary classroom after completing my education degree at Universitas Pendidikan Indonesia (UPI). Teaching young students math nurtured a deep appreciation for clear, structured thinking—habits that translated directly into software engineering and graphic design. Today, I bring that pedagogical discipline to modern web architecture with Nuxt, cross-platform mobile apps with Flutter, and visual order across the Adobe suite.
+  description: My journey began in the elementary classroom after earning my education degree at Universitas Pendidikan Indonesia (UPI). Teaching math nurtured a deep habit of structured and analytical thinking, habits that translate directly into software engineering and graphic design. Today, I bring that discipline to building modern web applications with Nuxt, cross-platform mobile apps with Flutter, and functional visual design with Adobe.
   primary_link_text: Explore Projects
   primary_link_to: /projects
   secondary_link_text: Start a Conversation

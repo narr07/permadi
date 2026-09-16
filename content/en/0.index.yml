@@ -1,14 +1,14 @@
 title: Dinar Permadi Yusup | Frontend Developer & Graphic Designer
-description: A living archive of digital systems, interface experiments, and field notes by a primary school teacher building with Nuxt, Flutter, and Swiss typographic discipline.
+description: An archive of web systems, interface experiments, and field notes by a primary school teacher building with Nuxt, Flutter, and Swiss typographic discipline.
 eyebrow: Permadi / Educator, Developer & Designer
 headline: A quiet corner of the open web.
 hero:
   section_number: "01 // MANIFEST"
   issue_number: "N° 2026.01"
-  author_title: "PRACTITIONER & EDUCATOR"
+  author_title: "EDUCATOR & DEVELOPER"
   author_name: "Dinar Permadi"
-  author_role: "Primary School Teacher & Code Craftsman"
-  author_bio: "Bringing classroom mathematical precision into modern web architecture, editorial layout, and software engineering."
+  author_role: "Primary School Teacher & Software Developer"
+  author_bio: "Bringing classroom mathematical precision into modern web architecture and clean interface layouts."
   specs:
     spec_title: "SYSTEM SPECIFICATIONS"
     status_label: "STATUS"
@@ -21,9 +21,9 @@ hero:
     timezone: "WIB"
     coords_label: "COORDINATES"
     coordinates: "6°50'S 108°13'E"
-  kicker: "01.A // PRINCIPLES & ENGINEERING VISION"
+  kicker: "01.A // PRINCIPLES & WORKING METHOD"
   headline: "Connecting numerical logic, clean code, and visual precision into one unified craft."
-  thesis: "Teaching in an elementary classroom shaped how I write software: clear, unpretentious, and free of filler. That conviction guides everything I build with Nuxt 4, Flutter, and Swiss typography—every pixel and function must earn its place, not merely decorate it."
+  thesis: "Teaching in an elementary classroom shaped how I write software: clear, unpretentious, and free of filler. That conviction guides everything I build with Nuxt 4, Flutter, and Swiss typography: every pixel and function must earn its place, not merely decorate it."
   links:
     - label: "EXPLORE PROJECTS"
       to: "/projects"
@@ -34,18 +34,18 @@ hero:
 project_section:
   label: "02 // SELECTED CASE STUDIES & SYSTEMS"
   count_badge: "CURATED ARCHIVE (03 WORKS)"
-  correlation_badge: "CORRELATION: EDUCATION × CODE CRAFT"
+  correlation_badge: "CLASSROOM & CODE CRAFT"
   fallback_title: "Selected works and the hard lessons behind them."
-  fallback_description: "A collection of web systems, mobile apps, and modular interfaces—spanning classroom utilities to digital products."
+  fallback_description: "A collection of web systems, mobile apps, and modular interfaces, spanning classroom utilities to digital products."
   all_link_text: "OPEN COMPLETE PROJECT ARCHIVE"
   all_link_to: "/projects"
 philosophy:
-  section_label: "03 // DOCTRINE & ETHOS"
+  section_label: "03 // PRINCIPLES & ETHOS"
   number: "PRINCIPLE 01"
   quote: "Good design is quiet."
   quote_bold: "Great design stays with you."
-  description: "Mathematics teaches truths that cannot be negotiated. Typography teaches how to present them—ordered, modest, and respectful of the reader."
-  pedagogy_tag: "PEDAGOGY × DIGITAL CRAFT"
+  description: "Mathematics teaches truths that cannot be negotiated. Typography teaches how to present them: ordered, modest, and respectful of the reader."
+  pedagogy_tag: "PEDAGOGY & DIGITAL CRAFT"
   institution_tag: "UPI BANDUNG"
   label: "Permadi Philosophy"
 skills_section:

@@ -64,7 +64,7 @@ const { locale } = useI18n()
 					</blockquote>
 
 					<p class="max-w-[44ch] text-xs text-slate-800 leading-relaxed font-sans sm:text-sm dark:text-slate-200">
-						{{ philosophy?.description || (locale === 'id' ? 'Matematika mengajarkan kebenaran yang tidak bisa ditawar. Tipografi mengajarkan cara menyampaikannya—tertib, bersahaja, dan menghargai akal sehat pembaca.' : 'Mathematics teaches truths that cannot be negotiated. Typography teaches how to present them—ordered, modest, and respectful of the reader.') }}
+						{{ philosophy?.description || (locale === 'id' ? 'Matematika mengajarkan kebenaran yang tidak bisa ditawar. Tipografi mengajarkan cara menyampaikannya: tertib, bersahaja, dan nyaman dibaca siapa saja.' : 'Mathematics teaches truths that cannot be negotiated. Typography teaches how to present them: ordered, modest, and respectful of the reader.') }}
 					</p>
 				</div>
 

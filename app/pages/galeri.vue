@@ -256,8 +256,8 @@ useSeoMeta({
 })
 
 defineOgImage('Bento', {
-	title: page.value?.title || 'Galeri Visual',
-	description: page.value?.description || 'Dokumentasi Visual & Fotografi',
+	title: page.value?.title || (locale.value === 'id' ? 'Galeri Visual' : 'Visual Gallery'),
+	description: page.value?.description || (locale.value === 'id' ? 'Dokumentasi Visual & Fotografi' : 'Visual Documentation & Photography'),
 	category: locale.value === 'id' ? 'Galeri Visual & Dokumentasi' : 'Visual Gallery & Documentation',
 })
 
@@ -340,10 +340,13 @@ useSchemaOrg([
 						</p>
 
 						<div class="flex flex-wrap gap-2 text-xs text-slate-700 font-mono dark:text-slate-300">
-							<span class="border border-slate-300 px-2.5 py-1 uppercase dark:border-[#134e43]">#FOTOGRAFI</span>
-							<span class="border border-slate-300 px-2.5 py-1 uppercase dark:border-[#134e43]">#WORKSPACE</span>
-							<span class="border border-slate-300 px-2.5 py-1 uppercase dark:border-[#134e43]">#ARSITEKTUR</span>
-							<span class="border border-slate-300 px-2.5 py-1 uppercase dark:border-[#134e43]">#DESAIN</span>
+							<span
+								v-for="tag in (locale === 'id' ? ['#FOTOGRAFI', '#WORKSPACE', '#ARSITEKTUR', '#DESAIN'] : ['#PHOTOGRAPHY', '#WORKSPACE', '#ARCHITECTURE', '#DESIGN'])"
+								:key="tag"
+								class="border border-slate-300 px-2.5 py-1 uppercase dark:border-[#134e43]"
+							>
+								{{ tag }}
+							</span>
 						</div>
 					</div>
 
@@ -439,7 +442,7 @@ useSchemaOrg([
 					<!-- High-Res Main Image -->
 					<img
 						:src="item.image"
-						:alt="item.title || 'Foto galeri'"
+						:alt="item.title || (locale === 'id' ? 'Foto galeri' : 'Gallery photo specimen')"
 						decoding="async"
 						:width="item.width || 720"
 						:height="item.height || 540"
@@ -574,7 +577,7 @@ useSchemaOrg([
 										:disabled="!hasPrevPhoto"
 										class="cursor-pointer border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-all duration-150 dark:border-[#134e43]"
 										:class="hasPrevPhoto ? 'hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent hover:-translate-y-0.5 active:scale-95' : 'opacity-40 cursor-not-allowed'"
-										title="Foto Sebelumnya (Panah Kiri)"
+										:title="locale === 'id' ? 'Foto Sebelumnya (Panah Kiri)' : 'Previous Photo (Left Arrow)'"
 										@click="prevPhoto"
 									>
 										{{ locale === 'id' ? '← SEBELUMNYA' : '← PREVIOUS' }}
@@ -586,7 +589,7 @@ useSchemaOrg([
 										:disabled="!hasNextPhoto"
 										class="cursor-pointer border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-all duration-150 dark:border-[#134e43]"
 										:class="hasNextPhoto ? 'hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent hover:-translate-y-0.5 active:scale-95' : 'opacity-40 cursor-not-allowed'"
-										title="Foto Selanjutnya (Panah Kanan)"
+										:title="locale === 'id' ? 'Foto Selanjutnya (Panah Kanan)' : 'Next Photo (Right Arrow)'"
 										@click="nextPhoto"
 									>
 										{{ locale === 'id' ? 'BERIKUTNYA →' : 'NEXT →' }}

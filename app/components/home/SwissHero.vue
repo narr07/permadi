@@ -153,7 +153,7 @@ onMounted(() => {
 
 					<!-- Thesis Paragraph in Permadi Body -->
 					<p class="mb-10 max-w-[58ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
-						{{ hero?.thesis || description || (locale === 'id' ? 'Mengajar di sekolah dasar Majalengka membentuk cara saya memandang kode: lugas, tertib, dan bebas dari basa-basi visual. Prinsip ini saya bawa ke setiap baris Nuxt 4, Flutter, dan sistem tata letak Swiss—tiap piksel dan fungsi harus punya alasan, bukan sekadar tempelan.' : 'Teaching in an elementary classroom shaped how I write software: clear, unpretentious, and free of filler. That conviction guides everything I build with Nuxt 4, Flutter, and Swiss typography—every pixel and function must earn its place, not merely decorate it.') }}
+						{{ hero?.thesis || description || (locale === 'id' ? 'Mengajar di sekolah dasar Majalengka membentuk cara saya memandang kode: lugas, tertib, dan bebas basa-basi visual. Prinsip ini saya bawa ke setiap baris Nuxt 4, Flutter, dan tata letak Swiss: tiap piksel dan fungsi harus punya alasan, bukan sekadar tempelan.' : 'Teaching in an elementary classroom shaped how I write software: clear, unpretentious, and free of filler. That conviction guides everything I build with Nuxt 4, Flutter, and Swiss typography: every pixel and function must earn its place, not merely decorate it.') }}
 					</p>
 				</div>
 

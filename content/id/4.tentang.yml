@@ -1,11 +1,11 @@
 title: Tentang Dinar Permadi Yusup | Guru SD, Developer & Desainer
-description: Catatan tentang Dinar Permadi Yusup—guru SD di Majalengka yang memadukan ketelitian matematika, arsitektur software (Nuxt, Flutter, Python, PHP), dan kepekaan desain visual.
+description: Catatan tentang Dinar Permadi Yusup, guru SD di Majalengka yang memadukan ketelitian matematika, arsitektur software (Nuxt, Flutter, Python, PHP), dan kepekaan desain visual.
 headline: Menghitung dengan cermat. Merancang dengan penuh niat.
-lead: Menjembatani ruang kelas sekolah dasar, ketelitian logika hitung, arsitektur perangkat lunak modern, dan disiplin tata letak visual.
+lead: Menghubungkan cara berpikir ruang kelas, ketelitian logika hitung, dan kerapian tata letak visual dalam setiap baris kode.
 section_label: Profil & Filosofi
 story_card:
   label: Filosofi & Profil
-  title: Saya Permadi, guru sekolah dasar dan perajin perangkat lunak dari Majalengka.
+  title: Saya Permadi, guru sekolah dasar dan pengembang web dari Majalengka.
   lead: Berbekal latar belakang pendidikan dari Universitas Pendidikan Indonesia (UPI), saya menyalurkan ketelitian berpikir ke dalam baris kode (Nuxt, Flutter, Python, PHP) dan tata letak visual yang presisi.
   bio: Di luar ruang kelas dan teks editor, saya menghabiskan waktu mengeksplorasi konsep matematika, menyusun aset grafis, dan merancang media ajar interaktif untuk siswa.
   link_text: Lihat Arsip Studi Kasus
@@ -32,20 +32,20 @@ location_card:
   title: Majalengka, Indonesia
   description: Bekerja dari Majalengka, terbuka berkolaborasi secara remote dengan tim dan klien di mana saja.
   timezone: GMT+7 (WIB)
-  badge: Tersedia Global
+  badge: Kolaborasi Terbuka
 principles_label: Prinsip Utama
-principles_footer: Dirancang dengan Penuh Niat
+principles_footer: Dibangun dengan Penuh Niat
 principles:
   - title: Logika Numerik & Presisi
     description: Menyusun algoritma dan struktur kode yang efisien, rapi, dan modular di setiap lapisan arsitektur.
   - title: Kepekaan Desain Grafis
-    description: Mengolah tata letak visual, harmoni warna, dan hierarki tipografi dengan standar mutu tinggi lewat ekosistem Adobe.
+    description: Menyusun tata letak visual, harmoni warna, dan hierarki tipografi yang rapi serta nyaman dibaca.
   - title: Keandalan & Kegunaan Nyata
-    description: Memastikan setiap aplikasi web (Nuxt) maupun mobile (Flutter) berjalan gegas, aksesibel, dan nyaman digunakan siapa saja.
+    description: Memastikan setiap aplikasi web maupun mobile selalu cepat dimuat, ringan, dan nyaman digunakan siapa saja.
 journey:
   label: Latar Belakang & Perjalanan
   title: Dari Ruang Kelas ke Rekayasa Digital
-  description: Perjalanan saya berakar dari ruang kelas sekolah dasar setelah menyelesaikan studi di Universitas Pendidikan Indonesia (UPI). Rutinitas mengajar matematika melatih ketahanan berpikir terstruktur—kebiasaan yang secara alami bermuara pada rekayasa perangkat lunak dan desain grafis. Hari ini, saya menyatukan disiplin pedagogi itu ke dalam arsitektur web modern dengan Nuxt, aplikasi lintas platform bersama Flutter, dan ketertiban visual lewat ekosistem Adobe.
+  description: Perjalanan saya bermula dari ruang kelas sekolah dasar setelah lulus dari Universitas Pendidikan Indonesia (UPI). Mengajar matematika melatih saya berpikir terstruktur dan teliti, kebiasaan yang langsung terpakai saat menulis kode dan merancang grafis. Hari ini, saya menyatukan disiplin mengajar tersebut untuk membangun aplikasi web modern dengan Nuxt, aplikasi mobile dengan Flutter, serta tata visual yang tertib dan fungsional.
   primary_link_text: Buka Arsip Karya
   primary_link_to: /id/projek
   secondary_link_text: Mulai Percakapan

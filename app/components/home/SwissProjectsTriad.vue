@@ -34,7 +34,7 @@ const localePath = useLocalePath()
 const defaultShowcase = [
 	{
 		index: '02.01',
-		title: 'Permadi.dev — Ruang Kerja Digital',
+		title: 'Permadi.dev | Ruang Kerja Digital',
 		description: 'Arsitektur website personal berbasis Nuxt 4, UnoCSS, dan SQLite Cloudflare D1 dengan skor Core Web Vitals 100/100.',
 		tags: ['Nuxt 4', 'UnoCSS', 'Cloudflare D1'],
 		link: '/projek',

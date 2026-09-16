@@ -1,14 +1,14 @@
 title: Dinar Permadi Yusup | Frontend Developer & Desainer Grafis
-description: Arsip hidup sistem web, eksperimen antarmuka, dan catatan lapangan oleh seorang guru SD di Majalengka yang merancang dengan Nuxt, Flutter, dan disiplin tipografi Swiss.
+description: Arsip sistem web, eksperimen antarmuka, dan catatan harian seorang guru SD di Majalengka yang membangun aplikasi dengan Nuxt, Flutter, dan tipografi Swiss.
 eyebrow: Permadi / Guru SD, Pengembang Web & Desainer
 headline: Sudut kecil di belantara internet.
 hero:
   section_number: "01 // MANIFEST"
   issue_number: "N° 2026.01"
-  author_title: "PRAKTISI & PENDIDIK"
+  author_title: "PENDIDIK & DEVELOPER"
   author_name: "Dinar Permadi"
-  author_role: "Guru SD & Perajin Kode"
-  author_bio: "Membawa ketelitian matematika dari ruang kelas ke dalam arsitektur web modern, presisi tata letak, dan rekayasa perangkat lunak."
+  author_role: "Guru SD & Software Developer"
+  author_bio: "Membawa ketelitian matematika dari ruang kelas ke arsitektur web modern dan kerapian tata letak antarmuka."
   specs:
     spec_title: "SPESIFIKASI SISTEM"
     status_label: "STATUS"
@@ -21,9 +21,9 @@ hero:
     timezone: "WIB"
     coords_label: "KOORDINAT"
     coordinates: "6°50'S 108°13'E"
-  kicker: "01.A // PRINSIP & VISI REKAYASA"
-  headline: "Menghubungkan logika berhitung, baris kode, dan ketelitian visual jadi satu cara kerja."
-  thesis: "Mengajar di sekolah dasar Majalengka membentuk cara saya memandang kode: lugas, tertib, dan bebas dari basa-basi visual. Prinsip ini saya bawa ke setiap baris Nuxt 4, Flutter, dan sistem tata letak Swiss—tiap piksel dan fungsi harus punya alasan, bukan sekadar tempelan."
+  kicker: "01.A // PRINSIP & CARA KERJA"
+  headline: "Menghubungkan logika berhitung, baris kode, dan ketelitian visual menjadi satu kesatuan."
+  thesis: "Mengajar di sekolah dasar Majalengka membentuk cara saya memandang kode: lugas, tertib, dan bebas basa-basi visual. Prinsip ini saya bawa ke setiap baris Nuxt 4, Flutter, dan tata letak Swiss: tiap piksel dan fungsi harus punya alasan, bukan sekadar tempelan."
   links:
     - label: "JELAJAHI PROJEK"
       to: "/id/projek"
@@ -34,18 +34,18 @@ hero:
 project_section:
   label: "02 // STUDI KASUS & REKAYASA SISTEM"
   count_badge: "ARSIP PILIHAN (03 KARYA)"
-  correlation_badge: "KORELASI: PENDIDIKAN × REKAYASA KODE"
+  correlation_badge: "RUANG KELAS & REKAYASA KODE"
   fallback_title: "Karya pilihan dan pelajaran nyata di baliknya."
-  fallback_description: "Koleksi studi kasus sistem web, aplikasi mobile, dan tata letak modular—dari ruang kelas hingga produk digital."
+  fallback_description: "Koleksi studi kasus sistem web, aplikasi mobile, dan tata letak modular, dari ruang kelas hingga produk digital."
   all_link_text: "BUKA SELURUH ARSIP PROJEK"
   all_link_to: "/id/projek"
 philosophy:
-  section_label: "03 // DOKTRIN & FILOSOFI"
+  section_label: "03 // PRINSIP & FILOSOFI"
   number: "PRINSIP 01"
   quote: "Desain yang baik itu tenang."
   quote_bold: "Desain luar biasa akan selalu membekas."
-  description: "Matematika mengajarkan kebenaran yang tidak bisa ditawar. Tipografi mengajarkan cara menyampaikannya—tertib, bersahaja, dan menghargai akal sehat pembaca."
-  pedagogy_tag: "PEDAGOGI × REKAYASA DIGITAL"
+  description: "Matematika mengajarkan kebenaran yang tidak bisa ditawar. Tipografi mengajarkan cara menyampaikannya: tertib, bersahaja, dan nyaman dibaca siapa saja."
+  pedagogy_tag: "PENDIDIKAN & REKAYASA DIGITAL"
   institution_tag: "UPI BANDUNG"
   label: "Permadi Philosophy"
 skills_section:

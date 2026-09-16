@@ -4,11 +4,11 @@ section_label: Get in Touch
 headline: Start a conversation or design a new system.
 lead: Open for discussions on Nuxt frontend architecture, Flutter cross-platform mobile apps, typographic design systems, or educational technology ideas.
 email_card:
-  label: Direct Inquiries
+  label: Direct Contact
   email: dinar@permadi.dev
-  description: Typical response within 1–2 business days for technical consulting, project proposals, or collaboration.
+  description: I usually reply within 1–2 business days for project discussions, consulting, or general inquiries.
   button_text: Send an Email
-  meta: Available Globally (UTC+7)
+  meta: Open for Collaboration (UTC+7)
 status_card:
   label: Availability Status
   title: Open for Projects & Consulting
@@ -16,8 +16,8 @@ status_card:
   location: Majalengka, ID
   timezone: WIB (UTC+7)
 social_card:
-  label: Digital Channels
-  title: Public Spaces & Repositories
+  label: Elsewhere on the Web
+  title: Repositories & Profiles
   description: Open-source repositories, ongoing design experiments, and visual documentation.
   items:
     - name: GitHub
@@ -34,5 +34,5 @@ social_card:
       icon: i-swisspost-icondesign
 newsletter_card:
   label: Newsletter
-  title: Curated Dispatches
-  description: Periodic field notes covering web performance, Nuxt engineering, Swiss typography, and classroom pedagogy.
+  title: Field Notes & Updates
+  description: Field notes covering web performance, Nuxt engineering, Swiss typography, and classroom insights.
