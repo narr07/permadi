@@ -356,12 +356,7 @@ export default defineNuxtConfig({
 				en: '/gallery',
 			},
 		},
-		detectBrowserLanguage: {
-			useCookie: true,
-			cookieKey: 'i18n_redirected',
-			fallbackLocale: 'en',
-			redirectOn: 'root',
-		},
+		detectBrowserLanguage: false,
 	},
 	hooks: {
 		'content:file:afterParse': function (ctx: any) {

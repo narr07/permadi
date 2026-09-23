@@ -80,3 +80,6 @@ bahan-artikel/
 # Python virtual environment & font backups
 .venv/
 public/fonts/_backup/
+
+# graft's local graph cache — regenerable, not committed (run `graft build`).
+/graft/

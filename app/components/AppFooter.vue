@@ -4,6 +4,13 @@ const route = useRoute()
 
 const currentYear = new Date().getFullYear()
 
+const socialLinks = [
+	{ name: 'GitHub', handle: 'narr07', url: 'https://github.com/narr07', icon: 'i-swisspost-github' },
+	{ name: 'X / Twitter', handle: 'dinarpermadi07', url: 'https://x.com/dinarpermadi07', icon: 'i-swisspost-twitterx' },
+	{ name: 'Instagram', handle: 'narr07', url: 'https://www.instagram.com/narr07/', icon: 'i-swisspost-instagram' },
+	{ name: 'Behance', handle: 'narr07', url: 'https://www.behance.net/narr07', icon: 'i-swisspost-icondesign' },
+]
+
 const isHomePage = computed(() => {
 	const path = route.path.replace(/\/$/, '')
 	return path === '' || path === '/id' || path === '/en'
@@ -20,11 +27,27 @@ function scrollToTop() {
 	<!-- When on Home Page: A subtle back-to-top anchor rail that seamlessly closes the document -->
 	<footer
 		v-if="isHomePage"
-		class="w-full flex items-center justify-between border-t border-slate-200/80 bg-slate-50/90 px-6 py-4 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/80 sm:px-8"
+		class="w-full flex flex-col items-center justify-between gap-4 border-t border-slate-200/80 bg-slate-50/90 px-6 py-4 text-xs font-mono sm:flex-row dark:border-[#134e43] dark:bg-[#002420]/80 sm:px-8"
 	>
 		<span class="text-slate-600 tracking-wider uppercase dark:text-slate-400">
 			{{ locale === 'id' ? 'MAJALENGKA, JAWA BARAT' : 'MAJALENGKA, WEST JAVA' }}
 		</span>
+
+		<!-- Social Media Links (Home Strip) -->
+		<div class="flex flex-wrap items-center gap-4 sm:gap-5">
+			<a
+				v-for="s in socialLinks"
+				:key="s.name"
+				:href="s.url"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="group inline-flex items-center gap-1.5 text-slate-700 transition-colors dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400"
+			>
+				<span :class="s.icon" class="text-xs" />
+				<span class="font-bold">@{{ s.handle }}</span>
+				<span class="i-swisspost-arrowupright text-[10px] text-slate-400 transition-transform duration-150 group-hover:(text-brand-600 translate-x-0.5 -translate-y-0.5) dark:group-hover:text-brand-400" />
+			</a>
+		</div>
 
 		<button
 			type="button"
@@ -36,7 +59,7 @@ function scrollToTop() {
 		</button>
 	</footer>
 
-	<!-- When on Inner Pages: Full Swiss Tabular Footer with Newsletter -->
+	<!-- When on Inner Pages: Full Swiss Tabular Footer with Newsletter & Social Links -->
 	<footer
 		v-else
 		class="w-full border-t border-slate-200/80 bg-white dark:border-[#134e43] dark:bg-[#001e1c]"
@@ -57,6 +80,28 @@ function scrollToTop() {
 
 			<div class="w-full lg:max-w-md">
 				<LazyNewsletterForm hydrate-on-visible />
+			</div>
+		</div>
+
+		<!-- Social Platforms Rail (Inner Pages) -->
+		<div class="flex flex-col items-start justify-between gap-3 border-b border-slate-200/80 bg-slate-50/40 px-6 py-3.5 text-xs font-mono sm:flex-row sm:items-center dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-8">
+			<span class="text-[11px] font-bold tracking-widest text-slate-600 uppercase dark:text-slate-400">
+				{{ locale === 'id' ? 'PLATFORM DIGITAL' : 'DIGITAL PLATFORMS' }}
+			</span>
+			<div class="flex flex-wrap items-center gap-4 sm:gap-6">
+				<a
+					v-for="s in socialLinks"
+					:key="s.name"
+					:href="s.url"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="group inline-flex items-center gap-1.5 text-slate-700 transition-colors dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400"
+				>
+					<span :class="s.icon" class="text-xs" />
+					<span class="font-bold">{{ s.name }}</span>
+					<span class="text-slate-500 dark:text-slate-400">(@{{ s.handle }})</span>
+					<span class="i-swisspost-arrowupright text-[10px] text-slate-400 transition-transform duration-150 group-hover:(text-brand-600 translate-x-0.5 -translate-y-0.5) dark:group-hover:text-brand-400" />
+				</a>
 			</div>
 		</div>
 

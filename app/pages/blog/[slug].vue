@@ -345,8 +345,8 @@ defineOgImage('Bento', {
 			</NuxtLink>
 
 			<div class="flex items-center gap-3 text-slate-600 uppercase dark:text-slate-400">
-				<span class="hidden sm:inline">DOKUMEN TEKNIS</span>
-				<span class="text-brand-600 font-bold dark:text-brand-400">[{{ (post.doc.category || 'UMUM').toUpperCase() }}]</span>
+				<span class="hidden sm:inline">{{ locale === 'id' ? 'DOKUMEN TEKNIS' : 'TECHNICAL DOCUMENT' }}</span>
+				<span class="text-brand-600 font-bold dark:text-brand-400">[{{ (post.doc.category || (locale === 'id' ? 'UMUM' : 'GENERAL')).toUpperCase() }}]</span>
 			</div>
 		</nav>
 
@@ -357,34 +357,34 @@ defineOgImage('Bento', {
 				<div class="flex flex-col justify-between border-b border-slate-200/80 bg-slate-50/50 p-6 lg:col-span-4 lg:border-b-0 lg:border-r dark:border-[#134e43] dark:bg-[#002420]/40 lg:p-10 sm:p-8">
 					<div>
 						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							PARAMETER NASKAH
+							{{ locale === 'id' ? 'PARAMETER NASKAH' : 'ARTICLE PARAMETERS' }}
 						</div>
 
 						<div class="mb-8 text-xs font-mono divide-y divide-slate-200/80 dark:divide-[#134e43]">
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">TANGGAL RILIS</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ locale === 'id' ? 'TANGGAL RILIS' : 'PUBLISHED DATE' }}</span>
 								<span class="text-slate-900 font-semibold tabular-nums dark:text-slate-50">{{ formatDate(post.doc.date) }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">WAKTU BACA</span>
-								<span class="text-slate-900 tabular-nums dark:text-slate-50">{{ post.doc.readingTime || 5 }} Menit</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ locale === 'id' ? 'WAKTU BACA' : 'READING TIME' }}</span>
+								<span class="text-slate-900 tabular-nums dark:text-slate-50">{{ post.doc.readingTime || 5 }} {{ locale === 'id' ? 'Menit' : 'Min' }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">KATEGORI</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ locale === 'id' ? 'KATEGORI' : 'CATEGORY' }}</span>
 								<span class="text-brand-600 font-bold uppercase dark:text-brand-400">{{ getCategoryLabel(post.doc.category) }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">PENULIS</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ locale === 'id' ? 'PENULIS' : 'AUTHOR' }}</span>
 								<span class="text-slate-900 font-medium dark:text-slate-50">Dinar Permadi Yusup</span>
 							</div>
 						</div>
 					</div>
 
 					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
-						<span>LISENSI KONTEN</span>
+						<span>{{ locale === 'id' ? 'LISENSI KONTEN' : 'CONTENT LICENSE' }}</span>
 						<span>CC BY-NC-SA 4.0</span>
 					</div>
 				</div>
@@ -393,7 +393,7 @@ defineOgImage('Bento', {
 				<div class="flex flex-col justify-between p-6 lg:col-span-8 lg:p-12 sm:p-10">
 					<div>
 						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							WACANA TEKNIS &amp; PEDAGOGIS
+							{{ locale === 'id' ? 'WACANA TEKNIS & PEDAGOGIS' : 'TECHNICAL & PEDAGOGICAL ESSAY' }}
 						</div>
 
 						<h1 class="mb-6 text-balance text-3xl text-slate-900 font-700 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
@@ -417,7 +417,7 @@ defineOgImage('Bento', {
 					</div>
 
 					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
-						<span>ARSIP PERMADI.DEV</span>
+						<span>{{ locale === 'id' ? 'ARSIP PERMADI.DEV' : 'PERMADI.DEV ARCHIVE' }}</span>
 					</div>
 				</div>
 			</div>
@@ -429,7 +429,7 @@ defineOgImage('Bento', {
 			ref="tocDropdownRef"
 			class="backdrop-blur-xs sticky z-30 w-full border-b border-slate-200/80 bg-white/95 text-xs font-mono dark:border-[#134e43] dark:bg-[#001e1c]/95"
 			:style="{ top: 'var(--app-header-height, 65px)' }"
-			aria-label="Status Membaca dan Daftar Isi"
+			:aria-label="locale === 'id' ? 'Status Membaca dan Daftar Isi' : 'Reading Progress and Table of Contents'"
 		>
 			<!-- Top Strip Bar -->
 			<div class="h-12 w-full flex items-center justify-between gap-4 px-4 sm:px-8">
@@ -454,7 +454,7 @@ defineOgImage('Bento', {
 						:aria-expanded="isTocDropdownOpen"
 						@click="toggleTocDropdown"
 					>
-						<span class="whitespace-nowrap">DAFTAR ISI ({{ String(flatTocList.length).padStart(2, '0') }})</span>
+						<span class="whitespace-nowrap">{{ locale === 'id' ? 'DAFTAR ISI' : 'TABLE OF CONTENTS' }} ({{ String(flatTocList.length).padStart(2, '0') }})</span>
 						<span
 							:class="isTocDropdownOpen ? 'rotate-180' : 'rotate-0'"
 							class="i-swisspost-chevrondown shrink-0 text-xs transition-transform duration-200"
@@ -469,7 +469,7 @@ defineOgImage('Bento', {
 						class="h-8 inline-flex shrink-0 cursor-pointer items-center justify-center whitespace-nowrap text-slate-700 leading-none transition-all duration-150 active:scale-95 dark:text-slate-300 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-accent"
 						@click="scrollToTop"
 					>
-						PUNCAK ↑
+						{{ locale === 'id' ? 'PUNCAK ↑' : 'TOP ↑' }}
 					</button>
 				</div>
 			</div>
@@ -483,14 +483,14 @@ defineOgImage('Bento', {
 				<div class="flex items-center justify-between border-b border-slate-200/80 bg-slate-50/80 px-6 py-2.5 text-[11px] font-bold tracking-wider uppercase dark:border-[#134e43] dark:bg-[#002420]/60">
 					<div class="flex items-center gap-2 text-brand-700 dark:text-accent">
 						<span class="inline-block h-1.5 w-1.5 bg-brand-500" />
-						<span>INDIKATOR STRUKTUR ARTIKEL // {{ String(flatTocList.length).padStart(2, '0') }} BAGIAN</span>
+						<span>{{ locale === 'id' ? 'INDIKATOR STRUKTUR ARTIKEL' : 'ARTICLE STRUCTURE INDEX' }} // {{ String(flatTocList.length).padStart(2, '0') }} {{ locale === 'id' ? 'BAGIAN' : 'SECTIONS' }}</span>
 					</div>
 					<button
 						type="button"
 						class="cursor-pointer text-[10px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-50"
 						@click="isTocDropdownOpen = false"
 					>
-						TUTUP [ESC] ✕
+						{{ locale === 'id' ? 'TUTUP [ESC] ✕' : 'CLOSE [ESC] ✕' }}
 					</button>
 				</div>
 
@@ -519,7 +519,7 @@ defineOgImage('Bento', {
 							v-if="link.id === activeSection"
 							class="shrink-0 text-[10px] text-brand-600 font-bold uppercase dark:text-accent"
 						>
-							AKTIF
+							{{ locale === 'id' ? 'AKTIF' : 'ACTIVE' }}
 						</span>
 						<span
 							v-else
@@ -532,8 +532,8 @@ defineOgImage('Bento', {
 
 				<!-- Dropdown Panel Footer Strip -->
 				<div class="flex items-center justify-between border-t border-slate-200/80 bg-slate-50/50 px-6 py-2 text-[10px] text-slate-600 dark:border-[#134e43] dark:bg-[#002420]/30 dark:text-slate-400">
-					<span>ARSIP DOKUMENTASI PERMADI.DEV</span>
-					<span>KLIK ITEM UNTUK BERPINDAH LANGSUNG</span>
+					<span>{{ locale === 'id' ? 'ARSIP DOKUMENTASI PERMADI.DEV' : 'PERMADI.DEV DOCUMENTATION ARCHIVE' }}</span>
+					<span>{{ locale === 'id' ? 'KLIK ITEM UNTUK BERPINDAH LANGSUNG' : 'CLICK ANY ITEM TO JUMP DIRECTLY' }}</span>
 				</div>
 			</div>
 		</div>
@@ -541,12 +541,6 @@ defineOgImage('Bento', {
 		<!-- Band 02: Primary Technical Reading Canvas (Centered Swiss Reading Column) -->
 		<main class="w-full border-b border-slate-200/80 p-6 dark:border-[#134e43] lg:p-14 sm:p-10">
 			<div class="mx-auto max-w-3xl">
-				<!-- Section Sub-Header -->
-				<div class="mb-8 flex items-center justify-between border-b border-slate-200/80 pb-3 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:border-[#134e43] dark:text-accent">
-					<span>■ 02 // DOKUMENTASI LENGKAP &amp; BEDAH TEKNIS</span>
-					<span class="text-slate-600 tabular-nums dark:text-slate-400">KORPUS 01</span>
-				</div>
-
 				<!-- Expansive Full-Measure Prose Content Centered -->
 				<div class="max-w-none w-full text-slate-800 leading-relaxed font-sans prose prose-slate dark:text-slate-100 dark:prose-invert">
 					<ContentRenderer :value="post.doc" />
@@ -576,13 +570,13 @@ defineOgImage('Bento', {
 		<nav
 			v-if="surround && (surround[0] || surround[1])"
 			class="grid grid-cols-1 w-full border-b border-slate-200/80 sm:grid-cols-2 divide-y divide-slate-200/80 dark:border-[#134e43] sm:divide-x sm:divide-y-0 dark:divide-[#134e43]"
-			aria-label="Navigasi Naskah Sebelumnya dan Berikutnya"
+			:aria-label="locale === 'id' ? 'Navigasi Naskah Sebelumnya dan Berikutnya' : 'Previous and Next Article Navigation'"
 		>
 			<!-- Previous Article -->
 			<div class="group flex flex-col justify-between p-6 transition-colors hover:bg-slate-50/80 sm:p-8 dark:hover:bg-[#002420]/40">
 				<div v-if="surround[0]">
 					<span class="mb-2 block text-[11px] text-slate-600 font-bold tracking-widest font-mono uppercase dark:text-slate-400">
-						← NASKAH SEBELUMNYA
+						{{ locale === 'id' ? '← NASKAH SEBELUMNYA' : '← PREVIOUS ARTICLE' }}
 					</span>
 					<h3 class="text-lg text-slate-900 font-700 leading-snug font-heading transition-colors dark:text-slate-50 group-hover:text-brand-600">
 						<NuxtLink :to="locale === 'id' ? `/id/blog/${surround[0].slug || cleanSlug(surround[0].path)}` : `/blog/${surround[0].slug || cleanSlug(surround[0].path)}`">
@@ -594,7 +588,7 @@ defineOgImage('Bento', {
 					v-else
 					class="text-xs text-slate-600 font-mono uppercase dark:text-slate-400"
 				>
-					AWAL ARSIP PUBLIKASI
+					{{ locale === 'id' ? 'AWAL ARSIP PUBLIKASI' : 'START OF ARCHIVE' }}
 				</div>
 			</div>
 
@@ -602,7 +596,7 @@ defineOgImage('Bento', {
 			<div class="group flex flex-col justify-between p-6 text-right transition-colors hover:bg-slate-50/80 sm:p-8 dark:hover:bg-[#002420]/40">
 				<div v-if="surround[1]">
 					<span class="mb-2 block text-[11px] text-slate-600 font-bold tracking-widest font-mono uppercase dark:text-slate-400">
-						NASKAH BERIKUTNYA →
+						{{ locale === 'id' ? 'NASKAH BERIKUTNYA →' : 'NEXT ARTICLE →' }}
 					</span>
 					<h3 class="text-lg text-slate-900 font-700 leading-snug font-heading transition-colors dark:text-slate-50 group-hover:text-brand-600">
 						<NuxtLink :to="locale === 'id' ? `/id/blog/${surround[1].slug || cleanSlug(surround[1].path)}` : `/blog/${surround[1].slug || cleanSlug(surround[1].path)}`">
@@ -614,7 +608,7 @@ defineOgImage('Bento', {
 					v-else
 					class="text-xs text-slate-600 font-mono uppercase dark:text-slate-400"
 				>
-					AKHIR ARSIP PUBLIKASI
+					{{ locale === 'id' ? 'AKHIR ARSIP PUBLIKASI' : 'END OF ARCHIVE' }}
 				</div>
 			</div>
 		</nav>
@@ -626,7 +620,7 @@ defineOgImage('Bento', {
 				class="inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
 				<span class="i-swisspost-arrowleft text-xs" />
-				<span>KEMBALI KE SELURUH NASKAH</span>
+				<span>{{ locale === 'id' ? 'KEMBALI KE SELURUH NASKAH' : 'BACK TO ALL POSTS' }}</span>
 			</NuxtLink>
 
 			<div class="text-slate-600 dark:text-slate-400">
