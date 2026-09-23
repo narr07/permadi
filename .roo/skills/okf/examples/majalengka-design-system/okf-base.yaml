@@ -1,0 +1,113 @@
+# Manifest okflint untuk bundle pengetahuan Design System Majalengka.tech.
+# Jalankan dari direktori ini: `okflint validate --manifest okf-base.yaml`
+# Profil di bawah menambah aturan khas proyek ini di atas aturan inti OKF v0.2.
+
+okf_version: "0.2"
+
+base:
+  name: Design System Majalengka.tech
+  roots:
+    - path: "."
+      exclude_patterns:
+        - ".okflint/**"
+        - "**/node_modules/**"
+  reserved_files:
+    index: index.md
+    log: log.md
+  link_resolution:
+    external_refs:
+      - https
+      - http
+      - mailto
+
+profile:
+  # date_fields sengaja dikosongkan: okflint mengharapkan format YYYY-MM-DD,
+  # sementara OKF v0.2 memakai ISO 8601 lengkap untuk stale_after.
+  # Bentuk stale_after tetap diperiksa lewat hygiene.okf_v02_shapes.
+  types:
+    Product Requirement:
+      aliases: [PRD, Product Requirements]
+      required: [type, title, description, status]
+      optional: [tags, generated, verified, sources, stale_after]
+      status_values: [draft, stable, deprecated]
+
+    Design Principle:
+      required: [type, title, description, status]
+      optional: [tags, generated, verified, sources, stale_after]
+      status_values: [draft, stable, deprecated]
+
+    Design Token Set:
+      aliases: [Token Set, Foundation]
+      required: [type, title, description, status]
+      optional: [tags, generated, verified, sources, stale_after]
+      status_values: [draft, stable, deprecated]
+
+    Component Spec:
+      aliases: [Component]
+      required: [type, title, description, status, tags]
+      optional: [generated, verified, sources, stale_after]
+      status_values: [draft, stable, deprecated]
+
+    Component Catalog:
+      required: [type, title, description, status]
+      optional: [tags, generated, verified, sources, stale_after]
+      status_values: [draft, stable, deprecated]
+
+    UX Pattern:
+      aliases: [Pattern]
+      required: [type, title, description, status]
+      optional: [tags, generated, verified, sources, stale_after]
+      status_values: [draft, stable, deprecated]
+
+    Standard:
+      required: [type, title, description, status]
+      optional: [tags, generated, verified, sources, stale_after]
+      status_values: [draft, stable, deprecated]
+
+    Architecture Decision:
+      aliases: [ADR]
+      required: [type, title, description, status]
+      optional: [tags, generated, verified, sources, stale_after]
+      status_values: [draft, stable, deprecated]
+
+    Metric:
+      required: [type, title, description, status]
+      optional: [tags, generated, verified, sources, stale_after, usage_window]
+      status_values: [draft, stable, deprecated]
+
+    Playbook:
+      required: [type, title, description, status]
+      optional: [tags, generated, verified, sources, stale_after]
+      status_values: [draft, stable, deprecated]
+
+    Attested Computation:
+      required: [type, title, description, status, runtime]
+      optional:
+        [
+          tags,
+          parameters,
+          computation,
+          executor,
+          attester,
+          generated,
+          verified,
+          sources,
+          stale_after,
+        ]
+      status_values: [draft, stable, deprecated]
+      runtime_values: [python, bigquery, postgres, dbt, node, shell]
+
+hygiene:
+  broken_links: error
+  reserved_files: error
+  okf_v02_shapes: error
+  legacy_forms: error
+  unknown_fields: warn
+  stale_content: warn
+  split_candidates: warn
+  split:
+    min_lines: 220
+    exempt_types:
+      - Component Catalog
+    exempt_paths:
+      - "components/catalog.md"

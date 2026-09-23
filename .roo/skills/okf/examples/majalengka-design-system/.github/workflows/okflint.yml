@@ -1,0 +1,36 @@
+name: OKF lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  okflint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Pasang okflint
+        run: pip install okflint
+
+      - name: Periksa manifest
+        run: okflint validate-manifest okf-base.yaml
+
+      - name: Validasi bundle
+        run: okflint validate --manifest okf-base.yaml --json > okflint-report.json
+
+      - name: Audit bundle
+        if: always()
+        run: okflint audit --manifest okf-base.yaml
+
+      - name: Simpan laporan
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: okflint-report
+          path: okflint-report.json
