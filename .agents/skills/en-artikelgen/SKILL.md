@@ -1,6 +1,6 @@
 ---
 name: en-artikelgen
-description: In-depth SEO-driven blog article generator for English content with Human-Grade tone (Anti-AI Writing Style) powered by Google Trends intelligence, bilingual technical translator (EN <-> ID) with Nuxt Content MDC syntax protection, and flat design visual illustration generator with teal/emerald brand palette (#14b898). Fully compatible with Gemini Spark and IDEs. Use when drafting new English blog posts, researching real-time Google search trends, optimizing on-page SEO, translating articles (content/en <-> content/id), or generating blog prompt assets.
+description: In-depth SEO-driven blog article generator for English content with Human-Grade tone (Anti-AI Writing Style) powered by Google Trends intelligence, bilingual technical translator (EN <-> ID) with Nuxt Content MDC syntax protection, and Swiss Design editorial visual illustration generator with Golden Ratio (1:1.618) mathematical composition and teal/emerald brand palette (#14b898). Fully compatible with Gemini Spark and IDEs. Use when drafting new English blog posts, researching real-time Google search trends, optimizing on-page SEO, translating articles (content/en <-> content/id), or generating blog prompt assets.
 license: MIT
 ---
 
@@ -133,23 +133,33 @@ When translating between `content/en/blog` and `content/id/blog`:
 
 ---
 
-## 4. Visual Identity & Brand Palette (#14b898)
+## 4. Visual Identity & Brand Palette: Swiss Design & Golden Ratio (#14b898)
 
 Every illustration and featured banner must strictly conform to the brand visual system:
-- **Style**: Flat vector illustration, clean sharp outlines, minimalist cartoon, modern.
-- **Aspect Ratio**: 16:9 Landscape (standard web featured banner).
-- **Strict Restrictions**: NO text/typography inside images, no watermarks, no 3D renders, no photorealistic elements.
+- **Style**: Swiss Graphic Design (International Typographic Style), strict 2D flat vector aesthetic, hard-edged pure geometric shapes, intersecting planes, and fine structural lines (`#134e43`).
+- **Mathematical Composition**: Strict Golden Ratio composition (phi 1:1.618 balance), asymmetric layout with 61.8% primary visual mass and 38.2% spacious breathable negative space.
+- **Aspect Ratio**: 16:9 Landscape (standard web featured banner & Open Graph card).
+- **Strict Restrictions**:
+  - ❌ **100% text-free**: NO text, letters, words, or typography inside the image.
+  - ❌ NO watermarks, logos, or frames.
+  - ❌ NO 3D rendering, claymorphism, gradients, or floating drop shadows.
+  - ❌ NO photorealism or real people.
+  - ❌ NO random decorative ornaments (no sparkles, doodles, or floating particles).
 - **Brand Palette Roles**:
 
 | Role | Hex | Description |
 |---|---|---|
-| **Background (Light)** | `#f0fdfa` (50), `#ccfbf2` (100) | Pale mint / soft greenish off-white |
-| **Bright Accents** | `#99f6e4` (200), `#5eeacf` (300), `#2bd4b5` (400) | Bright light teal |
-| **Primary Brand Focus** | `#14b898` (500) | Vibrant teal / emerald (main subject/character) |
-| **Dark Accents (Depth/Shadow)**| `#0d947a` (600), `#0f7662` (700), `#115e4f` (800) | Dark greenish teal |
-| **Line Art (Outlines)** | `#134e43` (900) | Deep dark forest green outline |
-| **Deepest Contrast** | `#042f27` (950) | Near-black green for minor details |
+| **Background (Light)** | `#f0fdfa` (50), `#ccfbf2` (100) | Pale mint solid background |
+| **Bright Accents** | `#99f6e4` (200), `#2bd4b5` (400) | Bright light teal highlights |
+| **Primary Brand Focus** | `#14b898` (500) | **Vivid teal / emerald (primary focal geometric mass)** |
+| **Dark Accents (Depth)**| `#0d947a` (600), `#0f7662` (700) | Rich dark emerald depth |
+| **Line Art & Grid Outlines** | `#134e43` (900) | Deep forest green structural lines |
+| **Deepest Contrast** | `#042f27` (950) | Near-black green minor accents |
 
+- **Master Prompt Template**:
+```text
+A refined Swiss graphic design editorial illustration representing [METAFORA_TOPIK_ARTIKEL]. Strict 2D flat vector aesthetic, International Typographic Style, hard-edged pure geometric shapes, circular segments, clean intersecting vector planes, and fine structural lines in deep forest green #134e43. Strict Golden Ratio composition (phi 1:1.618 balance), dynamic asymmetric layout with 61.8% primary visual mass and 38.2% spacious breathable negative space. Brand color palette: pale mint flat background #f0fdfa, primary focal elements in vivid teal #14b898, secondary geometric accents in bright cyan-mint #99f6e4 and rich emerald #0d947a, precise deep outlines #134e43. Mathematical harmony, rational, modernist poster aesthetic, Josef Müller-Brockmann inspired layout discipline, 16:9 aspect ratio, clean solid fills, zero gradients, zero shadows, no 3D elements, no realism, 100% text-free, no letters, no words, no watermark.
+```
 - **Image Alt Text**: Maximum 125 characters, descriptive, naturally embedding the primary keyword.
 
 ---

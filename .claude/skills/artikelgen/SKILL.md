@@ -1,10 +1,10 @@
 ---
 name: artikelgen
-description: Generator artikel blog SEO-driven bernada manusiawi otentik (Anti-AI Tone & Anti-Slop) berbasis Google Trends & TF-IDF Optimization, penerjemah bilingual ID-EN dengan proteksi sintaks MDC Nuxt Content, dan generator visual ilustrasi flat design dengan palet brand teal/emerald (#14b898). Otomatis menghasilkan 2 file .md siap copas (versi Bahasa Indonesia & Bahasa Inggris) lengkap dengan saran path file dan frontmatter baku. Kompatibel penuh dengan Gemini Spark dan IDE.
+description: Generator artikel blog SEO-driven bernada manusiawi otentik (Anti-AI Tone & Anti-Slop) berbasis Google Trends & TF-IDF Optimization, penerjemah bilingual ID-EN dengan proteksi sintaks MDC Nuxt Content, dan generator visual ilustrasi editorial Swiss Design dengan komposisi matematis Golden Ratio (Rasio Emas 1:1.618) dan palet brand teal/emerald (#14b898). Otomatis menghasilkan 2 file .md siap copas (versi Bahasa Indonesia & Bahasa Inggris) lengkap dengan saran path file dan frontmatter baku. Kompatibel penuh dengan Gemini Spark dan IDE.
 metadata:
   author: narr07
-  version: "1.0.0"
-  date: 2026-09-17
+  version: "1.1.0"
+  date: 2026-09-26
   repository: https://github.com/narr07/skills
   license: MIT
 license: MIT
@@ -24,7 +24,7 @@ Setiap artikel harus disajikan dalam blok kode markdown mandiri bertipe `~~~~md 
 
 1. **Bagian 1: Versi Bahasa Indonesia (`content/id/blog/<nomor>.<slug-id>.md`)**
 2. **Bagian 2: Versi Bahasa Inggris (`content/en/blog/<nomor>.<slug-en>.md`)**
-3. **Bagian 3: Prompt Gambar Ilustrasi Brand (#14b898)** (Rasio 16:9 flat vector)
+3. **Bagian 3: Prompt Gambar Ilustrasi Swiss Design & Golden Ratio (#14b898)** (Rasio 16:9 editorial Swiss style)
 
 ---
 
@@ -364,6 +364,9 @@ Implement a 3-minute exit ticket with a single conceptual question before studen
 
 ---
 
-### 🎨 3. Prompt Gambar Ilustrasi Brand (#14b898)
-> "A modern flat vector illustration of [DESKRIPSI OBJEK], minimalist cartoon style with clean sharp outlines in dark forest green #134e43 and smooth flat color fills. Color palette strictly dominated by teal and emerald green accents: background in pale mint #f0fdfa, primary subject highlighted with vivid teal #14b898 and dark emerald accents #0d947a, balanced bright highlights #99f6e4. Simple and elegant composition, uncluttered, professional graphic design, 16:9 aspect ratio, no text, no letters, no words, no watermark, no 3D elements, no realistic photo details."
+### 🎨 3. Prompt Gambar Ilustrasi Swiss Design & Golden Ratio (#14b898)
+- **Konsep Visual & Dekonstruksi Swiss**: [1–2 kalimat metafora visual geometris objektif yang mewakili esensi topik tanpa elemen klise]
+- **Struktur Grid & Rasio Emas (1:1.618)**: Pembagian kanvas 16:9 asimetris: 61.8% massa visual utama (perpotongan Golden Section) dan 38.2% ruang negatif bernafas.
+- **Prompt Bahasa Inggris Baku (Master Prompt Template)**:
+> "A refined Swiss graphic design editorial illustration representing [METAFORA_TOPIK_ARTIKEL]. Strict 2D flat vector aesthetic, International Typographic Style, hard-edged pure geometric shapes, circular segments, clean intersecting vector planes, and fine structural lines in deep forest green #134e43. Strict Golden Ratio composition (phi 1:1.618 balance), dynamic asymmetric layout with 61.8% primary visual mass and 38.2% spacious breathable negative space. Brand color palette: pale mint flat background #f0fdfa, primary focal elements in vivid teal #14b898, secondary geometric accents in bright cyan-mint #99f6e4 and rich emerald #0d947a, precise deep outlines #134e43. Mathematical harmony, rational, modernist poster aesthetic, Josef Müller-Brockmann inspired layout discipline, 16:9 aspect ratio, clean solid fills, zero gradients, zero shadows, no 3D elements, no realism, 100% text-free, no letters, no words, no watermark."
 ````

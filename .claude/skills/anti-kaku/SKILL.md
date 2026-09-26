@@ -1,72 +1,86 @@
 ---
 name: anti-kaku
-description: Menulis atau menyunting dokumentasi, blog post, copy website, halaman landing, README, atau konten apa pun berbahasa Indonesia agar TIDAK terdengar kaku/birokratis/seperti proposal-hibah. Gunakan skill ini setiap kali user meminta menulis atau memperbaiki teks berbahasa Indonesia untuk website, dokumentasi, artikel, landing page, deskripsi produk/proyek, atau bertanya "ini kaku ga?" / "kedengeran natural ga?" / "kok kayak AI?" — bahkan jika user tidak menyebut kata "kaku" secara eksplisit, misalnya cukup bilang "tolong tulisin", "bikinin copy", atau "review tulisan ini". Wajib dipakai juga saat menyunting draft yang sudah ada, bukan cuma menulis dari nol.
+description: Menulis atau menyunting copy website, artikel blog, dokumentasi, landing page, atau teks apa pun berbahasa Indonesia agar tidak kaku (birokratis/robotik) sekaligus tidak terlalu santai (gaul/slang). Menghasilkan nada bahasa editorial modern yang lugas, bernas, berbobot, dan enak dibaca manusia.
 metadata:
   author: narr07
-  version: "1.0.0"
-  date: 2026-09-17
+  version: "1.1.0"
+  date: 2026-09-26
   repository: https://github.com/narr07/skills
   license: MIT
 license: MIT
 ---
 
-# Anti-Kaku
+# Anti-Kaku: Panduan Bahasa Indonesia Bernas dan Alami
 
-Skill untuk mendeteksi dan memperbaiki gaya bahasa Indonesia yang kaku — nadanya seperti proposal hibah, laporan pertanggungjawaban (LPJ), siaran pers instansi, atau hasil terjemahan mesin — supaya jadi tulisan yang enak dibaca manusia sungguhan, tapi tetap kredibel dan tidak childish.
+Skill ini memandu penulisan dan penyuntingan teks Bahasa Indonesia agar mencapai titik temu ideal: **tidak kaku seperti birokrasi atau robot AI, tetapi juga tidak terlalu santai seperti obrolan tongkrongan**.
 
-Ini BUKAN skill untuk mengubah tulisan jadi terlalu santai/alay. Target akhirnya: profesional tapi hidup — seperti orang kompeten yang sedang menjelaskan sesuatu ke temannya, bukan pejabat yang membacakan sambutan.
+Target nada suara (*voice & tone*): **Profesional hangat, lugas, dan berbobot (Smart Conversational / Modern Editorial)**. Bayangkan tulisan seorang praktisi senior atau jurnalis majalah editorial bermutu: bahasanya bersih, runut, nyaman dibaca, percaya diri, tanpa basa-basi birokratis, dan tanpa kata-kata gaul murahan.
 
-## Kapan pakai skill ini
+---
 
-- Menulis konten baru: landing page, dokumentasi, README, blog post, deskripsi fitur/proyek
-- Menyunting draft yang sudah ada dan user merasa "kok kaku ya" atau "kayak AI"
-- Review halaman/copy yang sudah jadi sebelum publish
-- Menerjemahkan dari EN ke ID (kombinasikan dengan skill `translate-id-en` jika tersedia)
+## 🎯 Spektrum Tiga Tingkat: Menemukan Titik Temu
 
-## Ciri-ciri tulisan kaku (checklist deteksi)
+Saat menyunting atau membuat teks, gunakan spektrum tiga tingkat ini sebagai kompas:
 
-Sebelum menulis atau setelah dapat draft, cek pola-pola ini:
+| Konteks | ❌ Terlalu Kaku (Birokrasi / Robot AI) | ❌ Terlalu Santai (Gaul / Slang Tongkrongan) | ✅ Titik Temu Ideal (Lugas, Bernas, Profesional) |
+| :--- | :--- | :--- | :--- |
+| **Deskripsi Nilai** | *"Guna merealisasikan optimalisasi efisiensi kerja tim..."* | *"Biar kerjaan tim lo makin sat-set dan nggak ribet..."* | *"Membantu tim Anda bekerja lebih cepat dan teratur."* |
+| **Desain Antarmuka** | *"Menghubungkan pengguna dengan arsitektur sistem yang aksesibel..."* | *"Bikin web yang gampang banget dibuka siapa aja tanpa pusing..."* | *"Merancang antarmuka web yang terstruktur, ringan, dan nyaman digunakan siapa saja."* |
+| **Pendidikan & Belajar** | *"Pemberdayaan talenta lokal dalam rangka akselerasi transformasi digital daerah."* | *"Bikin anak-anak muda lokal makin jago ngoding biar daerahnya maju..."* | *"Membuka ruang belajar bagi talenta lokal untuk membangun teknologi di daerahnya sendiri."* |
+| **Prinsip Kerja** | *"Setiap komponen kode diimplementasikan secara komprehensif tanpa redundansi."* | *"Tiap tombol dan kodingan beneran ada fungsinya, bukan cuma tempelan doang."* | *"Setiap baris kode dan komponen visual dirancang dengan fungsi yang jelas, bukan sekadar pelengkap."* |
+| **Panggilan / Ajakan** | *"Pihak kami senantiasa membuka peluang kerjasama strategis..."* | *"Yuk ngobrol santai sambil ngopi kalau ada ide seru..."* | *"Pintu kami selalu terbuka untuk berdiskusi atau memulai kolaborasi baru."* |
 
-1. **Nominalisasi bertumpuk** — kata benda turunan (pe-/-an, ke-/-an) dipakai berderet dalam satu kalimat.
-   - Kaku: *"Menghubungkan manusia dan agen AI dengan arsitektur pengetahuan dan desain yang kredibel serta aksesibel."*
-   - Natural: *"Kami merancang sistem yang gampang dipahami manusia maupun AI — jelas strukturnya, dan bisa diakses siapa saja."*
+---
 
-2. **Jargon proposal/birokrasi** — kata seperti "tepat guna", "pemberdayaan", "sinergi", "optimalisasi", "guna mendukung", "dalam rangka", "untuk kemajuan [wilayah]". Kata-kata ini valid tapi jadi red flag kalau dipakai berulang di satu halaman.
-   - Kaku: *"solusi tepat guna yang menyelesaikan persoalan riil"*
-   - Natural: *"solusi yang beneran kepake buat masalah sehari-hari warga"* (atau versi lebih formal sedikit: *"solusi yang benar-benar menjawab kebutuhan warga"*)
+## 🚫 Ciri-Ciri yang Wajib Dihindari
 
-3. **Kalimat tanpa subjek/pelaku jelas, kalimat pasif berlebihan** — bikin teks berjarak, seperti pengumuman resmi.
-   - Kaku: *"Seluruh source code dirilis dengan lisensi terbuka."*
-   - Natural: *"Semua source code kami rilis dengan lisensi terbuka."* (aktif, ada "kami" sebagai pelaku)
+### 1. Zona Terlalu Kaku (Birokrasi & Slop AI)
+- **Tumpukan Nominalisasi (pe-...-an, ke-...-an)**: *"Melakukan pemanfaatan sistem pendataan..."* (Ubah jadi kata kerja aktif: *"Memanfaatkan sistem pendataan..."*).
+- **Jargon Proposal Hibah / LPJ**: *"Dalam rangka"*, *"guna mendukung"*, *"optimalisasi"*, *"sinergi"*, *"akselerasi"*, *"solusi tepat guna"*, *"persoalan riil"*.
+- **Kalimat Pasif Berjarak Tanpa Pelaku**: *"Seluruh berkas telah diselesaikan pengunggahannya oleh pihak pengembang."* (Ubah aktif: *"Tim kami telah mengunggah seluruh berkas."*).
+- **Pembuka Klise AI**: *"Dalam era digital yang serba cepat ini..."*, *"Di tengah pesatnya perkembangan teknologi..."*.
 
-4. **Semua kalimat panjangnya seragam** — tulisan kaku biasanya monoton, tiap kalimat 15-20 kata dengan struktur mirip. Tulisan natural punya variasi: kalimat pendek untuk penekanan, diselingi kalimat lebih panjang.
+### 2. Zona Terlalu Santai (Overcorrection / Gaul Tongkrongan)
+- **Partikel dan Slang Percakapan Non-Baku**: *"Beneran"*, *"banget"*, *"nggak ribet"*, *"makin jago"*, *"ngoding"*, *"sat-set"*, *"gaspol"*, *"cuan"*, *"doang"*, *"nih"*, *"dong"*, *"kan"*.
+- **Kata Ganti Informal Tanpa Kesepakatan**: Menggunakan *"lo-gue"* atau gaya percakapan media sosial yang kekanak-kanakan untuk konteks profesional.
+- **Kalimat Lepas yang Mengabaikan Kaidah**: Menulis kalimat tanpa struktur subjek-predikat yang jelas dengan alasan "biar santai".
 
-5. **Testimoni/kutipan yang terlalu rapi** — kalau semua testimoni punya struktur & panjang identik ("[Manfaat] + [nama alat] + [dampak positif]"), itu langsung kebaca AI-generated. Testimoni asli biasanya sedikit belepotan: ada penekanan spesifik, kadang mulai dari keluhan lama, kadang cuma satu kalimat.
+---
 
-6. **Daftar buzzword tanpa contoh konkret** — "inovatif", "agile", "kredibel", "berkelanjutan" tanpa penjelasan apa artinya di konteks itu.
+## 🛠️ Aturan Praktis Menulis yang Bernas
 
-7. **Terlalu banyak menyebut nama sendiri/proyek di kalimat singkat** — nada company-profile, bukan orang ngobrol.
+### 1. Ubah Kata Benda Abstrak Menjadi Kata Kerja Nyata
+Kata benda turunan sering membuat kalimat terasa berat dan lamban.
+- Kaku: *"Pengoptimalan performa aplikasi menghasilkan peningkatan retensi pengguna."*
+- Terlalu Santai: *"Aplikasi dibikin kenceng biar user betah."*
+- **Bernas**: *"Aplikasi yang cepat dan responsif membuat pengguna betah bertahan."*
 
-## Cara memperbaiki
+### 2. Pertahankan Kalimat Aktif dengan Pelaku Jelas
+Kalimat aktif terdengar lebih bertanggung jawab, manusiawi, dan hidup.
+- Kaku: *"Perubahan sistem telah diterapkan demi kenyamanan pembaca."*
+- **Bernas**: *"Kami memperbarui sistem agar Anda membaca dengan lebih nyaman."*
 
-1. **Pecah nominalisasi jadi kata kerja.** "pemberdayaan talenta lokal" → "membuka akses buat talenta lokal" / "bikin talenta lokal makin jago".
-2. **Ganti jargon dengan bahasa konkret.** Tanya ke diri sendiri: "kalau saya jelasin ini ke teman sambil ngopi, saya bakal ngomong apa?"
-3. **Aktifkan kalimat.** Cari pelaku (kami/kita/[nama proyek]) dan taruh di depan kalimat kalau memungkinkan.
-4. **Variasikan panjang kalimat.** Setelah kalimat panjang berisi detail, kasih satu kalimat pendek untuk penekanan atau transisi.
-5. **Buat testimoni terasa personal.** Beda-bedakan struktur, panjang, dan sudut pandang tiap kutipan. Boleh mulai dari konteks masalah, boleh cuma satu-dua kalimat pendek.
-6. **Konkretkan buzzword.** Ganti "aksesibel" jadi "bisa dipakai orang dengan gangguan penglihatan" kalau itu maksudnya; ganti "inovatif" dengan menyebut apa yang beda dari yang lain.
-7. **Baca ulang dengan suara keras (mental).** Kalau kalimatnya kedengaran aneh diucapkan manusia beneran, tulis ulang.
+### 3. Variasikan Ritme dan Panjang Kalimat (*Sentence Cadence*)
+Jangan buat semua kalimat memiliki panjang yang sama (15-20 kata). Selingi kalimat panjang penjelas dengan kalimat pendek penegas.
+- Contoh: *"Menata tipografi bukan sekadar memilih rupa huruf yang cantik. Di balik setiap jarak baris dan ukuran teks, ada pertimbangan keterbacaan yang matang. Sederhana, tetapi berdampak besar."*
 
-## Yang TETAP dipertahankan (jangan overcorrect)
+### 4. Gunakan Kosakata Sehari-Hari yang Tetap Tertib
+Pilih kata yang lazim dipakai orang terpelajar saat berdiskusi, bukan kata kamus arkaik dan bukan pula bahasa pasar:
+- Alih-alih *"mengakselerasi"* (kaku) atau *"ngebutin"* (santai) $\rightarrow$ gunakan **"mempercepat"**.
+- Alih-alih *"mengeliminasi friksi"* (kaku) atau *"ngilangin ribet"* (santai) $\rightarrow$ gunakan **"mempermudah"** atau **"meringkas alur"**.
+- Alih-alih *"komprehensif"* (kaku) atau *"lengkap banget"* (santai) $\rightarrow$ gunakan **"menyeluruh"** atau **"lengkap"**.
 
-- Istilah teknis yang memang perlu (nama produk, istilah domain seperti "IoT", "WCAG 2.1 AA", nama tempat) — jangan dihilangkan demi kesan santai.
-- Struktur informasi (heading, bullet list untuk fitur) — masalahnya di gaya bahasa dalam kalimat, bukan di strukturnya.
-- Tingkat formalitas dasar sesuai audiens: konten untuk instansi pemerintah/akademik boleh tetap sedikit lebih formal daripada blog santai, tapi tetap harus aktif dan konkret, bukan berjarak.
-- Jangan ganti "Anda"/nada formal jadi "lo-gue" kalau brand voice-nya memang bukan itu — natural ≠ gaul. Tanyakan dulu kalau brand voice belum jelas.
+### 5. Jaga Kebersihan Teks (Anti-Slop Protocol)
+- **Hindari tanda em dash (`—`)**: Ganti dengan koma, titik dua, tanda kurung, atau titik pemisah kalimat.
+- **Hindari emoji berlebihan**: Jangan gunakan emoji di judul heading (`##`) atau label resmi.
+- **Pertahankan istilah teknis yang baku**: Istilah domain spesifik seperti *Nuxt*, *Flutter*, *API*, *SSR*, *grid layout* tidak perlu dipaksakan diterjemahkan jika komunitas teknis terbiasa menggunakannya dalam bahasa asli.
 
-## Alur kerja
+---
 
-1. Kalau ini konten baru: tulis draft langsung dengan prinsip di atas, jangan tulis versi kaku dulu baru diperbaiki.
-2. Kalau ini menyunting draft yang ada: tandai bagian yang kena ciri-ciri di atas, jelaskan singkat kenapa itu kaku, lalu kasih versi perbaikannya. Jangan rewrite seluruh halaman tanpa penjelasan kalau user cuma minta feedback.
-3. Untuk halaman panjang, cukup contohkan 3-5 bagian paling parah dulu daripada me-rewrite semuanya sekaligus — biar user bisa approve arah gayanya sebelum lanjut ke sisa halaman.
-4. Kalau ragu soal tingkat formalitas yang diinginkan, tanyakan satu pertanyaan singkat (mis. "mau tetap agak formal karena target pembacanya dinas/instansi, atau lebih santai kayak blog developer?") daripada menebak.
+## 📋 Alur Evaluasi Sebelum Menyunting
+
+Sebelum menulis atau merevisi teks, jalankan 3 pertanyaan uji cepat:
+
+1. **Uji Kewajaran Lisan**: Jika kalimat ini dibacakan langsung di depan rekan kerja atau klien saat presentasi, apakah terdengar wajar dan percaya diri (bukan seperti pidato dinas dan bukan pula seperti obrolan warung kopi)?
+2. **Uji Kejelasan Tindakan**: Apakah pembaca langsung tahu siapa yang melakukan apa, dan apa manfaat konkretnya?
+3. **Uji Kepadatan Kata**: Apakah ada kata pemanis atau jargon yang jika dihapus, makna kalimatnya tetap utuh atau bahkan lebih tegas? Jika ada, buang kata tersebut.
