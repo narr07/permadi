@@ -73,7 +73,7 @@ onMounted(() => {
 <template>
 	<header
 		ref="headerContainerRef"
-		class="sticky top-0 w-full border-b border-slate-200/80 bg-white dark:border-[#134e43] dark:bg-[#001e1c]"
+		class="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white dark:border-[#134e43] dark:bg-[#001e1c]"
 	>
 		<div class="mx-auto max-w-6xl flex items-center justify-between px-4 py-3.5 lg:px-8 sm:px-6">
 			<!-- Brand Mark & Identity -->
