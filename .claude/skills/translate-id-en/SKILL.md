@@ -176,6 +176,17 @@ Content, JSX, frontmatter YAML), jangan ikut menerjemahkan atau merusak:
 
 Terjemahkan isi teks di antara/dalam komponen tersebut, biarkan strukturnya utuh.
 
+**Kasus khusus — frontmatter yang nilainya kode enum, bukan bahasa alami:**
+Beberapa kunci frontmatter (contoh: `category` di skema blog `content.config.ts`,
+biasanya nilai seperti `edu`/`tech`/`art`) bukan kalimat, melainkan kode tetap
+yang divalidasi skema Nuxt Content di kedua bahasa. **Jangan diterjemahkan sama
+sekali** — nilainya harus identik persis di versi ID dan EN. Ini beda dari
+`tags`, yang nilainya memang diterjemahkan/di-slug-kan ulang per bahasa (lihat
+pola kerja `artikelgen`: tag ID `metode-belajar` menjadi EN `learning-methods`).
+Kalau ragu apakah sebuah kunci frontmatter berisi kode enum atau teks bebas,
+cek skema collection-nya (`content.config.ts` atau setara) sebelum menerjemahkan
+nilainya — jangan menebak dari bentuk katanya saja.
+
 ## Alur Kerja
 
 1. Baca seluruh teks sumber dulu sampai paham maksud, nada, dan audiensnya —

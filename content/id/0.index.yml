@@ -1,6 +1,6 @@
 title: Dinar Permadi Yusup | Frontend Developer & Desainer Grafis
 description: Arsip sistem web, eksperimen antarmuka, dan catatan harian seorang guru SD di Majalengka yang membangun aplikasi dengan Nuxt, Flutter, dan tipografi Swiss.
-eyebrow: Permadi — Guru SD yang suka ngoding dan bikin desain.
+eyebrow: Permadi: Guru SD, pengembang software, dan desainer grafis.
 headline: Sudut kecil di belantara internet.
 hero:
   section_number: "01 // MANIFEST"
@@ -8,11 +8,11 @@ hero:
   author_title: "PENDIDIK & DEVELOPER"
   author_name: "Dinar Permadi"
   author_role: "Guru SD & Software Developer"
-  author_bio: "Bagi saya, ngajar matematika di kelas SD dan bikin aplikasi itu mirip: dua-duanya butuh logika yang runtut, jelas, dan nggak ribet."
+  author_bio: "Bagi saya, mengajar matematika di kelas SD dan membangun aplikasi memiliki esensi yang sama: keduanya membutuhkan alur logika yang runtut, jelas, dan terukur."
   specs:
     spec_title: "SPESIFIKASI SISTEM"
     status_label: "STATUS"
-    status: "LAGI BISA DIAJAK KERJASAMA"
+    status: "TERBUKA UNTUK KERJA SAMA"
     almamater_label: "ALMAMATER"
     almamater: "UPI Bandung"
     location_label: "LOKASI"
@@ -22,21 +22,21 @@ hero:
     coords_label: "KOORDINAT"
     coordinates: "6°50'S 108°13'E"
   kicker: "01.A // PRINSIP & CARA KERJA"
-  headline: "Bikin web dengan logika matematika yang rapi, kode yang bersih, dan desain yang enak dilihat."
-  thesis: "Pengalaman ngajar anak-anak SD di Majalengka ngebiasain saya buat mikir simpel dan to-the-point. Cara pandang ini selalu saya bawa waktu bikin aplikasi: tiap tombol, baris kode, dan piksel harus beneran ada fungsinya, bukan cuma pemanis."
+  headline: "Membangun web dengan logika matematika yang tertata, kode yang bersih, dan desain yang fungsional."
+  thesis: "Pengalaman mengajar anak-anak SD di Majalengka membiasakan saya berpikir lugas dan terarah. Cara pandang ini selalu saya bawa saat merancang aplikasi: setiap tombol, baris kode, dan detail visual harus memiliki fungsi nyata, bukan sekadar pelengkap."
   links:
-    - label: "INTIP PROJEK"
+    - label: "LIHAT PROJEK"
       to: "/id/projek"
       icon: "i-swisspost-arrowupright"
-    - label: "YUK NGOBROL"
+    - label: "HUBUNGI SAYA"
       to: "/id/kontak"
       icon: "i-swisspost-arrowright"
 project_section:
   label: "02 // PROJEK & APLIKASI PILIHAN"
   count_badge: "3 KARYA PILIHAN"
-  correlation_badge: "DARI RUANG KELAS SAMPAI CODING"
+  correlation_badge: "DARI RUANG KELAS HINGGA KODE"
   fallback_title: "Karya pilihan dan pelajaran nyata di baliknya."
-  fallback_description: "Koleksi aplikasi web, mobile apps, dan tata letak antarmuka yang rapi — dari alat bantu di kelas sampai produk digital siap pakai."
+  fallback_description: "Koleksi aplikasi web, aplikasi mobile, dan tata letak antarmuka yang rapi, mulai dari alat bantu kelas hingga produk digital siap pakai."
   all_link_text: "LIHAT SEMUA PROJEK SAYA →"
   all_link_to: "/id/projek"
 philosophy:
@@ -44,7 +44,7 @@ philosophy:
   number: "PRINSIP 01"
   quote: "Desain yang baik itu tenang."
   quote_bold: "Desain luar biasa akan selalu membekas."
-  description: "Di matematika, hitungan itu pasti dan nggak bisa ngasal. Nah, desain dan tipografi itu cara saya nyajiinnya: tertata rapi, ramah, dan nyaman dibaca siapa pun."
+  description: "Dalam matematika, setiap perhitungan memiliki kepastian logis. Melalui desain dan tipografi, saya menyajikannya agar tetap tertata, ramah, dan nyaman dibaca siapa saja."
   pedagogy_tag: "PENDIDIKAN & KARYA DIGITAL"
   institution_tag: "UPI BANDUNG"
   label: "Permadi Philosophy"
@@ -53,7 +53,7 @@ skills_section:
   matrix_tag: "DISIPLIN TEKNIS"
   code_kicker: "A // LOGIKA & SISTEM"
   code_title: "Software Engineering"
-  code_desc: "Bikin web yang kencang, aplikasi Android/iOS yang mulus, sampai otomasi data biar urusan kerjaan beres sendiri."
+  code_desc: "Membangun web berkinerja tinggi, aplikasi mobile yang lancar, serta otomatisasi data yang meringkas alur kerja."
   code_tag: "Ekosistem Modern"
   code_items:
     - name: "Nuxt 4 & Vue 3"
@@ -70,7 +70,7 @@ skills_section:
       icon: "i-swisspost-cloud"
   design_kicker: "B // VISUAL & GRAFIS"
   design_title: "Graphic & Editorial"
-  design_desc: "Bikin logo, ilustrasi, media ajar interaktif, sampai desain antarmuka aplikasi yang rapi berbasis grid Swiss."
+  design_desc: "Merancang identitas visual, media ajar interaktif, hingga tata letak antarmuka yang terstruktur berbasis grid Swiss."
   design_tag: "Presisi & Harmoni"
   design_items:
     - name: "Adobe Illustrator"
@@ -85,7 +85,7 @@ skills_section:
     - name: "Swiss Typography"
       desc: "Struktur Grid & Hirarki Konten"
       icon: "i-swisspost-paragraph"
-  all_link_text: "Lihat cara saya makai teknologi ini di projek nyata →"
+  all_link_text: "Lihat penerapan teknologi ini pada projek nyata →"
   all_link_to: "/id/projek"
 writing:
   label: "05 // TULISAN & CATATAN TERBARU"
@@ -95,14 +95,14 @@ writing:
   col_discipline: "DISIPLIN"
   col_date: "TANGGAL"
   footer_tag: "PUBLIKASI: TEKNOLOGI & RUANG KELAS"
-  title: "Cerita lapangan dan catatan santai seputar dunia coding, desain, dan pengalaman di kelas."
+  title: "Catatan lapangan dan dokumentasi pemikiran seputar rekayasa perangkat lunak, desain antarmuka, dan dinamika ruang kelas."
   all_link_text: "BACA SEMUA TULISAN →"
   all_link_to: "/id/blog"
 colophon:
   section_number: "06 // HUBUNGI & KOLABORASI"
   status: "TERBUKA UNTUK KERJASAMA"
-  headline: "Ada ide projek seru, mau bikin aplikasi bareng, atau sekadar mau ngobrol?"
-  description: "Pintu saya selalu terbuka buat ngobrol santai seputar Nuxt, bikin aplikasi Flutter, ngulik tipografi, atau serunya pakai teknologi di sekolah dasar. Jangan sungkan buat kontak ya!"
+  headline: "Punya ide projek, ingin berkolaborasi, atau ingin berdiskusi?"
+  description: "Pintu saya selalu terbuka untuk berdiskusi seputar Nuxt, pengembangan aplikasi Flutter, eksplorasi tipografi, maupun integrasi teknologi di sekolah dasar. Silakan hubungi saya kapan saja."
   email: "dinar@permadi.dev"
   response_time: "BIASANYA DIBALAS DALAM: 1–2 HARI KERJA // MAJALENGKA (WIB / GMT+7)"
   socials_title: "PLATFORM DIGITAL"
