@@ -92,14 +92,14 @@ const displayProjects = computed(() => {
 			<article
 				v-for="p in displayProjects"
 				:key="p.index"
-				class="group flex flex-col justify-between p-6 transition-all duration-200 active:scale-[0.99] hover:(bg-[#e2f4f0] -translate-y-0.5 dark:bg-[#003832]) lg:p-10 sm:p-8"
+				class="group flex flex-col justify-between p-6 transition-colors duration-150 hover:(bg-[#e2f4f0] dark:bg-[#003832]) lg:p-10 sm:p-8"
 			>
 				<div>
 					<div class="mb-6 flex items-center justify-between text-xs font-mono">
 						<span class="text-brand-600 font-bold dark:text-brand-400">
 							{{ p.index }} // {{ p.year }}
 						</span>
-						<span class="i-swisspost-arrowupright text-base text-slate-600 transition-transform duration-200 group-hover:(translate-x-1 text-brand-500 -translate-y-1) dark:text-slate-400" />
+						<span class="i-swisspost-arrowupright text-base text-slate-600 transition-colors duration-150 group-hover:text-brand-500 dark:text-slate-400" />
 					</div>
 
 					<h3 class="mb-4 text-xl text-slate-900 font-900 leading-snug font-heading transition-colors sm:text-2xl dark:text-slate-50 group-hover:text-brand-700 dark:group-hover:text-brand-300">
@@ -135,7 +135,7 @@ const displayProjects = computed(() => {
 				class="group ml-auto inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase underline underline-offset-4 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
 				<span>{{ projectSection?.all_link_text || allLinkText || (locale === 'id' ? 'LIHAT SEMUA PROJEK SAYA →' : 'VIEW ALL PROJECTS') }}</span>
-				<span class="i-swisspost-arrowright text-xs transition-transform duration-150 group-hover:translate-x-1" />
+				<span class="i-swisspost-arrowright text-xs transition-colors duration-150 group-hover:text-brand-600 dark:group-hover:text-brand-400" />
 			</NuxtLink>
 		</div>
 	</section>

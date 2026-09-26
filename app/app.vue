@@ -94,7 +94,7 @@ defineOgImage('Bento', {
 </script>
 
 <template>
-	<div class="relative mx-auto max-w-6xl min-h-screen w-full flex flex-col justify-between border-x border-slate-200/80 bg-white dark:border-[#134e43] dark:bg-[#001e1c] selection:(bg-brand-500 text-white)">
+	<div class="relative mx-auto max-w-6xl min-h-screen w-full flex flex-col justify-between overflow-x-hidden border-x border-slate-200/80 bg-white dark:border-[#134e43] dark:bg-[#001e1c] selection:(bg-brand-500 text-white)">
 		<!-- Skip to Main Content for A11y / Keyboard Focus Management -->
 		<a
 			href="#main"

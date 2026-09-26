@@ -113,7 +113,7 @@ const formattedPosts = computed(() => {
 				v-for="post in formattedPosts"
 				:key="post.index"
 				:to="localePath(post.link)"
-				class="group min-h-[56px] flex flex-col cursor-pointer items-start gap-2 px-6 py-5 transition-all duration-200 md:grid md:grid-cols-12 hover:(translate-x-1 bg-[#e2f4f0] dark:bg-[#003832]) active:scale-[0.99] md:items-center md:gap-4 sm:px-8"
+				class="group min-h-[56px] flex flex-col cursor-pointer items-start gap-2 px-6 py-5 transition-colors duration-150 md:grid md:grid-cols-12 hover:(bg-[#e2f4f0] dark:bg-[#003832]) md:items-center md:gap-4 sm:px-8"
 			>
 				<span class="col-span-1 text-xs text-brand-600 font-bold font-mono tabular-nums dark:text-brand-400">
 					{{ post.index }}
@@ -130,7 +130,7 @@ const formattedPosts = computed(() => {
 				<span class="col-span-1 w-full flex items-center justify-between gap-2 text-xs text-slate-700 font-mono tabular-nums md:w-auto md:justify-end dark:text-slate-300">
 					<span class="text-[10px] text-slate-600 font-mono uppercase md:hidden">[{{ post.category }}]</span>
 					<span>{{ post.date }}</span>
-					<span class="i-swisspost-arrowupright text-sm text-slate-600 transition-transform duration-150 group-hover:(translate-x-0.5 text-brand-500 -translate-y-0.5) dark:text-slate-400" />
+					<span class="i-swisspost-arrowupright text-sm text-slate-600 transition-colors duration-150 group-hover:text-brand-500 dark:text-slate-400" />
 				</span>
 			</NuxtLink>
 		</div>
@@ -145,7 +145,7 @@ const formattedPosts = computed(() => {
 				class="group ml-auto inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase underline underline-offset-4 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
 				<span>{{ writing?.all_link_text || $t('common.view_all_articles') }}</span>
-				<span class="i-swisspost-arrowright text-xs transition-transform duration-150 group-hover:translate-x-1" />
+				<span class="i-swisspost-arrowright text-xs transition-colors duration-150 group-hover:text-brand-600 dark:group-hover:text-brand-400" />
 			</NuxtLink>
 		</div>
 	</section>

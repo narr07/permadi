@@ -121,6 +121,7 @@ html {
 	scroll-padding-top: 5.5rem;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	overflow-x: hidden;
 }
 
 body {
@@ -130,6 +131,7 @@ body {
 	min-height: 100vh;
 	background-color: var(--canvas);
 	color: var(--ink);
+	overflow-x: hidden;
 	transition:
 		background-color 0.25s ease,
 		color 0.25s ease;
