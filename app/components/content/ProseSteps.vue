@@ -51,16 +51,16 @@ const resolvedLevel = computed(() => String(props.level || '3'))
 	font-family: 'Permadi Heading', sans-serif;
 	font-weight: 800;
 	letter-spacing: -0.025em;
-	color: #000b07;
+	color: var(--heading, #001e1c);
 	border-bottom: none !important;
 	padding-bottom: 0 !important;
 	line-height: 1.25 !important;
 }
 
-:global(.dark) .prose-steps :deep(h2),
-:global(.dark) .prose-steps :deep(h3),
-:global(.dark) .prose-steps :deep(h4) {
-	color: #f8fafa;
+:global(.dark .prose-steps h2),
+:global(.dark .prose-steps h3),
+:global(.dark .prose-steps h4) {
+	color: #f8fafa !important;
 }
 
 /* Target Heading by Level */
@@ -101,21 +101,20 @@ const resolvedLevel = computed(() => String(props.level || '3'))
 	font-weight: 700;
 	font-family: 'Permadi Mono', monospace;
 	background-color: #ffffff;
-	color: #0f7662;
-	border: 1px solid #ced7d5;
-	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+	color: #115e4f;
+	border: 2px solid #115e4f;
+	box-shadow: 0 1px 3px rgba(17, 94, 79, 0.12);
 	z-index: 2;
 	transition: all 0.15s ease;
 }
 
-:global(.dark) .level-2 :deep(> h2::before),
-:global(.dark) .level-3 :deep(> h3::before),
-:global(.dark) .level-4 :deep(> h4::before),
-:global(.dark) .prose-steps:not([class*="level-"]) :deep(> h3::before) {
-	background-color: #000c0a;
-	color: #5eeacf;
-	border-color: rgba(20, 184, 152, 0.4);
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+:global(.dark .prose-steps [class*="level-"] > :is(h2, h3, h4)::before),
+:global(.dark .prose-steps:not([class*="level-"]) > h3::before),
+:global(.dark .prose-steps :is(h2, h3, h4)::before) {
+	background-color: #001e1c !important;
+	color: #5eeacf !important;
+	border: 1.5px solid #2bd4b5 !important;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
 }
 
 /* Hide autolink hash inside steps */

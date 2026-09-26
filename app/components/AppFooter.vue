@@ -30,7 +30,7 @@ function scrollToTop() {
 		class="w-full flex flex-col items-center justify-between gap-4 border-t border-slate-200/80 bg-slate-50/90 px-6 py-4 text-xs font-mono sm:flex-row dark:border-[#134e43] dark:bg-[#002420]/80 sm:px-8"
 	>
 		<span class="text-slate-600 tracking-wider uppercase dark:text-slate-400">
-			{{ locale === 'id' ? 'MAJALENGKA, JAWA BARAT' : 'MAJALENGKA, WEST JAVA' }}
+			{{ $t('footer.location') }}
 		</span>
 
 		<!-- Social Media Links (Home Strip) -->
@@ -43,9 +43,12 @@ function scrollToTop() {
 				rel="noopener noreferrer"
 				class="group inline-flex items-center gap-1.5 text-slate-700 transition-colors dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400"
 			>
-				<span :class="s.icon" class="text-xs" />
+				<span
+					:class="s.icon"
+					class="text-xs"
+				/>
 				<span class="font-bold">@{{ s.handle }}</span>
-				<span class="i-swisspost-arrowupright text-[10px] text-slate-400 transition-transform duration-150 group-hover:(text-brand-600 translate-x-0.5 -translate-y-0.5) dark:group-hover:text-brand-400" />
+				<span class="i-swisspost-arrowupright text-[10px] text-slate-400 transition-transform duration-150 group-hover:(translate-x-0.5 text-brand-600 -translate-y-0.5) dark:group-hover:text-brand-400" />
 			</a>
 		</div>
 
@@ -54,7 +57,7 @@ function scrollToTop() {
 			class="inline-flex items-center gap-2 border border-slate-300 px-3 py-1.5 text-slate-900 font-bold tracking-wider uppercase transition-colors dark:border-[#134e43] hover:border-brand-500 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			@click="scrollToTop"
 		>
-			<span>{{ locale === 'id' ? 'KEMBALI KE ATAS' : 'BACK TO TOP' }}</span>
+			<span>{{ $t('footer.back_to_top').toUpperCase() }}</span>
 			<span class="i-swisspost-arrowup text-xs" />
 		</button>
 	</footer>
@@ -85,8 +88,8 @@ function scrollToTop() {
 
 		<!-- Social Platforms Rail (Inner Pages) -->
 		<div class="flex flex-col items-start justify-between gap-3 border-b border-slate-200/80 bg-slate-50/40 px-6 py-3.5 text-xs font-mono sm:flex-row sm:items-center dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-8">
-			<span class="text-[11px] font-bold tracking-widest text-slate-600 uppercase dark:text-slate-400">
-				{{ locale === 'id' ? 'PLATFORM DIGITAL' : 'DIGITAL PLATFORMS' }}
+			<span class="text-[11px] text-slate-600 font-bold tracking-widest uppercase dark:text-slate-400">
+				{{ $t('footer.platforms') }}
 			</span>
 			<div class="flex flex-wrap items-center gap-4 sm:gap-6">
 				<a
@@ -97,10 +100,13 @@ function scrollToTop() {
 					rel="noopener noreferrer"
 					class="group inline-flex items-center gap-1.5 text-slate-700 transition-colors dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400"
 				>
-					<span :class="s.icon" class="text-xs" />
+					<span
+						:class="s.icon"
+						class="text-xs"
+					/>
 					<span class="font-bold">{{ s.name }}</span>
 					<span class="text-slate-500 dark:text-slate-400">(@{{ s.handle }})</span>
-					<span class="i-swisspost-arrowupright text-[10px] text-slate-400 transition-transform duration-150 group-hover:(text-brand-600 translate-x-0.5 -translate-y-0.5) dark:group-hover:text-brand-400" />
+					<span class="i-swisspost-arrowupright text-[10px] text-slate-400 transition-transform duration-150 group-hover:(translate-x-0.5 text-brand-600 -translate-y-0.5) dark:group-hover:text-brand-400" />
 				</a>
 			</div>
 		</div>
@@ -111,7 +117,7 @@ function scrollToTop() {
 				<span>© 2021–<ClientOnly fallback="2026">{{ currentYear }}</ClientOnly></span>
 				<span>·</span>
 				<span class="text-slate-900 font-bold dark:text-slate-100">Dinar Permadi Yusup</span>
-				<span class="hidden sm:inline">· {{ locale === 'id' ? 'Hak cipta dilindungi.' : 'All rights reserved.' }}</span>
+				<span class="hidden sm:inline">· {{ $t('footer.all_rights_reserved') }}</span>
 			</div>
 
 			<button
@@ -119,7 +125,7 @@ function scrollToTop() {
 				class="group inline-flex cursor-pointer items-center gap-2 border border-slate-300 px-3 py-1.5 text-slate-900 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 dark:border-[#134e43] hover:border-brand-500 dark:text-slate-50 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-brand-400"
 				@click="scrollToTop"
 			>
-				<span>{{ locale === 'id' ? 'Kembali ke Atas' : 'Back to Top' }}</span>
+				<span>{{ $t('footer.back_to_top') }}</span>
 				<span class="i-swisspost-arrowup text-xs transition-transform duration-150 group-hover:-translate-y-0.5" />
 			</button>
 		</div>

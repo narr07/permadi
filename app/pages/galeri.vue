@@ -292,34 +292,34 @@ useSchemaOrg([
 				<div class="flex flex-col justify-between bg-slate-50/40 p-6 lg:col-span-4 dark:bg-[#002420]/20 sm:p-8">
 					<div>
 						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							{{ locale === 'id' ? '■ 03 // ARSIP VISUAL VOL. 26' : '■ 03 // VISUAL ARCHIVE VOL. 26' }}
+							{{ $t('galeri.archive_badge') }}
 						</div>
 
 						<div class="text-xs font-mono divide-y divide-slate-200/80 dark:divide-[#134e43]">
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">{{ locale === 'id' ? 'TOTAL SPESIMEN' : 'TOTAL SPECIMENS' }}</span>
-								<span class="text-slate-900 font-bold tabular-nums dark:text-slate-50">{{ allItems.length }} {{ locale === 'id' ? 'Dokumen' : 'Documents' }}</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ $t('galeri.total_label') }}</span>
+								<span class="text-slate-900 font-bold tabular-nums dark:text-slate-50">{{ allItems.length }} {{ $t('galeri.unit') }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">{{ locale === 'id' ? 'HOSTING MEDIA' : 'MEDIA HOSTING' }}</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ $t('galeri.hosting') }}</span>
 								<span class="text-slate-900 font-medium dark:text-slate-50">CLOUDINARY EDGE</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">{{ locale === 'id' ? 'OPTIMASI FORMAT' : 'FORMAT OPTIMIZATION' }}</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ $t('galeri.optimization') }}</span>
 								<span class="text-brand-600 font-bold dark:text-accent">WEBP / AVIF LQIP</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">{{ locale === 'id' ? 'KURASI' : 'CURATION' }}</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ $t('galeri.curator') }}</span>
 								<span class="text-slate-900 font-medium dark:text-slate-50">Dinar Permadi Yusup</span>
 							</div>
 						</div>
 					</div>
 
 					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
-						<span>{{ locale === 'id' ? 'HAK CIPTA' : 'COPYRIGHT' }}</span>
+						<span>{{ $t('galeri.copyright') }}</span>
 						<span>CC BY-NC-ND 4.0</span>
 					</div>
 				</div>
@@ -328,15 +328,15 @@ useSchemaOrg([
 				<div class="flex flex-col justify-between p-6 lg:col-span-8 lg:p-12 sm:p-10">
 					<div>
 						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							{{ locale === 'id' ? 'DOKUMENTASI VISUAL & STUDIO' : 'VISUAL DOCUMENTATION & STUDIO' }}
+							{{ $t('galeri.subhead_badge') }}
 						</div>
 
 						<h1 class="mb-6 text-balance text-3xl text-slate-900 font-900 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
-							{{ page?.title || (locale === 'id' ? 'Galeri Visual & Dokumentasi' : 'Visual Gallery & Documentation') }}
+							{{ page?.title || $t('galeri.default_title') }}
 						</h1>
 
 						<p class="mb-8 max-w-[58ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
-							{{ page?.description || (locale === 'id' ? 'Koleksi dokumentasi workspace, seni visual, dan tangkapan karya desain yang dioptimasi secara presisi melalui Cloudinary Edge CDN.' : 'A curated collection of visual experiments, photography, and workspace snapshots served via Cloudinary CDN.') }}
+							{{ page?.description || $t('galeri.default_description') }}
 						</p>
 
 						<div class="flex flex-wrap gap-2 text-xs text-slate-700 font-mono dark:text-slate-300">
@@ -351,7 +351,7 @@ useSchemaOrg([
 					</div>
 
 					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
-						<span>{{ locale === 'id' ? 'ARSIP PERMADI.DEV' : 'PERMADI.DEV ARCHIVE' }}</span>
+						<span>{{ $t('projek.archive_tag') }}</span>
 					</div>
 				</div>
 			</div>
@@ -362,7 +362,7 @@ useSchemaOrg([
 			<!-- Tag Filter Buttons -->
 			<div class="flex flex-wrap items-center gap-1.5">
 				<span class="mr-1 text-[11px] text-slate-600 font-bold uppercase dark:text-slate-400">
-					FILTER:
+					{{ $t('galeri.filter_label') }}
 				</span>
 
 				<!-- All Topics -->
@@ -374,7 +374,7 @@ useSchemaOrg([
 						: 'border-slate-300 dark:border-[#134e43] text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#002420]'"
 					@click="selectTag('ALL')"
 				>
-					{{ locale === 'id' ? 'SEMUA' : 'ALL' }} ({{ allItems.length }})
+					{{ $t('galeri.filter_all') }} ({{ allItems.length }})
 				</button>
 
 				<!-- Individual Tags -->
@@ -440,7 +440,7 @@ useSchemaOrg([
 					>
 
 					<!-- High-Res Main Image -->
-					<img
+					<imgt
 						:src="item.image"
 						:alt="item.title || (locale === 'id' ? 'Foto galeri' : 'Gallery photo specimen')"
 						decoding="async"
@@ -451,8 +451,7 @@ useSchemaOrg([
 						:loading="i < 6 ? 'eager' : 'lazy'"
 						:fetchpriority="i === 0 ? 'high' : 'auto'"
 						@load="onImageLoad(item.public_id)"
-					>
-				</div>
+					/></div>
 
 				<!-- Specimen Footer Details -->
 				<div class="flex flex-1 flex-col justify-between border-t border-slate-200/80 p-4 dark:border-[#134e43]">
@@ -504,9 +503,9 @@ useSchemaOrg([
 				class="flex cursor-pointer items-center gap-2 border border-slate-300 px-5 py-2.5 text-slate-900 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 dark:border-[#134e43] hover:border-brand-500 dark:text-slate-50 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-accent"
 				@click="loadMore"
 			>
-				<span>↓ {{ locale === 'id' ? 'MUAT LEBIH BANYAK FOTO' : 'LOAD MORE PHOTOS' }}</span>
+				<span>↓ {{ $t('galeri.load_more') }}</span>
 				<span class="text-slate-600 tabular-nums dark:text-slate-400">
-					({{ filteredGallery.length - displayedItems.length }} TERSISA)
+					({{ filteredGallery.length - displayedItems.length }} {{ $t('galeri.remaining') }})
 				</span>
 			</button>
 
@@ -514,7 +513,7 @@ useSchemaOrg([
 				v-else
 				class="text-[11px] text-slate-600 font-bold tracking-wider uppercase dark:text-slate-400"
 			>
-				{{ locale === 'id' ? `■ AKHIR ARSIP FOTO // ${filteredGallery.length} TOTAL SPESIMEN TERCATAT` : `■ END OF VISUAL ARCHIVE // ${filteredGallery.length} TOTAL SPECIMENS CATALOGED` }}
+				{{ $t('galeri.end_of_archive', { count: filteredGallery.length }) }}
 			</div>
 		</div>
 
@@ -524,10 +523,10 @@ useSchemaOrg([
 			class="w-full border-x border-b border-slate-200/80 bg-white p-12 text-center text-xs font-mono dark:border-[#134e43] dark:bg-[#001e1c]"
 		>
 			<div class="mb-2 text-sm text-brand-600 font-bold dark:text-accent">
-				{{ locale === 'id' ? '■ TIDAK ADA SPESIMEN TERSEDIA' : '■ NO SPECIMENS AVAILABLE' }}
+				{{ $t('galeri.empty_title') }}
 			</div>
 			<p class="text-slate-700 dark:text-slate-300">
-				{{ locale === 'id' ? 'Tidak ada foto yang cocok dengan filter tag terpilih.' : 'No photos match the selected tag filter.' }}
+				{{ $t('galeri.empty_desc') }}
 			</p>
 		</div>
 
@@ -561,7 +560,7 @@ useSchemaOrg([
 								<div class="flex items-center gap-2 truncate text-[11px] font-bold tracking-wider uppercase">
 									<span class="inline-block h-2 w-2 shrink-0 bg-brand-500" />
 									<span class="shrink-0 text-brand-700 dark:text-accent">
-										{{ locale === 'id' ? 'SPESIMEN' : 'SPECIMEN' }} [{{ String(currentModalIndex + 1).padStart(2, '0') }}/{{ String(filteredGallery.length).padStart(2, '0') }}]
+										{{ $t('galeri.specimen_label') }} [{{ String(currentModalIndex + 1).padStart(2, '0') }}/{{ String(filteredGallery.length).padStart(2, '0') }}]
 									</span>
 									<span class="text-slate-300 dark:text-[#134e43]">|</span>
 									<span class="truncate text-slate-900 dark:text-slate-50">
@@ -577,10 +576,10 @@ useSchemaOrg([
 										:disabled="!hasPrevPhoto"
 										class="cursor-pointer border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-all duration-150 dark:border-[#134e43]"
 										:class="hasPrevPhoto ? 'hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent hover:-translate-y-0.5 active:scale-95' : 'opacity-40 cursor-not-allowed'"
-										:title="locale === 'id' ? 'Foto Sebelumnya (Panah Kiri)' : 'Previous Photo (Left Arrow)'"
+										:title="$t('galeri.prev_photo_title')"
 										@click="prevPhoto"
 									>
-										{{ locale === 'id' ? '← SEBELUMNYA' : '← PREVIOUS' }}
+										{{ $t('galeri.prev_photo') }}
 									</button>
 
 									<!-- Next Button -->
@@ -589,10 +588,10 @@ useSchemaOrg([
 										:disabled="!hasNextPhoto"
 										class="cursor-pointer border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-all duration-150 dark:border-[#134e43]"
 										:class="hasNextPhoto ? 'hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent hover:-translate-y-0.5 active:scale-95' : 'opacity-40 cursor-not-allowed'"
-										:title="locale === 'id' ? 'Foto Selanjutnya (Panah Kanan)' : 'Next Photo (Right Arrow)'"
+										:title="$t('galeri.next_photo_title')"
 										@click="nextPhoto"
 									>
-										{{ locale === 'id' ? 'BERIKUTNYA →' : 'NEXT →' }}
+										{{ $t('galeri.next_photo') }}
 									</button>
 
 									<!-- Download HD Button -->
@@ -605,14 +604,14 @@ useSchemaOrg([
 										class="hidden cursor-pointer items-center gap-1 border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-all duration-150 sm:inline-flex active:scale-95 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-accent"
 									>
 										<span class="i-swisspost-download text-xs" />
-										<span>{{ locale === 'id' ? 'UNDUH HD' : 'DOWNLOAD HD' }}</span>
+										<span>{{ $t('galeri.download_hd') }}</span>
 									</a>
 
 									<!-- Close Button -->
 									<button
 										type="button"
 										class="cursor-pointer border border-slate-300 px-2.5 py-1 text-[10px] font-bold uppercase transition-all duration-150 active:scale-95 dark:border-[#134e43] hover:text-rose-600 hover:-translate-y-0.5 dark:hover:text-rose-400"
-										title="Tutup (Esc)"
+										:title="$t('galeri.close_title')"
 										@click="closeModal"
 									>
 										✕
@@ -635,12 +634,12 @@ useSchemaOrg([
 							<!-- Technical Parameters Ledger -->
 							<div class="flex flex-wrap items-center justify-between gap-4 border-t border-slate-200/80 bg-slate-50/80 p-3.5 text-[11px] text-slate-700 dark:border-[#134e43] dark:bg-[#002420]/60 sm:p-4 dark:text-slate-300">
 								<div class="flex flex-wrap items-center gap-2">
-									<span class="text-slate-900 font-bold dark:text-slate-50">{{ locale === 'id' ? 'PARAMETER:' : 'PARAMETERS:' }}</span>
+									<span class="text-slate-900 font-bold dark:text-slate-50">{{ $t('galeri.param_label') }}</span>
 									<span class="tabular-nums">{{ selectedPhoto.width || 720 }}×{{ selectedPhoto.height || 540 }} PX</span>
 									<span>//</span>
 									<span>FORMAT: CLOUDINARY SWR</span>
 									<span>//</span>
-									<span>{{ locale === 'id' ? 'LISENSI: CC BY-NC-ND 4.0' : 'LICENSE: CC BY-NC-ND 4.0' }}</span>
+									<span>{{ $t('galeri.license_label') }}</span>
 								</div>
 
 								<div

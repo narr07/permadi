@@ -88,7 +88,7 @@ const onSubmit = handleSubmit(async (values) => {
 					v-if="isSubmitting"
 					class="i-swisspost-reloadright animate-spin text-xs"
 				/>
-				<span>{{ isSubmitting ? (locale === 'id' ? 'Mengirim…' : 'Sending…') : t('newsletter.button', 'Subscribe') }}</span>
+				<span>{{ isSubmitting ? t('newsletter.subscribing', 'Mengirim…') : t('newsletter.button', 'Langganan') }}</span>
 			</button>
 		</div>
 

@@ -83,3 +83,8 @@ public/fonts/_backup/
 
 # graft's local graph cache — regenerable, not committed (run `graft build`).
 /graft/
+pdf_out/
+
+# Python bytecode
+__pycache__/
+*.py[cod]

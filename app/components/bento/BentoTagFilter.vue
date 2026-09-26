@@ -41,16 +41,16 @@ onClickOutside(dropdownRef, () => {
 const defaultAllLabel = computed(() => {
 	if (props.allLabel)
 		return props.allLabel
-	return locale.value === 'id' ? 'Semua Topik' : 'All Topics'
+	return t('search.all_tags', locale.value === 'id' ? 'Semua Topik' : 'All Tags')
 })
 
 const defaultItemUnit = computed(() => {
 	if (props.itemLabel)
 		return props.itemLabel
 	if (props.type === 'project') {
-		return locale.value === 'id' ? 'projek' : 'projects'
+		return t('projek.unit', locale.value === 'id' ? 'Projek' : 'Projects')
 	}
-	return locale.value === 'id' ? 'artikel' : 'articles'
+	return t('blog.unit', locale.value === 'id' ? 'Artikel' : 'Articles')
 })
 
 const currentLabel = computed(() => {
@@ -128,7 +128,7 @@ function resetFilter() {
 								<input
 									v-model="tagSearchQuery"
 									type="text"
-									:placeholder="locale === 'id' ? 'Cari tag...' : 'Search tags...'"
+									:placeholder="$t('common.search_tags')"
 									class="w-full border border-slate-200 rounded-lg bg-slate-50 py-1.5 pl-8 pr-3 text-xs text-slate-900 dark:border-white/10 dark:bg-[#002420] dark:text-white placeholder:text-slate-500"
 								>
 							</div>
@@ -182,7 +182,7 @@ function resetFilter() {
 								v-if="filteredDropdownTags.length === 0"
 								class="py-4 text-center text-xs text-slate-500"
 							>
-								{{ locale === 'id' ? 'Tag tidak ditemukan' : 'No tag found' }}
+								{{ $t('common.tag_not_found') }}
 							</div>
 						</div>
 					</div>
@@ -204,7 +204,7 @@ function resetFilter() {
 					@click="resetFilter"
 				>
 					<span class="i-swisspost-closex text-xs" />
-					{{ locale === 'id' ? 'Reset' : 'Reset' }}
+					{{ $t('common.reset') }}
 				</button>
 			</div>
 		</div>

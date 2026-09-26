@@ -61,9 +61,24 @@
 	--ink: #001e1c;
 	--heading: #001e1c;
 	--card: #ffffff;
-	--border-clean: #deeae9;
+	--border-clean: #115e4f;
 	--muted: #0f7662;
 	--accent: #f9bc60;
+}
+
+/* Swiss Architectural Grid Lines - High contrast Brand 800 in Light Mode */
+html:not(.dark) .border-slate-200\/80,
+html:not(.dark) .border-slate-200\/60,
+html:not(.dark) .border-slate-200\/70,
+html:not(.dark) .border-slate-200\/90,
+html:not(.dark) .border-slate-200,
+html:not(.dark) .border-slate-300 {
+	border-color: #115e4f;
+}
+
+html:not(.dark) .divide-slate-200\/80 > :not([hidden]) ~ :not([hidden]),
+html:not(.dark) .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
+	border-color: #115e4f;
 }
 
 .dark {
@@ -264,6 +279,19 @@ html.dark .shiki span,
 .dark .prose :where(h1, h2, h3, h4, h5, h6):not(:where([class~="not-prose"], [class~="not-prose"] *)) a {
 	color: inherit;
 	text-decoration: none;
+}
+
+/* ProseSteps Dark Mode Contrast (WCAG AAA) */
+.dark .prose-steps h2,
+.dark .prose-steps h3,
+.dark .prose-steps h4 {
+	color: #f8fafa !important;
+}
+
+.dark .prose-steps :is(h2, h3, h4)::before {
+	background-color: #000c0a !important;
+	color: #5eeacf !important;
+	border-color: rgba(20, 184, 152, 0.4) !important;
 }
 
 /* Micro-Interactions Keyframes & Utility Standards */

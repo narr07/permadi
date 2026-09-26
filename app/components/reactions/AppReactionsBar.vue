@@ -46,12 +46,12 @@ const reactionsList = computed(() => [
 	{
 		type: 'THINKING' as const,
 		emoji: '🧐',
-		title: locale.value === 'id' ? 'Insightful' : 'Insightful',
+		title: locale.value === 'id' ? 'Bermanfaat' : 'Insightful',
 	},
 	{
 		type: 'AMAZED' as const,
 		emoji: '😲',
-		title: locale.value === 'id' ? 'Impresif' : 'Amazed',
+		title: locale.value === 'id' ? 'Keren' : 'Amazed',
 	},
 ])
 
@@ -93,7 +93,7 @@ const amazedPercentage = computed(() => {
 
 		<!-- Explanatory Prompt -->
 		<div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/80 px-5 py-3 text-xs text-slate-700 dark:border-[#134e43] dark:text-slate-300">
-			<span>{{ locale === 'id' ? 'Bagaimana impresi teknis Anda terhadap naskah ini? Tinggalkan respon tipografis:' : 'What is your technical evaluation of this document? Leave a response:' }}</span>
+			<span>{{ $t('reactions.prompt') }}</span>
 			<span class="text-[10px] text-slate-600 uppercase dark:text-slate-400">BATAS: 10 RESPON / KATEGORI</span>
 		</div>
 
@@ -136,7 +136,7 @@ const amazedPercentage = computed(() => {
 
 					<!-- Title -->
 					<div class="mb-4 truncate text-[11px] text-slate-900 font-bold tracking-wider uppercase dark:text-slate-50">
-						{{ locale === 'id' ? 'STATISTIK' : 'INSIGHTS' }}
+						{{ $t('reactions.stats') }}
 					</div>
 
 					<!-- Bottom Status -->

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const { locale } = useI18n()
-// const { getCategoryLabel } = useCategoryLabel()
+const { locale, t } = useI18n()
+const { getCategoryLabel } = useCategoryLabel()
 const { formatDate } = useFormatDate()
 
 const collection = computed(() => (locale.value === 'id' ? 'projek_id' : 'projek_en'))
@@ -22,28 +22,18 @@ const { data: projects } = await useAsyncData(
 	{ watch: [locale] },
 )
 
-// Active filter tag
+// Active filter category ('ALL' | 'web' | 'mobile' | 'design')
 const selectedTag = ref('ALL')
 
-// Extract top unique tags/categories
-const filterTabs = computed(() => {
-	if (!projects.value)
-		return ['ALL']
-	const tagsSet = new Set<string>()
-	projects.value.forEach((item: any) => {
-		if (item.category) {
-			tagsSet.add(String(item.category).trim().toUpperCase())
-		}
-		const tags = item.tags || item.tech || []
-		tags.forEach((t: string) => {
-			const upper = String(t).trim().toUpperCase()
-			if (['NUXT', 'VUE', 'FLUTTER', 'WEB', 'TOOLS', 'UI'].includes(upper)) {
-				tagsSet.add(upper)
-			}
-		})
-	})
-	return ['ALL', ...Array.from(tagsSet)]
-})
+// Fixed 3 categories as defined in content.config.ts schema
+const projectCategories = ['ALL', 'web', 'mobile', 'design'] as const
+
+function getFilterLabel(key: string): string {
+	if (key === 'ALL') {
+		return t('projek.filter_all')
+	}
+	return getCategoryLabel(key)
+}
 
 const route = useRoute()
 const router = useRouter()
@@ -71,7 +61,7 @@ function selectTag(tag: string) {
 	}
 }
 
-// Filtered project list
+// Filtered project list strictly by category
 const filteredProjects = computed(() => {
 	if (!projects.value)
 		return []
@@ -79,10 +69,7 @@ const filteredProjects = computed(() => {
 		.filter((item: any) => {
 			if (selectedTag.value === 'ALL')
 				return true
-			const target = selectedTag.value.toUpperCase()
-			const cat = String(item.category || '').toUpperCase()
-			const tags = (item.tags || item.tech || []).map((t: string) => String(t).toUpperCase())
-			return cat === target || tags.includes(target)
+			return String(item.category || '').toLowerCase().trim() === selectedTag.value.toLowerCase().trim()
 		})
 		.map((item: any, idx: number) => {
 			const projectSlug = item.slug || (item.path ? item.path.split('/').pop().replace(/^\d+\./, '') : '')
@@ -154,18 +141,18 @@ defineOgImage('Bento', {
 						<div class="mb-4 flex items-center justify-between text-[11px] font-bold tracking-[0.2em] font-mono uppercase">
 							<div class="flex items-center gap-2 text-brand-700 dark:text-accent">
 								<span class="inline-block h-2 w-2 rounded-none bg-brand-500" />
-								<span>{{ locale === 'id' ? '01 // KATALOG KARYA' : '01 // SELECTED WORKS' }}</span>
+								<span>{{ $t('projek.katalog_badge') }}</span>
 							</div>
 							<span class="text-slate-600 tabular-nums dark:text-slate-400">
-								VOL. 26
+								{{ $t('projek.vol') }}
 							</span>
 						</div>
 
 						<span class="mb-1.5 block text-[11px] text-slate-600 tracking-[0.15em] font-mono uppercase dark:text-slate-400">
-							{{ locale === 'id' ? 'KLASIFIKASI ARSIP' : 'ARCHIVE CLASSIFICATION' }}
+							{{ $t('projek.category_label') }}
 						</span>
 						<h2 class="text-2xl text-slate-900 font-700 leading-tight font-heading sm:text-3xl dark:text-slate-50">
-							{{ page?.eyebrow || (locale === 'id' ? 'Karya & Rekayasa' : 'Work & Systems') }}
+							{{ page?.eyebrow || $t('projek.category_fallback') }}
 						</h2>
 					</div>
 
@@ -173,18 +160,18 @@ defineOgImage('Bento', {
 					<div class="mt-8 border-t border-slate-200/80 pt-6 dark:border-[#134e43]">
 						<div class="text-xs font-mono divide-y divide-slate-200/80 dark:divide-[#134e43]">
 							<div class="flex items-baseline justify-between py-2">
-								<span class="text-slate-700 dark:text-slate-300">{{ locale === 'id' ? 'TOTAL SPESIMEN' : 'TOTAL SPECIMENS' }}</span>
-								<span class="text-slate-900 font-bold tabular-nums dark:text-slate-50">{{ projects?.length || 0 }} {{ locale === 'id' ? 'Proyek' : 'Projects' }}</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ $t('projek.total_label') }}</span>
+								<span class="text-slate-900 font-bold tabular-nums dark:text-slate-50">{{ projects?.length || 0 }} {{ $t('projek.unit') }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2">
-								<span class="text-slate-700 dark:text-slate-300">{{ locale === 'id' ? 'FILTER AKTIF' : 'ACTIVE FILTER' }}</span>
-								<span class="text-brand-600 font-bold uppercase dark:text-brand-400">{{ selectedTag === 'ALL' ? (locale === 'id' ? 'SEMUA' : 'ALL') : selectedTag }}</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ $t('projek.filter_active') }}</span>
+								<span class="text-brand-600 font-bold uppercase dark:text-brand-400">{{ getFilterLabel(selectedTag) }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2">
-								<span class="text-slate-700 dark:text-slate-300">STATUS</span>
-								<span class="text-brand-600 font-semibold dark:text-brand-400">{{ locale === 'id' ? 'TERDOKUMENTASI' : 'DOCUMENTED' }}</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ $t('projek.status_label') }}</span>
+								<span class="text-brand-600 font-semibold dark:text-brand-400">{{ $t('projek.status_ready') }}</span>
 							</div>
 						</div>
 					</div>
@@ -194,20 +181,20 @@ defineOgImage('Bento', {
 				<div class="flex flex-col justify-between p-6 lg:col-span-8 lg:p-12 sm:p-10">
 					<div>
 						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							{{ locale === 'id' ? 'ARSIP TERKURASI // 2024–2026' : 'CURATED ARCHIVE // 2024–2026' }}
+							{{ $t('projek.curated_badge') }}
 						</div>
 
 						<h1 class="mb-6 text-balance text-3xl text-slate-900 font-900 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
-							{{ page?.title || (locale === 'id' ? 'Arsip Projek & Studi Kasus' : 'Projects & Case Studies Archive') }}
+							{{ page?.title || $t('projek.default_title') }}
 						</h1>
 
 						<p class="max-w-[56ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
-							{{ page?.description || (locale === 'id' ? 'Dokumentasi rekayasa aplikasi web modern, sistem komponen UI, aplikasi mobile Flutter, dan eksplorasi identitas visual berbasis kisi rasional.' : 'Curated documentation of web applications, UI component systems, mobile apps, and graphic identity design.') }}
+							{{ page?.description || $t('projek.default_description') }}
 						</p>
 					</div>
 
 					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
-						<span>{{ locale === 'id' ? 'DIREKTORI REKAYASA DIGITAL' : 'DIGITAL ENGINEERING DIRECTORY' }}</span>
+						<span>{{ $t('projek.directory_tag') }}</span>
 					</div>
 				</div>
 			</div>
@@ -219,23 +206,23 @@ defineOgImage('Bento', {
 			class="w-full flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 bg-slate-50/60 px-6 py-3.5 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/40 sm:px-8"
 		>
 			<div class="flex flex-wrap items-center gap-2">
-				<span class="mr-1 text-[11px] text-slate-600 uppercase dark:text-slate-400">FILTER:</span>
+				<span class="mr-1 text-[11px] text-slate-600 uppercase dark:text-slate-400">{{ $t('projek.filter_title') }}</span>
 				<button
-					v-for="tag in filterTabs"
-					:key="tag"
+					v-for="catKey in projectCategories"
+					:key="catKey"
 					type="button"
-					class="cursor-pointer border px-3.5 py-1.5 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
-					:class="selectedTag === tag
+					class="whitespace-nowrap cursor-pointer border px-3.5 py-1.5 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
+					:class="selectedTag === catKey
 						? 'swiss-filter-active'
 						: 'bg-white dark:bg-[#001e1c] text-slate-800 dark:text-slate-200 border-slate-300 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
-					@click="selectTag(tag)"
+					@click="selectTag(catKey)"
 				>
-					<span>{{ tag === 'ALL' ? (locale === 'id' ? 'SEMUA' : 'ALL') : tag }}</span>
+					<span>{{ getFilterLabel(catKey) }}</span>
 				</button>
 			</div>
 
 			<span class="text-[11px] text-slate-600 uppercase tabular-nums dark:text-slate-400">
-				{{ locale === 'id' ? `MENAMPILKAN ${filteredProjects.length} DARI ${projects?.length || 0} KARYA` : `SHOWING ${filteredProjects.length} OF ${projects?.length || 0} WORKS` }}
+				{{ $t('projek.showing_count', { count: filteredProjects.length, total: projects?.length || 0 }) }}
 			</span>
 		</nav>
 
@@ -250,7 +237,7 @@ defineOgImage('Bento', {
 					<div>
 						<div class="mb-4 flex items-center justify-between text-[11px] font-bold tracking-widest font-mono uppercase">
 							<span class="text-brand-700 dark:text-accent">
-								{{ locale === 'id' ? 'SPESIMEN 01 // UNGGULAN' : 'SPECIMEN 01 // FEATURED' }}
+								{{ $t('projek.featured_badge') }}
 							</span>
 							<span class="text-slate-600 tabular-nums dark:text-slate-400">
 								{{ formatDate(leadProject.date) }}
@@ -287,7 +274,7 @@ defineOgImage('Bento', {
 							:to="leadProject.url"
 							class="group flex cursor-pointer items-center gap-2 bg-brand-500 px-5 py-2.5 text-xs text-slate-950 font-bold tracking-wider font-mono uppercase shadow-xs transition-all duration-150 active:scale-95 hover:bg-brand-400 hover:-translate-y-0.5"
 						>
-							<span>{{ locale === 'id' ? 'BUKA STUDI KASUS' : 'VIEW CASE STUDY' }}</span>
+							<span>{{ $t('projek.view_detail') }}</span>
 							<span class="i-swisspost-arrowupright text-sm transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
 						</NuxtLink>
 
@@ -334,8 +321,8 @@ defineOgImage('Bento', {
 					</div>
 
 					<div class="mt-4 flex items-center justify-between text-[10px] text-slate-600 tracking-widest font-mono uppercase dark:text-slate-400">
-						<span>{{ locale === 'id' ? 'FIG. 01.01 // PRATINJAU VISUAL ANTARMUKA' : 'FIG. 01.01 // INTERFACE VISUAL PREVIEW' }}</span>
-						<span>{{ locale === 'id' ? 'RASIO: 16:9' : 'RATIO: 16:9' }}</span>
+						<span>{{ $t('projek.preview_label') }}</span>
+						<span>{{ $t('projek.ratio_label') }}</span>
 					</div>
 				</div>
 			</div>
@@ -350,7 +337,7 @@ defineOgImage('Bento', {
 				<article
 					v-for="(item, idx) in gridProjects"
 					:key="item.url"
-					class="group flex flex-col justify-between p-6 transition-all duration-150 hover:(bg-slate-50/90 -translate-y-0.5 dark:bg-[#002420]/50) sm:p-8"
+					class="group flex flex-col justify-between p-6 transition-all duration-200 hover:(bg-[#e2f4f0] -translate-y-0.5 dark:bg-[#003832]) sm:p-8"
 					:class="[
 						idx % 3 !== 2 ? 'lg:border-r border-slate-200/80 dark:border-[#134e43]' : '',
 						idx % 2 !== 1 ? 'md:border-r lg:border-r-0 border-slate-200/80 dark:border-[#134e43]' : '',
@@ -376,8 +363,8 @@ defineOgImage('Bento', {
 
 						<!-- Item Meta -->
 						<div class="mb-3 flex items-center justify-between text-[11px] font-mono">
-							<span class="text-brand-600 font-bold dark:text-brand-400">
-								SPESIMEN {{ item.indexNum }} // [{{ item.category?.toUpperCase() || 'WEB' }}]
+							<span class="text-brand-600 font-bold uppercase dark:text-brand-400">
+								{{ $t('projek.item_badge', { num: item.indexNum }) }} // [{{ getCategoryLabel(item.category) }}]
 							</span>
 							<span class="text-slate-600 tabular-nums dark:text-slate-400">
 								{{ formatDate(item.date) }}
@@ -400,7 +387,7 @@ defineOgImage('Bento', {
 							:to="item.url"
 							class="inline-flex items-center gap-1.5 text-xs text-slate-900 font-bold tracking-wider font-mono uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 group-hover:text-brand-600 hover:-translate-y-0.5 dark:group-hover:text-brand-400"
 						>
-							<span>{{ locale === 'id' ? 'STUDI KASUS' : 'CASE STUDY' }}</span>
+							<span>{{ $t('projek.read_story') }}</span>
 							<span class="i-swisspost-arrowupright text-sm transition-transform group-hover:(translate-x-0.5 -translate-y-0.5)" />
 						</NuxtLink>
 
@@ -440,17 +427,17 @@ defineOgImage('Bento', {
 			class="border-b border-slate-200/80 p-12 text-center dark:border-[#134e43]"
 		>
 			<span class="mb-2 block text-sm text-slate-600 tracking-widest font-mono uppercase dark:text-slate-400">
-				{{ locale === 'id' ? 'TIDAK ADA SPESIMEN DITEMUKAN' : 'NO SPECIMENS FOUND' }}
+				{{ $t('projek.empty_title') }}
 			</span>
 			<p class="mb-4 text-xs text-slate-700 font-sans dark:text-slate-300">
-				{{ locale === 'id' ? `Tidak ada projek yang sesuai dengan filter #${selectedTag}.` : `No projects matching filter #${selectedTag}.` }}
+				{{ $t('projek.empty_desc', { tag: getFilterLabel(selectedTag) }) }}
 			</p>
 			<button
 				type="button"
 				class="border border-slate-900 px-4 py-2 text-xs font-bold tracking-wider font-mono uppercase dark:border-slate-50"
 				@click="selectTag('ALL')"
 			>
-				RESET FILTER
+				{{ $t('projek.reset_filter') }}
 			</button>
 		</div>
 
@@ -461,7 +448,7 @@ defineOgImage('Bento', {
 			class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 bg-slate-50/50 px-6 py-6 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-8"
 		>
 			<div class="flex items-center gap-2">
-				<span class="text-slate-600 uppercase dark:text-slate-400">{{ locale === 'id' ? 'HALAMAN:' : 'PAGE:' }}</span>
+				<span class="text-slate-600 uppercase dark:text-slate-400">{{ $t('projek.page_label') }}</span>
 				<NuxtLink
 					v-for="pageNum in totalPages"
 					:key="pageNum"
@@ -481,14 +468,14 @@ defineOgImage('Bento', {
 					:to="getPaginationUrl(currentPage - 1)"
 					class="border border-slate-300 px-3 py-1.5 font-bold uppercase transition-colors dark:border-[#134e43] hover:border-brand-500"
 				>
-					{{ locale === 'id' ? '← SEBELUMNYA' : '← PREVIOUS' }}
+					{{ $t('projek.prev') }}
 				</NuxtLink>
 				<NuxtLink
 					v-if="currentPage < totalPages"
 					:to="getPaginationUrl(currentPage + 1)"
 					class="border border-slate-300 px-3 py-1.5 font-bold uppercase transition-colors dark:border-[#134e43] hover:border-brand-500"
 				>
-					{{ locale === 'id' ? 'BERIKUTNYA →' : 'NEXT →' }}
+					{{ $t('projek.next') }}
 				</NuxtLink>
 			</div>
 		</nav>
@@ -496,10 +483,10 @@ defineOgImage('Bento', {
 		<!-- Bottom Archival Colophon -->
 		<div class="flex flex-col items-start justify-between gap-2 bg-slate-50/80 px-6 py-4 text-[11px] text-slate-600 font-mono sm:flex-row sm:items-center dark:bg-[#002420]/60 sm:px-8 dark:text-slate-400">
 			<div>
-				{{ locale === 'id' ? 'DOKUMENTASI SISTEM REKAYASA & STUDI KASUS // PERMADI.DEV' : 'ENGINEERING SYSTEMS & CASE STUDIES // PERMADI.DEV' }}
+				{{ $t('projek.footer_colophon') }}
 			</div>
 			<div>
-				MAJALENGKA, INDONESIA
+				{{ $t('projek.location') }}
 			</div>
 		</div>
 	</div>

@@ -53,12 +53,12 @@ function formatNumber(num: number): string {
 			<div class="mb-3 flex items-center justify-between border-b border-slate-200/70 pb-2.5 dark:border-slate-800/70">
 				<div class="flex items-center gap-2 text-xs text-brand-900 font-bold tracking-wider font-heading uppercase dark:text-brand-300">
 					<span class="i-swisspost-statistics text-sm text-brand-700 dark:text-brand-400" />
-					<span>{{ locale === 'id' ? 'Statistik Artikel' : 'Article Insights' }}</span>
+					<span>{{ $t('reactions.insights_title') }}</span>
 				</div>
 				<button
 					type="button"
 					class="rounded-lg p-1 text-slate-500 transition-colors hover:bg-slate-100 dark:text-slate-400 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-white"
-					:aria-label="locale === 'id' ? 'Tutup' : 'Close'"
+					:aria-label="$t('search.close')"
 					@click="isOpen = false"
 				>
 					<span class="i-swisspost-closex text-sm" />
@@ -105,8 +105,8 @@ function formatNumber(num: number): string {
 		>
 			<button
 				type="button"
-				:title="locale === 'id' ? 'Lihat Statistik Artikel' : 'View Article Insights'"
-				:aria-label="locale === 'id' ? 'Lihat Statistik Artikel' : 'View Article Insights'"
+				:title="$t('reactions.insights_title')"
+				:aria-label="$t('reactions.insights_title')"
 				class="h-7 w-7 flex items-center justify-center border rounded-full transition-all duration-150 sm:h-8 sm:w-8"
 				:class="[
 					isOpen

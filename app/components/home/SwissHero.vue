@@ -185,7 +185,7 @@ onMounted(() => {
 							:to="localePath('projek')"
 							class="flex items-center gap-2.5 rounded-none bg-brand-500 px-6 py-3.5 text-xs text-slate-900 font-bold tracking-widest font-mono uppercase transition-all active:scale-[0.99] hover:bg-brand-400"
 						>
-							<span>{{ locale === 'id' ? 'JELAJAHI PROJEK' : 'EXPLORE PROJECTS' }}</span>
+							<span>{{ $t('common.explore_projects') }}</span>
 							<span class="i-swisspost-arrowupright text-sm" />
 						</NuxtLink>
 
@@ -193,7 +193,7 @@ onMounted(() => {
 							:to="localePath('kontak')"
 							class="flex items-center gap-2.5 border border-slate-300 rounded-none px-6 py-3.5 text-xs text-slate-900 font-bold tracking-widest font-mono uppercase transition-all active:scale-[0.99] dark:border-[#134e43] hover:border-brand-500 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 						>
-							<span>{{ locale === 'id' ? 'MULAI DISKUSI' : 'START DISCUSSION' }}</span>
+							<span>{{ $t('common.start_discussion') }}</span>
 							<span class="i-swisspost-arrowright text-sm" />
 						</NuxtLink>
 					</div>

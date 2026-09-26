@@ -113,7 +113,7 @@ const formattedPosts = computed(() => {
 				v-for="post in formattedPosts"
 				:key="post.index"
 				:to="localePath(post.link)"
-				class="group min-h-[56px] flex flex-col cursor-pointer items-start gap-2 px-6 py-5 transition-all duration-150 md:grid md:grid-cols-12 hover:(translate-x-0.5 bg-slate-50/90 dark:bg-[#002420]/50) active:scale-[0.99] md:items-center md:gap-4 sm:px-8"
+				class="group min-h-[56px] flex flex-col cursor-pointer items-start gap-2 px-6 py-5 transition-all duration-200 md:grid md:grid-cols-12 hover:(translate-x-1 bg-[#e2f4f0] dark:bg-[#003832]) active:scale-[0.99] md:items-center md:gap-4 sm:px-8"
 			>
 				<span class="col-span-1 text-xs text-brand-600 font-bold font-mono tabular-nums dark:text-brand-400">
 					{{ post.index }}
@@ -144,7 +144,7 @@ const formattedPosts = computed(() => {
 				:to="localePath(writing?.all_link_to || '/blog')"
 				class="group ml-auto inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase underline underline-offset-4 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
-				<span>{{ writing?.all_link_text || (locale === 'id' ? 'LIHAT SELURUH ARSIP TULISAN' : 'VIEW ALL WRITING ARCHIVE') }}</span>
+				<span>{{ writing?.all_link_text || $t('common.view_all_articles') }}</span>
 				<span class="i-swisspost-arrowright text-xs transition-transform duration-150 group-hover:translate-x-1" />
 			</NuxtLink>
 		</div>

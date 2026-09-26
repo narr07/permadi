@@ -436,10 +436,10 @@ export default defineNuxtConfig({
 				'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
 				'X-Content-Type-Options': 'nosniff',
 				'X-Frame-Options': 'SAMEORIGIN',
-				'Cross-Origin-Opener-Policy': 'same-origin',
+				'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
 				'Referrer-Policy': 'strict-origin-when-cross-origin',
 				'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
-				'Content-Security-Policy': 'default-src \'self\'; script-src \'self\' \'unsafe-inline\' \'unsafe-eval\' https://www.googletagmanager.com https://static.cloudflareinsights.com; style-src \'self\' \'unsafe-inline\' https://fonts.googleapis.com; font-src \'self\' data: https://fonts.gstatic.com; img-src \'self\' data: blob: https://res.cloudinary.com https://images.unsplash.com https://*.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://*.googletagmanager.com https://*.doubleclick.net https://*.google.com https://www.google.com; connect-src \'self\' https://*.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://*.googletagmanager.com https://*.doubleclick.net https://*.google.com https://www.google.com https://res.cloudinary.com https://api.cloudinary.com https://cloudflareinsights.com; frame-ancestors \'self\'; upgrade-insecure-requests;',
+				'Content-Security-Policy': 'default-src \'self\'; script-src \'self\' \'unsafe-inline\' \'unsafe-eval\' https://www.googletagmanager.com https://static.cloudflareinsights.com; style-src \'self\' \'unsafe-inline\' https://fonts.googleapis.com; font-src \'self\' data: https://fonts.gstatic.com; img-src \'self\' data: blob: https://avatars.githubusercontent.com https://github.githubassets.com https://res.cloudinary.com https://images.unsplash.com https://*.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://*.googletagmanager.com https://*.doubleclick.net https://*.google.com https://www.google.com; connect-src \'self\' https://api.github.com https://github.com https://raw.githubusercontent.com https://nuxt.studio https://*.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://*.googletagmanager.com https://*.doubleclick.net https://*.google.com https://www.google.com https://res.cloudinary.com https://api.cloudinary.com https://cloudflareinsights.com; frame-ancestors \'self\'; upgrade-insecure-requests;',
 			},
 		},
 
@@ -492,6 +492,20 @@ export default defineNuxtConfig({
 			headers: {
 				'Cache-Control': 'public, max-age=31536000, immutable',
 				'CDN-Cache-Control': 'max-age=31536000',
+			},
+		},
+
+		// Nuxt Studio admin & auth session routes: tidak di-prerender dan bypass edge cache
+		'/_studio/**': {
+			prerender: false,
+			headers: {
+				'Cache-Control': 'no-store, no-cache, must-revalidate',
+			},
+		},
+		'/__nuxt_studio/**': {
+			prerender: false,
+			headers: {
+				'Cache-Control': 'no-store, no-cache, must-revalidate',
 			},
 		},
 

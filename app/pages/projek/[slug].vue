@@ -149,11 +149,11 @@ const allScreenshots = computed(() => {
 				class="group inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
 				<span class="i-swisspost-arrowleft text-xs transition-transform duration-150 group-hover:-translate-x-1" />
-				<span>{{ locale === 'id' ? 'KEMBALI KE ARSIP PROJEK' : 'BACK TO PROJECTS ARCHIVE' }}</span>
+				<span>{{ $t('projek.back_to_archive') }}</span>
 			</NuxtLink>
 
 			<div class="flex items-center gap-3 text-slate-600 uppercase dark:text-slate-400">
-				<span class="hidden sm:inline">SPESIFIKASI STUDI KASUS</span>
+				<span class="hidden sm:inline">{{ $t('projek.spec_title') }}</span>
 				<span class="text-brand-600 font-bold dark:text-brand-400">[{{ project.doc.category?.toUpperCase() || 'WEB' }}]</span>
 			</div>
 		</nav>
@@ -165,28 +165,28 @@ const allScreenshots = computed(() => {
 				<div class="flex flex-col justify-between border-b border-slate-200/80 bg-slate-50/50 p-6 lg:col-span-4 lg:border-b-0 lg:border-r dark:border-[#134e43] dark:bg-[#002420]/40 lg:p-10 sm:p-8">
 					<div>
 						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							PARAMETER TEKNIS
+							{{ $t('projek.param_technical') }}
 						</div>
 
 						<div class="text-xs font-mono divide-y divide-slate-200/80 dark:divide-[#134e43]">
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">TANGGAL RILIS</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ $t('projek.release_date') }}</span>
 								<span class="text-slate-900 font-semibold tabular-nums dark:text-slate-50">{{ formatDate(project.doc.date) }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">WAKTU BACA</span>
-								<span class="text-slate-900 tabular-nums dark:text-slate-50">{{ project.doc.readingTime || 4 }} Menit</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ $t('projek.reading_time') }}</span>
+								<span class="text-slate-900 tabular-nums dark:text-slate-50">{{ project.doc.readingTime || 4 }} {{ $t('projek.minutes') }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">KATEGORI</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ $t('projek.category') }}</span>
 								<span class="text-brand-600 font-bold uppercase dark:text-brand-400">{{ getCategoryLabel(project.doc.category) }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">PENGEMBANG</span>
-								<span class="text-slate-900 dark:text-slate-50">Dinar Permadi Yusup</span>
+								<span class="text-slate-700 dark:text-slate-300">{{ $t('projek.developer') }}</span>
+								<span class="text-slate-900 dark:text-slate-50">{{ $t('projek.developer_name') }}</span>
 							</div>
 						</div>
 					</div>
@@ -200,7 +200,7 @@ const allScreenshots = computed(() => {
 							rel="noopener noreferrer"
 							class="w-full flex items-center justify-between bg-brand-500 px-5 py-3 text-xs text-slate-950 font-bold tracking-wider font-mono uppercase transition-colors hover:bg-brand-400"
 						>
-							<span>KUNJUNGI WEB DEMO</span>
+							<span>{{ $t('projek.visit_demo') }}</span>
 							<span class="i-swisspost-linkexternal text-sm" />
 						</a>
 
@@ -211,7 +211,7 @@ const allScreenshots = computed(() => {
 							rel="noopener noreferrer"
 							class="w-full flex items-center justify-between border border-slate-300 px-5 py-3 text-xs text-slate-900 font-bold tracking-wider font-mono uppercase transition-colors dark:border-[#134e43] hover:border-brand-500 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 						>
-							<span>REPOSITORI GITHUB</span>
+							<span>{{ $t('projek.github_repo') }}</span>
 							<span class="i-swisspost-github text-sm" />
 						</a>
 					</div>
@@ -221,7 +221,7 @@ const allScreenshots = computed(() => {
 				<div class="flex flex-col justify-between p-6 lg:col-span-8 lg:p-12 sm:p-10">
 					<div>
 						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							STUDI KASUS SISTEM
+							{{ $t('projek.case_study_title') }}
 						</div>
 
 						<h1 class="mb-6 text-balance text-3xl text-slate-900 font-900 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
@@ -245,7 +245,7 @@ const allScreenshots = computed(() => {
 					</div>
 
 					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
-						<span>ARSIP PERMADI.DEV</span>
+						<span>{{ $t('projek.archive_tag') }}</span>
 					</div>
 				</div>
 			</div>
@@ -270,8 +270,8 @@ const allScreenshots = computed(() => {
 					</div>
 
 					<div class="mt-3 flex items-center justify-between text-[10px] text-slate-600 tracking-widest font-mono uppercase dark:text-slate-400">
-						<span>FIG. 01 // TAMPILAN UTAMA ANTARMUKA SISTEM</span>
-						<span>RESOLUSI TINGGI (16:9)</span>
+						<span>{{ $t('projek.fig_main') }}</span>
+						<span>{{ $t('projek.fig_res') }}</span>
 					</div>
 				</div>
 
@@ -294,7 +294,7 @@ const allScreenshots = computed(() => {
 							loading="lazy"
 						/>
 						<div class="border-t border-slate-200/80 bg-white p-2 text-[9px] text-slate-600 font-mono uppercase dark:border-[#134e43] dark:bg-[#001e1c] dark:text-slate-400">
-							FIG. 0{{ idx + 2 }} // TAMPILAN DETAIL
+							{{ $t('projek.fig_detail', { num: idx + 2 }) }}
 						</div>
 					</div>
 				</div>
@@ -305,7 +305,7 @@ const allScreenshots = computed(() => {
 		<main class="w-full border-b border-slate-200/80 p-6 dark:border-[#134e43] lg:p-14 sm:p-10">
 			<div class="mx-auto max-w-3xl">
 				<div class="mb-8 border-b border-slate-200/80 pb-3 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:border-[#134e43] dark:text-accent">
-					DOKUMENTASI TEKNIS &amp; CATATAN REKAYASA
+					{{ $t('projek.doc_notes') }}
 				</div>
 
 				<div class="max-w-none text-slate-800 leading-relaxed font-sans prose prose-slate dark:text-slate-100 dark:prose-invert">
@@ -321,11 +321,11 @@ const allScreenshots = computed(() => {
 				class="group inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
 				<span class="i-swisspost-arrowleft text-xs transition-transform duration-150 group-hover:-translate-x-1" />
-				<span>KEMBALI KE SELURUH PROJEK</span>
+				<span>{{ $t('projek.back_to_archive') }}</span>
 			</NuxtLink>
 
 			<div class="text-slate-600 dark:text-slate-400">
-				DINAR PERMADI YUSUP
+				{{ $t('projek.developer_name') }}
 			</div>
 		</footer>
 	</div>

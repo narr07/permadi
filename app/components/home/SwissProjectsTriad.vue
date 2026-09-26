@@ -91,7 +91,7 @@ const displayProjects = computed(() => {
 			<article
 				v-for="p in displayProjects"
 				:key="p.index"
-				class="group flex flex-col justify-between p-6 transition-all duration-150 active:scale-[0.99] hover:(bg-slate-50/90 -translate-y-0.5 dark:bg-[#002420]/60) lg:p-10 sm:p-8"
+				class="group flex flex-col justify-between p-6 transition-all duration-200 active:scale-[0.99] hover:(bg-[#e2f4f0] -translate-y-0.5 dark:bg-[#003832]) lg:p-10 sm:p-8"
 			>
 				<div>
 					<div class="mb-6 flex items-center justify-between text-xs font-mono">
