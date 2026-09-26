@@ -83,18 +83,18 @@ onMounted(() => {
 					<!-- Author Signature & Title -->
 					<div class="my-6">
 						<span class="mb-1.5 block text-[11px] text-slate-600 tracking-[0.15em] font-mono uppercase dark:text-slate-400">
-							{{ hero?.author_title || (locale === 'id' ? 'PRAKTISI & PENDIDIK' : 'PRACTITIONER & EDUCATOR') }}
+							{{ hero?.author_title || (locale === 'id' ? 'PENDIDIK & DEVELOPER' : 'TEACHER & DEVELOPER') }}
 						</span>
 						<h2 class="text-3xl text-slate-900 font-900 leading-tight tracking-tight font-heading sm:text-4xl dark:text-slate-50">
 							{{ hero?.author_name || 'Dinar Permadi' }}
 						</h2>
 						<span class="mt-1 block text-xs text-brand-600 font-medium tracking-wider font-mono uppercase dark:text-brand-400">
-							{{ hero?.author_role || (locale === 'id' ? 'Guru SD & Perajin Kode' : 'Primary School Teacher & Code Craftsman') }}
+							{{ hero?.author_role || (locale === 'id' ? 'Guru SD & Software Developer' : 'Primary School Teacher & Software Developer') }}
 						</span>
 					</div>
 
 					<p class="max-w-[42ch] text-xs text-slate-700 leading-relaxed font-sans sm:text-sm dark:text-slate-300">
-						{{ hero?.author_bio || hero?.description || description || (locale === 'id' ? 'Membawa ketelitian matematika dari ruang kelas ke dalam arsitektur web modern, presisi tata letak, dan rekayasa perangkat lunak.' : 'Bringing mathematical precision from the elementary classroom into modern web architecture, editorial layout, and software engineering.') }}
+						{{ hero?.author_bio || hero?.description || description || (locale === 'id' ? 'Bagi saya, ngajar matematika di kelas SD dan bikin aplikasi itu mirip: dua-duanya butuh logika yang runtut, jelas, dan nggak ribet.' : 'To me, teaching elementary math and building software aren\'t that different: both need clear logic without needless complexity.') }}
 					</p>
 				</div>
 
@@ -109,7 +109,7 @@ onMounted(() => {
 							<span class="text-slate-700 dark:text-slate-300">{{ hero?.specs?.status_label || 'STATUS' }}</span>
 							<span class="flex items-center gap-1.5 text-brand-600 font-bold dark:text-brand-400">
 								<span class="animate-status-pulse inline-block h-1.5 w-1.5 rounded-none bg-brand-500" />
-								<span>{{ hero?.specs?.status || (locale === 'id' ? 'TERSEDIA PROYEK' : 'AVAILABLE FOR PROJECTS') }}</span>
+								<span>{{ hero?.specs?.status || (locale === 'id' ? 'LAGI BISA DIAJAK KERJASAMA' : 'OPEN FOR COLLABORATION') }}</span>
 							</span>
 						</div>
 
@@ -142,18 +142,18 @@ onMounted(() => {
 					<!-- Section Kicker -->
 					<div class="mb-6 flex items-center justify-between">
 						<span class="text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							{{ hero?.kicker || (locale === 'id' ? '01.A // PRINSIP & VISI REKAYASA' : '01.A // PRINCIPLES & ENGINEERING VISION') }}
+							{{ hero?.kicker || (locale === 'id' ? '01.A // PRINSIP & CARA KERJA' : '01.A // PRINCIPLES & WORKING METHOD') }}
 						</span>
 					</div>
 
 					<!-- Monumental Display Headline in Permadi Heading -->
 					<h1 class="mb-8 text-balance text-3xl text-slate-900 font-900 leading-[0.96] tracking-[-0.03em] font-heading lg:text-6xl sm:text-5xl xl:text-[4.25rem] dark:text-slate-50">
-						{{ hero?.headline || headline || (locale === 'id' ? 'Menghubungkan logika berhitung, baris kode, dan ketelitian visual jadi satu cara kerja.' : 'Connecting numerical logic, clean code, and visual precision into one unified craft.') }}
+						{{ hero?.headline || headline || (locale === 'id' ? 'Bikin web dengan logika matematika yang rapi, kode yang bersih, dan desain yang enak dilihat.' : 'Building for the web with clean math, tidy code, and interfaces that feel effortless to use.') }}
 					</h1>
 
 					<!-- Thesis Paragraph in Permadi Body -->
 					<p class="mb-10 max-w-[58ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
-						{{ hero?.thesis || description || (locale === 'id' ? 'Mengajar di sekolah dasar Majalengka membentuk cara saya memandang kode: lugas, tertib, dan bebas basa-basi visual. Prinsip ini saya bawa ke setiap baris Nuxt 4, Flutter, dan tata letak Swiss: tiap piksel dan fungsi harus punya alasan, bukan sekadar tempelan.' : 'Teaching in an elementary classroom shaped how I write software: clear, unpretentious, and free of filler. That conviction guides everything I build with Nuxt 4, Flutter, and Swiss typography: every pixel and function must earn its place, not merely decorate it.') }}
+						{{ hero?.thesis || description || (locale === 'id' ? 'Pengalaman ngajar anak-anak SD di Majalengka ngebiasain saya buat mikir simpel dan to-the-point. Cara pandang ini selalu saya bawa waktu bikin aplikasi: tiap tombol, baris kode, dan piksel harus beneran ada fungsinya, bukan cuma pemanis.' : 'Teaching in an elementary classroom shaped how I write software: clear, unpretentious, and free of filler. That conviction guides everything I build with Nuxt 4, Flutter, and Swiss typography: every pixel and function must earn its place, not merely decorate it.') }}
 					</p>
 				</div>
 

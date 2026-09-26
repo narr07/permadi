@@ -30,6 +30,7 @@ const props = defineProps<{
 }>()
 
 const localePath = useLocalePath()
+const { locale } = useI18n()
 
 const defaultShowcase = [
 	{
@@ -79,10 +80,10 @@ const displayProjects = computed(() => {
 		<div class="flex items-center justify-between border-b border-slate-200/80 px-6 py-4 text-[11px] font-bold tracking-[0.2em] font-mono uppercase dark:border-[#134e43] sm:px-8 sm:py-5">
 			<div class="flex items-center gap-2.5 text-brand-700 dark:text-accent">
 				<span class="inline-block h-2 w-2 rounded-none bg-brand-500" />
-				<span>{{ projectSection?.label || label || '02 // STUDI KASUS & REKAYASA SISTEM' }}</span>
+				<span>{{ projectSection?.label || label || (locale === 'id' ? '02 // PROJEK & APLIKASI PILIHAN' : '02 // SELECTED CASE STUDIES & SYSTEMS') }}</span>
 			</div>
 			<span class="text-slate-600 tabular-nums dark:text-slate-400">
-				{{ projectSection?.count_badge || 'ARSIP PILIHAN (03 KARYA)' }}
+				{{ projectSection?.count_badge || (locale === 'id' ? '3 KARYA PILIHAN' : 'CURATED ARCHIVE (03 WORKS)') }}
 			</span>
 		</div>
 
@@ -127,13 +128,13 @@ const displayProjects = computed(() => {
 		<!-- Footer Link Strip -->
 		<div class="flex items-center justify-between border-t border-slate-200/80 bg-slate-50/50 px-6 py-3.5 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-8">
 			<span class="hidden text-slate-600 uppercase sm:inline dark:text-slate-400">
-				{{ projectSection?.correlation_badge || 'KORELASI: PENDIDIKAN × REKAYASA KODE' }}
+				{{ projectSection?.correlation_badge || (locale === 'id' ? 'DARI RUANG KELAS SAMPAI CODING' : 'CLASSROOM & CODE CRAFT') }}
 			</span>
 			<NuxtLink
 				:to="localePath(projectSection?.all_link_to || '/projek')"
 				class="group ml-auto inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase underline underline-offset-4 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
-				<span>{{ projectSection?.all_link_text || allLinkText || 'BUKA SELURUH ARSIP PROJEK (01–06)' }}</span>
+				<span>{{ projectSection?.all_link_text || allLinkText || (locale === 'id' ? 'LIHAT SEMUA PROJEK SAYA →' : 'VIEW ALL PROJECTS') }}</span>
 				<span class="i-swisspost-arrowright text-xs transition-transform duration-150 group-hover:translate-x-1" />
 			</NuxtLink>
 		</div>

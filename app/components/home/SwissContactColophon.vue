@@ -50,7 +50,7 @@ const activeSocials = computed(() => {
 			<div class="flex items-center gap-2">
 				<span class="inline-block h-1.5 w-1.5 rounded-none bg-brand-500 shadow-[0_0_0_2px_#ccfbf2] dark:shadow-[0_0_0_2px_rgba(20,184,152,0.2)]" />
 				<span class="text-brand-600 dark:text-brand-400">
-					{{ colophon?.status || (locale === 'id' ? 'TERSEDIA PROYEK' : 'AVAILABLE FOR PROJECTS') }}
+					{{ colophon?.status || (locale === 'id' ? 'LAGI BISA DIAJAK KERJASAMA' : 'OPEN FOR COLLABORATION') }}
 				</span>
 			</div>
 		</div>
@@ -61,11 +61,11 @@ const activeSocials = computed(() => {
 			<div class="flex flex-col justify-between p-6 lg:col-span-8 lg:p-12 sm:p-10">
 				<div>
 					<h2 class="mb-6 text-balance text-3xl text-slate-900 font-900 leading-[0.95] tracking-[-0.03em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
-						{{ colophon?.headline || (locale === 'id' ? 'Tertarik berkolaborasi atau mendiskusikan sistem baru?' : 'Interested in collaboration or discussing a new project?') }}
+						{{ colophon?.headline || (locale === 'id' ? 'Ada ide projek seru, mau bikin aplikasi bareng, atau sekadar mau ngobrol?' : 'Got a project in mind, want to build something together, or just want to say hi?') }}
 					</h2>
 
 					<p class="mb-8 max-w-[54ch] text-sm text-slate-800 leading-relaxed font-sans sm:text-base dark:text-slate-200">
-						{{ colophon?.description || (locale === 'id' ? 'Terbuka untuk bertukar pikiran seputar arsitektur frontend dengan Nuxt, aplikasi mobile Flutter, eksplorasi desain grafis, maupun inovasi pembelajaran di sekolah dasar.' : 'Open to conversations about frontend architecture with Nuxt, cross-platform mobile apps with Flutter, typographic design systems, or tech in elementary education.') }}
+						{{ colophon?.description || (locale === 'id' ? 'Pintu saya selalu terbuka buat ngobrol santai seputar Nuxt, bikin aplikasi Flutter, ngulik tipografi, atau serunya pakai teknologi di sekolah dasar. Jangan sungkan buat kontak ya!' : 'I\'m always glad to chat about Nuxt, building Flutter apps, geeking out over typography, or bringing technology into primary school classrooms. Drop me a line anytime!') }}
 					</p>
 
 					<div class="my-6">
@@ -80,7 +80,7 @@ const activeSocials = computed(() => {
 				</div>
 
 				<div class="mt-8 border-t border-slate-200/60 pt-4 text-xs text-slate-600 font-mono dark:border-[#134e43]/60 dark:text-slate-400">
-					{{ colophon?.response_time || 'WAKTU RESPON RATA-RATA: 1–2 HARI KERJA // MAJALENGKA (WIB / GMT+7)' }}
+					{{ colophon?.response_time || (locale === 'id' ? 'BIASANYA DIBALAS DALAM: 1–2 HARI KERJA // MAJALENGKA (WIB / GMT+7)' : 'USUALLY REPLIES WITHIN 1–2 DAYS // MAJALENGKA (WIB / GMT+7)') }}
 				</div>
 			</div>
 
@@ -118,10 +118,7 @@ const activeSocials = computed(() => {
 		</div>
 
 		<!-- Swiss Colophon Strip -->
-		<div class="flex flex-col items-start justify-between gap-4 border-t border-slate-200/80 bg-slate-50/70 px-6 py-6 text-[11px] text-slate-600 font-mono sm:flex-row sm:items-center dark:border-[#134e43] dark:bg-[#002420]/60 sm:px-8 dark:text-slate-400">
-			<div class="leading-relaxed">
-				{{ colophon?.typography_credits || 'TIPOGRAFI: GT MECHANIK POLY & GT AMERICA (GRILLI TYPE)' }}
-			</div>
+		<div class="flex items-center justify-center border-t border-slate-200/80 bg-slate-50/70 px-6 py-6 text-center text-[11px] text-slate-600 font-mono dark:border-[#134e43] dark:bg-[#002420]/60 sm:px-8 dark:text-slate-400">
 			<div class="tabular-nums">
 				{{ colophon?.copyright || '© 2026 DINAR PERMADI YUSUP. ALL RIGHTS RESERVED.' }}
 			</div>
