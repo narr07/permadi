@@ -14,28 +14,12 @@ const { data: page } = await useAsyncData(
 	{ watch: [locale] },
 )
 
-// 2. Fetch gallery items from Cloudinary API with SWR (Lazy & Non-blocking)
-const nuxtApp = useNuxtApp()
-const { data: cloudinaryItems, refresh: refreshGallery } = await useAsyncData<GalleryItem[]>(
+// 2. Fetch gallery items from Cloudinary API with SWR
+const { data: cloudinaryItems } = await useAsyncData<GalleryItem[]>(
 	'cloudinary-gallery-list',
-	async () => {
-		try {
-			const res = await $fetch<GalleryItem[]>('/api/cloudinary-gallery', {
-				timeout: 3000,
-			})
-			if (Array.isArray(res) && res.length > 0) {
-				return res
-			}
-			return (nuxtApp.payload.data['cloudinary-gallery-list'] as GalleryItem[]) || []
-		}
-		catch (err) {
-			console.warn('[Gallery] Failed to fetch latest gallery items:', err)
-			return (nuxtApp.payload.data['cloudinary-gallery-list'] as GalleryItem[]) || []
-		}
-	},
+	() => $fetch<GalleryItem[]>('/api/cloudinary-gallery'),
 	{
 		default: () => [],
-		lazy: true,
 	},
 )
 
@@ -124,8 +108,6 @@ function onImageLoad(id: string) {
 const sentinelEl = ref<HTMLElement | null>(null)
 
 onMounted(() => {
-	refreshGallery()
-
 	if (typeof IntersectionObserver !== 'undefined') {
 		const observer = new IntersectionObserver(
 			(entries) => {
@@ -368,10 +350,10 @@ useSchemaOrg([
 				<!-- All Topics -->
 				<button
 					type="button"
-					class="cursor-pointer border px-2.5 py-1 text-[11px] font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
+					class="cursor-pointer border px-3 py-1 text-[11px] font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
 					:class="selectedTag === 'ALL'
-						? 'bg-slate-900 text-white dark:bg-brand-500 dark:text-slate-950 border-transparent'
-						: 'border-slate-300 dark:border-[#134e43] text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#002420]'"
+						? 'swiss-filter-active'
+						: 'bg-white dark:bg-[#001e1c] border-slate-300 dark:border-[#134e43] text-slate-800 dark:text-slate-200 hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
 					@click="selectTag('ALL')"
 				>
 					{{ $t('galeri.filter_all') }} ({{ allItems.length }})
@@ -382,10 +364,10 @@ useSchemaOrg([
 					v-for="tag in availableTags"
 					:key="tag"
 					type="button"
-					class="cursor-pointer border px-2.5 py-1 text-[11px] tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
+					class="cursor-pointer border px-3 py-1 text-[11px] tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
 					:class="selectedTag === tag
-						? 'bg-slate-900 text-white dark:bg-brand-500 dark:text-slate-950 border-transparent font-bold'
-						: 'border-slate-300 dark:border-[#134e43] text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#002420]'"
+						? 'swiss-filter-active font-bold'
+						: 'bg-white dark:bg-[#001e1c] border-slate-300 dark:border-[#134e43] text-slate-800 dark:text-slate-200 hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
 					@click="selectTag(tag)"
 				>
 					#{{ tag }} ({{ tagCounts[tag] || 0 }})
@@ -427,31 +409,32 @@ useSchemaOrg([
 
 				<!-- Image Frame (Pure Rectilinear Architecture) -->
 				<div class="relative aspect-[4/3] w-full overflow-hidden bg-slate-100 dark:bg-[#001714]">
-					<!-- LQIP Pixelated Placeholder -->
+					<!-- LQIP Pixelated Placeholder (Aktif saat gambar resolusi tinggi sedang memuat) -->
 					<img
 						v-if="item.placeholder_image"
 						:src="item.placeholder_image"
 						alt=""
 						aria-hidden="true"
 						decoding="async"
-						class="pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
+						class="pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out"
 						:class="loadedImages[item.public_id] ? 'opacity-0' : 'opacity-100'"
 						style="image-rendering: pixelated;"
 					>
 
-					<!-- High-Res Main Image -->
-					<imgt
-						:src="item.image"
+					<!-- High-Res Main Image (NuxtImg) -->
+					<NuxtImg
+						:src="item.secure_url || item.image"
 						:alt="item.title || (locale === 'id' ? 'Foto galeri' : 'Gallery photo specimen')"
-						decoding="async"
-						:width="item.width || 720"
-						:height="item.height || 540"
-						class="relative z-1 h-full w-full object-cover transition-transform duration-300 group-hover:scale-103"
-						:class="i === 0 || loadedImages[item.public_id] ? 'opacity-100' : 'opacity-0'"
-						:loading="i < 6 ? 'eager' : 'lazy'"
+						format="webp"
+						quality="85"
+						sizes="xs:100vw sm:100vw md:50vw lg:400px"
+						class="relative z-1 h-full w-full object-cover transition-all duration-700 ease-out group-hover:scale-103"
+						:class="loadedImages[item.public_id] ? 'opacity-100' : 'opacity-0'"
+						:loading="i < 3 ? 'eager' : 'lazy'"
 						:fetchpriority="i === 0 ? 'high' : 'auto'"
 						@load="onImageLoad(item.public_id)"
-					/></div>
+					/>
+				</div>
 
 				<!-- Specimen Footer Details -->
 				<div class="flex flex-1 flex-col justify-between border-t border-slate-200/80 p-4 dark:border-[#134e43]">
@@ -621,14 +604,27 @@ useSchemaOrg([
 
 							<!-- Image Canvas -->
 							<div class="relative max-h-[70vh] min-h-[300px] w-full flex items-center justify-center overflow-hidden bg-slate-950 p-2 sm:p-4">
+								<!-- LQIP Pixelated Placeholder (Aktif saat foto modal sedang di-fetch) -->
 								<img
-									:src="selectedPhoto.preview_image || selectedPhoto.image"
+									v-if="selectedPhoto.placeholder_image"
+									:src="selectedPhoto.placeholder_image"
+									alt=""
+									aria-hidden="true"
+									class="pointer-events-none absolute inset-0 h-full w-full object-contain transition-opacity duration-500 ease-out"
+									:class="isModalImageLoaded ? 'opacity-0' : 'opacity-100'"
+									style="image-rendering: pixelated;"
+								>
+
+								<NuxtImg
+									:src="selectedPhoto.preview_image || selectedPhoto.full_image || selectedPhoto.image"
 									:alt="selectedPhoto.title"
-									decoding="async"
-									class="relative z-10 max-h-[66vh] max-w-full w-auto object-contain transition-opacity duration-300"
+									format="webp"
+									quality="90"
+									sizes="xs:100vw sm:100vw md:90vw lg:1200px"
+									class="relative z-10 max-h-[66vh] max-w-full w-auto object-contain transition-opacity duration-500 ease-out"
 									:class="isModalImageLoaded ? 'opacity-100' : 'opacity-0'"
 									@load="isModalImageLoaded = true"
-								>
+								/>
 							</div>
 
 							<!-- Technical Parameters Ledger -->
@@ -662,3 +658,17 @@ useSchemaOrg([
 		</ClientOnly>
 	</div>
 </template>
+
+<style scoped>
+.swiss-filter-active {
+	background-color: #001e1c !important;
+	color: #ffffff !important;
+	border-color: #001e1c !important;
+}
+
+:global(.dark) .swiss-filter-active {
+	background-color: #f8fafa !important;
+	color: #001e1c !important;
+	border-color: #f8fafa !important;
+}
+</style>

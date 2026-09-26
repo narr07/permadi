@@ -455,7 +455,7 @@ defineOgImage('Bento', {
 					:to="getPaginationUrl(pageNum)"
 					class="h-8 w-8 flex items-center justify-center font-bold transition-colors"
 					:class="pageNum === currentPage
-						? 'bg-brand-500 text-slate-950'
+						? 'swiss-filter-active'
 						: 'border border-slate-300 dark:border-[#134e43] text-slate-900 dark:text-slate-50 hover:border-brand-500'"
 				>
 					{{ pageNum }}

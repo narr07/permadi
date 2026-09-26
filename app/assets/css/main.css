@@ -81,6 +81,20 @@ html:not(.dark) .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
 	border-color: #115e4f;
 }
 
+/* Swiss Filter & Tag Active States - Maximum Contrast */
+.swiss-filter-active {
+	background-color: #001e1c !important;
+	color: #ffffff !important;
+	border-color: #001e1c !important;
+}
+
+html.dark .swiss-filter-active,
+.dark .swiss-filter-active {
+	background-color: #f8fafa !important;
+	color: #001e1c !important;
+	border-color: #f8fafa !important;
+}
+
 .dark {
 	--canvas: #001e1c;
 	--ink: #f8fafa;
