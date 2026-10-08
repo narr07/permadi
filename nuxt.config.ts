@@ -567,6 +567,11 @@ export default defineNuxtConfig({
 		cloudflare: {
 			nodeCompat: true,
 		},
+		// Workaround Nuxt 4.6.0 on Windows: renderer stays external (backslash paths), SSR 500s.
+		// Remove once https://github.com/nuxt/nuxt/issues/36467 ships in a release.
+		externals: {
+			inline: [/[\\/]node_modules[\\/]nuxt[\\/]dist[\\/]/],
+		},
 	},
 	devtools: { enabled: true },
 	compatibilityDate: '2025-01-01',
