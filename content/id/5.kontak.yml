@@ -8,7 +8,6 @@ email_card:
   email: dinar@permadi.dev
   description: Saya usahakan membalas pesan dalam 1–2 hari kerja untuk mendiskusikan proyek, konsultasi teknis, atau sekadar berbagi kabar.
   button_text: Kirim Email Langsung
-  meta: Kolaborasi Terbuka (WIB)
 status_card:
   label: Status Ketersediaan
   title: Terbuka untuk Proyek & Konsultasi

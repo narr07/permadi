@@ -233,14 +233,6 @@ const currentActiveHeadingText = computed(() => {
 	return list[0]?.text || ''
 })
 
-const activeHeadingIndex = computed(() => {
-	const list = flatTocList.value
-	if (!list.length)
-		return 0
-	const idx = list.findIndex((l: any) => l.id === activeSection.value)
-	return idx >= 0 ? idx : 0
-})
-
 // Throttled real-time scrollspy for TOC navigation
 const updateActiveHeading = useThrottleFn(() => {
 	if (!import.meta.client)
@@ -334,7 +326,7 @@ defineOgImage('Bento', {
 		<!-- Navigation Top Rail -->
 		<nav
 			aria-label="Breadcrumb navigasi"
-			class="w-full flex items-center justify-between border-b border-slate-200/80 bg-slate-50/60 px-6 py-3.5 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/40 sm:px-8"
+			class="w-full flex items-center border-b border-slate-200/80 bg-slate-50/60 px-6 py-3.5 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/40 sm:px-8"
 		>
 			<NuxtLink
 				:to="locale === 'id' ? '/id/blog' : '/blog'"
@@ -343,11 +335,6 @@ defineOgImage('Bento', {
 				<span class="i-swisspost-arrowleft text-xs transition-transform duration-150 group-hover:-translate-x-1" />
 				<span>{{ $t('blog.back_to_archive') }}</span>
 			</NuxtLink>
-
-			<div class="flex items-center gap-3 text-slate-600 uppercase dark:text-slate-400">
-				<span class="hidden sm:inline">{{ $t('blog.doc_tech') }}</span>
-				<span class="text-brand-600 font-bold dark:text-brand-400">[{{ (post.doc.category || $t('blog.general_category')).toUpperCase() }}]</span>
-			</div>
 		</nav>
 
 		<!-- Header Band: Parameter Spec Sheet + Display Title (4:8 Split) -->
@@ -356,29 +343,23 @@ defineOgImage('Bento', {
 				<!-- Parameter Spec Sheet & TOC rail (Cols 1 to 4) -->
 				<div class="flex flex-col justify-between border-b border-slate-200/80 bg-slate-50/50 p-6 lg:col-span-4 lg:border-b-0 lg:border-r dark:border-[#134e43] dark:bg-[#002420]/40 lg:p-10 sm:p-8">
 					<div>
-						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							{{ $t('blog.article_params') }}
-						</div>
-
 						<div class="mb-8 text-xs font-mono divide-y divide-slate-200/80 dark:divide-[#134e43]">
 							<div class="flex items-baseline justify-between py-2.5">
 								<span class="text-slate-700 dark:text-slate-300">{{ $t('blog.published_date') }}</span>
 								<span class="text-slate-900 font-semibold tabular-nums dark:text-slate-50">{{ formatDate(post.doc.date) }}</span>
 							</div>
 
-							<div class="flex items-baseline justify-between py-2.5">
+							<div
+								v-if="post.doc.readingTime"
+								class="flex items-baseline justify-between py-2.5"
+							>
 								<span class="text-slate-700 dark:text-slate-300">{{ $t('blog.reading_time') }}</span>
-								<span class="text-slate-900 tabular-nums dark:text-slate-50">{{ post.doc.readingTime || 5 }} {{ $t('blog.minutes') }}</span>
+								<span class="text-slate-900 tabular-nums dark:text-slate-50">{{ post.doc.readingTime }} {{ $t('blog.minutes') }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
 								<span class="text-slate-700 dark:text-slate-300">{{ $t('blog.category') }}</span>
 								<span class="text-brand-600 font-bold uppercase dark:text-brand-400">{{ getCategoryLabel(post.doc.category) }}</span>
-							</div>
-
-							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">{{ $t('blog.author_label') }}</span>
-								<span class="text-slate-900 font-medium dark:text-slate-50">{{ $t('blog.author_name') }}</span>
 							</div>
 						</div>
 					</div>
@@ -392,10 +373,6 @@ defineOgImage('Bento', {
 				<!-- Typographic Statement Field (Cols 5 to 12) -->
 				<div class="flex flex-col justify-between p-6 lg:col-span-8 lg:p-12 sm:p-10">
 					<div>
-						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							{{ $t('blog.essay_badge') }}
-						</div>
-
 						<h1 class="mb-6 text-balance text-3xl text-slate-900 font-700 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
 							{{ post.doc.title }}
 						</h1>
@@ -415,10 +392,6 @@ defineOgImage('Bento', {
 							</span>
 						</div>
 					</div>
-
-					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
-						<span>{{ $t('blog.doc_archive_tag') }}</span>
-					</div>
 				</div>
 			</div>
 		</header>
@@ -435,10 +408,6 @@ defineOgImage('Bento', {
 			<div class="h-12 w-full flex items-center justify-between gap-4 px-4 sm:px-8">
 				<!-- Current Section Indicator -->
 				<div class="min-w-0 flex flex-1 items-center gap-2.5 text-[11px] leading-none">
-					<span class="inline-block h-2 w-2 shrink-0 bg-brand-500" />
-					<span class="shrink-0 text-slate-600 font-bold tracking-wider uppercase tabular-nums dark:text-slate-400">
-						[{{ String(activeHeadingIndex + 1).padStart(2, '0') }}/{{ String(flatTocList.length).padStart(2, '0') }}]:
-					</span>
 					<span class="truncate text-slate-900 font-bold dark:text-slate-50">
 						{{ currentActiveHeadingText }}
 					</span>
@@ -454,7 +423,7 @@ defineOgImage('Bento', {
 						:aria-expanded="isTocDropdownOpen"
 						@click="toggleTocDropdown"
 					>
-						<span class="whitespace-nowrap">{{ $t('blog.toc_button') }} ({{ String(flatTocList.length).padStart(2, '0') }})</span>
+						<span class="whitespace-nowrap">{{ $t('blog.toc_button') }}</span>
 						<span
 							:class="isTocDropdownOpen ? 'rotate-180' : 'rotate-0'"
 							class="i-swisspost-chevrondown shrink-0 text-xs transition-transform duration-200"
@@ -481,10 +450,7 @@ defineOgImage('Bento', {
 			>
 				<!-- Dropdown Panel Header -->
 				<div class="flex items-center justify-between border-b border-slate-200/80 bg-slate-50/80 px-6 py-2.5 text-[11px] font-bold tracking-wider uppercase dark:border-[#134e43] dark:bg-[#002420]/60">
-					<div class="flex items-center gap-2 text-brand-700 dark:text-accent">
-						<span class="inline-block h-1.5 w-1.5 bg-brand-500" />
-						<span>{{ $t('blog.toc_panel_title') }} // {{ String(flatTocList.length).padStart(2, '0') }} {{ $t('blog.sections_count') }}</span>
-					</div>
+					<span class="text-brand-700 dark:text-accent">{{ $t('blog.toc_panel_title') }}</span>
 					<button
 						type="button"
 						class="cursor-pointer text-[10px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-50"
@@ -497,19 +463,13 @@ defineOgImage('Bento', {
 				<!-- 3-Column Scrollable Modular Ledger Grid -->
 				<div class="grid grid-cols-1 max-h-[55vh] overflow-y-auto lg:grid-cols-3 md:grid-cols-2 divide-y divide-slate-200/80 md:divide-x md:divide-y-0 dark:divide-[#134e43]">
 					<a
-						v-for="(link, idx) in flatTocList"
+						v-for="link in flatTocList"
 						:key="link.id"
 						:href="`#${link.id}`"
 						class="group flex cursor-pointer items-start gap-3 border-b border-slate-200/80 p-3.5 transition-colors md:border-b-0 dark:border-[#134e43] sm:p-4"
 						:class="link.id === activeSection ? 'bg-brand-500/10 dark:bg-[#002420] text-brand-700 dark:text-accent font-bold' : 'hover:bg-slate-50 dark:hover:bg-[#002420]/40 text-slate-800 dark:text-slate-200'"
 						@click.prevent="selectHeading(link.id)"
 					>
-						<span
-							class="shrink-0 text-xs font-mono tabular-nums"
-							:class="link.id === activeSection ? 'text-brand-600 dark:text-accent font-bold' : 'text-slate-400 dark:text-slate-500 group-hover:text-brand-600'"
-						>
-							{{ String(idx + 1).padStart(2, '0') }}.
-						</span>
 						<div class="min-w-0 flex-1">
 							<span class="line-clamp-2 text-xs leading-snug font-mono">
 								{{ link.text }}
@@ -528,12 +488,6 @@ defineOgImage('Bento', {
 							→
 						</span>
 					</a>
-				</div>
-
-				<!-- Dropdown Panel Footer Strip -->
-				<div class="flex items-center justify-between border-t border-slate-200/80 bg-slate-50/50 px-6 py-2 text-[10px] text-slate-600 dark:border-[#134e43] dark:bg-[#002420]/30 dark:text-slate-400">
-					<span>{{ $t('blog.doc_archive_tag') }}</span>
-					<span>{{ $t('blog.toc_jump_hint') }}</span>
 				</div>
 			</div>
 		</div>
@@ -584,12 +538,6 @@ defineOgImage('Bento', {
 						</NuxtLink>
 					</h3>
 				</div>
-				<div
-					v-else
-					class="text-xs text-slate-600 font-mono uppercase dark:text-slate-400"
-				>
-					{{ $t('blog.start_archive') }}
-				</div>
 			</div>
 
 			<!-- Next Article -->
@@ -604,17 +552,11 @@ defineOgImage('Bento', {
 						</NuxtLink>
 					</h3>
 				</div>
-				<div
-					v-else
-					class="text-xs text-slate-600 font-mono uppercase dark:text-slate-400"
-				>
-					{{ $t('blog.end_archive') }}
-				</div>
 			</div>
 		</nav>
 
 		<!-- Bottom Archival Colophon Strip -->
-		<footer class="w-full flex flex-col items-start justify-between gap-4 bg-slate-50/80 px-6 py-6 text-xs font-mono sm:flex-row sm:items-center dark:bg-[#002420]/60 sm:px-8">
+		<footer class="w-full flex items-center bg-slate-50/80 px-6 py-6 text-xs font-mono sm:flex-row sm:items-center dark:bg-[#002420]/60 sm:px-8">
 			<NuxtLink
 				:to="locale === 'id' ? '/id/blog' : '/blog'"
 				class="inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
@@ -622,10 +564,6 @@ defineOgImage('Bento', {
 				<span class="i-swisspost-arrowleft text-xs" />
 				<span>{{ $t('blog.back_to_all') }}</span>
 			</NuxtLink>
-
-			<div class="text-slate-600 dark:text-slate-400">
-				{{ $t('blog.author_name') }}
-			</div>
 		</footer>
 	</div>
 </template>

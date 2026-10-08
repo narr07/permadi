@@ -4,7 +4,6 @@ headline: Calculating with care. Designing with purpose.
 lead: Connecting classroom pedagogy, numerical clarity, and clean visual layouts across every line of code.
 section_label: Profile & Philosophy
 story_card:
-  label: Philosophy & Story
   title: I'm Permadi, an elementary school teacher and software developer based in Majalengka.
   lead: Holding an education degree from Universitas Pendidikan Indonesia (UPI), I channel analytical rigor into clean code (Nuxt, Flutter, Python, PHP) and balanced visual compositions.
   bio: Outside the classroom and terminal, I explore mathematical curiosities, design vector assets, and build interactive teaching tools for young learners.
@@ -26,15 +25,12 @@ toolkit_card:
       desc: Edge Database & Serverless Engine
     - name: UnoCSS & Tailwind
       desc: Design Tokens & Atomic Styling
-  footer: Nuxt 4 / UnoCSS / Cloudflare
 location_card:
   label: Location & Timezone
   title: Majalengka, Indonesia
   description: Based in Majalengka, collaborating remotely with teams and clients worldwide.
   timezone: GMT+7 (WIB)
-  badge: Open for Collaboration
 principles_label: Core Principles
-principles_footer: Crafted with Intention
 principles:
   - title: Mathematical Logic & Precision
     description: Structuring clean, maintainable codebases with rigorous algorithmic logic and clear separation of concerns.

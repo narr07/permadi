@@ -570,7 +570,10 @@ export default defineNuxtConfig({
 		// Workaround Nuxt 4.6.0 on Windows: renderer stays external (backslash paths), SSR 500s.
 		// Remove once https://github.com/nuxt/nuxt/issues/36467 ships in a release.
 		externals: {
-			inline: [/[\\/]node_modules[\\/]nuxt[\\/]dist[\\/]/],
+			inline: [
+				/[\\/]node_modules[\\/]nuxt[\\/]dist[\\/]/,
+				/[\\/]node_modules[\\/]@nuxt[\\/]nitro-server[\\/]dist[\\/]/,
+			],
 		},
 	},
 	devtools: { enabled: true },

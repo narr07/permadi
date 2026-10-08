@@ -142,7 +142,7 @@ const allScreenshots = computed(() => {
 		<!-- Navigation Top Rail -->
 		<nav
 			aria-label="Breadcrumb navigasi"
-			class="w-full flex items-center justify-between border-b border-slate-200/80 bg-slate-50/60 px-6 py-3.5 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/40 sm:px-8"
+			class="w-full flex items-center border-b border-slate-200/80 bg-slate-50/60 px-6 py-3.5 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/40 sm:px-8"
 		>
 			<NuxtLink
 				:to="locale === 'id' ? '/id/projek' : '/projects'"
@@ -151,11 +151,6 @@ const allScreenshots = computed(() => {
 				<span class="i-swisspost-arrowleft text-xs transition-transform duration-150 group-hover:-translate-x-1" />
 				<span>{{ $t('projek.back_to_archive') }}</span>
 			</NuxtLink>
-
-			<div class="flex items-center gap-3 text-slate-600 uppercase dark:text-slate-400">
-				<span class="hidden sm:inline">{{ $t('projek.spec_title') }}</span>
-				<span class="text-brand-600 font-bold dark:text-brand-400">[{{ project.doc.category?.toUpperCase() || 'WEB' }}]</span>
-			</div>
 		</nav>
 
 		<!-- Header Band: Parameter Rail + Display Title -->
@@ -164,35 +159,32 @@ const allScreenshots = computed(() => {
 				<!-- Parameter Spec Sheet (Cols 1 to 4) -->
 				<div class="flex flex-col justify-between border-b border-slate-200/80 bg-slate-50/50 p-6 lg:col-span-4 lg:border-b-0 lg:border-r dark:border-[#134e43] dark:bg-[#002420]/40 lg:p-10 sm:p-8">
 					<div>
-						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							{{ $t('projek.param_technical') }}
-						</div>
-
 						<div class="text-xs font-mono divide-y divide-slate-200/80 dark:divide-[#134e43]">
 							<div class="flex items-baseline justify-between py-2.5">
 								<span class="text-slate-700 dark:text-slate-300">{{ $t('projek.release_date') }}</span>
 								<span class="text-slate-900 font-semibold tabular-nums dark:text-slate-50">{{ formatDate(project.doc.date) }}</span>
 							</div>
 
-							<div class="flex items-baseline justify-between py-2.5">
+							<div
+								v-if="project.doc.readingTime"
+								class="flex items-baseline justify-between py-2.5"
+							>
 								<span class="text-slate-700 dark:text-slate-300">{{ $t('projek.reading_time') }}</span>
-								<span class="text-slate-900 tabular-nums dark:text-slate-50">{{ project.doc.readingTime || 4 }} {{ $t('projek.minutes') }}</span>
+								<span class="text-slate-900 tabular-nums dark:text-slate-50">{{ project.doc.readingTime }} {{ $t('projek.minutes') }}</span>
 							</div>
 
 							<div class="flex items-baseline justify-between py-2.5">
 								<span class="text-slate-700 dark:text-slate-300">{{ $t('projek.category') }}</span>
 								<span class="text-brand-600 font-bold uppercase dark:text-brand-400">{{ getCategoryLabel(project.doc.category) }}</span>
 							</div>
-
-							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">{{ $t('projek.developer') }}</span>
-								<span class="text-slate-900 dark:text-slate-50">{{ $t('projek.developer_name') }}</span>
-							</div>
 						</div>
 					</div>
 
 					<!-- Direct Action Buttons -->
-					<div class="mt-8 flex flex-col gap-2.5 border-t border-slate-200/80 pt-6 dark:border-[#134e43]">
+					<div
+						v-if="project.doc.link || project.doc.repo"
+						class="mt-8 flex flex-col gap-2.5 border-t border-slate-200/80 pt-6 dark:border-[#134e43]"
+					>
 						<a
 							v-if="project.doc.link"
 							:href="project.doc.link"
@@ -220,10 +212,6 @@ const allScreenshots = computed(() => {
 				<!-- Typographic Statement Field (Cols 5 to 12) -->
 				<div class="flex flex-col justify-between p-6 lg:col-span-8 lg:p-12 sm:p-10">
 					<div>
-						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							{{ $t('projek.case_study_title') }}
-						</div>
-
 						<h1 class="mb-6 text-balance text-3xl text-slate-900 font-900 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
 							{{ project.doc.title }}
 						</h1>
@@ -242,10 +230,6 @@ const allScreenshots = computed(() => {
 								#{{ tech }}
 							</span>
 						</div>
-					</div>
-
-					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
-						<span>{{ $t('projek.archive_tag') }}</span>
 					</div>
 				</div>
 			</div>
@@ -268,11 +252,6 @@ const allScreenshots = computed(() => {
 							loading="eager"
 						/>
 					</div>
-
-					<div class="mt-3 flex items-center justify-between text-[10px] text-slate-600 tracking-widest font-mono uppercase dark:text-slate-400">
-						<span>{{ $t('projek.fig_main') }}</span>
-						<span>{{ $t('projek.fig_res') }}</span>
-					</div>
 				</div>
 
 				<!-- Additional Gallery Strip if Available -->
@@ -293,9 +272,6 @@ const allScreenshots = computed(() => {
 							class="aspect-video w-full object-cover"
 							loading="lazy"
 						/>
-						<div class="border-t border-slate-200/80 bg-white p-2 text-[9px] text-slate-600 font-mono uppercase dark:border-[#134e43] dark:bg-[#001e1c] dark:text-slate-400">
-							{{ $t('projek.fig_detail', { num: idx + 2 }) }}
-						</div>
 					</div>
 				</div>
 			</div>
@@ -304,18 +280,14 @@ const allScreenshots = computed(() => {
 		<!-- Content Prose Band -->
 		<main class="w-full border-b border-slate-200/80 p-6 dark:border-[#134e43] lg:p-14 sm:p-10">
 			<div class="mx-auto max-w-3xl">
-				<div class="mb-8 border-b border-slate-200/80 pb-3 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:border-[#134e43] dark:text-accent">
-					{{ $t('projek.doc_notes') }}
-				</div>
-
 				<div class="max-w-none text-slate-800 leading-relaxed font-sans prose prose-slate dark:text-slate-100 dark:prose-invert">
 					<ContentRenderer :value="project.doc" />
 				</div>
 			</div>
 		</main>
 
-		<!-- Bottom Archival Colophon Strip -->
-		<footer class="w-full flex flex-col items-start justify-between gap-4 bg-slate-50/80 px-6 py-6 text-xs font-mono sm:flex-row sm:items-center dark:bg-[#002420]/60 sm:px-8">
+		<!-- Back Link -->
+		<footer class="w-full flex items-center bg-slate-50/80 px-6 py-6 text-xs font-mono sm:flex-row sm:items-center dark:bg-[#002420]/60 sm:px-8">
 			<NuxtLink
 				:to="locale === 'id' ? '/id/projek' : '/projects'"
 				class="group inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
@@ -323,10 +295,6 @@ const allScreenshots = computed(() => {
 				<span class="i-swisspost-arrowleft text-xs transition-transform duration-150 group-hover:-translate-x-1" />
 				<span>{{ $t('projek.back_to_archive') }}</span>
 			</NuxtLink>
-
-			<div class="text-slate-600 dark:text-slate-400">
-				{{ $t('projek.developer_name') }}
-			</div>
 		</footer>
 	</div>
 </template>
