@@ -122,7 +122,7 @@ function getCategoryLabel(category?: string) {
 		<NuxtLink
 			v-if="featuredPost"
 			:to="getPostUrl(featuredPost)"
-			class="bento-card-clean group flex flex-col justify-between p-5 transition-all duration-200 md:col-span-5 hover:border-brand-500/40 sm:p-6 hover:-translate-y-0.5"
+			class="bento-card-clean group flex flex-col justify-between p-5 transition-all duration-200 md:col-span-5 hover:border-brand-500/40 sm:p-6"
 		>
 			<div>
 				<!-- Top Bar: Category Pill & Date -->

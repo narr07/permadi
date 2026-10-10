@@ -102,11 +102,11 @@ function scrollToTop() {
 
 			<button
 				type="button"
-				class="group inline-flex cursor-pointer items-center gap-2 border border-slate-300 px-3 py-1.5 text-slate-900 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 dark:border-[#134e43] hover:border-brand-500 dark:text-slate-50 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-brand-400"
+				class="group inline-flex cursor-pointer items-center gap-2 border border-slate-300 px-3 py-1.5 text-slate-900 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 dark:border-[#134e43] hover:border-brand-500 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 				@click="scrollToTop"
 			>
 				<span>{{ $t('footer.back_to_top') }}</span>
-				<span class="i-swisspost-arrowup text-xs transition-transform duration-150 group-hover:-translate-y-0.5" />
+				<span class="i-swisspost-arrowup text-xs transition-transform duration-150" />
 			</button>
 		</div>
 	</footer>

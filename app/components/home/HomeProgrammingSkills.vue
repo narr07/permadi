@@ -31,7 +31,7 @@ const localePath = useLocalePath()
 
 const defaultSkills = computed<SkillItem[]>(() => [
 	{
-		name: 'Nuxt & Vue 3',
+		name: 'NuxtJS',
 		icon: '/icons/f-nuxt.svg',
 		role: 'Web & SSR',
 		desc:

@@ -128,7 +128,7 @@ const { locale } = useI18n()
 						:key="link.to"
 						:to="localePath(link.to)"
 						:class="idx === 0 ? 'bg-brand-500 text-slate-900 hover:bg-brand-400 shadow-xs' : 'border border-slate-300 dark:border-[#134e43] text-slate-900 dark:text-slate-50 hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
-						class="flex cursor-pointer items-center rounded-none px-6 py-3.5 text-xs font-bold tracking-widest font-mono uppercase transition-all duration-150 active:scale-[0.97] hover:-translate-y-0.5"
+						class="flex cursor-pointer items-center rounded-none px-6 py-3.5 text-xs font-bold tracking-widest font-mono uppercase transition-all duration-150 active:scale-[0.97]"
 					>
 						{{ link.label }}
 					</NuxtLink>

@@ -92,7 +92,7 @@ const activeSocials = computed(() => {
 								:href="s.url"
 								target="_blank"
 								rel="noopener noreferrer"
-								class="group inline-flex items-center gap-1 text-slate-900 font-bold transition-all duration-150 active:scale-95 dark:text-slate-50 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-brand-400"
+								class="group inline-flex items-center gap-1 text-slate-900 font-bold transition-all duration-150 active:scale-95 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 							>
 								<span>@{{ s.handle }}</span>
 								<span class="i-swisspost-arrowupright text-[11px] transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />

@@ -13,14 +13,14 @@ toolkit_card:
   label: Toolkit & Frameworks
   title: Core Technologies & Software
   tools:
-    - name: Nuxt & Vue 3
+    - name: NuxtJS
       desc: Modern Web Framework & SSR
     - name: Flutter & Dart
       desc: Cross-Platform Mobile Apps
     - name: Python, JS & PHP
       desc: Backend & Logic Scripting
     - name: Adobe Creative Cloud
-      desc: Photoshop, Illustrator & Design Suite
+      desc: Photoshop, Illustrator & Design
     - name: Cloudflare & Nitro
       desc: Edge Database & Serverless Engine
     - name: UnoCSS & Tailwind

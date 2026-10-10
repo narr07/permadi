@@ -166,7 +166,7 @@ useSchemaOrg([
 					v-for="catKey in blogCategories"
 					:key="catKey"
 					type="button"
-					class="cursor-pointer whitespace-nowrap border px-3.5 py-1.5 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
+					class="cursor-pointer whitespace-nowrap border px-3.5 py-1.5 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95"
 					:class="selectedTag === catKey
 						? 'swiss-filter-active'
 						: 'bg-white dark:bg-[#001e1c] text-slate-800 dark:text-slate-200 border-slate-300 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
@@ -221,7 +221,7 @@ useSchemaOrg([
 					<div class="flex flex-wrap items-center justify-between gap-4 border-t border-slate-200/80 pt-6 dark:border-[#134e43]">
 						<NuxtLink
 							:to="leadPost.url"
-							class="group flex cursor-pointer items-center gap-2 bg-brand-500 px-5 py-2.5 text-xs text-slate-950 font-bold tracking-wider font-mono uppercase shadow-xs transition-all duration-150 active:scale-95 hover:bg-brand-400 hover:-translate-y-0.5"
+							class="group flex cursor-pointer items-center gap-2 bg-brand-500 px-5 py-2.5 text-xs text-slate-950 font-bold tracking-wider font-mono uppercase shadow-xs transition-all duration-150 active:scale-95 hover:bg-brand-400"
 						>
 							<span>{{ $t('blog.read_full') }}</span>
 							<span class="i-swisspost-arrowupright text-sm transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
@@ -248,7 +248,7 @@ useSchemaOrg([
 				<article
 					v-for="(item, idx) in gridPosts"
 					:key="item.url"
-					class="group flex flex-col justify-between p-6 transition-all duration-200 hover:(bg-[#e2f4f0] -translate-y-0.5 dark:bg-[#003832]) sm:p-8"
+					class="group flex flex-col justify-between p-6 transition-all duration-200 hover:(bg-[#e2f4f0] dark:bg-[#003832]) sm:p-8"
 					:class="[
 						idx % 3 !== 2 ? 'lg:border-r border-slate-200/80 dark:border-[#134e43]' : '',
 						idx % 2 !== 1 ? 'md:border-r lg:border-r-0 border-slate-200/80 dark:border-[#134e43]' : '',
@@ -281,7 +281,7 @@ useSchemaOrg([
 					<div class="flex items-center justify-between border-t border-slate-200/80 pt-4 dark:border-[#134e43]">
 						<NuxtLink
 							:to="item.url"
-							class="inline-flex items-center gap-1.5 text-xs text-slate-900 font-bold tracking-wider font-mono uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 group-hover:text-brand-600 hover:-translate-y-0.5 dark:group-hover:text-brand-400"
+							class="inline-flex items-center gap-1.5 text-xs text-slate-900 font-bold tracking-wider font-mono uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-brand-400"
 						>
 							<span>{{ $t('blog.read_note') }}</span>
 							<span class="i-swisspost-arrowupright text-sm transition-transform group-hover:(translate-x-0.5 -translate-y-0.5)" />

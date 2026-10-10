@@ -435,7 +435,7 @@ defineOgImage('Bento', {
 					<!-- Top of Page Action -->
 					<button
 						type="button"
-						class="h-8 inline-flex shrink-0 cursor-pointer items-center justify-center whitespace-nowrap text-slate-700 leading-none transition-all duration-150 active:scale-95 dark:text-slate-300 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-accent"
+						class="h-8 inline-flex shrink-0 cursor-pointer items-center justify-center whitespace-nowrap text-slate-700 leading-none transition-all duration-150 active:scale-95 dark:text-slate-300 hover:text-brand-600 dark:hover:text-accent"
 						@click="scrollToTop"
 					>
 						{{ $t('blog.top_button') }}

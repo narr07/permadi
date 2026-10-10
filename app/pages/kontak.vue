@@ -105,7 +105,7 @@ function getSocialIcon(name?: string, icon?: string) {
 				<div class="mt-8 flex items-center justify-between border-t border-brand-900/60 pt-4">
 					<a
 						:href="`mailto:${page.email_card.email || 'dinar@permadi.dev'}`"
-						class="group inline-flex cursor-pointer items-center gap-1.5 bg-brand-400 px-5 py-2.5 text-xs text-slate-950 font-bold shadow-xs transition-all duration-150 active:scale-95 hover:bg-brand-300 hover:-translate-y-0.5"
+						class="group inline-flex cursor-pointer items-center gap-1.5 bg-brand-400 px-5 py-2.5 text-xs text-slate-950 font-bold shadow-xs transition-all duration-150 active:scale-95 hover:bg-brand-300"
 					>
 						{{ page.email_card.button_text || (locale === 'id' ? 'Kirim Email Langsung' : 'Send an Email') }}
 						<span class="i-swisspost-arrowupright text-xs transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
@@ -187,7 +187,7 @@ function getSocialIcon(name?: string, icon?: string) {
 						:href="item.url"
 						target="_blank"
 						rel="noopener"
-						class="group block border border-slate-200/80 bg-slate-50 p-3 text-center text-slate-900 transition-all duration-150 active:scale-95 dark:border-[#134e43] dark:bg-slate-800/60 hover:(bg-brand-50 text-brand-950 -translate-y-0.5) dark:text-slate-100 focus-ring dark:hover:(bg-brand-950/40 text-brand-200)"
+						class="group block border border-slate-200/80 bg-slate-50 p-3 text-center text-slate-900 transition-all duration-150 active:scale-95 dark:border-[#134e43] dark:bg-slate-800/60 hover:(bg-brand-50 text-brand-950) dark:text-slate-100 focus-ring dark:hover:(bg-brand-950/40 text-brand-200)"
 					>
 						<span
 							:class="getSocialIcon(item.name, item.icon)"

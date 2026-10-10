@@ -156,25 +156,29 @@ function getToolIcon(name?: string) {
 					<h3 class="mb-4 text-xl text-slate-900 font-900 font-heading sm:text-2xl dark:text-white">
 						{{ page.toolkit_card.title }}
 					</h3>
-					<ul
+					<div
 						v-if="page.toolkit_card.tools && page.toolkit_card.tools.length > 0"
-						class="space-y-2.5 divide-y divide-slate-200/50 dark:divide-slate-800/50"
+						class="border-t border-slate-200/80 divide-y divide-slate-200/80 dark:border-[#134e43] dark:divide-[#134e43]"
 					>
-						<li
+						<div
 							v-for="t in page.toolkit_card.tools"
 							:key="t.name"
-							class="group flex items-center justify-between px-1.5 py-1 text-xs transition-all duration-150 hover:bg-slate-50 first:pt-0 dark:hover:bg-slate-800/50"
+							class="group flex items-center justify-between gap-3 py-3 transition-colors duration-150 sm:gap-4"
 						>
-							<span class="flex items-center gap-1.5 text-slate-900 font-semibold transition-colors dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400">
+							<div class="flex shrink-0 items-center gap-2">
 								<span
 									:class="getToolIcon(t.name)"
-									class="text-[11px] text-brand-600 dark:text-brand-400"
+									class="shrink-0 text-xs text-brand-600 dark:text-brand-400"
 								/>
-								{{ t.name }}
+								<span class="text-xs text-slate-900 font-bold whitespace-nowrap transition-colors dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-brand-400">
+									{{ t.name }}
+								</span>
+							</div>
+							<span class="text-right text-[11px] text-slate-600 font-mono leading-tight dark:text-slate-300">
+								{{ t.desc }}
 							</span>
-							<span class="text-[11px] text-slate-600 font-mono dark:text-slate-400">{{ t.desc }}</span>
-						</li>
-					</ul>
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -255,14 +259,14 @@ function getToolIcon(name?: string) {
 				<div class="flex shrink-0 items-center gap-3">
 					<NuxtLink
 						:to="localePath(page.journey.primary_link_to || '/projek')"
-						class="btn-brand inline-flex cursor-pointer items-center gap-1.5 text-xs font-semibold shadow-xs transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
+						class="btn-brand inline-flex cursor-pointer items-center gap-1.5 text-xs font-semibold shadow-xs transition-all duration-150 active:scale-95"
 					>
 						{{ page.journey.primary_link_text || (locale === 'id' ? 'Buka Arsip Karya' : 'Explore Projects') }}
 						<span class="i-swisspost-arrowright text-xs" />
 					</NuxtLink>
 					<NuxtLink
 						:to="localePath(page.journey.secondary_link_to || '/kontak')"
-						class="btn-ghost inline-flex cursor-pointer items-center gap-1.5 text-xs font-semibold transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
+						class="btn-ghost inline-flex cursor-pointer items-center gap-1.5 text-xs font-semibold transition-all duration-150 active:scale-95"
 					>
 						<span class="i-swisspost-mail text-xs" />
 						{{ page.journey.secondary_link_text || (locale === 'id' ? 'Mulai Percakapan' : 'Start a Conversation') }}

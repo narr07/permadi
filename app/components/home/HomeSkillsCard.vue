@@ -35,7 +35,7 @@ const props = withDefaults(
 const { locale } = useI18n()
 
 const defaultCodeSkills: SkillItem[] = [
-	{ name: 'Nuxt & Vue 3', icon: '/icons/f-nuxt.svg' },
+	{ name: 'NuxtJS', icon: '/icons/f-nuxt.svg' },
 	{ name: 'Flutter & Dart', icon: '/icons/f-flutter.svg' },
 	{ name: 'Python', icon: '/icons/b-python.svg' },
 ]

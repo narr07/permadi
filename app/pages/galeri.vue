@@ -275,7 +275,7 @@ useSchemaOrg([
 				<!-- All Topics -->
 				<button
 					type="button"
-					class="cursor-pointer whitespace-nowrap border px-3.5 py-1.5 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
+					class="cursor-pointer whitespace-nowrap border px-3.5 py-1.5 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95"
 					:class="selectedTag === 'ALL'
 						? 'swiss-filter-active'
 						: 'bg-white dark:bg-[#001e1c] border-slate-300 dark:border-[#134e43] text-slate-800 dark:text-slate-200 hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
@@ -289,7 +289,7 @@ useSchemaOrg([
 					v-for="tag in availableTags"
 					:key="tag"
 					type="button"
-					class="cursor-pointer whitespace-nowrap border px-3.5 py-1.5 tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
+					class="cursor-pointer whitespace-nowrap border px-3.5 py-1.5 tracking-wider uppercase transition-all duration-150 active:scale-95"
 					:class="selectedTag === tag
 						? 'swiss-filter-active font-bold'
 						: 'bg-white dark:bg-[#001e1c] border-slate-300 dark:border-[#134e43] text-slate-800 dark:text-slate-200 hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
@@ -390,7 +390,7 @@ useSchemaOrg([
 			<button
 				v-else-if="hasMore"
 				type="button"
-				class="flex cursor-pointer items-center gap-2 border border-slate-300 px-5 py-2.5 text-slate-900 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 dark:border-[#134e43] hover:border-brand-500 dark:text-slate-50 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-accent"
+				class="flex cursor-pointer items-center gap-2 border border-slate-300 px-5 py-2.5 text-slate-900 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 dark:border-[#134e43] hover:border-brand-500 dark:text-slate-50 hover:text-brand-600 dark:hover:text-accent"
 				@click="loadMore"
 			>
 				{{ $t('galeri.load_more') }}
@@ -448,7 +448,7 @@ useSchemaOrg([
 										type="button"
 										:disabled="!hasPrevPhoto"
 										class="cursor-pointer border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-all duration-150 dark:border-[#134e43]"
-										:class="hasPrevPhoto ? 'hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent hover:-translate-y-0.5 active:scale-95' : 'opacity-40 cursor-not-allowed'"
+										:class="hasPrevPhoto ? 'hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent active:scale-95' : 'opacity-40 cursor-not-allowed'"
 										:title="$t('galeri.prev_photo_title')"
 										@click="prevPhoto"
 									>
@@ -460,7 +460,7 @@ useSchemaOrg([
 										type="button"
 										:disabled="!hasNextPhoto"
 										class="cursor-pointer border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-all duration-150 dark:border-[#134e43]"
-										:class="hasNextPhoto ? 'hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent hover:-translate-y-0.5 active:scale-95' : 'opacity-40 cursor-not-allowed'"
+										:class="hasNextPhoto ? 'hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent active:scale-95' : 'opacity-40 cursor-not-allowed'"
 										:title="$t('galeri.next_photo_title')"
 										@click="nextPhoto"
 									>
@@ -474,7 +474,7 @@ useSchemaOrg([
 										target="_blank"
 										rel="noopener"
 										download
-										class="hidden cursor-pointer items-center gap-1 border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-all duration-150 sm:inline-flex active:scale-95 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-accent"
+										class="hidden cursor-pointer items-center gap-1 border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-all duration-150 sm:inline-flex active:scale-95 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent"
 									>
 										<span class="i-swisspost-download text-xs" />
 										<span>{{ $t('galeri.download_hd') }}</span>
@@ -483,7 +483,7 @@ useSchemaOrg([
 									<!-- Close Button -->
 									<button
 										type="button"
-										class="cursor-pointer border border-slate-300 px-2.5 py-1 text-[10px] font-bold uppercase transition-all duration-150 active:scale-95 dark:border-[#134e43] hover:text-rose-600 hover:-translate-y-0.5 dark:hover:text-rose-400"
+										class="cursor-pointer border border-slate-300 px-2.5 py-1 text-[10px] font-bold uppercase transition-all duration-150 active:scale-95 dark:border-[#134e43] hover:text-rose-600 dark:hover:text-rose-400"
 										:title="$t('galeri.close_title')"
 										@click="closeModal"
 									>
