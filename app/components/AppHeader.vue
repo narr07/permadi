@@ -94,8 +94,8 @@ onMounted(() => {
 						v-for="item in navItems"
 						:key="item.to"
 						:to="item.to"
-						class="transition-all duration-150 active:scale-[0.96] hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-brand-400"
-						:class="isItemActive(item) ? 'font-bold text-brand-700 dark:text-brand-400 underline underline-offset-4' : 'text-slate-700 dark:text-slate-300'"
+						class="nav-link relative py-1 tracking-wider uppercase transition-colors duration-200 active:scale-[0.97] hover:text-brand-600 dark:hover:text-brand-400"
+						:class="isItemActive(item) ? 'is-active font-bold text-brand-700 dark:text-brand-400' : 'text-slate-700 dark:text-slate-300'"
 					>
 						{{ item.label.toUpperCase() }}
 					</NuxtLink>
@@ -200,3 +200,28 @@ onMounted(() => {
 		</Transition>
 	</header>
 </template>
+
+<style scoped>
+.nav-link {
+	position: relative;
+	display: inline-block;
+}
+
+.nav-link::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	bottom: -2px;
+	width: 100%;
+	height: 2px;
+	background-color: currentColor;
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link:hover::after,
+.nav-link.is-active::after {
+	transform: scaleX(1);
+}
+</style>

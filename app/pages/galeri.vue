@@ -254,31 +254,34 @@ useSchemaOrg([
 </script>
 
 <template>
-	<div class="mx-auto max-w-6xl px-4 py-10 lg:px-8 sm:px-6 sm:py-14">
-		<header class="w-full border border-slate-200/80 bg-white p-6 dark:border-[#134e43] dark:bg-[#001e1c] lg:p-12 sm:p-10">
+	<div class="w-full bg-white dark:bg-[#001e1c]">
+		<header class="w-full border-b border-slate-200/80 p-6 dark:border-[#134e43] lg:p-12 sm:p-10">
 			<h1 class="mb-6 text-balance text-3xl text-slate-900 font-900 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
 				{{ page?.title || $t('galeri.default_title') }}
 			</h1>
 
-			<p class="max-w-[58ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
+			<p class="max-w-[56ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
 				{{ page?.description || $t('galeri.default_description') }}
 			</p>
 		</header>
 
 		<!-- Filter Strip -->
-		<div class="w-full flex flex-wrap items-center gap-4 border-x border-b border-slate-200/80 bg-slate-50/70 px-4 py-3 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-6">
+		<nav
+			aria-label="Filter galeri visual"
+			class="w-full flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 bg-slate-50/60 px-6 py-3.5 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/40 sm:px-8"
+		>
 			<!-- Tag Filter Buttons -->
-			<div class="flex flex-wrap items-center gap-1.5">
+			<div class="flex flex-wrap items-center gap-2">
 				<!-- All Topics -->
 				<button
 					type="button"
-					class="cursor-pointer border px-3 py-1 text-[11px] font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
+					class="cursor-pointer whitespace-nowrap border px-3.5 py-1.5 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
 					:class="selectedTag === 'ALL'
 						? 'swiss-filter-active'
 						: 'bg-white dark:bg-[#001e1c] border-slate-300 dark:border-[#134e43] text-slate-800 dark:text-slate-200 hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
 					@click="selectTag('ALL')"
 				>
-					{{ $t('galeri.filter_all') }}
+					<span>{{ $t('galeri.filter_all') }}</span>
 				</button>
 
 				<!-- Individual Tags -->
@@ -286,81 +289,86 @@ useSchemaOrg([
 					v-for="tag in availableTags"
 					:key="tag"
 					type="button"
-					class="cursor-pointer border px-3 py-1 text-[11px] tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
+					class="cursor-pointer whitespace-nowrap border px-3.5 py-1.5 tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
 					:class="selectedTag === tag
 						? 'swiss-filter-active font-bold'
 						: 'bg-white dark:bg-[#001e1c] border-slate-300 dark:border-[#134e43] text-slate-800 dark:text-slate-200 hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
 					@click="selectTag(tag)"
 				>
-					#{{ tag }}
+					<span>#{{ tag }}</span>
 				</button>
 			</div>
-		</div>
+
+			<span class="text-[11px] text-slate-600 uppercase tabular-nums dark:text-slate-400">
+				{{ locale === 'id' ? `Menampilkan ${displayedItems.length} dari ${filteredGallery.length} karya` : `Showing ${displayedItems.length} of ${filteredGallery.length} works` }}
+			</span>
+		</nav>
 
 		<!-- Image Grid -->
 		<div
 			v-if="displayedItems.length > 0"
-			class="grid grid-cols-1 border-x border-b border-slate-200/80 bg-white lg:grid-cols-3 md:grid-cols-2 dark:border-[#134e43] dark:bg-[#001e1c]"
+			class="w-full border-b border-slate-200/80 dark:border-[#134e43]"
 		>
-			<div
-				v-for="(item, i) in displayedItems"
-				:key="item.public_id || i"
-				tabindex="0"
-				role="button"
-				:aria-label="item.title || (locale === 'id' ? 'Buka foto' : 'Open photo')"
-				class="group flex flex-col cursor-pointer select-none justify-between border-b border-r-0 border-slate-200/80 text-xs font-mono transition-all duration-150 active:scale-[0.99] md:border-b-0 md:border-r dark:border-[#134e43] hover:bg-slate-50/80 dark:hover:bg-[#002420]/40"
-				@click="openModal(item)"
-				@keydown.enter.prevent="openModal(item)"
-				@keydown.space.prevent="openModal(item)"
-			>
-				<!-- Image Frame (Pure Rectilinear Architecture) -->
-				<div class="relative aspect-[4/3] w-full overflow-hidden bg-slate-100 dark:bg-[#001714]">
-					<!-- LQIP Pixelated Placeholder (Aktif saat gambar resolusi tinggi sedang memuat) -->
-					<img
-						v-if="item.placeholder_image"
-						:src="item.placeholder_image"
-						alt=""
-						aria-hidden="true"
-						decoding="async"
-						class="pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out"
-						:class="loadedImages[item.public_id] ? 'opacity-0' : 'opacity-100'"
-						style="image-rendering: pixelated;"
-					>
-
-					<!-- High-Res Main Image (NuxtImg) -->
-					<NuxtImg
-						:src="item.secure_url || item.image"
-						:alt="item.title || (locale === 'id' ? 'Foto galeri' : 'Gallery photo')"
-						format="webp"
-						quality="85"
-						sizes="xs:100vw sm:100vw md:50vw lg:400px"
-						class="relative z-1 h-full w-full object-cover transition-all duration-700 ease-out group-hover:scale-103"
-						:class="loadedImages[item.public_id] ? 'opacity-100' : 'opacity-0'"
-						:loading="i < 3 ? 'eager' : 'lazy'"
-						:fetchpriority="i === 0 ? 'high' : 'auto'"
-						@load="onImageLoad(item.public_id)"
-					/>
-				</div>
-
-				<!-- Photo Details -->
-				<div class="flex flex-1 flex-col border-t border-slate-200/80 p-4 dark:border-[#134e43]">
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+				<div
+					v-for="(item, i) in displayedItems"
+					:key="item.public_id || i"
+					tabindex="0"
+					role="button"
+					:aria-label="item.title || (locale === 'id' ? 'Buka foto' : 'Open photo')"
+					class="group flex flex-col cursor-pointer select-none justify-between border-b border-slate-200/80 p-6 transition-colors duration-200 dark:border-[#134e43] sm:p-8 hover:(bg-[#e2f4f0] dark:bg-[#003832])"
+					:class="[
+						i % 3 !== 2 ? 'lg:border-r' : 'lg:border-r-0',
+						i % 2 !== 1 ? 'md:border-r' : 'md:border-r-0',
+					]"
+					@click="openModal(item)"
+					@keydown.enter.prevent="openModal(item)"
+					@keydown.space.prevent="openModal(item)"
+				>
 					<div>
-						<h2 class="mb-2 text-base text-slate-900 font-900 leading-snug font-heading transition-colors dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-accent">
-							{{ item.title }}
-						</h2>
+						<!-- Image Frame -->
+						<div class="mb-4 aspect-[4/3] w-full overflow-hidden border border-slate-200/80 bg-slate-100 relative dark:border-[#134e43] dark:bg-[#001714]">
+							<!-- LQIP Pixelated Placeholder -->
+							<img
+								v-if="item.placeholder_image"
+								:src="item.placeholder_image"
+								alt=""
+								aria-hidden="true"
+								decoding="async"
+								class="pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out"
+								:class="loadedImages[item.public_id] ? 'opacity-0' : 'opacity-100'"
+								style="image-rendering: pixelated;"
+							>
 
-						<div
-							v-if="item.tags && item.tags.length"
-							class="flex flex-wrap gap-1.5"
-						>
+							<!-- High-Res Main Image (NuxtImg) -->
+							<NuxtImg
+								:src="item.secure_url || item.image"
+								:alt="item.title || (locale === 'id' ? 'Foto galeri' : 'Gallery photo')"
+								format="webp"
+								quality="85"
+								sizes="xs:100vw sm:100vw md:50vw lg:400px"
+								class="relative z-1 h-full w-full object-cover transition-all duration-500 ease-out group-hover:scale-[1.03]"
+								:class="loadedImages[item.public_id] ? 'opacity-100' : 'opacity-0'"
+								:loading="i < 3 ? 'eager' : 'lazy'"
+								:fetchpriority="i === 0 ? 'high' : 'auto'"
+								@load="onImageLoad(item.public_id)"
+							/>
+						</div>
+
+						<!-- Photo Details -->
+						<div class="mb-2.5 flex flex-wrap gap-1.5" v-if="item.tags && item.tags.length">
 							<span
 								v-for="tag in item.tags.slice(0, 3)"
 								:key="tag"
-								class="border border-slate-200 px-1.5 py-0.5 text-[10px] text-slate-700 uppercase dark:border-[#134e43] dark:text-slate-300"
+								class="border border-slate-200 px-1.5 py-0.5 text-[10px] text-slate-700 uppercase font-mono dark:border-[#134e43] dark:text-slate-300"
 							>
 								#{{ tag }}
 							</span>
 						</div>
+
+						<h2 class="text-base text-slate-900 font-700 leading-snug font-heading transition-colors dark:text-slate-50 group-hover:text-brand-700 dark:group-hover:text-brand-300">
+							{{ item.title }}
+						</h2>
 					</div>
 				</div>
 			</div>
@@ -369,7 +377,7 @@ useSchemaOrg([
 		<!-- Infinite Scroll Trigger Sentinel & Load More Strip -->
 		<div
 			ref="sentinelEl"
-			class="w-full flex flex-col items-center justify-center border-x border-b border-slate-200/80 bg-slate-50/60 p-6 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/30"
+			class="w-full flex flex-col items-center justify-center border-b border-slate-200/80 bg-slate-50/60 p-6 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/30"
 		>
 			<div
 				v-if="isLoadingMore"
@@ -392,7 +400,7 @@ useSchemaOrg([
 		<!-- Empty State -->
 		<div
 			v-if="displayedItems.length === 0"
-			class="w-full border-x border-b border-slate-200/80 bg-white p-12 text-center text-xs font-mono dark:border-[#134e43] dark:bg-[#001e1c]"
+			class="w-full border-b border-slate-200/80 bg-white p-12 text-center text-xs font-mono dark:border-[#134e43] dark:bg-[#001e1c]"
 		>
 			<div class="mb-2 text-sm text-brand-600 font-bold dark:text-accent">
 				{{ $t('galeri.empty_title') }}
@@ -405,7 +413,7 @@ useSchemaOrg([
 		<!-- Page Content Markdown if any -->
 		<article
 			v-if="page"
-			class="mx-auto mt-12 max-w-4xl font-sans prose prose-slate dark:prose-invert"
+			class="mx-auto max-w-4xl px-6 py-12 font-sans prose prose-slate dark:prose-invert sm:px-8"
 		>
 			<ContentRenderer :value="page" />
 		</article>

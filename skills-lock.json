@@ -5,7 +5,7 @@
       "source": "cloudflare/skills",
       "sourceType": "github",
       "skillPath": "skills/agents-sdk/SKILL.md",
-      "computedHash": "7bf1628a1b217eeb522b8150582cd31a16738259a10fdd415ab28b25efe68c16"
+      "computedHash": "fe556fd15236ba0ee161e7a3f4aa003abf8c3bca6ab257af3183f816087b407d"
     },
     "anti-kaku": {
       "source": "narr07/skills",
@@ -17,7 +17,7 @@
       "source": "miqdadbadjuber/anti-slop",
       "sourceType": "github",
       "skillPath": "skills/antislop/SKILL.md",
-      "computedHash": "aa23091644167679b13e6389a4b5a0665ed30d560c1f183f37f8fd445c4c8e4b"
+      "computedHash": "e263d21c173627572f12ba679494ebf86f6b8f4863ac3e470383ecff28d8d279"
     },
     "antislop-code": {
       "source": "miqdadbadjuber/anti-slop",
@@ -29,13 +29,13 @@
       "source": "miqdadbadjuber/anti-slop",
       "sourceType": "github",
       "skillPath": "skills/antislop-copywriting/SKILL.md",
-      "computedHash": "0450d1465bbe90ee25251d01e037bb31c418e7e9a92eebc74945fcf49d65e953"
+      "computedHash": "cdee48612a644126d839586a518b5e53327c45499928335e2d02f9587b128773"
     },
     "antislop-human": {
       "source": "miqdadbadjuber/anti-slop",
       "sourceType": "github",
       "skillPath": "skills/antislop-human/SKILL.md",
-      "computedHash": "eb1e475727e2cae672a5bb012360c85fbbe5c642755d0af53ed33531a971ca8e"
+      "computedHash": "42a76fb609a28c4a4268d4bb9ef332f11b24ad34daf392375aec320606b97841"
     },
     "antislop-layoutmobile": {
       "source": "miqdadbadjuber/anti-slop",
@@ -47,7 +47,7 @@
       "source": "miqdadbadjuber/anti-slop",
       "sourceType": "github",
       "skillPath": "skills/antislop-ui/SKILL.md",
-      "computedHash": "1bb233c1f06a2ea32d6e610122d4ac79854263445ffa9c64067334264f23a8d1"
+      "computedHash": "12c2cd7d1d5fbae9210410eb16230332747e9414fc06129200ac13ee174909b6"
     },
     "artikelgen": {
       "source": "narr07/skills",
@@ -59,25 +59,25 @@
       "source": "cloudflare/skills",
       "sourceType": "github",
       "skillPath": "skills/cloudflare/SKILL.md",
-      "computedHash": "61b6c4b68c6b155302edeb63779d39600d88a0029ef2bb0667aedc07c9732ba4"
+      "computedHash": "6b68295bfc7b100c0fc483a633c70edf85535cdc84c8b3e8c623b844846f6244"
     },
     "cloudflare-email-service": {
       "source": "cloudflare/skills",
       "sourceType": "github",
       "skillPath": "skills/cloudflare-email-service/SKILL.md",
-      "computedHash": "1e25b3f80019846897e4177eaf9859e2d2e1bf9852d2b08d6b4ef6ded5b8f519"
+      "computedHash": "e8b8b78de704c3b69c8ae70e6d37f27979510f5ecc0790ac8484149e8a9b3c81"
     },
     "cloudflare-one": {
       "source": "cloudflare/skills",
       "sourceType": "github",
       "skillPath": "skills/cloudflare-one/SKILL.md",
-      "computedHash": "5a987a5bd6d1a45bc8d48b5a69e4f87dff35af363c1ef3a4bb7d1c2e30510671"
+      "computedHash": "bc2b5a204cbfce8333be3f2a56092fae16299cef4f42280aaaf4115ad6e2d1ef"
     },
     "cloudflare-one-migrations": {
       "source": "cloudflare/skills",
       "sourceType": "github",
       "skillPath": "skills/cloudflare-one-migrations/SKILL.md",
-      "computedHash": "d00186658f458cb2b3dffafc371f3635cfdd980daa8c5579aa99c2e05b8ce5e0"
+      "computedHash": "96a3d34dbf4a2d0fef0f27f8033f3742038506093a8970696b80858b93c26da4"
     },
     "document-writer": {
       "source": "onmax/nuxt-skills",
@@ -89,7 +89,7 @@
       "source": "cloudflare/skills",
       "sourceType": "github",
       "skillPath": "skills/durable-objects/SKILL.md",
-      "computedHash": "c02fdc3bbf3cf892c3ab9e22c7c8dafc1db2275d02735389e7741c6b40da75ec"
+      "computedHash": "7e395e50364589ccc84543eb607ae21cbb7ac18b346e9a0bb36fa4f5bc10b3ac"
     },
     "google-trends": {
       "source": "terryds/google-trends-skill",
@@ -101,7 +101,7 @@
       "source": "kostja94/marketing-skills",
       "sourceType": "github",
       "skillPath": "skills/seo/content/keyword-research/SKILL.md",
-      "computedHash": "8d7bbcdb5c7b8715bbc3e421e9253fc21d47b116f196c7853bbf7775744c4250"
+      "computedHash": "5d5a388a568e6c6b96e3882a22c9193ceb8a992b2d974e3cb617d07728ba89e9"
     },
     "laws-of-ux-2": {
       "source": "sznnnnn/laws-of-ux-skill",
@@ -125,43 +125,43 @@
       "source": "antfu/skills",
       "sourceType": "github",
       "skillPath": "skills/nuxt/SKILL.md",
-      "computedHash": "3f271d53fd31dbb482e6aad3f54992955f1b5cb0afa9972c592b087316005436"
+      "computedHash": "6031032b72821dc19e164d9f8192bf00b5eb86ab15757a34111d9b75816a71d4"
     },
     "nuxt-content": {
       "source": "onmax/nuxt-skills",
       "sourceType": "github",
       "skillPath": "skills/nuxt-content/SKILL.md",
-      "computedHash": "3d4a05a07df23b059cb249a12245114c422037e7b8643eab4d71adbdc28c7740"
+      "computedHash": "64ff455cd74e53454f4c2c9eab857d870e3b23530c930fce9c6c24aea55b8c36"
     },
     "nuxt-i18n": {
       "source": "onmax/nuxt-skills",
       "sourceType": "github",
       "skillPath": "skills/nuxt-i18n/SKILL.md",
-      "computedHash": "6b37bbb19bb30c8ff7642ea74f34943b71202e3dce27eb88413aa7a694d6d181"
+      "computedHash": "7337fa28627a5a8191879bd750311c1f3e7cb9075179164f812a5851544a4d09"
     },
     "nuxt-seo": {
       "source": "onmax/nuxt-skills",
       "sourceType": "github",
       "skillPath": "skills/nuxt-seo/SKILL.md",
-      "computedHash": "7cf2663b401426360699c0fe8f5f369e565191583c0d009ef64ebb412f17e163"
+      "computedHash": "73d86e3943532f91de4c583186e559a463fc572e601899fbbe7b5515eac4e0c9"
     },
     "nuxt-studio": {
       "source": "onmax/nuxt-skills",
       "sourceType": "github",
       "skillPath": "skills/nuxt-studio/SKILL.md",
-      "computedHash": "9a5bbdc5aa171be54c20e2f5e0da4d0ad22dc3fcdaace1e2e60c55ae5e0b0286"
+      "computedHash": "f511599aa4d26b093425b360287db2b7066863340c7823123e109c0297dbb066"
     },
     "nuxt-ui": {
       "source": "onmax/nuxt-skills",
       "sourceType": "github",
       "skillPath": "skills/nuxt-ui/SKILL.md",
-      "computedHash": "6954d6eee3f091d66d76c3c1d006e3e5f2ae101bfb46c3fbe714adad39f6caef"
+      "computedHash": "1dd99c82a2f45b62999928126092f9ae4facb5ddfc86f1611d49b604b8038f3e"
     },
     "nuxthub": {
       "source": "onmax/nuxt-skills",
       "sourceType": "github",
       "skillPath": "skills/nuxthub/SKILL.md",
-      "computedHash": "f366b6a08c9a6806a4b0de604fd2128116455eb70bace08a8701023f9c7853e1"
+      "computedHash": "dba19d9f1c54b23ea2e9d8f95d62f7842e4f7911e056cf72b833f1cc374268c7"
     },
     "obscura-windows": {
       "source": "narr07/skills",
@@ -173,7 +173,7 @@
       "source": "gapmiss/obsidian-plugin-skill",
       "sourceType": "github",
       "skillPath": ".agents/skills/obsidian/SKILL.md",
-      "computedHash": "02152617426eec1895127dafb1d32ab25bb49c6806d707f157c56134630f618e"
+      "computedHash": "da9afc199ac0faa74d4b228c1933a6c2f822ef186f5b9bff153f3d2117aa5045"
     },
     "okf": {
       "source": "narr07/skills",
@@ -197,31 +197,31 @@
       "source": "antfu/skills",
       "sourceType": "github",
       "skillPath": "skills/pinia/SKILL.md",
-      "computedHash": "8e8346fac8cb76d6f186462b712352d5a651c9c049076ea73559f47210c874ef"
+      "computedHash": "5a43d60a532efe755d354fc3e95f966dd75e58879adb9c6c158c626c0f77d774"
     },
     "sandbox-migrate-to-next": {
       "source": "cloudflare/skills",
       "sourceType": "github",
       "skillPath": "skills/sandbox-migrate-to-next/SKILL.md",
-      "computedHash": "4e3e16553521a4c4e421220bcc562f76f3f32a8963c3dd2d042837f01855e572"
+      "computedHash": "22728ef55df1f0e64db400dcf315fa1ec03d32524a9f443e98f83c93dece8867"
     },
     "sandbox-next": {
       "source": "cloudflare/skills",
       "sourceType": "github",
       "skillPath": "skills/sandbox-next/SKILL.md",
-      "computedHash": "f268b1cc44d141176c8dd11a76f3a2dab02f7a7a2098ed0ceabb949c839e5f11"
+      "computedHash": "6d453bb2d1f942ec275208309afaa2a2fe01212faecea1e2696692e98940217a"
     },
     "sandbox-stable": {
       "source": "cloudflare/skills",
       "sourceType": "github",
       "skillPath": "skills/sandbox-stable/SKILL.md",
-      "computedHash": "e63fce16e4a67d796689891263a3083aa34e747573a2787e4cfa5af9a2e85c32"
+      "computedHash": "ea5794e07e20086db7f40ddf6766af798b712b9a8ad6d0bc5700c5161ac465e4"
     },
     "seo-content-writer": {
       "source": "sickn33/antigravity-awesome-skills",
       "sourceType": "github",
       "skillPath": "skills/seo-content-writer/SKILL.md",
-      "computedHash": "c9fbaa74cd74dde70d96e6e57ae10fb5e894f6383c157031f5f6d75e199fad38"
+      "computedHash": "cab886401e287a441ffbccb7f351aaa263c2f7311032e14f3180826844dd498f"
     },
     "swiss-design": {
       "source": "ZempTime/zemptime-marketplace",
@@ -251,19 +251,19 @@
       "source": "cloudflare/skills",
       "sourceType": "github",
       "skillPath": "skills/turnstile-spin/SKILL.md",
-      "computedHash": "3fb5f9c7edd4cbe608de00848adfaa35f5dd4b809c98a86c4cda19176de92aa1"
+      "computedHash": "01dada3b23ecac106908159bd637d226dcc69c7f97fd284982fd519d2fa32987"
     },
     "ui-ux-pro-max": {
       "source": "nextlevelbuilder/ui-ux-pro-max-skill",
       "sourceType": "github",
       "skillPath": ".claude/skills/ui-ux-pro-max/SKILL.md",
-      "computedHash": "eb75bf6085080d7d31fa2c0f9fd98d49abd229356147999b09177b733276f806"
+      "computedHash": "7ac62d931e52dbc7c309ed8ee067101969db2454709339b02daa583e80e98d5f"
     },
     "unocss": {
       "source": "antfu/skills",
       "sourceType": "github",
       "skillPath": "skills/unocss/SKILL.md",
-      "computedHash": "1054e69977e1d2d3b7c8479adf16b4db43191bf775f150ce8a06a0b1c191318b"
+      "computedHash": "88be6c6c1ce60f3d6e9b1468ffe2b474bff4d27e1efcb3433e805e93f143836b"
     },
     "vue-best-practices": {
       "source": "antfu/skills",
@@ -305,13 +305,13 @@
       "source": "cloudflare/skills",
       "sourceType": "github",
       "skillPath": "skills/workers-best-practices/SKILL.md",
-      "computedHash": "7764ccc81dca3f9b4289817879464608eb1bd73cd607347d43ab5c1697a4b707"
+      "computedHash": "f0b169213902a5cdd31e36141a2a1690ba4cf675c1eb5cc341b1608ff1452268"
     },
     "wrangler": {
       "source": "cloudflare/skills",
       "sourceType": "github",
       "skillPath": "skills/wrangler/SKILL.md",
-      "computedHash": "d6772400129d81396d655e1b5ab90067994a6a2033c62d96c911c12963eac0e5"
+      "computedHash": "b1cba2fab47b01915066505abdd249b60b3c7e311126224d92fed1f6ecbaa456"
     }
   }
 }

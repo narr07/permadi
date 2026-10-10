@@ -49,7 +49,36 @@ const { locale } = useI18n()
 					</span>
 				</div>
 
-				<div class="mt-8 border-t border-slate-200/80 pt-2 dark:border-[#134e43]">
+				<!-- Identity Rail: Interactive Monogram Plaque (Swiss Artifact) -->
+				<div class="my-6 sm:my-8">
+					<div class="group relative flex flex-col items-center justify-center border border-slate-200/80 bg-white/70 p-6 text-center transition-all duration-300 dark:border-[#134e43] hover:border-brand-500/50 dark:bg-[#001e1c]/60 sm:p-7 dark:hover:border-brand-400/50">
+						<!-- Technical Header Tag -->
+						<div class="mb-2 w-full flex items-center justify-center border-b border-slate-200/60 pb-2 text-[10px] text-slate-500 tracking-widest font-mono uppercase dark:border-[#134e43]/60 dark:text-slate-400">
+							<span class="flex items-center gap-1.5">
+								<span class="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-brand-500" />
+								<span>{{ locale === 'id' ? 'LOGO RESMI' : 'OFFICIAL LOGO' }}</span>
+							</span>
+						</div>
+
+						<!-- Large Interactive Logo with SSR fallback -->
+						<div class="relative py-2 transition-transform duration-300 ease-out group-hover:scale-105">
+							<ClientOnly>
+								<Logo
+									:size="132"
+									:interactive="true"
+								/>
+								<template #fallback>
+									<Logo
+										:size="132"
+										:interactive="false"
+									/>
+								</template>
+							</ClientOnly>
+						</div>
+					</div>
+				</div>
+
+				<div class="border-t border-slate-200/80 pt-2 dark:border-[#134e43]">
 					<div class="text-xs font-mono divide-y divide-slate-200/80 dark:divide-[#134e43]">
 						<div
 							v-if="hero?.specs?.status"
