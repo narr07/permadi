@@ -126,7 +126,6 @@ function getSocialIcon(name?: string, icon?: string) {
 			>
 				<div>
 					<span class="mb-3 flex items-center gap-1.5 text-xs text-slate-800 font-semibold tracking-wide dark:text-slate-200">
-						<span class="animate-status-pulse inline-block h-2 w-2 rounded-none bg-emerald-500" />
 						{{ page.status_card.label || (locale === 'id' ? 'Status Ketersediaan' : 'Availability Status') }}
 					</span>
 					<h3 class="text-2xl text-slate-900 font-900 leading-tight font-heading dark:text-white">

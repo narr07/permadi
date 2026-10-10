@@ -9,7 +9,7 @@ const currentPath = computed(() => (locale.value === 'id' ? '/id/projek' : '/pro
 // Page metadata
 const { data: page } = await useAsyncData(
 	() => `projek-page-${locale.value}`,
-	() => queryCollection(locale.value === 'id' ? 'pages_id' : 'pages_en').path(currentPath.value).select('title', 'description', 'eyebrow').first(),
+	() => queryCollection(locale.value === 'id' ? 'pages_id' : 'pages_en').path(currentPath.value).select('title', 'description').first(),
 	{ watch: [locale] },
 )
 
@@ -71,13 +71,12 @@ const filteredProjects = computed(() => {
 				return true
 			return String(item.category || '').toLowerCase().trim() === selectedTag.value.toLowerCase().trim()
 		})
-		.map((item: any, idx: number) => {
+		.map((item: any) => {
 			const projectSlug = item.slug || (item.path ? item.path.split('/').pop().replace(/^\d+\./, '') : '')
 			const basePath = locale.value === 'id' ? `/id/projek/${projectSlug}` : `/projects/${projectSlug}`
 			return {
 				...item,
 				url: basePath,
-				indexNum: String(idx + 1).padStart(2, '0'),
 			}
 		})
 })
@@ -132,86 +131,27 @@ defineOgImage('Bento', {
 
 <template>
 	<div class="w-full bg-white dark:bg-[#001e1c]">
-		<!-- Band 01: Swiss Masthead & Parameters Spec Rail -->
-		<header class="w-full border-b border-slate-200/80 dark:border-[#134e43]">
-			<div class="grid grid-cols-1 lg:grid-cols-12">
-				<!-- Meta Rail (4 Columns) -->
-				<div class="flex flex-col justify-between border-b border-slate-200/80 bg-slate-50/50 p-6 lg:col-span-4 lg:border-b-0 lg:border-r dark:border-[#134e43] dark:bg-[#002420]/40 lg:p-10 sm:p-8">
-					<div>
-						<div class="mb-4 flex items-center justify-between text-[11px] font-bold tracking-[0.2em] font-mono uppercase">
-							<div class="flex items-center gap-2 text-brand-700 dark:text-accent">
-								<span class="inline-block h-2 w-2 rounded-none bg-brand-500" />
-								<span>{{ $t('projek.katalog_badge') }}</span>
-							</div>
-							<span class="text-slate-600 tabular-nums dark:text-slate-400">
-								{{ $t('projek.vol') }}
-							</span>
-						</div>
+		<header class="w-full border-b border-slate-200/80 p-6 dark:border-[#134e43] lg:p-12 sm:p-10">
+			<h1 class="mb-6 text-balance text-3xl text-slate-900 font-900 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
+				{{ page?.title || $t('projek.default_title') }}
+			</h1>
 
-						<span class="mb-1.5 block text-[11px] text-slate-600 tracking-[0.15em] font-mono uppercase dark:text-slate-400">
-							{{ $t('projek.category_label') }}
-						</span>
-						<h2 class="text-2xl text-slate-900 font-700 leading-tight font-heading sm:text-3xl dark:text-slate-50">
-							{{ page?.eyebrow || $t('projek.category_fallback') }}
-						</h2>
-					</div>
-
-					<!-- Spec Parameters Table -->
-					<div class="mt-8 border-t border-slate-200/80 pt-6 dark:border-[#134e43]">
-						<div class="text-xs font-mono divide-y divide-slate-200/80 dark:divide-[#134e43]">
-							<div class="flex items-baseline justify-between py-2">
-								<span class="text-slate-700 dark:text-slate-300">{{ $t('projek.total_label') }}</span>
-								<span class="text-slate-900 font-bold tabular-nums dark:text-slate-50">{{ projects?.length || 0 }} {{ $t('projek.unit') }}</span>
-							</div>
-
-							<div class="flex items-baseline justify-between py-2">
-								<span class="text-slate-700 dark:text-slate-300">{{ $t('projek.filter_active') }}</span>
-								<span class="text-brand-600 font-bold uppercase dark:text-brand-400">{{ getFilterLabel(selectedTag) }}</span>
-							</div>
-
-							<div class="flex items-baseline justify-between py-2">
-								<span class="text-slate-700 dark:text-slate-300">{{ $t('projek.status_label') }}</span>
-								<span class="text-brand-600 font-semibold dark:text-brand-400">{{ $t('projek.status_ready') }}</span>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- Typographic Statement Field (8 Columns) -->
-				<div class="flex flex-col justify-between p-6 lg:col-span-8 lg:p-12 sm:p-10">
-					<div>
-						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							{{ $t('projek.curated_badge') }}
-						</div>
-
-						<h1 class="mb-6 text-balance text-3xl text-slate-900 font-900 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
-							{{ page?.title || $t('projek.default_title') }}
-						</h1>
-
-						<p class="max-w-[56ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
-							{{ page?.description || $t('projek.default_description') }}
-						</p>
-					</div>
-
-					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
-						<span>{{ $t('projek.directory_tag') }}</span>
-					</div>
-				</div>
-			</div>
+			<p class="max-w-[56ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
+				{{ page?.description || $t('projek.default_description') }}
+			</p>
 		</header>
 
-		<!-- Band 02: Architectural Filter Strip -->
+		<!-- Filter Strip -->
 		<nav
 			aria-label="Filter kategori proyek"
 			class="w-full flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 bg-slate-50/60 px-6 py-3.5 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/40 sm:px-8"
 		>
 			<div class="flex flex-wrap items-center gap-2">
-				<span class="mr-1 text-[11px] text-slate-600 uppercase dark:text-slate-400">{{ $t('projek.filter_title') }}</span>
 				<button
 					v-for="catKey in projectCategories"
 					:key="catKey"
 					type="button"
-					class="whitespace-nowrap cursor-pointer border px-3.5 py-1.5 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
+					class="cursor-pointer whitespace-nowrap border px-3.5 py-1.5 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
 					:class="selectedTag === catKey
 						? 'swiss-filter-active'
 						: 'bg-white dark:bg-[#001e1c] text-slate-800 dark:text-slate-200 border-slate-300 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
@@ -226,7 +166,7 @@ defineOgImage('Bento', {
 			</span>
 		</nav>
 
-		<!-- Band 03: Lead Featured Project (When On First Page & All Topics) -->
+		<!-- Lead Project (first page, all categories) -->
 		<article
 			v-if="leadProject"
 			class="w-full border-b border-slate-200/80 dark:border-[#134e43]"
@@ -235,13 +175,8 @@ defineOgImage('Bento', {
 				<!-- Lead Info (Cols 1 to 5) -->
 				<div class="flex flex-col justify-between border-b border-slate-200/80 p-6 lg:col-span-5 lg:border-b-0 lg:border-r dark:border-[#134e43] lg:p-10 sm:p-8">
 					<div>
-						<div class="mb-4 flex items-center justify-between text-[11px] font-bold tracking-widest font-mono uppercase">
-							<span class="text-brand-700 dark:text-accent">
-								{{ $t('projek.featured_badge') }}
-							</span>
-							<span class="text-slate-600 tabular-nums dark:text-slate-400">
-								{{ formatDate(leadProject.date) }}
-							</span>
+						<div class="mb-4 text-[11px] text-slate-600 font-bold tracking-widest font-mono uppercase tabular-nums dark:text-slate-400">
+							{{ getCategoryLabel(leadProject.category) }} · {{ formatDate(leadProject.date) }}
 						</div>
 
 						<h2 class="mb-4 text-2xl text-slate-900 font-700 leading-tight font-heading sm:text-4xl dark:text-slate-50">
@@ -305,7 +240,7 @@ defineOgImage('Bento', {
 				</div>
 
 				<!-- Lead Media Frame (Cols 6 to 12) -->
-				<div class="flex flex-col justify-between bg-slate-50/40 p-6 lg:col-span-7 dark:bg-[#002420]/20 lg:p-10 sm:p-8">
+				<div class="flex flex-col justify-center bg-slate-50/40 p-6 lg:col-span-7 dark:bg-[#002420]/20 lg:p-10 sm:p-8">
 					<div
 						v-if="leadProject.image || (leadProject.images && leadProject.images[0])"
 						class="aspect-video w-full overflow-hidden border border-slate-200/80 dark:border-[#134e43]"
@@ -320,15 +255,11 @@ defineOgImage('Bento', {
 						/>
 					</div>
 
-					<div class="mt-4 flex items-center justify-between text-[10px] text-slate-600 tracking-widest font-mono uppercase dark:text-slate-400">
-						<span>{{ $t('projek.preview_label') }}</span>
-						<span>{{ $t('projek.ratio_label') }}</span>
-					</div>
 				</div>
 			</div>
 		</article>
 
-		<!-- Band 04: Continuous Specimen Grid for All Other Projects -->
+		<!-- Project Grid -->
 		<div
 			v-if="gridProjects.length > 0"
 			class="w-full border-b border-slate-200/80 dark:border-[#134e43]"
@@ -364,7 +295,7 @@ defineOgImage('Bento', {
 						<!-- Item Meta -->
 						<div class="mb-3 flex items-center justify-between text-[11px] font-mono">
 							<span class="text-brand-600 font-bold uppercase dark:text-brand-400">
-								{{ $t('projek.item_badge', { num: item.indexNum }) }} // [{{ getCategoryLabel(item.category) }}]
+								{{ getCategoryLabel(item.category) }}
 							</span>
 							<span class="text-slate-600 tabular-nums dark:text-slate-400">
 								{{ formatDate(item.date) }}
@@ -441,14 +372,13 @@ defineOgImage('Bento', {
 			</button>
 		</div>
 
-		<!-- Band 05: Pagination Strip -->
+		<!-- Pagination -->
 		<nav
 			v-if="totalPages > 1"
 			:aria-label="locale === 'id' ? 'Navigasi Halaman Projek' : 'Project Page Navigation'"
 			class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 bg-slate-50/50 px-6 py-6 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-8"
 		>
 			<div class="flex items-center gap-2">
-				<span class="text-slate-600 uppercase dark:text-slate-400">{{ $t('projek.page_label') }}</span>
 				<NuxtLink
 					v-for="pageNum in totalPages"
 					:key="pageNum"
@@ -480,15 +410,6 @@ defineOgImage('Bento', {
 			</div>
 		</nav>
 
-		<!-- Bottom Archival Colophon -->
-		<div class="flex flex-col items-start justify-between gap-2 bg-slate-50/80 px-6 py-4 text-[11px] text-slate-600 font-mono sm:flex-row sm:items-center dark:bg-[#002420]/60 sm:px-8 dark:text-slate-400">
-			<div>
-				{{ $t('projek.footer_colophon') }}
-			</div>
-			<div>
-				{{ $t('projek.location') }}
-			</div>
-		</div>
 	</div>
 </template>
 

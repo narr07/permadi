@@ -69,37 +69,27 @@ defineOgImage('Bento', {
 			</div>
 		</div>
 
-		<!-- Section 01: Asymmetric Hero & System Spec Rail -->
 		<HomeSwissHero
 			:hero="page?.hero"
-			:eyebrow="page?.eyebrow"
 			:headline="page?.headline"
 			:description="page?.description"
 		/>
 
-		<!-- Section 02: Selected Case Studies Modular Triad -->
 		<HomeSwissProjectsTriad
 			:projects="latestProjects || []"
 			:project-section="page?.project_section"
-			:label="page?.project_section?.label"
-			:fallback-title="page?.project_section?.fallback_title"
-			:fallback-description="page?.project_section?.fallback_description"
-			:all-link-text="page?.project_section?.all_link_text"
 		/>
 
-		<!-- Section 03 & 04: Philosophy Ethos & Dual Toolkit Matrix -->
 		<HomeSwissPhilosophyToolkit
 			:philosophy="page?.philosophy"
 			:skills-data="page?.skills_section"
 		/>
 
-		<!-- Section 05: Archival Tabular Journal & Field Notes -->
 		<HomeSwissJournalList
 			:posts="latestPosts || []"
 			:writing="page?.writing"
 		/>
 
-		<!-- Section 06: Contact Inquiries & Technical Colophon -->
 		<HomeSwissContactColophon :colophon="page?.colophon" />
 	</div>
 </template>

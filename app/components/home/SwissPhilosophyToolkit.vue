@@ -1,13 +1,9 @@
 <script setup lang="ts">
 interface PhilosophyData {
 	section_label?: string
-	number?: string
 	quote?: string
 	quote_bold?: string
 	description?: string
-	pedagogy_tag?: string
-	institution_tag?: string
-	label?: string
 }
 
 interface SkillItem {
@@ -18,16 +14,9 @@ interface SkillItem {
 
 interface SkillsData {
 	matrix_label?: string
-	matrix_tag?: string
-	code_kicker?: string
 	code_title?: string
-	code_desc?: string
-	code_tag?: string
 	code_items?: SkillItem[]
-	design_kicker?: string
 	design_title?: string
-	design_desc?: string
-	design_tag?: string
 	design_items?: SkillItem[]
 }
 
@@ -45,14 +34,9 @@ const { locale } = useI18n()
 			<!-- Philosophy & Educational Ethos (5 Columns) -->
 			<div class="flex flex-col justify-between border-b border-slate-200/80 bg-slate-50/40 p-6 lg:col-span-5 lg:border-b-0 lg:border-r dark:border-[#134e43] dark:bg-[#002420]/30 lg:p-10 sm:p-8">
 				<div>
-					<div class="mb-6 flex items-center justify-between text-[11px] font-bold tracking-[0.2em] font-mono uppercase">
-						<span class="text-brand-700 dark:text-accent">
-							{{ philosophy?.section_label || '03 // DOKTRIN & FILOSOFI' }}
-						</span>
-						<span class="text-slate-600 tabular-nums dark:text-slate-400">
-							{{ philosophy?.number || 'PRINSIP 01' }}
-						</span>
-					</div>
+					<h2 class="mb-6 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
+						{{ philosophy?.section_label || (locale === 'id' ? 'Prinsip' : 'Principles') }}
+					</h2>
 
 					<blockquote class="my-6">
 						<p class="text-balance text-2xl text-slate-900 font-900 leading-snug tracking-tight font-heading lg:text-[2rem] sm:text-3xl dark:text-slate-50">
@@ -67,37 +51,20 @@ const { locale } = useI18n()
 						{{ philosophy?.description || (locale === 'id' ? 'Di matematika, hitungan itu pasti dan nggak bisa ngasal. Nah, desain dan tipografi itu cara saya nyajiinnya: tertib, ramah, dan nyaman dibaca siapa pun.' : 'Math teaches that numbers don\'t lie. Typography is how I present that clarity: tidy, welcoming, and easy for anyone to read.') }}
 					</p>
 				</div>
-
-				<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-[11px] font-mono dark:border-[#134e43]">
-					<span class="text-slate-600 uppercase dark:text-slate-400">
-						{{ philosophy?.pedagogy_tag || (locale === 'id' ? 'PEDAGOGI × REKAYASA DIGITAL' : 'PEDAGOGY × DIGITAL CRAFT') }}
-					</span>
-					<span class="text-brand-600 font-bold dark:text-brand-400">
-						{{ philosophy?.institution_tag || 'UPI BANDUNG' }}
-					</span>
-				</div>
 			</div>
 
 			<!-- Dual Discipline Toolkit Matrix (7 Columns) -->
 			<div class="flex flex-col justify-between p-6 lg:col-span-7 lg:p-10 sm:p-8">
 				<div>
-					<div class="mb-6 flex items-center justify-between border-b border-slate-200/80 pb-3 text-[11px] font-bold tracking-[0.2em] font-mono uppercase dark:border-[#134e43]">
-						<span class="text-brand-700 dark:text-accent">
-							{{ skillsData?.matrix_label || '04 // DUAL TOOLKIT MATRIX' }}
-						</span>
-						<span class="text-slate-600 dark:text-slate-400">
-							{{ skillsData?.matrix_tag || (locale === 'id' ? 'DISIPLIN TEKNIS' : 'TECHNICAL DISCIPLINES') }}
-						</span>
-					</div>
+					<h2 class="mb-6 border-b border-slate-200/80 pb-3 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:border-[#134e43] dark:text-accent">
+						{{ skillsData?.matrix_label || (locale === 'id' ? 'Alat kerja' : 'Toolkit') }}
+					</h2>
 
 					<div class="grid grid-cols-1 gap-8 sm:grid-cols-2 divide-y divide-slate-200/80 sm:divide-x sm:divide-y-0 dark:divide-[#134e43]">
 						<!-- Column A: Logic & Software Architecture -->
 						<div class="sm:pr-6">
 							<div class="mb-4">
-								<span class="text-[11px] text-brand-600 font-bold tracking-widest font-mono uppercase dark:text-brand-400">
-									{{ skillsData?.code_kicker || 'A // LOGIKA & SISTEM' }}
-								</span>
-								<h3 class="mt-1 text-lg text-slate-900 font-900 font-heading dark:text-slate-50">
+								<h3 class="text-lg text-slate-900 font-900 font-heading dark:text-slate-50">
 									{{ skillsData?.code_title || 'Software Engineering' }}
 								</h3>
 							</div>
@@ -110,9 +77,8 @@ const { locale } = useI18n()
 									v-for="(item, idx) in skillsData.code_items"
 									:key="item.name"
 									:class="{ 'border-b border-slate-100 pb-2.5 dark:border-[#134e43]/60': idx < skillsData.code_items.length - 1 }"
-									class="flex items-start gap-2.5"
+									class="flex items-start"
 								>
-									<span class="pt-0.5 text-[10px] text-brand-600 font-bold font-mono dark:text-brand-400">0{{ idx + 1 }}.</span>
 									<div>
 										<strong class="text-slate-900 font-semibold dark:text-slate-50">{{ item.name }}</strong>
 										<span
@@ -127,10 +93,7 @@ const { locale } = useI18n()
 						<!-- Column B: Visual Aesthetics & Editorial Craft -->
 						<div class="pt-6 sm:pl-6 sm:pt-0">
 							<div class="mb-4">
-								<span class="text-[11px] text-[#92400e] font-bold tracking-widest font-mono uppercase dark:text-[#f9bc60]">
-									{{ skillsData?.design_kicker || 'B // VISUAL & GRAFIS' }}
-								</span>
-								<h3 class="mt-1 text-lg text-slate-900 font-900 font-heading dark:text-slate-50">
+								<h3 class="text-lg text-slate-900 font-900 font-heading dark:text-slate-50">
 									{{ skillsData?.design_title || 'Graphic & Editorial' }}
 								</h3>
 							</div>
@@ -143,9 +106,8 @@ const { locale } = useI18n()
 									v-for="(item, idx) in skillsData.design_items"
 									:key="item.name"
 									:class="{ 'border-b border-slate-100 pb-2.5 dark:border-[#134e43]/60': idx < skillsData.design_items.length - 1 }"
-									class="flex items-start gap-2.5"
+									class="flex items-start"
 								>
-									<span class="pt-0.5 text-[10px] text-[#92400e] font-bold font-mono dark:text-[#f9bc60]">0{{ idx + 1 }}.</span>
 									<div>
 										<strong class="text-slate-900 font-semibold dark:text-slate-50">{{ item.name }}</strong>
 										<span
@@ -157,11 +119,6 @@ const { locale } = useI18n()
 							</ul>
 						</div>
 					</div>
-				</div>
-
-				<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-4 text-[11px] text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
-					<span>{{ locale === 'id' ? 'PRINSIP KERJA: TIDAK ADA HIASAN TANPA FUNGSI' : 'WORKING PRINCIPLE: NO ORNAMENT WITHOUT FUNCTION' }}</span>
-					<span>INDEX 03–04</span>
 				</div>
 			</div>
 		</div>

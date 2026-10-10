@@ -4,7 +4,6 @@ headline: Menghitung dengan cermat. Merancang dengan penuh niat.
 lead: Menghubungkan cara berpikir ruang kelas, ketelitian logika hitung, dan kerapian tata letak visual dalam setiap baris kode.
 section_label: Profil & Filosofi
 story_card:
-  label: Filosofi & Profil
   title: Saya Permadi, guru sekolah dasar dan pengembang web dari Majalengka.
   lead: Berbekal latar belakang pendidikan dari Universitas Pendidikan Indonesia (UPI), saya menyalurkan ketelitian berpikir ke dalam baris kode (Nuxt, Flutter, Python, PHP) dan tata letak visual yang presisi.
   bio: Di luar ruang kelas dan teks editor, saya menghabiskan waktu mengeksplorasi konsep matematika, menyusun aset grafis, dan merancang media ajar interaktif untuk siswa.
@@ -26,15 +25,12 @@ toolkit_card:
       desc: Edge Database & Serverless Engine
     - name: UnoCSS & Tailwind
       desc: Design Tokens & Atomic Styling
-  footer: Nuxt 4 / UnoCSS / Cloudflare
 location_card:
   label: Lokasi & Zona Waktu
   title: Majalengka, Indonesia
   description: Bekerja dari Majalengka, terbuka berkolaborasi secara remote dengan tim dan klien di mana saja.
   timezone: GMT+7 (WIB)
-  badge: Kolaborasi Terbuka
 principles_label: Prinsip Utama
-principles_footer: Dibangun dengan Penuh Niat
 principles:
   - title: Logika Numerik & Presisi
     description: Menyusun algoritma dan struktur kode yang efisien, rapi, dan modular di setiap lapisan arsitektur.

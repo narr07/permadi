@@ -29,28 +29,9 @@ function scrollToTop() {
 		v-if="isHomePage"
 		class="w-full flex flex-col items-center justify-between gap-4 border-t border-slate-200/80 bg-slate-50/90 px-6 py-4 text-xs font-mono sm:flex-row dark:border-[#134e43] dark:bg-[#002420]/80 sm:px-8"
 	>
-		<span class="text-slate-600 tracking-wider uppercase dark:text-slate-400">
-			{{ $t('footer.location') }}
+		<span class="text-slate-700 dark:text-slate-300">
+			© 2021–<ClientOnly fallback="2026">{{ currentYear }}</ClientOnly> · Dinar Permadi Yusup
 		</span>
-
-		<!-- Social Media Links (Home Strip) -->
-		<div class="flex flex-wrap items-center gap-4 sm:gap-5">
-			<a
-				v-for="s in socialLinks"
-				:key="s.name"
-				:href="s.url"
-				target="_blank"
-				rel="noopener noreferrer"
-				class="group inline-flex items-center gap-1.5 text-slate-700 transition-colors dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400"
-			>
-				<span
-					:class="s.icon"
-					class="text-xs"
-				/>
-				<span class="font-bold">@{{ s.handle }}</span>
-				<span class="i-swisspost-arrowupright text-[10px] text-slate-400 transition-transform duration-150 group-hover:(translate-x-0.5 text-brand-600 -translate-y-0.5) dark:group-hover:text-brand-400" />
-			</a>
-		</div>
 
 		<button
 			type="button"
@@ -105,7 +86,6 @@ function scrollToTop() {
 						class="text-xs"
 					/>
 					<span class="font-bold">{{ s.name }}</span>
-					<span class="text-slate-500 dark:text-slate-400">(@{{ s.handle }})</span>
 					<span class="i-swisspost-arrowupright text-[10px] text-slate-400 transition-transform duration-150 group-hover:(translate-x-0.5 text-brand-600 -translate-y-0.5) dark:group-hover:text-brand-400" />
 				</a>
 			</div>

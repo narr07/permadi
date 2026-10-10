@@ -9,7 +9,6 @@ const props = defineProps<{
 	type: ReactionType
 	emoji: string
 	title: string
-	index?: number
 	section?: string
 }>()
 
@@ -74,11 +73,7 @@ function removeParticle(id: string) {
 			]"
 			@click="handleClick"
 		>
-			<!-- Top Indicator Strip: Sequential number and Emoji -->
-			<div class="mb-3 flex items-center justify-between gap-2">
-				<span class="text-[11px] text-slate-600 font-bold tabular-nums dark:text-slate-400">
-					[{{ String(index || 1).padStart(2, '0') }}]
-				</span>
+			<div class="mb-3">
 				<span
 					class="text-xl transition-transform duration-150 sm:text-2xl"
 					:class="isBouncing ? 'animate-spring-bounce' : 'group-hover:scale-115'"

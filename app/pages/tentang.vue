@@ -176,9 +176,6 @@ function getToolIcon(name?: string) {
 						</li>
 					</ul>
 				</div>
-				<div class="mt-6 border-t border-slate-200/60 pt-3 text-xs text-slate-600 font-mono dark:border-slate-800/60 dark:text-slate-400">
-					{{ page.toolkit_card.footer || 'Nuxt 4 / UnoCSS / Cloudflare' }}
-				</div>
 			</div>
 
 			<!-- Location & Remote Work Card (Span 5) -->
@@ -195,14 +192,9 @@ function getToolIcon(name?: string) {
 						{{ page?.location_card?.description || (locale === 'id' ? 'Bekerja secara remote dan berkolaborasi dengan tim di berbagai belahan dunia.' : 'Working remotely and collaborating with teams across the globe.') }}
 					</p>
 				</div>
-				<div class="mt-6 flex items-center justify-between border-t border-slate-200/60 pt-3 text-xs text-slate-700 font-mono dark:border-slate-800/60 dark:text-slate-300">
-					<span class="flex items-center gap-1.5 font-semibold">
-						<span class="i-swisspost-globecontinents text-sm text-brand-600 dark:text-brand-400" />
-						{{ page?.location_card?.timezone || 'GMT+7' }}
-					</span>
-					<span class="inline-flex items-center gap-1 border border-brand-200/60 bg-brand-50 px-2 py-0.5 text-[11px] text-brand-900 font-medium dark:border-brand-800/60 dark:bg-brand-950/60 dark:text-brand-300">
-						{{ page?.location_card?.badge || 'Available Globally' }}
-					</span>
+				<div class="mt-6 flex items-center gap-1.5 border-t border-slate-200/60 pt-3 text-xs text-slate-700 font-semibold font-mono dark:border-slate-800/60 dark:text-slate-300">
+					<span class="i-swisspost-globecontinents text-sm text-brand-600 dark:text-brand-400" />
+					{{ page?.location_card?.timezone || 'GMT+7' }}
 				</div>
 			</div>
 
@@ -241,10 +233,6 @@ function getToolIcon(name?: string) {
 							{{ locale === 'id' ? 'Setiap baris kode dan elemen antarmuka dirancang dengan tujuan yang jelas: memberikan interaksi yang cepat, aksesibel, dan tahan lama.' : 'Every line of code and interface element is built with intention: delivering fast, accessible, and durable digital products.' }}
 						</p>
 					</div>
-				</div>
-				<div class="mt-6 flex items-center justify-between border-t border-brand-900/60 pt-3 text-xs text-brand-300 font-mono">
-					<span>{{ page?.principles_footer || 'Crafted with Intention' }}</span>
-					<span>© {{ new Date().getFullYear() }}</span>
 				</div>
 			</div>
 

@@ -164,15 +164,9 @@ async function handleCopyLink() {
 	>
 		<!-- Header / Eyebrow + Title Section -->
 		<div class="mb-6 flex flex-col justify-between gap-4 border-b border-slate-200/80 pb-5 sm:flex-row sm:items-center dark:border-[#134e43]">
-			<div>
-				<div class="mb-2 flex items-center gap-2 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-					<span class="inline-block h-1.5 w-1.5 bg-brand-500" />
-					<span>■ 03 // {{ locale === 'id' ? 'BAGIKAN TULISAN' : 'SHARE PUBLICATION' }}</span>
-				</div>
-				<h2 class="text-base text-slate-900 font-700 leading-snug tracking-tight font-heading sm:text-xl dark:text-slate-50">
-					{{ locale === 'id' ? 'Menemukan naskah ini bermanfaat? Bagikan ke jejaring Anda' : 'Found this publication insightful? Share it with your network' }}
-				</h2>
-			</div>
+			<h2 class="text-base text-slate-900 font-700 leading-snug tracking-tight font-heading sm:text-xl dark:text-slate-50">
+				{{ locale === 'id' ? 'Bagikan tulisan ini' : 'Share this article' }}
+			</h2>
 
 			<!-- Swiss Hairline Copy Button -->
 			<button
@@ -207,12 +201,6 @@ async function handleCopyLink() {
 				/>
 				<span>{{ net.shortLabel }}</span>
 			</a>
-		</div>
-
-		<!-- Swiss Footnote / Ledger Strip -->
-		<div class="mt-6 flex items-center justify-between border-t border-slate-200/80 pt-3 text-[10px] text-slate-600 font-mono uppercase dark:border-[#134e43] dark:text-slate-400">
-			<span>DISTRIBUSI TERBUKA // DOKUMEN PUBLIK</span>
-			<span class="tabular-nums">PERMADI.DEV</span>
 		</div>
 	</aside>
 </template>

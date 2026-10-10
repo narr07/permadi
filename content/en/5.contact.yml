@@ -8,7 +8,6 @@ email_card:
   email: dinar@permadi.dev
   description: I usually reply within 1–2 business days for project discussions, consulting, or general inquiries.
   button_text: Send an Email
-  meta: Open for Collaboration (UTC+7)
 status_card:
   label: Availability Status
   title: Open for Projects & Consulting

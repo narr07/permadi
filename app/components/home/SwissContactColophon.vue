@@ -6,17 +6,13 @@ interface SocialItem {
 }
 
 interface ColophonData {
-	section_number?: string
-	status?: string
+	section_label?: string
 	headline?: string
 	description?: string
 	email?: string
 	response_time?: string
 	socials_title?: string
 	socials?: SocialItem[]
-	almamater_note?: string
-	typography_credits?: string
-	copyright?: string
 }
 
 const props = defineProps<{
@@ -42,17 +38,8 @@ const activeSocials = computed(() => {
 <template>
 	<section class="w-full bg-white dark:bg-[#001e1c]">
 		<!-- Header Strip -->
-		<div class="flex items-center justify-between border-b border-slate-200/80 px-6 py-4 text-[11px] font-bold tracking-[0.2em] font-mono uppercase dark:border-[#134e43] sm:px-8 sm:py-5">
-			<div class="flex items-center gap-2.5 text-brand-700 dark:text-accent">
-				<span class="inline-block h-2 w-2 rounded-none bg-brand-500" />
-				<span>{{ colophon?.section_number || '06 // HUBUNGI & KOLABORASI' }}</span>
-			</div>
-			<div class="flex items-center gap-2">
-				<span class="inline-block h-1.5 w-1.5 rounded-none bg-brand-500 shadow-[0_0_0_2px_#ccfbf2] dark:shadow-[0_0_0_2px_rgba(20,184,152,0.2)]" />
-				<span class="text-brand-600 dark:text-brand-400">
-					{{ colophon?.status || (locale === 'id' ? 'LAGI BISA DIAJAK KERJASAMA' : 'OPEN FOR COLLABORATION') }}
-				</span>
-			</div>
+		<div class="border-b border-slate-200/80 px-6 py-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:border-[#134e43] sm:px-8 sm:py-5 dark:text-accent">
+			{{ colophon?.section_label || (locale === 'id' ? 'Kontak' : 'Contact') }}
 		</div>
 
 		<!-- 12-Column Grid -->
@@ -79,8 +66,11 @@ const activeSocials = computed(() => {
 					</div>
 				</div>
 
-				<div class="mt-8 border-t border-slate-200/60 pt-4 text-xs text-slate-600 font-mono dark:border-[#134e43]/60 dark:text-slate-400">
-					{{ colophon?.response_time || (locale === 'id' ? 'BIASANYA DIBALAS DALAM: 1–2 HARI KERJA // MAJALENGKA (WIB / GMT+7)' : 'USUALLY REPLIES WITHIN 1–2 DAYS // MAJALENGKA (WIB / GMT+7)') }}
+				<div
+					v-if="colophon?.response_time"
+					class="mt-8 border-t border-slate-200/60 pt-4 text-xs text-slate-600 font-mono dark:border-[#134e43]/60 dark:text-slate-400"
+				>
+					{{ colophon.response_time }}
 				</div>
 			</div>
 
@@ -88,7 +78,7 @@ const activeSocials = computed(() => {
 			<div class="flex flex-col justify-between border-t border-slate-200/80 bg-slate-50/50 p-6 lg:col-span-4 lg:border-l lg:border-t-0 dark:border-[#134e43] dark:bg-[#002420]/40 lg:p-10 sm:p-8">
 				<div>
 					<div class="mb-6 border-b border-slate-200/80 pb-2 text-[11px] text-slate-600 font-bold tracking-[0.2em] font-mono uppercase dark:border-[#134e43] dark:text-slate-400">
-						{{ colophon?.socials_title || 'PLATFORM DIGITAL' }}
+						{{ colophon?.socials_title || (locale === 'id' ? 'Media sosial' : 'Social') }}
 					</div>
 
 					<ul class="text-xs font-mono space-y-3">
@@ -110,17 +100,6 @@ const activeSocials = computed(() => {
 						</li>
 					</ul>
 				</div>
-
-				<div class="mt-8 border-t border-slate-200/80 pt-4 text-[10px] text-slate-600 leading-relaxed font-mono uppercase dark:border-[#134e43] dark:text-slate-400">
-					{{ colophon?.almamater_note || 'LULUSAN UNIVERSITAS PENDIDIKAN INDONESIA (UPI) BANDUNG · PROVINSI JAWA BARAT' }}
-				</div>
-			</div>
-		</div>
-
-		<!-- Swiss Colophon Strip -->
-		<div class="flex items-center justify-center border-t border-slate-200/80 bg-slate-50/70 px-6 py-6 text-center text-[11px] text-slate-600 font-mono dark:border-[#134e43] dark:bg-[#002420]/60 sm:px-8 dark:text-slate-400">
-			<div class="tabular-nums">
-				{{ colophon?.copyright || '© 2026 DINAR PERMADI YUSUP. ALL RIGHTS RESERVED.' }}
 			</div>
 		</div>
 	</section>

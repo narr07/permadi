@@ -83,7 +83,7 @@ onMounted(() => {
 				class="flex items-center gap-3 text-xs text-slate-900 font-bold tracking-wider font-mono uppercase transition-all duration-150 active:scale-[0.98] hover:scale-[1.01] dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
 				<LogoNav size="24" />
-				<span class="tracking-[0.12em]">PERMADI.DEV // DINAR PERMADI</span>
+				<span class="tracking-[0.12em]">DINAR PERMADI</span>
 			</NuxtLink>
 
 			<!-- Navigation & Utility Rail -->
@@ -91,14 +91,13 @@ onMounted(() => {
 				<!-- Desktop Nav Links -->
 				<nav class="hidden items-center gap-5 text-xs font-mono md:flex">
 					<NuxtLink
-						v-for="(item, idx) in navItems"
+						v-for="item in navItems"
 						:key="item.to"
 						:to="item.to"
-						class="transition-all duration-150 active:scale-[0.96] hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-brand-400"
-						:class="isItemActive(item) ? 'font-bold text-brand-700 dark:text-brand-400 underline underline-offset-4' : 'text-slate-700 dark:text-slate-300'"
+						class="nav-link relative py-1 tracking-wider uppercase transition-colors duration-200 active:scale-[0.97] hover:text-brand-600 dark:hover:text-brand-400"
+						:class="isItemActive(item) ? 'is-active font-bold text-brand-700 dark:text-brand-400' : 'text-slate-700 dark:text-slate-300'"
 					>
-						<span class="mr-1 text-slate-600 dark:text-slate-400">0{{ idx + 1 }} /</span>
-						<span>{{ item.label.toUpperCase() }}</span>
+						{{ item.label.toUpperCase() }}
 					</NuxtLink>
 				</nav>
 
@@ -171,14 +170,14 @@ onMounted(() => {
 			>
 				<div class="flex flex-col text-sm font-mono divide-y divide-slate-100 dark:divide-[#134e43]">
 					<NuxtLink
-						v-for="(item, idx) in navItems"
+						v-for="item in navItems"
 						:key="item.to"
 						:to="item.to"
 						class="flex items-center justify-between py-3"
 						:class="isItemActive(item) ? 'font-bold text-brand-600 dark:text-brand-400' : 'text-slate-800 dark:text-slate-200'"
 						@click="mobileOpen = false"
 					>
-						<span>0{{ idx + 1 }} / {{ item.label.toUpperCase() }}</span>
+						<span>{{ item.label.toUpperCase() }}</span>
 						<span class="i-swisspost-arrowright text-xs text-slate-600 dark:text-slate-400" />
 					</NuxtLink>
 
@@ -201,3 +200,28 @@ onMounted(() => {
 		</Transition>
 	</header>
 </template>
+
+<style scoped>
+.nav-link {
+	position: relative;
+	display: inline-block;
+}
+
+.nav-link::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	bottom: -2px;
+	width: 100%;
+	height: 2px;
+	background-color: currentColor;
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link:hover::after,
+.nav-link.is-active::after {
+	transform: scaleX(1);
+}
+</style>

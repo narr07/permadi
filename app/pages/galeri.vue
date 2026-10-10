@@ -53,18 +53,6 @@ function selectTag(tag: string) {
 	tagSearchQuery.value = ''
 }
 
-const tagCounts = computed(() => {
-	const map: Record<string, number> = {}
-	allItems.value.forEach((item: any) => {
-		if (Array.isArray(item.tags)) {
-			item.tags.forEach((tag: string) => {
-				map[tag] = (map[tag] || 0) + 1
-			})
-		}
-	})
-	return map
-})
-
 const filteredGallery = computed(() => {
 	if (selectedTag.value === 'ALL')
 		return allItems.value
@@ -266,97 +254,34 @@ useSchemaOrg([
 </script>
 
 <template>
-	<div class="mx-auto max-w-6xl px-4 py-10 lg:px-8 sm:px-6 sm:py-14">
-		<!-- Band 01: Swiss Broadside Masthead (4:8 Asymmetric Grid) -->
-		<header class="w-full border border-slate-200/80 bg-white dark:border-[#134e43] dark:bg-[#001e1c]">
-			<div class="grid grid-cols-1 lg:grid-cols-12 divide-y divide-slate-200/80 lg:divide-x lg:divide-y-0 dark:divide-[#134e43]">
-				<!-- Parameters Rail (Cols 1 to 4) -->
-				<div class="flex flex-col justify-between bg-slate-50/40 p-6 lg:col-span-4 dark:bg-[#002420]/20 sm:p-8">
-					<div>
-						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							{{ $t('galeri.archive_badge') }}
-						</div>
+	<div class="w-full bg-white dark:bg-[#001e1c]">
+		<header class="w-full border-b border-slate-200/80 p-6 dark:border-[#134e43] lg:p-12 sm:p-10">
+			<h1 class="mb-6 text-balance text-3xl text-slate-900 font-900 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
+				{{ page?.title || $t('galeri.default_title') }}
+			</h1>
 
-						<div class="text-xs font-mono divide-y divide-slate-200/80 dark:divide-[#134e43]">
-							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">{{ $t('galeri.total_label') }}</span>
-								<span class="text-slate-900 font-bold tabular-nums dark:text-slate-50">{{ allItems.length }} {{ $t('galeri.unit') }}</span>
-							</div>
-
-							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">{{ $t('galeri.hosting') }}</span>
-								<span class="text-slate-900 font-medium dark:text-slate-50">CLOUDINARY EDGE</span>
-							</div>
-
-							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">{{ $t('galeri.optimization') }}</span>
-								<span class="text-brand-600 font-bold dark:text-accent">WEBP / AVIF LQIP</span>
-							</div>
-
-							<div class="flex items-baseline justify-between py-2.5">
-								<span class="text-slate-700 dark:text-slate-300">{{ $t('galeri.curator') }}</span>
-								<span class="text-slate-900 font-medium dark:text-slate-50">Dinar Permadi Yusup</span>
-							</div>
-						</div>
-					</div>
-
-					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
-						<span>{{ $t('galeri.copyright') }}</span>
-						<span>CC BY-NC-ND 4.0</span>
-					</div>
-				</div>
-
-				<!-- Monumental Typographic Statement Field (Cols 5 to 12) -->
-				<div class="flex flex-col justify-between p-6 lg:col-span-8 lg:p-12 sm:p-10">
-					<div>
-						<div class="mb-4 text-[11px] text-brand-700 font-bold tracking-[0.2em] font-mono uppercase dark:text-accent">
-							{{ $t('galeri.subhead_badge') }}
-						</div>
-
-						<h1 class="mb-6 text-balance text-3xl text-slate-900 font-900 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
-							{{ page?.title || $t('galeri.default_title') }}
-						</h1>
-
-						<p class="mb-8 max-w-[58ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
-							{{ page?.description || $t('galeri.default_description') }}
-						</p>
-
-						<div class="flex flex-wrap gap-2 text-xs text-slate-700 font-mono dark:text-slate-300">
-							<span
-								v-for="tag in (locale === 'id' ? ['#FOTOGRAFI', '#WORKSPACE', '#ARSITEKTUR', '#DESAIN'] : ['#PHOTOGRAPHY', '#WORKSPACE', '#ARCHITECTURE', '#DESIGN'])"
-								:key="tag"
-								class="border border-slate-300 px-2.5 py-1 uppercase dark:border-[#134e43]"
-							>
-								{{ tag }}
-							</span>
-						</div>
-					</div>
-
-					<div class="mt-8 flex items-center justify-between border-t border-slate-200/80 pt-6 text-xs text-slate-600 font-mono dark:border-[#134e43] dark:text-slate-400">
-						<span>{{ $t('projek.archive_tag') }}</span>
-					</div>
-				</div>
-			</div>
+			<p class="max-w-[56ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
+				{{ page?.description || $t('galeri.default_description') }}
+			</p>
 		</header>
 
-		<!-- Band 02: Swiss Filter Strip & Metric Ledger Bar -->
-		<div class="w-full flex flex-wrap items-center justify-between gap-4 border-x border-b border-slate-200/80 bg-slate-50/70 px-4 py-3 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-6">
+		<!-- Filter Strip -->
+		<nav
+			aria-label="Filter galeri visual"
+			class="w-full flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 bg-slate-50/60 px-6 py-3.5 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/40 sm:px-8"
+		>
 			<!-- Tag Filter Buttons -->
-			<div class="flex flex-wrap items-center gap-1.5">
-				<span class="mr-1 text-[11px] text-slate-600 font-bold uppercase dark:text-slate-400">
-					{{ $t('galeri.filter_label') }}
-				</span>
-
+			<div class="flex flex-wrap items-center gap-2">
 				<!-- All Topics -->
 				<button
 					type="button"
-					class="cursor-pointer border px-3 py-1 text-[11px] font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
+					class="cursor-pointer whitespace-nowrap border px-3.5 py-1.5 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
 					:class="selectedTag === 'ALL'
 						? 'swiss-filter-active'
 						: 'bg-white dark:bg-[#001e1c] border-slate-300 dark:border-[#134e43] text-slate-800 dark:text-slate-200 hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
 					@click="selectTag('ALL')"
 				>
-					{{ $t('galeri.filter_all') }} ({{ allItems.length }})
+					<span>{{ $t('galeri.filter_all') }}</span>
 				</button>
 
 				<!-- Individual Tags -->
@@ -364,104 +289,86 @@ useSchemaOrg([
 					v-for="tag in availableTags"
 					:key="tag"
 					type="button"
-					class="cursor-pointer border px-3 py-1 text-[11px] tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
+					class="cursor-pointer whitespace-nowrap border px-3.5 py-1.5 tracking-wider uppercase transition-all duration-150 active:scale-95 hover:-translate-y-0.5"
 					:class="selectedTag === tag
 						? 'swiss-filter-active font-bold'
 						: 'bg-white dark:bg-[#001e1c] border-slate-300 dark:border-[#134e43] text-slate-800 dark:text-slate-200 hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
 					@click="selectTag(tag)"
 				>
-					#{{ tag }} ({{ tagCounts[tag] || 0 }})
+					<span>#{{ tag }}</span>
 				</button>
 			</div>
 
-			<!-- Quick Metric Indicator -->
-			<div class="text-[11px] text-slate-600 font-bold tracking-wider uppercase tabular-nums dark:text-slate-400">
-				{{ locale === 'id' ? 'DITAMPILKAN:' : 'DISPLAYING:' }} {{ displayedItems.length }} / {{ filteredGallery.length }}
-			</div>
-		</div>
+			<span class="text-[11px] text-slate-600 uppercase tabular-nums dark:text-slate-400">
+				{{ locale === 'id' ? `Menampilkan ${displayedItems.length} dari ${filteredGallery.length} karya` : `Showing ${displayedItems.length} of ${filteredGallery.length} works` }}
+			</span>
+		</nav>
 
-		<!-- Band 03: The Swiss Modular Image Grid (Rigorous 3-Column Ledger) -->
+		<!-- Image Grid -->
 		<div
 			v-if="displayedItems.length > 0"
-			class="grid grid-cols-1 border-x border-b border-slate-200/80 bg-white lg:grid-cols-3 md:grid-cols-2 dark:border-[#134e43] dark:bg-[#001e1c]"
+			class="w-full border-b border-slate-200/80 dark:border-[#134e43]"
 		>
-			<div
-				v-for="(item, i) in displayedItems"
-				:key="item.public_id || i"
-				tabindex="0"
-				role="button"
-				:aria-label="item.title || (locale === 'id' ? 'Buka spesimen foto' : 'Open photo specimen')"
-				class="group flex flex-col cursor-pointer select-none justify-between border-b border-r-0 border-slate-200/80 text-xs font-mono transition-all duration-150 active:scale-[0.99] md:border-b-0 md:border-r dark:border-[#134e43] hover:bg-slate-50/80 dark:hover:bg-[#002420]/40"
-				@click="openModal(item)"
-				@keydown.enter.prevent="openModal(item)"
-				@keydown.space.prevent="openModal(item)"
-			>
-				<!-- Specimen Header Rail -->
-				<div class="flex items-center justify-between border-b border-slate-200/80 bg-slate-50/50 px-4 py-3 text-[10px] font-bold tracking-wider uppercase dark:border-[#134e43] dark:bg-[#002420]/30">
-					<div class="flex items-center gap-1.5 text-brand-700 dark:text-accent">
-						<span class="inline-block h-1.5 w-1.5 bg-brand-500" />
-						<span>{{ locale === 'id' ? 'SPESIMEN' : 'SPECIMEN' }} {{ String(i + 1).padStart(2, '0') }}</span>
-					</div>
-					<span class="text-slate-600 tabular-nums dark:text-slate-400">
-						{{ item.width || 720 }}×{{ item.height || 540 }} HD
-					</span>
-				</div>
-
-				<!-- Image Frame (Pure Rectilinear Architecture) -->
-				<div class="relative aspect-[4/3] w-full overflow-hidden bg-slate-100 dark:bg-[#001714]">
-					<!-- LQIP Pixelated Placeholder (Aktif saat gambar resolusi tinggi sedang memuat) -->
-					<img
-						v-if="item.placeholder_image"
-						:src="item.placeholder_image"
-						alt=""
-						aria-hidden="true"
-						decoding="async"
-						class="pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out"
-						:class="loadedImages[item.public_id] ? 'opacity-0' : 'opacity-100'"
-						style="image-rendering: pixelated;"
-					>
-
-					<!-- High-Res Main Image (NuxtImg) -->
-					<NuxtImg
-						:src="item.secure_url || item.image"
-						:alt="item.title || (locale === 'id' ? 'Foto galeri' : 'Gallery photo specimen')"
-						format="webp"
-						quality="85"
-						sizes="xs:100vw sm:100vw md:50vw lg:400px"
-						class="relative z-1 h-full w-full object-cover transition-all duration-700 ease-out group-hover:scale-103"
-						:class="loadedImages[item.public_id] ? 'opacity-100' : 'opacity-0'"
-						:loading="i < 3 ? 'eager' : 'lazy'"
-						:fetchpriority="i === 0 ? 'high' : 'auto'"
-						@load="onImageLoad(item.public_id)"
-					/>
-				</div>
-
-				<!-- Specimen Footer Details -->
-				<div class="flex flex-1 flex-col justify-between border-t border-slate-200/80 p-4 dark:border-[#134e43]">
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+				<div
+					v-for="(item, i) in displayedItems"
+					:key="item.public_id || i"
+					tabindex="0"
+					role="button"
+					:aria-label="item.title || (locale === 'id' ? 'Buka foto' : 'Open photo')"
+					class="group flex flex-col cursor-pointer select-none justify-between border-b border-slate-200/80 p-6 transition-colors duration-200 dark:border-[#134e43] sm:p-8 hover:(bg-[#e2f4f0] dark:bg-[#003832])"
+					:class="[
+						i % 3 !== 2 ? 'lg:border-r' : 'lg:border-r-0',
+						i % 2 !== 1 ? 'md:border-r' : 'md:border-r-0',
+					]"
+					@click="openModal(item)"
+					@keydown.enter.prevent="openModal(item)"
+					@keydown.space.prevent="openModal(item)"
+				>
 					<div>
-						<h2 class="mb-2 text-base text-slate-900 font-900 leading-snug font-heading transition-colors dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-accent">
-							{{ item.title }}
-						</h2>
+						<!-- Image Frame -->
+						<div class="mb-4 aspect-[4/3] w-full overflow-hidden border border-slate-200/80 bg-slate-100 relative dark:border-[#134e43] dark:bg-[#001714]">
+							<!-- LQIP Pixelated Placeholder -->
+							<img
+								v-if="item.placeholder_image"
+								:src="item.placeholder_image"
+								alt=""
+								aria-hidden="true"
+								decoding="async"
+								class="pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out"
+								:class="loadedImages[item.public_id] ? 'opacity-0' : 'opacity-100'"
+								style="image-rendering: pixelated;"
+							>
 
-						<div
-							v-if="item.tags && item.tags.length"
-							class="mb-4 flex flex-wrap gap-1.5"
-						>
+							<!-- High-Res Main Image (NuxtImg) -->
+							<NuxtImg
+								:src="item.secure_url || item.image"
+								:alt="item.title || (locale === 'id' ? 'Foto galeri' : 'Gallery photo')"
+								format="webp"
+								quality="85"
+								sizes="xs:100vw sm:100vw md:50vw lg:400px"
+								class="relative z-1 h-full w-full object-cover transition-all duration-500 ease-out group-hover:scale-[1.03]"
+								:class="loadedImages[item.public_id] ? 'opacity-100' : 'opacity-0'"
+								:loading="i < 3 ? 'eager' : 'lazy'"
+								:fetchpriority="i === 0 ? 'high' : 'auto'"
+								@load="onImageLoad(item.public_id)"
+							/>
+						</div>
+
+						<!-- Photo Details -->
+						<div class="mb-2.5 flex flex-wrap gap-1.5" v-if="item.tags && item.tags.length">
 							<span
 								v-for="tag in item.tags.slice(0, 3)"
 								:key="tag"
-								class="border border-slate-200 px-1.5 py-0.5 text-[10px] text-slate-700 uppercase dark:border-[#134e43] dark:text-slate-300"
+								class="border border-slate-200 px-1.5 py-0.5 text-[10px] text-slate-700 uppercase font-mono dark:border-[#134e43] dark:text-slate-300"
 							>
 								#{{ tag }}
 							</span>
 						</div>
-					</div>
 
-					<div class="flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] text-slate-600 dark:border-[#134e43]/40 dark:text-slate-400">
-						<span>DOKUMEN FOTO</span>
-						<span class="flex items-center gap-1 font-bold transition-colors group-hover:text-brand-600 dark:group-hover:text-accent">
-							INSPEKSI <span class="i-swisspost-arrowupright text-xs transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
-						</span>
+						<h2 class="text-base text-slate-900 font-700 leading-snug font-heading transition-colors dark:text-slate-50 group-hover:text-brand-700 dark:group-hover:text-brand-300">
+							{{ item.title }}
+						</h2>
 					</div>
 				</div>
 			</div>
@@ -470,14 +377,14 @@ useSchemaOrg([
 		<!-- Infinite Scroll Trigger Sentinel & Load More Strip -->
 		<div
 			ref="sentinelEl"
-			class="w-full flex flex-col items-center justify-center border-x border-b border-slate-200/80 bg-slate-50/60 p-6 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/30"
+			class="w-full flex flex-col items-center justify-center border-b border-slate-200/80 bg-slate-50/60 p-6 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/30"
 		>
 			<div
 				v-if="isLoadingMore"
 				class="flex items-center gap-2 text-brand-700 font-bold tracking-wider uppercase dark:text-accent"
 			>
 				<span class="i-swisspost-reloadright animate-spin text-sm" />
-				<span>{{ locale === 'id' ? 'MEMUAT SPESIMEN LAINNYA...' : 'LOADING MORE SPECIMENS...' }}</span>
+				<span>{{ locale === 'id' ? 'Memuat foto…' : 'Loading photos…' }}</span>
 			</div>
 
 			<button
@@ -486,24 +393,14 @@ useSchemaOrg([
 				class="flex cursor-pointer items-center gap-2 border border-slate-300 px-5 py-2.5 text-slate-900 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 dark:border-[#134e43] hover:border-brand-500 dark:text-slate-50 hover:text-brand-600 hover:-translate-y-0.5 dark:hover:text-accent"
 				@click="loadMore"
 			>
-				<span>↓ {{ $t('galeri.load_more') }}</span>
-				<span class="text-slate-600 tabular-nums dark:text-slate-400">
-					({{ filteredGallery.length - displayedItems.length }} {{ $t('galeri.remaining') }})
-				</span>
+				{{ $t('galeri.load_more') }}
 			</button>
-
-			<div
-				v-else
-				class="text-[11px] text-slate-600 font-bold tracking-wider uppercase dark:text-slate-400"
-			>
-				{{ $t('galeri.end_of_archive', { count: filteredGallery.length }) }}
-			</div>
 		</div>
 
 		<!-- Empty State -->
 		<div
 			v-if="displayedItems.length === 0"
-			class="w-full border-x border-b border-slate-200/80 bg-white p-12 text-center text-xs font-mono dark:border-[#134e43] dark:bg-[#001e1c]"
+			class="w-full border-b border-slate-200/80 bg-white p-12 text-center text-xs font-mono dark:border-[#134e43] dark:bg-[#001e1c]"
 		>
 			<div class="mb-2 text-sm text-brand-600 font-bold dark:text-accent">
 				{{ $t('galeri.empty_title') }}
@@ -516,12 +413,12 @@ useSchemaOrg([
 		<!-- Page Content Markdown if any -->
 		<article
 			v-if="page"
-			class="mx-auto mt-12 max-w-4xl font-sans prose prose-slate dark:prose-invert"
+			class="mx-auto max-w-4xl px-6 py-12 font-sans prose prose-slate dark:prose-invert sm:px-8"
 		>
 			<ContentRenderer :value="page" />
 		</article>
 
-		<!-- Band 05: Swiss Specimen Inspection Sheet (Lightbox Modal) -->
+		<!-- Lightbox Modal -->
 		<ClientOnly>
 			<Teleport to="body">
 				<Transition
@@ -540,16 +437,9 @@ useSchemaOrg([
 						<div class="relative max-w-5xl w-full flex flex-col border border-slate-200/80 bg-white shadow-2xl dark:border-[#134e43] dark:bg-[#001e1c]">
 							<!-- Inspection Sheet Header -->
 							<div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 bg-slate-50/80 p-3.5 dark:border-[#134e43] dark:bg-[#002420]/60 sm:p-4">
-								<div class="flex items-center gap-2 truncate text-[11px] font-bold tracking-wider uppercase">
-									<span class="inline-block h-2 w-2 shrink-0 bg-brand-500" />
-									<span class="shrink-0 text-brand-700 dark:text-accent">
-										{{ $t('galeri.specimen_label') }} [{{ String(currentModalIndex + 1).padStart(2, '0') }}/{{ String(filteredGallery.length).padStart(2, '0') }}]
-									</span>
-									<span class="text-slate-300 dark:text-[#134e43]">|</span>
-									<span class="truncate text-slate-900 dark:text-slate-50">
-										{{ selectedPhoto.title }}
-									</span>
-								</div>
+								<span class="truncate text-[11px] text-slate-900 font-bold tracking-wider uppercase dark:text-slate-50">
+									{{ selectedPhoto.title }}
+								</span>
 
 								<!-- Action Controls -->
 								<div class="flex items-center gap-2 text-xs font-mono">
@@ -627,16 +517,9 @@ useSchemaOrg([
 								/>
 							</div>
 
-							<!-- Technical Parameters Ledger -->
+							<!-- License & Tags -->
 							<div class="flex flex-wrap items-center justify-between gap-4 border-t border-slate-200/80 bg-slate-50/80 p-3.5 text-[11px] text-slate-700 dark:border-[#134e43] dark:bg-[#002420]/60 sm:p-4 dark:text-slate-300">
-								<div class="flex flex-wrap items-center gap-2">
-									<span class="text-slate-900 font-bold dark:text-slate-50">{{ $t('galeri.param_label') }}</span>
-									<span class="tabular-nums">{{ selectedPhoto.width || 720 }}×{{ selectedPhoto.height || 540 }} PX</span>
-									<span>//</span>
-									<span>FORMAT: CLOUDINARY SWR</span>
-									<span>//</span>
-									<span>{{ $t('galeri.license_label') }}</span>
-								</div>
+								<span>{{ $t('galeri.license_label') }}</span>
 
 								<div
 									v-if="selectedPhoto.tags && selectedPhoto.tags.length"
