@@ -1,0 +1,66 @@
+name: Scheduled Auto Blog
+
+on:
+  schedule:
+    # Berjalan otomatis setiap 2 hari sekali pada pukul 00:00 UTC (07:00 WIB)
+    - cron: '0 0 */2 * *'
+
+  # Tombol trigger manual dari tab Actions di GitHub
+  workflow_dispatch:
+    inputs:
+      category:
+        description: 'Pilihan Kategori (edu, art, tech, atau auto)'
+        required: false
+        default: 'auto'
+        type: choice
+        options:
+          - auto
+          - edu
+          - art
+          - tech
+      topic:
+        description: 'Topik Khusus / Custom Topic (opsional)'
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  publish-article:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate Bilingual Article
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OVERRIDE_CATEGORY: ${{ github.event.inputs.category }}
+          OVERRIDE_TOPIC: ${{ github.event.inputs.topic }}
+        run: |
+          node scripts/auto-generate.mjs
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "Dinar, Permadi"
+          git config user.email "dinarpermadi07@gmail.com"
+
+          # Periksa apakah ada file markdown baru yang di-generate
+          if [ -n "$(git status --porcelain content/id/blog content/en/blog)" ]; then
+            git add content/id/blog/ content/en/blog/ public/article/
+            ARTICLE_NUM=$(ls -1 content/id/blog | grep -E '^[0-9]+\.' | sed -E 's/^([0-9]+)\..*/\1/' | sort -n | tail -1)
+            git commit -m "chore(blog): publish article ${ARTICLE_NUM}"
+            git push origin main
+            echo "Article #${ARTICLE_NUM} successfully committed and pushed to main."
+          else
+            echo "No new articles found to commit."
+          fi

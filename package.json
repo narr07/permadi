@@ -12,6 +12,7 @@
 		"prepare": "nuxt prepare",
 		"convert:webp": "bun scripts/convert-webp.ts",
 		"research": "bun scripts/research-trends.ts",
+		"auto:blog": "node scripts/auto-generate.mjs",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
 		"audit": "unlighthouse-ci --site https://permadi.dev",

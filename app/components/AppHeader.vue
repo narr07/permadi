@@ -182,7 +182,7 @@ onMounted(() => {
 					</NuxtLink>
 
 					<div class="flex items-center justify-between pt-3">
-						<span class="text-xs text-slate-600 dark:text-slate-400">BAHASA</span>
+						<span class="text-xs text-slate-600 dark:text-slate-400">{{ $t('common.language') }}</span>
 						<div class="flex items-center gap-3">
 							<NuxtLink
 								:to="switchLocalePath('id')"
