@@ -410,6 +410,7 @@ function loadGkpKeywordsForCategory(category) {
 			const line = lines[i].trim()
 			if (!line)
 				continue
+			const cols = line.split('\t')
 			let kw = cols[kwCol]?.trim()?.toLowerCase()
 			if (!kw || kw.length < 3)
 				continue
@@ -674,9 +675,11 @@ Kembalikan output HANYA DALAM FORMAT JSON MURNI (application/json) dengan skema:
 	const modelsToTry = [
 		process.env.GEMINI_MODEL || 'gemini-3.8-flash',
 		'gemini-3.7-flash',
+		'gemini-3.6-flash',
 		'gemini-3.5-flash',
-		'gemini-2.5-flash',
+		'gemini-3.5-flash-lite',
 		'gemini-flash-latest',
+		'gemini-3.1-pro-preview',
 	]
 
 	let lastError = null
@@ -722,6 +725,8 @@ Kembalikan output HANYA DALAM FORMAT JSON MURNI (application/json) dengan skema:
 		catch (err) {
 			console.warn(`[Gemini] Attempt failed with ${model}: ${err.message}`)
 			lastError = err
+			// Beri jeda 2 detik jika terjadi spike sebelum mencoba model fallback berikutnya
+			await new Promise(r => setTimeout(r, 2000))
 		}
 	}
 
