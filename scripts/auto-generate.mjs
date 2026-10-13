@@ -51,6 +51,7 @@ if (!process.env.GEMINI_API_KEY) {
 const CONTENT_ID_DIR = path.join(rootDir, 'content', 'id', 'blog')
 const CONTENT_EN_DIR = path.join(rootDir, 'content', 'en', 'blog')
 const PUBLIC_ARTICLE_DIR = path.join(rootDir, 'public', 'article')
+const DATA_DIR = path.join(rootDir, 'data')
 
 const CATEGORIES = ['edu', 'art', 'tech']
 
@@ -147,6 +148,14 @@ const BLACKLIST_WORDS = [
 	'kunci jawaban',
 	'unduh',
 	'rpp 1 lembar',
+	'loker',
+	'jobdesk',
+	'percetakan',
+	'sablon',
+	'spanduk',
+	'banner',
+	'offset',
+	'kartu nama',
 ]
 
 // Fallback seed topics terverifikasi sesuai pilar permadi.dev
@@ -275,36 +284,210 @@ function getNextArticleInfo(targetCategory) {
 }
 
 /**
- * 2. Fetch Targeted Google Search Trends for Specific Category
+ * 2. Ambil Riwayat Artikel yang Sudah Terbit
+ * Mencegah pengulangan topik atau kata kunci yang sudah pernah dibuat artikelnya
+ */
+function getExistingArticleKeywords() {
+	const existing = new Set()
+	if (!fs.existsSync(CONTENT_ID_DIR))
+		return existing
+
+	const files = fs.readdirSync(CONTENT_ID_DIR).filter(f => f.endsWith('.md'))
+	for (const file of files) {
+		const slug = file.replace(/^\d+\./, '').replace(/\.md$/, '').toLowerCase()
+		existing.add(slug)
+		try {
+			const content = fs.readFileSync(path.join(CONTENT_ID_DIR, file), 'utf8')
+			const titleMatch = content.match(/title:\s*["']?([^"'\n]+)/i)
+			if (titleMatch) {
+				existing.add(titleMatch[1].toLowerCase().trim())
+			}
+			const tagsMatch = content.match(/tags:\s*\n((?:\s*-\s*[^\n]+\n)+)/i)
+			if (tagsMatch) {
+				const tags = tagsMatch[1].split('\n').map(l => l.replace(/^\s*-\s*/, '').trim().toLowerCase())
+				for (const t of tags) {
+					if (t)
+						existing.add(t)
+				}
+			}
+		}
+		catch {
+			// ignore
+		}
+	}
+	return existing
+}
+
+/**
+ * 3. Matriks Penilaian Peluang Keyword GKP
+ * Mengutamakan persaingan Rendah/Sedang dan volume pencarian 'sweet spot' (100 - 50.000)
+ */
+function getKeywordOpportunityScore(item) {
+	let score = 0
+	const compLower = (item.competition || '').toLowerCase()
+
+	// Prioritas persaingan rendah
+	if (compLower.includes('rendah') || item.competitionValue <= 20) {
+		score += 50
+	}
+	else if (compLower.includes('sedang') || item.competitionValue <= 50) {
+		score += 25
+	}
+
+	// Volume pencarian sweet spot untuk blog personal
+	if (item.searches >= 500 && item.searches <= 10000) {
+		score += 40
+	}
+	else if (item.searches >= 100 && item.searches < 500) {
+		score += 30
+	}
+	else if (item.searches > 10000 && item.searches <= 50000) {
+		score += 20
+	}
+	else if (item.searches > 50000) {
+		score += 10
+	}
+
+	// Panjang 3-5 kata ideal untuk long-tail dengan intent jelas
+	const words = item.keyword.split(' ').length
+	if (words >= 3 && words <= 5) {
+		score += 15
+	}
+
+	return score
+}
+
+/**
+ * 4. Baca Seluruh File CSV GKP dari Folder data/<category>/
+ * Pengguna cukup menaruh file CSV unduhan GKP tanggal berapa pun ke dalam folder kategori terkait
+ */
+function loadGkpKeywordsForCategory(category) {
+	const catDir = path.join(DATA_DIR, category)
+	if (!fs.existsSync(catDir))
+		return []
+
+	const csvFiles = fs.readdirSync(catDir).filter(f => f.toLowerCase().endsWith('.csv'))
+	if (csvFiles.length === 0)
+		return []
+
+	const keywords = []
+	const seenKw = new Set()
+	const existingArticles = getExistingArticleKeywords()
+
+	for (const file of csvFiles) {
+		const filePath = path.join(catDir, file)
+		let raw = ''
+		try {
+			// Unduhan GKP biasanya berformat UTF-16LE dengan BOM
+			raw = fs.readFileSync(filePath, 'utf16le')
+			if (!raw.includes('\t') && !raw.includes('Keyword')) {
+				raw = fs.readFileSync(filePath, 'utf8')
+			}
+		}
+		catch {
+			continue
+		}
+
+		const lines = raw.split(/\r?\n/)
+		let headerIdx = -1
+		for (let i = 0; i < Math.min(10, lines.length); i++) {
+			if (lines[i].includes('Keyword') && (lines[i].includes('Avg. monthly searches') || lines[i].includes('\t'))) {
+				headerIdx = i
+				break
+			}
+		}
+
+		if (headerIdx === -1)
+			continue
+
+		const headers = lines[headerIdx].split('\t').map(h => h.trim().toLowerCase())
+		const kwCol = headers.indexOf('keyword')
+		const searchCol = headers.findIndex(h => h.includes('avg. monthly searches'))
+		const compCol = headers.findIndex(h => h === 'competition' || h.startsWith('competition'))
+		const compValCol = headers.findIndex(h => h.includes('competition (indexed value)'))
+
+		for (let i = headerIdx + 1; i < lines.length; i++) {
+			const line = lines[i].trim()
+			if (!line)
+				continue
+			const cols = line.split('\t')
+			const kw = cols[kwCol]?.trim()?.toLowerCase()
+			if (!kw || kw.length < 3 || seenKw.has(kw))
+				continue
+
+			// Filter kata terlarang (blacklist)
+			if (BLACKLIST_WORDS.some(bw => kw.includes(bw)))
+				continue
+
+			// Lewati jika sudah pernah dibahas di artikel sebelumnya
+			const isAlreadyCovered = [...existingArticles].some(item => item.includes(kw) || kw.includes(item))
+			if (isAlreadyCovered)
+				continue
+
+			const searches = searchCol !== -1 ? parseInt(cols[searchCol]?.replace(/[^0-9]/g, '') || '0', 10) : 0
+			const comp = compCol !== -1 ? cols[compCol]?.trim() : ''
+			const compVal = compValCol !== -1 ? parseInt(cols[compValCol]?.replace(/[^0-9]/g, '') || '999', 10) : 999
+
+			const words = kw.split(' ').length
+			if (words < 2)
+				continue
+
+			seenKw.add(kw)
+			keywords.push({
+				keyword: kw,
+				searches,
+				competition: comp,
+				competitionValue: isNaN(compVal) ? 999 : compVal,
+				file,
+			})
+		}
+	}
+
+	keywords.sort((a, b) => getKeywordOpportunityScore(b) - getKeywordOpportunityScore(a))
+	return keywords
+}
+
+/**
+ * 5. Cari Variasi Long-Tail & Tren Pertanyaan Riil via Google Suggest
+ */
+async function getGoogleSuggestVariations(anchorKeyword) {
+	try {
+		const url = `https://suggestqueries.google.com/complete/search?client=chrome&hl=id&gl=ID&q=${encodeURIComponent(anchorKeyword)}`
+		const response = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' }, signal: AbortSignal.timeout(5000) })
+		if (response.ok) {
+			const data = await response.json()
+			const queries = data?.[1] || []
+			return queries.filter((q) => {
+				const lower = q.toLowerCase()
+				return !BLACKLIST_WORDS.some(bw => lower.includes(bw)) && lower !== anchorKeyword.toLowerCase()
+			})
+		}
+	}
+	catch {
+		// ignore
+	}
+	return []
+}
+
+/**
+ * 6. Fetch Targeted Google Search Trends for Specific Category (Anchor Fallback)
  */
 async function fetchTargetedTrends(category) {
 	const anchors = CATEGORY_ANCHORS[category] || CATEGORY_ANCHORS.tech
-	// Acak salah satu kata kunci jangkar pilar
 	const randomAnchor = anchors[Math.floor(Math.random() * anchors.length)]
 
 	try {
 		console.log(`[Trends] Querying Google Suggest trends for anchor: "${randomAnchor}"...`)
-		const url = `https://suggestqueries.google.com/complete/search?client=chrome&hl=id&gl=ID&q=${encodeURIComponent(randomAnchor)}`
-		const response = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' }, signal: AbortSignal.timeout(5000) })
+		const suggestions = await getGoogleSuggestVariations(randomAnchor)
+		const validQueries = suggestions.filter(q => q.split(' ').length >= 3)
 
-		if (response.ok) {
-			const data = await response.json()
-			const queries = data?.[1] || []
-
-			// Filter query yang bersih dan relevan
-			const validQueries = queries.filter((q) => {
-				const lower = q.toLowerCase()
-				// Tidak boleh memuat kata blacklist
-				if (BLACKLIST_WORDS.some(bw => lower.includes(bw)))
-					return false
-				// Panjang minimal 3 kata agar cukup spesifik
-				return lower.split(' ').length >= 3
-			})
-
-			if (validQueries.length > 0) {
-				// Pilih salah satu query pencarian populer
-				const selectedQuery = validQueries[Math.floor(Math.random() * validQueries.length)]
-				return { topic: selectedQuery, source: `google-suggest (${randomAnchor})` }
+		if (validQueries.length > 0) {
+			const selectedQuery = validQueries[Math.floor(Math.random() * validQueries.length)]
+			return {
+				topic: selectedQuery,
+				primaryKeyword: randomAnchor,
+				secondaryKeywords: validQueries.slice(0, 3),
+				source: `google-suggest (${randomAnchor})`,
 			}
 		}
 	}
@@ -316,30 +499,70 @@ async function fetchTargetedTrends(category) {
 }
 
 /**
- * 3. Resolve Final Verified Topic
+ * 7. Resolve Final Verified Topic (GKP + Trends Hybrid Engine)
  */
 async function getTopicForCategory(category, customTopic) {
 	if (customTopic && customTopic.trim().length > 0) {
-		return { topic: customTopic.trim(), source: 'custom' }
+		return {
+			topic: customTopic.trim(),
+			primaryKeyword: customTopic.trim(),
+			secondaryKeywords: [],
+			source: 'custom',
+		}
 	}
 
-	// Coba cari tren pencarian nyata dari Google untuk pilar ini
+	// 1. Prioritas Utama: Cari dari Bank Data Google Keyword Planner (data/<category>/*.csv)
+	const gkpKeywords = loadGkpKeywordsForCategory(category)
+	if (gkpKeywords.length > 0) {
+		// Ambil dari 10 kata kunci terbaik secara acak agar tiap generate bervariasi
+		const candidatePool = gkpKeywords.slice(0, 10)
+		const chosen = candidatePool[Math.floor(Math.random() * candidatePool.length)]
+
+		console.log(`[GKP] Selected seed keyword: "${chosen.keyword}" (Vol: ${chosen.searches}/mo, Comp: ${chosen.competition}, File: ${chosen.file})`)
+
+		// 2. Sandingkan dengan Google Suggest untuk menangkap intent long-tail aktif
+		const suggestions = await getGoogleSuggestVariations(chosen.keyword)
+		let finalTopic = chosen.keyword
+
+		if (suggestions.length > 0) {
+			const longTail = suggestions.find(s => s.split(' ').length >= 3 && s.includes(chosen.keyword))
+			if (longTail) {
+				finalTopic = longTail
+			}
+		}
+
+		return {
+			topic: finalTopic,
+			primaryKeyword: chosen.keyword,
+			secondaryKeywords: suggestions.slice(0, 4),
+			source: `gkp-csv (${chosen.file}) + google-suggest`,
+			stats: { searches: chosen.searches, competition: chosen.competition },
+		}
+	}
+
+	// 2. Fallback: Google Suggest Anchor
 	const trendResult = await fetchTargetedTrends(category)
 	if (trendResult && trendResult.topic) {
 		return trendResult
 	}
 
-	// Jika Google tidak memberikan query spesifik, ambil dari bank pilar terverifikasi
+	// 3. Fallback: Curated Pillar Bank
 	const pool = TOPIC_SEEDS[category] || TOPIC_SEEDS.tech
 	const randomTopic = pool[Math.floor(Math.random() * pool.length)]
-	return { topic: randomTopic, source: 'curated-pillar-bank' }
+	return {
+		topic: randomTopic,
+		primaryKeyword: randomTopic,
+		secondaryKeywords: [],
+		source: 'curated-pillar-bank',
+	}
 }
 
 /**
- * 4. Call Gemini API with Strict Guardrails
+ * 8. Call Gemini API with Strict ArtikelGen & Anti-Kaku Guardrails
  */
-async function callGemini(apiKey, { number, category, topic }) {
+async function callGemini(apiKey, { number, category, topicData }) {
 	const today = new Date().toISOString().split('T')[0]
+	const { topic, primaryKeyword, secondaryKeywords = [] } = topicData
 
 	const categoryGuidelines = {
 		edu: 'Pilar Edukasi & Pedagogi: Kurikulum Merdeka (Deep Learning, Capaian Pembelajaran CP/TP, Modul Ajar, P5), model pembelajaran inovatif (PBL, PjBL, Discovery, Inquiry, Accelerated Learning, Flipped Classroom), teori belajar (Konstruktivisme, Kognitif, Vygotsky, Taksonomi Bloom), asesmen autentik (diagnostik, formatif, sumatif), pembelajaran berdiferensiasi (konten, proses, produk), manajemen kelas, dan media ajar interaktif. DILARANG membahas gosip dinas/sekolah, berita politik/gaji/tunjangan, atau lowongan kerja.',
@@ -350,38 +573,68 @@ async function callGemini(apiKey, { number, category, topic }) {
 	const systemInstruction = `Anda adalah Dinar Permadi Yusup, seorang praktisi pendidikan, desainer visual, dan web developer Indonesia.
 Anda menulis artikel blog profesional untuk website pribadi 'permadi.dev' (dibangun dengan Nuxt Content).
 
-BATASAN KETAT TOPIK (GUARDRAILS):
-- Kategori aktif: ${category.toUpperCase()}
-- Ruang lingkup: ${categoryGuidelines[category]}
-- DILARANG KERAS keluar dari koridor kategori di atas! Jangan membahas gosip, politik, clickbait, atau topik yang tidak relevan dengan keahlian Dinar Permadi Yusup.
-- Tujuan utama artikel: Memberikan panduan praktis, mendalam, dan bernilai abadi (evergreen & actionable) yang membangun Topical Authority dan E-E-A-T Google.
+STANDAR GAYA BAHASA ANTI-KAKU (SMART CONVERSATIONAL / MODERN EDITORIAL - SKILL ANTI-KAKU v1.2.0):
+1. Titik Temu Ideal: Bernas, hangat, lugas, percaya diri, dan berbobot layaknya tulisan praktisi senior atau jurnalis majalah editorial bermutu (Monocle, Stripe Docs, Linear).
+2. BAHASA INDONESIA:
+   - DILARANG PEMBUKA KLISE AI: Jangan pernah membuka artikel dengan "Dalam era digital saat ini...", "Di zaman modern yang serba cepat...", "Perkembangan teknologi telah membawa...", "Di tengah pesatnya perkembangan...", "Pernahkah Anda membayangkan...", "Mari kita bahas secara mendalam...". LANGSUNG TEMBAK KE AKAR MASALAH NYATA ATAU SOLUSI (Bottom Line Up Front / BLUF).
+   - DILARANG BASA-BASI & META-TALK: Jangan gunakan "Perlu diingat bahwa...", "Tidak dapat dipungkiri bahwa...", "Patut dicatat bahwa...", "Bukan rahasia lagi bahwa...". Langsung tuliskan poin atau data inti.
+   - DILARANG BIROKRASI & TUMPUKAN NOMINALISASI: Hindari pe-...-an dan ke-...-an berlebihan. Ubah kata benda abstrak menjadi kata kerja aktif nyata (misal: "Membantu Anda merancang..." bukan "Guna perealisasian perancangan...").
+   - DILARANG JARGON PROPOSAL / LPJ: Hindari kata "dalam rangka", "guna mendukung", "optimalisasi", "sinergi", "akselerasi", "solusi tepat guna", "persoalan riil".
+   - DILARANG KALIMAT PASIF BERJARAK TANPA PELAKU: Gunakan kalimat aktif di mana subjek melakukan tindakan nyata ("Kami menerapkan...", "Anda dapat menggunakan...").
+   - DILARANG SLANG TONGKRONGAN: Hindari kata "beneran", "banget", "nggak ribet", "makin jago", "sat-set", "gaspol", "cuan", "doang", "nih", "dong", "kan", "lo-gue".
+   - KOSAKATA TERTIB: Gunakan "mempercepat" (bukan "mengakselerasi"), "mempermudah" / "meringkas alur" (bukan "mengeliminasi friksi"), "lengkap" / "menyeluruh" (bukan "komprehensif").
+   - VARIASI RITME KALIMAT (BURSTINESS): Selingi kalimat pendek penegas (1-5 kata) dengan kalimat sedang (10-18 kata) dan kalimat panjang penjelas (20-35 kata).
+   - BERSIH DARI EM DASH: Dilarang menggunakan tanda em dash (—). Gunakan koma, titik dua, tanda kurung, atau titik pemisah kalimat.
+   - NO EMOJIS IN HEADINGS: Dilarang menggunakan emoji di judul maupun heading (##, ###).
+3. BAHASA INGGRIS (ENGLISH):
+   - Wajib natural native speaker phrasing, bukan terjemahan mesin kaku.
+   - DILARANG AI CORPORATE BUZZWORDS: "fast-paced digital world", "delve into", "dive deep into", "game-changer", "tapestry of", "beacon of", "crucial role", "harness the power of", "paradigm shift", "seamless synergy".
+   - DILARANG ROBOTIC TRANSITIONS: Jangan mengulang "Furthermore,", "Moreover,", "Additionally," di setiap awal paragraf.
+   - CONFIDENT VOCABULARY: Gunakan "use" (bukan "utilize"), "help/enable" (bukan "facilitate"), "speed up" (bukan "expedite"), "complete/thorough" (bukan "comprehensive").
+4. 3-STEP SELF-AUDIT:
+   - Spoken Reality Test: Dibaca lantang terdengar wajar dan percaya diri oleh praktisi senior.
+   - Action Clarity Test: Pembaca langsung paham siapa melakukan apa dan apa manfaat praktisnya.
+   - Word Density Test: Kalimat berdiri kokoh tanpa kata pengisi dan basa-basi.
 
-STANDAR PENULISAN (ARTIKELGEN & ANTI-SLOP):
-- Gaya bahasa: Human-written authentic tone (Anti-AI Slop, lugas, cerdas, tidak kaku tapi berbobot).
-- HINDARI KATA PEMBUKA KLISE SEPERTI: "Dalam era digital yang serba cepat ini", "Pernahkah Anda membayangkan", "Mari kita bahas secara mendalam". Langsung masuk ke pokok permasalahan (Bottom Line Up Front / BLUF).
-- Format bilingual: Buat versi Bahasa Indonesia (ID) dan Bahasa Inggris (EN). Versi EN ditulis dengan gaya bahasa natural native speaker, bukan terjemahan mesin kaku.
-- Elemen Konten:
-  * Wajib menyertakan minimal 1 tabel Markdown (perbandingan atau ringkasan teknis).
-  * Struktur heading H2 (##) dan H3 (###) yang rapi dan terarah.
-  * Daftar bullet points yang padat informasi.
-- SEO & Karakter:
-  * Title ID & EN: 50-58 karakter (HINDARI tanda titik dua ':').
-  * Description ID & EN: 70-105 karakter padat dan jelas.
-  * Tags: 3-5 tags spesifik dalam huruf kecil (misal: kurikulum-merdeka, model-pembelajaran).
-  * Slug: 15-35 karakter, huruf kecil dengan tanda hubung (-) tanpa angka/nomor.
-  * Image Alt Text: Deskriptif padat (10-100 karakter).
-  * Panjang artikel: Minimal 900 - 1400 kata dengan bahasan tuntas.`
+STANDAR SEO & STRUKTUR ARTIKELGEN (SKILL ARTIKELGEN v1.1.0):
+1. Batasan Karakter & Format Metadata:
+   - Title ID & EN: 50–58 karakter (Wajib memuat Primary Keyword di awal/tengah, HINDARI tanda titik dua ':').
+   - Description ID & EN: 70–105 karakter padat dan jelas (Wajib memuat Primary Keyword + Secondary Keyword, optimal layar seluler).
+   - URL Slug: 17–40 karakter (< 5 kata), huruf kecil dipisah tanda hubung (-) tanpa nomor/tanggal.
+   - Image Alt Text: Deskriptif padat dan kontekstual (10–125 karakter).
+2. Protokol Distribusi TF-IDF Kata Kunci:
+   - Primary Keyword: "${primaryKeyword}"
+   - Secondary / LSI Keywords: ${secondaryKeywords.length > 0 ? secondaryKeywords.join(', ') : 'sesuaikan dengan topik pilar'}
+   - Tags: 3–5 tags spesifik dalam huruf kecil (wajib menyertakan primary keyword).
+   - Body Text: SEMUA kata kunci dalam tags WAJIB muncul minimal 1–3 kali secara natural di dalam body artikel. Kerapatan kata kunci alami 1–2.5%, dilarang keyword stuffing.
+   - Penekanan Semantik: Berikan penekanan **tebal** atau *miring* secara selektif (1-3 kali per bagian) untuk memandu pemindaian mata.
+3. Struktur Konten & Elemen MDC:
+   - Heading H1: Selaras dengan Title.
+   - Heading H2 (15–60 karakter / 4-8 kata) & H3 (15–50 karakter / 2-6 kata): Menguraikan konsep secara struktural.
+   - Paragraf BLUF: 40–60 kata (~250-400 karakter) tepat di bawah heading utama untuk menjawab inti pertanyaan secara langsung (format optimal Featured Snippet Google).
+   - Paragraf Teks Biasa: 1 kalimat hingga 2–4 kalimat pendek (< 5 baris di layar seluler) untuk mencegah dinding teks (wall of text).
+   - Komponen MDC:
+     * Gunakan ::note, ::tip, atau ::warning untuk catatan praktis atau jebakan lapangan (common pitfalls).
+     * Gunakan ::steps jika ada panduan tutorial bertahap.
+     * Gunakan ::conclusion di akhir sebagai Panduan Keputusan Aksi (Actionable Decision Framework).
+   - Wajib minimal 1 tabel Markdown (perbandingan teknis atau ringkasan matriks).
+   - Panjang Artikel: Minimal 1500 kata (target 1500–2000 kata per body artikel, di luar frontmatter) untuk membangun otoritas topikal dan melawan thin content.
+
+BATASAN KATEGORI (${category.toUpperCase()}):
+${categoryGuidelines[category]}`
 
 	const userPrompt = `Tuliskan artikel blog bilingual berkualitas tinggi untuk website permadi.dev:
 Nomor Urut: ${number}
 Kategori: ${category}
 Topik Acuan: "${topic}"
+Primary Keyword (GKP/Search): "${primaryKeyword}"
+Secondary / Long-tail Keywords: ${secondaryKeywords.join(', ') || 'N/A'}
 Tanggal Publikasi: ${today}
 
 Kembalikan output HANYA DALAM FORMAT JSON MURNI (application/json) dengan skema:
 {
-  "slug_id": "string (slug url bahasa indonesia tanpa nomor)",
-  "slug_en": "string (slug url bahasa inggris tanpa nomor)",
+  "slug_id": "string (slug url bahasa indonesia 17-40 karakter tanpa nomor)",
+  "slug_en": "string (slug url bahasa inggris 17-40 karakter tanpa nomor)",
   "slug_image": "string (slug file gambar ilustrasi, misal: ${category}-topik-slug)",
   "title_id": "string (50-58 karakter tanpa tanda titik dua)",
   "title_en": "string (50-58 characters without colon)",
@@ -389,16 +642,17 @@ Kembalikan output HANYA DALAM FORMAT JSON MURNI (application/json) dengan skema:
   "description_en": "string (70-105 characters)",
   "tags_id": ["tag1", "tag2", "tag3", "tag4"],
   "tags_en": ["tag1", "tag2", "tag3", "tag4"],
-  "image_alt_id": "string (alt text gambar ilustrasi indonesia)",
-  "image_alt_en": "string (alt text image illustration english)",
-  "body_id": "string (isi teks artikel lengkap bahasa indonesia dalam format Markdown tanpa frontmatter)",
-  "body_en": "string (full article body in English in Markdown format without frontmatter)"
+  "image_alt_id": "string (alt text gambar ilustrasi indonesia 10-125 karakter)",
+  "image_alt_en": "string (alt text image illustration english 10-125 characters)",
+  "body_id": "string (isi teks artikel lengkap bahasa indonesia dalam format Markdown tanpa frontmatter, minimal 1500 kata, ada tabel dan komponen MDC)",
+  "body_en": "string (full article body in English in Markdown format without frontmatter, minimum 1500 words, contains table and MDC components)"
 }`
 
 	const modelsToTry = [
 		process.env.GEMINI_MODEL || 'gemini-3.8-flash',
+		'gemini-3.7-flash',
 		'gemini-3.5-flash',
-		'gemini-3.8-flash-lite',
+		'gemini-2.5-flash',
 		'gemini-flash-latest',
 	]
 
@@ -497,6 +751,13 @@ async function main() {
 
 	const topicData = await getTopicForCategory(info.category, cliTopic)
 	console.log(`Target Topic: "${topicData.topic}"`)
+	console.log(`Primary Keyword: "${topicData.primaryKeyword}"`)
+	if (topicData.secondaryKeywords && topicData.secondaryKeywords.length > 0) {
+		console.log(`Secondary Keywords: ${topicData.secondaryKeywords.join(', ')}`)
+	}
+	if (topicData.stats) {
+		console.log(`Monthly Searches: ${topicData.stats.searches} | Competition: ${topicData.stats.competition}`)
+	}
 	console.log(`Discovery Source: ${topicData.source}`)
 
 	if (isDryRun && !apiKey) {
@@ -510,7 +771,7 @@ async function main() {
 	const generated = await callGemini(apiKey, {
 		number: info.nextNumber,
 		category: info.category,
-		topic: topicData.topic,
+		topicData,
 	})
 
 	const today = new Date().toISOString().split('T')[0]
