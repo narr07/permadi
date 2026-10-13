@@ -298,16 +298,28 @@ function getExistingArticleKeywords() {
 		existing.add(slug)
 		try {
 			const content = fs.readFileSync(path.join(CONTENT_ID_DIR, file), 'utf8')
-			const titleMatch = content.match(/title:\s*["']?([^"'\n]+)/i)
+			const titleMatch = content.match(/title:[ \t]*["']?([^"'\r\n]+)/i)
 			if (titleMatch) {
 				existing.add(titleMatch[1].toLowerCase().trim())
 			}
-			const tagsMatch = content.match(/tags:\s*\n((?:\s*-\s*[^\n]+\n)+)/i)
-			if (tagsMatch) {
-				const tags = tagsMatch[1].split('\n').map(l => l.replace(/^\s*-\s*/, '').trim().toLowerCase())
-				for (const t of tags) {
-					if (t)
-						existing.add(t)
+
+			let inTags = false
+			for (const line of content.split(/\r?\n/)) {
+				const trimmed = line.trim()
+				if (trimmed.toLowerCase().startsWith('tags:')) {
+					inTags = true
+					continue
+				}
+				if (inTags) {
+					if (trimmed.startsWith('-')) {
+						const tag = trimmed.slice(1).trim().toLowerCase()
+						if (tag) {
+							existing.add(tag)
+						}
+					}
+					else if (trimmed.length > 0 && !line.startsWith(' ') && !line.startsWith('\t')) {
+						break
+					}
 				}
 			}
 		}
@@ -443,9 +455,9 @@ function loadGkpKeywordsForCategory(category) {
 			if (isAlreadyCovered)
 				continue
 
-			const searches = searchCol !== -1 ? parseInt(cols[searchCol]?.replace(/[^0-9]/g, '') || '0', 10) : 0
+			const searches = searchCol !== -1 ? parseInt(cols[searchCol]?.replace(/\D/g, '') || '0', 10) : 0
 			const comp = compCol !== -1 ? cols[compCol]?.trim() : ''
-			const compVal = compValCol !== -1 ? parseInt(cols[compValCol]?.replace(/[^0-9]/g, '') || '999', 10) : 999
+			const compVal = compValCol !== -1 ? parseInt(cols[compValCol]?.replace(/\D/g, '') || '999', 10) : 999
 
 			const words = kw.split(' ').length
 			if (words < 2)
@@ -456,7 +468,7 @@ function loadGkpKeywordsForCategory(category) {
 				keyword: kw,
 				searches,
 				competition: comp,
-				competitionValue: isNaN(compVal) ? 999 : compVal,
+				competitionValue: Number.isNaN(compVal) ? 999 : compVal,
 				file,
 			})
 		}
