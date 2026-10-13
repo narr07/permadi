@@ -410,9 +410,27 @@ function loadGkpKeywordsForCategory(category) {
 			const line = lines[i].trim()
 			if (!line)
 				continue
-			const cols = line.split('\t')
-			const kw = cols[kwCol]?.trim()?.toLowerCase()
-			if (!kw || kw.length < 3 || seenKw.has(kw))
+			let kw = cols[kwCol]?.trim()?.toLowerCase()
+			if (!kw || kw.length < 3)
+				continue
+
+			// Normalisasi salah ketik umum dari Google Keyword Planner
+			const TYPO_MAP = {
+				'un ux': 'ui ux',
+				'uinux': 'ui ux',
+				'ui/ux': 'ui ux',
+				'photoshp': 'photoshop',
+				'ilustrator': 'illustrator',
+				'corel draw': 'coreldraw',
+				'downlod': 'download',
+			}
+			for (const [typo, fixed] of Object.entries(TYPO_MAP)) {
+				if (kw.includes(typo)) {
+					kw = kw.replaceAll(typo, fixed)
+				}
+			}
+
+			if (seenKw.has(kw))
 				continue
 
 			// Filter kata terlarang (blacklist)
@@ -575,7 +593,12 @@ Anda menulis artikel blog profesional untuk website pribadi 'permadi.dev' (diban
 
 STANDAR GAYA BAHASA ANTI-KAKU (SMART CONVERSATIONAL / MODERN EDITORIAL - SKILL ANTI-KAKU v1.2.0):
 1. Titik Temu Ideal: Bernas, hangat, lugas, percaya diri, dan berbobot layaknya tulisan praktisi senior atau jurnalis majalah editorial bermutu (Monocle, Stripe Docs, Linear).
-2. BAHASA INDONESIA:
+2. KOREKSI SALAH KETIK DARI GOOGLE:
+   - Data Google Keyword Planner / Google Suggest terkadang mengandung salah ketik pencari internet (misal: 'un ux' untuk 'ui ux', 'uinux', 'photoshp', dll.).
+   - DILARANG KERAS memuat kata salah ketik/typo di Title, Heading H1/H2/H3, URL Slug, maupun teks pembuka!
+   - JIKA kata kunci acuan mengandung salah ketik, WAJIB KOREKSI KE KATA BAKU YANG BENAR (misalnya ubah 'un ux' menjadi 'UI UX' atau 'UI/UX').
+   - DILARANG membahas atau menyebutkan "Pencarian ini berasal dari salah ketik pengguna...". Perlakukan topik tersebut sebagai istilah baku yang wajar sejak kalimat pertama.
+3. BAHASA INDONESIA:
    - DILARANG PEMBUKA KLISE AI: Jangan pernah membuka artikel dengan "Dalam era digital saat ini...", "Di zaman modern yang serba cepat...", "Perkembangan teknologi telah membawa...", "Di tengah pesatnya perkembangan...", "Pernahkah Anda membayangkan...", "Mari kita bahas secara mendalam...". LANGSUNG TEMBAK KE AKAR MASALAH NYATA ATAU SOLUSI (Bottom Line Up Front / BLUF).
    - DILARANG BASA-BASI & META-TALK: Jangan gunakan "Perlu diingat bahwa...", "Tidak dapat dipungkiri bahwa...", "Patut dicatat bahwa...", "Bukan rahasia lagi bahwa...". Langsung tuliskan poin atau data inti.
    - DILARANG BIROKRASI & TUMPUKAN NOMINALISASI: Hindari pe-...-an dan ke-...-an berlebihan. Ubah kata benda abstrak menjadi kata kerja aktif nyata (misal: "Membantu Anda merancang..." bukan "Guna perealisasian perancangan...").
