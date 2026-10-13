@@ -69,9 +69,9 @@ Setiap artikel yang dihasilkan **WAJIB MEMATUHI BATASAN JUMLAH KARAKTER & KATA**
 ### 2. Tag Heading dalam Artikel
 
 * **Tag H1 (Judul Utama Artikel)**:
-  * **Minimal**: **20 karakter** (~3–4 kata).
-  * **Maksimal**: **60–70 karakter** (~8–10 kata).
-  * *Alasan*: H1 harus sangat mirip atau identik dengan Title Tag agar konsisten. H1 tidak terpotong di halaman web, namun tetap harus padat dan langsung menyampaikan topik utama.
+  * **Otomatis dari Frontmatter Title**: Tag H1 halaman web (`<h1>...</h1>`) dirender secara otomatis oleh sistem/template Nuxt dari nilai properti `title` di frontmatter.
+  * **ATURAN MUTLAK BODY MARKDOWN**: **DILARANG menulis Tag H1 (`# ...`) di dalam body teks Markdown artikel!** Penulisan `# H1` di dalam body menyebabkan duplikasi tag H1 ganda yang merusak struktur SEO halaman. Seluruh struktur judul dan bagian di dalam artikel wajib dimulai langsung dari **H2 (`## ...`)** dan **H3 (`### ...`)**.
+  * **Panjang Title**: 50–58 karakter (maksimal 60 karakter / 550 px) agar tampil optimal di SERP dan sebagai H1 halaman.
 * **Tag H2 (Subjudul Bagian Utama)**:
   * **Minimal**: **15 karakter** (~3 kata).
   * **Maksimal**: **60 karakter** (~4–8 kata).
@@ -107,7 +107,7 @@ Setiap artikel yang dihasilkan **WAJIB MEMATUHI BATASAN JUMLAH KARAKTER & KATA**
 | **Title Tag** | 50 karakter | 60 karakter / 550 px (total $\le$ 70 kar dengan suffix) |
 | **Meta Description** | 70 karakter | 105 karakter (Seluler) / 135–160 (Desktop) |
 | **URL Slug** | 10 karakter | 17–40 karakter (< 5 kata) |
-| **H1 Tag** | 20 karakter | 60–70 karakter (~8–10 kata) |
+| **H1 Tag (Page Header)** | Otomatis dari `title` | 50–58 karakter (Dilarang `#` di body .md) |
 | **H2 & H3 Tag** | 15 karakter | 50–60 karakter (4–8 kata) |
 | **Jawaban Snippet (BLUF)** | 40 kata (~250 kar) | 60 kata (~400 kar) |
 | **Paragraf Biasa** | 1 kalimat (~50–100 kar) | 2–4 kalimat (< 5 baris seluler) |

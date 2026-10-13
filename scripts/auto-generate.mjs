@@ -645,7 +645,7 @@ STANDAR SEO & STRUKTUR ARTIKELGEN (SKILL ARTIKELGEN v1.1.0):
    - Body Text: SEMUA kata kunci dalam tags WAJIB muncul minimal 1–3 kali secara natural di dalam body artikel. Kerapatan kata kunci alami 1–2.5%, dilarang keyword stuffing.
    - Penekanan Semantik: Berikan penekanan **tebal** atau *miring* secara selektif (1-3 kali per bagian) untuk memandu pemindaian mata.
 3. Struktur Konten & Elemen MDC:
-   - Heading H1: Selaras dengan Title.
+   - DILARANG KERAS MEMUAT HEADING H1 (#) DI DALAM BODY ARTIKEL! Judul H1 halaman web sudah dirender otomatis oleh template Nuxt dari frontmatter title. Body artikel harus langsung diawali paragraf pembuka (BLUF) setelah gambar cover, dan semua subjudul WAJIB dimulai dari Heading H2 (##) dan diikuti oleh H3 (###).
    - Heading H2 (15–60 karakter / 4-8 kata) & H3 (15–50 karakter / 2-6 kata): Menguraikan konsep secara struktural.
    - Paragraf BLUF: 40–60 kata (~250-400 karakter) tepat di bawah heading utama untuk menjawab inti pertanyaan secara langsung (format optimal Featured Snippet Google).
    - Paragraf Teks Biasa: 1 kalimat hingga 2–4 kalimat pendek (< 5 baris di layar seluler) untuk mencegah dinding teks (wall of text).
@@ -680,8 +680,8 @@ Kembalikan output HANYA DALAM FORMAT JSON MURNI (application/json) dengan skema:
   "tags_en": ["tag1", "tag2", "tag3", "tag4"],
   "image_alt_id": "string (alt text gambar ilustrasi indonesia 10-125 karakter)",
   "image_alt_en": "string (alt text image illustration english 10-125 characters)",
-  "body_id": "string (isi teks artikel lengkap bahasa indonesia dalam format Markdown tanpa frontmatter, minimal 1500 kata, ada tabel dan komponen MDC)",
-  "body_en": "string (full article body in English in Markdown format without frontmatter, minimum 1500 words, contains table and MDC components)"
+  "body_id": "string (isi teks artikel lengkap bahasa indonesia dalam format Markdown tanpa frontmatter, DILARANG MEMUAT H1 (#), semua heading dimulai dari H2 (##) dan H3 (###), minimal 1500 kata, ada tabel dan komponen MDC)",
+  "body_en": "string (full article body in English in Markdown format without frontmatter, NO H1 (#) allowed, all headings start from H2 (##) and H3 (###), minimum 1500 words, contains table and MDC components)"
 }`
 
 	const modelsToTry = [
@@ -774,6 +774,42 @@ function ensureCoverImage(imageSlug, category) {
 }
 
 /**
+ * 6. Sanitize Article Body Markdown
+ * Strictly enforces that no H1 heading (# ) is present in article body.
+ * - Removes leading H1 if present at the start of the body
+ * - Demotes any internal H1 (# ) to H2 (## )
+ */
+function sanitizeArticleBody(body) {
+	if (!body || typeof body !== 'string') {
+		return ''
+	}
+
+	const lines = body.trim().split('\n')
+	const result = []
+	let hasSeenContent = false
+
+	for (const rawLine of lines) {
+		const line = rawLine.trimEnd()
+		// Cek apakah baris diawali dengan single '#' (Heading 1)
+		if (/^#[ \t]/.test(line)) {
+			// Jika H1 muncul tepat di awal dokumen sebelum ada konten lain, hapus agar tidak duplikat dengan H1 title
+			if (!hasSeenContent) {
+				continue
+			}
+			result.push(`## ${line.replace(/^#[ \t]+/, '')}`)
+		}
+		else {
+			if (line.trim().length > 0) {
+				hasSeenContent = true
+			}
+			result.push(line)
+		}
+	}
+
+	return result.join('\n').trim()
+}
+
+/**
  * Main execution
  */
 async function main() {
@@ -826,6 +862,9 @@ async function main() {
 	const tagsId = Array.isArray(generated.tags_id) ? generated.tags_id : [info.category]
 	const tagsEn = Array.isArray(generated.tags_en) ? generated.tags_en : [info.category]
 
+	const cleanBodyId = sanitizeArticleBody(generated.body_id)
+	const cleanBodyEn = sanitizeArticleBody(generated.body_en)
+
 	// Format Indonesian Markdown
 	const idMarkdown = `---
 title: "${generated.title_id.replace(/"/g, '\\"')}"
@@ -836,7 +875,7 @@ tags:
 ${tagsId.map(t => `  - ${t}`).join('\n')}
 ---
 
-${generated.body_id.includes(`/article/`) ? generated.body_id : `![${generated.image_alt_id || generated.title_id}](/article/${imageSlug}.webp)\n\n${generated.body_id}`}
+${cleanBodyId.includes(`/article/`) ? cleanBodyId : `![${generated.image_alt_id || generated.title_id}](/article/${imageSlug}.webp)\n\n${cleanBodyId}`}
 `
 
 	// Format English Markdown
@@ -849,7 +888,7 @@ tags:
 ${tagsEn.map(t => `  - ${t}`).join('\n')}
 ---
 
-${generated.body_en.includes(`/article/`) ? generated.body_en : `![${generated.image_alt_en || generated.title_en}](/article/${imageSlug}.webp)\n\n${generated.body_en}`}
+${cleanBodyEn.includes(`/article/`) ? cleanBodyEn : `![${generated.image_alt_en || generated.title_en}](/article/${imageSlug}.webp)\n\n${cleanBodyEn}`}
 `
 
 	if (isDryRun) {

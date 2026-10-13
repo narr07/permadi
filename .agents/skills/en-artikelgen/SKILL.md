@@ -53,7 +53,8 @@ Gemini Spark utilizes native **Google Search & Google Trends web grounding** to 
    - *Top Trending Angle*: 2–3 high-interest angles backed by actual search intent.
    - *Recommended Secondary Keywords*: High-velocity target search terms.
 3. **Integrate into Content Hierarchy**:
-   - Primary breakout keyword must appear in the **H1 Title** and naturally within the **first 100 words**.
+   - Primary breakout keyword must appear in the **Frontmatter Title (Auto H1)** and naturally within the **first 100 words**.
+   - **NO `# H1` in markdown body**: Nuxt template automatically renders `<h1>{{ post.title }}</h1>` from frontmatter. All sections in the markdown body start with `##` (H2) and `###` (H3).
    - Sub-queries are converted into section subheadings (`##` and `###`).
    - Frequent user questions are mapped into `::faq` + `::faq-item` components.
 
@@ -78,7 +79,7 @@ Gemini Spark utilizes native **Google Search & Google Trends web grounding** to 
 | **Title Tag (`title`)** | 50 chars | 58–60 chars (~550 px) | Total $\le$ 70 chars with suffix ` \| Permadi`. Prevents SERP truncation and rewrite. |
 | **Meta Description** | 70 chars | 105 chars (Mobile) / 135–160 (Desktop) | Prevents clipping on mobile screens while optimizing desktop SERP snippet CTR. |
 | **URL Slug** | 10 chars | 17–40 chars (< 5 words) | Medium-length slugs (especially 21–25 chars) achieve the highest citation rate in AI search. |
-| **H1 Tag** | 20 chars (~3–4 words) | 60–70 chars (~8–10 words) | Aligned with Title tag; clear, punchy topical foundation. |
+| **H1 Tag (Page Header)** | Auto from `title` | 50–58 chars | Rendered by Nuxt template. **Forbidden to use `# H1` in markdown body.** |
 | **H2 & H3 Subheadings** | 15 chars (~2–3 words) | 50–60 chars (4–8 words) | Focused scanning for human readers and clean semantic parsing for LLM indexers. |
 | **Direct Answer (BLUF)** | 40 words (~250 chars) | 60 words (~400 chars) | Optimal window to trigger Google Featured Snippets and instant AI Overviews. |
 | **Regular Paragraph** | 1 sentence (~50–100 chars) | 2–4 sentences (< 5 mobile lines) | Eliminates mobile fatigue and forms self-contained modular chunks. |
