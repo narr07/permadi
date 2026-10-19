@@ -14,7 +14,7 @@ const props = withDefaults(
 		name: 'Details',
 		openText: 'Show',
 		closeText: 'Hide',
-		icon: 'i-swisspost-arrowdown',
+		icon: 'i-carbon-arrow-down',
 		defaultOpen: false,
 		class: undefined,
 	},

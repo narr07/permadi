@@ -13,7 +13,7 @@ const props = withDefaults(
 	{
 		title: undefined,
 		description: '',
-		icon: 'i-swisspost-help',
+		icon: 'i-carbon-help',
 		single: true,
 		hideHeader: false,
 		class: undefined,

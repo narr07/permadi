@@ -47,16 +47,16 @@ useSchemaOrg([
 function getToolIcon(name?: string) {
 	const n = (name || '').toLowerCase()
 	if (n.includes('nuxt') || n.includes('vue'))
-		return 'i-swisspost-code'
+		return 'i-carbon-code'
 	if (n.includes('flutter') || n.includes('dart') || n.includes('mobile'))
-		return 'i-swisspost-desktop'
+		return 'i-carbon-laptop'
 	if (n.includes('adobe') || n.includes('photo') || n.includes('design'))
-		return 'i-swisspost-brush'
+		return 'i-carbon-paint-brush'
 	if (n.includes('cloudflare') || n.includes('nitro') || n.includes('edge'))
-		return 'i-swisspost-globecontinents'
+		return 'i-carbon-earth'
 	if (n.includes('unocss') || n.includes('tailwind'))
-		return 'i-swisspost-icondesign'
-	return 'i-swisspost-code'
+		return 'i-carbon-pen-fountain'
+	return 'i-carbon-code'
 }
 </script>
 
@@ -71,7 +71,7 @@ function getToolIcon(name?: string) {
 				<div class="max-w-2xl">
 					<div class="mb-3.5 flex items-center justify-between gap-3">
 						<div class="inline-flex items-center gap-1.5 border border-brand-200/60 bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
-							<span class="i-swisspost-userunknown text-xs" />
+							<span class="i-carbon-user-avatar text-xs" />
 							<span>{{ page?.section_label || (locale === 'id' ? 'Tentang Saya' : 'About Me') }}</span>
 						</div>
 
@@ -136,7 +136,7 @@ function getToolIcon(name?: string) {
 						class="group flex items-center gap-1.5 hover:text-brand-950 hover:underline"
 					>
 						{{ page.story_card.link_text || (locale === 'id' ? 'Lihat Arsip Studi Kasus' : 'Explore Case Studies') }}
-						<span class="i-swisspost-arrowright text-xs transition-transform group-hover:translate-x-0.5" />
+						<span class="i-carbon-arrow-right text-xs transition-transform group-hover:translate-x-0.5" />
 					</NuxtLink>
 				</div>
 			</div>
@@ -170,11 +170,11 @@ function getToolIcon(name?: string) {
 									:class="getToolIcon(t.name)"
 									class="shrink-0 text-xs text-brand-600 dark:text-brand-400"
 								/>
-								<span class="text-xs text-slate-900 font-bold whitespace-nowrap transition-colors dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-brand-400">
+								<span class="whitespace-nowrap text-xs text-slate-900 font-bold transition-colors dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-brand-400">
 									{{ t.name }}
 								</span>
 							</div>
-							<span class="text-right text-[11px] text-slate-600 font-mono leading-tight dark:text-slate-300">
+							<span class="text-right text-[11px] text-slate-600 leading-tight font-mono dark:text-slate-300">
 								{{ t.desc }}
 							</span>
 						</div>
@@ -189,7 +189,7 @@ function getToolIcon(name?: string) {
 						{{ page?.location_card?.label || (locale === 'id' ? 'Lokasi & Zona Waktu' : 'Location & Timezone') }}
 					</span>
 					<h3 class="mb-2 flex items-center gap-1.5 text-2xl text-slate-900 font-900 font-heading dark:text-white">
-						<span class="i-swisspost-locationpin shrink-0 text-xl text-brand-600 dark:text-brand-400" />
+						<span class="i-carbon-location shrink-0 text-xl text-brand-600 dark:text-brand-400" />
 						<span>{{ page?.location_card?.title || 'Majalengka, Indonesia' }}</span>
 					</h3>
 					<p class="text-xs text-slate-700 leading-relaxed sm:text-sm dark:text-slate-300">
@@ -197,7 +197,7 @@ function getToolIcon(name?: string) {
 					</p>
 				</div>
 				<div class="mt-6 flex items-center gap-1.5 border-t border-slate-200/60 pt-3 text-xs text-slate-700 font-semibold font-mono dark:border-slate-800/60 dark:text-slate-300">
-					<span class="i-swisspost-globecontinents text-sm text-brand-600 dark:text-brand-400" />
+					<span class="i-carbon-earth text-sm text-brand-600 dark:text-brand-400" />
 					{{ page?.location_card?.timezone || 'GMT+7' }}
 				</div>
 			</div>
@@ -206,7 +206,7 @@ function getToolIcon(name?: string) {
 			<div class="flex flex-col justify-between border border-[#134e43] bg-[#002b27] p-6 text-[#f8fafa] md:col-span-7 sm:p-8">
 				<div>
 					<span class="mb-3 flex items-center gap-1.5 text-xs text-brand-300 font-semibold tracking-widest uppercase">
-						<span class="i-swisspost-checkmark text-xs" />
+						<span class="i-carbon-checkmark text-xs" />
 						{{ page?.principles_label || (locale === 'id' ? 'Prinsip Utama' : 'Core Principles') }}
 					</span>
 					<div
@@ -218,7 +218,7 @@ function getToolIcon(name?: string) {
 							:key="p.title"
 							class="flex items-start gap-2.5 border-b border-brand-900/60 pb-3 last:border-b-0 last:pb-0"
 						>
-							<span class="i-swisspost-checkmark mt-1 shrink-0 text-xs text-brand-300" />
+							<span class="i-carbon-checkmark mt-1 shrink-0 text-xs text-brand-300" />
 							<div>
 								<h4 class="text-sm text-white font-900 font-heading sm:text-base">
 									{{ p.title }}
@@ -262,13 +262,13 @@ function getToolIcon(name?: string) {
 						class="btn-brand inline-flex cursor-pointer items-center gap-1.5 text-xs font-semibold shadow-xs transition-all duration-150 active:scale-95"
 					>
 						{{ page.journey.primary_link_text || (locale === 'id' ? 'Buka Arsip Karya' : 'Explore Projects') }}
-						<span class="i-swisspost-arrowright text-xs" />
+						<span class="i-carbon-arrow-right text-xs" />
 					</NuxtLink>
 					<NuxtLink
 						:to="localePath(page.journey.secondary_link_to || '/kontak')"
 						class="btn-ghost inline-flex cursor-pointer items-center gap-1.5 text-xs font-semibold transition-all duration-150 active:scale-95"
 					>
-						<span class="i-swisspost-mail text-xs" />
+						<span class="i-carbon-email text-xs" />
 						{{ page.journey.secondary_link_text || (locale === 'id' ? 'Mulai Percakapan' : 'Start a Conversation') }}
 					</NuxtLink>
 				</div>

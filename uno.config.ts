@@ -1,4 +1,3 @@
-import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 import {
 	defineConfig,
 	presetIcons,
@@ -20,31 +19,31 @@ export default defineConfig({
 	},
 
 	safelist: [
-		'i-swisspost-github',
-		'i-swisspost-twitterx',
-		'i-swisspost-instagram',
-		'i-swisspost-icondesign',
-		'i-swisspost-brush',
-		'i-swisspost-mail',
-		'i-swisspost-locationpin',
-		'i-swisspost-arrowright',
-		'i-swisspost-arrowupright',
-		'i-swisspost-arrowleft',
-		'i-swisspost-arrowup',
-		'i-swisspost-globecontinents',
-		'i-swisspost-code',
-		'i-swisspost-checkmark',
-		'i-swisspost-link',
-		'i-swisspost-userunknown',
-		'i-swisspost-wifion',
-		'i-swisspost-documentemail',
-		'i-swisspost-search',
-		'i-swisspost-reloadright',
-		'i-swisspost-closex',
-		'i-swisspost-desktop',
-		'i-swisspost-sun',
-		'i-swisspost-moon',
-		'i-swisspost-burger',
+		'i-ant-design-github-filled',
+		'i-ant-design-x-outlined',
+		'i-ant-design-instagram-outlined',
+		'i-ant-design-behance-square-filled',
+		'i-carbon-paint-brush',
+		'i-carbon-email',
+		'i-carbon-location',
+		'i-carbon-arrow-right',
+		'i-carbon-arrow-up-right',
+		'i-carbon-arrow-left',
+		'i-carbon-arrow-up',
+		'i-carbon-earth',
+		'i-carbon-code',
+		'i-carbon-checkmark',
+		'i-carbon-link',
+		'i-carbon-user-avatar',
+		'i-carbon-wifi',
+		'i-carbon-email-new',
+		'i-carbon-search',
+		'i-carbon-renew',
+		'i-carbon-close',
+		'i-carbon-laptop',
+		'i-carbon-sun',
+		'i-carbon-moon',
+		'i-carbon-menu',
 	],
 
 	presets: [
@@ -60,24 +59,11 @@ export default defineConfig({
 				'vertical-align': 'middle',
 			},
 			collections: {
-				swisspost: FileSystemIconLoader(
-					'./node_modules/@swisspost/design-system-icons/public/post-icons',
-					(svg) => {
-						const match24 = svg.match(/<symbol id="s24" viewBox="([^"]+)">([\s\S]*?)<\/symbol>/)
-						if (match24) {
-							return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${match24[1]}" fill="currentColor">${match24[2]}</svg>`
-						}
-						const match16 = svg.match(/<symbol id="s16" viewBox="([^"]+)">([\s\S]*?)<\/symbol>/)
-						if (match16) {
-							return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${match16[1]}" fill="currentColor">${match16[2]}</svg>`
-						}
-						const matchAny = svg.match(/<symbol id="s\d+" viewBox="([^"]+)">([\s\S]*?)<\/symbol>/)
-						if (matchAny) {
-							return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${matchAny[1]}" fill="currentColor">${matchAny[2]}</svg>`
-						}
-						return svg.replace(/<svg\b([^>]*)>/, '<svg$1 fill="currentColor">')
-					},
-				),
+				// Explicit loaders: preset-icons skips its node auto-loader when VSCODE_CWD is set
+				// (builds from a VS Code terminal), which silently drops every icon.
+				'carbon': () => import('@iconify-json/carbon/icons.json').then(i => i.default as any),
+				'vscode-icons': () => import('@iconify-json/vscode-icons/icons.json').then(i => i.default as any),
+				'ant-design': () => import('@iconify-json/ant-design/icons.json').then(i => i.default as any),
 			},
 		}),
 
@@ -294,7 +280,7 @@ export default defineConfig({
 
 		'btn-primary': 'focus-ring inline-flex items-center justify-center gap-2 px-5 py-2.5 font-bold text-white bg-brand-900 hover:bg-brand-950 dark:bg-brand-400 dark:text-slate-950 dark:hover:bg-brand-300 hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-150 cursor-pointer',
 		'btn-ghost': 'focus-ring inline-flex items-center justify-center gap-2 px-5 py-2.5 font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-[0.98] transition-all duration-150 cursor-pointer',
-		'icon-btn': 'focus-ring flex items-center justify-center w-9 h-9 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 hover:scale-105 active:scale-[0.92] transition-all duration-150 cursor-pointer',
+		'icon-btn': 'focus-ring inline-flex shrink-0 items-center justify-center w-10 h-10 border border-slate-300 dark:border-[#134e43] hover:border-brand-500 dark:hover:border-brand-400 text-slate-800 dark:text-slate-100 active:scale-[0.92] transition-all duration-150 cursor-pointer',
 		'badge-neutral': 'inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60',
 
 		// Swiss International Style System Shortcuts
@@ -326,12 +312,12 @@ export default defineConfig({
 	],
 
 	safelist: [
-		'i-swisspost-home',
-		'i-swisspost-bookopen',
-		'i-swisspost-folder',
-		'i-swisspost-picture',
-		'i-swisspost-sun',
-		'i-swisspost-moon',
-		'i-swisspost-search',
+		'i-carbon-home',
+		'i-carbon-book',
+		'i-carbon-folder',
+		'i-carbon-image',
+		'i-carbon-sun',
+		'i-carbon-moon',
+		'i-carbon-search',
 	],
 })

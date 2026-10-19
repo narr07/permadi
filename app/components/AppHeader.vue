@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onClickOutside, useEventListener } from '@vueuse/core'
+import { onClickOutside, useEventListener, useScrollLock } from '@vueuse/core'
 
 const { t, locale } = useI18n()
 const localePath = useLocalePath()
@@ -21,6 +21,16 @@ useEventListener('keydown', (e: KeyboardEvent) => {
 		mobileOpen.value = false
 	}
 })
+
+// Full-screen mobile panel: freeze the page behind it (scroll + focus), close on navigation
+// Lock <html>, not <body>: body has overflow-x: clip, so overflow:hidden on it turns body into
+// its own scroll container and the sticky header jumps off-screen when the page is scrolled.
+const scrollLocked = useScrollLock(import.meta.client ? document.documentElement : null)
+watch(mobileOpen, (open) => {
+	scrollLocked.value = open
+	document.querySelectorAll('#main, footer').forEach(el => el.toggleAttribute('inert', open))
+})
+watch(() => route.path, () => (mobileOpen.value = false))
 
 const navItems = computed(() => [
 	{
@@ -87,7 +97,7 @@ onMounted(() => {
 			</NuxtLink>
 
 			<!-- Navigation & Utility Rail -->
-			<div class="flex items-center gap-4 sm:gap-6">
+			<div class="flex items-center gap-2 sm:gap-4">
 				<!-- Desktop Nav Links -->
 				<nav class="hidden items-center gap-5 text-xs font-mono md:flex">
 					<NuxtLink
@@ -129,11 +139,11 @@ onMounted(() => {
 				<button
 					type="button"
 					:aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-					class="inline-flex cursor-pointer items-center justify-center border border-slate-300 p-1.5 text-slate-800 transition-all duration-150 active:scale-90 dark:border-[#134e43] hover:border-brand-500 dark:text-slate-200 hover:text-brand-700 dark:hover:border-brand-400 dark:hover:text-accent"
+					class="icon-btn"
 					@click="toggleDark($event)"
 				>
-					<span class="i-swisspost-sun shrink-0 text-base text-slate-800 dark:hidden" />
-					<span class="i-swisspost-moon hidden shrink-0 text-base text-accent dark:inline-block" />
+					<span class="i-carbon-sun shrink-0 text-base text-slate-800 dark:hidden" />
+					<span class="i-carbon-moon hidden shrink-0 text-base text-accent dark:inline-block" />
 				</button>
 
 				<!-- Mobile Hamburger Button -->
@@ -142,12 +152,12 @@ onMounted(() => {
 					aria-controls="mobile-navigation"
 					:aria-expanded="mobileOpen"
 					aria-label="Toggle navigation menu"
-					class="cursor-pointer border border-slate-300 p-1.5 text-slate-900 transition-transform duration-150 md:hidden active:scale-90 dark:border-[#134e43] dark:text-slate-50"
+					class="icon-btn md:hidden"
 					@click="mobileOpen = !mobileOpen"
 				>
 					<span
 						class="block text-base"
-						:class="mobileOpen ? 'i-swisspost-closex' : 'i-swisspost-burger'"
+						:class="mobileOpen ? 'i-carbon-close' : 'i-carbon-menu'"
 					/>
 				</button>
 			</div>
@@ -166,34 +176,40 @@ onMounted(() => {
 				v-if="mobileOpen"
 				id="mobile-navigation"
 				aria-label="Mobile Secondary Navigation"
-				class="border-t border-slate-200/80 bg-white px-4 py-4 md:hidden dark:border-[#134e43] dark:bg-[#001e1c]"
+				class="fixed inset-x-0 bottom-0 top-[var(--app-header-height,65px)] flex flex-col overflow-y-auto border-t border-slate-200/80 bg-white md:hidden dark:border-[#134e43] dark:bg-[#001e1c]"
 			>
-				<div class="flex flex-col text-sm font-mono divide-y divide-slate-100 dark:divide-[#134e43]">
-					<NuxtLink
-						v-for="item in navItems"
-						:key="item.to"
-						:to="item.to"
-						class="flex items-center justify-between py-3"
-						:class="isItemActive(item) ? 'font-bold text-brand-600 dark:text-brand-400' : 'text-slate-800 dark:text-slate-200'"
-						@click="mobileOpen = false"
-					>
-						<span>{{ item.label.toUpperCase() }}</span>
-						<span class="i-swisspost-arrowright text-xs text-slate-600 dark:text-slate-400" />
-					</NuxtLink>
+				<NuxtLink
+					v-for="(item, idx) in navItems"
+					:key="item.to"
+					:to="item.to"
+					class="group flex items-baseline gap-4 border-b border-slate-200/80 px-4 py-5 dark:border-[#134e43] sm:px-6"
+					:class="isItemActive(item) ? 'text-brand-700 dark:text-brand-400' : 'text-slate-900 dark:text-slate-50'"
+					:aria-current="isItemActive(item) ? 'page' : undefined"
+					@click="mobileOpen = false"
+				>
+					<span class="w-6 text-xs text-slate-500 font-mono dark:text-slate-400">{{ String(idx + 1).padStart(2, '0') }}</span>
+					<span class="flex-1 text-2xl font-900 tracking-tight font-heading">{{ item.label }}</span>
+					<!-- Arrow marks the current page only, so "active" isn't conveyed by color alone -->
+					<span
+						v-if="isItemActive(item)"
+						class="i-carbon-arrow-right self-center text-base text-brand-600 dark:text-brand-400"
+						aria-hidden="true"
+					/>
+				</NuxtLink>
 
-					<div class="flex items-center justify-between pt-3">
-						<span class="text-xs text-slate-600 dark:text-slate-400">{{ $t('common.language') }}</span>
-						<div class="flex items-center gap-3">
-							<NuxtLink
-								:to="switchLocalePath('id')"
-								:class="locale === 'id' ? 'font-bold text-brand-700 dark:text-brand-300' : ''"
-							>ID</NuxtLink>
-							<span>/</span>
-							<NuxtLink
-								:to="switchLocalePath('en')"
-								:class="locale === 'en' ? 'font-bold text-brand-700 dark:text-brand-300' : ''"
-							>EN</NuxtLink>
-						</div>
+				<div class="mt-auto flex items-center justify-between border-t border-slate-200/80 px-4 py-4 text-xs font-mono dark:border-[#134e43] sm:px-6">
+					<span class="text-slate-600 tracking-wider uppercase dark:text-slate-400">{{ $t('common.language') }}</span>
+					<div class="flex items-center">
+						<NuxtLink
+							:to="switchLocalePath('id')"
+							class="h-10 w-12 flex items-center justify-center border border-slate-300 dark:border-[#134e43]"
+							:class="locale === 'id' ? 'bg-brand-500 border-brand-500 text-slate-950 font-bold' : 'text-slate-700 dark:text-slate-300'"
+						>ID</NuxtLink>
+						<NuxtLink
+							:to="switchLocalePath('en')"
+							class="h-10 w-12 flex items-center justify-center border border-l-0 border-slate-300 dark:border-[#134e43]"
+							:class="locale === 'en' ? 'bg-brand-500 border-brand-500 text-slate-950 font-bold' : 'text-slate-700 dark:text-slate-300'"
+						>EN</NuxtLink>
 					</div>
 				</div>
 			</nav>

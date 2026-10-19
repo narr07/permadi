@@ -9,7 +9,7 @@ const props = withDefaults(
 	}>(),
 	{
 		title: undefined,
-		icon: 'i-swisspost-bulb',
+		icon: 'i-carbon-idea',
 		class: undefined,
 	},
 )

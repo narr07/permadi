@@ -180,7 +180,7 @@ onUnmounted(() => {
 				<div class="flex items-center gap-1.5 text-xs text-slate-700 dark:text-slate-300">
 					<span>{{ mobileOpen ? 'TUTUP' : 'LIHAT' }}</span>
 					<span
-						:class="mobileOpen ? 'i-swisspost-chevronup' : 'i-swisspost-chevrondown'"
+						:class="mobileOpen ? 'i-carbon-chevron-up' : 'i-carbon-chevron-down'"
 						class="text-sm"
 					/>
 				</div>
@@ -309,7 +309,7 @@ onUnmounted(() => {
 						class="w-full flex cursor-pointer items-center justify-center gap-1.5 py-1.5 text-[11px] text-slate-700 font-bold tracking-wider uppercase transition-colors dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400"
 						@click="scrollToTop"
 					>
-						<span class="i-swisspost-arrowup text-xs" />
+						<span class="i-carbon-arrow-up text-xs" />
 						<span>{{ locale === 'id' ? 'KEMBALI KE PUNCAK' : 'BACK TO TOP' }}</span>
 					</button>
 				</div>

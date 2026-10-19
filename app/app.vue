@@ -2,34 +2,6 @@
 const { locale } = useI18n()
 const config = useRuntimeConfig()
 
-// Defer analytics to first user interaction (scroll, click, touch, keydown)
-// This eliminates 182 KiB of third-party JS on initial load, drops TBT to 0ms,
-// and avoids net::ERR_BLOCKED_BY_CLIENT in Lighthouse audits.
-onMounted(() => {
-	if (!import.meta.client)
-		return
-
-	const initAnalytics = () => {
-		window.removeEventListener('scroll', initAnalytics)
-		window.removeEventListener('click', initAnalytics)
-		window.removeEventListener('touchstart', initAnalytics)
-		window.removeEventListener('keydown', initAnalytics)
-
-		if (config.public.googleAnalyticsId) {
-			useScriptGoogleAnalytics({
-				id: config.public.googleAnalyticsId,
-			}, {
-				proxy: false,
-			})
-		}
-	}
-
-	window.addEventListener('scroll', initAnalytics, { passive: true, once: true })
-	window.addEventListener('click', initAnalytics, { passive: true, once: true })
-	window.addEventListener('touchstart', initAnalytics, { passive: true, once: true })
-	window.addEventListener('keydown', initAnalytics, { passive: true, once: true })
-})
-
 useHead({
 	htmlAttrs: {
 		lang: () => locale.value,

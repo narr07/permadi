@@ -111,7 +111,7 @@ const iconMap: Record<string, string> = {
 	'shell': 'i-vscode-icons-file-type-shell',
 	'powershell': 'i-vscode-icons-file-type-powershell',
 	'ps1': 'i-vscode-icons-file-type-powershell',
-	'terminal': 'i-swisspost-screen',
+	'terminal': 'i-carbon-screen',
 }
 
 function resolveIcon(filename?: string, language?: string): string {
@@ -215,7 +215,7 @@ function handleCopy() {
 				<span
 					class="transition-transform duration-200"
 					:class="[
-						copied ? 'i-swisspost-checkmark text-brand-300 scale-110' : 'i-swisspost-copy text-brand-300 group-hover/btn:scale-110',
+						copied ? 'i-carbon-checkmark text-brand-300 scale-110' : 'i-carbon-copy text-brand-300 group-hover/btn:scale-110',
 					]"
 				/>
 				<span class="text-[11px] font-medium">

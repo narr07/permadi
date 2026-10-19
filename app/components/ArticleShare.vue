@@ -50,42 +50,42 @@ const shareNetworks = computed(() => {
 			name: 'x',
 			label: 'X (Twitter)',
 			shortLabel: 'X',
-			icon: 'i-swisspost-twitterx',
+			icon: 'i-ant-design-x-outlined',
 			shareUrl: `https://twitter.com/intent/tweet?url=${u}&text=${t}`,
 		},
 		{
 			name: 'whatsapp',
 			label: 'WhatsApp',
 			shortLabel: 'WA',
-			icon: 'i-swisspost-whatsapp',
+			icon: 'i-ant-design-whats-app-outlined',
 			shareUrl: `https://api.whatsapp.com/send?text=${t}%20${u}`,
 		},
 		{
 			name: 'linkedin',
 			label: 'LinkedIn',
 			shortLabel: 'LinkedIn',
-			icon: 'i-swisspost-linkedin',
+			icon: 'i-ant-design-linkedin-filled',
 			shareUrl: `https://www.linkedin.com/sharing/share-offsite/?url=${u}`,
 		},
 		{
 			name: 'telegram',
 			label: 'Telegram',
 			shortLabel: 'Telegram',
-			icon: 'i-swisspost-send',
+			icon: 'i-carbon-send',
 			shareUrl: `https://t.me/share/url?url=${u}&text=${t}`,
 		},
 		{
 			name: 'threads',
 			label: 'Threads',
 			shortLabel: 'Threads',
-			icon: 'i-swisspost-comment',
+			icon: 'i-carbon-chat',
 			shareUrl: `https://threads.net/intent/post?text=${t}%20${u}`,
 		},
 		{
 			name: 'facebook',
 			label: 'Facebook',
 			shortLabel: 'FB',
-			icon: 'i-swisspost-facebook',
+			icon: 'i-carbon-logo-facebook',
 			shareUrl: `https://www.facebook.com/sharer/sharer.php?u=${u}`,
 		},
 	]
@@ -129,7 +129,7 @@ async function handleCopyLink() {
 				@click="handleCopyLink"
 			>
 				<span
-					:class="copied ? 'i-swisspost-checkmark text-emerald-600 dark:text-slate-950' : 'i-swisspost-link'"
+					:class="copied ? 'i-carbon-checkmark text-emerald-600 dark:text-slate-950' : 'i-carbon-link'"
 					class="shrink-0 text-xs"
 				/>
 				<span>{{ copied ? (locale === 'id' ? 'TERSALIN' : 'COPIED') : (locale === 'id' ? 'SALIN' : 'COPY') }}</span>
@@ -176,7 +176,7 @@ async function handleCopyLink() {
 				@click="handleCopyLink"
 			>
 				<span
-					:class="copied ? 'i-swisspost-checkmark text-emerald-600 dark:text-slate-950' : 'i-swisspost-link'"
+					:class="copied ? 'i-carbon-checkmark text-emerald-600 dark:text-slate-950' : 'i-carbon-link'"
 					class="shrink-0 text-xs"
 				/>
 				<span>{{ copied ? (locale === 'id' ? 'TAUTAN TERSALIN!' : 'LINK COPIED!') : (locale === 'id' ? 'SALIN TAUTAN' : 'COPY LINK') }}</span>

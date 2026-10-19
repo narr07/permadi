@@ -145,7 +145,7 @@ useSchemaOrg([
 </script>
 
 <template>
-	<div class="w-full bg-white dark:bg-[#001e1c]">
+	<div class="relative w-full bg-white dark:bg-[#001e1c]">
 		<header class="w-full border-b border-slate-200/80 p-6 dark:border-[#134e43] lg:p-12 sm:p-10">
 			<h1 class="mb-6 text-balance text-3xl text-slate-900 font-900 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
 				{{ page?.title || $t('blog.default_title') }}
@@ -224,7 +224,7 @@ useSchemaOrg([
 							class="group flex cursor-pointer items-center gap-2 bg-brand-500 px-5 py-2.5 text-xs text-slate-950 font-bold tracking-wider font-mono uppercase shadow-xs transition-all duration-150 active:scale-95 hover:bg-brand-400"
 						>
 							<span>{{ $t('blog.read_full') }}</span>
-							<span class="i-swisspost-arrowupright text-sm transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
+							<span class="i-carbon-arrow-up-right text-sm transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
 						</NuxtLink>
 
 						<span
@@ -284,7 +284,7 @@ useSchemaOrg([
 							class="inline-flex items-center gap-1.5 text-xs text-slate-900 font-bold tracking-wider font-mono uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-brand-400"
 						>
 							<span>{{ $t('blog.read_note') }}</span>
-							<span class="i-swisspost-arrowupright text-sm transition-transform group-hover:(translate-x-0.5 -translate-y-0.5)" />
+							<span class="i-carbon-arrow-up-right text-sm transition-transform group-hover:(translate-x-0.5 -translate-y-0.5)" />
 						</NuxtLink>
 
 						<span
@@ -356,6 +356,7 @@ useSchemaOrg([
 			</div>
 		</nav>
 
+		<SwissTrace />
 	</div>
 </template>
 

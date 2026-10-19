@@ -49,7 +49,7 @@ defineOgImage('Bento', {
 </script>
 
 <template>
-	<div class="w-full">
+	<div class="relative w-full">
 		<!-- Swiss Modular Grid Inspection Overlay (Key 'G' Toggle) -->
 		<div
 			v-if="showGridOverlay"
@@ -91,5 +91,7 @@ defineOgImage('Bento', {
 		/>
 
 		<HomeSwissContactColophon :colophon="page?.colophon" />
+
+		<SwissTrace />
 	</div>
 </template>

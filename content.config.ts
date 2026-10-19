@@ -373,9 +373,9 @@ export default defineContentConfig({
 				readingTime: property(z.number().optional()).editor({ hidden: true }),
 				slug: property(z.string().optional()).editor({ hidden: true }),
 				plainText: property(z.string().optional()).editor({ hidden: true }),
-				category: property(z.enum(['web', 'mobile', 'design']).optional()).editor({
+				category: property(z.enum(['web', 'mobile', 'design', 'software']).optional()).editor({
 					label: 'Kategori / Category',
-					tooltip: 'web (Web App), mobile (Mobile App), design (Desain / Design)',
+					tooltip: 'web (Web App), mobile (Mobile App), design (Desain / Design), software (Software Desktop)',
 				}),
 				date: property(z.date()).editor({ label: 'Release Date', description: 'Pick launch / release date' }),
 				tags: property(z.array(z.string()).default([])).editor({ label: 'Technologies & Tags', description: 'List of tech stack and tags' }),
@@ -402,9 +402,9 @@ export default defineContentConfig({
 				readingTime: property(z.number().optional()).editor({ hidden: true }),
 				slug: property(z.string().optional()).editor({ hidden: true }),
 				plainText: property(z.string().optional()).editor({ hidden: true }),
-				category: property(z.enum(['web', 'mobile', 'design']).optional()).editor({
+				category: property(z.enum(['web', 'mobile', 'design', 'software']).optional()).editor({
 					label: 'Kategori / Category',
-					tooltip: 'web (Web App), mobile (Mobile App), design (Desain / Design)',
+					tooltip: 'web (Web App), mobile (Mobile App), design (Desain / Design), software (Software Desktop)',
 				}),
 				date: property(z.date()).editor({ label: 'Tanggal Rilis', description: 'Pilih tanggal peluncuran projek' }),
 				tags: property(z.array(z.string()).default([])).editor({ label: 'Teknologi & Tag', description: 'Daftar teknologi yang digunakan' }),

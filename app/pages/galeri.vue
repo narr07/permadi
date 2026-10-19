@@ -254,7 +254,7 @@ useSchemaOrg([
 </script>
 
 <template>
-	<div class="w-full bg-white dark:bg-[#001e1c]">
+	<div class="relative w-full bg-white dark:bg-[#001e1c]">
 		<header class="w-full border-b border-slate-200/80 p-6 dark:border-[#134e43] lg:p-12 sm:p-10">
 			<h1 class="mb-6 text-balance text-3xl text-slate-900 font-900 leading-[0.95] tracking-[-0.035em] font-heading lg:text-6xl sm:text-5xl dark:text-slate-50">
 				{{ page?.title || $t('galeri.default_title') }}
@@ -309,14 +309,14 @@ useSchemaOrg([
 			v-if="displayedItems.length > 0"
 			class="w-full border-b border-slate-200/80 dark:border-[#134e43]"
 		>
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+			<div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2">
 				<div
 					v-for="(item, i) in displayedItems"
 					:key="item.public_id || i"
 					tabindex="0"
 					role="button"
 					:aria-label="item.title || (locale === 'id' ? 'Buka foto' : 'Open photo')"
-					class="group flex flex-col cursor-pointer select-none justify-between border-b border-slate-200/80 p-6 transition-colors duration-200 dark:border-[#134e43] sm:p-8 hover:(bg-[#e2f4f0] dark:bg-[#003832])"
+					class="group flex flex-col cursor-pointer select-none justify-between border-b border-slate-200/80 p-6 transition-colors duration-200 dark:border-[#134e43] hover:(bg-[#e2f4f0] dark:bg-[#003832]) sm:p-8"
 					:class="[
 						i % 3 !== 2 ? 'lg:border-r' : 'lg:border-r-0',
 						i % 2 !== 1 ? 'md:border-r' : 'md:border-r-0',
@@ -327,7 +327,7 @@ useSchemaOrg([
 				>
 					<div>
 						<!-- Image Frame -->
-						<div class="mb-4 aspect-[4/3] w-full overflow-hidden border border-slate-200/80 bg-slate-100 relative dark:border-[#134e43] dark:bg-[#001714]">
+						<div class="relative mb-4 aspect-[4/3] w-full overflow-hidden border border-slate-200/80 bg-slate-100 dark:border-[#134e43] dark:bg-[#001714]">
 							<!-- LQIP Pixelated Placeholder -->
 							<img
 								v-if="item.placeholder_image"
@@ -356,11 +356,14 @@ useSchemaOrg([
 						</div>
 
 						<!-- Photo Details -->
-						<div class="mb-2.5 flex flex-wrap gap-1.5" v-if="item.tags && item.tags.length">
+						<div
+							v-if="item.tags && item.tags.length"
+							class="mb-2.5 flex flex-wrap gap-1.5"
+						>
 							<span
 								v-for="tag in item.tags.slice(0, 3)"
 								:key="tag"
-								class="border border-slate-200 px-1.5 py-0.5 text-[10px] text-slate-700 uppercase font-mono dark:border-[#134e43] dark:text-slate-300"
+								class="border border-slate-200 px-1.5 py-0.5 text-[10px] text-slate-700 font-mono uppercase dark:border-[#134e43] dark:text-slate-300"
 							>
 								#{{ tag }}
 							</span>
@@ -383,7 +386,7 @@ useSchemaOrg([
 				v-if="isLoadingMore"
 				class="flex items-center gap-2 text-brand-700 font-bold tracking-wider uppercase dark:text-accent"
 			>
-				<span class="i-swisspost-reloadright animate-spin text-sm" />
+				<span class="i-carbon-renew animate-spin text-sm" />
 				<span>{{ locale === 'id' ? 'Memuat foto…' : 'Loading photos…' }}</span>
 			</div>
 
@@ -413,7 +416,7 @@ useSchemaOrg([
 		<!-- Page Content Markdown if any -->
 		<article
 			v-if="page"
-			class="mx-auto max-w-4xl px-6 py-12 font-sans prose prose-slate dark:prose-invert sm:px-8"
+			class="mx-auto max-w-4xl px-6 py-12 font-sans prose prose-slate sm:px-8 dark:prose-invert"
 		>
 			<ContentRenderer :value="page" />
 		</article>
@@ -476,7 +479,7 @@ useSchemaOrg([
 										download
 										class="hidden cursor-pointer items-center gap-1 border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-all duration-150 sm:inline-flex active:scale-95 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent"
 									>
-										<span class="i-swisspost-download text-xs" />
+										<span class="i-carbon-download text-xs" />
 										<span>{{ $t('galeri.download_hd') }}</span>
 									</a>
 
@@ -539,6 +542,7 @@ useSchemaOrg([
 				</Transition>
 			</Teleport>
 		</ClientOnly>
+		<SwissTrace />
 	</div>
 </template>
 

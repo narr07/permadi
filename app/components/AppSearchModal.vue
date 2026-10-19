@@ -62,64 +62,64 @@ const defaultLinks = computed(() => [
 	{
 		label: t('nav.home', 'Home'),
 		description: locale.value === 'id' ? 'Halaman utama & ringkasan profil' : 'Overview & main landing',
-		icon: 'i-swisspost-home',
+		icon: 'i-carbon-home',
 		to: localePath('/'),
 	},
 	{
 		label: t('nav.blog', 'Blog'),
 		description: locale.value === 'id' ? 'Artikel teknis, tutorial, dan catatan pengembangan' : 'Technical articles, tutorials & dev notes',
-		icon: 'i-swisspost-bookopen',
+		icon: 'i-carbon-book',
 		to: localePath('/blog'),
 	},
 	{
 		label: t('nav.projects', 'Projects'),
 		description: locale.value === 'id' ? 'Koleksi studi kasus aplikasi & demo karya' : 'Explore case studies and live demos',
-		icon: 'i-swisspost-code',
+		icon: 'i-carbon-code',
 		to: locale.value === 'id' ? '/id/projek' : '/projects',
 	},
 	{
 		label: t('nav.gallery', 'Gallery'),
 		description: locale.value === 'id' ? 'Koleksi foto visual & cuplikan karya' : 'Visual snapshots, photos & design',
-		icon: 'i-swisspost-picture',
+		icon: 'i-carbon-image',
 		to: locale.value === 'id' ? '/id/galeri' : '/gallery',
 	},
 	{
 		label: t('nav.about', 'About'),
 		description: locale.value === 'id' ? 'Biografi singkat, keahlian, dan riwayat karir' : 'Biography, skillset, and career',
-		icon: 'i-swisspost-userunknown',
+		icon: 'i-carbon-user-avatar',
 		to: locale.value === 'id' ? '/id/tentang' : '/about',
 	},
 	{
 		label: t('nav.contact', 'Contact'),
 		description: locale.value === 'id' ? 'Diskusikan projek baru atau kirim pesan' : 'Discuss new projects or get in touch',
-		icon: 'i-swisspost-mail',
+		icon: 'i-carbon-email',
 		to: locale.value === 'id' ? '/id/kontak' : '/contact',
 	},
 	{
 		label: 'GitHub',
 		description: 'github.com/narr07',
-		icon: 'i-swisspost-github',
+		icon: 'i-ant-design-github-filled',
 		href: 'https://github.com/narr07',
 		target: '_blank',
 	},
 	{
 		label: 'X (Twitter)',
 		description: 'x.com/dinarpermadi07',
-		icon: 'i-swisspost-twitterx',
+		icon: 'i-ant-design-x-outlined',
 		href: 'https://x.com/dinarpermadi07',
 		target: '_blank',
 	},
 	{
 		label: 'Behance',
 		description: 'behance.net/narr07',
-		icon: 'i-swisspost-icondesign',
+		icon: 'i-ant-design-behance-square-filled',
 		href: 'https://www.behance.net/narr07',
 		target: '_blank',
 	},
 	{
 		label: 'Instagram',
 		description: 'instagram.com/narr07',
-		icon: 'i-swisspost-instagram',
+		icon: 'i-ant-design-instagram-outlined',
 		href: 'https://www.instagram.com/narr07/',
 		target: '_blank',
 	},
@@ -233,7 +233,7 @@ onMounted(() => {
 			:aria-label="t('search.shortcut', 'Cari (Ctrl+K)')"
 			@click="openModal"
 		>
-			<span class="i-swisspost-search text-base text-slate-800 dark:text-slate-100" />
+			<span class="i-carbon-search text-base text-slate-800 dark:text-slate-100" />
 		</button>
 
 		<!-- Modal Backdrop & Blur -->
@@ -275,7 +275,7 @@ onMounted(() => {
 
 							<span
 								v-if="status === 'loading'"
-								class="i-swisspost-reloadright shrink-0 animate-spin text-base text-brand-600 dark:text-brand-400"
+								class="i-carbon-renew shrink-0 animate-spin text-base text-brand-600 dark:text-brand-400"
 								aria-live="polite"
 							/>
 
@@ -285,7 +285,7 @@ onMounted(() => {
 								aria-label="Tutup"
 								@click="closeModal"
 							>
-								<span class="i-swisspost-closex text-base" />
+								<span class="i-carbon-close text-base" />
 							</button>
 						</div>
 
@@ -407,7 +407,7 @@ onMounted(() => {
 								v-else-if="results.length === 0 && status !== 'loading'"
 								class="py-10 text-center"
 							>
-								<span class="i-swisspost-search mx-auto mb-2 block text-2xl text-slate-400 opacity-60" />
+								<span class="i-carbon-search mx-auto mb-2 block text-2xl text-slate-400 opacity-60" />
 								<p class="text-sm text-slate-800 font-medium dark:text-slate-200">
 									{{ t('search.no_results', 'Tidak ada hasil untuk') }} "<strong>{{ searchQuery }}</strong>"
 								</p>
@@ -445,7 +445,7 @@ onMounted(() => {
 														class="text-slate-900 font-bold transition-colors dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-brand-400"
 														v-html="item.snippets?.title || item.title"
 													/>
-													<span class="i-swisspost-arrowright shrink-0 text-xs text-slate-500 group-hover:text-brand-600" />
+													<span class="i-carbon-arrow-right shrink-0 text-xs text-slate-500 group-hover:text-brand-600" />
 												</div>
 												<div
 													v-if="item.snippets?.content"
@@ -484,7 +484,7 @@ onMounted(() => {
 														class="text-slate-900 font-bold transition-colors dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-brand-400"
 														v-html="item.snippets?.title || item.title"
 													/>
-													<span class="i-swisspost-arrowright shrink-0 text-xs text-slate-500 group-hover:text-brand-600" />
+													<span class="i-carbon-arrow-right shrink-0 text-xs text-slate-500 group-hover:text-brand-600" />
 												</div>
 												<div
 													v-if="item.snippets?.content"
@@ -523,7 +523,7 @@ onMounted(() => {
 														class="text-slate-900 font-bold transition-colors dark:text-slate-50 group-hover:text-accent"
 														v-html="item.snippets?.title || item.title"
 													/>
-													<span class="i-swisspost-arrowright shrink-0 text-xs text-slate-500 group-hover:text-accent" />
+													<span class="i-carbon-arrow-right shrink-0 text-xs text-slate-500 group-hover:text-accent" />
 												</div>
 												<div
 													v-if="item.snippets?.content"

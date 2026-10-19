@@ -42,7 +42,7 @@ skills_section:
       icon: "/icons/b-python.svg"
     - name: "Cloudflare Edge"
       desc: "Workers, SQLite D1 & Pages"
-      icon: "i-swisspost-cloud"
+      icon: "i-carbon-cloud"
   design_title: "Graphic & Editorial"
   design_items:
     - name: "Adobe Illustrator"
@@ -56,7 +56,7 @@ skills_section:
       icon: "/icons/d-figma.svg"
     - name: "Swiss Typography"
       desc: "Struktur Grid & Hirarki Konten"
-      icon: "i-swisspost-paragraph"
+      icon: "i-carbon-paragraph"
 writing:
   label: "Tulisan terbaru"
   all_link_text: "Semua tulisan"

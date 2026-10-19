@@ -118,7 +118,7 @@ const iconMap: Record<string, string> = {
 	'shell': 'i-vscode-icons-file-type-shell',
 	'powershell': 'i-vscode-icons-file-type-powershell',
 	'ps1': 'i-vscode-icons-file-type-powershell',
-	'terminal': 'i-swisspost-screen',
+	'terminal': 'i-carbon-screen',
 }
 
 const fileIcon = computed(() => {
@@ -156,7 +156,7 @@ function handleCopy() {
 			<!-- Left: File Icon & Filename & Language Tag -->
 			<div class="min-w-0 flex items-center gap-2.5">
 				<span
-					:class="isMermaid ? 'i-swisspost-branch text-brand-400' : fileIcon"
+					:class="isMermaid ? 'i-carbon-branch text-brand-400' : fileIcon"
 					class="shrink-0 text-sm"
 				/>
 				<span
@@ -206,7 +206,7 @@ function handleCopy() {
 					@click="handleCopy"
 				>
 					<span
-						:class="copied ? 'i-swisspost-checkmark text-brand-400' : 'i-swisspost-copy'"
+						:class="copied ? 'i-carbon-checkmark text-brand-400' : 'i-carbon-copy'"
 						class="shrink-0 text-xs"
 					/>
 					<span class="text-[11px] font-medium font-sans">

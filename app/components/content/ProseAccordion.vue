@@ -20,7 +20,7 @@ const props = withDefaults(
 		multiple?: boolean
 		/**
 		 * Optional icon displayed on the right side of the trigger
-		 * @default 'i-swisspost-arrowdown'
+		 * @default 'i-carbon-arrow-down'
 		 */
 		trailingIcon?: string
 		/**
@@ -34,7 +34,7 @@ const props = withDefaults(
 	}>(),
 	{
 		multiple: false,
-		trailingIcon: 'i-swisspost-arrowdown',
+		trailingIcon: 'i-carbon-arrow-down',
 		items: undefined,
 		class: undefined,
 	},
@@ -83,7 +83,7 @@ provide('accordionRegister', registerItem)
 provide('accordionToggle', toggleItem)
 provide('accordionIsOpen', isItemOpen)
 provide('accordionMultiple', isMultiple)
-provide('accordionTrailingIcon', computed(() => props.trailingIcon || 'i-swisspost-arrowdown'))
+provide('accordionTrailingIcon', computed(() => props.trailingIcon || 'i-carbon-arrow-down'))
 </script>
 
 <template>

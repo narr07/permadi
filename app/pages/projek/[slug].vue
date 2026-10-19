@@ -148,7 +148,7 @@ const allScreenshots = computed(() => {
 				:to="locale === 'id' ? '/id/projek' : '/projects'"
 				class="group inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
-				<span class="i-swisspost-arrowleft text-xs transition-transform duration-150 group-hover:-translate-x-1" />
+				<span class="i-carbon-arrow-left text-xs transition-transform duration-150 group-hover:-translate-x-1" />
 				<span>{{ $t('projek.back_to_archive') }}</span>
 			</NuxtLink>
 		</nav>
@@ -193,7 +193,7 @@ const allScreenshots = computed(() => {
 							class="w-full flex items-center justify-between bg-brand-500 px-5 py-3 text-xs text-slate-950 font-bold tracking-wider font-mono uppercase transition-colors hover:bg-brand-400"
 						>
 							<span>{{ $t('projek.visit_demo') }}</span>
-							<span class="i-swisspost-linkexternal text-sm" />
+							<span class="i-carbon-launch text-sm" />
 						</a>
 
 						<a
@@ -204,7 +204,7 @@ const allScreenshots = computed(() => {
 							class="w-full flex items-center justify-between border border-slate-300 px-5 py-3 text-xs text-slate-900 font-bold tracking-wider font-mono uppercase transition-colors dark:border-[#134e43] hover:border-brand-500 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 						>
 							<span>{{ $t('projek.github_repo') }}</span>
-							<span class="i-swisspost-github text-sm" />
+							<span class="i-ant-design-github-filled text-sm" />
 						</a>
 					</div>
 				</div>
@@ -292,7 +292,7 @@ const allScreenshots = computed(() => {
 				:to="locale === 'id' ? '/id/projek' : '/projects'"
 				class="group inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
-				<span class="i-swisspost-arrowleft text-xs transition-transform duration-150 group-hover:-translate-x-1" />
+				<span class="i-carbon-arrow-left text-xs transition-transform duration-150 group-hover:-translate-x-1" />
 				<span>{{ $t('projek.back_to_archive') }}</span>
 			</NuxtLink>
 		</footer>

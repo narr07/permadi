@@ -680,6 +680,7 @@ Kembalikan output HANYA DALAM FORMAT JSON MURNI (application/json) dengan skema:
   "tags_en": ["tag1", "tag2", "tag3", "tag4"],
   "image_alt_id": "string (alt text gambar ilustrasi indonesia 10-125 karakter)",
   "image_alt_en": "string (alt text image illustration english 10-125 characters)",
+  "image_metaphor": "string (English, 1-2 sentences: ONE concrete geometric visual metaphor of this article's core idea built from circles, squares, arcs, grids and lines, e.g. 'a large teal circle split into three overlapping wedges orbiting a small dark square'. No text, no people, no clichés like light bulbs or gears)",
   "body_id": "string (isi teks artikel lengkap bahasa indonesia dalam format Markdown tanpa frontmatter, DILARANG MEMUAT H1 (#), semua heading dimulai dari H2 (##) dan H3 (###), minimal 1500 kata, ada tabel dan komponen MDC)",
   "body_en": "string (full article body in English in Markdown format without frontmatter, NO H1 (#) allowed, all headings start from H2 (##) and H3 (###), minimum 1500 words, contains table and MDC components)"
 }`
@@ -771,6 +772,89 @@ function ensureCoverImage(imageSlug, category) {
 	}
 
 	return targetFile
+}
+
+/**
+ * 6. Generate a topic-specific Swiss cover (Cloudflare Workers AI, then Gemini).
+ * Returns true on success; caller falls back to ensureCoverImage() on false.
+ */
+async function generateCoverImage(apiKey, metaphor, imageSlug) {
+	const targetFile = path.join(PUBLIC_ARTICLE_DIR, `${imageSlug}.webp`)
+	if (!metaphor || fs.existsSync(targetFile))
+		return fs.existsSync(targetFile)
+
+	let sharp
+	try {
+		sharp = (await import('sharp')).default
+	}
+	catch {
+		console.warn('[Image] sharp not installed, skipping AI cover.')
+		return false
+	}
+
+	// Master prompt from gem-gambar-artikel-generator (Swiss + Golden Ratio + brand palette)
+	const prompt = `A refined Swiss graphic design editorial illustration representing ${metaphor}. Strict 2D flat vector aesthetic, International Typographic Style, hard-edged pure geometric shapes, circular segments, clean intersecting vector planes, and fine structural lines in deep forest green #134e43. Strict Golden Ratio composition (phi 1:1.618 balance), dynamic asymmetric layout with 61.8% primary visual mass and 38.2% spacious breathable negative space. Brand color palette: pale mint flat background #f0fdfa, primary focal elements in vivid teal #14b898, secondary geometric accents in bright cyan-mint #99f6e4 and rich emerald #0d947a, precise deep outlines #134e43. Mathematical harmony, rational, modernist poster aesthetic, Josef Müller-Brockmann inspired layout discipline, 16:9 aspect ratio, clean solid fills, zero gradients, zero shadows, no 3D elements, no realism, 100% text-free, no letters, no words, no numbers, no watermark.`
+
+	// Each provider resolves to a base64 image. Cloudflare Workers AI first (free 10k neurons/day,
+	// ~210 neurons per 1600x896 cover), Gemini image models as paid fallback.
+	const providers = []
+	const { CLOUDFLARE_ACCOUNT_ID: cfAccount, CLOUDFLARE_API_TOKEN: cfToken } = process.env
+	if (cfAccount && cfToken) {
+		const model = process.env.CF_IMAGE_MODEL || '@cf/black-forest-labs/flux-2-klein-4b'
+		providers.push({ name: model, run: async () => {
+			const form = new FormData()
+			form.append('prompt', prompt)
+			form.append('width', '1600')
+			form.append('height', '896')
+			const response = await fetch(`https://api.cloudflare.com/client/v4/accounts/${cfAccount}/ai/run/${model}`, {
+				method: 'POST',
+				headers: { Authorization: `Bearer ${cfToken}` },
+				body: form,
+				signal: AbortSignal.timeout(120000),
+			})
+			if (!response.ok)
+				throw new Error(`HTTP ${response.status}: ${(await response.text()).slice(0, 300)}`)
+			return (await response.json()).result?.image
+		} })
+	}
+	for (const model of [process.env.GEMINI_IMAGE_MODEL || 'gemini-3.1-flash-image', 'gemini-2.5-flash-image']) {
+		providers.push({ name: model, run: async () => {
+			const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
+				body: JSON.stringify({
+					contents: [{ role: 'user', parts: [{ text: prompt }] }],
+					generationConfig: { responseModalities: ['IMAGE'], imageConfig: { aspectRatio: '16:9' } },
+				}),
+				signal: AbortSignal.timeout(120000),
+			})
+			if (!response.ok)
+				throw new Error(`HTTP ${response.status}: ${(await response.text()).slice(0, 300)}`)
+			const data = await response.json()
+			return data.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data
+		} })
+	}
+
+	for (const { name, run } of providers) {
+		try {
+			console.log(`[Image] Requesting cover from ${name}...`)
+			const b64 = await run()
+			if (!b64)
+				throw new Error('No image in response')
+
+			fs.mkdirSync(PUBLIC_ARTICLE_DIR, { recursive: true })
+			await sharp(Buffer.from(b64, 'base64'))
+				.resize(1600, 900, { fit: 'cover' })
+				.webp({ quality: 82 })
+				.toFile(targetFile)
+			console.log(`[Image] AI cover written: ${targetFile}`)
+			return true
+		}
+		catch (err) {
+			console.warn(`[Image] ${name} failed: ${err.message}`)
+		}
+	}
+	return false
 }
 
 /**
@@ -911,8 +995,9 @@ ${cleanBodyEn.includes(`/article/`) ? cleanBodyEn : `![${generated.image_alt_en 
 	console.log(`[Success] Written: ${idFilePath}`)
 	console.log(`[Success] Written: ${enFilePath}`)
 
-	// Ensure cover image
-	ensureCoverImage(imageSlug, info.category)
+	// Topic-specific AI cover; category fallback only if generation fails
+	if (!await generateCoverImage(apiKey, generated.image_metaphor, imageSlug))
+		ensureCoverImage(imageSlug, info.category)
 
 	console.log('\n[Complete] Article generation finished successfully.')
 }

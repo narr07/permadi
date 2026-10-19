@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import { z } from 'zod'
 
-const { locale, t } = useI18n()
+const { t } = useI18n()
 
 const isSuccess = ref(false)
 const isSubmitting = ref(false)
@@ -11,11 +10,13 @@ const successMessage = ref('')
 const serverError = ref('')
 
 const { defineField, errors, handleSubmit, resetForm } = useForm({
-	validationSchema: toTypedSchema(
-		z.object({
-			email: z.string().min(1, () => t('newsletter.error_required', 'Email wajib diisi')).email(() => t('newsletter.error_invalid', 'Format email tidak valid')),
-		}),
-	),
+	validationSchema: {
+		email: (value?: string) => {
+			if (!value)
+				return t('newsletter.error_required', 'Email wajib diisi')
+			return z.email().safeParse(value).success || t('newsletter.error_invalid', 'Format email tidak valid')
+		},
+	},
 })
 
 const [email] = defineField('email')
@@ -86,7 +87,7 @@ const onSubmit = handleSubmit(async (values) => {
 			>
 				<span
 					v-if="isSubmitting"
-					class="i-swisspost-reloadright animate-spin text-xs"
+					class="i-carbon-renew animate-spin text-xs"
 				/>
 				<span>{{ isSubmitting ? t('newsletter.subscribing', 'Mengirim…') : t('newsletter.button', 'Langganan') }}</span>
 			</button>
@@ -98,21 +99,21 @@ const onSubmit = handleSubmit(async (values) => {
 			aria-live="polite"
 			class="mt-1.5 flex items-center gap-1 text-xs text-[#ef4565] font-medium"
 		>
-			<span class="i-swisspost-warning text-xs" /> {{ errors.email }}
+			<span class="i-carbon-warning text-xs" /> {{ errors.email }}
 		</p>
 		<p
 			v-else-if="serverError"
 			aria-live="polite"
 			class="mt-1.5 flex items-center gap-1 text-xs text-[#ef4565] font-medium"
 		>
-			<span class="i-swisspost-warning text-xs" /> {{ serverError }}
+			<span class="i-carbon-warning text-xs" /> {{ serverError }}
 		</p>
 		<p
 			v-if="isSuccess"
 			aria-live="polite"
 			class="mt-1.5 flex items-center gap-1 text-xs text-emerald-700 font-medium dark:text-emerald-300"
 		>
-			<span class="i-swisspost-checkmark text-xs" /> {{ successMessage }}
+			<span class="i-carbon-checkmark text-xs" /> {{ successMessage }}
 		</p>
 	</form>
 </template>

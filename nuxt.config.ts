@@ -198,6 +198,10 @@ export default defineNuxtConfig({
 		// 	component: 'Bento',
 		// },
 	},
+	// Bundled by @nuxtjs/seo v6. Off to keep pre-v6 behavior: nuxt-llms already serves /llms.txt,
+	// and skew protection would add old-build asset storage + polling on Workers.
+	aiReady: false,
+	skewProtection: false,
 
 	app: {
 		head: {},
@@ -234,7 +238,10 @@ export default defineNuxtConfig({
 				? {
 						googleAnalytics: {
 							id: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID,
-							trigger: 'idle',
+							// Load GA only after first interaction: keeps ~180 KiB of third-party JS off initial load (TBT).
+							// Trade-off: visitors who leave without any interaction are not tracked. Use 'idle' to track them.
+							// Listeners sit on <html>; 'scroll' never reaches it (fires on document/window), so use bubbling events.
+							trigger: { interaction: ['wheel', 'pointerdown', 'touchstart', 'keydown'] },
 							proxy: false,
 						},
 					}

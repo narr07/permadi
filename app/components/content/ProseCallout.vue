@@ -9,7 +9,7 @@ const props = withDefaults(
 		 */
 		color?: 'primary' | 'neutral' | 'accent' | 'success' | 'warning' | 'error' | 'info'
 		/**
-		 * Optional leading icon (e.g. i-swisspost-info, i-swisspost-bulb, i-swisspost-warning)
+		 * Optional leading icon (e.g. i-carbon-information, i-carbon-idea, i-carbon-warning)
 		 */
 		icon?: string
 		/**
@@ -50,20 +50,20 @@ const defaultIcon = computed(() => {
 		return props.icon
 	switch (resolvedColor.value) {
 		case 'success':
-			return 'i-swisspost-checkmark'
+			return 'i-carbon-checkmark'
 		case 'warning':
-			return 'i-swisspost-warning'
+			return 'i-carbon-warning'
 		case 'error':
-			return 'i-swisspost-warning'
+			return 'i-carbon-warning'
 		case 'info':
-			return 'i-swisspost-info'
+			return 'i-carbon-information'
 		case 'accent':
-			return 'i-swisspost-magicwand'
+			return 'i-carbon-magic-wand'
 		case 'neutral':
-			return 'i-swisspost-edit'
+			return 'i-carbon-edit'
 		case 'primary':
 		default:
-			return 'i-swisspost-bulb'
+			return 'i-carbon-idea'
 	}
 })
 
@@ -162,7 +162,7 @@ const colorConfig = computed(() => {
 			class="pointer-events-none absolute right-3.5 top-3.5 text-slate-400 transition-colors group-hover:text-current"
 			:class="colorConfig.icon"
 		>
-			<span class="i-swisspost-linkexternal text-xs" />
+			<span class="i-carbon-launch text-xs" />
 		</div>
 
 		<!-- Content Layout (Leading Icon + Body) -->

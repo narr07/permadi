@@ -27,18 +27,18 @@ useSchemaOrg([
 ])
 
 function getSocialIcon(name?: string, icon?: string) {
-	if (icon && icon.startsWith('i-swisspost' + '-'))
+	if (icon && (icon.startsWith('i-ant-design-') || icon.startsWith('i-carbon-')))
 		return icon
 	const n = (name || '').toLowerCase()
 	if (n.includes('git'))
-		return 'i-swisspost-github'
+		return 'i-ant-design-github-filled'
 	if (n.includes('twit') || n === 'x')
-		return 'i-swisspost-twitterx'
+		return 'i-ant-design-x-outlined'
 	if (n.includes('insta'))
-		return 'i-swisspost-instagram'
+		return 'i-ant-design-instagram-outlined'
 	if (n.includes('behance'))
-		return 'i-swisspost-icondesign'
-	return 'i-swisspost-link'
+		return 'i-ant-design-behance-square-filled'
+	return 'i-carbon-link'
 }
 </script>
 
@@ -53,7 +53,7 @@ function getSocialIcon(name?: string, icon?: string) {
 				<div class="max-w-2xl">
 					<div class="mb-3.5 flex items-center justify-between gap-3">
 						<div class="inline-flex items-center gap-1.5 border border-brand-200/60 bg-brand-100/70 px-3 py-1 text-xs text-brand-950 font-semibold dark:border-brand-800/60 dark:bg-brand-950 dark:text-brand-300">
-							<span class="i-swisspost-documentemail text-xs" />
+							<span class="i-carbon-email-new text-xs" />
 							<span>{{ page?.section_label || (locale === 'id' ? 'Mari Terhubung' : 'Get in Touch') }}</span>
 						</div>
 
@@ -90,7 +90,7 @@ function getSocialIcon(name?: string, icon?: string) {
 			>
 				<div>
 					<span class="mb-3 flex items-center gap-1.5 text-xs text-brand-200 font-semibold tracking-wide">
-						<span class="i-swisspost-mail text-xs text-brand-300" /> {{ page.email_card.label || (locale === 'id' ? 'Pertanyaan Langsung' : 'Direct Inquiries') }}
+						<span class="i-carbon-email text-xs text-brand-300" /> {{ page.email_card.label || (locale === 'id' ? 'Pertanyaan Langsung' : 'Direct Inquiries') }}
 					</span>
 					<h3 class="text-3xl text-white font-900 tracking-tight font-heading sm:text-5xl">
 						{{ page.email_card.email || 'dinar@permadi.dev' }}
@@ -108,7 +108,7 @@ function getSocialIcon(name?: string, icon?: string) {
 						class="group inline-flex cursor-pointer items-center gap-1.5 bg-brand-400 px-5 py-2.5 text-xs text-slate-950 font-bold shadow-xs transition-all duration-150 active:scale-95 hover:bg-brand-300"
 					>
 						{{ page.email_card.button_text || (locale === 'id' ? 'Kirim Email Langsung' : 'Send an Email') }}
-						<span class="i-swisspost-arrowupright text-xs transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
+						<span class="i-carbon-arrow-up-right text-xs transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
 					</a>
 					<span
 						v-if="page.email_card.meta"
@@ -143,7 +143,7 @@ function getSocialIcon(name?: string, icon?: string) {
 						v-if="page.status_card.location"
 						class="flex items-center gap-1.5 font-semibold"
 					>
-						<span class="i-swisspost-locationpin text-sm text-brand-600 dark:text-brand-400" />
+						<span class="i-carbon-location text-sm text-brand-600 dark:text-brand-400" />
 						{{ page.status_card.location }}
 					</span>
 					<span

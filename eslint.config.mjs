@@ -20,6 +20,8 @@ export default withNuxt(
 			'src-nuxt-ui/**',
 			'scripts/convert-webp.ts',
 			'server/db/migrations/**',
+			'.tgrep/**',
+			'skills-lock.json',
 		],
 		stylistic: {
 			indent: 'tab',

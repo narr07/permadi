@@ -68,7 +68,7 @@ function isImagePath(icon?: string) {
 
 function getIconClass(icon?: string) {
 	if (!icon)
-		return 'i-swisspost-code'
+		return 'i-carbon-code'
 	if (icon.startsWith('i-'))
 		return icon
 	if (icon.includes(':'))

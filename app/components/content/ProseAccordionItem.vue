@@ -16,7 +16,7 @@ const props = withDefaults(
 		 */
 		description?: string
 		/**
-		 * Leading icon name (e.g. i-swisspost-database, i-swisspost-magicwand)
+		 * Leading icon name (e.g. i-carbon-data-base, i-carbon-magic-wand)
 		 */
 		icon?: string
 		/**
@@ -49,7 +49,7 @@ const toggle = inject<((id: string) => void) | null>('accordionToggle', null)
 const isItemOpen = inject<((id: string) => boolean) | null>('accordionIsOpen', null)
 const parentTrailingIcon = inject<any>('accordionTrailingIcon', null)
 
-const resolvedTrailingIcon = computed(() => props.trailingIcon || parentTrailingIcon?.value || 'i-swisspost-arrowdown')
+const resolvedTrailingIcon = computed(() => props.trailingIcon || parentTrailingIcon?.value || 'i-carbon-arrow-down')
 
 const internalOpen = ref(props.defaultOpen)
 
@@ -83,10 +83,10 @@ function handleToggle() {
 const resolvedIcon = computed(() => {
 	if (!props.icon)
 		return undefined
-	if (props.icon === 'i-swisspost-database')
-		return 'i-swisspost-database'
-	if (props.icon === 'i-swisspost-globecontinents')
-		return 'i-swisspost-globecontinents'
+	if (props.icon === 'i-carbon-data-base')
+		return 'i-carbon-data-base'
+	if (props.icon === 'i-carbon-earth')
+		return 'i-carbon-earth'
 	return props.icon
 })
 </script>

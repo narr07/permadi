@@ -1,14 +1,14 @@
 <script setup lang="ts">
-const { locale, t } = useI18n()
+const { t } = useI18n()
 const route = useRoute()
 
 const currentYear = new Date().getFullYear()
 
 const socialLinks = [
-	{ name: 'GitHub', handle: 'narr07', url: 'https://github.com/narr07', icon: 'i-swisspost-github' },
-	{ name: 'X / Twitter', handle: 'dinarpermadi07', url: 'https://x.com/dinarpermadi07', icon: 'i-swisspost-twitterx' },
-	{ name: 'Instagram', handle: 'narr07', url: 'https://www.instagram.com/narr07/', icon: 'i-swisspost-instagram' },
-	{ name: 'Behance', handle: 'narr07', url: 'https://www.behance.net/narr07', icon: 'i-swisspost-icondesign' },
+	{ name: 'GitHub', handle: 'narr07', url: 'https://github.com/narr07', icon: 'i-ant-design-github-filled' },
+	{ name: 'X / Twitter', handle: 'dinarpermadi07', url: 'https://x.com/dinarpermadi07', icon: 'i-ant-design-x-outlined' },
+	{ name: 'Instagram', handle: 'narr07', url: 'https://www.instagram.com/narr07/', icon: 'i-ant-design-instagram-outlined' },
+	{ name: 'Behance', handle: 'narr07', url: 'https://www.behance.net/narr07', icon: 'i-ant-design-behance-square-filled' },
 ]
 
 const isHomePage = computed(() => {
@@ -39,7 +39,7 @@ function scrollToTop() {
 			@click="scrollToTop"
 		>
 			<span>{{ $t('footer.back_to_top').toUpperCase() }}</span>
-			<span class="i-swisspost-arrowup text-xs" />
+			<span class="i-carbon-arrow-up text-xs" />
 		</button>
 	</footer>
 
@@ -86,7 +86,7 @@ function scrollToTop() {
 						class="text-xs"
 					/>
 					<span class="font-bold">{{ s.name }}</span>
-					<span class="i-swisspost-arrowupright text-[10px] text-slate-400 transition-transform duration-150 group-hover:(translate-x-0.5 text-brand-600 -translate-y-0.5) dark:group-hover:text-brand-400" />
+					<span class="i-carbon-arrow-up-right text-[10px] text-slate-400 transition-transform duration-150 group-hover:(translate-x-0.5 text-brand-600 -translate-y-0.5) dark:group-hover:text-brand-400" />
 				</a>
 			</div>
 		</div>
@@ -106,7 +106,7 @@ function scrollToTop() {
 				@click="scrollToTop"
 			>
 				<span>{{ $t('footer.back_to_top') }}</span>
-				<span class="i-swisspost-arrowup text-xs transition-transform duration-150" />
+				<span class="i-carbon-arrow-up text-xs transition-transform duration-150" />
 			</button>
 		</div>
 	</footer>

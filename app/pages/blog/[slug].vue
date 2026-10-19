@@ -332,7 +332,7 @@ defineOgImage('Bento', {
 				:to="locale === 'id' ? '/id/blog' : '/blog'"
 				class="group inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
-				<span class="i-swisspost-arrowleft text-xs transition-transform duration-150 group-hover:-translate-x-1" />
+				<span class="i-carbon-arrow-left text-xs transition-transform duration-150 group-hover:-translate-x-1" />
 				<span>{{ $t('blog.back_to_archive') }}</span>
 			</NuxtLink>
 		</nav>
@@ -426,7 +426,7 @@ defineOgImage('Bento', {
 						<span class="whitespace-nowrap">{{ $t('blog.toc_button') }}</span>
 						<span
 							:class="isTocDropdownOpen ? 'rotate-180' : 'rotate-0'"
-							class="i-swisspost-chevrondown shrink-0 text-xs transition-transform duration-200"
+							class="i-carbon-chevron-down shrink-0 text-xs transition-transform duration-200"
 						/>
 					</button>
 
@@ -561,7 +561,7 @@ defineOgImage('Bento', {
 				:to="locale === 'id' ? '/id/blog' : '/blog'"
 				class="inline-flex items-center gap-2 text-slate-900 font-bold tracking-wider uppercase dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
-				<span class="i-swisspost-arrowleft text-xs" />
+				<span class="i-carbon-arrow-left text-xs" />
 				<span>{{ $t('blog.back_to_all') }}</span>
 			</NuxtLink>
 		</footer>

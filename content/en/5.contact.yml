@@ -21,16 +21,16 @@ social_card:
   items:
     - name: GitHub
       url: https://github.com/narr07
-      icon: i-swisspost-github
+      icon: i-ant-design-github-filled
     - name: X / Twitter
       url: https://x.com/dinarpermadi07
-      icon: i-swisspost-twitterx
+      icon: i-ant-design-x-outlined
     - name: Instagram
       url: https://www.instagram.com/narr07/
-      icon: i-swisspost-instagram
+      icon: i-ant-design-instagram-outlined
     - name: Behance
       url: https://www.behance.net/narr07
-      icon: i-swisspost-icondesign
+      icon: i-ant-design-behance-square-filled
 newsletter_card:
   label: Newsletter
   title: Field Notes & Updates

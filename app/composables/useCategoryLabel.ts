@@ -11,6 +11,7 @@ export function useCategoryLabel() {
 		web: { id: 'Web App', en: 'Web App' },
 		mobile: { id: 'Mobile App', en: 'Mobile App' },
 		design: { id: 'Desain', en: 'Design' },
+		software: { id: 'Software', en: 'Software' },
 	}
 
 	function getCategoryLabel(category?: string): string {
