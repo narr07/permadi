@@ -24,9 +24,10 @@ export function useFormatDate() {
 		// Fallback parse using Date object
 		const d = typeof dateStr === 'string' ? new Date(dateStr) : dateStr
 		if (!Number.isNaN(d.getTime())) {
-			const year = d.getFullYear()
-			const month = String(d.getMonth() + 1).padStart(2, '0')
-			const day = String(d.getDate()).padStart(2, '0')
+			// UTC getters: date-only content values are UTC midnight, local getters shift them west of UTC
+			const year = d.getUTCFullYear()
+			const month = String(d.getUTCMonth() + 1).padStart(2, '0')
+			const day = String(d.getUTCDate()).padStart(2, '0')
 
 			if (locale.value === 'id') {
 				return `${day}-${month}-${year}`

@@ -89,7 +89,6 @@ onMounted(() => {
 			<!-- Brand Mark & Identity -->
 			<NuxtLink
 				:to="localePath('/')"
-				aria-label="permadi.dev"
 				class="flex items-center gap-3 text-xs text-slate-900 font-bold tracking-wider font-mono uppercase transition-all duration-150 active:scale-[0.98] hover:scale-[1.01] dark:text-slate-50 hover:text-brand-600 dark:hover:text-brand-400"
 			>
 				<LogoNav size="24" />

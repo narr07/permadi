@@ -25,6 +25,9 @@ const formattedPosts = computed(() => {
 		day: 'numeric',
 		month: 'short',
 		year: 'numeric',
+		// Content dates are date-only (UTC midnight); formatting in the visitor's zone shifts them a
+		// day west of UTC and mismatches the prerendered HTML.
+		timeZone: 'UTC',
 	})
 	return (props.posts || []).slice(0, 4).map(post => ({
 		title: post.title,
