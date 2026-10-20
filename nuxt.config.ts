@@ -238,9 +238,12 @@ export default defineNuxtConfig({
 				? {
 						googleAnalytics: {
 							id: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID,
-							// Load GA right after hydration, no interaction needed: every visitor is tracked and Google's
-							// tag check sees gtag. An interaction trigger hid the tag from that check and missed bounces.
-							trigger: 'onNuxtReady',
+							// Load GA only after first interaction: keeps ~195 KiB of third-party JS off initial load (TBT).
+							// Measured 2026-10-20 with onNuxtReady: mobile TBT 14 ms -> 427 ms, score 91 -> 87.
+							// Trade-off: visitors who leave without any interaction are not tracked, and Google's tag
+							// checker (which never interacts) reports the tag as missing.
+							// Listeners sit on <html>; 'scroll' never reaches it (fires on document/window), so use bubbling events.
+							trigger: { interaction: ['wheel', 'pointerdown', 'touchstart', 'keydown'] },
 							proxy: false,
 						},
 					}
