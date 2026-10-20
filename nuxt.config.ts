@@ -238,10 +238,9 @@ export default defineNuxtConfig({
 				? {
 						googleAnalytics: {
 							id: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID,
-							// Load GA only after first interaction: keeps ~180 KiB of third-party JS off initial load (TBT).
-							// Trade-off: visitors who leave without any interaction are not tracked. Use 'idle' to track them.
-							// Listeners sit on <html>; 'scroll' never reaches it (fires on document/window), so use bubbling events.
-							trigger: { interaction: ['wheel', 'pointerdown', 'touchstart', 'keydown'] },
+							// Load GA right after hydration, no interaction needed: every visitor is tracked and Google's
+							// tag check sees gtag. An interaction trigger hid the tag from that check and missed bounces.
+							trigger: 'onNuxtReady',
 							proxy: false,
 						},
 					}
