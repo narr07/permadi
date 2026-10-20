@@ -542,7 +542,6 @@ useSchemaOrg([
 				</Transition>
 			</Teleport>
 		</ClientOnly>
-		<SwissTrace />
 	</div>
 </template>
 

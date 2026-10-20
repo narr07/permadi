@@ -91,7 +91,5 @@ defineOgImage('Bento', {
 		/>
 
 		<HomeSwissContactColophon :colophon="page?.colophon" />
-
-		<SwissTrace />
 	</div>
 </template>

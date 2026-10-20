@@ -355,8 +355,6 @@ useSchemaOrg([
 				</NuxtLink>
 			</div>
 		</nav>
-
-		<SwissTrace />
 	</div>
 </template>
 

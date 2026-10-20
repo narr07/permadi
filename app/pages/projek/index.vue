@@ -409,8 +409,6 @@ defineOgImage('Bento', {
 				</NuxtLink>
 			</div>
 		</nav>
-
-		<SwissTrace />
 	</div>
 </template>
 
