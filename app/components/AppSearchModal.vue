@@ -14,10 +14,17 @@ const collections = computed(() => {
 		: (['blog_en', 'projek_en', 'home_en', 'tentang_en', 'kontak_en', 'pages_en'] as const)
 })
 
-// Composable resmi Nuxt Content: useSearchCollection
+// Composable resmi Nuxt Content: useSearchCollection.
+// Index dibangun saat dibutuhkan saja: init langsung memuat SQLite WASM (~400 KB) + dump tiap koleksi
+// dan mengisi index di main thread, terlalu mahal untuk setiap page load.
 const { status, search, init } = useSearchCollection(collections as any, {
-	immediate: true,
+	immediate: false,
 })
+
+function warmSearch() {
+	if (status.value === 'idle')
+		init().catch(() => {})
+}
 
 // Jalankan pencarian saat query berubah
 watch(searchQuery, async (newVal) => {
@@ -140,12 +147,11 @@ function getTargetUrl(result: any): string {
 	return locale.value === 'id' ? '/id' : '/'
 }
 
-async function openModal() {
+function openModal() {
 	isOpen.value = true
 	selectedIndex.value = -1
-	if (status.value === 'idle') {
-		await init()
-	}
+	// Jangan tunggu index: input langsung fokus, search() menunggu init sendiri
+	warmSearch()
 	nextTick(() => {
 		inputRef.value?.focus()
 	})
@@ -232,6 +238,8 @@ onMounted(() => {
 			class="icon-btn transition-transform active:scale-95"
 			:aria-label="t('search.shortcut', 'Cari (Ctrl+K)')"
 			@click="openModal"
+			@pointerenter="warmSearch"
+			@focus="warmSearch"
 		>
 			<span class="i-carbon-search text-base text-slate-800 dark:text-slate-100" />
 		</button>
