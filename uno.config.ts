@@ -18,6 +18,10 @@ export default defineConfig({
 		},
 	},
 
+	// File-type icons are served as static SVGs (FileTypeIcon.vue, scripts/generate-vscode-icons.mjs);
+	// as CSS they added ~50 KB to the render-blocking bundle on every page.
+	blocklist: [/^i-vscode-icons-/],
+
 	safelist: [
 		'i-ant-design-github-filled',
 		'i-ant-design-x-outlined',

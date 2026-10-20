@@ -197,8 +197,8 @@ function handleCopy() {
 					]"
 					@click="selectedIndex = idx"
 				>
-					<span
-						:class="tab.icon"
+					<FileTypeIcon
+						:icon="tab.icon"
 						class="shrink-0 text-sm"
 					/>
 					<span>{{ tab.label }}</span>

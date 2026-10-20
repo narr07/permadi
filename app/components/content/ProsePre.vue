@@ -155,8 +155,8 @@ function handleCopy() {
 		<div class="flex select-none items-center justify-between border-b border-[#115e4f]/40 bg-[#02211c]/95 px-4 py-2.5 text-xs font-mono dark:border-[#134e43]/50 dark:bg-[#001c19]/90">
 			<!-- Left: File Icon & Filename & Language Tag -->
 			<div class="min-w-0 flex items-center gap-2.5">
-				<span
-					:class="isMermaid ? 'i-carbon-branch text-brand-400' : fileIcon"
+				<FileTypeIcon
+					:icon="isMermaid ? 'i-carbon-branch text-brand-400' : fileIcon"
 					class="shrink-0 text-sm"
 				/>
 				<span

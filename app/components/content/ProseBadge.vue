@@ -156,9 +156,9 @@ const colorVariantClasses = computed(() => {
 			props.class,
 		]"
 	>
-		<span
+		<FileTypeIcon
 			v-if="props.icon"
-			:class="props.icon"
+			:icon="props.icon"
 			class="shrink-0 text-[1.15em]"
 		/>
 		<span><slot>{{ props.label }}</slot></span>
