@@ -24,28 +24,29 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const rootDir = path.resolve(__dirname, '..')
 
-// Auto-load .env if GEMINI_API_KEY is not already set
-if (!process.env.GEMINI_API_KEY) {
-	const envPath = path.join(rootDir, '.env')
-	if (fs.existsSync(envPath)) {
-		try {
-			if (typeof process.loadEnvFile === 'function') {
-				process.loadEnvFile(envPath)
-			}
-			else {
-				const envContent = fs.readFileSync(envPath, 'utf8')
-				for (const line of envContent.split(/\r?\n/)) {
-					const [k, ...v] = line.split('=')
-					if (k?.trim() === 'GEMINI_API_KEY') {
-						process.env.GEMINI_API_KEY = v.join('=').trim()
-					}
-				}
-			}
-		}
-		catch {
-			// ignore
+// Auto-load .env for GEMINI_API_KEY, CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_API_TOKEN, etc.
+const envPath = path.join(rootDir, '.env')
+if (fs.existsSync(envPath)) {
+	try {
+		if (typeof process.loadEnvFile === 'function') {
+			process.loadEnvFile(envPath)
 		}
 	}
+	catch {}
+	try {
+		const envContent = fs.readFileSync(envPath, 'utf8')
+		for (const line of envContent.split(/\r?\n/)) {
+			const trimmed = line.trim()
+			if (!trimmed || trimmed.startsWith('#'))
+				continue
+			const [k, ...v] = trimmed.split('=')
+			const key = k?.trim()
+			if (key && !process.env[key]) {
+				process.env[key] = v.join('=').trim()
+			}
+		}
+	}
+	catch {}
 }
 
 const CONTENT_ID_DIR = path.join(rootDir, 'content', 'id', 'blog')
@@ -680,7 +681,7 @@ Kembalikan output HANYA DALAM FORMAT JSON MURNI (application/json) dengan skema:
   "tags_en": ["tag1", "tag2", "tag3", "tag4"],
   "image_alt_id": "string (alt text gambar ilustrasi indonesia 10-125 karakter)",
   "image_alt_en": "string (alt text image illustration english 10-125 characters)",
-  "image_metaphor": "string (English, 1-2 sentences: ONE concrete geometric visual metaphor of this article's core idea built from circles, squares, arcs, grids and lines, e.g. 'a large teal circle split into three overlapping wedges orbiting a small dark square'. No text, no people, no clichés like light bulbs or gears)",
+  "image_metaphor": "string (English, 1-2 sentences: ONE concrete, meaningful visual scene or technical diagram that directly represents the topic of this article. For tech/web articles: show a modern developer workstation, browser viewport, responsive mobile preview, terminal, code blocks, or architecture flow. For design/art articles: show color wheels, UI wireframes, typography specimen, or design canvas. For education articles: show student study desks, mind maps, active recall flashcards, classroom whiteboard discussion, or learning flowcharts. Style: clean, professional, relatable to the article, NO chaotic text, NO realistic photo)",
   "body_id": "string (isi teks artikel lengkap bahasa indonesia dalam format Markdown tanpa frontmatter, DILARANG MEMUAT H1 (#), semua heading dimulai dari H2 (##) dan H3 (###), minimal 1500 kata, ada tabel dan komponen MDC)",
   "body_en": "string (full article body in English in Markdown format without frontmatter, NO H1 (#) allowed, all headings start from H2 (##) and H3 (###), minimum 1500 words, contains table and MDC components)"
 }`
@@ -792,8 +793,8 @@ async function generateCoverImage(apiKey, metaphor, imageSlug) {
 		return false
 	}
 
-	// Master prompt from gem-gambar-artikel-generator (Swiss + Golden Ratio + brand palette)
-	const prompt = `A refined Swiss graphic design editorial illustration representing ${metaphor}. Strict 2D flat vector aesthetic, International Typographic Style, hard-edged pure geometric shapes, circular segments, clean intersecting vector planes, and fine structural lines in deep forest green #134e43. Strict Golden Ratio composition (phi 1:1.618 balance), dynamic asymmetric layout with 61.8% primary visual mass and 38.2% spacious breathable negative space. Brand color palette: pale mint flat background #f0fdfa, primary focal elements in vivid teal #14b898, secondary geometric accents in bright cyan-mint #99f6e4 and rich emerald #0d947a, precise deep outlines #134e43. Mathematical harmony, rational, modernist poster aesthetic, Josef Müller-Brockmann inspired layout discipline, 16:9 aspect ratio, clean solid fills, zero gradients, zero shadows, no 3D elements, no realism, 100% text-free, no letters, no words, no numbers, no watermark.`
+	// Master prompt for clean modern editorial vector illustration matching the site's brand
+	const prompt = `A clean modern editorial vector illustration representing ${metaphor}. Minimalist flat 2D vector style, bold crisp outlines in dark forest green #134e43, pale mint background #f0fdfa, brand color accents in vivid teal #14b898, soft mint #99f6e4, and deep emerald #0d947a. Professional tech and design studio aesthetic, friendly and clean, balanced asymmetric layout, 16:9 aspect ratio, clean solid fills, no realistic photos, no messy text, no watermark.`
 
 	// Each provider resolves to a base64 image. Cloudflare Workers AI first (free 10k neurons/day,
 	// ~210 neurons per 1600x896 cover), Gemini image models as paid fallback.
@@ -949,6 +950,10 @@ async function main() {
 	const cleanBodyId = sanitizeArticleBody(generated.body_id)
 	const cleanBodyEn = sanitizeArticleBody(generated.body_en)
 
+	// Clean up any leading image markdown tags and normalize /images/ paths generated by the model
+	const sanitizedBodyId = cleanBodyId.replace(/^!\[[^\]]*\]\([^)]+\)\s*/, '').replace(/\/images\//g, '/article/')
+	const sanitizedBodyEn = cleanBodyEn.replace(/^!\[[^\]]*\]\([^)]+\)\s*/, '').replace(/\/images\//g, '/article/')
+
 	// Format Indonesian Markdown
 	const idMarkdown = `---
 title: "${generated.title_id.replace(/"/g, '\\"')}"
@@ -959,7 +964,9 @@ tags:
 ${tagsId.map(t => `  - ${t}`).join('\n')}
 ---
 
-${cleanBodyId.includes(`/article/`) ? cleanBodyId : `![${generated.image_alt_id || generated.title_id}](/article/${imageSlug}.webp)\n\n${cleanBodyId}`}
+![${generated.image_alt_id || generated.title_id}](/article/${imageSlug}.webp)
+
+${sanitizedBodyId}
 `
 
 	// Format English Markdown
@@ -972,7 +979,9 @@ tags:
 ${tagsEn.map(t => `  - ${t}`).join('\n')}
 ---
 
-${cleanBodyEn.includes(`/article/`) ? cleanBodyEn : `![${generated.image_alt_en || generated.title_en}](/article/${imageSlug}.webp)\n\n${cleanBodyEn}`}
+![${generated.image_alt_en || generated.title_en}](/article/${imageSlug}.webp)
+
+${sanitizedBodyEn}
 `
 
 	if (isDryRun) {
