@@ -19,6 +19,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { createLedger, generate, parseJson } from './lib/gemini.mjs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -53,6 +54,7 @@ const CONTENT_ID_DIR = path.join(rootDir, 'content', 'id', 'blog')
 const CONTENT_EN_DIR = path.join(rootDir, 'content', 'en', 'blog')
 const PUBLIC_ARTICLE_DIR = path.join(rootDir, 'public', 'article')
 const DATA_DIR = path.join(rootDir, 'data')
+const AI_SPEND_FILE = path.join(DATA_DIR, 'ai-spend.json')
 
 const CATEGORIES = ['edu', 'art', 'tech']
 
@@ -590,161 +592,251 @@ async function getTopicForCategory(category, customTopic) {
 }
 
 /**
- * 8. Call Gemini API with Strict ArtikelGen & Anti-Kaku Guardrails
+ * 4. Pipeline artikel bertahap: riset (Google Search) → draf ID → penyuntingan → versi EN → metadata.
+ * Model termahal hanya dipakai di tahap yang menentukan mutu (draf & penyuntingan).
+ * Belanja dicatat di data/ai-spend.json; bila mendekati anggaran bulanan, otomatis pindah ke profil hemat.
  */
-async function callGemini(apiKey, { number, category, topicData }) {
+const AI_MONTHLY_BUDGET_USD = Number(process.env.AI_MONTHLY_BUDGET_USD || 12)
+// Perkiraan biaya satu artikel profil premium (teks + cover), dipakai untuk keputusan anggaran
+const PREMIUM_ARTICLE_USD = 0.9
+
+const MODEL_PROFILES = {
+	premium: {
+		research: ['gemini-3.8-flash', 'gemini-flash-latest'],
+		writer: [process.env.GEMINI_WRITER_MODEL || 'gemini-4-argon', 'gemini-3.1-pro-preview', 'gemini-pro-latest'],
+		translator: ['gemini-3.1-pro-preview', 'gemini-pro-latest', 'gemini-3.8-flash'],
+		utility: ['gemini-3.8-flash', 'gemini-flash-latest'],
+		image: ['gemini-3-pro-image', 'gemini-nano-banana-2.1'],
+	},
+	economy: {
+		research: ['gemini-3.8-flash', 'gemini-flash-latest'],
+		writer: ['gemini-3.8-flash', 'gemini-flash-latest'],
+		translator: ['gemini-3.8-flash', 'gemini-flash-latest'],
+		utility: ['gemini-3.8-flash', 'gemini-flash-latest'],
+		image: ['gemini-nano-banana-2.1'],
+	},
+}
+
+function chooseProfile(ledger) {
+	const remaining = AI_MONTHLY_BUDGET_USD - ledger.spent
+	const name = remaining >= PREMIUM_ARTICLE_USD ? 'premium' : 'economy'
+	console.log(`[Budget] ${ledger.month}: $${ledger.spent.toFixed(2)} of $${AI_MONTHLY_BUDGET_USD} spent → profile "${name}"`)
+	return { name, models: MODEL_PROFILES[name] }
+}
+
+const CATEGORY_GUIDELINES = {
+	edu: 'Pilar Edukasi & Pedagogi: Kurikulum Merdeka (Deep Learning, Capaian Pembelajaran CP/TP, Modul Ajar, P5), model pembelajaran inovatif (PBL, PjBL, Discovery, Inquiry, Accelerated Learning, Flipped Classroom), teori belajar (Konstruktivisme, Kognitif, Vygotsky, Taksonomi Bloom), asesmen autentik (diagnostik, formatif, sumatif), pembelajaran berdiferensiasi (konten, proses, produk), manajemen kelas, dan media ajar interaktif. DILARANG membahas gosip dinas/sekolah, berita politik/gaji/tunjangan, atau lowongan kerja.',
+	art: 'Pilar Desain & Seni: Teori warna (HSL, palet harmonik, kontras, psikologi warna), teori desain (Gestalt, Golden Ratio 1.618, hierarki visual, whitespace, keterbacaan), design trends terkini (Bento Grid, Swiss Style, Neo-brutalism, minimalis), tipografi web & font pairing, sistem grid modular, aksesibilitas WCAG, serta UI/UX design. DILARANG membahas karya seni abstrak non-aplikatif, gosip desainer, atau clickbait.',
+	tech: 'Pilar Teknologi & Rekayasa Perangkat Lunak: Nuxt/Vue, Flutter & Dart, Python automation/scripting, Rust & Tauri (aplikasi desktop modern), Cloudflare Workers, Edge Computing, Core Web Vitals, atau TypeScript. DILARANG membahas berita kripto, gosip gadget konsumsi, atau berita clickbait.',
+}
+
+const AUTHOR = `Anda adalah Dinar Permadi Yusup: guru SD di Majalengka, desainer visual, dan web developer Indonesia. Anda menulis untuk blog pribadi permadi.dev (Nuxt Content). Pembaca Anda guru, desainer, dan developer yang ingin jawaban praktis dari praktisi, bukan rangkuman generik.`
+
+const STYLE_ID = `GAYA BAHASA INDONESIA (Smart Conversational / Modern Editorial):
+- Bernas, hangat, lugas, percaya diri, seperti praktisi senior atau jurnalis majalah editorial bermutu.
+- Buka langsung dengan inti jawaban (BLUF). DILARANG pembuka klise: "Dalam era digital saat ini", "Di zaman modern yang serba cepat", "Perkembangan teknologi telah membawa", "Pernahkah Anda membayangkan", "Mari kita bahas".
+- DILARANG meta-talk: "Perlu diingat bahwa", "Tidak dapat dipungkiri", "Patut dicatat", "Bukan rahasia lagi".
+- DILARANG jargon proposal: "dalam rangka", "guna mendukung", "optimalisasi", "sinergi", "akselerasi", "solusi tepat guna". Ubah nominalisasi pe-an/ke-an menjadi kata kerja aktif.
+- DILARANG slang: "banget", "nggak", "beneran", "sat-set", "gaspol", "cuan", "doang", "nih", "dong", "lo-gue".
+- Kalimat aktif dengan pelaku jelas. Variasikan panjang kalimat: pendek penegas, sedang, dan panjang penjelas.
+- DILARANG em dash (—). Gunakan koma, titik dua, kurung, atau titik.
+- Tanpa emoji di judul dan heading.`
+
+const STYLE_EN = `ENGLISH STYLE:
+- Natural native-speaker phrasing; never a stiff word-for-word translation.
+- BANNED: "fast-paced digital world", "delve into", "dive deep", "game-changer", "tapestry", "beacon", "crucial role", "harness the power", "paradigm shift", "seamless synergy".
+- Do not open consecutive paragraphs with "Furthermore", "Moreover", "Additionally".
+- Prefer plain verbs: use (not utilize), help (not facilitate), speed up (not expedite), complete (not comprehensive).
+- No em dashes (—). No emoji in headings.`
+
+const STRUCTURE_RULES = `STRUKTUR & FORMAT (Nuxt Content MDC):
+- Body TANPA frontmatter dan TANPA H1 (#). Subjudul memakai H2 (##) lalu H3 (###).
+- Paragraf pertama: jawaban inti 40–60 kata (target featured snippet).
+- Paragraf pendek: 1–4 kalimat. Tidak ada dinding teks.
+- Panjang body 1500–2000 kata.
+- Minimal 1 tabel perbandingan memakai SINTAKS TABEL MARKDOWN (| kolom | kolom |). DILARANG tabel atau diagram ASCII (+---+, |---|) di dalam blok kode.
+- Blok kode (\`\`\`) HANYA untuk kode sungguhan, dengan nama bahasa (\`\`\`ts, \`\`\`python, dst.).
+- Penekanan **tebal** atau *miring* secukupnya (1–3 kali per bagian).
+- Komponen MDC yang tersedia (pakai yang relevan, sintaks persis):
+  ::tip / ::note / ::warning untuk catatan praktis atau jebakan umum:
+  ::tip
+  Isi catatan.
+  ::
+  ::steps untuk panduan bertahap, setiap langkah berupa H3 di dalamnya:
+  ::steps
+  ### Langkah pertama
+  Penjelasan.
+  ::
+  ::faq berisi 3–4 pertanyaan yang benar-benar dicari orang:
+  ::faq
+    :::faq-item
+    ---
+    question: Pertanyaan?
+    ---
+    Jawaban singkat.
+    :::
+  ::
+  ::conclusion di akhir sebagai panduan keputusan aksi:
+  ::conclusion
+  Ringkasan dan langkah berikutnya.
+  ::
+
+SEO & KATA KUNCI:
+- Kata kunci dari Google Keyword Planner sering berupa frasa pencarian mentah (contoh: "logo grafis png", "logo grafis adalah", salah ketik "un ux"). Pakai bentuk wajar dan baku di dalam kalimat; jangan memaksakan frasa mentah, jangan sebut asal-usul salah ketik.
+- Primary keyword muncul di paragraf pertama, satu H2, dan 3–6 kali alami di body. Kerapatan 1–2,5%, tanpa keyword stuffing.
+
+KEJUJURAN (E-E-A-T):
+- Fakta, angka, nama, dan tahun hanya dari catatan riset atau pengetahuan umum yang pasti. Jika ragu, tulis secara umum tanpa angka.
+- Boleh memakai sudut pandang praktisi (guru/desainer/developer), tetapi DILARANG mengarang anekdot pribadi spesifik, kutipan, testimoni, atau statistik.`
+
+function getInternalLinkCatalog() {
+	const read = (dir, prefix) => {
+		const map = new Map()
+		if (!fs.existsSync(dir))
+			return map
+		for (const file of fs.readdirSync(dir).filter(f => /^\d+\..+\.md$/.test(f))) {
+			const [num] = file.split('.')
+			const slug = file.replace(/^\d+\./, '').replace(/\.md$/, '')
+			const rawTitle = fs.readFileSync(path.join(dir, file), 'utf8').match(/^title:(.*)$/m)?.[1] || ''
+			const title = rawTitle.trim().replace(/^["']|["']$/g, '') || slug
+			map.set(num, { title, url: `${prefix}/${slug}` })
+		}
+		return map
+	}
+	const id = read(CONTENT_ID_DIR, '/id/blog')
+	const en = read(CONTENT_EN_DIR, '/blog')
+	return [...id.entries()].map(([num, a]) => ({ title: a.title, url: a.url, en: en.get(num) }))
+}
+
+async function generateArticle(apiKey, { category, topicData, ledger, profile }) {
 	const today = new Date().toISOString().split('T')[0]
-	const { topic, primaryKeyword, secondaryKeywords = [] } = topicData
+	const { topic, primaryKeyword } = topicData
+	// Data GKP kadang memuat frasa tanpa huruf (mis. "= 1.61803399"); buang sebelum masuk prompt
+	const secondaryKeywords = (topicData.secondaryKeywords || []).filter(k => /\p{L}{3}/u.test(k))
+	const { models } = profile
+	const links = getInternalLinkCatalog()
+	const linkListId = links.map(l => `- ${l.title}: ${l.url}`).join('\n')
+	const linkMapEn = links.filter(l => l.en).map(l => `- ${l.url} → ${l.en.url} (${l.en.title})`).join('\n')
+	const brief = `Topik acuan: "${topic}"
+Kategori: ${category} (${CATEGORY_GUIDELINES[category]})
+Primary keyword: "${primaryKeyword}"
+Secondary keywords: ${secondaryKeywords.join(', ') || 'sesuaikan dengan topik'}
+Tanggal terbit: ${today}`
 
-	const categoryGuidelines = {
-		edu: 'Pilar Edukasi & Pedagogi: Kurikulum Merdeka (Deep Learning, Capaian Pembelajaran CP/TP, Modul Ajar, P5), model pembelajaran inovatif (PBL, PjBL, Discovery, Inquiry, Accelerated Learning, Flipped Classroom), teori belajar (Konstruktivisme, Kognitif, Vygotsky, Taksonomi Bloom), asesmen autentik (diagnostik, formatif, sumatif), pembelajaran berdiferensiasi (konten, proses, produk), manajemen kelas, dan media ajar interaktif. DILARANG membahas gosip dinas/sekolah, berita politik/gaji/tunjangan, atau lowongan kerja.',
-		art: 'Pilar Desain & Seni: Teori warna (HSL, palet harmonik, kontras, psikologi warna), teori desain (Gestalt, Golden Ratio 1.618, hierarki visual, whitespace, keterbacaan), design trends terkini (Bento Grid, Swiss Style, Neo-brutalism, minimalis), tipografi web & font pairing, sistem grid modular, aksesibilitas WCAG, serta UI/UX design. DILARANG membahas karya seni abstrak non-aplikatif, gosip desainer, atau clickbait.',
-		tech: 'Pilar Teknologi & Rekayasa Perangkat Lunak: Nuxt/Vue, Flutter & Dart, Python automation/scripting, Rust & Tauri (aplikasi desktop modern), Cloudflare Workers, Edge Computing, Core Web Vitals, atau TypeScript. DILARANG membahas berita kripto, gosip gadget konsumsi, atau berita clickbait.',
-	}
+	// Tahap 1: riset berbasis Google Search agar fakta & data terkini, bukan dari ingatan model
+	console.log('\n[Pipeline 1/5] Research with Google Search grounding...')
+	const research = await generate(models.research, {
+		apiKey,
+		ledger,
+		stage: 'research',
+		search: true,
+		prompt: `${brief}
 
-	const systemInstruction = `Anda adalah Dinar Permadi Yusup, seorang praktisi pendidikan, desainer visual, dan web developer Indonesia.
-Anda menulis artikel blog profesional untuk website pribadi 'permadi.dev' (dibangun dengan Nuxt Content).
+Lakukan riset untuk artikel blog berbahasa Indonesia tentang topik di atas. Gunakan Google Search. Tulis catatan riset dalam markdown:
+1. Jawaban inti / definisi yang akurat.
+2. Fakta, data, versi, atau perkembangan terbaru (sebut nama sumber dan tahunnya).
+3. Langkah, contoh, atau penerapan konkret yang bisa langsung dipraktikkan.
+4. Kesalahan umum dan cara menghindarinya.
+5. Pertanyaan yang sering dicari orang tentang topik ini.
+6. Sudut pandang yang jarang dibahas artikel lain.
+Jangan mengarang. Tandai informasi yang tidak pasti dengan "(belum pasti)".`,
+	})
 
-STANDAR GAYA BAHASA ANTI-KAKU (SMART CONVERSATIONAL / MODERN EDITORIAL - SKILL ANTI-KAKU v1.2.0):
-1. Titik Temu Ideal: Bernas, hangat, lugas, percaya diri, dan berbobot layaknya tulisan praktisi senior atau jurnalis majalah editorial bermutu (Monocle, Stripe Docs, Linear).
-2. KOREKSI SALAH KETIK DARI GOOGLE:
-   - Data Google Keyword Planner / Google Suggest terkadang mengandung salah ketik pencari internet (misal: 'un ux' untuk 'ui ux', 'uinux', 'photoshp', dll.).
-   - DILARANG KERAS memuat kata salah ketik/typo di Title, Heading H1/H2/H3, URL Slug, maupun teks pembuka!
-   - JIKA kata kunci acuan mengandung salah ketik, WAJIB KOREKSI KE KATA BAKU YANG BENAR (misalnya ubah 'un ux' menjadi 'UI UX' atau 'UI/UX').
-   - DILARANG membahas atau menyebutkan "Pencarian ini berasal dari salah ketik pengguna...". Perlakukan topik tersebut sebagai istilah baku yang wajar sejak kalimat pertama.
-3. BAHASA INDONESIA:
-   - DILARANG PEMBUKA KLISE AI: Jangan pernah membuka artikel dengan "Dalam era digital saat ini...", "Di zaman modern yang serba cepat...", "Perkembangan teknologi telah membawa...", "Di tengah pesatnya perkembangan...", "Pernahkah Anda membayangkan...", "Mari kita bahas secara mendalam...". LANGSUNG TEMBAK KE AKAR MASALAH NYATA ATAU SOLUSI (Bottom Line Up Front / BLUF).
-   - DILARANG BASA-BASI & META-TALK: Jangan gunakan "Perlu diingat bahwa...", "Tidak dapat dipungkiri bahwa...", "Patut dicatat bahwa...", "Bukan rahasia lagi bahwa...". Langsung tuliskan poin atau data inti.
-   - DILARANG BIROKRASI & TUMPUKAN NOMINALISASI: Hindari pe-...-an dan ke-...-an berlebihan. Ubah kata benda abstrak menjadi kata kerja aktif nyata (misal: "Membantu Anda merancang..." bukan "Guna perealisasian perancangan...").
-   - DILARANG JARGON PROPOSAL / LPJ: Hindari kata "dalam rangka", "guna mendukung", "optimalisasi", "sinergi", "akselerasi", "solusi tepat guna", "persoalan riil".
-   - DILARANG KALIMAT PASIF BERJARAK TANPA PELAKU: Gunakan kalimat aktif di mana subjek melakukan tindakan nyata ("Kami menerapkan...", "Anda dapat menggunakan...").
-   - DILARANG SLANG TONGKRONGAN: Hindari kata "beneran", "banget", "nggak ribet", "makin jago", "sat-set", "gaspol", "cuan", "doang", "nih", "dong", "kan", "lo-gue".
-   - KOSAKATA TERTIB: Gunakan "mempercepat" (bukan "mengakselerasi"), "mempermudah" / "meringkas alur" (bukan "mengeliminasi friksi"), "lengkap" / "menyeluruh" (bukan "komprehensif").
-   - VARIASI RITME KALIMAT (BURSTINESS): Selingi kalimat pendek penegas (1-5 kata) dengan kalimat sedang (10-18 kata) dan kalimat panjang penjelas (20-35 kata).
-   - BERSIH DARI EM DASH: Dilarang menggunakan tanda em dash (—). Gunakan koma, titik dua, tanda kurung, atau titik pemisah kalimat.
-   - NO EMOJIS IN HEADINGS: Dilarang menggunakan emoji di judul maupun heading (##, ###).
-3. BAHASA INGGRIS (ENGLISH):
-   - Wajib natural native speaker phrasing, bukan terjemahan mesin kaku.
-   - DILARANG AI CORPORATE BUZZWORDS: "fast-paced digital world", "delve into", "dive deep into", "game-changer", "tapestry of", "beacon of", "crucial role", "harness the power of", "paradigm shift", "seamless synergy".
-   - DILARANG ROBOTIC TRANSITIONS: Jangan mengulang "Furthermore,", "Moreover,", "Additionally," di setiap awal paragraf.
-   - CONFIDENT VOCABULARY: Gunakan "use" (bukan "utilize"), "help/enable" (bukan "facilitate"), "speed up" (bukan "expedite"), "complete/thorough" (bukan "comprehensive").
-4. 3-STEP SELF-AUDIT:
-   - Spoken Reality Test: Dibaca lantang terdengar wajar dan percaya diri oleh praktisi senior.
-   - Action Clarity Test: Pembaca langsung paham siapa melakukan apa dan apa manfaat praktisnya.
-   - Word Density Test: Kalimat berdiri kokoh tanpa kata pengisi dan basa-basi.
+	// Tahap 2: draf ID dalam markdown biasa (bukan JSON) agar model fokus pada tulisan
+	console.log('[Pipeline 2/5] Drafting Indonesian article...')
+	const draft = await generate(models.writer, {
+		apiKey,
+		ledger,
+		stage: 'draft-id',
+		system: `${AUTHOR}\n\n${STYLE_ID}\n\n${STRUCTURE_RULES}`,
+		prompt: `${brief}
 
-STANDAR SEO & STRUKTUR ARTIKELGEN (SKILL ARTIKELGEN v1.1.0):
-1. Batasan Karakter & Format Metadata:
-   - Title ID & EN: 50–58 karakter (Wajib memuat Primary Keyword di awal/tengah, HINDARI tanda titik dua ':').
-   - Description ID & EN: 70–105 karakter padat dan jelas (Wajib memuat Primary Keyword + Secondary Keyword, optimal layar seluler).
-   - URL Slug: 17–40 karakter (< 5 kata), huruf kecil dipisah tanda hubung (-) tanpa nomor/tanggal.
-   - Image Alt Text: Deskriptif padat dan kontekstual (10–125 karakter).
-2. Protokol Distribusi TF-IDF Kata Kunci:
-   - Primary Keyword: "${primaryKeyword}"
-   - Secondary / LSI Keywords: ${secondaryKeywords.length > 0 ? secondaryKeywords.join(', ') : 'sesuaikan dengan topik pilar'}
-   - Tags: 3–5 tags spesifik dalam huruf kecil (wajib menyertakan primary keyword).
-   - Body Text: SEMUA kata kunci dalam tags WAJIB muncul minimal 1–3 kali secara natural di dalam body artikel. Kerapatan kata kunci alami 1–2.5%, dilarang keyword stuffing.
-   - Penekanan Semantik: Berikan penekanan **tebal** atau *miring* secara selektif (1-3 kali per bagian) untuk memandu pemindaian mata.
-3. Struktur Konten & Elemen MDC:
-   - DILARANG KERAS MEMUAT HEADING H1 (#) DI DALAM BODY ARTIKEL! Judul H1 halaman web sudah dirender otomatis oleh template Nuxt dari frontmatter title. Body artikel harus langsung diawali paragraf pembuka (BLUF) setelah gambar cover, dan semua subjudul WAJIB dimulai dari Heading H2 (##) dan diikuti oleh H3 (###).
-   - Heading H2 (15–60 karakter / 4-8 kata) & H3 (15–50 karakter / 2-6 kata): Menguraikan konsep secara struktural.
-   - Paragraf BLUF: 40–60 kata (~250-400 karakter) tepat di bawah heading utama untuk menjawab inti pertanyaan secara langsung (format optimal Featured Snippet Google).
-   - Paragraf Teks Biasa: 1 kalimat hingga 2–4 kalimat pendek (< 5 baris di layar seluler) untuk mencegah dinding teks (wall of text).
-   - Komponen MDC:
-     * Gunakan ::note, ::tip, atau ::warning untuk catatan praktis atau jebakan lapangan (common pitfalls).
-     * Gunakan ::steps jika ada panduan tutorial bertahap.
-     * Gunakan ::conclusion di akhir sebagai Panduan Keputusan Aksi (Actionable Decision Framework).
-   - Wajib minimal 1 tabel Markdown (perbandingan teknis atau ringkasan matriks).
-   - Panjang Artikel: Minimal 1500 kata (target 1500–2000 kata per body artikel, di luar frontmatter) untuk membangun otoritas topikal dan melawan thin content.
+CATATAN RISET:
+${research.text}
 
-BATASAN KATEGORI (${category.toUpperCase()}):
-${categoryGuidelines[category]}`
+ARTIKEL LAIN DI SITUS (tautkan 2–3 yang benar-benar relevan dengan format [teks jangkar](url), di tempat yang wajar):
+${linkListId}
 
-	const userPrompt = `Tuliskan artikel blog bilingual berkualitas tinggi untuk website permadi.dev:
-Nomor Urut: ${number}
-Kategori: ${category}
-Topik Acuan: "${topic}"
-Primary Keyword (GKP/Search): "${primaryKeyword}"
-Secondary / Long-tail Keywords: ${secondaryKeywords.join(', ') || 'N/A'}
-Tanggal Publikasi: ${today}
+Tulis body artikel lengkap dalam Bahasa Indonesia. Keluarkan HANYA markdown body artikel, tanpa pengantar atau penutup dari Anda.`,
+	})
 
-Kembalikan output HANYA DALAM FORMAT JSON MURNI (application/json) dengan skema:
+	// Tahap 3: penyuntingan oleh editor yang memeriksa daftar aturan dan fakta terhadap riset
+	console.log('[Pipeline 3/5] Editing pass...')
+	const edited = await generate(models.writer, {
+		apiKey,
+		ledger,
+		stage: 'edit-id',
+		system: `Anda editor senior permadi.dev. Tugas Anda menyunting draf agar layak terbit tanpa mengubah topik.\n\n${STYLE_ID}\n\n${STRUCTURE_RULES}`,
+		prompt: `CATATAN RISET (acuan fakta):
+${research.text}
+
+DRAF:
+${draft.text}
+
+Sunting draf di atas. Periksa dan perbaiki:
+1. Pembuka langsung menjawab inti (BLUF), tanpa klise.
+2. Semua frasa terlarang, jargon, slang, dan em dash hilang.
+3. Tabel memakai sintaks tabel markdown; tidak ada tabel/diagram ASCII di blok kode.
+4. Kata kunci terdengar wajar, tidak dipaksakan.
+5. Klaim yang tidak didukung riset dihapus atau dibuat umum.
+6. Sintaks komponen MDC benar dan ditutup dengan ::.
+7. Alur antarbagian mengalir, tidak ada pengulangan isi.
+Keluarkan HANYA markdown body artikel hasil suntingan lengkap.`,
+	})
+	const bodyId = sanitizeArticleBody(edited.text)
+
+	// Tahap 4: versi EN ditulis ulang secara natural, tautan internal dipetakan ke versi EN
+	console.log('[Pipeline 4/5] Writing English edition...')
+	const english = await generate(models.translator, {
+		apiKey,
+		ledger,
+		stage: 'english',
+		system: `You are the English editor of permadi.dev. You adapt Indonesian articles for an international audience so they read as if written in English from the start.\n\n${STYLE_EN}`,
+		prompt: `Adapt the Indonesian article below into English.
+- Keep the same structure, headings depth, tables, code blocks, and MDC components (::tip, ::steps, ::faq with :::faq-item, ::conclusion). Keep component syntax exactly; translate only the human text, including faq "question:" values.
+- Use the natural English search phrasing for the keywords.
+- Replace internal links using this map (drop a link if it has no English version):
+${linkMapEn}
+- No H1, no frontmatter. Output ONLY the English markdown body.
+
+INDONESIAN ARTICLE:
+${bodyId}`,
+	})
+	const bodyEn = sanitizeArticleBody(english.text)
+
+	// Tahap 5: metadata SEO + brief ilustrasi dari artikel final
+	console.log('[Pipeline 5/5] SEO metadata and cover brief...')
+	const meta = await generate(models.utility, {
+		apiKey,
+		ledger,
+		stage: 'metadata',
+		json: true,
+		prompt: `Buat metadata untuk artikel berikut. Primary keyword: "${primaryKeyword}". Kategori: ${category}.
+
+Kembalikan JSON:
 {
-  "slug_id": "string (slug url bahasa indonesia 17-40 karakter tanpa nomor)",
-  "slug_en": "string (slug url bahasa inggris 17-40 karakter tanpa nomor)",
-  "slug_image": "string (slug file gambar ilustrasi, misal: ${category}-topik-slug)",
-  "title_id": "string (50-58 karakter tanpa tanda titik dua)",
-  "title_en": "string (50-58 characters without colon)",
-  "description_id": "string (70-105 karakter)",
-  "description_en": "string (70-105 characters)",
-  "tags_id": ["tag1", "tag2", "tag3", "tag4"],
-  "tags_en": ["tag1", "tag2", "tag3", "tag4"],
-  "image_alt_id": "string (alt text gambar ilustrasi indonesia 10-125 karakter)",
-  "image_alt_en": "string (alt text image illustration english 10-125 characters)",
-  "image_metaphor": "string (English, 1-2 sentences: ONE concrete, meaningful visual scene or technical diagram that directly represents the topic of this article. For tech/web articles: show a modern developer workstation, browser viewport, responsive mobile preview, terminal, code blocks, or architecture flow. For design/art articles: show color wheels, UI wireframes, typography specimen, or design canvas. For education articles: show student study desks, mind maps, active recall flashcards, classroom whiteboard discussion, or learning flowcharts. Style: clean, professional, relatable to the article, NO chaotic text, NO realistic photo)",
-  "body_id": "string (isi teks artikel lengkap bahasa indonesia dalam format Markdown tanpa frontmatter, DILARANG MEMUAT H1 (#), semua heading dimulai dari H2 (##) dan H3 (###), minimal 1500 kata, ada tabel dan komponen MDC)",
-  "body_en": "string (full article body in English in Markdown format without frontmatter, NO H1 (#) allowed, all headings start from H2 (##) and H3 (###), minimum 1500 words, contains table and MDC components)"
-}`
+  "slug_id": "slug Indonesia 17-40 karakter, huruf kecil, tanda hubung, tanpa nomor",
+  "slug_en": "English slug 17-40 characters",
+  "slug_image": "${category}-<2-4 kata topik>, huruf kecil, tanda hubung",
+  "title_id": "50-58 karakter, memuat primary keyword dalam bentuk wajar, tanpa titik dua",
+  "title_en": "50-58 characters, no colon",
+  "description_id": "70-105 karakter",
+  "description_en": "70-105 characters",
+  "tags_id": ["3-5 tag huruf kecil berupa istilah wajar, bukan frasa pencarian mentah"],
+  "tags_en": ["3-5 lowercase tags"],
+  "image_alt_id": "alt text 10-125 karakter yang menggambarkan ilustrasi cover",
+  "image_alt_en": "alt text 10-125 characters",
+  "image_brief": "English, 2-3 sentences. Art direction for ONE concrete editorial illustration that shows the article's core idea through recognizable objects or a scene (e.g. a teacher's desk with a lesson plan, a designer constructing a logo on a grid, a browser and phone showing a responsive layout). Name the focal subject, 2-4 supporting objects, and the composition. No abstract-only shapes, no people's faces in close-up."
+}
 
-	const modelsToTry = [
-		process.env.GEMINI_MODEL || 'gemini-3.8-flash',
-		'gemini-3.7-flash',
-		'gemini-3.6-flash',
-		'gemini-3.5-flash',
-		'gemini-3.5-flash-lite',
-		'gemini-flash-latest',
-		'gemini-3.1-pro-preview',
-	]
+ARTIKEL (ID):
+${bodyId.slice(0, 6000)}
 
-	let lastError = null
+JUDUL-JUDUL BAGIAN (EN):
+${bodyEn.split('\n').filter(l => l.startsWith('## ')).join('\n')}`,
+	})
 
-	for (const model of modelsToTry) {
-		try {
-			console.log(`[Gemini] Requesting article to model ${model}...`)
-			const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					system_instruction: {
-						parts: [{ text: systemInstruction }],
-					},
-					contents: [
-						{
-							role: 'user',
-							parts: [{ text: userPrompt }],
-						},
-					],
-					generationConfig: {
-						responseMimeType: 'application/json',
-						temperature: 0.65,
-					},
-				}),
-			})
-
-			if (!response.ok) {
-				const errText = await response.text()
-				throw new Error(`HTTP ${response.status} ${response.statusText}: ${errText}`)
-			}
-
-			const data = await response.json()
-			const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text
-			if (!rawText) {
-				throw new Error('Empty response from Gemini API')
-			}
-
-			return JSON.parse(rawText)
-		}
-		catch (err) {
-			console.warn(`[Gemini] Attempt failed with ${model}: ${err.message}`)
-			lastError = err
-			// Beri jeda 2 detik jika terjadi spike sebelum mencoba model fallback berikutnya
-			await new Promise(r => setTimeout(r, 2000))
-		}
-	}
-
-	throw lastError || new Error('All Gemini models failed.')
+	return { ...parseJson(meta.text), body_id: bodyId, body_en: bodyEn }
 }
 
 /**
@@ -776,12 +868,43 @@ function ensureCoverImage(imageSlug, category) {
 }
 
 /**
- * 6. Generate a topic-specific Swiss cover (Cloudflare Workers AI, then Gemini).
- * Returns true on success; caller falls back to ensureCoverImage() on false.
+ * 6. Cover ilustrasi editorial: Nano Banana Pro (2K) dengan pemeriksaan otomatis oleh model vision,
+ * lalu Nano Banana 2.1, lalu Cloudflare FLUX (gratis). Mengembalikan true bila cover tertulis;
+ * pemanggil memakai ensureCoverImage() bila false.
  */
-async function generateCoverImage(apiKey, metaphor, imageSlug) {
+function coverPrompt(brief, feedback) {
+	return `Editorial flat vector illustration for a blog article cover. Scene: ${brief}
+
+Style: clean modern flat 2D vector illustration with confident dark forest green #134e43 outlines and solid fills, in the discipline of the International Typographic Style. One clear focal subject placed on a golden-ratio point, asymmetric but balanced layout, generous calm negative space. Palette only: pale mint background #f0fdfa, vivid teal #14b898 for the focal accents, soft mint #99f6e4 and emerald #0d947a as secondary colors, #134e43 for outlines and dark shapes, white highlights. No gradients, no drop shadows, no photorealism, no 3D render.
+Screens, papers, cards and signs show simple placeholder bars, lines and icons only: absolutely no readable or fake text, no letters, no numbers, no logos, no watermark. Wide 16:9 composition.${feedback ? `\n\nFix these problems from the previous attempt: ${feedback}` : ''}`
+}
+
+async function reviewCover(apiKey, models, ledger, { imageData, imageMime }, brief) {
+	try {
+		const review = await generate(models.utility, {
+			apiKey,
+			ledger,
+			stage: 'cover-review',
+			json: true,
+			parts: [
+				{ inlineData: { mimeType: imageMime || 'image/png', data: imageData } },
+				{ text: `You review blog cover illustrations. Intended scene: "${brief}".
+Reject only for real problems: garbled or fake text/letters, distorted objects or anatomy, off-brand colors (not mint/teal/forest green), scene clearly unrelated to the brief, or cluttered composition.
+Return JSON: {"ok": boolean, "issues": "short English list of problems, empty if ok"}` },
+			],
+		})
+		return parseJson(review.text)
+	}
+	catch (err) {
+		// Pemeriksa gagal bukan alasan membuang gambar yang sudah dibayar
+		console.warn(`[Image] Review skipped: ${err.message}`)
+		return { ok: true, issues: '' }
+	}
+}
+
+async function generateCoverImage(apiKey, { brief, ledger, profile }, imageSlug) {
 	const targetFile = path.join(PUBLIC_ARTICLE_DIR, `${imageSlug}.webp`)
-	if (!metaphor || fs.existsSync(targetFile))
+	if (!brief || fs.existsSync(targetFile))
 		return fs.existsSync(targetFile)
 
 	let sharp
@@ -793,18 +916,56 @@ async function generateCoverImage(apiKey, metaphor, imageSlug) {
 		return false
 	}
 
-	// Master prompt for clean modern editorial vector illustration matching the site's brand
-	const prompt = `A clean modern editorial vector illustration representing ${metaphor}. Minimalist flat 2D vector style, bold crisp outlines in dark forest green #134e43, pale mint background #f0fdfa, brand color accents in vivid teal #14b898, soft mint #99f6e4, and deep emerald #0d947a. Professional tech and design studio aesthetic, friendly and clean, balanced asymmetric layout, 16:9 aspect ratio, clean solid fills, no realistic photos, no messy text, no watermark.`
+	const writeCover = async (b64) => {
+		fs.mkdirSync(PUBLIC_ARTICLE_DIR, { recursive: true })
+		await sharp(Buffer.from(b64, 'base64'))
+			.resize(1600, 900, { fit: 'cover' })
+			.webp({ quality: 86 })
+			.toFile(targetFile)
+		console.log(`[Image] AI cover written: ${targetFile}`)
+		return true
+	}
 
-	// Each provider resolves to a base64 image. Cloudflare Workers AI first (free 10k neurons/day,
-	// ~210 neurons per 1600x896 cover), Gemini image models as paid fallback.
-	const providers = []
+	// Gemini image: maks 2 percobaan; percobaan kedua membawa catatan perbaikan dari pemeriksa
+	let feedback = ''
+	let lastImage = null
+	for (let attempt = 1; attempt <= 2; attempt++) {
+		try {
+			console.log(`[Image] Generating cover (attempt ${attempt})...`)
+			const result = await generate(profile.models.image, {
+				apiKey,
+				ledger,
+				stage: `cover-${attempt}`,
+				prompt: coverPrompt(brief, feedback),
+				image: { aspectRatio: '16:9', imageSize: '2K' },
+				timeoutMs: 180000,
+			})
+			if (!result.imageData)
+				throw new Error('No image in response')
+			lastImage = result.imageData
+			const review = await reviewCover(apiKey, profile.models, ledger, result, brief)
+			if (review.ok)
+				return writeCover(result.imageData)
+			feedback = review.issues
+			console.warn(`[Image] Review rejected cover: ${feedback}`)
+		}
+		catch (err) {
+			console.warn(`[Image] Gemini image failed: ${err.message}`)
+			break
+		}
+	}
+	// Dua percobaan ditolak pemeriksa: pakai yang terakhir daripada membuang gambar berbayar
+	if (lastImage)
+		return writeCover(lastImage)
+
+	// Cadangan gratis: Cloudflare Workers AI FLUX
 	const { CLOUDFLARE_ACCOUNT_ID: cfAccount, CLOUDFLARE_API_TOKEN: cfToken } = process.env
 	if (cfAccount && cfToken) {
 		const model = process.env.CF_IMAGE_MODEL || '@cf/black-forest-labs/flux-2-klein-4b'
-		providers.push({ name: model, run: async () => {
+		try {
+			console.log(`[Image] Requesting cover from ${model}...`)
 			const form = new FormData()
-			form.append('prompt', prompt)
+			form.append('prompt', coverPrompt(brief))
 			form.append('width', '1600')
 			form.append('height', '896')
 			const response = await fetch(`https://api.cloudflare.com/client/v4/accounts/${cfAccount}/ai/run/${model}`, {
@@ -815,44 +976,12 @@ async function generateCoverImage(apiKey, metaphor, imageSlug) {
 			})
 			if (!response.ok)
 				throw new Error(`HTTP ${response.status}: ${(await response.text()).slice(0, 300)}`)
-			return (await response.json()).result?.image
-		} })
-	}
-	for (const model of [process.env.GEMINI_IMAGE_MODEL || 'gemini-3.1-flash-image', 'gemini-2.5-flash-image']) {
-		providers.push({ name: model, run: async () => {
-			const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
-				body: JSON.stringify({
-					contents: [{ role: 'user', parts: [{ text: prompt }] }],
-					generationConfig: { responseModalities: ['IMAGE'], imageConfig: { aspectRatio: '16:9' } },
-				}),
-				signal: AbortSignal.timeout(120000),
-			})
-			if (!response.ok)
-				throw new Error(`HTTP ${response.status}: ${(await response.text()).slice(0, 300)}`)
-			const data = await response.json()
-			return data.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data
-		} })
-	}
-
-	for (const { name, run } of providers) {
-		try {
-			console.log(`[Image] Requesting cover from ${name}...`)
-			const b64 = await run()
-			if (!b64)
-				throw new Error('No image in response')
-
-			fs.mkdirSync(PUBLIC_ARTICLE_DIR, { recursive: true })
-			await sharp(Buffer.from(b64, 'base64'))
-				.resize(1600, 900, { fit: 'cover' })
-				.webp({ quality: 82 })
-				.toFile(targetFile)
-			console.log(`[Image] AI cover written: ${targetFile}`)
-			return true
+			const b64 = (await response.json()).result?.image
+			if (b64)
+				return writeCover(b64)
 		}
 		catch (err) {
-			console.warn(`[Image] ${name} failed: ${err.message}`)
+			console.warn(`[Image] ${model} failed: ${err.message}`)
 		}
 	}
 	return false
@@ -894,6 +1023,9 @@ function sanitizeArticleBody(body) {
 	return result.join('\n').trim()
 }
 
+// Ledger disimpan juga saat gagal, karena panggilan yang sudah terjadi tetap ditagih
+let ledger = null
+
 /**
  * Main execution
  */
@@ -928,11 +1060,15 @@ async function main() {
 		return
 	}
 
+	ledger = createLedger(AI_SPEND_FILE)
+	const profile = chooseProfile(ledger)
+
 	console.log('\nGenerating article content via Gemini API...')
-	const generated = await callGemini(apiKey, {
-		number: info.nextNumber,
+	const generated = await generateArticle(apiKey, {
 		category: info.category,
 		topicData,
+		ledger,
+		profile,
 	})
 
 	const today = new Date().toISOString().split('T')[0]
@@ -950,9 +1086,10 @@ async function main() {
 	const cleanBodyId = sanitizeArticleBody(generated.body_id)
 	const cleanBodyEn = sanitizeArticleBody(generated.body_en)
 
-	// Clean up any leading image markdown tags and normalize /images/ paths generated by the model
-	const sanitizedBodyId = cleanBodyId.replace(/^!\[[^\]]*\]\([^)]+\)\s*/, '').replace(/\/images\//g, '/article/')
-	const sanitizedBodyEn = cleanBodyEn.replace(/^!\[[^\]]*\]\([^)]+\)\s*/, '').replace(/\/images\//g, '/article/')
+	// Clean up any leading image markdown tags and normalize /images/ paths generated by the model.
+	// Em dash dilarang gaya situs; sisa yang lolos dari editor diganti koma.
+	const sanitizedBodyId = cleanBodyId.replace(/^!\[[^\]]*\]\([^)]+\)\s*/, '').replace(/\/images\//g, '/article/').replace(/\s*—\s*/g, ', ')
+	const sanitizedBodyEn = cleanBodyEn.replace(/^!\[[^\]]*\]\([^)]+\)\s*/, '').replace(/\/images\//g, '/article/').replace(/\s*—\s*/g, ', ')
 
 	// Format Indonesian Markdown
 	const idMarkdown = `---
@@ -1005,13 +1142,15 @@ ${sanitizedBodyEn}
 	console.log(`[Success] Written: ${enFilePath}`)
 
 	// Topic-specific AI cover; category fallback only if generation fails
-	if (!await generateCoverImage(apiKey, generated.image_metaphor, imageSlug))
+	if (!await generateCoverImage(apiKey, { brief: generated.image_brief, ledger, profile }, imageSlug))
 		ensureCoverImage(imageSlug, info.category)
 
-	console.log('\n[Complete] Article generation finished successfully.')
+	console.log(`\n[Complete] Article generation finished. Cost this run: $${ledger.runUsd.toFixed(3)} (month: $${ledger.spent.toFixed(2)} of $${AI_MONTHLY_BUDGET_USD})`)
 }
 
-main().catch((err) => {
-	console.error('\n[Error] Auto-generation failed:', err.message)
-	process.exit(1)
-})
+main()
+	.catch((err) => {
+		console.error('\n[Error] Auto-generation failed:', err.message)
+		process.exitCode = 1
+	})
+	.finally(() => ledger?.save(cliTopic || 'auto'))
