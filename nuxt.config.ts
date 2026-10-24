@@ -223,6 +223,7 @@ export default defineNuxtConfig({
 		cloudinaryApiSecret: process.env.NUXT_CLOUDINARY_API_SECRET || '',
 		resendApiKey: process.env.RESEND_API_KEY || '',
 		resendAudienceId: process.env.RESEND_AUDIENCE_ID || '',
+		chatProxySecret: process.env.NUXT_CHAT_PROXY_SECRET || '',
 		public: {
 			googleAnalyticsId: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID || '',
 			fbAppId: process.env.NUXT_PUBLIC_FB_APP_ID || '',
