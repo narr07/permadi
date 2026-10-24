@@ -1,0 +1,17 @@
+name: Auto Reindex Chat Gateway
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'content/**'
+
+jobs:
+  reindex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Reindex on Chat Gateway
+        run: |
+          curl -s -X POST https://8787-agqwzwuabezjc5sxhm4y77kkyy.instabox.tech/admin/reindex \
+            -H "Authorization: Bearer ${{ secrets.CHAT_GATEWAY_ADMIN_TOKEN }}"

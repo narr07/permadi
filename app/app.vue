@@ -91,6 +91,7 @@ defineOgImage('Bento', {
 		</main>
 
 		<AppFooter />
+		<AppChatWidget />
 
 	</div>
 </template>
