@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, defineAsyncComponent, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 
 // Struktur mengikuti komponen chat Nuxt UI (ChatMessages, ChatMessage, ChatTool, ChatReasoning,
 // ChatPrompt, ChatPromptSubmit) seperti dipakai asisten nuxt.com, ditulis ulang dengan UnoCSS
@@ -47,6 +47,10 @@ const scrollRef = ref<HTMLElement | null>(null)
 const contentRef = ref<HTMLElement | null>(null)
 const textareaRef = ref<HTMLTextAreaElement | null>(null)
 const toggleRef = ref<HTMLButtonElement | null>(null)
+
+// Dimuat saat jawaban pertama dirender, agar Comark + rangi tidak membebani muatan awal tiap halaman
+const ChatMarkdown = defineAsyncComponent(() => import('~/components/chat/ChatMarkdown'))
+const streamingCaret = { class: 'inline-block w-2 h-[1em] bg-current align-middle ml-px opacity-70 animate-pulse' }
 
 let nextId = 0
 let abortController: AbortController | null = null
@@ -274,19 +278,6 @@ async function copyMessage(msg: ChatMessage) {
 		}, 2000)
 	}
 	catch {}
-}
-
-// Tautan sumber di domain sendiri dibuka sebagai navigasi internal agar chat tetap terbuka
-function toLinkTarget(url: string) {
-	try {
-		const parsed = new URL(url, window.location.origin)
-		if (parsed.origin === window.location.origin || parsed.hostname.endsWith('permadi.dev'))
-			return { to: `${parsed.pathname}${parsed.hash}`, external: false, label: parsed.pathname }
-		return { to: url, external: true, label: parsed.hostname }
-	}
-	catch {
-		return { to: url, external: true, label: url }
-	}
 }
 
 function formatClock(timestamp?: number | null) {
@@ -630,9 +621,9 @@ async function ask(query: string) {
 												:key="src.url"
 											>
 												<NuxtLink
-													:to="toLinkTarget(src.url).to"
-													:external="toLinkTarget(src.url).external"
-													:target="toLinkTarget(src.url).external ? '_blank' : undefined"
+													:to="resolveChatLink(src.url).to"
+													:external="resolveChatLink(src.url).external"
+													:target="resolveChatLink(src.url).external ? '_blank' : undefined"
 													class="min-w-0 flex items-center gap-2 rounded px-2 py-1.5 text-sm text-slate-700 font-sans transition-colors hover:bg-slate-100 dark:text-slate-300 hover:text-slate-950 focus-visible:outline-2 focus-visible:outline-brand-600 focus-visible:outline-offset--2 focus-visible:outline dark:hover:bg-[#0a3a35] dark:hover:text-slate-50"
 												>
 													<span
@@ -640,7 +631,7 @@ async function ask(query: string) {
 														aria-hidden="true"
 													/>
 													<span class="truncate">{{ src.title }}</span>
-													<span class="ms-auto max-w-[40%] shrink-0 truncate text-xs text-slate-500 font-mono dark:text-slate-400">{{ toLinkTarget(src.url).label }}</span>
+													<span class="ms-auto max-w-[40%] shrink-0 truncate text-xs text-slate-500 font-mono dark:text-slate-400">{{ resolveChatLink(src.url).label }}</span>
 												</NuxtLink>
 											</li>
 										</ul>
@@ -699,24 +690,16 @@ async function ask(query: string) {
 									<span>{{ msg.content }}</span>
 								</p>
 
-								<!-- Root MDC tidak menerima scope id, jadi gaya prose dipasang di pembungkus.
-									prose: false agar tag dirender native, bukan komponen Prose artikel -->
+								<!-- Comark (seperti nuxt.com): aman untuk teks model, paham markdown yang belum lengkap saat streaming -->
 								<div
 									v-else-if="msg.content"
 									class="chat-prose"
 								>
-									<MDC
-										v-slot="{ body, data }"
+									<ChatMarkdown
 										:value="msg.content"
-										:cache-key="`chat-${msg.id}`"
-									>
-										<MDCRenderer
-											:body="body"
-											:data="data"
-											:prose="false"
-											tag="div"
-										/>
-									</MDC>
+										:streaming="isLiveMessage(msg)"
+										:caret="isLiveMessage(msg) ? streamingCaret : false"
+									/>
 								</div>
 
 								<!-- Indikator sebelum langkah pertama tiba -->
@@ -1032,10 +1015,6 @@ async function ask(query: string) {
 	line-height: 1.4;
 }
 
-.chat-prose :deep(a) {
-	--at-apply: text-brand-800 underline underline-offset-2 dark:text-brand-300;
-}
-
 .chat-prose :deep(strong) {
 	--at-apply: font-semibold text-slate-950 dark:text-slate-50;
 }
@@ -1044,24 +1023,24 @@ async function ask(query: string) {
 	--at-apply: rounded bg-slate-100 px-1 py-0.5 text-[0.85em] font-mono dark:bg-[#0a3a35];
 }
 
-.chat-prose :deep(pre) {
-	--at-apply: overflow-x-auto rounded-md bg-slate-100 p-3 text-[0.8125rem] font-mono dark:bg-[#00140f];
-	margin: 0.75em 0;
-}
-
 .chat-prose :deep(blockquote) {
 	--at-apply: border-l-2 border-slate-300 pl-3 text-slate-700 dark:border-[#1b5e52] dark:text-slate-300;
 	margin: 0.6em 0;
 }
 
-.chat-prose :deep(table) {
-	--at-apply: block w-full overflow-x-auto border-collapse text-[0.8125rem];
-	margin: 0.75em 0;
+.chat-prose :deep(hr) {
+	--at-apply: border-slate-200 dark:border-[#134e43];
+	margin: 1em 0;
 }
 
+/* Bingkai tabel ada di ChatProseTable; sel cukup garis pemisah */
 .chat-prose :deep(th),
 .chat-prose :deep(td) {
-	--at-apply: border border-slate-200 px-2.5 py-1.5 text-left align-top dark:border-[#134e43];
+	--at-apply: border-b border-slate-200 px-2.5 py-1.5 text-left align-top dark:border-[#134e43];
+}
+
+.chat-prose :deep(tbody tr:last-child td) {
+	border-bottom: 0;
 }
 
 .chat-prose :deep(th) {

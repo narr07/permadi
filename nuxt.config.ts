@@ -148,13 +148,26 @@ export default defineNuxtConfig({
 				title: 'Halaman Utama & Profil (Bahasa Indonesia)',
 				description: 'Informasi profil, biografi, filosofi desain, dan kontak Dinar Permadi Yusup dalam Bahasa Indonesia.',
 				contentCollection: 'pages_id',
+				// Tentang & Kontak berupa YAML di koleksi terpisah; isinya ditulis ke llms-full.txt oleh server/plugins/llms-profile.ts
+				links: [
+					{ title: 'Tentang Dinar Permadi Yusup', description: 'Profil, latar belakang, toolkit, dan prinsip kerja.', href: 'https://permadi.dev/id/tentang' },
+					{ title: 'Kontak & Kolaborasi', description: 'Email, status ketersediaan, dan media sosial.', href: 'https://permadi.dev/id/kontak' },
+				],
 			},
 			{
 				title: 'Main Pages & Profile (English)',
 				description: 'Profile information, biography, design philosophy, and contact details in English.',
 				contentCollection: 'pages_en',
+				links: [
+					{ title: 'About Dinar Permadi Yusup', description: 'Profile, background, toolkit, and working principles.', href: 'https://permadi.dev/about' },
+					{ title: 'Contact & Collaboration', description: 'Email, availability, and social profiles.', href: 'https://permadi.dev/contact' },
+				],
 			},
 		],
+		full: {
+			title: 'Dinar Permadi Yusup | Permadi: isi lengkap',
+			description: 'Isi lengkap artikel blog, studi kasus projek, serta profil dan kontak Dinar Permadi Yusup dalam Bahasa Indonesia dan English.',
+		},
 	},
 
 	fonts: {
@@ -584,6 +597,12 @@ export default defineNuxtConfig({
 				/[\\/]node_modules[\\/]nuxt[\\/]dist[\\/]/,
 				/[\\/]node_modules[\\/]@nuxt[\\/]nitro-server[\\/]dist[\\/]/,
 			],
+		},
+	},
+	vite: {
+		optimizeDeps: {
+			// Renderer chat dimuat lazy; tanpa pre-bundle, Vite dev me-reload halaman saat jawaban pertama
+			include: ['@comark/vue', 'comark/plugins/rangi', 'comark/plugins/security'],
 		},
 	},
 	devtools: { enabled: true },
