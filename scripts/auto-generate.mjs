@@ -14,12 +14,16 @@
  *   node scripts/auto-generate.mjs --dry-run
  *   node scripts/auto-generate.mjs --category tech
  *   node scripts/auto-generate.mjs --topic "Panduan Nuxt 4 Server Components"
+ *   node scripts/auto-generate.mjs --topic-only   (hanya pilih topik: Search Console/Trends/GKP)
  */
 
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createLedger, generate, parseJson } from './lib/gemini.mjs'
+import { loadServiceAccount } from './lib/google-auth.mjs'
+import { fetchRisingTerms } from './lib/google-trends.mjs'
+import { fetchSearchOpportunities } from './lib/search-console.mjs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -55,12 +59,15 @@ const CONTENT_EN_DIR = path.join(rootDir, 'content', 'en', 'blog')
 const PUBLIC_ARTICLE_DIR = path.join(rootDir, 'public', 'article')
 const DATA_DIR = path.join(rootDir, 'data')
 const AI_SPEND_FILE = path.join(DATA_DIR, 'ai-spend.json')
+const SEO_REFRESH_FILE = path.join(DATA_DIR, 'seo-refresh.json')
 
 const CATEGORIES = ['edu', 'art', 'tech']
 
 // Parse CLI flags
 const args = process.argv.slice(2)
 const isDryRun = args.includes('--dry-run')
+// Hanya jalankan pemilihan topik (Search Console/Trends/GKP), tanpa menulis artikel
+const isTopicOnly = args.includes('--topic-only')
 const categoryArgIdx = args.indexOf('--category')
 const cliCategory = categoryArgIdx !== -1 ? args[categoryArgIdx + 1] : process.env.OVERRIDE_CATEGORY
 const topicArgIdx = args.indexOf('--topic')
@@ -229,6 +236,13 @@ const TOPIC_SEEDS = {
 		'Integrasi Database SQLite Drizzle ORM pada Lingkungan Edge Worker Tanpa Server',
 		'Mengamankan Aplikasi Web Edge dari Bot dan Serangan DDoS dengan Cloudflare Turnstile',
 	],
+}
+
+// Batasan isi per pilar, dipakai pemilih topik dan penulis artikel
+const CATEGORY_GUIDELINES = {
+	edu: 'Pilar Edukasi & Pedagogi: Kurikulum Merdeka (Deep Learning, Capaian Pembelajaran CP/TP, Modul Ajar, P5), model pembelajaran inovatif (PBL, PjBL, Discovery, Inquiry, Accelerated Learning, Flipped Classroom), teori belajar (Konstruktivisme, Kognitif, Vygotsky, Taksonomi Bloom), asesmen autentik (diagnostik, formatif, sumatif), pembelajaran berdiferensiasi (konten, proses, produk), manajemen kelas, dan media ajar interaktif. DILARANG membahas gosip dinas/sekolah, berita politik/gaji/tunjangan, atau lowongan kerja.',
+	art: 'Pilar Desain & Seni: Teori warna (HSL, palet harmonik, kontras, psikologi warna), teori desain (Gestalt, Golden Ratio 1.618, hierarki visual, whitespace, keterbacaan), design trends terkini (Bento Grid, Swiss Style, Neo-brutalism, minimalis), tipografi web & font pairing, sistem grid modular, aksesibilitas WCAG, serta UI/UX design. DILARANG membahas karya seni abstrak non-aplikatif, gosip desainer, atau clickbait.',
+	tech: 'Pilar Teknologi & Rekayasa Perangkat Lunak: Nuxt/Vue, Flutter & Dart, Python automation/scripting, Rust & Tauri (aplikasi desktop modern), Cloudflare Workers, Edge Computing, Core Web Vitals, atau TypeScript. DILARANG membahas berita kripto, gosip gadget konsumsi, atau berita clickbait.',
 }
 
 // Category fallback cover image mapping
@@ -533,15 +547,119 @@ async function fetchTargetedTrends(category) {
 }
 
 /**
- * 7. Resolve Final Verified Topic (GKP + Trends Hybrid Engine)
+ * Artikel lama yang kata kuncinya hampir masuk halaman 1, dikumpulkan per halaman di
+ * data/seo-refresh.json (di-commit bersama artikel) sebagai daftar kerja pembaruan artikel.
  */
-async function getTopicForCategory(category, customTopic) {
+function saveRefreshCandidates(refresh, opportunities) {
+	let data = {}
+	try {
+		data = JSON.parse(fs.readFileSync(SEO_REFRESH_FILE, 'utf8'))
+	}
+	catch {}
+	const today = new Date().toISOString().slice(0, 10)
+	for (const { page, query } of refresh) {
+		const stats = opportunities.find(o => o.query === query && o.page === page)
+		if (!page || !query)
+			continue
+		data[page] ||= { queries: {} }
+		data[page].queries[query] = { position: stats?.position ?? null, impressions: stats?.impressions ?? null, seen: today }
+		data[page].updated = today
+	}
+	fs.writeFileSync(SEO_REFRESH_FILE, `${JSON.stringify(data, null, 2)}\n`)
+}
+
+/**
+ * 7a. Topik berbasis data: kueri Search Console di halaman 2 Google (posisi 8–20) dan istilah yang
+ * sedang naik di Google Trends Indonesia (BigQuery). Flash memilih satu yang cocok dengan pilar dan
+ * belum punya artikel sendiri, supaya artikel baru tidak berebut kata kunci dengan artikel lama.
+ */
+async function pickDataDrivenTopic(apiKey, category, { ledger, profile }) {
+	const account = loadServiceAccount()
+	if (!account || !apiKey)
+		return null
+
+	// Situs masih muda (data Search Console tipis): ambang longgar, posisi 5–40 dengan ≥2 tayangan.
+	// Perketat ke posisi 8–20 / ≥10 tayangan setelah trafik bertambah.
+	const [sc, trends] = await Promise.allSettled([
+		fetchSearchOpportunities(account, { minImpressions: 2, minPosition: 5, maxPosition: 40, hostname: 'permadi.dev' }),
+		fetchRisingTerms(account, { country: 'ID' }),
+	])
+	if (sc.status === 'rejected')
+		console.warn(`[SearchConsole] ${sc.reason.message}`)
+	if (trends.status === 'rejected')
+		console.warn(`[Trends] ${trends.reason.message}`)
+	const opportunities = sc.status === 'fulfilled' ? sc.value.opportunities.slice(0, 60) : []
+	const rising = trends.status === 'fulfilled' ? trends.value : []
+	console.log(`[Data] ${opportunities.length} Search Console opportunities, ${rising.length} rising terms`)
+	if (!opportunities.length && !rising.length)
+		return null
+
+	const articles = getInternalLinkCatalog().map(a => `- ${a.title} (${a.url})`).join('\n')
+	const pick = await generate(profile.models.utility, {
+		apiKey,
+		ledger,
+		stage: 'topic-pick',
+		json: true,
+		prompt: `Anda redaktur permadi.dev. Pilih SATU topik artikel baru untuk pilar "${category}": ${CATEGORY_GUIDELINES[category]}
+
+DATA A, Search Console permadi.dev (kueri yang sudah memberi tayangan; posisi rata-rata 5–40, makin kecil makin dekat halaman 1):
+${opportunities.map(o => `- "${o.query}" | posisi ${o.position} | ${o.impressions} tayangan | halaman: ${o.page}`).join('\n') || '(kosong)'}
+
+DATA B, Google Trends Indonesia (istilah yang sedang naik minggu ini):
+${rising.map(t => `- ${t.term}`).join('\n') || '(kosong)'}
+
+ARTIKEL YANG SUDAH ADA:
+${articles}
+
+Aturan:
+1. Prioritaskan DATA A: kueri yang relevan dengan pilar dan BELUM dibahas khusus oleh artikel yang ada.
+2. Jika halaman yang tampil untuk sebuah kueri memang artikel yang membahas kueri itu, JANGAN jadikan topik baru (kanibalisasi); masukkan ke "refresh".
+3. DATA B hanya dipakai bila istilahnya jelas relevan dengan pilar. Abaikan berita, selebritas, olahraga, politik, dan produk konsumen.
+4. Bila tidak ada yang layak, isi "topic" dengan null.
+
+Kembalikan JSON:
+{"topic": "topik artikel dalam Bahasa Indonesia, atau null", "primary_keyword": "kata kunci utama dalam bentuk wajar", "secondary_keywords": ["2-4 kata kunci pendukung"], "source": "search-console atau google-trends", "reason": "alasan singkat", "refresh": [{"query": "kueri", "page": "url halaman", "position": 0}]}`,
+	})
+
+	const choice = parseJson(pick.text)
+	if (choice.refresh?.length) {
+		console.log(`[SearchConsole] Existing articles worth refreshing:\n${choice.refresh.map(r => `  - ${r.page} for "${r.query}" (position ${r.position})`).join('\n')}`)
+		saveRefreshCandidates(choice.refresh, opportunities)
+	}
+	if (!choice.topic) {
+		console.log(`[Data] No data-driven topic for ${category}: ${choice.reason}`)
+		return null
+	}
+	return {
+		topic: choice.topic,
+		primaryKeyword: choice.primary_keyword || choice.topic,
+		secondaryKeywords: choice.secondary_keywords || [],
+		source: `${choice.source}: ${choice.reason}`,
+	}
+}
+
+/**
+ * 7. Resolve Final Verified Topic (Search Console/Trends → GKP → Suggest → curated)
+ */
+async function getTopicForCategory(category, customTopic, ai) {
 	if (customTopic && customTopic.trim().length > 0) {
 		return {
 			topic: customTopic.trim(),
 			primaryKeyword: customTopic.trim(),
 			secondaryKeywords: [],
 			source: 'custom',
+		}
+	}
+
+	// 0. Data milik situs sendiri (Search Console) dan tren Indonesia, bila service account tersedia
+	if (ai) {
+		try {
+			const dataTopic = await pickDataDrivenTopic(ai.apiKey, category, ai)
+			if (dataTopic)
+				return dataTopic
+		}
+		catch (err) {
+			console.warn(`[Data] Data-driven topic failed, falling back to GKP: ${err.message}`)
 		}
 	}
 
@@ -622,12 +740,6 @@ function chooseProfile(ledger) {
 	const name = remaining >= PREMIUM_ARTICLE_USD ? 'premium' : 'economy'
 	console.log(`[Budget] ${ledger.month}: $${ledger.spent.toFixed(2)} of $${AI_MONTHLY_BUDGET_USD} spent → profile "${name}"`)
 	return { name, models: MODEL_PROFILES[name] }
-}
-
-const CATEGORY_GUIDELINES = {
-	edu: 'Pilar Edukasi & Pedagogi: Kurikulum Merdeka (Deep Learning, Capaian Pembelajaran CP/TP, Modul Ajar, P5), model pembelajaran inovatif (PBL, PjBL, Discovery, Inquiry, Accelerated Learning, Flipped Classroom), teori belajar (Konstruktivisme, Kognitif, Vygotsky, Taksonomi Bloom), asesmen autentik (diagnostik, formatif, sumatif), pembelajaran berdiferensiasi (konten, proses, produk), manajemen kelas, dan media ajar interaktif. DILARANG membahas gosip dinas/sekolah, berita politik/gaji/tunjangan, atau lowongan kerja.',
-	art: 'Pilar Desain & Seni: Teori warna (HSL, palet harmonik, kontras, psikologi warna), teori desain (Gestalt, Golden Ratio 1.618, hierarki visual, whitespace, keterbacaan), design trends terkini (Bento Grid, Swiss Style, Neo-brutalism, minimalis), tipografi web & font pairing, sistem grid modular, aksesibilitas WCAG, serta UI/UX design. DILARANG membahas karya seni abstrak non-aplikatif, gosip desainer, atau clickbait.',
-	tech: 'Pilar Teknologi & Rekayasa Perangkat Lunak: Nuxt/Vue, Flutter & Dart, Python automation/scripting, Rust & Tauri (aplikasi desktop modern), Cloudflare Workers, Edge Computing, Core Web Vitals, atau TypeScript. DILARANG membahas berita kripto, gosip gadget konsumsi, atau berita clickbait.',
 }
 
 const AUTHOR = `Anda adalah Dinar Permadi Yusup: guru SD di Majalengka, desainer visual, dan web developer Indonesia. Anda menulis untuk blog pribadi permadi.dev (Nuxt Content). Pembaca Anda guru, desainer, dan developer yang ingin jawaban praktis dari praktisi, bukan rangkuman generik.`
@@ -1042,7 +1154,12 @@ async function main() {
 	console.log(`Next Article Number: #${info.nextNumber}`)
 	console.log(`Selected Pillar Category: [${info.category.toUpperCase()}] (Previous: ${info.lastCategory})`)
 
-	const topicData = await getTopicForCategory(info.category, cliTopic)
+	if (apiKey) {
+		ledger = createLedger(AI_SPEND_FILE)
+	}
+	const profile = ledger ? chooseProfile(ledger) : null
+
+	const topicData = await getTopicForCategory(info.category, cliTopic, apiKey ? { apiKey, ledger, profile } : null)
 	console.log(`Target Topic: "${topicData.topic}"`)
 	console.log(`Primary Keyword: "${topicData.primaryKeyword}"`)
 	if (topicData.secondaryKeywords && topicData.secondaryKeywords.length > 0) {
@@ -1053,15 +1170,15 @@ async function main() {
 	}
 	console.log(`Discovery Source: ${topicData.source}`)
 
+	if (isTopicOnly)
+		return
+
 	if (isDryRun && !apiKey) {
 		console.log('\n[Dry-Run Notice] No GEMINI_API_KEY detected. Calculation & guardrail verified successfully.')
 		console.log(`Planned ID File: content/id/blog/${info.nextNumber}.<slug-id>.md`)
 		console.log(`Planned EN File: content/en/blog/${info.nextNumber}.<slug-en>.md`)
 		return
 	}
-
-	ledger = createLedger(AI_SPEND_FILE)
-	const profile = chooseProfile(ledger)
 
 	console.log('\nGenerating article content via Gemini API...')
 	const generated = await generateArticle(apiKey, {
