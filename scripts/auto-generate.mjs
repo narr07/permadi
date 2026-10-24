@@ -15,6 +15,7 @@
  *   node scripts/auto-generate.mjs --category tech
  *   node scripts/auto-generate.mjs --topic "Panduan Nuxt 4 Server Components"
  *   node scripts/auto-generate.mjs --topic-only   (hanya pilih topik: Search Console/Trends/GKP)
+ *   node scripts/auto-generate.mjs --refresh 9    (tulis ulang artikel #9 atau --refresh <slug>)
  */
 
 import fs from 'node:fs'
@@ -72,6 +73,9 @@ const categoryArgIdx = args.indexOf('--category')
 const cliCategory = categoryArgIdx !== -1 ? args[categoryArgIdx + 1] : process.env.OVERRIDE_CATEGORY
 const topicArgIdx = args.indexOf('--topic')
 const cliTopic = topicArgIdx !== -1 ? args[topicArgIdx + 1] : process.env.OVERRIDE_TOPIC
+// Tulis ulang artikel yang sudah terbit (nomor atau slug ID/EN); URL, nomor, dan tanggal tetap
+const refreshArgIdx = args.indexOf('--refresh')
+const cliRefresh = refreshArgIdx !== -1 ? args[refreshArgIdx + 1] : process.env.REFRESH_ARTICLE
 
 // Kata kunci jangkar pilar situs untuk pencarian tren terarah di Google
 const CATEGORY_ANCHORS = {
@@ -820,20 +824,79 @@ function getInternalLinkCatalog() {
 	return [...id.entries()].map(([num, a]) => ({ title: a.title, url: a.url, en: en.get(num) }))
 }
 
-async function generateArticle(apiKey, { category, topicData, ledger, profile }) {
+/**
+ * Artikel yang sudah terbit untuk ditulis ulang (--refresh <nomor|slug>): pasangan file ID & EN
+ * bernomor sama, isi lama, dan kueri Search Console yang diincar (dari data/seo-refresh.json).
+ */
+function loadArticleForRefresh(ref) {
+	const listMd = dir => fs.readdirSync(dir).filter(f => /^\d+\..+\.md$/.test(f))
+	const slugOf = file => file.replace(/^\d+\./, '').replace(/\.md$/, '')
+	const match = file => file.split('.')[0] === String(ref) || slugOf(file) === ref
+	const number = (listMd(CONTENT_ID_DIR).find(match) || listMd(CONTENT_EN_DIR).find(match))?.split('.')[0]
+	const idFile = number && listMd(CONTENT_ID_DIR).find(f => f.startsWith(`${number}.`))
+	const enFile = number && listMd(CONTENT_EN_DIR).find(f => f.startsWith(`${number}.`))
+	if (!idFile || !enFile)
+		throw new Error(`Article "${ref}" not found in both content/id/blog and content/en/blog`)
+
+	const raw = fs.readFileSync(path.join(CONTENT_ID_DIR, idFile), 'utf8')
+	const readField = (text, name) => {
+		const frontmatter = text.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] || ''
+		return (frontmatter.split(/\r?\n/).find(l => l.startsWith(`${name}:`)) || '').slice(name.length + 1).trim().replace(/^["']|["']$/g, '')
+	}
+	const field = name => readField(raw, name)
+	const body = raw.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '').trim()
+	const cover = body.match(/^!\[[^\]]*\]\(\/article\/([^)]+)\.webp\)/)?.[1]
+
+	const slugId = slugOf(idFile)
+	const slugEn = slugOf(enFile)
+	const queries = []
+	try {
+		const refresh = JSON.parse(fs.readFileSync(SEO_REFRESH_FILE, 'utf8'))
+		for (const url of [`https://permadi.dev/id/blog/${slugId}`, `https://permadi.dev/blog/${slugEn}`]) {
+			for (const [query, stats] of Object.entries(refresh[url]?.queries || {}))
+				queries.push({ query, ...stats })
+		}
+	}
+	catch {}
+	queries.sort((a, b) => (b.impressions || 0) - (a.impressions || 0))
+
+	return {
+		number,
+		idFile,
+		enFile,
+		slugId,
+		slugEn,
+		// Judul lama dipertahankan: judul itulah yang sudah membawa tayangan di Google
+		title: field('title'),
+		titleEn: readField(fs.readFileSync(path.join(CONTENT_EN_DIR, enFile), 'utf8'), 'title'),
+		category: field('category'),
+		date: field('date'),
+		// Gambar lama dibuang agar tidak terbawa ke artikel baru (cover baru dibuat terpisah)
+		body: body.replace(/!\[[^\]]*\]\([^)]+\)\s*/g, ''),
+		// Nama file cover baru (bukan menimpa) agar cache CDN tidak menahan gambar lama
+		imageSlug: `${cover || `${field('category')}-${slugId}`}-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}`,
+		queries,
+	}
+}
+
+async function generateArticle(apiKey, { category, topicData, ledger, profile, rewrite }) {
 	const today = new Date().toISOString().split('T')[0]
 	const { topic, primaryKeyword } = topicData
 	// Data GKP kadang memuat frasa tanpa huruf (mis. "= 1.61803399"); buang sebelum masuk prompt
 	const secondaryKeywords = (topicData.secondaryKeywords || []).filter(k => /\p{L}{3}/u.test(k))
 	const { models } = profile
-	const links = getInternalLinkCatalog()
+	// Saat menulis ulang, artikel itu sendiri tidak ikut ditawarkan sebagai tautan internal
+	const links = getInternalLinkCatalog().filter(l => !rewrite || l.url !== `/id/blog/${rewrite.slugId}`)
 	const linkListId = links.map(l => `- ${l.title}: ${l.url}`).join('\n')
 	const linkMapEn = links.filter(l => l.en).map(l => `- ${l.url} → ${l.en.url} (${l.en.title})`).join('\n')
+	const targetQueries = rewrite?.queries?.length
+		? `\nKueri Google yang sudah menampilkan artikel ini (posisi rata-rata dalam kurung), harus terjawab tuntas: ${rewrite.queries.map(q => `"${q.query}" (${q.position})`).join(', ')}`
+		: ''
 	const brief = `Topik acuan: "${topic}"
 Kategori: ${category} (${CATEGORY_GUIDELINES[category]})
 Primary keyword: "${primaryKeyword}"
 Secondary keywords: ${secondaryKeywords.join(', ') || 'sesuaikan dengan topik'}
-Tanggal terbit: ${today}`
+Tanggal terbit: ${rewrite?.date || today}${rewrite ? `\nMODE TULIS ULANG: artikel ini sudah terbit dengan URL tetap; tujuannya naik ke halaman 1 Google.${targetQueries}` : ''}`
 
 	// Tahap 1: riset berbasis Google Search agar fakta & data terkini, bukan dari ingatan model
 	console.log('\n[Pipeline 1/5] Research with Google Search grounding...')
@@ -865,7 +928,7 @@ Jangan mengarang. Tandai informasi yang tidak pasti dengan "(belum pasti)".`,
 
 CATATAN RISET:
 ${research.text}
-
+${rewrite ? `\nARTIKEL LAMA (pertahankan informasi yang benar dan berguna, buang yang lemah atau keliru, perbaiki struktur dan gaya, isi celah yang ditemukan riset, dan jawab kueri target di paragraf awal serta subjudul):\n${rewrite.body}\n` : ''}
 ARTIKEL LAIN DI SITUS (tautkan 2–3 yang benar-benar relevan dengan format [teks jangkar](url), di tempat yang wajar):
 ${linkListId}
 
@@ -1150,8 +1213,11 @@ async function main() {
 		process.exit(1)
 	}
 
-	const info = getNextArticleInfo(cliCategory)
-	console.log(`Next Article Number: #${info.nextNumber}`)
+	const refreshTarget = cliRefresh ? loadArticleForRefresh(cliRefresh) : null
+	const info = refreshTarget
+		? { nextNumber: refreshTarget.number, category: refreshTarget.category, lastCategory: '-' }
+		: getNextArticleInfo(cliCategory)
+	console.log(refreshTarget ? `Refreshing Article: #${info.nextNumber} (${refreshTarget.idFile})` : `Next Article Number: #${info.nextNumber}`)
 	console.log(`Selected Pillar Category: [${info.category.toUpperCase()}] (Previous: ${info.lastCategory})`)
 
 	if (apiKey) {
@@ -1159,7 +1225,14 @@ async function main() {
 	}
 	const profile = ledger ? chooseProfile(ledger) : null
 
-	const topicData = await getTopicForCategory(info.category, cliTopic, apiKey ? { apiKey, ledger, profile } : null)
+	const topicData = refreshTarget
+		? {
+				topic: refreshTarget.title,
+				primaryKeyword: refreshTarget.queries[0]?.query || refreshTarget.title,
+				secondaryKeywords: refreshTarget.queries.slice(1, 5).map(q => q.query),
+				source: `refresh (${refreshTarget.queries.length} Search Console queries)`,
+			}
+		: await getTopicForCategory(info.category, cliTopic, apiKey ? { apiKey, ledger, profile } : null)
 	console.log(`Target Topic: "${topicData.topic}"`)
 	console.log(`Primary Keyword: "${topicData.primaryKeyword}"`)
 	if (topicData.secondaryKeywords && topicData.secondaryKeywords.length > 0) {
@@ -1186,12 +1259,18 @@ async function main() {
 		topicData,
 		ledger,
 		profile,
+		rewrite: refreshTarget,
 	})
 
-	const today = new Date().toISOString().split('T')[0]
-	const cleanSlugId = (generated.slug_id || 'artikel').replace(/^\d+\./, '').toLowerCase().trim()
-	const cleanSlugEn = (generated.slug_en || 'article').replace(/^\d+\./, '').toLowerCase().trim()
-	const imageSlug = (generated.slug_image || cleanSlugId).replace(/\.webp$/, '').toLowerCase().trim()
+	// Tulis ulang: slug, nomor file, dan tanggal terbit tetap supaya URL dan peringkat tidak berubah
+	const today = refreshTarget?.date || new Date().toISOString().split('T')[0]
+	const cleanSlugId = refreshTarget?.slugId || (generated.slug_id || 'artikel').replace(/^\d+\./, '').toLowerCase().trim()
+	const cleanSlugEn = refreshTarget?.slugEn || (generated.slug_en || 'article').replace(/^\d+\./, '').toLowerCase().trim()
+	const imageSlug = refreshTarget?.imageSlug || (generated.slug_image || cleanSlugId).replace(/\.webp$/, '').toLowerCase().trim()
+	if (refreshTarget) {
+		generated.title_id = refreshTarget.title || generated.title_id
+		generated.title_en = refreshTarget.titleEn || generated.title_en
+	}
 
 	const idFileName = `${info.nextNumber}.${cleanSlugId}.md`
 	const enFileName = `${info.nextNumber}.${cleanSlugEn}.md`
@@ -1270,4 +1349,4 @@ main()
 		console.error('\n[Error] Auto-generation failed:', err.message)
 		process.exitCode = 1
 	})
-	.finally(() => ledger?.save(cliTopic || 'auto'))
+	.finally(() => ledger?.save(cliRefresh ? `refresh:${cliRefresh}` : cliTopic || 'auto'))
