@@ -38,8 +38,7 @@ function getFilterLabel(key: string): string {
 const route = useRoute()
 const router = useRouter()
 
-// Pagination: 7 projects per page (1 lead + 6 grid)
-const projectsPerPage = 7
+const filterOptions = computed(() => projectCategories.map(key => ({ value: key, label: getFilterLabel(key) })))
 
 const currentPage = computed(() => {
 	const p = Number(route.query.page)
@@ -81,28 +80,22 @@ const filteredProjects = computed(() => {
 		})
 })
 
-const totalPages = computed(() => {
-	return Math.ceil(filteredProjects.value.length / projectsPerPage) || 1
-})
+// Halaman 1 tanpa filter: 1 projek unggulan + 6 kartu; halaman lain: 6 kartu
+const showLead = computed(() => selectedTag.value === 'ALL')
+const { totalPages, lead: leadProject, grid: gridProjects } = useLeadPagination(filteredProjects, currentPage, showLead)
 
-const paginatedProjects = computed(() => {
-	const start = (currentPage.value - 1) * projectsPerPage
-	return filteredProjects.value.slice(start, start + projectsPerPage)
-})
-
-const leadProject = computed(() => {
-	if (currentPage.value === 1 && selectedTag.value === 'ALL' && paginatedProjects.value.length > 0) {
-		return paginatedProjects.value[0]
-	}
-	return null
-})
-
-const gridProjects = computed(() => {
-	if (leadProject.value) {
-		return paginatedProjects.value.slice(1)
-	}
-	return paginatedProjects.value
-})
+// Kartu yang mengisi satu baris penuh beralih ke tata letak horizontal agar gambarnya tidak raksasa
+function projectCardClass(index: number, total: number) {
+	const span = gridCardSpan(index, total)
+	const item = gridProjects.value[index] as any
+	const hasImage = Boolean(item?.image || item?.images?.[0])
+	return [
+		span.md,
+		span.lg,
+		hasImage && span.mdFullRow ? 'wide-md' : '',
+		hasImage && span.lgFullRow ? 'wide-lg' : '',
+	]
+}
 
 function getPaginationUrl(pageNumber: number) {
 	const query: Record<string, any> = { ...route.query }
@@ -141,30 +134,14 @@ defineOgImage('Bento', {
 			</p>
 		</header>
 
-		<!-- Filter Strip -->
-		<nav
-			aria-label="Filter kategori proyek"
-			class="w-full flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 bg-slate-50/60 px-6 py-3.5 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/40 sm:px-8"
+		<AppFilterTabs
+			:options="filterOptions"
+			:model-value="selectedTag"
+			:label="locale === 'id' ? 'Filter kategori projek' : 'Filter project category'"
+			@update:model-value="selectTag"
 		>
-			<div class="flex flex-wrap items-center gap-2">
-				<button
-					v-for="catKey in projectCategories"
-					:key="catKey"
-					type="button"
-					class="cursor-pointer whitespace-nowrap border px-3.5 py-1.5 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95"
-					:class="selectedTag === catKey
-						? 'swiss-filter-active'
-						: 'bg-white dark:bg-[#001e1c] text-slate-800 dark:text-slate-200 border-slate-300 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
-					@click="selectTag(catKey)"
-				>
-					<span>{{ getFilterLabel(catKey) }}</span>
-				</button>
-			</div>
-
-			<span class="text-[11px] text-slate-600 uppercase tabular-nums dark:text-slate-400">
-				{{ $t('projek.showing_count', { count: filteredProjects.length, total: projects?.length || 0 }) }}
-			</span>
-		</nav>
+			{{ $t('projek.showing_count', { count: filteredProjects.length, total: projects?.length || 0 }) }}
+		</AppFilterTabs>
 
 		<!-- Lead Project (first page, all categories) -->
 		<article
@@ -173,7 +150,7 @@ defineOgImage('Bento', {
 		>
 			<div class="grid grid-cols-1 lg:grid-cols-12">
 				<!-- Lead Info (Cols 1 to 5) -->
-				<div class="flex flex-col justify-between border-b border-slate-200/80 p-6 lg:col-span-5 lg:border-b-0 lg:border-r dark:border-[#134e43] lg:p-10 sm:p-8">
+				<div class="flex flex-col justify-between p-6 lg:col-span-5 lg:border-r lg:border-slate-200/80 lg:p-10 sm:p-8 lg:dark:border-[#134e43]">
 					<div>
 						<div class="mb-4 text-[11px] text-slate-600 font-bold tracking-widest font-mono uppercase tabular-nums dark:text-slate-400">
 							{{ getCategoryLabel(leadProject.category) }} · {{ formatDate(leadProject.date) }}
@@ -239,8 +216,8 @@ defineOgImage('Bento', {
 					</div>
 				</div>
 
-				<!-- Lead Media Frame (Cols 6 to 12) -->
-				<div class="flex flex-col justify-center bg-slate-50/40 p-6 lg:col-span-7 dark:bg-[#002420]/20 lg:p-10 sm:p-8">
+				<!-- Lead Media Frame (Cols 6 to 12); di mobile tampil di atas info -->
+				<div class="order-first flex flex-col justify-center border-b border-slate-200/80 bg-slate-50/40 p-6 lg:order-none lg:col-span-7 lg:border-b-0 dark:border-[#134e43] dark:bg-[#002420]/20 lg:p-10 sm:p-8">
 					<div
 						v-if="leadProject.image || (leadProject.images && leadProject.images[0])"
 						class="aspect-video w-full overflow-hidden border border-slate-200/80 dark:border-[#134e43]"
@@ -264,34 +241,30 @@ defineOgImage('Bento', {
 			v-if="gridProjects.length > 0"
 			class="w-full border-b border-slate-200/80 dark:border-[#134e43]"
 		>
-			<div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 divide-y divide-slate-200/80 md:divide-y-0 dark:divide-[#134e43]">
+			<!-- Garis grid dari gap-px di atas latar garis, sehingga tetap rapi berapa pun lebar kartu -->
+			<div class="grid grid-cols-1 gap-px bg-slate-200/80 lg:grid-cols-6 md:grid-cols-4 dark:bg-[#134e43]">
 				<article
 					v-for="(item, idx) in gridProjects"
 					:key="item.url"
-					class="group flex flex-col justify-between p-6 transition-all duration-200 hover:(bg-[#e2f4f0] dark:bg-[#003832]) sm:p-8"
-					:class="[
-						idx % 3 !== 2 ? 'lg:border-r border-slate-200/80 dark:border-[#134e43]' : '',
-						idx % 2 !== 1 ? 'md:border-r lg:border-r-0 border-slate-200/80 dark:border-[#134e43]' : '',
-						idx >= 3 ? 'lg:border-t border-slate-200/80 dark:border-[#134e43]' : '',
-						idx >= 2 ? 'md:border-t lg:border-t-0 border-slate-200/80 dark:border-[#134e43]' : '',
-					]"
+					class="project-card group grid gap-x-8 bg-white p-6 transition-colors duration-200 dark:bg-[#001e1c] hover:(bg-[#e2f4f0] dark:bg-[#003832]) sm:p-8"
+					:class="projectCardClass(idx, gridProjects.length)"
 				>
-					<div>
-						<!-- Thumbnail -->
-						<div
-							v-if="item.image || (item.images && item.images[0])"
-							class="mb-6 aspect-video w-full overflow-hidden border border-slate-200/80 dark:border-[#134e43]"
-						>
-							<NuxtImg
-								:src="item.image || item.images[0]"
-								:alt="item.title"
-								format="webp"
-								quality="80"
-								class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-								loading="lazy"
-							/>
-						</div>
+					<!-- Thumbnail -->
+					<div
+						v-if="item.image || (item.images && item.images[0])"
+						class="project-thumb mb-6 aspect-video w-full overflow-hidden border border-slate-200/80 dark:border-[#134e43]"
+					>
+						<NuxtImg
+							:src="item.image || item.images[0]"
+							:alt="item.title"
+							format="webp"
+							quality="80"
+							class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+							loading="lazy"
+						/>
+					</div>
 
+					<div>
 						<!-- Item Meta -->
 						<div class="mb-3 flex items-center justify-between text-[11px] font-mono">
 							<span class="text-brand-600 font-bold uppercase dark:text-brand-400">
@@ -413,6 +386,36 @@ defineOgImage('Bento', {
 </template>
 
 <style scoped>
+/* Kartu: gambar, teks (mengisi ruang), footer di dasar */
+.project-card {
+	grid-template-rows: auto 1fr auto;
+}
+
+/* Kartu selebar baris: gambar di kiri, teks + footer di kanan */
+@media (min-width: 768px) and (max-width: 1023.98px) {
+	.project-card.wide-md {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr auto;
+	}
+
+	.project-card.wide-md .project-thumb {
+		grid-row: span 2;
+		margin-bottom: 0;
+	}
+}
+
+@media (min-width: 1024px) {
+	.project-card.wide-lg {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr auto;
+	}
+
+	.project-card.wide-lg .project-thumb {
+		grid-row: span 2;
+		margin-bottom: 0;
+	}
+}
+
 .swiss-filter-active {
 	background-color: #001e1c !important;
 	color: #ffffff !important;

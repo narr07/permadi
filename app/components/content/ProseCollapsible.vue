@@ -43,10 +43,15 @@ const isOpen = ref(props.defaultOpen)
 		</button>
 
 		<div
-			v-show="isOpen"
-			class="border-t border-[#115e4f]/15 px-5 pb-5 pt-3 text-sm text-slate-600 leading-relaxed font-sans dark:border-[#134e43]/40 dark:text-slate-300"
+			class="collapse-panel"
+			:data-open="isOpen"
+			:inert="!isOpen"
 		>
-			<slot />
+			<div>
+				<div class="border-t border-[#115e4f]/15 px-5 pb-5 pt-3 text-sm text-slate-600 leading-relaxed font-sans dark:border-[#134e43]/40 dark:text-slate-300">
+					<slot />
+				</div>
+			</div>
 		</div>
 	</div>
 </template>

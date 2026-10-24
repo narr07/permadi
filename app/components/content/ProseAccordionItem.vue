@@ -130,12 +130,17 @@ const resolvedIcon = computed(() => {
 		</button>
 
 		<div
-			v-show="isOpen"
-			class="border-t border-slate-100 px-5 pb-5 pt-3.5 text-sm text-slate-600 leading-relaxed font-sans dark:border-slate-800/70 dark:text-slate-300"
+			class="collapse-panel"
+			:data-open="isOpen"
+			:inert="!isOpen"
 		>
-			<slot>
-				{{ props.description }}
-			</slot>
+			<div>
+				<div class="border-t border-slate-100 px-5 pb-5 pt-3.5 text-sm text-slate-600 leading-relaxed font-sans dark:border-slate-800/70 dark:text-slate-300">
+					<slot>
+						{{ props.description }}
+					</slot>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
