@@ -88,3 +88,8 @@ pdf_out/
 # Python bytecode
 __pycache__/
 *.py[cod]
+
+# File skill alat AI lokal: tetap di disk, tidak ikut repo
+.agents/
+.claude/
+skills-lock.json
