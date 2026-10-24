@@ -1,18 +1,59 @@
 {
   "2026-10": {
-    "usd": 0.4891,
-    "runs": 9,
+    "usd": 0.9469,
+    "runs": 12,
     "last": {
-      "label": "auto",
-      "date": "2026-10-24T20:45:43.079Z",
-      "usd": 0.0107,
+      "label": "refresh:what-is-swiss-style-design",
+      "date": "2026-10-24T22:02:36.464Z",
+      "usd": 0.4474,
       "calls": [
         {
-          "stage": "topic-pick",
+          "stage": "research",
           "model": "gemini-3.8-flash",
-          "usd": 0.0107
+          "provider": "vertex",
+          "usd": 0.0216
+        },
+        {
+          "stage": "draft-id",
+          "model": "gemini-4-argon",
+          "provider": "vertex",
+          "usd": 0.06
+        },
+        {
+          "stage": "edit-id",
+          "model": "gemini-4-argon",
+          "provider": "vertex",
+          "usd": 0.0667
+        },
+        {
+          "stage": "english",
+          "model": "gemini-3.1-pro-preview",
+          "provider": "vertex",
+          "usd": 0.1456
+        },
+        {
+          "stage": "metadata",
+          "model": "gemini-3.8-flash",
+          "provider": "vertex",
+          "usd": 0.0124
+        },
+        {
+          "stage": "cover-1",
+          "model": "gemini-3-pro-image",
+          "provider": "vertex",
+          "usd": 0.1389
+        },
+        {
+          "stage": "cover-review",
+          "model": "gemini-3.8-flash",
+          "provider": "vertex",
+          "usd": 0.0023
         }
       ]
+    },
+    "providers": {
+      "aistudio": 0.4891,
+      "vertex": 0.4578
     }
   }
 }

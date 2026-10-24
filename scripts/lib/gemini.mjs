@@ -6,6 +6,7 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
+import { getAccessToken, loadServiceAccount } from './google-auth.mjs'
 
 const API = 'https://generativelanguage.googleapis.com/v1beta/models'
 
@@ -53,23 +54,30 @@ export function createLedger(file) {
 	}
 	catch {}
 	data[month] ||= { usd: 0, runs: 0 }
+	// Catatan lama belum memisahkan jalur: semua belanja sebelumnya lewat AI Studio
+	data[month].providers ||= { aistudio: data[month].usd, vertex: 0 }
 	const run = { usd: 0, calls: [] }
 
 	return {
 		month,
+		// Anggaran bulanan hanya menghitung AI Studio (kredit Developer Program $10/bulan);
+		// Vertex dibayar dari kredit trial Google Cloud yang terpisah
 		get spent() {
-			return data[month].usd
+			return data[month].providers.aistudio || 0
 		},
 		get runUsd() {
 			return run.usd
 		},
-		record(stage, model, usd) {
+		record(stage, model, usd, provider = 'aistudio') {
 			run.usd += usd
 			data[month].usd += usd
-			run.calls.push({ stage, model, usd: Number(usd.toFixed(4)) })
+			data[month].providers[provider] = (data[month].providers[provider] || 0) + usd
+			run.calls.push({ stage, model, provider, usd: Number(usd.toFixed(4)) })
 		},
 		save(label) {
 			data[month].usd = Number(data[month].usd.toFixed(4))
+			for (const key of Object.keys(data[month].providers))
+				data[month].providers[key] = Number(data[month].providers[key].toFixed(4))
 			data[month].runs += 1
 			data[month].last = { label, date: new Date().toISOString(), usd: Number(run.usd.toFixed(4)), calls: run.calls }
 			fs.mkdirSync(path.dirname(file), { recursive: true })
@@ -80,30 +88,54 @@ export function createLedger(file) {
 
 const RETRYABLE = new Set([429, 500, 502, 503, 504])
 
-async function callOnce({ apiKey, model, system, prompt, parts, json, search, image, timeoutMs }) {
+// Kredit trial Google Cloud ($300) hanya berlaku lewat Vertex AI (tidak lewat AI Studio) dan habis
+// 18 Januari 2027. Sampai tanggal itu Vertex jadi jalur utama; AI Studio cadangan dan jalur sesudahnya.
+// AI_PROVIDER=vertex|aistudio memaksa satu jalur.
+const VERTEX_CREDIT_UNTIL = process.env.VERTEX_CREDIT_UNTIL || '2027-01-18'
+let vertexAccount
+
+function providerOrder(apiKey) {
+	const mode = process.env.AI_PROVIDER || 'auto'
+	if (vertexAccount === undefined)
+		vertexAccount = loadServiceAccount()
+	const today = new Date().toISOString().slice(0, 10)
+	const useVertex = vertexAccount && mode !== 'aistudio' && (mode === 'vertex' || today <= VERTEX_CREDIT_UNTIL)
+	return [useVertex && 'vertex', apiKey && mode !== 'vertex' && 'aistudio'].filter(Boolean)
+}
+
+async function callOnce({ provider, apiKey, model, system, prompt, parts, json, search, image, timeoutMs }) {
 	const body = {
 		contents: [{ role: 'user', parts: parts || [{ text: prompt }] }],
 		generationConfig: {},
 	}
+	// Vertex memakai nama field camelCase; AI Studio menerima snake_case seperti contoh resminya
 	if (system)
-		body.system_instruction = { parts: [{ text: system }] }
+		body[provider === 'vertex' ? 'systemInstruction' : 'system_instruction'] = { parts: [{ text: system }] }
 	if (json)
 		body.generationConfig.responseMimeType = 'application/json'
 	if (search)
-		body.tools = [{ google_search: {} }]
+		body.tools = [provider === 'vertex' ? { googleSearch: {} } : { google_search: {} }]
 	if (image) {
 		body.generationConfig.responseModalities = ['IMAGE']
 		body.generationConfig.imageConfig = image
 	}
 
-	const response = await fetch(`${API}/${model}:generateContent`, {
+	let url = `${API}/${model}:generateContent`
+	let headers = { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey }
+	if (provider === 'vertex') {
+		const token = await getAccessToken(vertexAccount, ['https://www.googleapis.com/auth/cloud-platform'])
+		url = `https://aiplatform.googleapis.com/v1/projects/${vertexAccount.project_id}/locations/global/publishers/google/models/${model}:generateContent`
+		headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
+	}
+
+	const response = await fetch(url, {
 		method: 'POST',
-		headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
+		headers,
 		body: JSON.stringify(body),
 		signal: AbortSignal.timeout(timeoutMs),
 	})
 	if (!response.ok) {
-		const err = new Error(`${model} HTTP ${response.status}: ${(await response.text()).slice(0, 300)}`)
+		const err = new Error(`${provider}/${model} HTTP ${response.status}: ${(await response.text()).slice(0, 300)}`)
 		err.status = response.status
 		throw err
 	}
@@ -111,35 +143,38 @@ async function callOnce({ apiKey, model, system, prompt, parts, json, search, im
 }
 
 /**
- * Coba tiap model berurutan (dengan 1 retry untuk error sementara) sampai ada yang berhasil.
- * Mengembalikan { text, imageData, imageMime, model }.
+ * Coba tiap model berurutan; per model coba tiap jalur (Vertex lalu AI Studio), dengan 1 retry
+ * untuk error sementara, sampai ada yang berhasil. Mengembalikan { text, imageData, imageMime, model, provider }.
  */
 export async function generate(models, { ledger, stage, timeoutMs = 300000, ...options }) {
 	let lastError
+	const providers = providerOrder(options.apiKey)
 	for (const model of models) {
-		for (let attempt = 1; attempt <= 2; attempt++) {
-			try {
-				const data = await callOnce({ ...options, model, timeoutMs })
-				const candidate = data.candidates?.[0]
-				const parts = candidate?.content?.parts || []
-				const inline = parts.find(p => p.inlineData)?.inlineData
-				const imageData = inline?.data
-				const text = parts.filter(p => p.text && !p.thought).map(p => p.text).join('').trim()
+		for (const provider of providers) {
+			for (let attempt = 1; attempt <= 2; attempt++) {
+				try {
+					const data = await callOnce({ ...options, provider, model, timeoutMs })
+					const candidate = data.candidates?.[0]
+					const parts = candidate?.content?.parts || []
+					const inline = parts.find(p => p.inlineData)?.inlineData
+					const imageData = inline?.data
+					const text = parts.filter(p => p.text && !p.thought).map(p => p.text).join('').trim()
 
-				const usd = estimateCost(model, data.usageMetadata, imageData ? 1 : 0)
-				ledger?.record(stage, model, usd)
-				console.log(`[AI] ${stage} · ${model} · $${usd.toFixed(4)}`)
+					const usd = estimateCost(model, data.usageMetadata, imageData ? 1 : 0)
+					ledger?.record(stage, model, usd, provider)
+					console.log(`[AI] ${stage} · ${provider} · ${model} · $${usd.toFixed(4)}`)
 
-				if (!text && !imageData)
-					throw new Error(`${model} returned no content (finishReason: ${candidate?.finishReason})`)
-				return { text, imageData, imageMime: inline?.mimeType, model }
-			}
-			catch (err) {
-				lastError = err
-				console.warn(`[AI] ${stage} · ${model} attempt ${attempt} failed: ${err.message}`)
-				if (!RETRYABLE.has(err.status) || attempt === 2)
-					break
-				await new Promise(r => setTimeout(r, 5000 * attempt))
+					if (!text && !imageData)
+						throw new Error(`${model} returned no content (finishReason: ${candidate?.finishReason})`)
+					return { text, imageData, imageMime: inline?.mimeType, model, provider }
+				}
+				catch (err) {
+					lastError = err
+					console.warn(`[AI] ${stage} · ${provider} · ${model} attempt ${attempt} failed: ${err.message}`)
+					if (!RETRYABLE.has(err.status) || attempt === 2)
+						break
+					await new Promise(r => setTimeout(r, 5000 * attempt))
+				}
 			}
 		}
 	}
