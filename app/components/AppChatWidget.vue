@@ -121,18 +121,28 @@ async function sendMessage() {
 		.slice(-6)
 		.map(m => ({ role: m.role, content: m.content }))
 
-	const GATEWAY_URL = 'https://8787-agqwzwuabezjc5sxhm4y77kkyy.instabox.tech'
+	const payload = JSON.stringify({
+		message: query,
+		lang: locale.value,
+		history: historyPayload,
+	})
 
 	try {
-		const res = await fetch(`${GATEWAY_URL}/v1/chat`, {
+		// Gunakan same-origin /api/chat (kebal CORS & CSP), fallback ke direct gateway
+		let res: Response | null = await fetch('/api/chat', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				message: query,
-				lang: locale.value,
-				history: historyPayload,
-			}),
-		})
+			body: payload,
+		}).catch(() => null)
+
+		if (!res || !res.ok) {
+			const directRes = await fetch('https://8787-agqwzwuabezjc5sxhm4y77kkyy.instabox.tech/v1/chat', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: payload,
+			})
+			res = directRes
+		}
 
 		if (!res.ok) {
 			const errJson = await res.json().catch(() => ({}))
