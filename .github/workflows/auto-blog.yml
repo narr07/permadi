@@ -65,7 +65,7 @@ jobs:
 
           # Periksa apakah ada file markdown baru yang di-generate
           if [ -n "$(git status --porcelain content/id/blog content/en/blog)" ]; then
-            git add content/id/blog/ content/en/blog/ public/article/
+            git add content/id/blog/ content/en/blog/ public/article/ data/ai-spend.json
             ARTICLE_NUM=$(ls -1 content/id/blog | grep -E '^[0-9]+\.' | sed -E 's/^([0-9]+)\..*/\1/' | sort -n | tail -1)
             git commit -m "chore(blog): publish article ${ARTICLE_NUM}"
             git push origin main
