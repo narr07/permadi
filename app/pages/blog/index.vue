@@ -45,8 +45,7 @@ function getFilterLabel(key: string): string {
 const route = useRoute()
 const router = useRouter()
 
-// Pagination: 7 articles per page (1 lead + 6 grid)
-const postsPerPage = 7
+const filterOptions = computed(() => blogCategories.map(key => ({ value: key, label: getFilterLabel(key) })))
 
 const currentPage = computed(() => {
 	const p = Number(route.query.page)
@@ -88,28 +87,9 @@ const filteredPosts = computed(() => {
 		})
 })
 
-const totalPages = computed(() => {
-	return Math.ceil(filteredPosts.value.length / postsPerPage) || 1
-})
-
-const paginatedPosts = computed(() => {
-	const start = (currentPage.value - 1) * postsPerPage
-	return filteredPosts.value.slice(start, start + postsPerPage)
-})
-
-const leadPost = computed(() => {
-	if (currentPage.value === 1 && selectedTag.value === 'ALL' && paginatedPosts.value.length > 0) {
-		return paginatedPosts.value[0]
-	}
-	return null
-})
-
-const gridPosts = computed(() => {
-	if (leadPost.value) {
-		return paginatedPosts.value.slice(1)
-	}
-	return paginatedPosts.value
-})
+// Halaman 1 tanpa filter: 1 artikel unggulan + 6 kartu; halaman lain: 6 kartu
+const showLead = computed(() => selectedTag.value === 'ALL')
+const { totalPages, lead: leadPost, grid: gridPosts } = useLeadPagination(filteredPosts, currentPage, showLead)
 
 function getPaginationUrl(pageNumber: number) {
 	const query: Record<string, any> = { ...route.query }
@@ -156,30 +136,14 @@ useSchemaOrg([
 			</p>
 		</header>
 
-		<!-- Filter Strip -->
-		<nav
-			aria-label="Filter kategori artikel"
-			class="w-full flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 bg-slate-50/60 px-6 py-3.5 text-xs font-mono dark:border-[#134e43] dark:bg-[#002420]/40 sm:px-8"
+		<AppFilterTabs
+			:options="filterOptions"
+			:model-value="selectedTag"
+			:label="locale === 'id' ? 'Filter kategori artikel' : 'Filter article category'"
+			@update:model-value="selectTag"
 		>
-			<div class="flex flex-wrap items-center gap-2">
-				<button
-					v-for="catKey in blogCategories"
-					:key="catKey"
-					type="button"
-					class="cursor-pointer whitespace-nowrap border px-3.5 py-1.5 font-bold tracking-wider uppercase transition-all duration-150 active:scale-95"
-					:class="selectedTag === catKey
-						? 'swiss-filter-active'
-						: 'bg-white dark:bg-[#001e1c] text-slate-800 dark:text-slate-200 border-slate-300 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
-					@click="selectTag(catKey)"
-				>
-					<span>{{ getFilterLabel(catKey) }}</span>
-				</button>
-			</div>
-
-			<span class="text-[11px] text-slate-600 uppercase tabular-nums dark:text-slate-400">
-				{{ $t('blog.showing_count', { count: filteredPosts.length, total: posts?.length || 0 }) }}
-			</span>
-		</nav>
+			{{ $t('blog.showing_count', { count: filteredPosts.length, total: posts?.length || 0 }) }}
+		</AppFilterTabs>
 
 		<!-- Lead Article (first page, all categories) -->
 		<article
@@ -244,17 +208,13 @@ useSchemaOrg([
 			v-if="gridPosts.length > 0"
 			class="w-full border-b border-slate-200/80 dark:border-[#134e43]"
 		>
-			<div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 divide-y divide-slate-200/80 md:divide-y-0 dark:divide-[#134e43]">
+			<!-- Garis grid dari gap-px di atas latar garis; kartu di baris terakhir melebar agar tidak ada slot kosong -->
+			<div class="grid grid-cols-1 gap-px bg-slate-200/80 lg:grid-cols-6 md:grid-cols-4 dark:bg-[#134e43]">
 				<article
 					v-for="(item, idx) in gridPosts"
 					:key="item.url"
-					class="group flex flex-col justify-between p-6 transition-all duration-200 hover:(bg-[#e2f4f0] dark:bg-[#003832]) sm:p-8"
-					:class="[
-						idx % 3 !== 2 ? 'lg:border-r border-slate-200/80 dark:border-[#134e43]' : '',
-						idx % 2 !== 1 ? 'md:border-r lg:border-r-0 border-slate-200/80 dark:border-[#134e43]' : '',
-						idx >= 3 ? 'lg:border-t border-slate-200/80 dark:border-[#134e43]' : '',
-						idx >= 2 ? 'md:border-t lg:border-t-0 border-slate-200/80 dark:border-[#134e43]' : '',
-					]"
+					class="group flex flex-col justify-between bg-white p-6 transition-colors duration-200 dark:bg-[#001e1c] hover:(bg-[#e2f4f0] dark:bg-[#003832]) sm:p-8"
+					:class="[gridCardSpan(idx, gridPosts.length).md, gridCardSpan(idx, gridPosts.length).lg]"
 				>
 					<div>
 						<!-- Item Meta -->
@@ -273,7 +233,7 @@ useSchemaOrg([
 							</NuxtLink>
 						</h3>
 
-						<p class="line-clamp-3 mb-6 text-xs text-slate-700 leading-relaxed font-sans sm:text-sm dark:text-slate-300">
+						<p class="line-clamp-3 mb-6 max-w-[62ch] text-xs text-slate-700 leading-relaxed font-sans sm:text-sm dark:text-slate-300">
 							{{ item.description }}
 						</p>
 					</div>

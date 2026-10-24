@@ -86,12 +86,17 @@ function handleToggle() {
 			/>
 		</button>
 
-		<!-- Accordion Answer Body -->
+		<!-- Accordion Answer Body: tetap di DOM (terbaca mesin pencari), inert saat tertutup -->
 		<div
-			v-show="isOpen"
-			class="border-t border-slate-100 px-5 pb-5 pt-4 text-sm text-slate-700 leading-relaxed font-sans dark:border-slate-800/80 sm:px-6 sm:pb-6 sm:text-base dark:text-slate-300"
+			class="collapse-panel"
+			:data-open="isOpen"
+			:inert="!isOpen"
 		>
-			<slot />
+			<div>
+				<div class="border-t border-slate-100 px-5 pb-5 pt-4 text-sm text-slate-700 leading-relaxed font-sans dark:border-slate-800/80 sm:px-6 sm:pb-6 sm:text-base dark:text-slate-300">
+					<slot />
+				</div>
+			</div>
 		</div>
 	</div>
 </template>

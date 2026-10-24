@@ -323,5 +323,11 @@ export default defineConfig({
 		'i-carbon-sun',
 		'i-carbon-moon',
 		'i-carbon-search',
+		// Lebar kartu grid dari gridCardSpan() di composables (file .ts tidak dipindai)
+		'md:col-span-2',
+		'md:col-span-4',
+		'lg:col-span-2',
+		'lg:col-span-3',
+		'lg:col-span-6',
 	],
 })
