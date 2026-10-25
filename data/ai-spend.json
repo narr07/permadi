@@ -1,7 +1,11 @@
 {
   "2026-10": {
-    "usd": 12.7944,
-    "runs": 42,
+    "usd": 13.2307,
+    "runs": 43,
+    "providers": {
+      "aistudio": 0.72,
+      "vertex": 12.5107
+    },
     "last": {
       "label": "refresh:28",
       "date": "2026-10-25T02:36:11.359Z",
@@ -50,10 +54,6 @@
           "usd": 0.0019
         }
       ]
-    },
-    "providers": {
-      "aistudio": 0.72,
-      "vertex": 12.0744
     }
   }
 }
