@@ -1,59 +1,59 @@
 {
   "2026-10": {
-    "usd": 2.2647,
-    "runs": 18,
+    "usd": 12.7944,
+    "runs": 42,
     "last": {
-      "label": "refresh:3",
-      "date": "2026-10-24T22:43:09.018Z",
-      "usd": 0.4863,
+      "label": "refresh:28",
+      "date": "2026-10-25T02:36:11.359Z",
+      "usd": 0.4376,
       "calls": [
         {
           "stage": "research",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0211
+          "usd": 0.0168
         },
         {
           "stage": "draft-id",
           "model": "gemini-4-argon",
           "provider": "vertex",
-          "usd": 0.0596
+          "usd": 0.0676
         },
         {
           "stage": "edit-id",
           "model": "gemini-4-argon",
           "provider": "vertex",
-          "usd": 0.0628
+          "usd": 0.0672
         },
         {
           "stage": "english",
           "model": "gemini-3.1-pro-preview",
           "provider": "vertex",
-          "usd": 0.1903
+          "usd": 0.1326
         },
         {
           "stage": "metadata",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0107
+          "usd": 0.0122
         },
         {
           "stage": "cover-1",
           "model": "gemini-3-pro-image",
           "provider": "vertex",
-          "usd": 0.1396
+          "usd": 0.1393
         },
         {
           "stage": "cover-review",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0022
+          "usd": 0.0019
         }
       ]
     },
     "providers": {
-      "aistudio": 0.4891,
-      "vertex": 1.7756
+      "aistudio": 0.72,
+      "vertex": 12.0744
     }
   }
 }
