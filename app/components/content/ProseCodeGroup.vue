@@ -169,6 +169,11 @@ const activeCode = computed(() => {
 	return extractText(activeTab.vnode)
 })
 
+const { locale } = useI18n()
+const copyLabels = computed(() => locale.value === 'id'
+	? { copy: 'Salin', copied: 'Tersalin', copyAria: 'Salin kode' }
+	: { copy: 'Copy', copied: 'Copied', copyAria: 'Copy code' })
+
 function handleCopy() {
 	if (activeCode.value) {
 		copy(activeCode.value)
@@ -178,22 +183,22 @@ function handleCopy() {
 
 <template>
 	<div
-		class="prose-code-group my-6 overflow-hidden border border-[#115e4f]/30 rounded-2xl bg-[#042f27] shadow-xl dark:border-[#134e43]/60 dark:bg-[#001412]"
+		class="prose-code-group not-prose my-6 overflow-hidden border border-slate-200 bg-white dark:border-[#134e43] dark:bg-[#00140f]"
 		:class="props.class"
 	>
 		<!-- Bento Tab Bar & Action Header -->
-		<div class="flex items-center justify-between border-b border-[#115e4f]/40 bg-[#02211c]/95 px-2 py-1.5 dark:border-[#134e43]/50 dark:bg-[#001c19]/90">
+		<div class="min-h-10 flex items-center justify-between gap-2 border-b border-slate-200 bg-slate-50 px-1.5 dark:border-[#134e43] dark:bg-[#00211e]">
 			<!-- Tab Buttons List -->
 			<div class="custom-scrollbar min-w-0 flex items-center gap-1.5 overflow-x-auto pr-2">
 				<button
 					v-for="(tab, idx) in tabs"
 					:key="idx"
 					type="button"
-					class="flex shrink-0 cursor-pointer items-center gap-2 rounded-xl px-3 py-1.5 text-xs font-mono transition-all"
+					class="h-10 flex shrink-0 cursor-pointer items-center gap-2 border-b-2 px-2.5 text-xs font-mono transition-colors"
 					:class="[
 						selectedIndex === idx
-							? 'bg-brand-500/20 text-brand-200 font-semibold shadow-xs border border-brand-500/30 dark:bg-white/10 dark:text-white dark:border-white/15'
-							: 'text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-transparent',
+							? 'border-brand-600 text-slate-900 font-semibold dark:border-brand-400 dark:text-slate-50'
+							: 'border-transparent text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50',
 					]"
 					@click="selectedIndex = idx"
 				>
@@ -208,19 +213,15 @@ function handleCopy() {
 			<!-- Copy Button on Right -->
 			<button
 				type="button"
-				class="group/btn flex shrink-0 cursor-pointer items-center gap-1.5 border border-brand-500/25 rounded-lg bg-brand-950/40 px-2.5 py-1 text-xs text-brand-200 font-sans transition-all hover:border-brand-400/50 hover:bg-brand-500/20 hover:text-white"
-				:aria-label="copied ? 'Tersalin' : 'Salin kode'"
+				class="h-8 inline-flex shrink-0 cursor-pointer items-center gap-1.5 px-2 text-xs text-slate-600 font-sans transition-colors hover:bg-slate-200 dark:text-slate-400 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-brand-600 focus-visible:outline-offset-2 focus-visible:outline dark:hover:bg-[#0a3a35] dark:hover:text-slate-50"
+				:aria-label="copied ? copyLabels.copied : copyLabels.copyAria"
 				@click="handleCopy"
 			>
 				<span
-					class="transition-transform duration-200"
-					:class="[
-						copied ? 'i-carbon-checkmark text-brand-300 scale-110' : 'i-carbon-copy text-brand-300 group-hover/btn:scale-110',
-					]"
+					:class="copied ? 'i-carbon-checkmark text-brand-600 dark:text-brand-400' : 'i-carbon-copy'"
+					aria-hidden="true"
 				/>
-				<span class="text-[11px] font-medium">
-					{{ copied ? 'Tersalin' : 'Salin' }}
-				</span>
+				<span aria-live="polite">{{ copied ? copyLabels.copied : copyLabels.copy }}</span>
 			</button>
 		</div>
 
