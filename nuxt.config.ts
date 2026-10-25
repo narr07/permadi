@@ -406,7 +406,8 @@ export default defineNuxtConfig({
 
 			// Ekstrak plain text isi konten untuk sistem pencarian komprehensif (Full-Text Search)
 			const text = typeof ctx.file?.body === 'string' ? ctx.file.body : ''
-			const cleanPlainText = text.replace(/[#*`_[\]()>$-]/g, ' ').replace(/\s+/g, ' ').trim()
+			// "<" ikut dibuang: sisa "</script" di teks pencarian bisa memutus tag <script> payload
+			const cleanPlainText = text.replace(/[#*`_[\]()<>$-]/g, ' ').replace(/\s+/g, ' ').trim()
 			ctx.content.plainText = cleanPlainText
 
 			// Hitung reading time berdasarkan jumlah kata
