@@ -23,27 +23,18 @@ const { data: cloudinaryItems } = await useAsyncData<GalleryItem[]>(
 	},
 )
 
-// Judul dan alt mengikuti bahasa aktif; versi Inggris diambil dari context Cloudinary
+// Judul, alt, dan kategori mengikuti bahasa aktif; versi Inggris disiapkan oleh API galeri
 const allItems = computed(() => {
 	const items = cloudinaryItems.value || []
 	if (locale.value !== 'en')
 		return items
-	return items.map(item => ({ ...item, title: item.title_en || item.title, alt: item.alt_en || item.alt }))
+	return items.map(item => ({
+		...item,
+		title: item.title_en || item.title,
+		alt: item.alt_en || item.alt,
+		tags: item.tags_en?.length ? item.tags_en : item.tags,
+	}))
 })
-
-// Tag di Cloudinary ditulis dalam bahasa Indonesia; label Inggrisnya dipetakan di sini
-const TAG_LABELS_EN: Record<string, string> = {
-	'Potret': 'Portrait',
-	'Ilustrasi': 'Illustration',
-	'Maskot': 'Mascot',
-	'Wisuda': 'Graduation',
-	'Manipulasi Foto': 'Photo Manipulation',
-	'desainer': 'Design',
-}
-
-function tagLabel(tag: string) {
-	return locale.value === 'en' ? TAG_LABELS_EN[tag] ?? tag : tag
-}
 
 // Filter Tag
 const selectedTag = ref<string>('ALL')
@@ -85,6 +76,11 @@ const currentLimit = ref(itemsPerPage)
 
 watch(selectedTag, () => {
 	currentLimit.value = itemsPerPage
+})
+
+// Label kategori berbeda per bahasa, jadi filter dikembalikan ke semua saat bahasa berganti
+watch(locale, () => {
+	selectedTag.value = 'ALL'
 })
 
 const displayedItems = computed(() => {
@@ -315,7 +311,7 @@ useSchemaOrg([
 						: 'bg-white dark:bg-[#001e1c] border-slate-300 dark:border-[#134e43] text-slate-800 dark:text-slate-200 hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
 					@click="selectTag(tag)"
 				>
-					<span>#{{ tagLabel(tag) }}</span>
+					<span>#{{ tag }}</span>
 				</button>
 			</div>
 
@@ -385,7 +381,7 @@ useSchemaOrg([
 								:key="tag"
 								class="border border-slate-200 px-1.5 py-0.5 text-[10px] text-slate-700 font-mono uppercase dark:border-[#134e43] dark:text-slate-300"
 							>
-								#{{ tagLabel(tag) }}
+								#{{ tag }}
 							</span>
 						</div>
 
@@ -529,7 +525,7 @@ useSchemaOrg([
 										:key="tag"
 										class="border border-slate-300 px-1.5 py-0.5 text-[10px] uppercase dark:border-[#134e43]"
 									>
-										#{{ tagLabel(tag) }}
+										#{{ tag }}
 									</span>
 								</div>
 							</div>
