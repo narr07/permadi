@@ -1,5 +1,7 @@
 // server/api/cloudinary-gallery.get.ts
 // Fetches all images from the 'gallery' folder in Cloudinary with metadata
+// Judul, deskripsi, dan kategori dibaca dari structured metadata `galeri_*` (formulir di Media Library);
+// context (caption/alt) dan tags lama tetap dipakai sebagai cadangan
 
 interface CloudinaryResource {
 	public_id: string
@@ -17,6 +19,7 @@ interface CloudinaryResource {
 		custom?: Record<string, string>
 	}
 	tags?: string[]
+	metadata?: Record<string, string | string[]>
 }
 
 interface CloudinaryListResponse {
@@ -28,7 +31,7 @@ export interface GalleryItem {
 	public_id: string
 	title: string
 	alt: string
-	/** Versi Inggris dari context `caption_en` / `alt_en`; kosong jika belum diisi */
+	/** Versi Inggris; kosong jika belum diisi */
 	title_en: string
 	alt_en: string
 	image: string
@@ -38,9 +41,44 @@ export interface GalleryItem {
 	download_url: string
 	secure_url: string
 	tags: string[]
+	tags_en: string[]
 	created_at: string
 	width: number
 	height: number
+}
+
+interface MetadataField {
+	datasource?: { values: { external_id: string, value: string, state?: string }[] }
+}
+
+const CATEGORY_FIELD = 'galeri_kategori'
+
+// Label untuk tag lama (sebelum ada structured metadata)
+const LEGACY_TAG_LABELS_EN: Record<string, string> = {
+	'Potret': 'Portrait',
+	'Ilustrasi': 'Illustration',
+	'Maskot': 'Mascot',
+	'Wisuda': 'Graduation',
+	'Manipulasi Foto': 'Photo Manipulation',
+	'desainer': 'Design',
+}
+
+/** Opsi kategori ditulis "Label ID / Label EN" di Cloudinary; tanpa " / " label EN sama dengan ID */
+async function fetchCategoryLabels(cloudName: string, authHeader: string) {
+	const labels = new Map<string, { id: string, en: string }>()
+	try {
+		const field = await $fetch<MetadataField>(`https://api.cloudinary.com/v1_1/${cloudName}/metadata_fields/${CATEGORY_FIELD}`, {
+			headers: { Authorization: authHeader },
+		})
+		for (const option of field.datasource?.values || []) {
+			const [id = option.value, en = id] = option.value.split(' / ').map(part => part.trim())
+			labels.set(option.external_id, { id, en })
+		}
+	}
+	catch (err: any) {
+		console.warn('[Cloudinary Gallery] Category labels unavailable:', err?.message || err)
+	}
+	return labels
 }
 
 export default defineCachedEventHandler(
@@ -55,6 +93,7 @@ export default defineCachedEventHandler(
 
 		try {
 			const authHeader = getCloudinaryAuthHeader(apiKey, apiSecret)
+			const categoryLabels = await fetchCategoryLabels(cloudName, authHeader)
 			const allResources: CloudinaryResource[] = []
 			let nextCursor: string | undefined
 
@@ -65,6 +104,7 @@ export default defineCachedEventHandler(
 					type: 'upload',
 					context: 'true',
 					tags: 'true',
+					metadata: 'true',
 					max_results: '500',
 				})
 
@@ -92,6 +132,19 @@ export default defineCachedEventHandler(
 				.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
 				.map((resource) => {
 					const context = resource.context?.custom || {}
+					const metadata = resource.metadata || {}
+					const text = (key: string) => typeof metadata[key] === 'string' ? (metadata[key] as string).trim() : ''
+
+					const categoryIds = Array.isArray(metadata[CATEGORY_FIELD]) ? metadata[CATEGORY_FIELD] as string[] : []
+					const categories = categoryIds.map(key => categoryLabels.get(key) || { id: key, en: key })
+					const legacyTags = resource.tags?.length ? resource.tags : ['desainer']
+					const tags = categories.length ? categories.map(c => c.id) : legacyTags
+					const tagsEn = categories.length ? categories.map(c => c.en) : legacyTags.map(tag => LEGACY_TAG_LABELS_EN[tag] ?? tag)
+
+					const titleId = text('galeri_judul_id') || context.caption
+					const altId = text('galeri_alt_id') || context.alt
+					const titleEn = text('galeri_judul_en') || context.caption_en
+					const altEn = text('galeri_alt_en') || context.alt_en
 
 					// Extract version from public_id URL pattern
 					const versionPrefix = resource.version ? `v${resource.version}/` : ''
@@ -120,17 +173,18 @@ export default defineCachedEventHandler(
 
 					return {
 						public_id: resource.public_id,
-						title: context.caption || context.alt || resource.display_name || fallbackName || 'Permadi Gallery',
-						alt: context.alt || context.caption || resource.display_name || fallbackName || 'Permadi Gallery',
-						title_en: context.caption_en || context.alt_en || '',
-						alt_en: context.alt_en || context.caption_en || '',
+						title: titleId || altId || resource.display_name || fallbackName || 'Permadi Gallery',
+						alt: altId || titleId || resource.display_name || fallbackName || 'Permadi Gallery',
+						title_en: titleEn || altEn || '',
+						alt_en: altEn || titleEn || '',
 						image: thumbnailCdnUrl,
 						placeholder_image: placeholderCdnUrl,
 						preview_image: modalPreviewCdnUrl,
 						full_image: fullCdnUrl,
 						download_url: downloadCdnUrl,
 						secure_url: resource.secure_url,
-						tags: resource.tags?.length ? resource.tags : ['desainer'],
+						tags,
+						tags_en: tagsEn,
 						created_at: resource.created_at,
 						width: resource.width,
 						height: resource.height,
