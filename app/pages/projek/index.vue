@@ -80,9 +80,9 @@ const filteredProjects = computed(() => {
 		})
 })
 
-// Halaman 1 tanpa filter: 1 projek unggulan + 6 kartu; halaman lain: 6 kartu
+// Halaman 1 tanpa filter: 1 projek unggulan + 12 kartu; halaman lain: 12 kartu
 const showLead = computed(() => selectedTag.value === 'ALL')
-const { totalPages, lead: leadProject, grid: gridProjects } = useLeadPagination(filteredProjects, currentPage, showLead)
+const { totalPages, lead: leadProject, grid: gridProjects } = useLeadPagination(filteredProjects, currentPage, showLead, 12)
 
 // Kartu yang mengisi satu baris penuh beralih ke tata letak horizontal agar gambarnya tidak raksasa
 function projectCardClass(index: number, total: number) {

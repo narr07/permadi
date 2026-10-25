@@ -1,0 +1,73 @@
+name: Weekly SEO Refresh
+
+on:
+  schedule:
+    # Setiap Senin pukul 01:00 UTC (08:00 WIB), satu jam setelah Auto Blog harian
+    - cron: '0 1 * * 1'
+
+  # Tombol trigger manual; isi nomor/slug untuk memilih artikel sendiri, kosongkan untuk otomatis
+  workflow_dispatch:
+    inputs:
+      article:
+        description: Nomor atau slug artikel (kosongkan = pilih otomatis dari Search Console)
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-article:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install image encoder
+        # Isolated install so npm doesn't resolve the whole Nuxt tree; symlink makes `import('sharp')` resolve
+        run: |
+          npm install --prefix "$RUNNER_TEMP/img" --no-package-lock sharp@0.35.5
+          mkdir -p node_modules
+          ln -s "$RUNNER_TEMP/img/node_modules/"* node_modules/
+
+      # Pilih artikel bertayangan terbanyak di posisi 4–30 yang belum diperbarui 30 hari terakhir
+      - name: Refresh article from Search Console data
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          REFRESH_ARTICLE: ${{ github.event.inputs.article || 'auto' }}
+        run: |
+          node scripts/auto-generate.mjs
+
+      - name: Commit and push changes
+        id: publish
+        run: |
+          git config user.name "Dinar, Permadi"
+          git config user.email "dinarpermadi07@gmail.com"
+
+          if [ -n "$(git status --porcelain content/id/blog content/en/blog)" ]; then
+            git add content/id/blog/ content/en/blog/ public/article/ data/ai-spend.json data/seo-refresh.json data/refresh-log.json
+            git commit -m "content(blog): refresh article from Search Console data"
+            git pull --rebase origin main
+            git push origin main
+            echo "published=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No article needed a refresh this week."
+          fi
+
+      # Push dari GITHUB_TOKEN tidak memicu workflow lain, jadi index chatbot diperbarui di sini
+      - name: Reindex chat gateway
+        if: steps.publish.outputs.published == 'true'
+        run: |
+          curl -s -X POST https://8787-agqwzwuabezjc5sxhm4y77kkyy.instabox.tech/admin/reindex \
+            -H "Authorization: Bearer ${{ secrets.CHAT_GATEWAY_ADMIN_TOKEN }}"
