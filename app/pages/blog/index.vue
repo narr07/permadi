@@ -183,20 +183,20 @@ useSchemaOrg([
 					</div>
 
 					<div class="flex flex-wrap items-center justify-between gap-4 border-t border-slate-200/80 pt-6 dark:border-[#134e43]">
-						<NuxtLink
-							:to="leadPost.url"
-							class="group flex cursor-pointer items-center gap-2 bg-brand-500 px-5 py-2.5 text-xs text-slate-950 font-bold tracking-wider font-mono uppercase shadow-xs transition-all duration-150 active:scale-95 hover:bg-brand-400"
-						>
-							<span>{{ $t('blog.read_full') }}</span>
-							<span class="i-carbon-arrow-up-right text-sm transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
-						</NuxtLink>
-
 						<span
 							v-if="leadPost.readingTime"
 							class="text-xs text-slate-700 font-mono dark:text-slate-300"
 						>
 							{{ leadPost.readingTime }} {{ $t('blog.min_read') }}
 						</span>
+
+						<NuxtLink
+							:to="leadPost.url"
+							class="group ml-auto flex cursor-pointer items-center gap-2 bg-brand-500 px-5 py-2.5 text-xs text-slate-950 font-bold tracking-wider font-mono uppercase shadow-xs transition-all duration-150 active:scale-95 hover:bg-brand-400"
+						>
+							<span>{{ $t('blog.read_full') }}</span>
+							<span class="i-carbon-arrow-up-right text-sm transition-transform duration-150 group-hover:(translate-x-0.5 -translate-y-0.5)" />
+						</NuxtLink>
 					</div>
 				</div>
 
@@ -239,20 +239,20 @@ useSchemaOrg([
 					</div>
 
 					<div class="flex items-center justify-between border-t border-slate-200/80 pt-4 dark:border-[#134e43]">
-						<NuxtLink
-							:to="item.url"
-							class="inline-flex items-center gap-1.5 text-xs text-slate-900 font-bold tracking-wider font-mono uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-brand-400"
-						>
-							<span>{{ $t('blog.read_note') }}</span>
-							<span class="i-carbon-arrow-up-right text-sm transition-transform group-hover:(translate-x-0.5 -translate-y-0.5)" />
-						</NuxtLink>
-
 						<span
 							v-if="item.readingTime"
 							class="text-[11px] text-slate-600 font-mono tabular-nums dark:text-slate-400"
 						>
 							{{ item.readingTime }} {{ $t('blog.min_read') }}
 						</span>
+
+						<NuxtLink
+							:to="item.url"
+							class="ml-auto inline-flex items-center gap-1.5 text-xs text-slate-900 font-bold tracking-wider font-mono uppercase transition-all duration-150 active:scale-95 dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-brand-400"
+						>
+							<span>{{ $t('blog.read_note') }}</span>
+							<span class="i-carbon-arrow-up-right text-sm transition-transform group-hover:(translate-x-0.5 -translate-y-0.5)" />
+						</NuxtLink>
 					</div>
 				</article>
 			</div>

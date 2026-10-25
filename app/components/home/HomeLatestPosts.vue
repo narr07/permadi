@@ -163,12 +163,12 @@ function getCategoryLabel(category?: string) {
 
 			<!-- Bottom Action -->
 			<div class="mt-5 flex items-center justify-between border-t border-slate-200/60 pt-3 text-xs text-brand-900 font-bold dark:border-slate-800/60 dark:text-brand-300 group-hover:text-brand-950 dark:group-hover:text-accent">
+				<span class="text-[11px] text-slate-500 font-normal font-mono dark:text-slate-400">
+					{{ locale === 'id' ? `${featuredPost.readingTime || 5} mnt baca` : `${featuredPost.readingTime || 5} min read` }}
+				</span>
 				<span class="flex items-center gap-1.5">
 					<span>{{ locale === 'id' ? 'Baca Artikel' : 'Read Article' }}</span>
 					<span class="i-carbon-arrow-right text-xs transition-transform group-hover:translate-x-1" />
-				</span>
-				<span class="text-[11px] text-slate-500 font-normal font-mono dark:text-slate-400">
-					{{ locale === 'id' ? `${featuredPost.readingTime || 5} mnt baca` : `${featuredPost.readingTime || 5} min read` }}
 				</span>
 			</div>
 		</NuxtLink>

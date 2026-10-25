@@ -23,7 +23,27 @@ const { data: cloudinaryItems } = await useAsyncData<GalleryItem[]>(
 	},
 )
 
-const allItems = computed(() => cloudinaryItems.value || [])
+// Judul dan alt mengikuti bahasa aktif; versi Inggris diambil dari context Cloudinary
+const allItems = computed(() => {
+	const items = cloudinaryItems.value || []
+	if (locale.value !== 'en')
+		return items
+	return items.map(item => ({ ...item, title: item.title_en || item.title, alt: item.alt_en || item.alt }))
+})
+
+// Tag di Cloudinary ditulis dalam bahasa Indonesia; label Inggrisnya dipetakan di sini
+const TAG_LABELS_EN: Record<string, string> = {
+	'Potret': 'Portrait',
+	'Ilustrasi': 'Illustration',
+	'Maskot': 'Mascot',
+	'Wisuda': 'Graduation',
+	'Manipulasi Foto': 'Photo Manipulation',
+	'desainer': 'Design',
+}
+
+function tagLabel(tag: string) {
+	return locale.value === 'en' ? TAG_LABELS_EN[tag] ?? tag : tag
+}
 
 // Filter Tag
 const selectedTag = ref<string>('ALL')
@@ -295,7 +315,7 @@ useSchemaOrg([
 						: 'bg-white dark:bg-[#001e1c] border-slate-300 dark:border-[#134e43] text-slate-800 dark:text-slate-200 hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
 					@click="selectTag(tag)"
 				>
-					<span>#{{ tag }}</span>
+					<span>#{{ tagLabel(tag) }}</span>
 				</button>
 			</div>
 
@@ -365,7 +385,7 @@ useSchemaOrg([
 								:key="tag"
 								class="border border-slate-200 px-1.5 py-0.5 text-[10px] text-slate-700 font-mono uppercase dark:border-[#134e43] dark:text-slate-300"
 							>
-								#{{ tag }}
+								#{{ tagLabel(tag) }}
 							</span>
 						</div>
 
@@ -439,37 +459,13 @@ useSchemaOrg([
 					>
 						<div class="relative max-w-5xl w-full flex flex-col border border-slate-200/80 bg-white shadow-2xl dark:border-[#134e43] dark:bg-[#001e1c]">
 							<!-- Inspection Sheet Header -->
-							<div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 bg-slate-50/80 p-3.5 dark:border-[#134e43] dark:bg-[#002420]/60 sm:p-4">
-								<span class="truncate text-[11px] text-slate-900 font-bold tracking-wider uppercase dark:text-slate-50">
+							<div class="flex items-center justify-between gap-4 border-b border-slate-200/80 bg-slate-50/80 p-3.5 dark:border-[#134e43] dark:bg-[#002420]/60 sm:p-4">
+								<span class="min-w-0 truncate text-[11px] text-slate-900 font-bold tracking-wider uppercase dark:text-slate-50">
 									{{ selectedPhoto.title }}
 								</span>
 
 								<!-- Action Controls -->
-								<div class="flex items-center gap-2 text-xs font-mono">
-									<!-- Prev Button -->
-									<button
-										type="button"
-										:disabled="!hasPrevPhoto"
-										class="cursor-pointer border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-all duration-150 dark:border-[#134e43]"
-										:class="hasPrevPhoto ? 'hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent active:scale-95' : 'opacity-40 cursor-not-allowed'"
-										:title="$t('galeri.prev_photo_title')"
-										@click="prevPhoto"
-									>
-										{{ $t('galeri.prev_photo') }}
-									</button>
-
-									<!-- Next Button -->
-									<button
-										type="button"
-										:disabled="!hasNextPhoto"
-										class="cursor-pointer border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-all duration-150 dark:border-[#134e43]"
-										:class="hasNextPhoto ? 'hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent active:scale-95' : 'opacity-40 cursor-not-allowed'"
-										:title="$t('galeri.next_photo_title')"
-										@click="nextPhoto"
-									>
-										{{ $t('galeri.next_photo') }}
-									</button>
-
+								<div class="flex shrink-0 items-center gap-2 text-xs font-mono">
 									<!-- Download HD Button -->
 									<a
 										v-if="selectedPhoto.download_url || selectedPhoto.full_image"
@@ -477,7 +473,7 @@ useSchemaOrg([
 										target="_blank"
 										rel="noopener"
 										download
-										class="hidden cursor-pointer items-center gap-1 border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase transition-all duration-150 sm:inline-flex active:scale-95 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent"
+										class="hidden h-10 cursor-pointer items-center gap-1 border border-slate-300 px-3 text-[10px] font-bold uppercase transition-all duration-150 sm:inline-flex active:scale-95 dark:border-[#134e43] hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent"
 									>
 										<span class="i-carbon-download text-xs" />
 										<span>{{ $t('galeri.download_hd') }}</span>
@@ -486,7 +482,7 @@ useSchemaOrg([
 									<!-- Close Button -->
 									<button
 										type="button"
-										class="cursor-pointer border border-slate-300 px-2.5 py-1 text-[10px] font-bold uppercase transition-all duration-150 active:scale-95 dark:border-[#134e43] hover:text-rose-600 dark:hover:text-rose-400"
+										class="h-10 w-10 inline-flex cursor-pointer items-center justify-center border border-slate-300 text-[11px] font-bold uppercase transition-all duration-150 active:scale-95 dark:border-[#134e43] hover:text-rose-600 dark:hover:text-rose-400"
 										:title="$t('galeri.close_title')"
 										@click="closeModal"
 									>
@@ -496,7 +492,7 @@ useSchemaOrg([
 							</div>
 
 							<!-- Image Canvas -->
-							<div class="relative max-h-[70vh] min-h-[300px] w-full flex items-center justify-center overflow-hidden bg-slate-950 p-2 sm:p-4">
+							<div class="relative max-h-[62vh] min-h-[260px] w-full flex items-center justify-center overflow-hidden bg-slate-950 p-2 sm:p-4">
 								<!-- LQIP Pixelated Placeholder (Aktif saat foto modal sedang di-fetch) -->
 								<img
 									v-if="selectedPhoto.placeholder_image"
@@ -514,7 +510,7 @@ useSchemaOrg([
 									format="webp"
 									quality="90"
 									sizes="xs:100vw sm:100vw md:90vw lg:1200px"
-									class="relative z-10 max-h-[66vh] max-w-full w-auto object-contain transition-opacity duration-500 ease-out"
+									class="relative z-10 max-h-[58vh] max-w-full w-auto object-contain transition-opacity duration-500 ease-out"
 									:class="isModalImageLoaded ? 'opacity-100' : 'opacity-0'"
 									@load="isModalImageLoaded = true"
 								/>
@@ -533,9 +529,38 @@ useSchemaOrg([
 										:key="tag"
 										class="border border-slate-300 px-1.5 py-0.5 text-[10px] uppercase dark:border-[#134e43]"
 									>
-										#{{ tag }}
+										#{{ tagLabel(tag) }}
 									</span>
 								</div>
+							</div>
+
+							<!-- Navigasi foto di bawah agar mudah dijangkau jempol -->
+							<div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2 border-t border-slate-200/80 p-3 text-xs font-mono dark:border-[#134e43] sm:p-4">
+								<button
+									type="button"
+									:disabled="!hasPrevPhoto"
+									class="h-11 inline-flex cursor-pointer items-center justify-center border border-slate-300 px-3 text-[11px] font-bold tracking-wider uppercase transition-all duration-150 dark:border-[#134e43]"
+									:class="hasPrevPhoto ? 'hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent active:scale-95' : 'opacity-40 cursor-not-allowed'"
+									:title="$t('galeri.prev_photo_title')"
+									@click="prevPhoto"
+								>
+									{{ $t('galeri.prev_photo') }}
+								</button>
+
+								<span class="px-2 text-[11px] text-slate-600 tabular-nums dark:text-slate-400">
+									{{ currentModalIndex + 1 }} / {{ filteredGallery.length }}
+								</span>
+
+								<button
+									type="button"
+									:disabled="!hasNextPhoto"
+									class="h-11 inline-flex cursor-pointer items-center justify-center border border-slate-300 px-3 text-[11px] font-bold tracking-wider uppercase transition-all duration-150 dark:border-[#134e43]"
+									:class="hasNextPhoto ? 'hover:border-brand-500 hover:text-brand-600 dark:hover:text-accent active:scale-95' : 'opacity-40 cursor-not-allowed'"
+									:title="$t('galeri.next_photo_title')"
+									@click="nextPhoto"
+								>
+									{{ $t('galeri.next_photo') }}
+								</button>
 							</div>
 						</div>
 					</div>
