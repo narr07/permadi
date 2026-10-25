@@ -1,65 +1,59 @@
 {
   "2026-10": {
-    "usd": 2.701,
-    "runs": 19,
+    "usd": 13.2307,
+    "runs": 43,
+    "providers": {
+      "aistudio": 0.72,
+      "vertex": 12.5107
+    },
     "last": {
-      "label": "auto",
-      "date": "2026-10-25T02:32:54.226Z",
-      "usd": 0.4363,
+      "label": "refresh:28",
+      "date": "2026-10-25T02:36:11.359Z",
+      "usd": 0.4376,
       "calls": [
-        {
-          "stage": "topic-pick",
-          "model": "gemini-3.8-flash",
-          "provider": "vertex",
-          "usd": 0.0071
-        },
         {
           "stage": "research",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0133
+          "usd": 0.0168
         },
         {
           "stage": "draft-id",
           "model": "gemini-4-argon",
           "provider": "vertex",
-          "usd": 0.0527
+          "usd": 0.0676
         },
         {
           "stage": "edit-id",
           "model": "gemini-4-argon",
           "provider": "vertex",
-          "usd": 0.0586
+          "usd": 0.0672
         },
         {
           "stage": "english",
           "model": "gemini-3.1-pro-preview",
           "provider": "vertex",
-          "usd": 0.1512
+          "usd": 0.1326
         },
         {
           "stage": "metadata",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0121
+          "usd": 0.0122
         },
         {
           "stage": "cover-1",
           "model": "gemini-3-pro-image",
           "provider": "vertex",
-          "usd": 0.139
+          "usd": 0.1393
         },
         {
           "stage": "cover-review",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0023
+          "usd": 0.0019
         }
       ]
-    },
-    "providers": {
-      "aistudio": 0.4891,
-      "vertex": 2.2119
     }
   }
 }
