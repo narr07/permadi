@@ -110,25 +110,25 @@ const { locale } = useI18n()
 			<!-- Statement (Col 5 to 12 on Desktop) -->
 			<div class="flex flex-col justify-between p-6 lg:col-span-8 lg:p-12 sm:p-10">
 				<div>
-					<h1 class="mb-8 text-balance text-3xl text-slate-900 font-900 leading-[0.96] tracking-[-0.03em] font-heading lg:text-6xl sm:text-5xl xl:text-[4.25rem] dark:text-slate-50">
+					<h1 class="mb-6 text-balance text-3xl text-slate-900 font-900 leading-[0.96] tracking-[-0.03em] font-heading lg:text-6xl sm:text-5xl xl:text-[4.25rem] dark:text-slate-50">
 						{{ hero?.headline || headline }}
 					</h1>
 
-					<p class="mb-10 max-w-[58ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
+					<p class="mb-8 max-w-[58ch] text-base text-slate-800 leading-relaxed font-sans sm:text-lg dark:text-slate-200">
 						{{ hero?.thesis || description }}
 					</p>
 				</div>
 
 				<div
 					v-if="hero?.links && hero.links.length > 0"
-					class="flex flex-wrap items-center gap-3 border-t border-slate-200/80 pt-8 sm:gap-4 dark:border-[#134e43]"
+					class="grid grid-cols-2 gap-2 border-t border-slate-200/80 pt-6 sm:flex sm:flex-wrap sm:items-center sm:gap-4 dark:border-[#134e43] sm:pt-8"
 				>
 					<NuxtLink
 						v-for="(link, idx) in hero.links"
 						:key="link.to"
 						:to="localePath(link.to)"
 						:class="idx === 0 ? 'bg-brand-500 text-slate-900 hover:bg-brand-400 shadow-xs' : 'border border-slate-300 dark:border-[#134e43] text-slate-900 dark:text-slate-50 hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'"
-						class="flex cursor-pointer items-center rounded-none px-6 py-3.5 text-xs font-bold tracking-widest font-mono uppercase transition-all duration-150 active:scale-[0.97]"
+						class="min-h-12 flex cursor-pointer items-center justify-center rounded-none px-3 py-3 text-center text-xs font-bold tracking-wider font-mono uppercase transition-all duration-150 active:scale-[0.97] sm:px-6 sm:py-3.5 sm:tracking-widest"
 					>
 						{{ link.label }}
 					</NuxtLink>

@@ -28,6 +28,9 @@ export interface GalleryItem {
 	public_id: string
 	title: string
 	alt: string
+	/** Versi Inggris dari context `caption_en` / `alt_en`; kosong jika belum diisi */
+	title_en: string
+	alt_en: string
 	image: string
 	placeholder_image: string
 	preview_image: string
@@ -106,8 +109,10 @@ export default defineCachedEventHandler(
 					const cleanFilename = (resource.public_id.split('/').pop() || 'permadi_artwork').replace(/[^\w-]/g, '_')
 					const downloadCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/fl_attachment:${cleanFilename}/${versionPrefix}${resource.public_id}.${resource.format}`
 
-					// Fallback: use readable name from public_id (e.g. "gallery/isola_v1" -> "Isola V1")
+					// Fallback: use readable name from public_id (e.g. "gallery/isola_v1_dfq70w" -> "Isola V1")
+					// Akhiran 6 karakter acak dari Cloudinary (unique filename) dibuang
 					const fallbackName = (resource.public_id.split('/').pop() || '')
+						.replace(/_[a-z0-9]{6}$/, '')
 						.replace(/[_-]/g, ' ')
 						.replace(/\s+/g, ' ')
 						.trim()
@@ -117,6 +122,8 @@ export default defineCachedEventHandler(
 						public_id: resource.public_id,
 						title: context.caption || context.alt || resource.display_name || fallbackName || 'Permadi Gallery',
 						alt: context.alt || context.caption || resource.display_name || fallbackName || 'Permadi Gallery',
+						title_en: context.caption_en || context.alt_en || '',
+						alt_en: context.alt_en || context.caption_en || '',
 						image: thumbnailCdnUrl,
 						placeholder_image: placeholderCdnUrl,
 						preview_image: modalPreviewCdnUrl,

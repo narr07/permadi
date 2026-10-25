@@ -5,10 +5,10 @@ const route = useRoute()
 const currentYear = new Date().getFullYear()
 
 const socialLinks = [
-	{ name: 'GitHub', handle: 'narr07', url: 'https://github.com/narr07', icon: 'i-ant-design-github-filled' },
+	{ name: 'GitHub', handle: 'narr07', url: 'https://github.com/narr07', icon: 'i-ant-design-github-outlined' },
 	{ name: 'X / Twitter', handle: 'dinarpermadi07', url: 'https://x.com/dinarpermadi07', icon: 'i-ant-design-x-outlined' },
 	{ name: 'Instagram', handle: 'narr07', url: 'https://www.instagram.com/narr07/', icon: 'i-ant-design-instagram-outlined' },
-	{ name: 'Behance', handle: 'narr07', url: 'https://www.behance.net/narr07', icon: 'i-ant-design-behance-square-filled' },
+	{ name: 'Behance', handle: 'narr07', url: 'https://www.behance.net/narr07', icon: 'i-ant-design-behance-outlined' },
 ]
 
 const isHomePage = computed(() => {
@@ -68,25 +68,29 @@ function scrollToTop() {
 		</div>
 
 		<!-- Social Platforms Rail (Inner Pages) -->
-		<div class="flex flex-col items-start justify-between gap-3 border-b border-slate-200/80 bg-slate-50/40 px-6 py-3.5 text-xs font-mono sm:flex-row sm:items-center dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-8">
+		<div class="flex flex-col items-start justify-between gap-3 border-b border-slate-200/80 bg-slate-50/40 px-6 py-4 text-xs font-mono sm:flex-row sm:items-center dark:border-[#134e43] dark:bg-[#002420]/30 sm:px-8">
 			<span class="text-[11px] text-slate-600 font-bold tracking-widest uppercase dark:text-slate-400">
 				{{ $t('footer.platforms') }}
 			</span>
-			<div class="flex flex-wrap items-center gap-4 sm:gap-6">
+			<div class="grid grid-cols-2 w-full gap-2 sm:w-auto sm:flex sm:flex-wrap sm:items-center">
 				<a
 					v-for="s in socialLinks"
 					:key="s.name"
 					:href="s.url"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="group inline-flex items-center gap-1.5 text-slate-700 transition-colors dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400"
+					:aria-label="`${s.name} @${s.handle}`"
+					class="group min-h-11 inline-flex items-center gap-2.5 border border-slate-200/80 bg-white px-3 py-2 text-slate-700 transition-colors duration-150 active:scale-[0.98] dark:border-[#134e43] hover:border-brand-500 dark:bg-[#001e1c] dark:text-slate-300 hover:text-brand-700 dark:hover:border-brand-400 dark:hover:text-brand-400"
 				>
 					<span
 						:class="s.icon"
-						class="text-xs"
+						class="shrink-0 text-lg"
+						aria-hidden="true"
 					/>
-					<span class="font-bold">{{ s.name }}</span>
-					<span class="i-carbon-arrow-up-right text-[10px] text-slate-400 transition-transform duration-150 group-hover:(translate-x-0.5 text-brand-600 -translate-y-0.5) dark:group-hover:text-brand-400" />
+					<span class="min-w-0 flex flex-col leading-tight">
+						<span class="truncate text-slate-900 font-bold dark:text-slate-50 group-hover:text-inherit">{{ s.name }}</span>
+						<span class="truncate text-[10px] text-slate-500 dark:text-slate-400">@{{ s.handle }}</span>
+					</span>
 				</a>
 			</div>
 		</div>

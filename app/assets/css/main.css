@@ -1,4 +1,5 @@
-@import '@unocss/reset/tailwind.css';
+/* Reset di dalam layer agar selalu kalah dari kelas utilitas UnoCSS (mis. bg-* pada <button type="button">) */
+@import '@unocss/reset/tailwind.css' layer(reset);
 
 /* Permadi Body Font Family */
 @font-face {
