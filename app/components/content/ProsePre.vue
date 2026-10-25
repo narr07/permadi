@@ -24,6 +24,11 @@ const props = withDefaults(
 )
 
 const { copy, copied } = useClipboard({ copiedDuring: 2000 })
+const { locale } = useI18n()
+
+const labels = computed(() => locale.value === 'id'
+	? { copy: 'Salin', copied: 'Tersalin', copyAria: 'Salin kode', diagram: 'Diagram', code: 'Kode' }
+	: { copy: 'Copy', copied: 'Copied', copyAria: 'Copy code', diagram: 'Diagram', code: 'Code' })
 
 const resolvedFilename = computed(() => {
 	if (props.filename)
@@ -150,82 +155,77 @@ function handleCopy() {
 </script>
 
 <template>
-	<div class="group relative my-6 overflow-hidden border border-[#115e4f]/30 rounded-2xl bg-[#042f27] shadow-xl transition-all duration-300 prose-code-block dark:border-[#134e43]/60 dark:bg-[#001412]">
-		<!-- Code Block Header (File Info & Copy Button) -->
-		<div class="flex select-none items-center justify-between border-b border-[#115e4f]/40 bg-[#02211c]/95 px-4 py-2.5 text-xs font-mono dark:border-[#134e43]/50 dark:bg-[#001c19]/90">
-			<!-- Left: File Icon & Filename & Language Tag -->
-			<div class="min-w-0 flex items-center gap-2.5">
+	<!-- not-prose: gaya tipografi artikel (mis. margin 2em pada img) tidak boleh masuk ke header -->
+	<div class="not-prose my-6 overflow-hidden border border-slate-200 bg-white prose-code-block dark:border-[#134e43] dark:bg-[#00140f]">
+		<div class="h-10 flex select-none items-center justify-between gap-3 border-b border-slate-200 bg-slate-50 pl-3 pr-1 text-xs font-mono dark:border-[#134e43] dark:bg-[#00211e]">
+			<div class="min-w-0 flex items-center gap-2">
 				<FileTypeIcon
-					:icon="isMermaid ? 'i-carbon-branch text-brand-400' : fileIcon"
+					:icon="isMermaid ? 'i-carbon-branch text-brand-600 dark:text-brand-400' : fileIcon"
 					class="shrink-0 text-sm"
 				/>
 				<span
 					v-if="resolvedFilename"
-					class="truncate text-xs text-brand-100 font-medium"
+					class="truncate text-slate-800 dark:text-slate-200"
 				>
 					{{ resolvedFilename }}
 				</span>
 				<span
 					v-if="displayLanguage"
-					class="border border-brand-500/30 rounded-md bg-brand-500/15 px-1.5 py-0.5 text-[10px] text-brand-300 font-semibold tracking-wider uppercase"
+					class="shrink-0 text-slate-500 dark:text-slate-400"
 				>
-					{{ isMermaid ? 'Diagram Alur' : displayLanguage }}
+					{{ isMermaid ? labels.diagram : displayLanguage }}
 				</span>
 			</div>
 
-			<!-- Right: Controls (Mermaid Toggle + Copy Button) -->
-			<div class="flex items-center gap-2">
-				<!-- Mermaid View Mode Toggle -->
+			<div class="flex shrink-0 items-center gap-1">
 				<div
 					v-if="isMermaid"
-					class="flex items-center border border-brand-500/30 rounded-lg bg-brand-950/60 p-0.5"
+					class="flex items-center border border-slate-200 p-0.5 dark:border-[#134e43]"
 				>
 					<button
 						type="button"
-						class="cursor-pointer rounded px-2 py-0.5 text-[11px] font-medium font-sans transition-all"
-						:class="isVisualMode ? 'bg-brand-500 text-brand-950 font-semibold shadow-sm' : 'text-brand-300 hover:text-white'"
+						class="h-6 cursor-pointer px-2 text-[11px] transition-colors"
+						:class="isVisualMode ? 'bg-slate-900 text-white dark:bg-brand-400 dark:text-slate-950' : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50'"
+						:aria-pressed="isVisualMode"
 						@click="isVisualMode = true"
 					>
 						Visual
 					</button>
 					<button
 						type="button"
-						class="cursor-pointer rounded px-2 py-0.5 text-[11px] font-medium font-sans transition-all"
-						:class="!isVisualMode ? 'bg-brand-500 text-brand-950 font-semibold shadow-sm' : 'text-brand-300 hover:text-white'"
+						class="h-6 cursor-pointer px-2 text-[11px] transition-colors"
+						:class="!isVisualMode ? 'bg-slate-900 text-white dark:bg-brand-400 dark:text-slate-950' : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50'"
+						:aria-pressed="!isVisualMode"
 						@click="isVisualMode = false"
 					>
-						Kode
+						{{ labels.code }}
 					</button>
 				</div>
 
-				<!-- Copy Code Button -->
 				<button
 					type="button"
-					class="flex cursor-pointer items-center gap-1.5 border border-brand-500/30 rounded-lg bg-brand-900/70 px-2.5 py-1 text-xs text-brand-200 transition-all dark:border-white/10 dark:bg-white/10 hover:bg-brand-800 hover:text-white focus:outline-none focus:ring-1 focus:ring-brand-400/50 dark:hover:bg-white/15"
-					:aria-label="copied ? 'Copied to clipboard' : 'Copy code to clipboard'"
+					class="h-8 inline-flex cursor-pointer items-center gap-1.5 px-2 text-xs text-slate-600 font-sans transition-colors hover:bg-slate-200 dark:text-slate-400 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-brand-600 focus-visible:outline-offset-2 focus-visible:outline dark:hover:bg-[#0a3a35] dark:hover:text-slate-50"
+					:aria-label="copied ? labels.copied : labels.copyAria"
 					@click="handleCopy"
 				>
 					<span
-						:class="copied ? 'i-carbon-checkmark text-brand-400' : 'i-carbon-copy'"
-						class="shrink-0 text-xs"
+						:class="copied ? 'i-carbon-checkmark text-brand-600 dark:text-brand-400' : 'i-carbon-copy'"
+						class="shrink-0"
+						aria-hidden="true"
 					/>
-					<span class="text-[11px] font-medium font-sans">
-						{{ copied ? 'Tersalin!' : 'Salin' }}
-					</span>
+					<span aria-live="polite">{{ copied ? labels.copied : labels.copy }}</span>
 				</button>
 			</div>
 		</div>
 
-		<!-- Mermaid Visual Render -->
 		<MermaidDiagram
 			v-if="isMermaid && isVisualMode"
 			:code="props.code"
 		/>
 
-		<!-- Pre / Code Slot Container with Shiki Syntax Highlighting -->
 		<div
 			v-else
-			class="custom-scrollbar relative overflow-x-auto p-4 text-[13px] leading-relaxed font-mono sm:text-sm"
+			class="custom-scrollbar relative overflow-x-auto px-4 py-3.5 text-[13px] leading-relaxed font-mono"
 		>
 			<pre
 				:class="props.class"
@@ -259,10 +259,7 @@ function handleCopy() {
 	word-wrap: normal !important;
 }
 
-:deep(.shiki span),
-:deep(pre span) {
-	color: var(--shiki-dark, inherit);
-}
+/* Warna token mengikuti tema lewat --shiki-default (terang) dan --shiki-dark di main.css */
 
 :deep(.line) {
 	display: block !important;
@@ -270,10 +267,10 @@ function handleCopy() {
 }
 
 :deep(.line.highlight) {
-	background-color: rgba(20, 184, 152, 0.15) !important;
+	background-color: rgba(20, 184, 152, 0.12) !important;
 	margin-left: -1rem;
 	margin-right: -1rem;
-	padding-left: 1rem;
+	padding-left: calc(1rem - 2px);
 	padding-right: 1rem;
 	border-left: 2px solid #14b898;
 }
