@@ -87,9 +87,9 @@ const filteredPosts = computed(() => {
 		})
 })
 
-// Halaman 1 tanpa filter: 1 artikel unggulan + 6 kartu; halaman lain: 6 kartu
+// Halaman 1 tanpa filter: 1 artikel unggulan + 12 kartu; halaman lain: 12 kartu
 const showLead = computed(() => selectedTag.value === 'ALL')
-const { totalPages, lead: leadPost, grid: gridPosts } = useLeadPagination(filteredPosts, currentPage, showLead)
+const { totalPages, lead: leadPost, grid: gridPosts } = useLeadPagination(filteredPosts, currentPage, showLead, 12)
 
 function getPaginationUrl(pageNumber: number) {
 	const query: Record<string, any> = { ...route.query }

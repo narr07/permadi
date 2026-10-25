@@ -24,6 +24,7 @@ import { fileURLToPath } from 'node:url'
 import { createLedger, generate, parseJson } from './lib/gemini.mjs'
 import { loadServiceAccount } from './lib/google-auth.mjs'
 import { fetchRisingTerms } from './lib/google-trends.mjs'
+import { latexToText } from './lib/latex-to-text.mjs'
 import { fetchSearchOpportunities } from './lib/search-console.mjs'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -61,6 +62,9 @@ const PUBLIC_ARTICLE_DIR = path.join(rootDir, 'public', 'article')
 const DATA_DIR = path.join(rootDir, 'data')
 const AI_SPEND_FILE = path.join(DATA_DIR, 'ai-spend.json')
 const SEO_REFRESH_FILE = path.join(DATA_DIR, 'seo-refresh.json')
+// Tanggal terakhir tiap artikel ditulis/ditulis ulang, per nomor artikel
+const REFRESH_LOG_FILE = path.join(DATA_DIR, 'refresh-log.json')
+const REFRESH_COOLDOWN_DAYS = 30
 
 const CATEGORIES = ['edu', 'art', 'tech']
 
@@ -76,6 +80,9 @@ const cliTopic = topicArgIdx !== -1 ? args[topicArgIdx + 1] : process.env.OVERRI
 // Tulis ulang artikel yang sudah terbit (nomor atau slug ID/EN); URL, nomor, dan tanggal tetap
 const refreshArgIdx = args.indexOf('--refresh')
 const cliRefresh = refreshArgIdx !== -1 ? args[refreshArgIdx + 1] : process.env.REFRESH_ARTICLE
+// Sudut pandang wajib saat menulis ulang, mis. untuk membedakan dua artikel bertopik mirip
+const angleArgIdx = args.indexOf('--angle')
+const cliAngle = angleArgIdx !== -1 ? args[angleArgIdx + 1] : process.env.REFRESH_ANGLE
 
 // Kata kunci jangkar pilar situs untuk pencarian tren terarah di Google
 const CATEGORY_ANCHORS = {
@@ -550,6 +557,87 @@ async function fetchTargetedTrends(category) {
 	return null
 }
 
+function readJson(file) {
+	try {
+		return JSON.parse(fs.readFileSync(file, 'utf8'))
+	}
+	catch {
+		return {}
+	}
+}
+
+/**
+ * Sisipkan baris (gambar) di bagian H2 ke-n: setelah paragraf pertamanya bila berupa teks biasa,
+ * atau tepat di bawah heading bila bagian itu dibuka tabel, daftar, kode, atau komponen MDC.
+ */
+function insertIntoSection(body, h2Index, line) {
+	const lines = body.split('\n')
+	let count = 0
+	for (let i = 0; i < lines.length; i++) {
+		if (!lines[i].startsWith('## ') || ++count !== h2Index)
+			continue
+		let j = i + 1
+		while (j < lines.length && lines[j].trim() === '')
+			j++
+		const plainParagraph = j < lines.length && !/^(?:::|\||```|[-*] |\d+\. |#|!\[)/.test(lines[j].trim())
+		if (plainParagraph) {
+			while (j < lines.length && lines[j].trim() !== '')
+				j++
+			lines.splice(j, 0, '', line)
+		}
+		else {
+			lines.splice(i + 1, 0, '', line)
+		}
+		return lines.join('\n')
+	}
+	return body
+}
+
+/**
+ * --refresh auto: artikel dengan tayangan Search Console terbanyak di posisi 4–30 yang belum
+ * ditulis ulang dalam REFRESH_COOLDOWN_DAYS hari. Mengembalikan nomor artikel atau null.
+ */
+async function pickRefreshCandidate() {
+	const account = loadServiceAccount()
+	if (!account) {
+		console.warn('[Refresh] GOOGLE_SERVICE_ACCOUNT_JSON missing; cannot read Search Console.')
+		return null
+	}
+	const { opportunities } = await fetchSearchOpportunities(account, { minImpressions: 2, minPosition: 4, maxPosition: 30, hostname: 'permadi.dev' })
+	const log = readJson(REFRESH_LOG_FILE)
+	const cutoff = Date.now() - REFRESH_COOLDOWN_DAYS * 864e5
+
+	const byPage = new Map()
+	for (const o of opportunities) {
+		const slug = new URL(o.page).pathname.match(/^\/(?:id\/)?blog\/([^/]+)\/?$/)?.[1]
+		if (!slug)
+			continue
+		const entry = byPage.get(slug) || { slug, impressions: 0, rows: [] }
+		entry.impressions += o.impressions
+		entry.rows.push(o)
+		byPage.set(slug, entry)
+	}
+
+	for (const candidate of [...byPage.values()].sort((a, b) => b.impressions - a.impressions)) {
+		let target
+		try {
+			target = loadArticleForRefresh(candidate.slug)
+		}
+		catch {
+			continue
+		}
+		const last = log[target.number]
+		if (last && new Date(last).getTime() > cutoff) {
+			console.log(`[Refresh] Skip #${target.number}: refreshed on ${last}`)
+			continue
+		}
+		saveRefreshCandidates(candidate.rows.map(r => ({ page: r.page, query: r.query })), opportunities)
+		console.log(`[Refresh] Picked #${target.number} (${candidate.slug}): ${candidate.impressions} impressions in positions 4–30`)
+		return target.number
+	}
+	return null
+}
+
 /**
  * Artikel lama yang kata kuncinya hampir masuk halaman 1, dikumpulkan per halaman di
  * data/seo-refresh.json (di-commit bersama artikel) sebagai daftar kerja pembaruan artikel.
@@ -772,6 +860,7 @@ const STRUCTURE_RULES = `STRUKTUR & FORMAT (Nuxt Content MDC):
 - Panjang body 1500–2000 kata.
 - Minimal 1 tabel perbandingan memakai SINTAKS TABEL MARKDOWN (| kolom | kolom |). DILARANG tabel atau diagram ASCII (+---+, |---|) di dalam blok kode.
 - Blok kode (\`\`\`) HANYA untuk kode sungguhan, dengan nama bahasa (\`\`\`ts, \`\`\`python, dst.).
+- DILARANG notasi LaTeX ($...$, \\frac, \\times). Tulis matematika sebagai teks biasa dengan simbol Unicode (×, ÷, ², ≤, →, π), karena situs tidak merender LaTeX.
 - Penekanan **tebal** atau *miring* secukupnya (1–3 kali per bagian).
 - Komponen MDC yang tersedia (pakai yang relevan, sintaks persis):
   ::tip / ::note / ::warning untuk catatan praktis atau jebakan umum:
@@ -898,7 +987,7 @@ async function generateArticle(apiKey, { category, topicData, ledger, profile, r
 Kategori: ${category} (${CATEGORY_GUIDELINES[category]})
 Primary keyword: "${primaryKeyword}"
 Secondary keywords: ${secondaryKeywords.join(', ') || 'sesuaikan dengan topik'}
-Tanggal terbit: ${rewrite?.date || today}${rewrite ? `\nMODE TULIS ULANG: artikel ini sudah terbit dengan URL tetap; tujuannya naik ke halaman 1 Google.${targetQueries}` : ''}`
+Tanggal terbit: ${rewrite?.date || today}${rewrite ? `\nMODE TULIS ULANG: artikel ini sudah terbit dengan URL tetap; tujuannya naik ke halaman 1 Google.${targetQueries}` : ''}${rewrite?.angle ? `\nSUDUT PANDANG WAJIB (artikel lain di situs sudah membahas sisi lain topik ini, jangan tumpang tindih): ${rewrite.angle}` : ''}`
 
 	// Tahap 1: riset berbasis Google Search agar fakta & data terkini, bukan dari ingatan model
 	console.log('\n[Pipeline 1/5] Research with Google Search grounding...')
@@ -1003,7 +1092,13 @@ Kembalikan JSON:
   "tags_en": ["3-5 lowercase tags"],
   "image_alt_id": "alt text 10-125 karakter yang menggambarkan ilustrasi cover",
   "image_alt_en": "alt text 10-125 characters",
-  "image_brief": "English, 2-3 sentences. Art direction for ONE concrete editorial illustration that shows the article's core idea through recognizable objects or a scene (e.g. a teacher's desk with a lesson plan, a designer constructing a logo on a grid, a browser and phone showing a responsive layout). Name the focal subject, 2-4 supporting objects, and the composition. No abstract-only shapes, no people's faces in close-up."
+  "image_brief": "English, 2-3 sentences. Art direction for ONE concrete editorial illustration that shows the article's core idea through recognizable objects or a scene (e.g. a teacher's desk with a lesson plan, a designer constructing a logo on a grid, a browser and phone showing a responsive layout). Name the focal subject, 2-4 supporting objects, and the composition. No abstract-only shapes, no people's faces in close-up.",
+  "inline_image": {
+    "after_h2": "nomor urut bagian H2 (mulai 1) yang paling terbantu oleh ilustrasi penjelas: proses, perbandingan, struktur, atau alur",
+    "brief": "English, 2-3 sentences. A second, explanatory illustration for that section, different from the cover: show the concept as a visual metaphor or simple process scene with icons, arrows, and objects. No text or labels at all (the article is bilingual).",
+    "alt_id": "alt text 10-125 karakter",
+    "alt_en": "alt text 10-125 characters"
+  }
 }
 
 ARTIKEL (ID):
@@ -1215,7 +1310,12 @@ async function main() {
 		process.exit(1)
 	}
 
-	const refreshTarget = cliRefresh ? loadArticleForRefresh(cliRefresh) : null
+	const refreshRef = cliRefresh === 'auto' ? await pickRefreshCandidate() : cliRefresh
+	if (cliRefresh === 'auto' && !refreshRef) {
+		console.log('[Refresh] No article needs a refresh right now.')
+		return
+	}
+	const refreshTarget = refreshRef ? loadArticleForRefresh(refreshRef) : null
 	const info = refreshTarget
 		? { nextNumber: refreshTarget.number, category: refreshTarget.category, lastCategory: '-' }
 		: getNextArticleInfo(cliCategory)
@@ -1261,7 +1361,7 @@ async function main() {
 		topicData,
 		ledger,
 		profile,
-		rewrite: refreshTarget,
+		rewrite: refreshTarget && { ...refreshTarget, angle: cliAngle },
 	})
 
 	// Tulis ulang: slug, nomor file, dan tanggal terbit tetap supaya URL dan peringkat tidak berubah
@@ -1287,13 +1387,24 @@ async function main() {
 	// Clean up any leading image markdown tags and normalize /images/ paths generated by the model.
 	// Em dash dilarang gaya situs; sisa yang lolos dari editor diganti koma.
 	// Komponen ::faq sudah menampilkan judulnya sendiri, jadi heading tepat di atasnya dibuang.
-	const tidyBody = body => body
+	// Situs tidak merender LaTeX: rumus $...$ diubah ke teks + simbol Unicode.
+	const tidyBody = body => latexToText(body
 		.replace(/^!\[[^\]]*\]\([^)]+\)\s*/, '')
 		.replace(/\/images\//g, '/article/')
 		.replace(/\s*—\s*/g, ', ')
-		.replace(/^#{2,} [^\n]*\n+(?=::faq\b)/gm, '')
-	const sanitizedBodyId = tidyBody(cleanBodyId)
-	const sanitizedBodyEn = tidyBody(cleanBodyEn)
+		.replace(/^#{2,} [^\n]*\n+(?=::faq\b)/gm, ''))
+	let sanitizedBodyId = tidyBody(cleanBodyId)
+	let sanitizedBodyEn = tidyBody(cleanBodyEn)
+
+	// Ilustrasi penjelas di dalam artikel (mode premium saja); disisipkan di bagian yang dipilih model
+	const inline = generated.inline_image
+	if (!isDryRun && profile?.name === 'premium' && inline?.brief && Number(inline.after_h2) > 0) {
+		const inlineSlug = `${imageSlug}-ilustrasi`
+		if (await generateCoverImage(apiKey, { brief: inline.brief, ledger, profile }, inlineSlug)) {
+			sanitizedBodyId = insertIntoSection(sanitizedBodyId, Number(inline.after_h2), `![${inline.alt_id || generated.title_id}](/article/${inlineSlug}.webp)`)
+			sanitizedBodyEn = insertIntoSection(sanitizedBodyEn, Number(inline.after_h2), `![${inline.alt_en || generated.title_en}](/article/${inlineSlug}.webp)`)
+		}
+	}
 
 	// Format Indonesian Markdown
 	const idMarkdown = `---
@@ -1348,6 +1459,11 @@ ${sanitizedBodyEn}
 	// Topic-specific AI cover; category fallback only if generation fails
 	if (!await generateCoverImage(apiKey, { brief: generated.image_brief, ledger, profile }, imageSlug))
 		ensureCoverImage(imageSlug, info.category)
+
+	// Catat tanggal tulis ulang/terbit agar refresh otomatis mingguan tidak mengulang artikel yang masih baru
+	const refreshLog = readJson(REFRESH_LOG_FILE)
+	refreshLog[info.nextNumber] = new Date().toISOString().slice(0, 10)
+	fs.writeFileSync(REFRESH_LOG_FILE, `${JSON.stringify(refreshLog, null, 2)}\n`)
 
 	console.log(`\n[Complete] Article generation finished. Cost this run: $${ledger.runUsd.toFixed(3)} (month: $${ledger.spent.toFixed(2)} of $${AI_MONTHLY_BUDGET_USD})`)
 }

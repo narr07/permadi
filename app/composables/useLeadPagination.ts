@@ -3,7 +3,7 @@ import type { Ref } from 'vue'
 /**
  * Paginasi daftar dengan satu item unggulan di halaman pertama.
  * Halaman 1: unggulan + `gridSize` kartu; halaman berikutnya: `gridSize` kartu.
- * `gridSize` 6 = kelipatan 2 dan 3 kolom, jadi baris grid penuh kecuali di halaman terakhir.
+ * `gridSize` sebaiknya kelipatan 6 (= kelipatan 2 dan 3 kolom) agar baris grid penuh kecuali di halaman terakhir.
  */
 export function useLeadPagination<T>(items: Ref<T[]>, page: Ref<number>, hasLead: Ref<boolean>, gridSize = 6) {
 	const firstPageSize = computed(() => hasLead.value ? gridSize + 1 : gridSize)

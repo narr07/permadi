@@ -2,8 +2,9 @@ name: Scheduled Auto Blog
 
 on:
   schedule:
-    # Berjalan otomatis setiap 2 hari sekali pada pukul 00:00 UTC (07:00 WIB)
-    - cron: '0 0 */2 * *'
+    # Setiap hari pukul 00:00 UTC (07:00 WIB). Biaya dijaga pembatas anggaran di generator:
+    # Vertex (kredit trial) sampai 18 Jan 2027, lalu AI Studio dengan batas AI_MONTHLY_BUDGET_USD.
+    - cron: '0 0 * * *'
 
   # Tombol trigger manual dari tab Actions di GitHub
   workflow_dispatch:
@@ -60,17 +61,27 @@ jobs:
           node scripts/auto-generate.mjs
 
       - name: Commit and push changes
+        id: publish
         run: |
           git config user.name "Dinar, Permadi"
           git config user.email "dinarpermadi07@gmail.com"
 
           # Periksa apakah ada file markdown baru yang di-generate
           if [ -n "$(git status --porcelain content/id/blog content/en/blog)" ]; then
-            git add content/id/blog/ content/en/blog/ public/article/ data/ai-spend.json data/seo-refresh.json
+            git add content/id/blog/ content/en/blog/ public/article/ data/ai-spend.json data/seo-refresh.json data/refresh-log.json
             ARTICLE_NUM=$(ls -1 content/id/blog | grep -E '^[0-9]+\.' | sed -E 's/^([0-9]+)\..*/\1/' | sort -n | tail -1)
             git commit -m "chore(blog): publish article ${ARTICLE_NUM}"
+            git pull --rebase origin main
             git push origin main
+            echo "published=true" >> "$GITHUB_OUTPUT"
             echo "Article #${ARTICLE_NUM} successfully committed and pushed to main."
           else
             echo "No new articles found to commit."
           fi
+
+      # Push dari GITHUB_TOKEN tidak memicu workflow lain, jadi index chatbot diperbarui di sini
+      - name: Reindex chat gateway
+        if: steps.publish.outputs.published == 'true'
+        run: |
+          curl -s -X POST https://8787-agqwzwuabezjc5sxhm4y77kkyy.instabox.tech/admin/reindex \
+            -H "Authorization: Bearer ${{ secrets.CHAT_GATEWAY_ADMIN_TOKEN }}"
