@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { onClickOutside, useEventListener, useScrollLock } from '@vueuse/core'
+import { onClickOutside, useEventListener, useScrollLock, useThrottleFn } from '@vueuse/core'
 
 const { t, locale } = useI18n()
 const localePath = useLocalePath()
-const switchLocalePath = useSwitchLocalePath()
 const { getLocaleSwitchUrl } = useLocaleSwitch()
 const { toggleDark, isDark } = useThemeToggle()
 const route = useRoute()
@@ -31,7 +30,27 @@ watch(mobileOpen, (open) => {
 	scrollLocked.value = open
 	document.querySelectorAll('#main, footer').forEach(el => el.toggleAttribute('inert', open))
 })
-watch(() => route.path, () => (mobileOpen.value = false))
+const scrollProgress = ref(0)
+
+const updateScrollProgress = useThrottleFn(() => {
+	if (!import.meta.client)
+		return
+	const docEl = document.documentElement
+	const total = docEl.scrollHeight - docEl.clientHeight
+	if (total <= 0) {
+		scrollProgress.value = 0
+		return
+	}
+	const progress = Math.min(1, Math.max(0, window.scrollY / total))
+	scrollProgress.value = Number(progress.toFixed(4))
+}, 20)
+
+watch(() => route.path, () => {
+	mobileOpen.value = false
+	nextTick(() => {
+		updateScrollProgress()
+	})
+})
 
 const navItems = computed(() => [
 	{
@@ -73,10 +92,18 @@ onMounted(() => {
 		}
 	}
 	updateHeight()
+	updateScrollProgress()
 	window.addEventListener('resize', updateHeight, { passive: true })
+	window.addEventListener('scroll', updateScrollProgress, { passive: true })
 	if (typeof ResizeObserver !== 'undefined' && headerContainerRef.value) {
 		const ro = new ResizeObserver(updateHeight)
 		ro.observe(headerContainerRef.value)
+	}
+})
+
+onUnmounted(() => {
+	if (import.meta.client) {
+		window.removeEventListener('scroll', updateScrollProgress)
 	}
 })
 </script>
@@ -214,6 +241,17 @@ onMounted(() => {
 				</div>
 			</nav>
 		</Transition>
+
+		<!-- Global Swiss Architectural Scroll / Reading Progress Indicator -->
+		<div
+			class="pointer-events-none absolute bottom-0 left-0 right-0 h-[2px] overflow-hidden"
+			aria-hidden="true"
+		>
+			<div
+				class="h-full origin-left bg-brand-500 transition-transform duration-75 ease-out will-change-transform dark:bg-brand-400"
+				:style="{ transform: `scaleX(${scrollProgress})` }"
+			/>
+		</div>
 	</header>
 </template>
 
