@@ -272,19 +272,51 @@ const updateActiveHeading = useThrottleFn(() => {
 	}
 }, 80)
 
+// Real-time architectural reading progress calculation
+const readingProgress = ref(0)
+const updateReadingProgress = useThrottleFn(() => {
+	if (!import.meta.client)
+		return
+	const articleEl = document.querySelector('main')
+	if (!articleEl) {
+		const docEl = document.documentElement
+		const total = docEl.scrollHeight - docEl.clientHeight
+		readingProgress.value = total > 0 ? Number(Math.min(1, Math.max(0, window.scrollY / total)).toFixed(4)) : 0
+		return
+	}
+
+	const rect = articleEl.getBoundingClientRect()
+	const startY = window.scrollY + rect.top - 100
+	const scrollableDistance = rect.height - window.innerHeight + 100
+
+	if (scrollableDistance <= 0) {
+		readingProgress.value = 1
+		return
+	}
+
+	const currentScroll = window.scrollY - startY
+	const progress = Math.min(1, Math.max(0, currentScroll / scrollableDistance))
+	readingProgress.value = Number(progress.toFixed(4))
+}, 20)
+
+function onScroll() {
+	updateActiveHeading()
+	updateReadingProgress()
+}
+
 onMounted(() => {
 	if (!import.meta.client)
 		return
 
 	nextTick(() => {
-		updateActiveHeading()
-		window.addEventListener('scroll', updateActiveHeading, { passive: true })
+		onScroll()
+		window.addEventListener('scroll', onScroll, { passive: true })
 	})
 })
 
 onUnmounted(() => {
 	if (import.meta.client) {
-		window.removeEventListener('scroll', updateActiveHeading)
+		window.removeEventListener('scroll', onScroll)
 	}
 })
 
@@ -292,7 +324,7 @@ watch(
 	() => post.value?.doc,
 	() => {
 		nextTick(() => {
-			updateActiveHeading()
+			onScroll()
 		})
 	},
 	{ deep: true },
@@ -329,6 +361,18 @@ defineOgImage('Bento', {
 		v-if="post?.doc"
 		class="w-full bg-white dark:bg-[#001e1c]"
 	>
+		<!-- Architectural Thin Reading Progress Bar (Fixed below header) -->
+		<div
+			class="fixed left-0 right-0 z-40 h-[2px] pointer-events-none bg-slate-200/40 dark:bg-[#134e43]/30"
+			:style="{ top: 'var(--app-header-height, 65px)' }"
+			aria-hidden="true"
+		>
+			<div
+				class="h-full bg-brand-500 dark:bg-brand-400 will-change-transform origin-left transition-transform duration-75 ease-out"
+				:style="{ transform: `scaleX(${readingProgress})` }"
+			/>
+		</div>
+
 		<!-- Navigation Top Rail -->
 		<nav
 			aria-label="Breadcrumb navigasi"
