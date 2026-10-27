@@ -63,5 +63,15 @@
       }
     },
     "updated": "2026-10-25"
+  },
+  "https://permadi.dev/id/blog/mengenal-nuxt-js-framework-vue-ssr-ssg": {
+    "queries": {
+      "nuxt": {
+        "position": 18.5,
+        "impressions": 2,
+        "seen": "2026-10-27"
+      }
+    },
+    "updated": "2026-10-27"
   }
 }

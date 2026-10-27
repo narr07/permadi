@@ -1,69 +1,69 @@
 {
   "2026-10": {
-    "usd": 15.4865,
-    "runs": 47,
+    "usd": 16.0636,
+    "runs": 48,
     "providers": {
       "aistudio": 0.72,
-      "vertex": 14.7665
+      "vertex": 15.3436
     },
     "last": {
       "label": "auto",
-      "date": "2026-10-26T04:28:50.632Z",
-      "usd": 0.6266,
+      "date": "2026-10-27T04:46:39.796Z",
+      "usd": 0.5771,
       "calls": [
         {
           "stage": "topic-pick",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0063
+          "usd": 0.0053
         },
         {
           "stage": "research",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0163
+          "usd": 0.0166
         },
         {
           "stage": "draft-id",
           "model": "gemini-4-argon",
           "provider": "vertex",
-          "usd": 0.0598
+          "usd": 0.0555
         },
         {
           "stage": "edit-id",
           "model": "gemini-4-argon",
           "provider": "vertex",
-          "usd": 0.067
+          "usd": 0.0621
         },
         {
           "stage": "english",
           "model": "gemini-3.1-pro-preview",
           "provider": "vertex",
-          "usd": 0.1844
+          "usd": 0.1365
         },
         {
           "stage": "metadata",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0108
+          "usd": 0.0154
         },
         {
           "stage": "cover-1",
           "model": "gemini-3-pro-image",
           "provider": "vertex",
-          "usd": 0.1391
+          "usd": 0.1394
         },
         {
           "stage": "cover-review",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0021
+          "usd": 0.002
         },
         {
           "stage": "cover-1",
           "model": "gemini-3-pro-image",
           "provider": "vertex",
-          "usd": 0.1388
+          "usd": 0.1422
         },
         {
           "stage": "cover-review",
