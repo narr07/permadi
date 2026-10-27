@@ -27,7 +27,7 @@ const { data: project } = await useAsyncData(
 			return s === requestedSlug.value
 		})
 
-		// Fallback: If slug in other language was visited, find matching document
+		// Fallback: If slug in other language was visited, redirect to the matching project
 		if (!matched) {
 			const otherCol = (locale.value === 'id' ? 'projek_en' : 'projek_id') as any
 			const otherDocs = await queryCollection(otherCol).all()
@@ -36,9 +36,11 @@ const { data: project } = await useAsyncData(
 				return s === requestedSlug.value
 			})
 			if (otherMatched) {
-				const matchId = otherMatched.idProjek || otherMatched.idItem
-				if (matchId) {
-					matched = allDocs.find((d: any) => (d.idProjek === matchId || d.idItem === matchId))
+				const targetPath = locale.value === 'id'
+					? `/projects/${requestedSlug.value}`
+					: `/id/projek/${requestedSlug.value}`
+				return {
+					redirectUrl: targetPath,
 				}
 			}
 		}
@@ -86,6 +88,10 @@ watch(
 	},
 	{ immediate: true },
 )
+
+if (project.value?.redirectUrl) {
+	await navigateTo(project.value.redirectUrl, { redirectCode: 301, external: false })
+}
 
 if (!project.value?.doc) {
 	throw createError({

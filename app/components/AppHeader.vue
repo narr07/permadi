@@ -4,6 +4,7 @@ import { onClickOutside, useEventListener, useScrollLock } from '@vueuse/core'
 const { t, locale } = useI18n()
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
+const { getLocaleSwitchUrl } = useLocaleSwitch()
 const { toggleDark, isDark } = useThemeToggle()
 const route = useRoute()
 
@@ -118,7 +119,7 @@ onMounted(() => {
 				<!-- Language Switcher -->
 				<div class="hidden items-center gap-1 text-xs text-slate-700 font-mono sm:flex dark:text-slate-300">
 					<NuxtLink
-						:to="switchLocalePath('id')"
+						:to="getLocaleSwitchUrl('id')"
 						class="px-1 py-0.5 transition-all duration-150 active:scale-90 hover:text-brand-500"
 						:class="locale === 'id' ? 'font-bold text-brand-700 dark:text-brand-400 underline underline-offset-2' : ''"
 					>
@@ -126,7 +127,7 @@ onMounted(() => {
 					</NuxtLink>
 					<span class="text-slate-600 dark:text-slate-400">/</span>
 					<NuxtLink
-						:to="switchLocalePath('en')"
+						:to="getLocaleSwitchUrl('en')"
 						class="px-1 py-0.5 transition-all duration-150 active:scale-90 hover:text-brand-500"
 						:class="locale === 'en' ? 'font-bold text-brand-700 dark:text-brand-400 underline underline-offset-2' : ''"
 					>
@@ -200,12 +201,12 @@ onMounted(() => {
 					<span class="text-slate-600 tracking-wider uppercase dark:text-slate-400">{{ $t('common.language') }}</span>
 					<div class="flex items-center">
 						<NuxtLink
-							:to="switchLocalePath('id')"
+							:to="getLocaleSwitchUrl('id')"
 							class="h-10 w-12 flex items-center justify-center border border-slate-300 dark:border-[#134e43]"
 							:class="locale === 'id' ? 'bg-brand-500 border-brand-500 text-slate-950 font-bold' : 'text-slate-700 dark:text-slate-300'"
 						>ID</NuxtLink>
 						<NuxtLink
-							:to="switchLocalePath('en')"
+							:to="getLocaleSwitchUrl('en')"
 							class="h-10 w-12 flex items-center justify-center border border-l-0 border-slate-300 dark:border-[#134e43]"
 							:class="locale === 'en' ? 'bg-brand-500 border-brand-500 text-slate-950 font-bold' : 'text-slate-700 dark:text-slate-300'"
 						>EN</NuxtLink>

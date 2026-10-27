@@ -1,3 +1,8 @@
+import { syncBlogSlugs } from './scripts/sync-blog-slugs.mjs'
+
+// Automatically synchronize blog slug translations between en and id from content/
+syncBlogSlugs()
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	modules: [
@@ -8,16 +13,17 @@ export default defineNuxtConfig({
 		'@nuxt/fonts',
 		'@unocss/nuxt',
 		'@nuxtjs/color-mode',
-		'@nuxt/content',
 		'@nuxtjs/i18n',
+		'@nuxtjs/seo',
+		'@nuxt/content',
 		'@nuxt/image',
 		'nuxt-studio',
-		'@nuxtjs/seo',
 		'nuxt-llms',
 		'@nuxt/scripts',
 		'@stefanobartoletti/nuxt-social-share',
 		'@nuxt/a11y',
 		'nuxt-vitalizer',
+		'@sentry/nuxt/module',
 	],
 	$development: {
 		modules: ['@nuxtjs/mcp-toolkit'],
@@ -238,6 +244,12 @@ export default defineNuxtConfig({
 		resendAudienceId: process.env.RESEND_AUDIENCE_ID || '',
 		chatProxySecret: process.env.NUXT_CHAT_PROXY_SECRET || '',
 		public: {
+			// DSN Sentry project permadi.dev. Kosong berarti Sentry tidak mengirim apa pun (lokal, atau sebelum DSN diisi).
+			sentry: {
+				dsn: process.env.NUXT_PUBLIC_SENTRY_DSN || '',
+			},
+			// Skrip SimpleAnalytics hanya dimuat bila diaktifkan, supaya preview dan lokal tidak ikut terhitung.
+			simpleAnalytics: process.env.NUXT_PUBLIC_SIMPLE_ANALYTICS === 'true',
 			googleAnalyticsId: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID || '',
 			fbAppId: process.env.NUXT_PUBLIC_FB_APP_ID || '',
 		},
@@ -263,6 +275,16 @@ export default defineNuxtConfig({
 					}
 				: {}),
 		},
+	},
+	sentry: {
+		org: 'permadi',
+		project: 'permadi-dev',
+		authToken: process.env.SENTRY_AUTH_TOKEN,
+		// Tanpa auth token, source map tidak dibuat; kalau dibuat tapi tidak diunggah, kode sumber ikut tersaji publik.
+		sourcemaps: {
+			disable: !process.env.SENTRY_AUTH_TOKEN,
+		},
+		telemetry: false,
 	},
 	image: {
 		cloudinary: {
@@ -463,7 +485,7 @@ export default defineNuxtConfig({
 				'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
 				'Referrer-Policy': 'strict-origin-when-cross-origin',
 				'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
-				'Content-Security-Policy': 'default-src \'self\'; script-src \'self\' \'unsafe-inline\' \'unsafe-eval\' https://www.googletagmanager.com https://static.cloudflareinsights.com; style-src \'self\' \'unsafe-inline\' https://fonts.googleapis.com; font-src \'self\' data: https://fonts.gstatic.com; img-src \'self\' data: blob: https://avatars.githubusercontent.com https://github.githubassets.com https://res.cloudinary.com https://images.unsplash.com https://*.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://*.googletagmanager.com https://*.doubleclick.net https://*.google.com https://www.google.com; connect-src \'self\' https://api.github.com https://github.com https://raw.githubusercontent.com https://nuxt.studio https://*.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://*.googletagmanager.com https://*.doubleclick.net https://*.google.com https://www.google.com https://res.cloudinary.com https://api.cloudinary.com https://cloudflareinsights.com https://*.instabox.tech; frame-ancestors \'self\'; upgrade-insecure-requests;',
+				'Content-Security-Policy': 'default-src \'self\'; script-src \'self\' \'unsafe-inline\' \'unsafe-eval\' https://www.googletagmanager.com https://static.cloudflareinsights.com https://scripts.simpleanalyticscdn.com https://browser.sentry-cdn.com; style-src \'self\' \'unsafe-inline\' https://fonts.googleapis.com; font-src \'self\' data: https://fonts.gstatic.com; img-src \'self\' data: blob: https://avatars.githubusercontent.com https://github.githubassets.com https://res.cloudinary.com https://images.unsplash.com https://*.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://*.googletagmanager.com https://*.doubleclick.net https://*.google.com https://www.google.com https://queue.simpleanalyticscdn.com; connect-src \'self\' https://api.github.com https://github.com https://raw.githubusercontent.com https://nuxt.studio https://*.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://*.googletagmanager.com https://*.doubleclick.net https://*.google.com https://www.google.com https://res.cloudinary.com https://api.cloudinary.com https://cloudflareinsights.com https://*.instabox.tech https://queue.simpleanalyticscdn.com https://*.ingest.us.sentry.io; worker-src \'self\' blob:; frame-ancestors \'self\'; upgrade-insecure-requests;',
 			},
 		},
 

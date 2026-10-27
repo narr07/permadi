@@ -18,6 +18,11 @@ useHead({
 	],
 })
 
+// Statistik pengunjung tanpa cookie. Dimuat setelah Nuxt siap supaya tidak menambah TBT, dan hanya bila diaktifkan lewat env.
+if (config.public.simpleAnalytics && !import.meta.dev) {
+	useScript({ src: 'https://scripts.simpleanalyticscdn.com/latest.js', async: true }, { trigger: 'onNuxtReady' })
+}
+
 useSeoMeta({
 	titleTemplate: (titleChunk) => {
 		return titleChunk ? `${titleChunk} | Permadi` : (locale.value === 'id' ? 'Dinar Permadi Yusup | Guru SD, Developer & Desainer' : 'Dinar Permadi Yusup | Teacher, Developer & Designer')

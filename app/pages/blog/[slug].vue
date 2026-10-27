@@ -88,7 +88,7 @@ const { data: post } = await useAsyncData(
 			return s === requestedSlug.value
 		})
 
-		// 2. Fallback: Check other locale collection
+		// 2. If not matched, check if this slug belongs to the other language
 		if (!matched) {
 			const otherCol = (locale.value === 'id' ? 'blog_en' : 'blog_id') as any
 			const otherDocs = await queryCollection(otherCol).all()
@@ -97,9 +97,11 @@ const { data: post } = await useAsyncData(
 				return s === requestedSlug.value
 			})
 			if (otherMatched) {
-				const matchId = otherMatched.idBlog || otherMatched.idItem
-				if (matchId) {
-					matched = allDocs.find((d: any) => (d.idBlog === matchId || d.idItem === matchId))
+				const targetPath = locale.value === 'id'
+					? `/blog/${requestedSlug.value}`
+					: `/id/blog/${requestedSlug.value}`
+				return {
+					redirectUrl: targetPath,
 				}
 			}
 		}
@@ -165,6 +167,10 @@ watch(
 )
 
 provide('pageTitle', computed(() => post.value?.doc?.title || ''))
+
+if (post.value?.redirectUrl) {
+	await navigateTo(post.value.redirectUrl, { redirectCode: 301, external: false })
+}
 
 if (!post.value?.doc) {
 	throw createError({
