@@ -1,75 +1,75 @@
 {
   "2026-10": {
-    "usd": 16.0636,
-    "runs": 48,
+    "usd": 16.61,
+    "runs": 49,
     "providers": {
       "aistudio": 0.72,
-      "vertex": 15.3436
+      "vertex": 15.89
     },
     "last": {
       "label": "auto",
-      "date": "2026-10-27T04:46:39.796Z",
-      "usd": 0.5771,
+      "date": "2026-10-28T05:19:25.028Z",
+      "usd": 0.5464,
       "calls": [
         {
           "stage": "topic-pick",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0053
+          "usd": 0.0092
         },
         {
           "stage": "research",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0166
+          "usd": 0.0133
         },
         {
           "stage": "draft-id",
           "model": "gemini-4-argon",
           "provider": "vertex",
-          "usd": 0.0555
+          "usd": 0.0446
         },
         {
           "stage": "edit-id",
           "model": "gemini-4-argon",
           "provider": "vertex",
-          "usd": 0.0621
+          "usd": 0.0489
         },
         {
           "stage": "english",
           "model": "gemini-3.1-pro-preview",
           "provider": "vertex",
-          "usd": 0.1365
+          "usd": 0.1337
         },
         {
           "stage": "metadata",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0154
+          "usd": 0.0147
         },
         {
           "stage": "cover-1",
           "model": "gemini-3-pro-image",
           "provider": "vertex",
-          "usd": 0.1394
+          "usd": 0.1395
         },
         {
           "stage": "cover-review",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.002
+          "usd": 0.0019
         },
         {
           "stage": "cover-1",
           "model": "gemini-3-pro-image",
           "provider": "vertex",
-          "usd": 0.1422
+          "usd": 0.1384
         },
         {
           "stage": "cover-review",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.002
+          "usd": 0.0022
         }
       ]
     }

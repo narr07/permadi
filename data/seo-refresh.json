@@ -24,7 +24,7 @@
       "accelerated learning techniques examples": {
         "position": 15.5,
         "impressions": 2,
-        "seen": "2026-10-25"
+        "seen": "2026-10-28"
       },
       "accelerated learning method": {
         "position": 24,
@@ -39,10 +39,10 @@
       "accelerated learning techniques": {
         "position": 35.9,
         "impressions": 7,
-        "seen": "2026-10-25"
+        "seen": "2026-10-28"
       }
     },
-    "updated": "2026-10-25"
+    "updated": "2026-10-28"
   },
   "https://permadi.dev/blog/accelerated-learning-cara-belajar-cepat": {
     "queries": {
@@ -59,10 +59,10 @@
       "accelerated learning adalah": {
         "position": 30,
         "impressions": 2,
-        "seen": "2026-10-25"
+        "seen": "2026-10-28"
       }
     },
-    "updated": "2026-10-25"
+    "updated": "2026-10-28"
   },
   "https://permadi.dev/id/blog/mengenal-nuxt-js-framework-vue-ssr-ssg": {
     "queries": {
@@ -73,5 +73,15 @@
       }
     },
     "updated": "2026-10-27"
+  },
+  "https://permadi.dev/id/blog/problem-based-learning-stages-and-syntax": {
+    "queries": {
+      "sintaks pbl": {
+        "position": 24,
+        "impressions": 2,
+        "seen": "2026-10-28"
+      }
+    },
+    "updated": "2026-10-28"
   }
 }
