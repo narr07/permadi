@@ -1,75 +1,51 @@
 {
   "2026-10": {
-    "usd": 16.61,
-    "runs": 49,
+    "usd": 16.9037,
+    "runs": 50,
     "providers": {
       "aistudio": 0.72,
-      "vertex": 15.89
+      "vertex": 16.1837
     },
     "last": {
       "label": "auto",
-      "date": "2026-10-28T05:19:25.028Z",
-      "usd": 0.5464,
+      "date": "2026-10-29T05:30:21.020Z",
+      "usd": 0.2937,
       "calls": [
         {
           "stage": "topic-pick",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0092
+          "usd": 0.0081
         },
         {
           "stage": "research",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0133
+          "usd": 0.0172
         },
         {
           "stage": "draft-id",
           "model": "gemini-4-argon",
           "provider": "vertex",
-          "usd": 0.0446
+          "usd": 0.0581
         },
         {
           "stage": "edit-id",
           "model": "gemini-4-argon",
           "provider": "vertex",
-          "usd": 0.0489
+          "usd": 0.0647
         },
         {
           "stage": "english",
           "model": "gemini-3.1-pro-preview",
           "provider": "vertex",
-          "usd": 0.1337
+          "usd": 0.135
         },
         {
           "stage": "metadata",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0147
-        },
-        {
-          "stage": "cover-1",
-          "model": "gemini-3-pro-image",
-          "provider": "vertex",
-          "usd": 0.1395
-        },
-        {
-          "stage": "cover-review",
-          "model": "gemini-3.8-flash",
-          "provider": "vertex",
-          "usd": 0.0019
-        },
-        {
-          "stage": "cover-1",
-          "model": "gemini-3-pro-image",
-          "provider": "vertex",
-          "usd": 0.1384
-        },
-        {
-          "stage": "cover-review",
-          "model": "gemini-3.8-flash",
-          "provider": "vertex",
-          "usd": 0.0022
+          "usd": 0.0106
         }
       ]
     }

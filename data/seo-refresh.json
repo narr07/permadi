@@ -2,22 +2,22 @@
   "https://permadi.dev/blog/what-is-swiss-style-design": {
     "queries": {
       "swiss style": {
-        "position": 18.5,
-        "impressions": 24,
-        "seen": "2026-10-26"
+        "position": 17.8,
+        "impressions": 28,
+        "seen": "2026-10-29"
       },
       "swiss design": {
-        "position": 21.2,
-        "impressions": 26,
-        "seen": "2026-10-26"
+        "position": 22.5,
+        "impressions": 31,
+        "seen": "2026-10-29"
       },
       "swiss style design": {
         "position": 36,
         "impressions": 5,
-        "seen": "2026-10-26"
+        "seen": "2026-10-29"
       }
     },
-    "updated": "2026-10-26"
+    "updated": "2026-10-29"
   },
   "https://permadi.dev/blog/accelerated-learning-fast-learning-methods": {
     "queries": {
@@ -83,5 +83,50 @@
       }
     },
     "updated": "2026-10-28"
+  },
+  "https://permadi.dev/id/blog/apa-itu-swiss-style-design": {
+    "queries": {
+      "style swiss": {
+        "position": 9.5,
+        "impressions": 2,
+        "seen": "2026-10-29"
+      }
+    },
+    "updated": "2026-10-29"
+  },
+  "https://permadi.dev/blog/primary-secondary-tertiary-color-wheel": {
+    "queries": {
+      "secondary color wheel": {
+        "position": 14.6,
+        "impressions": 5,
+        "seen": "2026-10-29"
+      },
+      "color wheel primary secondary tertiary": {
+        "position": 18.7,
+        "impressions": 3,
+        "seen": "2026-10-29"
+      },
+      "primary secondary and tertiary colour wheel": {
+        "position": 20,
+        "impressions": 4,
+        "seen": "2026-10-29"
+      },
+      "tertiary color wheel": {
+        "position": 20.4,
+        "impressions": 5,
+        "seen": "2026-10-29"
+      },
+      "secondary colour wheel": {
+        "position": 22,
+        "impressions": 3,
+        "seen": "2026-10-29"
+      },
+      "colour wheel tertiary": {
+        "position": 29,
+        "impressions": 2,
+        "seen": "2026-10-29"
+      }
+    },
+    "updated": "2026-10-29"
   }
 }
