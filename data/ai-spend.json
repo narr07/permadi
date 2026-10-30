@@ -1,51 +1,75 @@
 {
   "2026-10": {
-    "usd": 16.9037,
-    "runs": 50,
+    "usd": 17.5062,
+    "runs": 51,
     "providers": {
       "aistudio": 0.72,
-      "vertex": 16.1837
+      "vertex": 16.7862
     },
     "last": {
       "label": "auto",
-      "date": "2026-10-29T05:30:21.020Z",
-      "usd": 0.2937,
+      "date": "2026-10-30T05:35:31.967Z",
+      "usd": 0.6025,
       "calls": [
         {
           "stage": "topic-pick",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0081
+          "usd": 0.0072
         },
         {
           "stage": "research",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0172
+          "usd": 0.0125
         },
         {
           "stage": "draft-id",
           "model": "gemini-4-argon",
           "provider": "vertex",
-          "usd": 0.0581
+          "usd": 0.0597
         },
         {
           "stage": "edit-id",
           "model": "gemini-4-argon",
           "provider": "vertex",
-          "usd": 0.0647
+          "usd": 0.0659
         },
         {
           "stage": "english",
           "model": "gemini-3.1-pro-preview",
           "provider": "vertex",
-          "usd": 0.135
+          "usd": 0.1547
         },
         {
           "stage": "metadata",
           "model": "gemini-3.8-flash",
           "provider": "vertex",
-          "usd": 0.0106
+          "usd": 0.0214
+        },
+        {
+          "stage": "cover-1",
+          "model": "gemini-3-pro-image",
+          "provider": "vertex",
+          "usd": 0.1381
+        },
+        {
+          "stage": "cover-review",
+          "model": "gemini-3.8-flash",
+          "provider": "vertex",
+          "usd": 0.0019
+        },
+        {
+          "stage": "cover-1",
+          "model": "gemini-3-pro-image",
+          "provider": "vertex",
+          "usd": 0.1391
+        },
+        {
+          "stage": "cover-review",
+          "model": "gemini-3.8-flash",
+          "provider": "vertex",
+          "usd": 0.002
         }
       ]
     }
