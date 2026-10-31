@@ -39,10 +39,10 @@
       "accelerated learning techniques": {
         "position": 35.9,
         "impressions": 7,
-        "seen": "2026-10-28"
+        "seen": "2026-10-31"
       }
     },
-    "updated": "2026-10-28"
+    "updated": "2026-10-31"
   },
   "https://permadi.dev/blog/accelerated-learning-cara-belajar-cepat": {
     "queries": {
@@ -59,10 +59,10 @@
       "accelerated learning adalah": {
         "position": 30,
         "impressions": 2,
-        "seen": "2026-10-28"
+        "seen": "2026-10-31"
       }
     },
-    "updated": "2026-10-28"
+    "updated": "2026-10-31"
   },
   "https://permadi.dev/id/blog/mengenal-nuxt-js-framework-vue-ssr-ssg": {
     "queries": {
@@ -79,10 +79,10 @@
       "sintaks pbl": {
         "position": 24,
         "impressions": 2,
-        "seen": "2026-10-28"
+        "seen": "2026-10-31"
       }
     },
-    "updated": "2026-10-28"
+    "updated": "2026-10-31"
   },
   "https://permadi.dev/id/blog/apa-itu-swiss-style-design": {
     "queries": {
@@ -128,5 +128,15 @@
       }
     },
     "updated": "2026-10-29"
+  },
+  "http://permadi.dev/blog/kinesthetic-learning-methods": {
+    "queries": {
+      "kinesthetic education": {
+        "position": 34.5,
+        "impressions": 2,
+        "seen": "2026-10-31"
+      }
+    },
+    "updated": "2026-10-31"
   }
 }
