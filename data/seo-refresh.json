@@ -2,9 +2,9 @@
   "https://permadi.dev/blog/what-is-swiss-style-design": {
     "queries": {
       "swiss style": {
-        "position": 17.8,
-        "impressions": 28,
-        "seen": "2026-10-29"
+        "position": 16.1,
+        "impressions": 37,
+        "seen": "2026-11-01"
       },
       "swiss design": {
         "position": 22.5,
@@ -17,7 +17,7 @@
         "seen": "2026-10-29"
       }
     },
-    "updated": "2026-10-29"
+    "updated": "2026-11-01"
   },
   "https://permadi.dev/blog/accelerated-learning-fast-learning-methods": {
     "queries": {
@@ -89,17 +89,22 @@
       "style swiss": {
         "position": 9.5,
         "impressions": 2,
-        "seen": "2026-10-29"
+        "seen": "2026-11-01"
+      },
+      "swiss style design": {
+        "position": 10.3,
+        "impressions": 12,
+        "seen": "2026-11-01"
       }
     },
-    "updated": "2026-10-29"
+    "updated": "2026-11-01"
   },
   "https://permadi.dev/blog/primary-secondary-tertiary-color-wheel": {
     "queries": {
       "secondary color wheel": {
-        "position": 14.6,
-        "impressions": 5,
-        "seen": "2026-10-29"
+        "position": 15.4,
+        "impressions": 25,
+        "seen": "2026-11-01"
       },
       "color wheel primary secondary tertiary": {
         "position": 18.7,
@@ -112,9 +117,9 @@
         "seen": "2026-10-29"
       },
       "tertiary color wheel": {
-        "position": 20.4,
-        "impressions": 5,
-        "seen": "2026-10-29"
+        "position": 20.1,
+        "impressions": 35,
+        "seen": "2026-11-01"
       },
       "secondary colour wheel": {
         "position": 22,
@@ -127,7 +132,7 @@
         "seen": "2026-10-29"
       }
     },
-    "updated": "2026-10-29"
+    "updated": "2026-11-01"
   },
   "http://permadi.dev/blog/kinesthetic-learning-methods": {
     "queries": {
@@ -138,5 +143,15 @@
       }
     },
     "updated": "2026-10-31"
+  },
+  "https://permadi.dev/id/blog/teori-warna-dalam-seni-rupa": {
+    "queries": {
+      "teori pigmen dipelopori oleh": {
+        "position": 6.7,
+        "impressions": 3,
+        "seen": "2026-11-01"
+      }
+    },
+    "updated": "2026-11-01"
   }
 }
