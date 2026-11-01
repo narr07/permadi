@@ -103,12 +103,6 @@ function loadMore() {
 	}, 250)
 }
 
-const loadedImages = ref<Record<string, boolean>>({})
-
-function onImageLoad(id: string) {
-	loadedImages.value[id] = true
-}
-
 const sentinelEl = ref<HTMLElement | null>(null)
 
 onMounted(() => {
@@ -194,31 +188,20 @@ onMounted(() => {
 const site = useSiteConfig()
 const canonicalUrl = computed(() => `${site.url}/${locale.value === 'id' ? 'id/galeri' : 'gallery'}`)
 
-useHead(() => {
-	const firstImage = displayedItems.value[0]?.image || allItems.value[0]?.image
-	return {
-		link: [
-			{
-				rel: 'canonical',
-				href: canonicalUrl.value,
-			},
-			{
-				rel: 'preconnect',
-				href: 'https://res.cloudinary.com',
-			},
-			...(firstImage
-				? [
-						{
-							rel: 'preload',
-							as: 'image',
-							href: firstImage,
-							fetchpriority: 'high',
-						},
-					]
-				: []),
-		],
-	}
-})
+// Tanpa preload gambar pertama: kartu memakai srcset Cloudinary, jadi URL preload tunggal tidak
+// akan cocok dan malah mengunduh gambar dua kali. Kartu pertama sudah eager + fetchpriority high.
+useHead(() => ({
+	link: [
+		{
+			rel: 'canonical',
+			href: canonicalUrl.value,
+		},
+		{
+			rel: 'preconnect',
+			href: 'https://res.cloudinary.com',
+		},
+	],
+}))
 
 useSeoMeta({
 	title: () => page.value?.title || (locale.value === 'id' ? 'Galeri Visual & Dokumentasi | Permadi' : 'Visual Gallery & Documentation | Permadi'),
@@ -326,70 +309,13 @@ useSchemaOrg([
 			class="w-full border-b border-slate-200/80 dark:border-[#134e43]"
 		>
 			<div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2">
-				<div
+				<GalleryCard
 					v-for="(item, i) in displayedItems"
 					:key="item.public_id || i"
-					tabindex="0"
-					role="button"
-					:aria-label="item.title || (locale === 'id' ? 'Buka foto' : 'Open photo')"
-					class="group flex flex-col cursor-pointer select-none justify-between border-b border-slate-200/80 p-6 transition-colors duration-200 dark:border-[#134e43] hover:(bg-[#e2f4f0] dark:bg-[#003832]) sm:p-8"
-					:class="[
-						i % 3 !== 2 ? 'lg:border-r' : 'lg:border-r-0',
-						i % 2 !== 1 ? 'md:border-r' : 'md:border-r-0',
-					]"
-					@click="openModal(item)"
-					@keydown.enter.prevent="openModal(item)"
-					@keydown.space.prevent="openModal(item)"
-				>
-					<div>
-						<!-- Image Frame -->
-						<div class="relative mb-4 aspect-[4/3] w-full overflow-hidden border border-slate-200/80 bg-slate-100 dark:border-[#134e43] dark:bg-[#001714]">
-							<!-- LQIP Pixelated Placeholder -->
-							<img
-								v-if="item.placeholder_image"
-								:src="item.placeholder_image"
-								alt=""
-								aria-hidden="true"
-								decoding="async"
-								class="pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out"
-								:class="loadedImages[item.public_id] ? 'opacity-0' : 'opacity-100'"
-								style="image-rendering: pixelated;"
-							>
-
-							<!-- High-Res Main Image (NuxtImg) -->
-							<NuxtImg
-								:src="item.secure_url || item.image"
-								:alt="item.title || (locale === 'id' ? 'Foto galeri' : 'Gallery photo')"
-								format="webp"
-								quality="85"
-								sizes="xs:100vw sm:100vw md:50vw lg:400px"
-								class="relative z-1 h-full w-full object-cover transition-all duration-500 ease-out group-hover:scale-[1.03]"
-								:class="loadedImages[item.public_id] ? 'opacity-100' : 'opacity-0'"
-								:loading="i < 3 ? 'eager' : 'lazy'"
-								:fetchpriority="i === 0 ? 'high' : 'auto'"
-								@load="onImageLoad(item.public_id)"
-							/>
-						</div>
-
-						<!-- Photo Details -->
-						<div
-							v-if="item.tags && item.tags.length"
-							class="mb-2.5 flex flex-wrap gap-1.5"
-						>
-							<span
-								v-for="tag in item.tags.slice(0, 3)"
-								:key="tag"
-								class="border border-slate-200 px-1.5 py-0.5 text-[10px] text-slate-700 font-mono uppercase dark:border-[#134e43] dark:text-slate-300"
-							>
-								#{{ tag }}
-							</span>
-						</div>
-
-						<h2 class="text-base text-slate-900 font-700 leading-snug font-heading transition-colors dark:text-slate-50 group-hover:text-brand-700 dark:group-hover:text-brand-300">
-							{{ item.title }}
-						</h2>
-					</div>
-				</div>
+					:item="item"
+					:index="i"
+					@open="openModal(item)"
+				/>
 			</div>
 		</div>
 

@@ -409,35 +409,48 @@ html.dark .shiki span,
    Nuxt Page & View Transitions (Snappy & Lightweight)
    ========================================================================== */
 
-::view-transition-old(root),
-::view-transition-new(root) {
-	animation-duration: 140ms;
-	animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+/* Header dan tombol chat diangkat dari snapshot halaman: keduanya diam di tempat dan langsung
+   menampilkan keadaan baru (menu aktif), sehingga yang bergerak hanya isi halaman. */
+.vt-static-header {
+	view-transition-name: site-header;
 }
 
+.vt-static-chat {
+	view-transition-name: chat-launcher;
+}
+
+::view-transition-group(site-header),
+::view-transition-group(chat-launcher),
+::view-transition-new(site-header),
+::view-transition-new(chat-launcher) {
+	animation: none;
+}
+
+::view-transition-old(site-header),
+::view-transition-old(chat-launcher) {
+	display: none;
+}
+
+/* Isi lama memudar cepat, isi baru naik 10px sambil muncul. Hanya opacity dan transform pada
+   snapshot, jadi dikerjakan compositor (GPU) tanpa layout/paint ulang: halus di HP murah sekalipun. */
 ::view-transition-old(root) {
-	animation-name: vt-fade-out;
+	animation: vt-fade-out 120ms cubic-bezier(0.4, 0, 1, 1) both;
 }
 
 ::view-transition-new(root) {
-	animation-name: vt-fade-in;
+	animation: vt-rise-in 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes vt-fade-out {
-	from {
-		opacity: 1;
-	}
 	to {
 		opacity: 0;
 	}
 }
 
-@keyframes vt-fade-in {
+@keyframes vt-rise-in {
 	from {
 		opacity: 0;
-	}
-	to {
-		opacity: 1;
+		transform: translateY(10px);
 	}
 }
 
