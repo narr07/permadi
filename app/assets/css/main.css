@@ -431,6 +431,19 @@ html.dark .shiki span,
 	display: none;
 }
 
+/* Lapisan di belakang snapshot memakai warna kanvas tema aktif. Tanpa ini browser memakai kanvas
+   putih bawaan, yang menembus saat kedua snapshot setengah transparan (kedip terang di dark mode). */
+::view-transition {
+	background-color: var(--canvas);
+}
+
+/* Blend bawaan plus-lighter menjumlahkan warna kedua snapshot sehingga sesaat lebih terang/pudar;
+   normal membuat halaman baru cukup menumpuk di atas yang lama tanpa pergeseran warna. */
+::view-transition-old(root),
+::view-transition-new(root) {
+	mix-blend-mode: normal;
+}
+
 /* Isi lama memudar cepat, isi baru naik 10px sambil muncul. Hanya opacity dan transform pada
    snapshot, jadi dikerjakan compositor (GPU) tanpa layout/paint ulang: halus di HP murah sekalipun. */
 ::view-transition-old(root) {
