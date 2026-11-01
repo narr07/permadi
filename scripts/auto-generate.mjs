@@ -26,6 +26,7 @@ import { loadServiceAccount } from './lib/google-auth.mjs'
 import { fetchRisingTerms } from './lib/google-trends.mjs'
 import { latexToText } from './lib/latex-to-text.mjs'
 import { fetchSearchOpportunities } from './lib/search-console.mjs'
+import { validateArticle } from './lib/validate-article.mjs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -177,6 +178,12 @@ const BLACKLIST_WORDS = [
 	'banner',
 	'offset',
 	'kartu nama',
+	// Intent komersial/lowongan: pencarinya mencari penyedia jasa atau pekerjaan, bukan artikel
+	'jasa',
+	'freelance',
+	'jobstreet',
+	'harga',
+	'murah',
 ]
 
 // Fallback seed topics terverifikasi sesuai pilar permadi.dev
@@ -311,51 +318,70 @@ function getNextArticleInfo(targetCategory) {
 	return { nextNumber, category, lastCategory }
 }
 
+// Kata yang tidak membedakan topik: kata tanya, kata sambung, dan pembungkus judul SEO
+const TOPIC_STOPWORDS = new Set([
+	'adalah',
+	'apa',
+	'itu',
+	'yang',
+	'yg',
+	'dan',
+	'di',
+	'ke',
+	'dari',
+	'untuk',
+	'dengan',
+	'dalam',
+	'pada',
+	'atau',
+	'serta',
+	'cara',
+	'panduan',
+	'lengkap',
+	'pengertian',
+	'contoh',
+	'mengenal',
+	'memahami',
+	'pahami',
+	'kuasai',
+	'tips',
+])
+
+/**
+ * Kata inti sebuah frasa: huruf kecil, tanda hubung jadi spasi (slug dan kueri jadi setara),
+ * tanpa stopword, dan akhiran -s dibuang agar "sintak"/"sintaks" dianggap sama.
+ */
+function topicTokens(text) {
+	return new Set(text.toLowerCase()
+		.replace(/[^\p{L}\p{N}]+/gu, ' ')
+		.split(' ')
+		.filter(w => w.length > 1 && !TOPIC_STOPWORDS.has(w))
+		.map(w => (w.length > 4 ? w.replace(/s$/, '') : w)))
+}
+
 /**
  * 2. Ambil Riwayat Artikel yang Sudah Terbit
- * Mencegah pengulangan topik atau kata kunci yang sudah pernah dibuat artikelnya
+ * Kata inti judul + slug tiap artikel ID, untuk mencegah topik yang sudah pernah dibahas
  */
-function getExistingArticleKeywords() {
-	const existing = new Set()
+function getExistingArticleTopics() {
 	if (!fs.existsSync(CONTENT_ID_DIR))
-		return existing
+		return []
+	return fs.readdirSync(CONTENT_ID_DIR).filter(f => /^\d+\..+\.md$/.test(f)).map((file) => {
+		const slug = file.replace(/^\d+\./, '').replace(/\.md$/, '')
+		const title = fs.readFileSync(path.join(CONTENT_ID_DIR, file), 'utf8').match(/^title:(.*)$/m)?.[1] || ''
+		return topicTokens(`${slug} ${title}`)
+	})
+}
 
-	const files = fs.readdirSync(CONTENT_ID_DIR).filter(f => f.endsWith('.md'))
-	for (const file of files) {
-		const slug = file.replace(/^\d+\./, '').replace(/\.md$/, '').toLowerCase()
-		existing.add(slug)
-		try {
-			const content = fs.readFileSync(path.join(CONTENT_ID_DIR, file), 'utf8')
-			const titleMatch = content.match(/title:[ \t]*["']?([^"'\r\n]+)/i)
-			if (titleMatch) {
-				existing.add(titleMatch[1].toLowerCase().trim())
-			}
-
-			let inTags = false
-			for (const line of content.split(/\r?\n/)) {
-				const trimmed = line.trim()
-				if (trimmed.toLowerCase().startsWith('tags:')) {
-					inTags = true
-					continue
-				}
-				if (inTags) {
-					if (trimmed.startsWith('-')) {
-						const tag = trimmed.slice(1).trim().toLowerCase()
-						if (tag) {
-							existing.add(tag)
-						}
-					}
-					else if (trimmed.length > 0 && !line.startsWith(' ') && !line.startsWith('\t')) {
-						break
-					}
-				}
-			}
-		}
-		catch {
-			// ignore
-		}
-	}
-	return existing
+/**
+ * Kata kunci dianggap sudah dibahas bila ≥75% kata intinya ada di satu artikel yang sama
+ * ("prinsip desain" ⊂ "Prinsip Dasar Desain", tetapi "game based learning" ≠ "project based learning").
+ */
+function isTopicCovered(keyword, existingTopics) {
+	const tokens = [...topicTokens(keyword)]
+	if (!tokens.length)
+		return true
+	return existingTopics.some(article => tokens.filter(t => article.has(t)).length / tokens.length >= 0.75)
 }
 
 /**
@@ -412,7 +438,7 @@ function loadGkpKeywordsForCategory(category) {
 
 	const keywords = []
 	const seenKw = new Set()
-	const existingArticles = getExistingArticleKeywords()
+	const existingTopics = getExistingArticleTopics()
 
 	for (const file of csvFiles) {
 		const filePath = path.join(catDir, file)
@@ -479,8 +505,7 @@ function loadGkpKeywordsForCategory(category) {
 				continue
 
 			// Lewati jika sudah pernah dibahas di artikel sebelumnya
-			const isAlreadyCovered = [...existingArticles].some(item => item.includes(kw) || kw.includes(item))
-			if (isAlreadyCovered)
+			if (isTopicCovered(kw, existingTopics))
 				continue
 
 			const searches = searchCol !== -1 ? parseInt(cols[searchCol]?.replace(/\D/g, '') || '0', 10) : 0
@@ -502,7 +527,8 @@ function loadGkpKeywordsForCategory(category) {
 		}
 	}
 
-	keywords.sort((a, b) => getKeywordOpportunityScore(b) - getKeywordOpportunityScore(a))
+	// GKP membulatkan volume (50/500/5000) sehingga banyak skor seri; volume dipakai sebagai pemecah seri
+	keywords.sort((a, b) => getKeywordOpportunityScore(b) - getKeywordOpportunityScore(a) || b.searches - a.searches)
 	return keywords
 }
 
@@ -538,7 +564,8 @@ async function fetchTargetedTrends(category) {
 	try {
 		console.log(`[Trends] Querying Google Suggest trends for anchor: "${randomAnchor}"...`)
 		const suggestions = await getGoogleSuggestVariations(randomAnchor)
-		const validQueries = suggestions.filter(q => q.split(' ').length >= 3)
+		const existingTopics = getExistingArticleTopics()
+		const validQueries = suggestions.filter(q => q.split(' ').length >= 3 && !isTopicCovered(q, existingTopics))
 
 		if (validQueries.length > 0) {
 			const selectedQuery = validQueries[Math.floor(Math.random() * validQueries.length)]
@@ -731,6 +758,46 @@ Kembalikan JSON:
 }
 
 /**
+ * 7b. Saring kandidat GKP dengan redaktur Flash: buang yang melenceng dari pilar, ber-intent komersial,
+ * atau sinonim artikel yang sudah ada (pemeriksaan kata saja tidak menangkap "cara belajar yg baik" ≈
+ * "cara belajar efektif"). Mengembalikan { keyword, topic } atau null bila tidak ada yang layak.
+ */
+async function pickGkpKeyword(candidates, category, { apiKey, ledger, profile }) {
+	const articles = getInternalLinkCatalog().map(a => `- ${a.title}`).join('\n')
+	const pick = await generate(profile.models.utility, {
+		apiKey,
+		ledger,
+		stage: 'gkp-pick',
+		json: true,
+		prompt: `Anda redaktur permadi.dev. Pilih SATU kata kunci Google Keyword Planner untuk artikel baru pilar "${category}": ${CATEGORY_GUIDELINES[category]}
+
+KANDIDAT (nomor | kata kunci | pencarian/bulan | persaingan):
+${candidates.map((c, i) => `${i} | ${c.keyword} | ${c.searches} | ${c.competition}`).join('\n')}
+
+ARTIKEL YANG SUDAH ADA:
+${articles}
+
+Aturan:
+1. Kata kunci harus jelas masuk pilar di atas. Tolak yang ambigu, terlalu umum, atau tidak bermakna (mis. "end css", "grafis desain").
+2. Intent harus informasional: orang ingin belajar atau memahami. Tolak intent komersial (mencari jasa, membeli, harga), lowongan kerja, dan navigasi ke situs tertentu.
+3. Tolak kata kunci yang maknanya sudah dijawab artikel yang ada, termasuk sinonim dan variasi frasa ("cara belajar yg baik" sama dengan artikel cara belajar efektif).
+4. Dari yang lolos, utamakan yang paling berguna bagi guru, desainer, atau developer Indonesia.
+5. Bila tidak ada yang lolos, isi "index" dengan null.
+
+Kembalikan JSON:
+{"index": nomor kandidat atau null, "topic": "topik artikel dalam Bahasa Indonesia yang wajar, bukan salinan kueri mentah", "reason": "alasan singkat"}`,
+	})
+	const choice = parseJson(pick.text)
+	const chosen = Number.isInteger(choice.index) ? candidates[choice.index] : null
+	if (!chosen) {
+		console.log(`[GKP] No candidate accepted for ${category}: ${choice.reason}`)
+		return null
+	}
+	console.log(`[GKP] Editor picked "${chosen.keyword}": ${choice.reason}`)
+	return { ...chosen, topic: choice.topic || chosen.keyword }
+}
+
+/**
  * 7. Resolve Final Verified Topic (Search Console/Trends → GKP → Suggest → curated)
  */
 async function getTopicForCategory(category, customTopic, ai) {
@@ -757,18 +824,29 @@ async function getTopicForCategory(category, customTopic, ai) {
 
 	// 1. Prioritas Utama: Cari dari Bank Data Google Keyword Planner (data/<category>/*.csv)
 	const gkpKeywords = loadGkpKeywordsForCategory(category)
-	if (gkpKeywords.length > 0) {
-		// Ambil dari 10 kata kunci terbaik secara acak agar tiap generate bervariasi
-		const candidatePool = gkpKeywords.slice(0, 10)
-		const chosen = candidatePool[Math.floor(Math.random() * candidatePool.length)]
+	let chosen = null
+	if (gkpKeywords.length > 0 && ai) {
+		try {
+			chosen = await pickGkpKeyword(gkpKeywords.slice(0, 25), category, ai)
+		}
+		catch (err) {
+			console.warn(`[GKP] Editor pick failed (${err.message}); using random top-10 pick.`)
+			chosen = gkpKeywords[Math.floor(Math.random() * Math.min(10, gkpKeywords.length))]
+		}
+	}
+	else if (gkpKeywords.length > 0) {
+		// Tanpa API (dry run): ambil acak dari 10 kata kunci terbaik
+		chosen = gkpKeywords[Math.floor(Math.random() * Math.min(10, gkpKeywords.length))]
+	}
 
+	if (chosen) {
 		console.log(`[GKP] Selected seed keyword: "${chosen.keyword}" (Vol: ${chosen.searches}/mo, Comp: ${chosen.competition}, File: ${chosen.file})`)
 
 		// 2. Sandingkan dengan Google Suggest untuk menangkap intent long-tail aktif
 		const suggestions = await getGoogleSuggestVariations(chosen.keyword)
-		let finalTopic = chosen.keyword
+		let finalTopic = chosen.topic || chosen.keyword
 
-		if (suggestions.length > 0) {
+		if (!chosen.topic && suggestions.length > 0) {
 			const longTail = suggestions.find(s => s.split(' ').length >= 3 && s.includes(chosen.keyword))
 			if (longTail) {
 				finalTopic = longTail
@@ -828,9 +906,13 @@ const MODEL_PROFILES = {
 }
 
 function chooseProfile(ledger) {
-	const remaining = AI_MONTHLY_BUDGET_USD - ledger.spent
-	const name = remaining >= PREMIUM_ARTICLE_USD ? 'premium' : 'economy'
-	console.log(`[Budget] ${ledger.month}: $${ledger.spent.toFixed(2)} of $${AI_MONTHLY_BUDGET_USD} spent → profile "${name}"`)
+	// Anggaran dibuka bertahap per hari supaya artikel premium tersebar sepanjang bulan,
+	// bukan habis di dua minggu pertama lalu sisanya economy semua
+	const now = new Date()
+	const daysInMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 0)).getUTCDate()
+	const allowance = Math.max(PREMIUM_ARTICLE_USD, AI_MONTHLY_BUDGET_USD * now.getUTCDate() / daysInMonth)
+	const name = ledger.spent + PREMIUM_ARTICLE_USD <= Math.min(allowance, AI_MONTHLY_BUDGET_USD) ? 'premium' : 'economy'
+	console.log(`[Budget] ${ledger.month}: $${ledger.spent.toFixed(2)} of $${AI_MONTHLY_BUDGET_USD} spent (allowance today $${allowance.toFixed(2)}) → profile "${name}"`)
 	return { name, models: MODEL_PROFILES[name] }
 }
 
@@ -857,7 +939,7 @@ const STRUCTURE_RULES = `STRUKTUR & FORMAT (Nuxt Content MDC):
 - Body TANPA frontmatter dan TANPA H1 (#). Subjudul memakai H2 (##) lalu H3 (###).
 - Paragraf pertama: jawaban inti 40–60 kata (target featured snippet).
 - Paragraf pendek: 1–4 kalimat. Tidak ada dinding teks.
-- Panjang body 1500–2000 kata.
+- Panjang body 1500–2000 kata, batas keras 2200 kata. Lebih baik padat daripada mengulang poin.
 - Minimal 1 tabel perbandingan memakai SINTAKS TABEL MARKDOWN (| kolom | kolom |). DILARANG tabel atau diagram ASCII (+---+, |---|) di dalam blok kode.
 - Blok kode (\`\`\`) HANYA untuk kode sungguhan, dengan nama bahasa (\`\`\`ts, \`\`\`python, dst.).
 - DILARANG notasi LaTeX ($...$, \\frac, \\times). Tulis matematika sebagai teks biasa dengan simbol Unicode (×, ÷, ², ≤, →, π), karena situs tidak merender LaTeX.
@@ -893,6 +975,17 @@ SEO & KATA KUNCI:
 KEJUJURAN (E-E-A-T):
 - Fakta, angka, nama, dan tahun hanya dari catatan riset atau pengetahuan umum yang pasti. Jika ragu, tulis secara umum tanpa angka.
 - Boleh memakai sudut pandang praktisi (guru/desainer/developer), tetapi DILARANG mengarang anekdot pribadi spesifik, kutipan, testimoni, atau statistik.`
+
+// Jumlah kata prosa, tanpa blok kode, sintaks MDC, dan URL tautan
+function countWords(markdown) {
+	return markdown
+		.replace(/```[\s\S]*?```/g, ' ')
+		.replace(/\]\([^)]*\)/g, ']')
+		.replace(/^\s*::.*$/gm, ' ')
+		.split(/\s+/)
+		.filter(w => /\p{L}/u.test(w))
+		.length
+}
 
 function getInternalLinkCatalog() {
 	const read = (dir, prefix) => {
@@ -1047,9 +1140,11 @@ Sunting draf di atas. Periksa dan perbaiki:
 5. Klaim yang tidak didukung riset dihapus atau dibuat umum.
 6. Sintaks komponen MDC benar dan ditutup dengan ::.
 7. Alur antarbagian mengalir, tidak ada pengulangan isi.
+8. Panjang draf saat ini sekitar ${countWords(draft.text)} kata. Bila lebih dari 2200 kata, pangkas bagian yang mengulang atau bertele-tele sampai 1500–2000 kata tanpa membuang langkah praktis, tabel, atau FAQ.
 Keluarkan HANYA markdown body artikel hasil suntingan lengkap.`,
 	})
 	const bodyId = sanitizeArticleBody(edited.text)
+	console.log(`[Pipeline] Words: draft ${countWords(draft.text)} → edited ${countWords(bodyId)}`)
 
 	// Tahap 4: versi EN ditulis ulang secara natural, tautan internal dipetakan ke versi EN
 	console.log('[Pipeline 4/5] Writing English edition...')
@@ -1081,7 +1176,7 @@ ${bodyId}`,
 
 Kembalikan JSON:
 {
-  "slug_id": "slug Indonesia 17-40 karakter, huruf kecil, tanda hubung, tanpa nomor",
+  "slug_id": "slug Indonesia 17-40 karakter, huruf kecil, tanda hubung, tanpa nomor; dari topik inti artikel, bukan salinan kueri mentah (tanpa kata 'adalah', 'yg', 'diberikan', 'apa-itu')",
   "slug_en": "English slug 17-40 characters",
   "slug_image": "${category}-<2-4 kata topik>, huruf kecil, tanda hubung",
   "title_id": "50-58 karakter, memuat primary keyword dalam bentuk wajar, tanpa titik dua",
@@ -1436,6 +1531,14 @@ ${tagsEn.map(t => `  - ${t}`).join('\n')}
 ${sanitizedBodyEn}
 `
 
+	// Struktur rusak (komponen MDC tak tertutup, H1, frontmatter kosong) tidak boleh sampai ke main
+	const structureErrors = [
+		...validateArticle(idMarkdown, { label: idFileName }),
+		...validateArticle(enMarkdown, { label: enFileName }),
+	]
+	if (structureErrors.length)
+		throw new Error(`Article failed validation:\n  ${structureErrors.join('\n  ')}`)
+
 	if (isDryRun) {
 		console.log('\n[Dry-Run] Target Files:')
 		console.log(`- ${path.join('content/id/blog', idFileName)}`)
@@ -1459,6 +1562,14 @@ ${sanitizedBodyEn}
 	// Topic-specific AI cover; category fallback only if generation fails
 	if (!await generateCoverImage(apiKey, { brief: generated.image_brief, ledger, profile }, imageSlug))
 		ensureCoverImage(imageSlug, info.category)
+
+	const publicDir = path.join(rootDir, 'public')
+	const imageErrors = [
+		...validateArticle(idMarkdown, { publicDir, label: idFileName }),
+		...validateArticle(enMarkdown, { publicDir, label: enFileName }),
+	]
+	if (imageErrors.length)
+		throw new Error(`Article failed validation:\n  ${imageErrors.join('\n  ')}`)
 
 	// Catat tanggal tulis ulang/terbit agar refresh otomatis mingguan tidak mengulang artikel yang masih baru
 	const refreshLog = readJson(REFRESH_LOG_FILE)

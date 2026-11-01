@@ -50,6 +50,7 @@ jobs:
           ln -s "$RUNNER_TEMP/img/node_modules/"* node_modules/
 
       - name: Generate Bilingual Article
+        id: generate
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
@@ -60,14 +61,25 @@ jobs:
         run: |
           node scripts/auto-generate.mjs
 
+      # Tetap jalan saat generator gagal (mis. artikel tidak lolos validasi): artikel tidak di-commit,
+      # tetapi data/ai-spend.json tetap disimpan karena panggilan AI yang sudah terjadi tetap ditagih
       - name: Commit and push changes
         id: publish
+        if: always()
         run: |
           git config user.name "Dinar, Permadi"
           git config user.email "dinarpermadi07@gmail.com"
 
+          if [ "${{ steps.generate.outcome }}" != "success" ]; then
+            if [ -n "$(git status --porcelain data/ai-spend.json)" ]; then
+              git add data/ai-spend.json
+              git commit -m "chore(blog): record AI spend from failed run"
+              git pull --rebase origin main
+              git push origin main
+            fi
+            echo "Generation failed; no article committed."
           # Periksa apakah ada file markdown baru yang di-generate
-          if [ -n "$(git status --porcelain content/id/blog content/en/blog)" ]; then
+          elif [ -n "$(git status --porcelain content/id/blog content/en/blog)" ]; then
             git add content/id/blog/ content/en/blog/ public/article/ data/ai-spend.json data/seo-refresh.json data/refresh-log.json
             ARTICLE_NUM=$(ls -1 content/id/blog | grep -E '^[0-9]+\.' | sed -E 's/^([0-9]+)\..*/\1/' | sort -n | tail -1)
             git commit -m "chore(blog): publish article ${ARTICLE_NUM}"

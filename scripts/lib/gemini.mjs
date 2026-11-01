@@ -65,6 +65,9 @@ export function createLedger(file) {
 		get spent() {
 			return data[month].providers.aistudio || 0
 		},
+		get vertexSpent() {
+			return data[month].providers.vertex || 0
+		},
 		get runUsd() {
 			return run.usd
 		},
@@ -92,14 +95,18 @@ const RETRYABLE = new Set([429, 500, 502, 503, 504])
 // 18 Januari 2027. Sampai tanggal itu Vertex jadi jalur utama; AI Studio cadangan dan jalur sesudahnya.
 // AI_PROVIDER=vertex|aistudio memaksa satu jalur.
 const VERTEX_CREDIT_UNTIL = process.env.VERTEX_CREDIT_UNTIL || '2027-01-18'
+// Rem darurat kredit trial: bila belanja Vertex bulan ini melewati batas, pindah ke AI Studio
+// (yang punya anggaran sendiri), supaya run yang macet berulang tidak menguras $300 sekaligus
+const VERTEX_MONTHLY_BUDGET_USD = Number(process.env.VERTEX_MONTHLY_BUDGET_USD || 40)
 let vertexAccount
 
-function providerOrder(apiKey) {
+function providerOrder(apiKey, ledger) {
 	const mode = process.env.AI_PROVIDER || 'auto'
 	if (vertexAccount === undefined)
 		vertexAccount = loadServiceAccount()
 	const today = new Date().toISOString().slice(0, 10)
-	const useVertex = vertexAccount && mode !== 'aistudio' && (mode === 'vertex' || today <= VERTEX_CREDIT_UNTIL)
+	const vertexCapped = mode !== 'vertex' && (ledger?.vertexSpent || 0) >= VERTEX_MONTHLY_BUDGET_USD
+	const useVertex = vertexAccount && mode !== 'aistudio' && !vertexCapped && (mode === 'vertex' || today <= VERTEX_CREDIT_UNTIL)
 	return [useVertex && 'vertex', apiKey && mode !== 'vertex' && 'aistudio'].filter(Boolean)
 }
 
@@ -148,7 +155,7 @@ async function callOnce({ provider, apiKey, model, system, prompt, parts, json, 
  */
 export async function generate(models, { ledger, stage, timeoutMs = 300000, ...options }) {
 	let lastError
-	const providers = providerOrder(options.apiKey)
+	const providers = providerOrder(options.apiKey, ledger)
 	for (const model of models) {
 		for (const provider of providers) {
 			for (let attempt = 1; attempt <= 2; attempt++) {

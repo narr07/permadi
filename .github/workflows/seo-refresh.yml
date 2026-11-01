@@ -40,6 +40,7 @@ jobs:
 
       # Pilih artikel bertayangan terbanyak di posisi 4–30 yang belum diperbarui 30 hari terakhir
       - name: Refresh article from Search Console data
+        id: generate
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
@@ -49,13 +50,23 @@ jobs:
         run: |
           node scripts/auto-generate.mjs
 
+      # Tetap jalan saat generator gagal: artikel lama tidak ditimpa, tetapi belanja AI tetap dicatat
       - name: Commit and push changes
         id: publish
+        if: always()
         run: |
           git config user.name "Dinar, Permadi"
           git config user.email "dinarpermadi07@gmail.com"
 
-          if [ -n "$(git status --porcelain content/id/blog content/en/blog)" ]; then
+          if [ "${{ steps.generate.outcome }}" != "success" ]; then
+            if [ -n "$(git status --porcelain data/ai-spend.json)" ]; then
+              git add data/ai-spend.json
+              git commit -m "chore(blog): record AI spend from failed run"
+              git pull --rebase origin main
+              git push origin main
+            fi
+            echo "Refresh failed; article left unchanged."
+          elif [ -n "$(git status --porcelain content/id/blog content/en/blog)" ]; then
             git add content/id/blog/ content/en/blog/ public/article/ data/ai-spend.json data/seo-refresh.json data/refresh-log.json
             git commit -m "content(blog): refresh article from Search Console data"
             git pull --rebase origin main
