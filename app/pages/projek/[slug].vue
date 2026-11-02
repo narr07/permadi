@@ -22,7 +22,7 @@ const { data: project } = await useAsyncData(
 		const allDocs = await queryCollection(colName).all()
 
 		// Match slug or cleaned path
-		let matched = allDocs.find((d: any) => {
+		const matched = allDocs.find((d: any) => {
 			const s = d.slug || cleanSlug(d.path || '')
 			return s === requestedSlug.value
 		})
@@ -198,8 +198,12 @@ const allScreenshots = computed(() => {
 							rel="noopener noreferrer"
 							class="w-full flex items-center justify-between bg-brand-500 px-5 py-3 text-xs text-slate-950 font-bold tracking-wider font-mono uppercase transition-colors hover:bg-brand-400"
 						>
-							<span>{{ $t('projek.visit_demo') }}</span>
-							<span class="i-carbon-launch text-sm" />
+							<!-- Projek desain menautkan ke Behance, bukan demo web -->
+							<span>{{ project.doc.link.includes('behance.net') ? $t('projek.view_behance') : $t('projek.visit_demo') }}</span>
+							<span
+								class="text-sm"
+								:class="project.doc.link.includes('behance.net') ? 'i-ant-design-behance-outlined' : 'i-carbon-launch'"
+							/>
 						</a>
 
 						<a
