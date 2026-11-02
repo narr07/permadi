@@ -49,7 +49,7 @@ useSeoMeta({
 </script>
 
 <template>
-	<div class="relative min-h-screen flex flex-col justify-between overflow-hidden selection:(bg-brand-500 text-white)">
+	<div class="relative min-h-screen flex flex-col justify-between overflow-hidden">
 		<!-- Ambient Noise & Glowing Radial Gradients -->
 		<div
 			class="noise"

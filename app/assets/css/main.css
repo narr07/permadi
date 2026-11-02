@@ -138,6 +138,14 @@ body {
 		color 0.25s ease;
 }
 
+/* Warna seleksi teks ditulis di sini, bukan lewat varian UnoCSS selection:(bg-brand-500 ...):
+   UnoCSS menggabungkan varian itu dengan .bg-brand-500 dalam satu aturan berisi ::selection,
+   dan browser membuang background-color-nya sehingga semua elemen bg-brand-500 jadi transparan. */
+::selection {
+	background-color: #14b898;
+	color: #fff;
+}
+
 /* Swiss International Typographic Style: Rectilinear Discipline */
 * {
 	border-radius: 0 !important;
