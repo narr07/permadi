@@ -71,7 +71,7 @@ const emit = defineEmits<{
 		border-color: #001e1c;
 	}
 
-	:global(.dark) .filter-tab[aria-pressed='true'] {
+	.dark .filter-tab[aria-pressed='true'] {
 		background-color: #f8fafa;
 		color: #001e1c;
 		border-color: #f8fafa;

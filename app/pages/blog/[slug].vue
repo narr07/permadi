@@ -75,12 +75,12 @@ function cleanSlug(pathStr: string): string {
 	return lastPart.replace(/^\d+\./, '')
 }
 
-// Fetch single blog post safely in-memory
+// Fetch single blog post; pencarian cukup pakai metadata, isi lengkap hanya untuk artikel yang cocok
 const { data: post } = await useAsyncData(
 	() => `blog-post-${locale.value}-${requestedSlug.value}`,
 	async () => {
 		const colName = collection.value as any
-		const allDocs = await queryCollection(colName).all()
+		const allDocs = await queryCollection(colName).select('path', 'slug', 'title', 'date', 'idBlog', 'idItem').all()
 
 		// 1. Match slug or cleanSlug(path)
 		const matched = allDocs.find((d: any) => {
@@ -91,7 +91,7 @@ const { data: post } = await useAsyncData(
 		// 2. If not matched, check if this slug belongs to the other language
 		if (!matched) {
 			const otherCol = (locale.value === 'id' ? 'blog_en' : 'blog_id') as any
-			const otherDocs = await queryCollection(otherCol).all()
+			const otherDocs = await queryCollection(otherCol).select('path', 'slug').all()
 			const otherMatched = otherDocs.find((d: any) => {
 				const s = d.slug || cleanSlug(d.path || '')
 				return s === requestedSlug.value
@@ -109,7 +109,13 @@ const { data: post } = await useAsyncData(
 		if (!matched)
 			return null
 
-		// 3. Compute surround in-memory without second DB query
+		const fullDoc = await queryCollection(colName).path(matched.path).first()
+		if (!fullDoc)
+			return null
+		// plainText hanya untuk pencarian di server; tidak perlu ikut ke browser
+		const { plainText: _plainText, ...doc } = fullDoc as any
+
+		// 3. Compute surround from the metadata list
 		const sorted = [...allDocs].sort((a: any, b: any) => new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime())
 		const idx = sorted.findIndex((d: any) => d.path === matched.path)
 		const prev = idx < sorted.length - 1 ? sorted[idx + 1] : null
@@ -129,7 +135,7 @@ const { data: post } = await useAsyncData(
 			}
 
 			const locCol = (locCode === 'id' ? 'blog_id' : 'blog_en') as any
-			const otherLocDocs = await queryCollection(locCol).all()
+			const otherLocDocs = await queryCollection(locCol).select('path', 'slug', 'idBlog', 'idItem').all()
 			const trDoc = otherLocDocs.find((d: any) => (matchId && (d.idBlog === matchId || d.idItem === matchId)))
 			if (trDoc) {
 				translations[locCode] = {
@@ -139,7 +145,7 @@ const { data: post } = await useAsyncData(
 		}
 
 		return {
-			doc: matched,
+			doc,
 			translations,
 			surround: [prev, next],
 		}

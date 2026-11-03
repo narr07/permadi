@@ -14,10 +14,11 @@ const { data: page } = await useAsyncData(
 	{ watch: [locale] },
 )
 
-// All blog articles (SSR)
+// All blog articles (SSR); kartu cukup metadata, body dan plainText jangan ikut ke payload
 const { data: posts } = await useAsyncData(
 	() => `blog-posts-list-${locale.value}`,
 	() => queryCollection(blogCollection.value)
+		.select('path', 'slug', 'title', 'description', 'date', 'category', 'tags', 'readingTime')
 		.order('date', 'DESC')
 		.all(),
 	{ watch: [locale] },
@@ -325,7 +326,7 @@ useSchemaOrg([
 	border-color: #001e1c !important;
 }
 
-:global(.dark) .swiss-filter-active {
+.dark .swiss-filter-active {
 	background-color: #f8fafa !important;
 	color: #001e1c !important;
 	border-color: #f8fafa !important;

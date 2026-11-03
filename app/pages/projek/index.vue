@@ -13,10 +13,11 @@ const { data: page } = await useAsyncData(
 	{ watch: [locale] },
 )
 
-// All projects collection (SSR)
+// All projects collection (SSR); kartu cukup metadata, body dan plainText jangan ikut ke payload
 const { data: projects } = await useAsyncData(
 	() => `projek-list-${locale.value}`,
 	() => queryCollection(collection.value)
+		.select('path', 'slug', 'title', 'description', 'date', 'category', 'tags', 'image', 'images', 'link', 'repo')
 		.order('date', 'DESC')
 		.all(),
 	{ watch: [locale] },
@@ -422,7 +423,7 @@ defineOgImage('Bento', {
 	border-color: #001e1c !important;
 }
 
-:global(.dark) .swiss-filter-active {
+.dark .swiss-filter-active {
 	background-color: #f8fafa !important;
 	color: #001e1c !important;
 	border-color: #f8fafa !important;

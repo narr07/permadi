@@ -71,12 +71,13 @@ const { data: page } = await useAsyncData(
 
 		// 2. Cek di collection blog
 		if (section === 'blog') {
-			const allPosts = await queryCollection(blogCollection.value).all()
+			const allPosts = await queryCollection(blogCollection.value).select('path', 'slug', 'idBlog', 'idItem').all()
 			const matched = allPosts.find((p: any) => {
 				return p.slug === requestedSlug || cleanSlug(p.path) === requestedSlug || p.path === path
 			})
+			const matchedDoc = matched ? await queryCollection(blogCollection.value).path(matched.path).first() : null
 
-			if (matched) {
+			if (matched && matchedDoc) {
 				// Cari padanan artikel di bahasa lain berdasarkan idBlog / idItem
 				const translations: Record<string, { slug: string[] }> = {}
 
@@ -93,7 +94,7 @@ const { data: page } = await useAsyncData(
 				}
 
 				return {
-					doc: matched,
+					doc: matchedDoc,
 					type: 'blog',
 					translations,
 				}
@@ -102,12 +103,13 @@ const { data: page } = await useAsyncData(
 
 		// 3. Cek di collection projek / projects
 		if (section === 'projek' || section === 'projects') {
-			const allProjects = await queryCollection(projekCollection.value).all()
+			const allProjects = await queryCollection(projekCollection.value).select('path', 'slug', 'idProjek', 'idItem').all()
 			const matched = allProjects.find((p: any) => {
 				return p.slug === requestedSlug || cleanSlug(p.path) === requestedSlug || p.path === path
 			})
+			const matchedDoc = matched ? await queryCollection(projekCollection.value).path(matched.path).first() : null
 
-			if (matched) {
+			if (matched && matchedDoc) {
 				// Cari padanan projek di bahasa lain berdasarkan idProjek / idItem
 				const translations: Record<string, { slug: string[] }> = {}
 
@@ -125,7 +127,7 @@ const { data: page } = await useAsyncData(
 				}
 
 				return {
-					doc: matched,
+					doc: matchedDoc,
 					type: 'projek',
 					translations,
 				}
