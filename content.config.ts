@@ -12,6 +12,19 @@ function createLinkSchema() {
 	})
 }
 
+// Alat di bagian Toolkit: ikon brand + tautan ke situs resminya (dibuka di tab baru)
+function createToolLinkSchema() {
+	return z.array(z.object({
+		name: property(z.string()).editor({ label: 'Nama Alat', tooltip: 'Contoh: Nuxt' }),
+		url: property(z.string()).editor({ label: 'Situs Resmi', tooltip: 'Contoh: https://nuxt.com' }),
+		icon: property(z.string().optional()).editor({
+			input: 'icon',
+			iconLibraries: ['vscode-icons', 'carbon'],
+			label: 'Ikon (path /icons/... atau kelas i-vscode-icons-... / i-carbon-...)',
+		}),
+	})).optional()
+}
+
 // 🛑 Sembunyikan field bawaan Nuxt Content (seo & navigation) di Nuxt Studio UI
 const hiddenSeo = property(
 	z.object({
@@ -89,6 +102,7 @@ const homeSchema = z.object({
 				iconLibraries: ['ph', 'vscode-icons'],
 				label: 'Pilih Ikon (Iconify / Path)',
 			}),
+			tools: createToolLinkSchema(),
 			role: property(z.string().optional()).editor({ hidden: true }),
 		})).optional(),
 		design_title: property(z.string().optional()).editor({ label: 'Judul Design', description: 'Default: Graphic & Editorial' }),
@@ -100,6 +114,7 @@ const homeSchema = z.object({
 				iconLibraries: ['ph', 'vscode-icons'],
 				label: 'Pilih Ikon (Iconify / Path)',
 			}),
+			tools: createToolLinkSchema(),
 			role: property(z.string().optional()).editor({ hidden: true }),
 		})).optional(),
 	}).optional(),

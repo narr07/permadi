@@ -28,6 +28,7 @@ export default defineConfig({
 		'i-ant-design-instagram-outlined',
 		'i-ant-design-behance-square-filled',
 		'i-carbon-paint-brush',
+		'i-carbon-text-font',
 		'i-carbon-email',
 		'i-carbon-location',
 		'i-carbon-arrow-right',
