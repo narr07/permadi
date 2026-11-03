@@ -612,6 +612,13 @@ export default defineNuxtConfig({
 		},
 		cloudflare: {
 			nodeCompat: true,
+			deployConfig: true,
+			// Matikan alamat *.workers.dev: WAF zone permadi.dev tidak berlaku di sana, jadi bot bisa memicu SSR tanpa disaring
+			wrangler: {
+				workers_dev: false,
+				preview_urls: false,
+				routes: [{ pattern: 'permadi.dev', custom_domain: true }],
+			},
 		},
 		// Workaround Nuxt 4.6.0 on Windows: renderer stays external (backslash paths), SSR 500s.
 		// Remove once https://github.com/nuxt/nuxt/issues/36467 ships in a release.
