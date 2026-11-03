@@ -14,12 +14,12 @@ function cleanSlug(pathStr: string): string {
 	return lastPart.replace(/^\d+\./, '')
 }
 
-// Fetch project by slug safely
+// Fetch project by slug; pencarian cukup pakai metadata, isi lengkap hanya untuk projek yang cocok
 const { data: project } = await useAsyncData(
 	() => `projek-item-${locale.value}-${requestedSlug.value}`,
 	async () => {
 		const colName = collection.value as any
-		const allDocs = await queryCollection(colName).all()
+		const allDocs = await queryCollection(colName).select('path', 'slug', 'idProjek', 'idItem').all()
 
 		// Match slug or cleaned path
 		const matched = allDocs.find((d: any) => {
@@ -30,7 +30,7 @@ const { data: project } = await useAsyncData(
 		// Fallback: If slug in other language was visited, redirect to the matching project
 		if (!matched) {
 			const otherCol = (locale.value === 'id' ? 'projek_en' : 'projek_id') as any
-			const otherDocs = await queryCollection(otherCol).all()
+			const otherDocs = await queryCollection(otherCol).select('path', 'slug').all()
 			const otherMatched = otherDocs.find((d: any) => {
 				const s = d.slug || cleanSlug(d.path || '')
 				return s === requestedSlug.value
@@ -48,6 +48,12 @@ const { data: project } = await useAsyncData(
 		if (!matched)
 			return null
 
+		const fullDoc = await queryCollection(colName).path(matched.path).first()
+		if (!fullDoc)
+			return null
+		// plainText hanya untuk pencarian di server; tidak perlu ikut ke browser
+		const { plainText: _plainText, ...doc } = fullDoc as any
+
 		// Find translations for language switcher
 		const translations: Record<string, { slug: string }> = {}
 		const matchId = matched.idProjek || matched.idItem
@@ -62,7 +68,7 @@ const { data: project } = await useAsyncData(
 			}
 
 			const locCol = (locCode === 'id' ? 'projek_id' : 'projek_en') as any
-			const otherLocDocs = await queryCollection(locCol).all()
+			const otherLocDocs = await queryCollection(locCol).select('path', 'slug', 'idProjek', 'idItem').all()
 			const trDoc = otherLocDocs.find((d: any) => (matchId && (d.idProjek === matchId || d.idItem === matchId)))
 			if (trDoc) {
 				translations[locCode] = {
@@ -72,7 +78,7 @@ const { data: project } = await useAsyncData(
 		}
 
 		return {
-			doc: matched,
+			doc,
 			translations,
 		}
 	},

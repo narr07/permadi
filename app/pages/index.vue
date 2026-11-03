@@ -25,13 +25,13 @@ const { data: page } = await useAsyncData(
 
 const { data: latestPosts } = await useAsyncData(
 	() => `home-latest-posts-${locale.value}`,
-	() => queryCollection(blogCollection.value).order('date', 'DESC').limit(4).all(),
+	() => queryCollection(blogCollection.value).select('path', 'title', 'date', 'category').order('date', 'DESC').limit(4).all(),
 	{ watch: [locale] },
 )
 
 const { data: latestProjects } = await useAsyncData(
 	() => `home-latest-projects-${locale.value}`,
-	() => queryCollection(projectCollection.value).order('date', 'DESC').limit(3).all(),
+	() => queryCollection(projectCollection.value).select('path', 'title', 'description', 'tags', 'date').order('date', 'DESC').limit(3).all(),
 	{ watch: [locale] },
 )
 

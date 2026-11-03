@@ -13,10 +13,11 @@ const { data: page } = await useAsyncData(
 	{ watch: [locale] },
 )
 
-// All projects collection (SSR)
+// All projects collection (SSR); kartu cukup metadata, body dan plainText jangan ikut ke payload
 const { data: projects } = await useAsyncData(
 	() => `projek-list-${locale.value}`,
 	() => queryCollection(collection.value)
+		.select('path', 'slug', 'title', 'description', 'date', 'category', 'tags', 'image', 'images', 'link', 'repo')
 		.order('date', 'DESC')
 		.all(),
 	{ watch: [locale] },
