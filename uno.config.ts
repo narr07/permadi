@@ -22,34 +22,6 @@ export default defineConfig({
 	// as CSS they added ~50 KB to the render-blocking bundle on every page.
 	blocklist: [/^i-vscode-icons-/],
 
-	safelist: [
-		'i-ant-design-github-filled',
-		'i-ant-design-x-outlined',
-		'i-ant-design-instagram-outlined',
-		'i-ant-design-behance-square-filled',
-		'i-carbon-paint-brush',
-		'i-carbon-email',
-		'i-carbon-location',
-		'i-carbon-arrow-right',
-		'i-carbon-arrow-up-right',
-		'i-carbon-arrow-left',
-		'i-carbon-arrow-up',
-		'i-carbon-earth',
-		'i-carbon-code',
-		'i-carbon-checkmark',
-		'i-carbon-link',
-		'i-carbon-user-avatar',
-		'i-carbon-wifi',
-		'i-carbon-email-new',
-		'i-carbon-search',
-		'i-carbon-renew',
-		'i-carbon-close',
-		'i-carbon-laptop',
-		'i-carbon-sun',
-		'i-carbon-moon',
-		'i-carbon-menu',
-	],
-
 	presets: [
 		presetWind3({
 			dark: 'class',
