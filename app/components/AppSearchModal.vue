@@ -26,6 +26,21 @@ function warmSearch() {
 		init().catch(() => {})
 }
 
+// Snippet dan judul dari Nuxt Content adalah teks mentah artikel (isi blok kode ikut) dengan <mark> disisipkan.
+// Teks di-escape dulu, lalu hanya <mark> yang dikembalikan menjadi HTML, supaya contoh kode di artikel
+// tidak berubah menjadi elemen sungguhan di hasil pencarian.
+function toHighlightHtml(value?: string) {
+	if (!value)
+		return ''
+	return value
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#39;')
+		.replace(/&lt;(\/?)mark&gt;/g, '<$1mark>')
+}
+
 // Jalankan pencarian saat query berubah
 watch(searchQuery, async (newVal) => {
 	selectedIndex.value = -1
@@ -43,7 +58,11 @@ watch(searchQuery, async (newVal) => {
 				tag: 'mark',
 			},
 		})
-		results.value = res
+		results.value = res.map((r: any) => ({
+			...r,
+			titleHtml: toHighlightHtml(r.snippets?.title || r.title),
+			contentHtml: toHighlightHtml(r.snippets?.content),
+		}))
 	}
 	catch (err) {
 		console.error('Search error:', err)
@@ -451,14 +470,14 @@ onMounted(() => {
 												<div class="flex items-center justify-between gap-2">
 													<div
 														class="text-slate-900 font-bold transition-colors dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-brand-400"
-														v-html="item.snippets?.title || item.title"
+														v-html="item.titleHtml"
 													/>
 													<span class="i-carbon-arrow-right shrink-0 text-xs text-slate-500 group-hover:text-brand-600" />
 												</div>
 												<div
-													v-if="item.snippets?.content"
+													v-if="item.contentHtml"
 													class="line-clamp-1 mt-0.5 text-xs text-slate-700 dark:text-slate-300"
-													v-html="item.snippets.content"
+													v-html="item.contentHtml"
 												/>
 											</NuxtLink>
 										</li>
@@ -490,14 +509,14 @@ onMounted(() => {
 												<div class="flex items-center justify-between gap-2">
 													<div
 														class="text-slate-900 font-bold transition-colors dark:text-slate-50 group-hover:text-brand-600 dark:group-hover:text-brand-400"
-														v-html="item.snippets?.title || item.title"
+														v-html="item.titleHtml"
 													/>
 													<span class="i-carbon-arrow-right shrink-0 text-xs text-slate-500 group-hover:text-brand-600" />
 												</div>
 												<div
-													v-if="item.snippets?.content"
+													v-if="item.contentHtml"
 													class="line-clamp-1 mt-0.5 text-xs text-slate-700 dark:text-slate-300"
-													v-html="item.snippets.content"
+													v-html="item.contentHtml"
 												/>
 											</NuxtLink>
 										</li>
@@ -529,14 +548,14 @@ onMounted(() => {
 												<div class="flex items-center justify-between gap-2">
 													<div
 														class="text-slate-900 font-bold transition-colors dark:text-slate-50 group-hover:text-accent"
-														v-html="item.snippets?.title || item.title"
+														v-html="item.titleHtml"
 													/>
 													<span class="i-carbon-arrow-right shrink-0 text-xs text-slate-500 group-hover:text-accent" />
 												</div>
 												<div
-													v-if="item.snippets?.content"
+													v-if="item.contentHtml"
 													class="line-clamp-1 mt-0.5 text-xs text-slate-700 dark:text-slate-300"
-													v-html="item.snippets.content"
+													v-html="item.contentHtml"
 												/>
 											</NuxtLink>
 										</li>
