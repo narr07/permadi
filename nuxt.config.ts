@@ -51,7 +51,19 @@ export default defineNuxtConfig({
 				databaseId: process.env.NUXT_HUB_DATABASE_ID || 'ec2dcc68-5b36-4991-a8aa-ca9e1076956b',
 			},
 		},
+		// Cache Nitro (swr galeri, API Cloudinary) di KV: cache memori hilang tiap isolate Worker baru,
+		// jadi galeri tetap SSR + memanggil Cloudinary di setiap kunjungan
+		cache: {
+			driver: 'cloudflare-kv-binding',
+			binding: 'CACHE',
+			namespaceId: 'ec9a437898814c4ba25d4b34bcf60107',
+		},
 		dir: '.data',
+	},
+	$development: {
+		hub: {
+			cache: { driver: 'fs-lite', base: '.data/cache' },
+		},
 	},
 	colorMode: {
 		classSuffix: '',
