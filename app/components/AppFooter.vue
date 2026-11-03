@@ -79,7 +79,6 @@ function scrollToTop() {
 					:href="s.url"
 					target="_blank"
 					rel="noopener noreferrer"
-					:aria-label="`${s.name} @${s.handle}`"
 					class="group min-h-11 inline-flex items-center gap-2.5 border border-slate-200/80 bg-white px-3 py-2 text-slate-700 transition-colors duration-150 active:scale-[0.98] dark:border-[#134e43] hover:border-brand-500 dark:bg-[#001e1c] dark:text-slate-300 hover:text-brand-700 dark:hover:border-brand-400 dark:hover:text-brand-400"
 				>
 					<span
