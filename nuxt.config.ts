@@ -414,6 +414,14 @@ export default defineNuxtConfig({
 		detectBrowserLanguage: false,
 	},
 	hooks: {
+		// Bawaan Nuxt Content: request pertama setelah deploy mengimpor ulang dump ke D1. Di Worker paket gratis
+		// impor itu sering terhenti di tengah, dan impor yang berjalan bersamaan pernah meninggalkan tabel
+		// _content_pages_en hilang padahal tercatat siap. Impor dipindah ke scripts/sync-content-d1.mjs
+		// (GitHub Actions, setelah deploy); runtime cukup membaca D1.
+		'nitro:config': function (nitroConfig) {
+			if (nitroConfig.runtimeConfig?.content)
+				nitroConfig.runtimeConfig.content.integrityCheck = false
+		},
 		'content:file:afterParse': function (ctx: any) {
 			const fileId = ctx.file?.id || ''
 			const parts = fileId.split('/')
