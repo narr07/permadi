@@ -28,7 +28,6 @@ export default defineConfig({
 		'i-ant-design-instagram-outlined',
 		'i-ant-design-behance-square-filled',
 		'i-carbon-paint-brush',
-		'i-carbon-text-font',
 		'i-carbon-email',
 		'i-carbon-location',
 		'i-carbon-arrow-right',
@@ -317,6 +316,8 @@ export default defineConfig({
 	],
 
 	safelist: [
+		// Ikon dari konten (content/*/0.index.yml, Toolkit) tidak selalu terdeteksi scanner, jadi didaftarkan di sini
+		'i-carbon-text-font',
 		'i-carbon-home',
 		'i-carbon-book',
 		'i-carbon-folder',

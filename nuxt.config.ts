@@ -613,6 +613,8 @@ export default defineNuxtConfig({
 			deployConfig: true,
 			// Matikan alamat *.workers.dev: WAF zone permadi.dev tidak berlaku di sana, jadi bot bisa memicu SSR tanpa disaring
 			wrangler: {
+				// Nama Worker yang sudah ada di Cloudflare; tanpa ini Nitro menebak dari remote git (narr07-permadi)
+				name: 'permadi',
 				workers_dev: false,
 				preview_urls: false,
 				routes: [{ pattern: 'permadi.dev', custom_domain: true }],
