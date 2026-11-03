@@ -51,7 +51,7 @@ async function copyCode() {
 
 <style scoped>
 /* rangi menulis warna mode gelap di --shiki-dark; inline style perlu dikalahkan di mode gelap */
-:global(.dark) .chat-code pre :deep(span[style*='--shiki-dark']) {
+.dark .chat-code pre :deep(span[style*='--shiki-dark']) {
 	color: var(--shiki-dark) !important;
 }
 </style>

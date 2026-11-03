@@ -196,30 +196,30 @@ const onSubmit = handleSubmit(async (values) => {
 	outline-offset: 2px;
 }
 
-:global(.dark) .newsletter-box {
+.dark .newsletter-box {
 	background-color: #001e1c;
 	border-color: #134e43;
 }
 
-:global(.dark) .newsletter-box:focus-within {
+.dark .newsletter-box:focus-within {
 	border-color: #2bd4b5;
 	box-shadow: 0 0 0 2px rgba(43, 212, 181, 0.18);
 }
 
-:global(.dark) .newsletter-input {
+.dark .newsletter-input {
 	color: #f8fafa;
 }
 
-:global(.dark) .newsletter-input::placeholder {
+.dark .newsletter-input::placeholder {
 	color: #84a8a4;
 }
 
-:global(.dark) .newsletter-btn {
+.dark .newsletter-btn {
 	background-color: #ffffff;
 	color: #001e1c;
 }
 
-:global(.dark) .newsletter-btn:hover:not(:disabled) {
+.dark .newsletter-btn:hover:not(:disabled) {
 	background-color: #f0fdfa;
 	color: #0f7662;
 }

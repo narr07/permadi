@@ -499,7 +499,7 @@ useSchemaOrg([
 	border-color: #001e1c !important;
 }
 
-:global(.dark) .swiss-filter-active {
+.dark .swiss-filter-active {
 	background-color: #f8fafa !important;
 	color: #001e1c !important;
 	border-color: #f8fafa !important;
