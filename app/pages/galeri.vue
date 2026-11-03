@@ -390,8 +390,7 @@ useSchemaOrg([
 								<div class="flex shrink-0 items-center gap-2 text-xs font-mono">
 									<!-- Download HD Button -->
 									<a
-										v-if="selectedPhoto.download_url || selectedPhoto.full_image"
-										:href="selectedPhoto.download_url || selectedPhoto.full_image"
+										:href="galleryDownloadUrl(selectedPhoto.secure_url, selectedPhoto.public_id)"
 										target="_blank"
 										rel="noopener"
 										download
@@ -417,8 +416,7 @@ useSchemaOrg([
 							<div class="relative max-h-[62vh] min-h-[260px] w-full flex items-center justify-center overflow-hidden bg-slate-950 p-2 sm:p-4">
 								<!-- LQIP Pixelated Placeholder (Aktif saat foto modal sedang di-fetch) -->
 								<img
-									v-if="selectedPhoto.placeholder_image"
-									:src="selectedPhoto.placeholder_image"
+									:src="galleryImageUrl(selectedPhoto.secure_url, 'placeholder')"
 									alt=""
 									aria-hidden="true"
 									class="pointer-events-none absolute inset-0 h-full w-full object-contain transition-opacity duration-500 ease-out"
@@ -427,7 +425,7 @@ useSchemaOrg([
 								>
 
 								<NuxtImg
-									:src="selectedPhoto.preview_image || selectedPhoto.full_image || selectedPhoto.image"
+									:src="galleryImageUrl(selectedPhoto.secure_url, 'preview')"
 									:alt="selectedPhoto.title"
 									format="webp"
 									quality="90"

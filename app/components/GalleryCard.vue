@@ -34,8 +34,8 @@ const loaded = ref(false)
 			<div class="relative mb-4 aspect-[4/3] w-full overflow-hidden border border-slate-200/80 bg-slate-100 dark:border-[#134e43] dark:bg-[#001714]">
 				<!-- LQIP Pixelated Placeholder, dilepas dari DOM setelah foto asli tampil -->
 				<img
-					v-if="item.placeholder_image && !loaded"
-					:src="item.placeholder_image"
+					v-if="!loaded"
+					:src="galleryImageUrl(item.secure_url, 'placeholder')"
 					alt=""
 					aria-hidden="true"
 					decoding="async"
@@ -46,7 +46,7 @@ const loaded = ref(false)
 				<!-- Cloudinary mengubah ukuran dan format per lebar srcset (w_, f_auto, q_auto:eco), bukan mengirim file asli 4000px -->
 				<NuxtImg
 					provider="cloudinary"
-					:src="item.secure_url || item.image"
+					:src="item.secure_url"
 					:alt="item.title || (locale === 'id' ? 'Foto galeri' : 'Gallery photo')"
 					fit="coverLimit"
 					quality="auto:eco"

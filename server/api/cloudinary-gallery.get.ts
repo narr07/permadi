@@ -34,11 +34,6 @@ export interface GalleryItem {
 	/** Versi Inggris; kosong jika belum diisi */
 	title_en: string
 	alt_en: string
-	image: string
-	placeholder_image: string
-	preview_image: string
-	full_image: string
-	download_url: string
 	secure_url: string
 	tags: string[]
 	tags_en: string[]
@@ -146,22 +141,6 @@ export default defineCachedEventHandler(
 					const titleEn = text('galeri_judul_en') || context.caption_en
 					const altEn = text('galeri_alt_en') || context.alt_en
 
-					// Extract version from public_id URL pattern
-					const versionPrefix = resource.version ? `v${resource.version}/` : ''
-
-					// Direct CDN Delivery URLs with automatic WebP/AVIF format & smart eco compression
-					// 1. Grid thumbnail (tajam & dioptimasi ~20-40KB, ideal untuk bento grid & lazy decoding)
-					const thumbnailCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_720,f_auto,q_auto:eco/${versionPrefix}${resource.public_id}.${resource.format}`
-					// 2. Official Cloudinary LQIP Pixelate (~8 KB, blok piksel tegas & presisi persis contoh dokumentasi)
-					const placeholderCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_300,e_pixelate:20,f_auto,q_auto:eco/${versionPrefix}${resource.public_id}.${resource.format}`
-					// 3. Modal preview (tajam & responsif ~80-120KB, muat instan di mobile/tablet saat zoom)
-					const modalPreviewCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_1080,f_auto,q_auto:eco/${versionPrefix}${resource.public_id}.${resource.format}`
-					// 4. Full original resolution HD (untuk tombol direct open / preview penuh)
-					const fullCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_1920,f_auto,q_auto:good/${versionPrefix}${resource.public_id}.${resource.format}`
-					// 5. Direct HD download URL (Cloudinary fl_attachment otomatis memicu download file langsung)
-					const cleanFilename = (resource.public_id.split('/').pop() || 'permadi_artwork').replace(/[^\w-]/g, '_')
-					const downloadCdnUrl = `https://res.cloudinary.com/${cloudName}/image/upload/fl_attachment:${cleanFilename}/${versionPrefix}${resource.public_id}.${resource.format}`
-
 					// Fallback: use readable name from public_id (e.g. "gallery/isola_v1_dfq70w" -> "Isola V1")
 					// Akhiran 6 karakter acak dari Cloudinary (unique filename) dibuang
 					const fallbackName = (resource.public_id.split('/').pop() || '')
@@ -177,11 +156,6 @@ export default defineCachedEventHandler(
 						alt: altId || titleId || resource.display_name || fallbackName || 'Permadi Gallery',
 						title_en: titleEn || altEn || '',
 						alt_en: altEn || titleEn || '',
-						image: thumbnailCdnUrl,
-						placeholder_image: placeholderCdnUrl,
-						preview_image: modalPreviewCdnUrl,
-						full_image: fullCdnUrl,
-						download_url: downloadCdnUrl,
 						secure_url: resource.secure_url,
 						tags,
 						tags_en: tagsEn,
