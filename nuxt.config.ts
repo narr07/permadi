@@ -564,6 +564,12 @@ export default defineNuxtConfig({
 				'Cache-Control': 'no-store, no-cache, must-revalidate',
 			},
 		},
+		// Media Studio: kalaupun file aktif (SVG) lolos, CSP sandbox mencegahnya menjalankan skrip di origin ini
+		'/__nuxt_studio/ipx/**': {
+			headers: {
+				'Content-Security-Policy': 'default-src \'none\'; img-src \'self\' data:; style-src \'unsafe-inline\'; sandbox',
+			},
+		},
 
 		// API routes tidak di-prerender
 		'/api/**': {
@@ -619,6 +625,12 @@ export default defineNuxtConfig({
 			ignore: ['/gallery', '/id/galeri'],
 			crawlLinks: true,
 			failOnError: false,
+		},
+		// Pesan i18n di-cache Nitro dengan key dari hash di URL, dan hash itu tidak divalidasi: tiap hash acak = tulis KV baru.
+		// File pesan yang valid sudah di-prerender sebagai aset statis, jadi cache memori per isolate sudah cukup.
+		storage: {
+			'cache:nitro:handlers:i18n:messages': { driver: 'memory' },
+			'cache:nitro:functions:i18n:messages-internal': { driver: 'memory' },
 		},
 		cloudflare: {
 			nodeCompat: true,
