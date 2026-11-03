@@ -6,10 +6,17 @@ interface PhilosophyData {
 	description?: string
 }
 
+interface ToolLink {
+	name: string
+	url: string
+	icon?: string
+}
+
 interface SkillItem {
 	name: string
 	desc?: string
 	icon?: string
+	tools?: ToolLink[]
 }
 
 interface SkillsData {
@@ -26,6 +33,8 @@ defineProps<{
 }>()
 
 const { locale } = useI18n()
+
+const newTabLabel = computed(() => (locale.value === 'id' ? '(buka di tab baru)' : '(opens in a new tab)'))
 </script>
 
 <template>
@@ -69,25 +78,11 @@ const { locale } = useI18n()
 								</h3>
 							</div>
 
-							<ul
-								v-if="skillsData?.code_items && skillsData.code_items.length > 0"
-								class="text-xs text-slate-800 font-sans space-y-3 sm:text-sm dark:text-slate-200"
-							>
-								<li
-									v-for="(item, idx) in skillsData.code_items"
-									:key="item.name"
-									:class="{ 'border-b border-slate-100 pb-2.5 dark:border-[#134e43]/60': idx < skillsData.code_items.length - 1 }"
-									class="flex items-start"
-								>
-									<div>
-										<strong class="text-slate-900 font-semibold dark:text-slate-50">{{ item.name }}</strong>
-										<span
-											v-if="item.desc"
-											class="block text-xs text-slate-700 dark:text-slate-300"
-										>{{ item.desc }}</span>
-									</div>
-								</li>
-							</ul>
+							<HomeToolkitList
+								v-if="skillsData?.code_items?.length"
+								:items="skillsData.code_items"
+								:new-tab-label="newTabLabel"
+							/>
 						</div>
 
 						<!-- Column B: Visual Aesthetics & Editorial Craft -->
@@ -98,25 +93,11 @@ const { locale } = useI18n()
 								</h3>
 							</div>
 
-							<ul
-								v-if="skillsData?.design_items && skillsData.design_items.length > 0"
-								class="text-xs text-slate-800 font-sans space-y-3 sm:text-sm dark:text-slate-200"
-							>
-								<li
-									v-for="(item, idx) in skillsData.design_items"
-									:key="item.name"
-									:class="{ 'border-b border-slate-100 pb-2.5 dark:border-[#134e43]/60': idx < skillsData.design_items.length - 1 }"
-									class="flex items-start"
-								>
-									<div>
-										<strong class="text-slate-900 font-semibold dark:text-slate-50">{{ item.name }}</strong>
-										<span
-											v-if="item.desc"
-											class="block text-xs text-slate-700 dark:text-slate-300"
-										>{{ item.desc }}</span>
-									</div>
-								</li>
-							</ul>
+							<HomeToolkitList
+								v-if="skillsData?.design_items?.length"
+								:items="skillsData.design_items"
+								:new-tab-label="newTabLabel"
+							/>
 						</div>
 					</div>
 				</div>

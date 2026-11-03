@@ -316,6 +316,8 @@ export default defineConfig({
 	],
 
 	safelist: [
+		// Ikon dari konten (content/*/0.index.yml, Toolkit) tidak selalu terdeteksi scanner, jadi didaftarkan di sini
+		'i-carbon-text-font',
 		'i-carbon-home',
 		'i-carbon-book',
 		'i-carbon-folder',

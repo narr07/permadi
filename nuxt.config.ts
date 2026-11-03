@@ -248,8 +248,6 @@ export default defineNuxtConfig({
 			sentry: {
 				dsn: process.env.NUXT_PUBLIC_SENTRY_DSN || '',
 			},
-			// Skrip SimpleAnalytics hanya dimuat bila diaktifkan, supaya preview dan lokal tidak ikut terhitung.
-			simpleAnalytics: process.env.NUXT_PUBLIC_SIMPLE_ANALYTICS === 'true',
 			googleAnalyticsId: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID || '',
 			fbAppId: process.env.NUXT_PUBLIC_FB_APP_ID || '',
 		},
@@ -612,6 +610,15 @@ export default defineNuxtConfig({
 		},
 		cloudflare: {
 			nodeCompat: true,
+			deployConfig: true,
+			// Matikan alamat *.workers.dev: WAF zone permadi.dev tidak berlaku di sana, jadi bot bisa memicu SSR tanpa disaring
+			wrangler: {
+				// Nama Worker yang sudah ada di Cloudflare; tanpa ini Nitro menebak dari remote git (narr07-permadi)
+				name: 'permadi',
+				workers_dev: false,
+				preview_urls: false,
+				routes: [{ pattern: 'permadi.dev', custom_domain: true }],
+			},
 		},
 		// Workaround Nuxt 4.6.0 on Windows: renderer stays external (backslash paths), SSR 500s.
 		// Remove once https://github.com/nuxt/nuxt/issues/36467 ships in a release.
