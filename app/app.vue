@@ -18,9 +18,17 @@ useHead({
 	],
 })
 
-// Statistik pengunjung tanpa cookie. Dimuat setelah Nuxt siap supaya tidak menambah TBT, dan hanya bila diaktifkan lewat env.
-if (config.public.simpleAnalytics && !import.meta.dev) {
-	useScript({ src: 'https://scripts.simpleanalyticscdn.com/latest.js', async: true }, { trigger: 'onNuxtReady' })
+// Statistik pengunjung tanpa cookie. Tag ada di HTML (async, tidak memblokir render) supaya halaman prerender
+// ikut membawanya dan pemeriksa instalasi SimpleAnalytics bisa menemukannya. Admin Nuxt Studio tidak dihitung.
+if (!import.meta.dev) {
+	useHead({
+		script: [{
+			'key': 'simple-analytics',
+			'src': 'https://scripts.simpleanalyticscdn.com/latest.js',
+			'async': true,
+			'data-ignore-pages': '/_studio,/_studio/*',
+		}],
+	})
 }
 
 useSeoMeta({
