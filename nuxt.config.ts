@@ -626,6 +626,12 @@ export default defineNuxtConfig({
 			crawlLinks: true,
 			failOnError: false,
 		},
+		// Pesan i18n di-cache Nitro dengan key dari hash di URL, dan hash itu tidak divalidasi: tiap hash acak = tulis KV baru.
+		// File pesan yang valid sudah di-prerender sebagai aset statis, jadi cache memori per isolate sudah cukup.
+		storage: {
+			'cache:nitro:handlers:i18n:messages': { driver: 'memory' },
+			'cache:nitro:functions:i18n:messages-internal': { driver: 'memory' },
+		},
 		cloudflare: {
 			nodeCompat: true,
 			deployConfig: true,
