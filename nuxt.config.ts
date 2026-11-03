@@ -248,8 +248,9 @@ export default defineNuxtConfig({
 			sentry: {
 				dsn: process.env.NUXT_PUBLIC_SENTRY_DSN || '',
 			},
-			// Skrip SimpleAnalytics hanya dimuat bila diaktifkan, supaya preview dan lokal tidak ikut terhitung.
-			simpleAnalytics: process.env.NUXT_PUBLIC_SIMPLE_ANALYTICS === 'true',
+			// Aktif di build produksi kecuali NUXT_PUBLIC_SIMPLE_ANALYTICS=false. Dev sudah dikecualikan di app.vue,
+			// dan skrip SimpleAnalytics sendiri mengabaikan localhost.
+			simpleAnalytics: process.env.NUXT_PUBLIC_SIMPLE_ANALYTICS !== 'false',
 			googleAnalyticsId: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID || '',
 			fbAppId: process.env.NUXT_PUBLIC_FB_APP_ID || '',
 		},
