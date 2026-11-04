@@ -222,6 +222,27 @@ function getSocialIcon(name?: string, icon?: string) {
 				</div>
 				<NewsletterForm />
 			</div>
+
+			<!-- Masukan tentang situs: formulir yang sama dengan dialog di footer -->
+			<section
+				class="border border-slate-200/80 bg-white p-6 md:col-span-12 dark:border-[#134e43] dark:bg-[#002b27] sm:p-7"
+				aria-labelledby="site-feedback-title"
+			>
+				<h2
+					id="site-feedback-title"
+					class="m-0 text-2xl text-slate-900 font-900 font-heading dark:text-white"
+				>
+					{{ locale === 'id' ? 'Masukan untuk situs ini' : 'Feedback about this site' }}
+				</h2>
+				<p class="mb-5 mt-1 max-w-2xl text-xs text-slate-700 leading-relaxed sm:text-sm dark:text-slate-300">
+					{{ locale === 'id'
+						? 'Ada tampilan yang aneh, tautan yang rusak, atau isi yang kurang jelas? Kirim di sini tanpa perlu login. Masukan hanya dibaca oleh saya.'
+						: 'Spotted a layout glitch, a broken link, or something unclear? Send it here, no login needed. Only I read your feedback.' }}
+				</p>
+				<div class="max-w-2xl">
+					<AppFeedbackForm />
+				</div>
+			</section>
 		</div>
 
 		<article

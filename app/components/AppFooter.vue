@@ -27,11 +27,15 @@ function scrollToTop() {
 	<!-- When on Home Page: A subtle back-to-top anchor rail that seamlessly closes the document -->
 	<footer
 		v-if="isHomePage"
-		class="w-full flex flex-col items-center justify-between gap-4 border-t border-slate-200/80 bg-slate-50/90 px-6 py-4 text-xs font-mono sm:flex-row dark:border-[#134e43] dark:bg-[#002420]/80 sm:px-8"
+		class="w-full flex flex-col items-center justify-between gap-4 border-t border-slate-200/80 bg-slate-50/90 px-6 py-4 text-xs font-mono sm:flex-row sm:flex-wrap dark:border-[#134e43] dark:bg-[#002420]/80 sm:px-8"
 	>
 		<span class="text-slate-700 dark:text-slate-300">
 			© 2021–<ClientOnly fallback="2026">{{ currentYear }}</ClientOnly> · Dinar Permadi Yusup
 		</span>
+
+		<LazyAppReadCount hydrate-on-visible />
+
+		<LazyAppFeedbackDialog hydrate-on-visible />
 
 		<button
 			type="button"
@@ -95,13 +99,17 @@ function scrollToTop() {
 		</div>
 
 		<!-- Bottom Copyright & Back to Top Strip -->
-		<div class="flex flex-col items-start justify-between gap-4 bg-slate-50/60 px-6 py-4 text-xs font-mono sm:flex-row sm:items-center dark:bg-[#002420]/40 sm:px-8">
+		<div class="flex flex-col items-start justify-between gap-4 bg-slate-50/60 px-6 py-4 text-xs font-mono sm:flex-row sm:flex-wrap sm:items-center dark:bg-[#002420]/40 sm:px-8">
 			<div class="flex items-center gap-2 text-slate-700 dark:text-slate-300">
 				<span>© 2021–<ClientOnly fallback="2026">{{ currentYear }}</ClientOnly></span>
 				<span>·</span>
 				<span class="text-slate-900 font-bold dark:text-slate-100">Dinar Permadi Yusup</span>
 				<span class="hidden sm:inline">· {{ $t('footer.all_rights_reserved') }}</span>
 			</div>
+
+			<LazyAppReadCount hydrate-on-visible />
+
+			<LazyAppFeedbackDialog hydrate-on-visible />
 
 			<button
 				type="button"
