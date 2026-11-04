@@ -28,6 +28,18 @@ export const contentActivity = sqliteTable('content_activity', {
 	createdAt: text('created_at').notNull(),
 })
 
+// Masukan pengunjung tentang situs (bukan per artikel). Privat: tidak pernah ditampilkan di situs.
+export const siteFeedback = sqliteTable('site_feedback', {
+	id: integer('id').primaryKey({ autoIncrement: true }),
+	category: text('category').notNull(), // 'design' | 'content' | 'bug' | 'other'
+	message: text('message').notNull(),
+	email: text('email'),
+	page: text('page'), // path halaman tempat formulir dibuka
+	locale: text('locale'),
+	ipHash: text('ip_hash').notNull(), // SHA-256 IP + salt, untuk batas kiriman; IP asli tidak disimpan
+	createdAt: text('created_at').notNull(),
+})
+
 export type Reaction = typeof reactions.$inferSelect
 export type NewReaction = typeof reactions.$inferInsert
 export type ContentMeta = typeof contentMeta.$inferSelect

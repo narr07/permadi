@@ -457,7 +457,8 @@ async function ask(query: string) {
 
 <template>
 	<!-- Tombol pembuka -->
-	<div class="vt-static-chat fixed bottom-5 right-5 z-40 sm:bottom-6 sm:right-6 print:hidden">
+	<div class="vt-static-chat fixed bottom-5 right-5 z-40 flex items-center gap-2 sm:bottom-6 sm:right-6 print:hidden">
+		<AppPresence />
 		<button
 			ref="toggleRef"
 			type="button"
