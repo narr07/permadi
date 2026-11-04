@@ -610,7 +610,12 @@ export default defineNuxtConfig({
 	},
 
 	nitro: {
-		preset: 'cloudflare_module',
+		// cloudflare_durable = cloudflare_module + satu Durable Object yang menampung semua WebSocket,
+		// dipakai penghitung pengunjung online (server/routes/_presence.ts). Request HTTP biasa tetap di Worker.
+		preset: 'cloudflare_durable',
+		experimental: {
+			websocket: true,
+		},
 		prerender: {
 			concurrency: 1,
 			interval: 50,
@@ -650,6 +655,11 @@ export default defineNuxtConfig({
 				workers_dev: false,
 				preview_urls: false,
 				routes: [{ pattern: 'permadi.dev', custom_domain: true }],
+				// Kelas dan nama binding ditetapkan preset cloudflare_durable; SQLite agar jalan di paket Workers Free
+				durable_objects: {
+					bindings: [{ name: '$DurableObject', class_name: '$DurableObject' }],
+				},
+				migrations: [{ tag: 'v1', new_sqlite_classes: ['$DurableObject'] }],
 			},
 		},
 		// Workaround Nuxt 4.6.0 on Windows: renderer stays external (backslash paths), SSR 500s.
