@@ -18,6 +18,8 @@ const HEADER_LEN = MAGIC.length + 1 + 32 + 12 + 16
 
 // Folder sumber → kategori generator
 const FOLDER_CATEGORY = {
+	'Buku Desain Markdown': 'art',
+	// Nama lama di folder sumber E:\Buku Bacaan, tetap dikenali bila disalin ulang
 	'Buku Desaun Markdown': 'art',
 	'Buku Pendidikan Markdown': 'edu',
 	'Buku Teknologi Markdown': 'tech',
