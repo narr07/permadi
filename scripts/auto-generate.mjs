@@ -21,6 +21,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { loadLibrary, searchLibrary } from './lib/book-library.mjs'
 import { createLedger, generate, parseJson } from './lib/gemini.mjs'
 import { loadServiceAccount } from './lib/google-auth.mjs'
 import { fetchRisingTerms } from './lib/google-trends.mjs'
@@ -66,6 +67,9 @@ const SEO_REFRESH_FILE = path.join(DATA_DIR, 'seo-refresh.json')
 // Tanggal terakhir tiap artikel ditulis/ditulis ulang, per nomor artikel
 const REFRESH_LOG_FILE = path.join(DATA_DIR, 'refresh-log.json')
 const REFRESH_COOLDOWN_DAYS = 30
+// Buku hasil OCR (lokal, tidak di-commit) dan salinan terenkripsinya untuk GitHub Actions
+const BOOKS_DIR = path.join(rootDir, 'books')
+const BOOK_INDEX_FILE = path.join(DATA_DIR, 'book-index.enc')
 
 const CATEGORIES = ['edu', 'art', 'tech']
 
@@ -1063,6 +1067,51 @@ function loadArticleForRefresh(ref) {
 	}
 }
 
+/**
+ * Ambil potongan buku dari perpustakaan pribadi yang relevan dengan topik, sebagai blok prompt
+ * untuk tahap riset. Kosong bila perpustakaan tidak tersedia atau tidak ada yang cocok.
+ */
+async function findBookReferences(apiKey, { category, topic, primaryKeyword, secondaryKeywords, ledger, profile }) {
+	const { library, source } = loadLibrary({ booksDir: BOOKS_DIR, indexFile: BOOK_INDEX_FILE, key: process.env.BOOK_INDEX_KEY })
+	if (!library) {
+		console.warn(`[Books] Library unavailable (${source}); continuing without book references.`)
+		return ''
+	}
+
+	// Banyak buku berbahasa Inggris, jadi kueri dibuat dwibahasa agar istilah ID tetap menemukan buku EN
+	let queries = [topic, primaryKeyword, ...secondaryKeywords]
+	try {
+		const res = await generate(profile.models.utility, {
+			apiKey,
+			ledger,
+			stage: 'book-query',
+			json: true,
+			prompt: `Topik artikel: "${topic}". Primary keyword: "${primaryKeyword}".
+Buat istilah pencarian untuk menemukan bagian buku yang membahas topik ini. Pakai istilah spesifik (nama konsep, teori, metode, tokoh), bukan kata umum seperti "panduan" atau "cara".
+Kembalikan JSON: {"id": ["4-6 istilah Bahasa Indonesia"], "en": ["4-6 padanan atau istilah Bahasa Inggris"]}`,
+		})
+		const parsed = parseJson(res.text)
+		queries = [...queries, ...(parsed.id || []), ...(parsed.en || [])].filter(q => typeof q === 'string' && q.trim())
+	}
+	catch (err) {
+		console.warn(`[Books] Query expansion failed (${err.message}); using keywords only.`)
+	}
+
+	const hits = searchLibrary(library, queries, { category })
+	if (!hits.length) {
+		console.log(`[Books] No relevant passages in ${library.books.length} books (${source}).`)
+		return ''
+	}
+	console.log(`[Books] ${hits.length} passages (${source}): ${[...new Set(hits.map(h => h.book))].join('; ')}`)
+	const blocks = hits.map((h, i) => `[${i + 1}] ${h.book}${h.heading ? ` › ${h.heading}` : ''}\n${h.text}`).join('\n\n')
+	return `
+
+REFERENSI BUKU DARI PERPUSTAKAAN PENULIS (hasil OCR, bisa ada salah ketik; format nama: "Judul - Penulis"):
+${blocks}
+
+Pakai referensi buku di atas sebagai sumber konsep, prinsip, dan contoh bila relevan dengan topik; abaikan yang tidak relevan. Di catatan riset, tandai setiap poin dari buku dengan (Buku: Judul, Penulis). Rangkum dengan kata-kata sendiri, jangan salin paragraf.`
+}
+
 async function generateArticle(apiKey, { category, topicData, ledger, profile, rewrite }) {
 	const today = new Date().toISOString().split('T')[0]
 	const { topic, primaryKeyword } = topicData
@@ -1082,6 +1131,8 @@ Primary keyword: "${primaryKeyword}"
 Secondary keywords: ${secondaryKeywords.join(', ') || 'sesuaikan dengan topik'}
 Tanggal terbit: ${rewrite?.date || today}${rewrite ? `\nMODE TULIS ULANG: artikel ini sudah terbit dengan URL tetap; tujuannya naik ke halaman 1 Google.${targetQueries}` : ''}${rewrite?.angle ? `\nSUDUT PANDANG WAJIB (artikel lain di situs sudah membahas sisi lain topik ini, jangan tumpang tindih): ${rewrite.angle}` : ''}`
 
+	const bookRefs = await findBookReferences(apiKey, { category, topic, primaryKeyword, secondaryKeywords, ledger, profile })
+
 	// Tahap 1: riset berbasis Google Search agar fakta & data terkini, bukan dari ingatan model
 	console.log('\n[Pipeline 1/5] Research with Google Search grounding...')
 	const research = await generate(models.research, {
@@ -1098,7 +1149,7 @@ Lakukan riset untuk artikel blog berbahasa Indonesia tentang topik di atas. Guna
 4. Kesalahan umum dan cara menghindarinya.
 5. Pertanyaan yang sering dicari orang tentang topik ini.
 6. Sudut pandang yang jarang dibahas artikel lain.
-Jangan mengarang. Tandai informasi yang tidak pasti dengan "(belum pasti)".`,
+Jangan mengarang. Tandai informasi yang tidak pasti dengan "(belum pasti)".${bookRefs}`,
 	})
 
 	// Tahap 2: draf ID dalam markdown biasa (bukan JSON) agar model fokus pada tulisan
@@ -1115,7 +1166,7 @@ ${research.text}
 ${rewrite ? `\nARTIKEL LAMA (pertahankan informasi yang benar dan berguna, buang yang lemah atau keliru, perbaiki struktur dan gaya, isi celah yang ditemukan riset, dan jawab kueri target di paragraf awal serta subjudul):\n${rewrite.body}\n` : ''}
 ARTIKEL LAIN DI SITUS (tautkan 2–3 yang benar-benar relevan dengan format [teks jangkar](url), di tempat yang wajar):
 ${linkListId}
-
+${bookRefs ? '\nBila catatan riset memuat bagian dari buku, sebut judul dan penulisnya secara wajar di dalam kalimat (misalnya "Jon Yablonski dalam Laws of UX menjelaskan ..."). Tulis dengan kata-kata sendiri; kutipan langsung paling banyak satu kalimat pendek per buku.\n' : ''}
 Tulis body artikel lengkap dalam Bahasa Indonesia. Keluarkan HANYA markdown body artikel, tanpa pengantar atau penutup dari Anda.`,
 	})
 
