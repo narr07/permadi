@@ -75,6 +75,7 @@ scripts/obsidian-plugin/
 
 # Drafts / Unpublished content staging
 drafts/
+books/
 bahan-artikel/
 
 # Python virtual environment & font backups
