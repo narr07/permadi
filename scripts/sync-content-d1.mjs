@@ -45,6 +45,13 @@ async function d1(sql, params = []) {
 	return body.result?.[0]?.results || []
 }
 
+// Tabel yang belum ada wajar (database baru); error lain, misalnya token tanpa izin D1, harus menghentikan skrip
+function ignoreMissingTable(error) {
+	if (/no such table/i.test(error.message))
+		return []
+	throw error
+}
+
 async function loadDump(collection) {
 	const res = await fetch(`${SITE_URL}/__nuxt_content/${collection}/sql_dump.txt`)
 	if (!res.ok)
@@ -64,8 +71,8 @@ for (const collection of collections) {
 	// "ready" sementara tabel kontennya sudah di-drop. Jumlah baris di tabel ikut dicocokkan dengan dump.
 	const table = `_content_${collection}`
 	const expectedRows = statements.filter(s => s.startsWith(`INSERT INTO ${table} `)).length
-	const [current] = await d1('SELECT version, ready FROM _content_info WHERE id = ?', [`checksum_${collection}`]).catch(() => [])
-	const [count] = await d1(`SELECT count(*) AS n FROM ${table}`).catch(() => [])
+	const [current] = await d1('SELECT version, ready FROM _content_info WHERE id = ?', [`checksum_${collection}`]).catch(ignoreMissingTable)
+	const [count] = await d1(`SELECT count(*) AS n FROM ${table}`).catch(ignoreMissingTable)
 	if (current?.version === version && current.ready && count?.n === expectedRows) {
 		console.log(`= ${collection}: sudah terbaru (${expectedRows} baris)`)
 		continue
@@ -78,7 +85,7 @@ for (const collection of collections) {
 		continue
 
 	// Baris info lama harus dihapus dulu: dump memasukkannya ulang dengan INSERT biasa
-	await d1('DELETE FROM _content_info WHERE id = ?', [`checksum_${collection}`]).catch(() => {})
+	await d1('DELETE FROM _content_info WHERE id = ?', [`checksum_${collection}`]).catch(ignoreMissingTable)
 	for (const raw of statements) {
 		// Tiap statement diakhiri " -- <hash>", sama seperti yang dibuang Nuxt Content saat impor
 		const hash = raw.split(' -- ').pop()
