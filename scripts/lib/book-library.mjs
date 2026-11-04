@@ -23,6 +23,8 @@ const FOLDER_CATEGORY = {
 	'Buku Desaun Markdown': 'art',
 	'Buku Pendidikan Markdown': 'edu',
 	'Buku Teknologi Markdown': 'tech',
+	// Buku guru/siswa, dokumen kurikulum resmi, dan catatan taksonomi (berikut subfoldernya)
+	'sumber': 'edu',
 }
 
 const CHUNK_MIN_WORDS = 220
@@ -128,13 +130,39 @@ export function buildLibraryFromDir(booksDir) {
 		const dir = path.join(booksDir, folder)
 		if (!fs.existsSync(dir))
 			continue
-		for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.md')).sort()) {
-			const bookIdx = books.push({ name: file.replace(/\.md$/, ''), cat }) - 1
-			for (const [heading, text] of chunkBook(fs.readFileSync(path.join(dir, file), 'utf8')))
+		for (const file of listMarkdown(dir)) {
+			const markdown = fs.readFileSync(file, 'utf8')
+			const book = { name: bookName(file, markdown), cat }
+			// Buku guru/siswa per mata pelajaran: tetap dipakai, tapi kalah dari dokumen kurikulum dan buku teori
+			if (folder === 'sumber' && path.relative(dir, file).split(path.sep)[0] === 'buku')
+				book.w = 0.85
+			const bookIdx = books.push(book) - 1
+			for (const [heading, text] of chunkBook(markdown))
 				chunks.push([bookIdx, heading, text])
 		}
 	}
 	return books.length ? { v: FORMAT_VERSION, books, chunks } : null
+}
+
+/** Semua .md di folder beserta subfoldernya, urut agar indeks deterministik. */
+function listMarkdown(dir) {
+	return fs.readdirSync(dir, { withFileTypes: true })
+		.sort((a, b) => a.name.localeCompare(b.name))
+		.flatMap((e) => {
+			const full = path.join(dir, e.name)
+			if (e.isDirectory())
+				return listMarkdown(full)
+			return e.name.endsWith('.md') ? [full] : []
+		})
+}
+
+/** Nama yang dikutip di artikel: nama file, atau judul H1 bila nama file berupa slug (mis. taksonomi-solo). */
+function bookName(file, markdown) {
+	const base = path.basename(file, '.md').replace(/^\[Signed\]\s*/i, '')
+	if (/\s/.test(base))
+		return base
+	const h1 = markdown.match(/^#\s+(\S.*)$/m)?.[1]
+	return h1 ? cleanText(h1).replace(/\s*\(untuk generator\)\s*$/i, '') : base
 }
 
 function parseKey(keyB64) {
@@ -275,6 +303,7 @@ export function searchLibrary(library, queries, { category, limit = 8, perBook =
 		}
 		if (category && library.books[bookIdx].cat === category)
 			score *= 1.15
+		score *= library.books[bookIdx].w ?? 1
 		scored.push({ score, bookIdx, heading, text })
 	}
 
@@ -282,6 +311,7 @@ export function searchLibrary(library, queries, { category, limit = 8, perBook =
 	const floor = (scored[0]?.score || 0) * 0.35
 	const perBookCount = new Map()
 	const picked = []
+	const pickedTokens = []
 	let words = 0
 	for (const hit of scored) {
 		if (picked.length >= limit || hit.score < floor)
@@ -290,9 +320,23 @@ export function searchLibrary(library, queries, { category, limit = 8, perBook =
 		const wc = wordCount(hit.text)
 		if (used >= perBook || words + wc > maxWords)
 			continue
+		// Buku guru/siswa dan edisi revisi sering memuat teks yang sama; ambil satu saja
+		const tokens = new Set(tokenize(hit.text))
+		if (pickedTokens.some(p => jaccard(p, tokens) >= 0.5))
+			continue
+		pickedTokens.push(tokens)
 		perBookCount.set(hit.bookIdx, used + 1)
 		words += wc
 		picked.push({ book: library.books[hit.bookIdx].name, heading: hit.heading, text: hit.text, score: hit.score })
 	}
 	return picked
+}
+
+function jaccard(a, b) {
+	let inter = 0
+	for (const t of a) {
+		if (b.has(t))
+			inter++
+	}
+	return inter / Math.max(a.size + b.size - inter, 1)
 }
