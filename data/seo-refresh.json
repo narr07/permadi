@@ -69,10 +69,15 @@
       "nuxt": {
         "position": 18.5,
         "impressions": 2,
-        "seen": "2026-11-02"
+        "seen": "2026-11-05"
+      },
+      "nuxt ssg": {
+        "position": 7,
+        "impressions": 2,
+        "seen": "2026-11-05"
       }
     },
-    "updated": "2026-11-02"
+    "updated": "2026-11-05"
   },
   "https://permadi.dev/id/blog/problem-based-learning-stages-and-syntax": {
     "queries": {
