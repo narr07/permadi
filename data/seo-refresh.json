@@ -69,15 +69,15 @@
       "nuxt": {
         "position": 18.5,
         "impressions": 2,
-        "seen": "2026-11-05"
+        "seen": "2026-11-08"
       },
       "nuxt ssg": {
         "position": 7,
         "impressions": 2,
-        "seen": "2026-11-05"
+        "seen": "2026-11-08"
       }
     },
-    "updated": "2026-11-05"
+    "updated": "2026-11-08"
   },
   "https://permadi.dev/id/blog/problem-based-learning-stages-and-syntax": {
     "queries": {
@@ -198,5 +198,20 @@
       }
     },
     "updated": "2026-11-06"
+  },
+  "https://permadi.dev/blog/backend-architecture-and-nuxt-integration": {
+    "queries": {
+      "nuxt bff": {
+        "position": 7,
+        "impressions": 2,
+        "seen": "2026-11-08"
+      },
+      "bff nuxt": {
+        "position": 7.5,
+        "impressions": 2,
+        "seen": "2026-11-08"
+      }
+    },
+    "updated": "2026-11-08"
   }
 }
