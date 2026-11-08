@@ -161,6 +161,56 @@ export const BLOG_SLUG_PAIRS: BlogSlugPair[] = [
 		"id": 31,
 		"en": "critical-thinking-equation-algebra",
 		"idSlug": "berpikir-kritis-diberikan-persamaan"
+	},
+	{
+		"id": 32,
+		"en": "principles-of-graphic-design-guide",
+		"idSlug": "panduan-prinsip-dasar-desain"
+	},
+	{
+		"id": 33,
+		"en": "modern-website-development-services",
+		"idSlug": "jasa-website-development-modern"
+	},
+	{
+		"id": 34,
+		"en": "evidence-based-study-methods",
+		"idSlug": "cara-belajar-yang-baik"
+	},
+	{
+		"id": 35,
+		"en": "graphic-design-principles-guide",
+		"idSlug": "panduan-prinsip-desain-grafis"
+	},
+	{
+		"id": 36,
+		"en": "modern-webshop-development-guide",
+		"idSlug": "panduan-arsitektur-webshop-development"
+	},
+	{
+		"id": 37,
+		"en": "rumah-belajar-kemdikbud-guide",
+		"idSlug": "portal-rumah-belajar-kemdikbud"
+	},
+	{
+		"id": 38,
+		"en": "golden-ratio-photography-guide",
+		"idSlug": "golden-ratio-fotografi-komposisi"
+	},
+	{
+		"id": 39,
+		"en": "cloudflare-workers-edge-architecture",
+		"idSlug": "arsitektur-cloudflare-workers-edge"
+	},
+	{
+		"id": 40,
+		"en": "learning-outcomes-guide",
+		"idSlug": "panduan-capaian-pembelajaran"
+	},
+	{
+		"id": 41,
+		"en": "infographic-design-guide",
+		"idSlug": "prinsip-desain-infografis"
 	}
 ]
 
