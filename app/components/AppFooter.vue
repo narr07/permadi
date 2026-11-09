@@ -33,8 +33,6 @@ function scrollToTop() {
 			© 2021–<ClientOnly fallback="2026">{{ currentYear }}</ClientOnly> · Dinar Permadi Yusup
 		</span>
 
-		<LazyAppReadCount hydrate-on-visible />
-
 		<LazyAppFeedbackDialog hydrate-on-visible />
 
 		<button
@@ -106,8 +104,6 @@ function scrollToTop() {
 				<span class="text-slate-900 font-bold dark:text-slate-100">Dinar Permadi Yusup</span>
 				<span class="hidden sm:inline">· {{ $t('footer.all_rights_reserved') }}</span>
 			</div>
-
-			<LazyAppReadCount hydrate-on-visible />
 
 			<LazyAppFeedbackDialog hydrate-on-visible />
 
