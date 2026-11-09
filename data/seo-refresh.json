@@ -59,10 +59,10 @@
       "accelerated learning adalah": {
         "position": 30,
         "impressions": 2,
-        "seen": "2026-11-06"
+        "seen": "2026-11-09"
       }
     },
-    "updated": "2026-11-06"
+    "updated": "2026-11-09"
   },
   "https://permadi.dev/id/blog/mengenal-nuxt-js-framework-vue-ssr-ssg": {
     "queries": {
@@ -84,10 +84,10 @@
       "sintaks pbl": {
         "position": 24,
         "impressions": 2,
-        "seen": "2026-11-06"
+        "seen": "2026-11-09"
       }
     },
-    "updated": "2026-11-06"
+    "updated": "2026-11-09"
   },
   "https://permadi.dev/id/blog/apa-itu-swiss-style-design": {
     "queries": {
@@ -174,10 +174,10 @@
       "kinesthetic education": {
         "position": 34.5,
         "impressions": 2,
-        "seen": "2026-11-06"
+        "seen": "2026-11-09"
       }
     },
-    "updated": "2026-11-06"
+    "updated": "2026-11-09"
   },
   "https://permadi.dev/id/blog/teori-warna-dalam-seni-rupa": {
     "queries": {
@@ -194,10 +194,10 @@
       "fast learning adalah": {
         "position": 23,
         "impressions": 2,
-        "seen": "2026-11-06"
+        "seen": "2026-11-09"
       }
     },
-    "updated": "2026-11-06"
+    "updated": "2026-11-09"
   },
   "https://permadi.dev/blog/backend-architecture-and-nuxt-integration": {
     "queries": {
@@ -213,5 +213,15 @@
       }
     },
     "updated": "2026-11-08"
+  },
+  "https://permadi.dev/blog/rumah-belajar-kemdikbud-guide": {
+    "queries": {
+      "rumah belajar kemdikbud": {
+        "position": 16,
+        "impressions": 2,
+        "seen": "2026-11-09"
+      }
+    },
+    "updated": "2026-11-09"
   }
 }
