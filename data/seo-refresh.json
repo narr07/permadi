@@ -97,12 +97,12 @@
         "seen": "2026-11-07"
       },
       "swiss style design": {
-        "position": 9.8,
-        "impressions": 18,
-        "seen": "2026-11-07"
+        "position": 9.5,
+        "impressions": 22,
+        "seen": "2026-11-10"
       }
     },
-    "updated": "2026-11-07"
+    "updated": "2026-11-10"
   },
   "https://permadi.dev/blog/primary-secondary-tertiary-color-wheel": {
     "queries": {
@@ -112,9 +112,9 @@
         "seen": "2026-11-07"
       },
       "color wheel primary secondary tertiary": {
-        "position": 16.9,
-        "impressions": 45,
-        "seen": "2026-11-07"
+        "position": 17.8,
+        "impressions": 54,
+        "seen": "2026-11-10"
       },
       "primary secondary and tertiary colour wheel": {
         "position": 18.6,
@@ -122,9 +122,9 @@
         "seen": "2026-11-04"
       },
       "tertiary color wheel": {
-        "position": 20.2,
-        "impressions": 58,
-        "seen": "2026-11-07"
+        "position": 20.7,
+        "impressions": 74,
+        "seen": "2026-11-10"
       },
       "secondary colour wheel": {
         "position": 25.4,
@@ -167,7 +167,7 @@
         "seen": "2026-11-04"
       }
     },
-    "updated": "2026-11-07"
+    "updated": "2026-11-10"
   },
   "http://permadi.dev/blog/kinesthetic-learning-methods": {
     "queries": {
@@ -184,10 +184,10 @@
       "teori pigmen dipelopori oleh": {
         "position": 6.5,
         "impressions": 4,
-        "seen": "2026-11-07"
+        "seen": "2026-11-10"
       }
     },
-    "updated": "2026-11-07"
+    "updated": "2026-11-10"
   },
   "https://permadi.dev/id/blog/accelerated-learning-fast-learning-methods": {
     "queries": {
@@ -223,5 +223,15 @@
       }
     },
     "updated": "2026-11-09"
+  },
+  "https://permadi.dev/blog/career-guide-ui-ux-designer": {
+    "queries": {
+      "ui/ux artist": {
+        "position": 25.5,
+        "impressions": 8,
+        "seen": "2026-11-10"
+      }
+    },
+    "updated": "2026-11-10"
   }
 }
