@@ -58,7 +58,22 @@ useSchemaOrg([
 			'https://www.behance.net/narr07',
 			'https://www.instagram.com/narr07/',
 		],
-		worksFor: 'SDN Teja II',
+		worksFor: {
+			'@type': 'Organization',
+			'name': 'SDN Teja II',
+		},
+	}),
+	defineOrganization({
+		'@id': 'https://permadi.dev/#organization',
+		'name': 'Permadi',
+		'url': 'https://permadi.dev',
+		'logo': 'https://permadi.dev/logo.png',
+		'sameAs': [
+			'https://github.com/narr07',
+			'https://x.com/dinarpermadi07',
+			'https://www.behance.net/narr07',
+			'https://www.instagram.com/narr07/',
+		],
 	}),
 	defineWebSite({
 		name: 'Permadi',

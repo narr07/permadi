@@ -328,6 +328,36 @@ defineOgImage('Bento', {
 	description: post.value?.doc?.description,
 	category: locale.value === 'id' ? 'Artikel & Catatan' : 'Blog & Article',
 })
+
+useSchemaOrg([
+	defineArticle({
+		headline: () => post.value?.doc?.title || '',
+		description: () => post.value?.doc?.description || '',
+		datePublished: () => post.value?.doc?.date,
+		dateModified: () => post.value?.doc?.date,
+		author: {
+			name: 'Dinar Permadi Yusup',
+			url: 'https://permadi.dev',
+		},
+		image: () => post.value?.doc?.image || '/logo.png',
+	}),
+	defineBreadcrumb({
+		itemListElement: [
+			{
+				name: (): string => (locale.value === 'id' ? 'Beranda' : 'Home'),
+				item: (): string => (locale.value === 'id' ? '/id' : '/'),
+			},
+			{
+				name: 'Blog',
+				item: (): string => (locale.value === 'id' ? '/id/blog' : '/blog'),
+			},
+			{
+				name: (): string => post.value?.doc?.title || '',
+				item: (): string => canonicalUrl.value,
+			},
+		],
+	}),
+])
 </script>
 
 <template>

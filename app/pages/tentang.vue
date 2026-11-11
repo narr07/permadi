@@ -39,7 +39,10 @@ useSchemaOrg([
 				'https://www.behance.net/narr07',
 				'https://www.instagram.com/narr07/',
 			]),
-			worksFor: computed(() => page.value?.person_meta?.worksFor || 'SDN Teja II'),
+			worksFor: computed(() => ({
+				'@type': 'Organization',
+				'name': page.value?.person_meta?.worksFor || 'SDN Teja II',
+			})),
 		}),
 	}),
 ])

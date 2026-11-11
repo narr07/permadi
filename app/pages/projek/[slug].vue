@@ -144,6 +144,42 @@ const allScreenshots = computed(() => {
 	}
 	return Array.from(new Set(list))
 })
+
+useSchemaOrg([
+	defineProduct({
+		name: () => project.value?.doc?.title || '',
+		description: () => project.value?.doc?.description || '',
+		image: () => allScreenshots.value?.[0] || '/logo.png',
+		url: () => canonicalUrl.value,
+		brand: {
+			'@type': 'Brand',
+			'name': 'Permadi',
+		},
+		offers: {
+			'@type': 'Offer',
+			'price': 0,
+			'priceCurrency': 'USD',
+			'availability': 'https://schema.org/InStock',
+			'url': () => canonicalUrl.value,
+		},
+	}),
+	defineBreadcrumb({
+		itemListElement: [
+			{
+				name: (): string => (locale.value === 'id' ? 'Beranda' : 'Home'),
+				item: (): string => (locale.value === 'id' ? '/id' : '/'),
+			},
+			{
+				name: (): string => (locale.value === 'id' ? 'Projek' : 'Projects'),
+				item: (): string => (locale.value === 'id' ? '/id/projek' : '/projects'),
+			},
+			{
+				name: (): string => project.value?.doc?.title || '',
+				item: (): string => canonicalUrl.value,
+			},
+		],
+	}),
+])
 </script>
 
 <template>

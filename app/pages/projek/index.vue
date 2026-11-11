@@ -112,6 +112,8 @@ function getPaginationUrl(pageNumber: number) {
 	}
 }
 
+const site = useSiteConfig()
+
 useSeoMeta({
 	title: computed(() => page.value?.title || (locale.value === 'id' ? 'Projek & Studi Kasus' : 'Projects & Case Studies')),
 	description: computed(() => page.value?.description || (locale.value === 'id' ? 'Portofolio projek rekayasa web dan desain grafis.' : 'Web engineering and graphic design project portfolio.')),
@@ -121,6 +123,21 @@ defineOgImage('Bento', {
 	title: page.value?.title || 'Projek & Studi Kasus',
 	description: page.value?.description || 'Arsip studi kasus karya Dinar Permadi Yusup.',
 })
+
+useSchemaOrg(computed(() => [
+	defineWebPage({
+		'@type': 'CollectionPage',
+	}),
+	defineItemList({
+		numberOfItems: filteredProjects.value.length,
+		itemListElement: filteredProjects.value.slice(0, 13).map((item: any, index: number) => ({
+			'@type': 'ListItem',
+			'position': index + 1,
+			'name': item.title,
+			'url': `${site.url}${item.url}`,
+		})),
+	}),
+]))
 </script>
 
 <template>

@@ -106,6 +106,8 @@ function getPaginationUrl(pageNumber: number) {
 	}
 }
 
+const site = useSiteConfig()
+
 useSeoMeta({
 	title: computed(() => page.value?.title || (locale.value === 'id' ? 'Blog & Catatan Teknis' : 'Blog & Technical Notes')),
 	description: computed(() => page.value?.description || (locale.value === 'id' ? 'Kumpulan tulisan seputar pemrograman web, sistem antarmuka, dan teknologi pendidikan.' : 'Articles and notes on web engineering, UI systems, and education.')),
@@ -118,11 +120,20 @@ defineOgImage('Bento', {
 	description: page.value?.description || 'Arsip artikel karya Dinar Permadi Yusup.',
 })
 
-useSchemaOrg([
+useSchemaOrg(computed(() => [
 	defineWebPage({
 		'@type': 'CollectionPage',
 	}),
-])
+	defineItemList({
+		numberOfItems: filteredPosts.value.length,
+		itemListElement: filteredPosts.value.slice(0, 13).map((item: any, index: number) => ({
+			'@type': 'ListItem',
+			'position': index + 1,
+			'name': item.title,
+			'url': `${site.url}${item.url}`,
+		})),
+	}),
+]))
 </script>
 
 <template>
