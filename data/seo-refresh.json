@@ -69,15 +69,15 @@
       "nuxt": {
         "position": 18.5,
         "impressions": 2,
-        "seen": "2026-11-08"
+        "seen": "2026-11-11"
       },
       "nuxt ssg": {
         "position": 7,
         "impressions": 2,
-        "seen": "2026-11-08"
+        "seen": "2026-11-11"
       }
     },
-    "updated": "2026-11-08"
+    "updated": "2026-11-11"
   },
   "https://permadi.dev/id/blog/problem-based-learning-stages-and-syntax": {
     "queries": {
@@ -202,17 +202,17 @@
   "https://permadi.dev/blog/backend-architecture-and-nuxt-integration": {
     "queries": {
       "nuxt bff": {
-        "position": 7,
-        "impressions": 2,
-        "seen": "2026-11-08"
+        "position": 7.3,
+        "impressions": 3,
+        "seen": "2026-11-11"
       },
       "bff nuxt": {
         "position": 7.5,
         "impressions": 2,
-        "seen": "2026-11-08"
+        "seen": "2026-11-11"
       }
     },
-    "updated": "2026-11-08"
+    "updated": "2026-11-11"
   },
   "https://permadi.dev/blog/rumah-belajar-kemdikbud-guide": {
     "queries": {
@@ -233,5 +233,25 @@
       }
     },
     "updated": "2026-11-10"
+  },
+  "https://permadi.dev/blog/modern-backend-architecture-edge-serverless": {
+    "queries": {
+      "sqlite vs fiber": {
+        "position": 10.5,
+        "impressions": 4,
+        "seen": "2026-11-11"
+      }
+    },
+    "updated": "2026-11-11"
+  },
+  "https://permadi.dev/blog/nuxt-content-and-technical-seo": {
+    "queries": {
+      "nuxt js for seo": {
+        "position": 38,
+        "impressions": 5,
+        "seen": "2026-11-11"
+      }
+    },
+    "updated": "2026-11-11"
   }
 }
