@@ -3,7 +3,6 @@ import { onClickOutside, useEventListener, useScrollLock, useThrottleFn } from '
 
 const { t, locale } = useI18n()
 const localePath = useLocalePath()
-const { getLocaleSwitchUrl } = useLocaleSwitch()
 const { toggleDark, isDark } = useThemeToggle()
 const route = useRoute()
 
@@ -54,6 +53,12 @@ watch(() => route.path, () => {
 
 const navItems = computed(() => [
 	{
+		label: 'Home',
+		to: '/',
+		prefix: '/',
+		exact: true,
+	},
+	{
 		label: t('nav.projects', locale.value === 'id' ? 'Projek' : 'Projects'),
 		to: locale.value === 'id' ? '/id/projek' : '/projects',
 		prefix: locale.value === 'id' ? '/id/projek' : '/projects',
@@ -80,7 +85,10 @@ const navItems = computed(() => [
 	},
 ])
 
-function isItemActive(item: { to: string, prefix: string }): boolean {
+function isItemActive(item: { to: string, prefix: string, exact?: boolean }): boolean {
+	if (item.exact) {
+		return route.path === '/' || route.path === '/id'
+	}
 	return route.path === item.to || route.path.startsWith(item.prefix)
 }
 
@@ -144,22 +152,8 @@ onUnmounted(() => {
 				<AppSearchModal />
 
 				<!-- Language Switcher -->
-				<div class="hidden items-center gap-1 text-xs text-slate-700 font-mono sm:flex dark:text-slate-300">
-					<NuxtLink
-						:to="getLocaleSwitchUrl('id')"
-						class="px-1 py-0.5 transition-all duration-150 active:scale-90 hover:text-brand-500"
-						:class="locale === 'id' ? 'font-bold text-brand-700 dark:text-brand-400 underline underline-offset-2' : ''"
-					>
-						ID
-					</NuxtLink>
-					<span class="text-slate-600 dark:text-slate-400">/</span>
-					<NuxtLink
-						:to="getLocaleSwitchUrl('en')"
-						class="px-1 py-0.5 transition-all duration-150 active:scale-90 hover:text-brand-500"
-						:class="locale === 'en' ? 'font-bold text-brand-700 dark:text-brand-400 underline underline-offset-2' : ''"
-					>
-						EN
-					</NuxtLink>
+				<div class="hidden sm:flex">
+					<AppLocaleSwitch />
 				</div>
 
 				<!-- Theme Switcher -->
@@ -226,18 +220,7 @@ onUnmounted(() => {
 
 				<div class="mt-auto flex items-center justify-between border-t border-slate-200/80 px-4 py-4 text-xs font-mono dark:border-[#134e43] sm:px-6">
 					<span class="text-slate-600 tracking-wider uppercase dark:text-slate-400">{{ $t('common.language') }}</span>
-					<div class="flex items-center">
-						<NuxtLink
-							:to="getLocaleSwitchUrl('id')"
-							class="h-10 w-12 flex items-center justify-center border border-slate-300 dark:border-[#134e43]"
-							:class="locale === 'id' ? 'bg-brand-500 border-brand-500 text-slate-950 font-bold' : 'text-slate-700 dark:text-slate-300'"
-						>ID</NuxtLink>
-						<NuxtLink
-							:to="getLocaleSwitchUrl('en')"
-							class="h-10 w-12 flex items-center justify-center border border-l-0 border-slate-300 dark:border-[#134e43]"
-							:class="locale === 'en' ? 'bg-brand-500 border-brand-500 text-slate-950 font-bold' : 'text-slate-700 dark:text-slate-300'"
-						>EN</NuxtLink>
-					</div>
+					<AppLocaleSwitch />
 				</div>
 			</nav>
 		</Transition>
