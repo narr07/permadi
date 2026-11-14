@@ -67,9 +67,9 @@
   "https://permadi.dev/id/blog/mengenal-nuxt-js-framework-vue-ssr-ssg": {
     "queries": {
       "nuxt": {
-        "position": 18.5,
-        "impressions": 2,
-        "seen": "2026-11-11"
+        "position": 23.7,
+        "impressions": 3,
+        "seen": "2026-11-14"
       },
       "nuxt ssg": {
         "position": 7,
@@ -77,7 +77,7 @@
         "seen": "2026-11-11"
       }
     },
-    "updated": "2026-11-11"
+    "updated": "2026-11-14"
   },
   "https://permadi.dev/id/blog/problem-based-learning-stages-and-syntax": {
     "queries": {
@@ -204,15 +204,15 @@
       "nuxt bff": {
         "position": 7.3,
         "impressions": 3,
-        "seen": "2026-11-11"
+        "seen": "2026-11-14"
       },
       "bff nuxt": {
         "position": 7.5,
         "impressions": 2,
-        "seen": "2026-11-11"
+        "seen": "2026-11-14"
       }
     },
-    "updated": "2026-11-11"
+    "updated": "2026-11-14"
   },
   "https://permadi.dev/blog/rumah-belajar-kemdikbud-guide": {
     "queries": {
@@ -237,21 +237,36 @@
   "https://permadi.dev/blog/modern-backend-architecture-edge-serverless": {
     "queries": {
       "sqlite vs fiber": {
-        "position": 10.5,
-        "impressions": 4,
-        "seen": "2026-11-11"
+        "position": 10.4,
+        "impressions": 5,
+        "seen": "2026-11-14"
       }
     },
-    "updated": "2026-11-11"
+    "updated": "2026-11-14"
   },
   "https://permadi.dev/blog/nuxt-content-and-technical-seo": {
     "queries": {
       "nuxt js for seo": {
         "position": 38,
         "impressions": 5,
-        "seen": "2026-11-11"
+        "seen": "2026-11-14"
       }
     },
-    "updated": "2026-11-11"
+    "updated": "2026-11-14"
+  },
+  "https://permadi.dev/blog/introduction-to-nuxt-js-vue-framework-ssr-ssg": {
+    "queries": {
+      "nuxt ssg": {
+        "position": 14,
+        "impressions": 2,
+        "seen": "2026-11-14"
+      },
+      "what is nuxt js": {
+        "position": 28,
+        "impressions": 2,
+        "seen": "2026-11-14"
+      }
+    },
+    "updated": "2026-11-14"
   }
 }
