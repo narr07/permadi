@@ -176,7 +176,10 @@ export default defineConfig({
 					'background-color': 'rgba(20, 184, 152, 0.08)',
 					'border-color': 'rgba(94, 234, 207, 0.35)',
 				},
-				'code::before, code::after': {
+				'code::before': {
+					content: 'none',
+				},
+				'code::after': {
 					content: 'none',
 				},
 			},
