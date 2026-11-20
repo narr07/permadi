@@ -27,6 +27,9 @@ export default defineNuxtConfig({
 	],
 	$development: {
 		modules: ['@nuxtjs/mcp-toolkit'],
+		hub: {
+			cache: { driver: 'fs-lite', base: '.data/cache' },
+		},
 	},
 	vitalizer: {
 		disableStylesheets: true,
@@ -59,11 +62,6 @@ export default defineNuxtConfig({
 			namespaceId: 'ec9a437898814c4ba25d4b34bcf60107',
 		},
 		dir: '.data',
-	},
-	$development: {
-		hub: {
-			cache: { driver: 'fs-lite', base: '.data/cache' },
-		},
 	},
 	colorMode: {
 		classSuffix: '',

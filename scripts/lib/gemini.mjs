@@ -84,7 +84,7 @@ export function createLedger(file) {
 			data[month].runs += 1
 			data[month].last = { label, date: new Date().toISOString(), usd: Number(run.usd.toFixed(4)), calls: run.calls }
 			fs.mkdirSync(path.dirname(file), { recursive: true })
-			fs.writeFileSync(file, `${JSON.stringify(data, null, 2)}\n`)
+			fs.writeFileSync(file, `${JSON.stringify(data, null, '\t')}\n`)
 		},
 	}
 }
