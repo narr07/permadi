@@ -688,7 +688,7 @@ function saveRefreshCandidates(refresh, opportunities) {
 		data[page].queries[query] = { position: stats?.position ?? null, impressions: stats?.impressions ?? null, seen: today }
 		data[page].updated = today
 	}
-	fs.writeFileSync(SEO_REFRESH_FILE, `${JSON.stringify(data, null, 2)}\n`)
+	fs.writeFileSync(SEO_REFRESH_FILE, `${JSON.stringify(data, null, '\t')}\n`)
 }
 
 /**
@@ -1703,7 +1703,7 @@ ${sanitizedBodyEn}
 	// Catat tanggal tulis ulang/terbit agar refresh otomatis mingguan tidak mengulang artikel yang masih baru
 	const refreshLog = readJson(REFRESH_LOG_FILE)
 	refreshLog[info.nextNumber] = new Date().toISOString().slice(0, 10)
-	fs.writeFileSync(REFRESH_LOG_FILE, `${JSON.stringify(refreshLog, null, 2)}\n`)
+	fs.writeFileSync(REFRESH_LOG_FILE, `${JSON.stringify(refreshLog, null, '\t')}\n`)
 
 	console.log(`\n[Complete] Article generation finished. Cost this run: $${ledger.runUsd.toFixed(3)} (month: $${ledger.spent.toFixed(2)} of $${AI_MONTHLY_BUDGET_USD})`)
 }

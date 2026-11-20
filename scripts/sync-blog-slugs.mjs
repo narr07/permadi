@@ -79,4 +79,3 @@ if (import.meta.url === `file://${process.argv[1]}`.replace(/\\/g, '/')) {
 	syncBlogSlugs()
 	console.log('Blog slugs synchronized successfully.')
 }
-
