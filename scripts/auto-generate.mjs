@@ -1301,10 +1301,10 @@ Kembalikan JSON:
   "tags_en": ["3-5 lowercase tags"],
   "image_alt_id": "alt text 10-125 karakter yang menggambarkan ilustrasi cover",
   "image_alt_en": "alt text 10-125 characters",
-  "image_brief": "English, 2-3 sentences. Art direction for ONE concrete editorial illustration that shows the article's core idea through recognizable objects or a scene (e.g. a teacher's desk with a lesson plan, a designer constructing a logo on a grid, a browser and phone showing a responsive layout). Name the focal subject, 2-4 supporting objects, and the composition. No abstract-only shapes, no people's faces in close-up.",
+  "image_brief": "English, 2-3 sentences. Art direction for ONE Swiss-style geometric composition that captures the article's core idea. Name 1-2 key objects or people to show as geometric pictograms (e.g. an open book, a pencil, a laptop, a teacher figure), the dominant rhythmic system around them (e.g. concentric rings, a progression of bars, overlapping planes, diagonal rules) and where it sits, and the secondary system that crosses it. Do not name colors (the palette is fixed). No charts, no scene with a background setting, no facial features.",
   "inline_image": {
     "after_h2": "nomor urut bagian H2 (mulai 1) yang paling terbantu oleh ilustrasi penjelas: proses, perbandingan, struktur, atau alur",
-    "brief": "English, 2-3 sentences. A second, explanatory illustration for that section, different from the cover: show the concept as a visual metaphor or simple process scene with icons, arrows, and objects. No text or labels at all (the article is bilingual).",
+    "brief": "English, 2-3 sentences. A second Swiss-style geometric composition for that section, different from the cover, that a reader understands without the text. One idea only, with at most 3 geometric pictograms named explicitly and one clear relationship between them (left versus right, or A leading to B), arranged by position, scale, and repetition (e.g. left: one teacher figure on a single straight staircase; right: three student figures of different sizes on three bar paths leading to one open book). Do not name colors (the palette is fixed). No text or labels at all (the article is bilingual).",
     "alt_id": "alt text 10-125 karakter",
     "alt_en": "alt text 10-125 characters"
   }
@@ -1354,10 +1354,25 @@ function ensureCoverImage(imageSlug, category) {
  * pemanggil memakai ensureCoverImage() bila false.
  */
 function coverPrompt(brief, feedback) {
-	return `Editorial flat vector illustration for a blog article cover. Scene: ${brief}
+	return `Swiss International Typographic Style poster graphic, without any type, wide 16:9. Subject: ${brief}
 
-Style: clean modern flat 2D vector illustration with confident dark forest green #134e43 outlines and solid fills, in the discipline of the International Typographic Style. One clear focal subject placed on a golden-ratio point, asymmetric but balanced layout, generous calm negative space. Palette only: pale mint background #f0fdfa, vivid teal #14b898 for the focal accents, soft mint #99f6e4 and emerald #0d947a as secondary colors, #134e43 for outlines and dark shapes, white highlights. No gradients, no drop shadows, no photorealism, no 3D render.
-Screens, papers, cards and signs show simple placeholder bars, lines and icons only: absolutely no readable or fake text, no letters, no numbers, no logos, no watermark. Wide 16:9 composition.${feedback ? `\n\nFix these problems from the previous attempt: ${feedback}` : ''}`
+Concept: translate the subject into a constructed geometric system, in the spirit of 1950s-60s Swiss concert and exhibition posters. The result is objective and rigorous but rich and dynamic, not a sparse diagram and not a chart.
+
+Pictograms: the 1-3 key objects or people named in the subject (e.g. an open book, a pencil, a laptop, a student) appear as geometric pictograms in the language of 1970s Olympic and transport signage, built only from circles, rectangles, bars, and arcs of the same flat colors. People are faceless figures: a circle head and a bar body with simple limbs, no facial features, no hair or clothing detail. Pictograms are large, integrated into the construction (overlapping planes, sitting on the grid), never a cartoon, never a realistic drawing, and never a scene with a background setting.
+
+Grid: a strict modular grid (8 columns, equal rows) governs every element and shows only as very faint hairlines in the background. Edges, centers, and line ends land on grid lines or on other forms; nothing stops at an arbitrary point.
+
+Forms: flat geometric primitives with crisp hard edges (circles, rings, arcs, rectangles, bars, and rules), organized into rhythmic systems rather than placed one by one. Favor large overlapping rectangular planes of stepped widths, a sequence of horizontal bars, a field of thin white parallel rules on one diagonal (hatching that may cross itself), and one large circle or arc bleeding off an edge. Concentric rings, a scaled sequence of circles, or a progression of bars may replace one of these when the subject calls for it. All lines have square ends. Combine them into one interlocking construction of roughly 12-30 elements, with mathematical proportions and strong scale contrast.
+
+Hierarchy (3 levels): one dominant system, one secondary system that crosses or interlocks with it, and a few small solid accents. The reading order must be obvious at a glance and must still work in grayscale.
+
+Composition: asymmetric and dynamic. Anchor the dominant system off-center, let it bleed off one or two edges, and use a diagonal axis or overlap for tension. Keep roughly 25-35% of the canvas as calm background so the construction can breathe. Never center the composition symmetrically.
+
+Color: flat solid fields, all from this palette: pale mint background #f0fdfa, dark forest green #134e43, vivid teal #14b898, emerald #0d947a, soft mint #99f6e4, and white. Overlaps may overprint, where the overlapping area becomes a darker shade of the same green family. No other hues.
+
+Finish: clean, precise vector edges. No texture, no grain, no noise, no paper effect, no sketchy or hand-drawn lines, no gradients, no shadows, no glow, no 3D, no photorealism, no rounded line caps, no tick marks, no crosshairs, no construction lines, no loose dots that do not belong to a system.
+
+Absolutely no readable or fake text: no letters, no words, no numbers, no logos, no watermark.${feedback ? `\n\nFix these problems from the previous attempt: ${feedback}` : ''}`
 }
 
 async function reviewCover(apiKey, models, ledger, { imageData, imageMime }, brief) {
@@ -1369,8 +1384,8 @@ async function reviewCover(apiKey, models, ledger, { imageData, imageMime }, bri
 			json: true,
 			parts: [
 				{ inlineData: { mimeType: imageMime || 'image/png', data: imageData } },
-				{ text: `You review blog cover illustrations. Intended scene: "${brief}".
-Reject only for real problems: garbled or fake text/letters, distorted objects or anatomy, off-brand colors (not mint/teal/forest green), scene clearly unrelated to the brief, or cluttered composition.
+				{ text: `You review blog graphics in the style of 1950s-60s Swiss posters: rhythmic systems of flat geometric primitives on a grid, with faceless geometric pictograms of objects or people, asymmetric and dynamic, clean vector edges, no type. Intended subject: "${brief}".
+Reject only for real problems: garbled or fake text, letters, or numbers; off-brand colors (anything besides mint, teal, emerald, forest green, and white); a cartoon, realistic drawing, or scene with a background setting instead of geometric pictograms; faces with features; more than 3 pictograms, or pictograms of objects the subject does not name; a plain chart; a centered symmetric layout; a sparse composition of only a few unrelated shapes; random clutter with no grid or rhythm (tick marks, crosshairs, construction lines, scattered dots); sketchy or textured rendering; or no recognizable link to the subject.
 Return JSON: {"ok": boolean, "issues": "short English list of problems, empty if ok"}` },
 			],
 		})
