@@ -922,15 +922,25 @@ function chooseProfile(ledger) {
 
 const AUTHOR = `Anda adalah Dinar Permadi Yusup: guru SD di Majalengka, desainer visual, dan web developer Indonesia. Anda menulis untuk blog pribadi permadi.dev (Nuxt Content). Pembaca Anda guru, desainer, dan developer yang ingin jawaban praktis dari praktisi, bukan rangkuman generik.`
 
-const STYLE_ID = `GAYA BAHASA INDONESIA (Smart Conversational / Modern Editorial):
-- Bernas, hangat, lugas, percaya diri, seperti praktisi senior atau jurnalis majalah editorial bermutu.
+const STYLE_ID = `GAYA BAHASA INDONESIA (santai luwes, tetap baku):
+- Tulis seperti praktisi yang menjelaskan ke rekan sendiri: akrab, ringan, langsung ke inti, tetapi tetap rapi dan berbobot.
+- Sapa pembaca dengan "kamu", bukan "Anda". Pakai "saya" hanya bila sudut pandang praktisi memang membantu.
+- Semua kata tetap baku: "tidak" (bukan "nggak"), "saja" (bukan "aja"), "sangat" (bukan "banget"), "sudah" (bukan "udah").
+- Boleh kalimat tanya ringan di tengah tulisan dan kalimat pendek yang tegas untuk memberi ritme. Hindari kalimat panjang berlapis.
 - Buka langsung dengan inti jawaban (BLUF). DILARANG pembuka klise: "Dalam era digital saat ini", "Di zaman modern yang serba cepat", "Perkembangan teknologi telah membawa", "Pernahkah Anda membayangkan", "Mari kita bahas".
 - DILARANG meta-talk: "Perlu diingat bahwa", "Tidak dapat dipungkiri", "Patut dicatat", "Bukan rahasia lagi".
 - DILARANG jargon proposal: "dalam rangka", "guna mendukung", "optimalisasi", "sinergi", "akselerasi", "solusi tepat guna". Ubah nominalisasi pe-an/ke-an menjadi kata kerja aktif.
-- DILARANG slang: "banget", "nggak", "beneran", "sat-set", "gaspol", "cuan", "doang", "nih", "dong", "lo-gue".
+- DILARANG slang dan partikel lisan: "banget", "nggak", "aja", "beneran", "sat-set", "gaspol", "cuan", "doang", "nih", "dong", "sih", "deh", "lo-gue".
 - Kalimat aktif dengan pelaku jelas. Variasikan panjang kalimat: pendek penegas, sedang, dan panjang penjelas.
 - DILARANG em dash (—). Gunakan koma, titik dua, kurung, atau titik.
 - Tanpa emoji di judul dan heading.`
+
+// Panduan humanizer-id (MIT, onesoira/humanizer-bahasa-indonesia). Disimpan di repo karena generator jalan di
+// GitHub Actions, sedangkan .agents/ tidak ikut di-commit. Komentar lisensi dan frontmatter dibuang dari prompt.
+const HUMANIZER_ID = fs.readFileSync(path.join(__dirname, 'lib/prompts/humanizer-id.md'), 'utf8')
+	.replace(/<!--[\s\S]*?-->/g, '')
+	.replace(/^\s*---\r?\n[\s\S]*?\r?\n---\r?\n/, '')
+	.trim()
 
 const STYLE_EN = `ENGLISH STYLE:
 - Natural native-speaker phrasing; never a stiff word-for-word translation.
@@ -989,6 +999,33 @@ function countWords(markdown) {
 		.split(/\s+/)
 		.filter(w => /\p{L}/u.test(w))
 		.length
+}
+
+// Kerangka artikel yang tidak boleh berubah saat tahap humanize: heading, komponen MDC, kode, tabel, dan tautan
+function structureOf(markdown) {
+	const lines = markdown.split('\n')
+	const count = re => lines.filter(l => re.test(l)).length
+	return {
+		headings: count(/^#{2,3} /),
+		components: count(/^\s*:{2,3}[a-z]/),
+		closers: count(/^\s*:{2,3}\s*$/),
+		fences: count(/^\s*```/),
+		tableRows: count(/^\s*\|.*\|\s*$/),
+		links: (markdown.match(/\]\([^)\s]+\)/g) || []).length,
+	}
+}
+
+// Hasil humanize dipakai hanya bila kerangkanya utuh dan panjangnya tidak bergeser lebih dari 15%
+function keepsStructure(before, after) {
+	const a = structureOf(before)
+	const b = structureOf(after)
+	const changed = Object.keys(a).filter(k => a[k] !== b[k])
+	const ratio = countWords(after) / Math.max(1, countWords(before))
+	if (changed.length || ratio < 0.85 || ratio > 1.15) {
+		console.warn(`[Pipeline] Humanize output rejected (changed: ${changed.join(', ') || 'none'}; words x${ratio.toFixed(2)}), keeping edited draft`)
+		return false
+	}
+	return true
 }
 
 function getInternalLinkCatalog() {
@@ -1134,7 +1171,7 @@ Tanggal terbit: ${rewrite?.date || today}${rewrite ? `\nMODE TULIS ULANG: artike
 	const bookRefs = await findBookReferences(apiKey, { category, topic, primaryKeyword, secondaryKeywords, ledger, profile })
 
 	// Tahap 1: riset berbasis Google Search agar fakta & data terkini, bukan dari ingatan model
-	console.log('\n[Pipeline 1/5] Research with Google Search grounding...')
+	console.log('\n[Pipeline 1/6] Research with Google Search grounding...')
 	const research = await generate(models.research, {
 		apiKey,
 		ledger,
@@ -1153,7 +1190,7 @@ Jangan mengarang. Tandai informasi yang tidak pasti dengan "(belum pasti)".${boo
 	})
 
 	// Tahap 2: draf ID dalam markdown biasa (bukan JSON) agar model fokus pada tulisan
-	console.log('[Pipeline 2/5] Drafting Indonesian article...')
+	console.log('[Pipeline 2/6] Drafting Indonesian article...')
 	const draft = await generate(models.writer, {
 		apiKey,
 		ledger,
@@ -1171,7 +1208,7 @@ Tulis body artikel lengkap dalam Bahasa Indonesia. Keluarkan HANYA markdown body
 	})
 
 	// Tahap 3: penyuntingan oleh editor yang memeriksa daftar aturan dan fakta terhadap riset
-	console.log('[Pipeline 3/5] Editing pass...')
+	console.log('[Pipeline 3/6] Editing pass...')
 	const edited = await generate(models.writer, {
 		apiKey,
 		ledger,
@@ -1194,11 +1231,37 @@ Sunting draf di atas. Periksa dan perbaiki:
 8. Panjang draf saat ini sekitar ${countWords(draft.text)} kata. Bila lebih dari 2200 kata, pangkas bagian yang mengulang atau bertele-tele sampai 1500–2000 kata tanpa membuang langkah praktis, tabel, atau FAQ.
 Keluarkan HANYA markdown body artikel hasil suntingan lengkap.`,
 	})
-	const bodyId = sanitizeArticleBody(edited.text)
-	console.log(`[Pipeline] Words: draft ${countWords(draft.text)} → edited ${countWords(bodyId)}`)
+	const editedId = sanitizeArticleBody(edited.text)
 
-	// Tahap 4: versi EN ditulis ulang secara natural, tautan internal dipetakan ke versi EN
-	console.log('[Pipeline 4/5] Writing English edition...')
+	// Tahap 4: humanize, menyisir pola tulisan AI khas Bahasa Indonesia tanpa mengubah fakta atau struktur
+	console.log('[Pipeline 4/6] Humanizing Indonesian article...')
+	const humanized = await generate(models.writer, {
+		apiKey,
+		ledger,
+		stage: 'humanize-id',
+		system: `Anda editor bahasa permadi.dev. Tugas Anda menyisir pola tulisan AI dari artikel Bahasa Indonesia memakai panduan humanizer di bawah.
+
+PRIORITAS: aturan GAYA BAHASA permadi.dev dan larangan mengarang mengalahkan contoh di panduan humanizer. Jangan menambah opini, perasaan, pengalaman pribadi, anekdot, angka, kutipan, atau sumber yang tidak ada di artikel.
+
+${STYLE_ID}
+
+${HUMANIZER_ID}`,
+		prompt: `Sunting artikel berikut dengan panduan humanizer.
+- Ubah hanya kalimat yang terasa kaku, generik, berulang, birokratis, atau promosi. Biarkan kalimat yang sudah baik.
+- Pertahankan struktur persis: semua heading (## dan ###), tabel markdown, blok kode, tautan [teks](url), dan komponen MDC (::tip, ::note, ::warning, ::steps, ::faq, :::faq-item beserta "question:", ::conclusion) lengkap dengan penutup :: dan :::.
+- Pertahankan primary keyword "${primaryKeyword}" di paragraf pertama dan di heading yang memuatnya.
+- Panjang akhir kira-kira sama dengan artikel ini (${countWords(editedId)} kata).
+Keluarkan HANYA markdown body artikel hasil suntingan lengkap, tanpa catatan perubahan.
+
+ARTIKEL:
+${editedId}`,
+	})
+	const humanizedId = sanitizeArticleBody(humanized.text)
+	const bodyId = keepsStructure(editedId, humanizedId) ? humanizedId : editedId
+	console.log(`[Pipeline] Words: draft ${countWords(draft.text)} → edited ${countWords(editedId)} → final ${countWords(bodyId)}`)
+
+	// Tahap 5: versi EN ditulis ulang secara natural, tautan internal dipetakan ke versi EN
+	console.log('[Pipeline 5/6] Writing English edition...')
 	const english = await generate(models.translator, {
 		apiKey,
 		ledger,
@@ -1216,8 +1279,8 @@ ${bodyId}`,
 	})
 	const bodyEn = sanitizeArticleBody(english.text)
 
-	// Tahap 5: metadata SEO + brief ilustrasi dari artikel final
-	console.log('[Pipeline 5/5] SEO metadata and cover brief...')
+	// Tahap 6: metadata SEO + brief ilustrasi dari artikel final
+	console.log('[Pipeline 6/6] SEO metadata and cover brief...')
 	const meta = await generate(models.utility, {
 		apiKey,
 		ledger,
