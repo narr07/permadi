@@ -63,6 +63,11 @@ export default defineNuxtConfig({
 		},
 		dir: '.data',
 	},
+	// Wajib eksplisit sejak @nuxt/schema 4.6.4: tanpa env HOST, `devServer.host` ter-resolve jadi objek kosong `{}`
+	// dan `nuxt dev` crash dengan "options.hostname.toLowerCase is not a function". 'localhost' = perilaku lama.
+	devServer: {
+		host: 'localhost',
+	},
 	colorMode: {
 		classSuffix: '',
 		preference: 'system',
