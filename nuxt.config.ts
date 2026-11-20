@@ -27,6 +27,9 @@ export default defineNuxtConfig({
 	],
 	$development: {
 		modules: ['@nuxtjs/mcp-toolkit'],
+		hub: {
+			cache: { driver: 'fs-lite', base: '.data/cache' },
+		},
 	},
 	vitalizer: {
 		disableStylesheets: true,
@@ -60,10 +63,10 @@ export default defineNuxtConfig({
 		},
 		dir: '.data',
 	},
-	$development: {
-		hub: {
-			cache: { driver: 'fs-lite', base: '.data/cache' },
-		},
+	// Wajib eksplisit sejak @nuxt/schema 4.6.4: tanpa env HOST, `devServer.host` ter-resolve jadi objek kosong `{}`
+	// dan `nuxt dev` crash dengan "options.hostname.toLowerCase is not a function". 'localhost' = perilaku lama.
+	devServer: {
+		host: 'localhost',
 	},
 	colorMode: {
 		classSuffix: '',
