@@ -2,7 +2,7 @@ name: Weekly SEO Refresh
 
 on:
   schedule:
-    # Setiap Senin pukul 01:00 UTC (08:00 WIB), satu jam setelah Auto Blog harian
+    # Setiap Senin pukul 01:00 UTC (08:00 WIB), dua jam sebelum Auto Blog harian
     - cron: '0 1 * * 1'
 
   # Tombol trigger manual; isi nomor/slug untuk memilih artikel sendiri, kosongkan untuk otomatis

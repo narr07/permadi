@@ -2,9 +2,11 @@ name: Scheduled Auto Blog
 
 on:
   schedule:
-    # Setiap hari pukul 00:00 UTC (07:00 WIB). Biaya dijaga pembatas anggaran di generator:
+    # Setiap hari pukul 03:17 UTC (10:17 WIB). Sengaja bukan 00:00 UTC: jam itu antrean jadwal GitHub
+    # paling padat dan run kita telat 6–7 jam. Tetap sebelum 17:00 UTC agar tanggal artikel (UTC) sama
+    # dengan tanggal WIB. Biaya dijaga pembatas anggaran di generator:
     # Vertex (kredit trial) sampai 18 Jan 2027, lalu AI Studio dengan batas AI_MONTHLY_BUDGET_USD.
-    - cron: '0 0 * * *'
+    - cron: '17 3 * * *'
 
   # Tombol trigger manual dari tab Actions di GitHub
   workflow_dispatch:
