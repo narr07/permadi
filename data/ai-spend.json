@@ -75,28 +75,28 @@
 		}
 	},
 	"2026-11": {
-		"usd": 12.612,
-		"runs": 21,
+		"usd": 13.2647,
+		"runs": 22,
 		"providers": {
 			"aistudio": 0.2,
-			"vertex": 12.4119
+			"vertex": 13.0646
 		},
 		"last": {
 			"label": "auto",
-			"date": "2026-11-21T06:52:52.806Z",
-			"usd": 0.6966,
+			"date": "2026-11-22T06:10:44.761Z",
+			"usd": 0.6527,
 			"calls": [
 				{
 					"stage": "topic-pick",
 					"model": "gemini-3.8-flash",
 					"provider": "vertex",
-					"usd": 0.0142
+					"usd": 0.0107
 				},
 				{
 					"stage": "gkp-pick",
 					"model": "gemini-3.8-flash",
 					"provider": "vertex",
-					"usd": 0.0045
+					"usd": 0.0092
 				},
 				{
 					"stage": "book-query",
@@ -108,49 +108,49 @@
 					"stage": "research",
 					"model": "gemini-3.8-flash",
 					"provider": "vertex",
-					"usd": 0.0193
+					"usd": 0.0178
 				},
 				{
 					"stage": "draft-id",
 					"model": "gemini-4-argon",
 					"provider": "vertex",
-					"usd": 0.0571
+					"usd": 0.0582
 				},
 				{
 					"stage": "edit-id",
 					"model": "gemini-4-argon",
 					"provider": "vertex",
-					"usd": 0.0601
+					"usd": 0.063
 				},
 				{
 					"stage": "humanize-id",
 					"model": "gemini-4-argon",
 					"provider": "vertex",
-					"usd": 0.062
+					"usd": 0.0644
 				},
 				{
 					"stage": "english",
 					"model": "gemini-3.1-pro-preview",
 					"provider": "vertex",
-					"usd": 0.1715
+					"usd": 0.1255
 				},
 				{
 					"stage": "metadata",
 					"model": "gemini-3.8-flash",
 					"provider": "vertex",
-					"usd": 0.0124
+					"usd": 0.0138
 				},
 				{
 					"stage": "cover-1",
 					"model": "gemini-3-pro-image",
 					"provider": "vertex",
-					"usd": 0.1413
+					"usd": 0.1409
 				},
 				{
 					"stage": "cover-review",
 					"model": "gemini-3.8-flash",
 					"provider": "vertex",
-					"usd": 0.0046
+					"usd": 0.0026
 				},
 				{
 					"stage": "cover-1",
@@ -162,7 +162,7 @@
 					"stage": "cover-review",
 					"model": "gemini-3.8-flash",
 					"provider": "vertex",
-					"usd": 0.0058
+					"usd": 0.0028
 				}
 			]
 		}
