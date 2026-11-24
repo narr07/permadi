@@ -24,12 +24,12 @@
 			"accelerated learning techniques examples": {
 				"position": 19.3,
 				"impressions": 4,
-				"seen": "2026-11-12"
+				"seen": "2026-11-24"
 			},
 			"accelerated learning method": {
 				"position": 24,
 				"impressions": 3,
-				"seen": "2026-11-12"
+				"seen": "2026-11-24"
 			},
 			"accelerated learning methods": {
 				"position": 26.5,
@@ -37,12 +37,17 @@
 				"seen": "2026-10-25"
 			},
 			"accelerated learning techniques": {
-				"position": 35.9,
-				"impressions": 7,
-				"seen": "2026-10-31"
+				"position": 32.8,
+				"impressions": 10,
+				"seen": "2026-11-24"
+			},
+			"accelerated learning": {
+				"position": 40,
+				"impressions": 3,
+				"seen": "2026-11-24"
 			}
 		},
-		"updated": "2026-11-12"
+		"updated": "2026-11-24"
 	},
 	"https://permadi.dev/blog/accelerated-learning-cara-belajar-cepat": {
 		"queries": {
@@ -314,15 +319,15 @@
 			"macam macam model pembelajaran dan sintaknya": {
 				"position": 7.7,
 				"impressions": 3,
-				"seen": "2026-11-21"
+				"seen": "2026-11-24"
 			},
 			"sintaksnya": {
 				"position": 9,
 				"impressions": 4,
-				"seen": "2026-11-21"
+				"seen": "2026-11-24"
 			}
 		},
-		"updated": "2026-11-21"
+		"updated": "2026-11-24"
 	},
 	"https://permadi.dev/blog/vite-js-modern-frontend-guide": {
 		"queries": {
@@ -343,5 +348,15 @@
 			}
 		},
 		"updated": "2026-11-23"
+	},
+	"https://permadi.dev/blog/discovery-learning-and-inquiry-stages-for-class": {
+		"queries": {
+			"discovery and inquiry based learning": {
+				"position": 17.7,
+				"impressions": 3,
+				"seen": "2026-11-24"
+			}
+		},
+		"updated": "2026-11-24"
 	}
 }
