@@ -219,7 +219,7 @@
 			"nuxt bff": {
 				"position": 7.3,
 				"impressions": 3,
-				"seen": "2026-11-23"
+				"seen": "2026-11-26"
 			},
 			"bff nuxt": {
 				"position": 7.5,
@@ -227,7 +227,7 @@
 				"seen": "2026-11-14"
 			}
 		},
-		"updated": "2026-11-23"
+		"updated": "2026-11-26"
 	},
 	"https://permadi.dev/blog/rumah-belajar-kemdikbud-guide": {
 		"queries": {
@@ -258,8 +258,8 @@
 			},
 			"traefik vs sqlite": {
 				"position": 10.1,
-				"impressions": 34,
-				"seen": "2026-11-23"
+				"impressions": 39,
+				"seen": "2026-11-26"
 			},
 			"sqlite vs nomad": {
 				"position": 8,
@@ -282,17 +282,17 @@
 				"seen": "2026-11-23"
 			}
 		},
-		"updated": "2026-11-23"
+		"updated": "2026-11-26"
 	},
 	"https://permadi.dev/blog/nuxt-content-and-technical-seo": {
 		"queries": {
 			"nuxt js for seo": {
 				"position": 38,
 				"impressions": 5,
-				"seen": "2026-11-23"
+				"seen": "2026-11-26"
 			}
 		},
-		"updated": "2026-11-23"
+		"updated": "2026-11-26"
 	},
 	"https://permadi.dev/blog/introduction-to-nuxt-js-vue-framework-ssr-ssg": {
 		"queries": {
@@ -309,10 +309,10 @@
 			"what is nuxt": {
 				"position": 8.2,
 				"impressions": 5,
-				"seen": "2026-11-23"
+				"seen": "2026-11-26"
 			}
 		},
-		"updated": "2026-11-23"
+		"updated": "2026-11-26"
 	},
 	"https://permadi.dev/id/blog/macam-macam-model-pembelajaran-inovatif": {
 		"queries": {
@@ -332,9 +332,9 @@
 	"https://permadi.dev/blog/vite-js-modern-frontend-guide": {
 		"queries": {
 			"vite js": {
-				"position": 12.8,
-				"impressions": 6,
-				"seen": "2026-11-23"
+				"position": 9,
+				"impressions": 22,
+				"seen": "2026-11-26"
 			},
 			"vitejs": {
 				"position": 11.8,
@@ -347,7 +347,7 @@
 				"seen": "2026-11-23"
 			}
 		},
-		"updated": "2026-11-23"
+		"updated": "2026-11-26"
 	},
 	"https://permadi.dev/blog/discovery-learning-and-inquiry-stages-for-class": {
 		"queries": {
