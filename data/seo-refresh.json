@@ -107,9 +107,9 @@
 				"seen": "2026-11-22"
 			},
 			"swiss style": {
-				"position": 7.8,
-				"impressions": 62,
-				"seen": "2026-11-25"
+				"position": 7.7,
+				"impressions": 63,
+				"seen": "2026-11-28"
 			},
 			"swiss design": {
 				"position": 8.8,
@@ -117,7 +117,7 @@
 				"seen": "2026-11-22"
 			}
 		},
-		"updated": "2026-11-25"
+		"updated": "2026-11-28"
 	},
 	"https://permadi.dev/blog/primary-secondary-tertiary-color-wheel": {
 		"queries": {
@@ -137,9 +137,9 @@
 				"seen": "2026-11-04"
 			},
 			"tertiary color wheel": {
-				"position": 19.2,
-				"impressions": 83,
-				"seen": "2026-11-22"
+				"position": 17,
+				"impressions": 103,
+				"seen": "2026-11-28"
 			},
 			"secondary colour wheel": {
 				"position": 25.4,
@@ -182,7 +182,7 @@
 				"seen": "2026-11-04"
 			}
 		},
-		"updated": "2026-11-25"
+		"updated": "2026-11-28"
 	},
 	"http://permadi.dev/blog/kinesthetic-learning-methods": {
 		"queries": {
@@ -199,10 +199,10 @@
 			"teori pigmen dipelopori oleh": {
 				"position": 6.5,
 				"impressions": 4,
-				"seen": "2026-11-25"
+				"seen": "2026-11-28"
 			}
 		},
-		"updated": "2026-11-25"
+		"updated": "2026-11-28"
 	},
 	"https://permadi.dev/id/blog/accelerated-learning-fast-learning-methods": {
 		"queries": {
@@ -244,10 +244,10 @@
 			"ui/ux artist": {
 				"position": 25.5,
 				"impressions": 8,
-				"seen": "2026-11-25"
+				"seen": "2026-11-28"
 			}
 		},
-		"updated": "2026-11-25"
+		"updated": "2026-11-28"
 	},
 	"https://permadi.dev/blog/modern-backend-architecture-edge-serverless": {
 		"queries": {
