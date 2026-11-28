@@ -145,24 +145,25 @@ const allScreenshots = computed(() => {
 	return Array.from(new Set(list))
 })
 
+// A portfolio case study is a CreativeWork, not a Product: Google's product
+// snippets expect real ratings and reviews, which a portfolio does not have.
+useSchemaOrg(computed(() => [
+	{
+		'@type': 'CreativeWork',
+		'name': project.value?.doc?.title || '',
+		'description': project.value?.doc?.description || '',
+		'image': allScreenshots.value?.[0] || '/logo.png',
+		'url': canonicalUrl.value,
+		'inLanguage': locale.value === 'id' ? 'id-ID' : 'en-US',
+		'author': {
+			'@type': 'Person',
+			'name': 'Dinar Permadi Yusup',
+			'url': site.url,
+		},
+	},
+]))
+
 useSchemaOrg([
-	defineProduct({
-		name: () => project.value?.doc?.title || '',
-		description: () => project.value?.doc?.description || '',
-		image: () => allScreenshots.value?.[0] || '/logo.png',
-		url: () => canonicalUrl.value,
-		brand: {
-			'@type': 'Brand',
-			'name': 'Permadi',
-		},
-		offers: {
-			'@type': 'Offer',
-			'price': 0,
-			'priceCurrency': 'USD',
-			'availability': 'https://schema.org/InStock',
-			'url': () => canonicalUrl.value,
-		},
-	}),
 	defineBreadcrumb({
 		itemListElement: [
 			{
